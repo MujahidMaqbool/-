@@ -1,0 +1,258 @@
+<div *ngIf="shouldGetPersonInfo" class="white_bg info_bar_bg top_zero">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="view_main_bar">
+                <person-info></person-info>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#sale_histroy_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+
+            </div>
+        </div>
+        <div id="sale_histroy_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3">
+                        <div class="field_label">
+                            <h5>Booking Type</h5>
+                        </div>
+                        <div class="select_label">
+                            <select [(ngModel)]="waitListSearchParameter.ItemTypeID"
+                                (ngModelChange)="onBookingTypeChange()">
+                                <option [ngValue]="0" *ngIf="hasClassesAndServices">All</option>
+                                <option *ngFor="let bookingType of waitlistBookingType"
+                                    [ngValue]="bookingType.ItemTypeID">
+                                    {{bookingType.ItemTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <h5 class="field_label">Item Name</h5>
+                        <input type="text" class="form-control" name="Name"
+                            [(ngModel)]="waitListSearchParameter.ItemName" maxlength="50" id="item_name">
+                    </div>
+                    <div class="col-lg-6 col-md-6 no_padding input_heading">
+                        <dateto-datefrom [dateToPlaceHolder]="dateToPlaceHolder"
+                            [dateFromPlaceHolder]="dateFromPlaceHolder" #waitlistDateSearch>
+                        </dateto-datefrom>
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <div class="field_label">
+                            <h5>Waitlist Status</h5>
+                        </div>
+                        <div class="select_label">
+                            <select [(ngModel)]="waitListSearchParameter.WaitListStatusTypeID">
+                                <option *ngFor="let statusType of waitlistStatusType" [ngValue]="statusType.value">
+                                    {{statusType.text}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 offset-lg-6 col-md-3 offset-md-6 no_padding">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 space">
+                                <div class="full_width_btn">
+                                    <button class="reset" (click)="resetWaitlistFilter()" type="reset">Reset</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 space">
+                                <div class="full_width_btn">
+                                    <button type="button" (click)="searchAllWaitlists()" class="search">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grids_white_bg">
+    <div class="cstm_scroll_bg overflow-auto master_row">
+        <div class="row grid_header mob-scroll-grid">
+            <div class="col">
+                <h5>Item Name</h5>
+            </div>
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="sortWaitList(1)" href="javascript:void(0)">
+                        Waitlist Request
+                        <i class="fas fa-sort-alt"></i>
+                    </a>
+                </h5>
+            </div>
+            <div class="col">
+                <h5>Booking Type</h5>
+            </div>
+            <div class="col">
+                <h5>Staff</h5>
+            </div>
+            <div *ngIf="!this.customerID" class="col">
+                <h5>Customer</h5>
+            </div>
+            <!-- <div class="col">
+                <h5>Item Price</h5>
+            </div> -->
+            <div class="col">
+                <h5>Waitlist Status</h5>
+            </div>
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="sortWaitList(2)" href="javascript:void(0)">
+                        Created Date
+                        <i class="fas fa-sort-alt"></i>
+                    </a>
+                </h5>
+            </div>
+            <div class="col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div *ngIf="isDataExists">
+            <ng-container *ngFor="let waitList of allWaitlists; let i =index">
+
+                <div class="row grid_rows grid_parent_rows_pos mob-scroll-grid collapse-dd">
+                    <div class="col">
+                        <div class="cst-collapse" data-toggle="collapse" attr.data-target="#collapseExample{{i}}"
+                            aria-expanded="false" attr.aria-label="collapseExample{{i}}">
+                            <h5> {{waitList.ItemName}} <span id="collapseExample{{i}}"
+                                    class="plus_mem  collapse">(+{{waitList.ItemList.length}} others)</span>
+                            </h5>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <h5></h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{waitlistBookingType[waitList.ItemTypeID - 1]?.ItemTypeName}}</h5>
+                    </div>
+                    <div class="col">
+                        <h5></h5>
+                    </div>
+                    <div *ngIf="!this.customerID" class="col">
+                        <h5></h5>
+                    </div>
+                    <div class="col">
+                        <h5></h5>
+                    </div>
+                    <div class="col">
+                        <h5></h5>
+                    </div>
+                    <div class="col text-center">
+
+                        <span *ngIf="waitList.IsAvailable" class="blue oranage_user">
+                            <a matTooltip="Slot Available" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                <i class="fal fa-user-clock"></i>
+                            </a>
+                        </span>&nbsp;
+                        <span class="red_del">
+                            <a matTooltip="Delete" *ngIf="customerID && allowedPages.isSaveAllow"
+                                (click)="deleteWaitlist(waitList.WaitListID, null)" matTooltipPosition="above"
+                                matTooltipClass="custom-tooltip">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <ng-container>
+                    <div *ngFor="let itemType of waitList.ItemList" id="collapseExample{{i}}"
+                        class="row grid_rows grid_child_rows mob-scroll-grid collapse show">
+                        <div class="col">
+                            <h5></h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{itemType.RequestDate | customdate: dateFormat}}</h5>
+                            <span class="booking_time"> {{ itemType.StartTime | branchTimeFormat }} -
+                                {{ itemType.EndTime | branchTimeFormat }}</span><br> <span class="booking_time">
+                                {{ itemType.DurationInMinutes }}
+                                Minute(s)</span>
+                        </div>
+                        <div class="col">
+                            <h5>
+                                <span *ngIf="itemType.CustomerMembershipID && itemType.CustomerMembershipID > 0">
+                                    <i class="far fa-crown light-blue-color font-size-small"></i>
+                                </span>&nbsp; {{itemType.MembershipName}}
+                            </h5>
+
+                            <!-- <h5><i *ngIf="itemType.CustomerMembershipID && itemType.CustomerMembershipID > 0"  class="fal fa-crown"></i>{{ itemType.MembershipName }}</h5> -->
+                        </div>
+                        <div class="col">
+                            <h5>{{itemType.StaffName}}</h5>
+                        </div>
+                        <div *ngIf="!this.customerID" class="col">
+                            <h5>{{itemType.CustomerName}}<span class="badges_layout">{{itemType.CustomerTypeID ===
+                                    enumCustomerType.Client ? "Client" : itemType.CustomerTypeID ===
+                                    enumCustomerType.Lead ? "Lead" : "Member"}}</span></h5>
+                        </div>
+
+                        <!-- <div class="col">
+                            <h5>{{itemType.ItemPrice | currency: currencyFormat}}</h5>
+                        </div> -->
+                        <div class="col">
+                            <h5>{{itemType.WaitListStatusTypeID == waitlistStatus.AddedToWaitlist ? 'Added to Waitlist'
+                                : itemType.WaitListStatusTypeID == waitlistStatus.AvailableToBook ? 'Available to Book':
+                                itemType.WaitListStatusTypeID == waitlistStatus.TimedOut
+                                ? 'Timed Out': '' }}
+                            </h5>
+                        </div>
+
+                        <div class="col">
+                            <h5>{{itemType.CreatedDate | customdate: dateFormat}}</h5>
+
+                        </div>
+                        <div class="col text-center">
+                            <span *ngIf="itemType.IsNotified" class="blue">
+                                <a [matTooltip]="'Notified On' +  ' ' + (itemType.NotifiedOn | customdate: dateFormat)"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                    <i class="fal fa-user-clock"></i>
+                                </a>
+                            </span>&nbsp;
+                            <span class="blue" *ngIf="allowedPages.isSaveAllow">
+                                <a matTooltip="Book Waitlist"
+                                    *ngIf="itemType.WaitListStatusTypeID == waitlistStatus.AvailableToBook"
+                                    (click)="bookWaitList( waitList, itemType)" matTooltipPosition="above"
+                                    matTooltipClass="custom-tooltip">
+                                    <i class="fal fa-calendar-plus"></i>&nbsp;
+                                </a>
+                                <!-- (click)="bookWaitList(waitList, itemType)"  -->
+                            </span>
+                            <span class="red_del" *ngIf="allowedPages.isSaveAllow">
+                                <a matTooltip="Delete" (click)="deleteWaitlist(null , itemType.WaitListDetailID)"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                    <i class="fal fa-trash-alt"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </ng-container>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <app-pagination [isWaitlistStatus]="isWaitlistStatus" (paginationEvent)="reciviedPagination($event)" #appPagination>
+    </app-pagination>
+</div>

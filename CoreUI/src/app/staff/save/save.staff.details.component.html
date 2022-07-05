@@ -1,0 +1,684 @@
+﻿<form #StaffFormData="ngForm" (ngSubmit)="onSaveStaff(StaffFormData.valid)" novalidate>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="company_btn float-right">
+                <!-- <button class="simple_btn" type="button" role="navigation" [routerLink]="['search']">
+                    Back to Search
+                </button> -->
+                <button *ngIf="!staff.IsSuperAdmin || isSuperAdminLoggedIn" class="simple_btn" type="button"
+                    (click)="resetForm()">
+                    Reset</button>
+                <button *ngIf="!staff.IsSuperAdmin || isSuperAdminLoggedIn" class="save"
+                    [disabled]="(StaffFormData.pristine)" tabindex="26">
+                    Save</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="white_bg">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger" *ngIf="StaffFormData.submitted && StaffFormData.invalid ">
+                    {{ getErrorMessage(StaffFormData) }}
+                    <!-- <div *ngIf="StaffFormData.invalid ">
+                        {{messages.Validation.Info_Required}}
+                    </div>
+                    <div *ngIf="StaffFormData.controls.Email?.errors?.pattern">
+                        {{messages.Validation.Email_Invalid}}
+                    </div>
+                    <div *ngIf="StaffFormData.controls.Mobile?.errors || StaffFormData.controls.Phone?.errors">
+                        {{messages.Validation.Phone_Invalid}}
+                    </div> -->
+                </div>
+                <span class="alert alert-warning"
+                    *ngIf="staff.IsSuperAdmin && !isSuperAdminLoggedIn">{{messages.Validation.Update_SuperAdmin}}</span>
+            </div>
+        </div>
+        <div class="row section_title inside_margin">
+            <div class="col-md-6 padding_left">
+                <h4>Personal Information</h4>
+            </div>
+            <!-- <div class="col-md-6 padding_right">
+                <mat-slide-toggle class="example-margin float-right" [(checked)]="staff.IsActive" [(ngModel)]="staff.IsActive"
+                    [disabled]="false" #IsActive="ngModel" (ngModelChange)="onStatusChange(staff.IsActive)" name="IsActive"
+                    required>
+                    {{staff.IsActive ? 'Active': 'Inactive'}}
+                </mat-slide-toggle>
+
+            </div> -->
+        </div>
+        <div class="section_content">
+            <div class="row tab-col-rev mob-col-rev">
+                <div class="col-lg-9 col-md-12 no_padding">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="field_label">
+                                <h5>Email <span
+                                        *ngIf="staff.StaffID > 0 && (!staff.IsSuperAdmin || isSuperAdminLoggedIn)"
+                                        class="float-right"><a class="edit_mail" href="javascript:void(0)"
+                                            (click)="editEmailDialog()"> Edit Email</a></span>
+                                </h5>
+                            </div>
+                            <div [ngClass]="{
+                                            'has-danger': Email.invalid && (Email.dirty || Email.touched || StaffFormData.submitted),
+                                            'has-success': Email.valid && (Email.dirty || Email.touched ) }">
+
+                                <input type="text" name="Email" [(ngModel)]="staff.Email" class="form-control"
+                                    #Email="ngModel"
+                                    pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                                    maxlength="50" (blur)="onEmailUpdated()" tabindex="1" required
+                                    [disabled]="staff.StaffID > 0" />
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-4 col-sm-6 space mob-mt-0 mob-space-30">
+                            <div class="checkbox checkbox-success permission_checkbox">
+                                <input name="AllowLogin" type="checkbox" id="allow_login"
+                                    class="ng-untouched ng-pristine ng-valid" [disabled]="staff.IsSuperAdmin"
+                                    [(ngModel)]="staff.AllowLogin" #AllowLogin="ngModel" [(checked)]="staff.AllowLogin"
+                                    tabindex="2">
+                                <label for="allow_login"> Login Allowed </label>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-4 no_padding">
+                                    <div class="field_label">
+                                        <h5>Title <span>(optional)</span></h5>
+                                        <div [ngClass]="{
+                                               'has-danger': Title.invalid && (Title.dirty || Title.touched || StaffFormData.submitted),
+                                                'has-success': Title.valid && (Title.dirty || Title.touched )
+                                                   }">
+                                            <div class="select_label">
+                                                <select class="form-control" name="Title" [(ngModel)]="staff.Title"
+                                                    #Title="ngModel" tabindex="3">
+                                                    <option [ngValue]="undefined">
+                                                        Select Title
+                                                    </option>
+                                                    <option *ngFor="let title of titleList" [ngValue]="title">
+                                                        {{title}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-sm-8 padding_right">
+                                    <div class="field_label required">
+                                        <h5>First Name</h5>
+                                        <div [ngClass]="{
+                                        'has-danger': FirstName.invalid && (FirstName.dirty || FirstName.touched ||StaffFormData.submitted),
+                                        'has-success': FirstName.valid && (FirstName.dirty || FirstName.touched )
+                                            }">
+                                            <input type="text" class="form-control" (blur)="trimName()" name="FirstName"
+                                                [(ngModel)]="staff.FirstName" #FirstName="ngModel" maxlength="30"
+                                                tabindex="4" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="field_label required">
+                                <h5>Last Name</h5>
+                                <div [ngClass]="{
+                                    'has-danger': LastName.invalid && (LastName.dirty || LastName.touched ||StaffFormData.submitted),
+                                    'has-success': LastName.valid && (LastName.dirty || LastName.touched )
+                                        }">
+                                    <input type="text" class="form-control" name="LastName" (blur)="trimName()"
+                                        [(ngModel)]="staff.LastName" #LastName="ngModel" maxlength="30" tabindex="5"
+                                        required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="field_label required">
+                                <h5>Gender <span>(optional)</span></h5>
+                            </div>
+                            <div [ngClass]="{
+                                                'has-danger': Gender.invalid && (Gender.dirty || Gender.touched || StaffFormData.submitted),
+                                                'has-success': Gender.valid && (Gender.dirty || Gender.touched )
+                                                }">
+                                <div class="select_label">
+                                    <select class="form-control" name="Gender" [(ngModel)]="staff.Gender"
+                                        #Gender="ngModel" tabindex="6">
+                                        <option [ngValue]="undefined">
+                                            Select Gender
+                                        </option>
+                                        <option *ngFor="let gender of genderList" [ngValue]="gender">
+                                            {{gender}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="field_label ">
+                                <h5>Date of Birth <span>(optional)</span> </h5>
+                            </div>
+                            <date-picker [value]="staff.BirthDate" [max]="maxDate" [tabindex]="7"
+                                (onDateChange)="onBirthDateChange($event)"></date-picker>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="field_label required">
+                                <h5>Mobile <span>(optional)</span></h5>
+                            </div>
+
+                            <div [ngClass]="{
+                                             'has-danger': Mobile.invalid && (Mobile.dirty || Mobile.touched || StaffFormData.submitted),
+                                             'has-success': Mobile.valid && (Mobile.dirty || Mobile.touched )
+                                                            }">
+                                <international-phone-number name="Mobile" [(ngModel)]="staff.Mobile" #Mobile="ngModel"
+                                    tabindex="9" [defaultCountry]="staff.Mobile ? '' : defaultBranchCountry">
+                                </international-phone-number>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="field_label">
+                                <h5>Phone <span>(optional)</span></h5>
+                            </div>
+                            <div [ngClass]="{
+                                             'has-danger': Phone.invalid && (Phone.dirty || Phone.touched || StaffFormData.submitted),
+                                             'has-success': Phone.valid && (Phone.dirty || Phone.touched )
+                                        }">
+                                <international-phone-number name="Phone" [(ngModel)]="staff.Phone" #Phone="ngModel"
+                                    tabindex="8" [defaultCountry]="staff.Phone ? '' : defaultBranchCountry">
+                                </international-phone-number>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <div class="staff_img">
+                        <div *ngIf="!isImageExist" class="upload_image_box" (click)="onShowImageCropperDialog()">
+                            <!-- <my-image-cropper [roundedImage]="true" [croppedHeight]="200" [croppedWidth]="200"
+                                        [canvasHeight]="250" [canvasWidth]="300" (imageUrlChange)="onImageChange($event)"></my-image-cropper> -->
+                            <div class="border_circle">
+                                <i class="fal fa-cloud-upload-alt"></i>
+                                <br>
+                                <button type="button" class="save">Upload Image</button>
+                            </div>
+                            <div class="camera">
+                                <i class="fal fa-camera"></i>
+                            </div>
+                        </div>
+                        <div *ngIf="isImageExist">
+                            <img class="img-responsive rounded-circle center-block" src="{{imagePath}}"
+                                alt="no image" />
+                            <br>
+                            <div class="changeimg_btn" *ngIf="!staff.IsSuperAdmin || isSuperAdminLoggedIn">
+                                <button type="button" (click)="onShowImageCropperDialog()"><i
+                                        class="fal fa-pen"></i></button>
+                                <button type="button" (click)="onDeleteImage()"
+                                    *ngIf="staff.StaffID && staff.ImagePath"><i class="fal fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="white_bg">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section_title">
+                    <h4>Staff Information</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12  no_padding" *ngIf="!staff.IsSuperAdmin && isRoleRequired">
+                <div class="row">
+                    <div class="col-md-8 pr-md-0">
+                        <div class="field_label required">
+                            <h5>Role</h5>
+                        </div>
+                        <div [ngClass]="{
+                                'has-danger': RoleID.invalid && (RoleID.dirty || RoleID.touched || StaffFormData.submitted),
+                                'has-success': RoleID.valid && (RoleID.dirty || RoleID.touched )
+                                }">
+                            <div class="role_dropdown">
+                                <div class="select_label">
+                                    <select class="form-control" name="RoleID" #RoleID="ngModel"
+                                        [(ngModel)]="staff.Permission.RoleID" tabindex="12" required>
+                                        <option [ngValue]="undefined" [disabled]="true"> Select Role </option>
+                                        <option *ngFor="let role of roleList" [ngValue]="role.RoleID">
+                                            {{role.RoleName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 view_role_btn">
+                        <button type="button" (click)="onViewRole()"
+                            [disabled]="!staff.Permission.RoleID || staff.Permission.RoleID == 0 ">
+                            View</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                <div class="field_label">
+                    <h5>Position</h5>
+                </div>
+                <div [ngClass]="{
+                                    'has-danger': StaffPositionID.invalid && (StaffPositionID.dirty || StaffPositionID.touched || StaffFormData.submitted),
+                                    'has-success': StaffPositionID.valid && (StaffPositionID.dirty || StaffPositionID.touched )
+                                    }">
+                    <div class="select_label">
+                        <select class="form-control" name="StaffPositionID" [(ngModel)]="staff.StaffPositionID"
+                            #StaffPositionID="ngModel" tabindex="10" required>
+                            <option *ngFor="let Position of positionList" [ngValue]="Position.StaffPositionID">
+                                {{Position.StaffPositionName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                <div class="field_label">
+                    <h5>Online Display Name</h5>
+                </div>
+                <input name="OnlineDisplayName" type="text" [(ngModel)]="staff.Permission.OnlineDisplayName"
+                    maxlength="14" />
+            </div>
+
+        </div>
+    </div>
+    <div class="white_bg">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section_title">
+                    <h4>Address <span class="optional">(optional)</span></h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>Country </h5>
+                </div>
+                <div class="select_label">
+                    <select [(ngModel)]="staff.CountryID" class="form-control" name="countryName" #countryName="ngModel"
+                        tabindex="13">
+                        <option [ngValue]="undefined"> Select Country </option>
+                        <option *ngFor="let country of countryList" [ngValue]="country.CountryID">
+                            {{country.CountryName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>State / County </h5>
+                </div>
+                <input type="text" [(ngModel)]="staff.StateCountyName" name="StateCountyName" maxlength="50"
+                    tabindex="14" />
+                <!-- <div class="select_label">
+                    <select [(ngModel)]="staff.StateCountyID" class="form-control" name="state" #state="ngModel"
+                        tabindex="14">
+                        <option [ngValue]="undefined"> Select State / County </option>
+                        <option *ngFor="let state of stateList" [ngValue]="state.StateCountyID">
+                            {{ state.StateCountyName }}
+                        </option>
+                    </select>
+                </div> -->
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>Address Line 1 </h5>
+                </div>
+                <input name="Address1" type="text" class="form-control" [(ngModel)]="staff.Address1" #Address1="ngModel"
+                    maxlength="250" tabindex="15" />
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>Address Line 2 </h5>
+                </div>
+                <input name="Address2" type="text" [(ngModel)]="staff.Address2" maxlength="250" tabindex="16" />
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>City </h5>
+                </div>
+                <div>
+                    <input type="text" name="CityName" [(ngModel)]="staff.CityName" class="form-control"
+                        #CityName="ngModel" tabindex="17" maxlength="50">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>Post Code / Zip Code </h5>
+                </div>
+                <input name="PostCode" type="text" [(ngModel)]="staff.PostCode" maxlength="10" tabindex="18" />
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg">
+        <div id="search_accordion">
+            <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+                data-target="#staffgeneral">
+                <div class="col-md-12">
+                    <h4 class="panel-title accordion-toggle"> General Information <span
+                            class="optional">(optional)</span></h4>
+                </div>
+            </div>
+            <div id="staffgeneral" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row flex-end">
+                        <div class="col-md-12">
+                            <div class="filter_seprator"></div>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6">
+                            <div class="field_label">
+                                <h5>Card Number </h5>
+                            </div>
+                            <input type="text" name="CardNumber" class="form-control" [(ngModel)]="staff.CardNumber"
+                                maxlength="20" tabindex="11" />
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12  p-0">
+                            <div class="row">
+                                <div class="col-md-8 pr-md-0">
+                                    <div class="field_label">
+                                        <h5>NFC Access</h5>
+                                    </div>
+                                    <input type="text" maxlength="16" class="form-control" name="NFCAccess"
+                                        [(ngModel)]="staff.CardAccessID " numberControl #NFCAccess="ngModel"
+                                        tabindex="35" (blur)="onUpdateNFCAccess()" />
+                                </div>
+                                <div class="col-md-4 view_role_btn"><button type="button" disabled="" class="mb-1">
+                                         NFC</button></div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12 col-sm-12">
+                            <div class="field_label">
+                                <h5>Notes <span class="reamin">(Remaining Characters: {{1500 -
+                                    staff.Notes?.length}})</span></h5>
+                            </div>
+                            <textarea rows="4" [(ngModel)]="staff.Notes" name="Notes" maxlength="1500"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg">
+        <div id="search_accordion">
+            <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+                data-target="#permissionbox">
+                <div class="col-md-12">
+                    <h4 class="panel-title accordion-toggle"> Permissions</h4>
+                </div>
+            </div>
+            <div id="permissionbox" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row flex-end">
+                        <div class="col-md-12">
+                            <div class="filter_seprator"></div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="permission_box">
+                                <div class="center_flex_alignment">
+                                    <div>
+                                        <h5>Scheduler</h5>
+                                        <p>Toggle on if this staff should be shown on the scheduler</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <mat-slide-toggle class="example-margin float-right wellyx-checked"
+                                        [(checked)]="staff.Permission.ShowOnScheduler"
+                                        [(ngModel)]="staff.Permission.ShowOnScheduler" [disabled]="false"
+                                        #ShowOnScheduler="ngModel" name="ShowOnScheduler"
+                                        (ngModelChange)="onShowSchedulerChange()" tabindex="19">
+                                        <!-- {{staff.Permission.ShowOnScheduler ? 'Allowed': 'Not Allowed'}} -->
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="permission_box" *ngIf="showClassesCheck">
+                                <div class="center_flex_alignment">
+                                    <div>
+                                        <i class="fal fa-users-class"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Classes on Scheduler</h5>
+                                        <p>Toggle on if the staff can provide classes on scheduler</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="CanDoClass"
+                                        [(ngModel)]="staff.Permission.CanDoClass" #CanDoClass="ngModel"
+                                        [(checked)]="staff.Permission.CanDoClass"
+                                        [disabled]="!staff.Permission.ShowOnScheduler">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="permission_box" *ngIf="showServicesCheck">
+                                <div class="center_flex_alignment">
+                                    <div>
+                                        <i class="fal fa-user-check"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Services in Core</h5>
+                                        <p>Toggle on if the staff can provide services in core through scheduler and POS
+                                        </p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="CanDoService"
+                                        [(ngModel)]="staff.Permission.CanDoService"
+                                        [(checked)]="staff.Permission.CanDoService"
+                                        [disabled]="!staff.Permission.ShowOnScheduler">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="permission_box" *ngIf="showServicesCheck">
+                                <div class="center_flex_alignment">
+                                    <div>
+                                        <i class="fal fa-mobile-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Services on Widget & Apps</h5>
+                                        <p>Toggle on if the staff can provide services on widget and apps</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <mat-slide-toggle class="wellyx-checked" [disabled]="false"
+                                        name="CanDoServiceOnline" [(ngModel)]="staff.Permission.CanDoServiceOnline"
+                                        #Service="ngModel" [(checked)]="staff.Permission.CanDoServiceOnline"
+                                        [disabled]="!staff.Permission.ShowOnScheduler || !staff.Permission.CanDoService">
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="permission_box ">
+                            <div class="center_flex_alignment">
+                              <div>
+                                <i class="fal fa-box-usd"></i>
+                              </div>
+                              <div>
+                              <h5>Access Control</h5>
+                                <p>Toggle on if you are happy to allow the staff to use access control to gain entry into your branch.</p>
+                              </div>
+                            </div>
+                            <div>
+                              <mat-slide-toggle class="wellyx-checked" [disabled]="false" [(checked)]="staff.Permission.DoorAccessAllowed"
+                              [(ngModel)]="staff.Permission.DoorAccessAllowed" #AccessControlAllowed="ngModel"
+                                 name="AccessControlAllowed">
+                              </mat-slide-toggle>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-8 col-md-8 col-sm-12">
+                            <div class="permission_box" *ngIf="showServicesCheck">
+                                <div class="center_flex_alignment">
+                                    <div>
+                                        <i class="fal fa-user-plus"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Assign Services</h5>
+                                        <p>Add services that can be provided by the staff :
+                                            <span class="left_space"
+                                                *ngIf="staffServiceModel?.ServiceList?.length > 0">{{staffServiceModel.ServiceList.length}}
+                                                Services</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="button" [disabled]="!staff.Permission.ShowOnScheduler"
+                                        class="btn-sm add_new float-right mob-non-float"
+                                        (click)="onProvideSerivceClick()"> Add
+                                        Services</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="ptm">
+                <div>
+                    <h4>Login Access</h4>
+                    <p>Toggle on if the staff is allowed to access wellyx</p>
+                </div>
+                <div>
+                    <mat-slide-toggle class="example-margin float-right wellyx-checked" name="AllowLogin"
+                        [(checked)]="staff.AllowLogin" [(ngModel)]="staff.AllowLogin" [disabled]="staff.IsSuperAdmin"
+                        #AllowLogin="ngModel">
+                        <!-- {{staff.Permission.FirstAidAllowed ? 'Allowed': 'Not Allowed'}} -->
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="ptm">
+                <div>
+                    <h4>Tips</h4>
+                    <p>Toggle on if the staff is allowed to accept tips</p>
+                </div>
+                <div>
+                    <mat-slide-toggle class="example-margin float-right wellyx-checked"
+                        [(checked)]="staff.Permission.AllowTip" [(ngModel)]="staff.Permission.AllowTip"
+                        [disabled]="false" #AllowTip="ngModel" name="AllowTip" tabindex="24">
+                        <!-- {{staff.Permission.AllowTip ? 'Allowed': 'Not Allowed'}} -->
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="ptm">
+                <div>
+                    <h4>First Aid</h4>
+                    <p>Toggle on if the staff is happy to receive first aid</p>
+                </div>
+                <div>
+                    <mat-slide-toggle class="example-margin float-right wellyx-checked"
+                        [(checked)]="staff.Permission.FirstAidAllowed" [(ngModel)]="staff.Permission.FirstAidAllowed"
+                        [disabled]="false" #FirstAidAllowed="ngModel" name="FirstAidAllowed" tabindex="25">
+                        <!-- {{staff.Permission.FirstAidAllowed ? 'Allowed': 'Not Allowed'}} -->
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="white_bg">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="permission_header">
+                    <h3>Show on Scheduler</h3>
+                    <mat-slide-toggle class="example-margin float-right" [(checked)]="staff.Permission.ShowOnScheduler"
+                        [(ngModel)]="staff.Permission.ShowOnScheduler" [disabled]="false" #ShowOnScheduler="ngModel"
+                        name="ShowOnScheduler" (ngModelChange)="onShowSchedulerChange()" tabindex="19">
+                        {{staff.Permission.ShowOnScheduler ? 'Allowed': 'Not Allowed'}}
+                    </mat-slide-toggle>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="permission_body">
+                    <div class="permission_item" *ngIf="showClassesCheck">
+                        <div class="checkbox checkbox-success permission_checkbox">
+                            <input name="CanDoClass" type="checkbox" id="provide_classes"
+                                [(ngModel)]="staff.Permission.CanDoClass" #CanDoClass="ngModel"
+                                [(checked)]="staff.Permission.CanDoClass" [disabled]="!staff.Permission.ShowOnScheduler"
+                                tabindex="20">
+                            <label for="provide_classes"> Provide Class On Scheduler </label>
+                        </div>
+                    </div>
+                    <div class="permission_item" *ngIf="showServicesCheck">
+                        <div class="checkbox checkbox-success permission_checkbox">
+                            <input name="CanDoService" type="checkbox" id="provide_services"
+                                [(ngModel)]="staff.Permission.CanDoService" [(checked)]="staff.Permission.CanDoService"
+                                [disabled]="!staff.Permission.ShowOnScheduler" tabindex="21">
+                            <label for="provide_services"> Provide Service On Scheduler and POS </label>
+
+                        </div>
+                    </div>
+                    <div class="permission_item" *ngIf="showServicesCheck">
+                        <div class="checkbox checkbox-success permission_checkbox">
+                            <input name="CanDoServiceOnline" type="checkbox" id="CanDoServiceOnline"
+                                [(ngModel)]="staff.Permission.CanDoServiceOnline" #Service="ngModel"
+                                [(checked)]="staff.Permission.CanDoServiceOnline"
+                                [disabled]="!staff.Permission.ShowOnScheduler || !staff.Permission.CanDoService"
+                                tabindex="22">
+                            <label for="CanDoServiceOnline"> Provide Service Online </label>
+
+                        </div>
+                    </div>
+                    <div class="permission_item permission_checkbox" *ngIf="showServicesCheck">
+                        <label>Select Services For POS/Online</label>
+                        <span style="padding-left: 20px"
+                            *ngIf="staffServiceModel?.ServiceList?.length > 0">{{staffServiceModel.ServiceList.length}}
+                            Services</span>
+                        <button type="button" [disabled]="!staff.Permission.ShowOnScheduler"
+                            class="btn-sm add_new float-right mob-non-float" (click)="onProvideSerivceClick()"> Add
+                            Services</button>
+                       
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="permission_header small_space">
+                    <h3>Allow Tips</h3>
+                    <mat-slide-toggle class="example-margin float-right" [(checked)]="staff.Permission.AllowTip"
+                        [(ngModel)]="staff.Permission.AllowTip" [disabled]="false" #AllowTip="ngModel" name="AllowTip"
+                        tabindex="24">
+                        {{staff.Permission.AllowTip ? 'Allowed': 'Not Allowed'}}
+                    </mat-slide-toggle>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="permission_header small_space">
+                    <h3>Allow First Aid</h3>
+                    <mat-slide-toggle class="example-margin float-right wellyx-checked" [(checked)]="staff.Permission.FirstAidAllowed"
+                        [(ngModel)]="staff.Permission.FirstAidAllowed" [disabled]="false" #FirstAidAllowed="ngModel"
+                        name="FirstAidAllowed" tabindex="25">
+                        {{staff.Permission.FirstAidAllowed ? 'Allowed': 'Not Allowed'}}
+                    </mat-slide-toggle>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</form>

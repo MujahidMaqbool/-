@@ -1,0 +1,82 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>{{enquiryTitle}}</h4>
+            </div>
+            <form>
+                <div class="popup_content sl-limit-content">
+                    <div class="view_bg info_bar_bg" >
+                        <person-info  *ngIf="shouldGetPersonInfo" ></person-info>
+                    </div>
+                    <div class="popup_white_bg">
+                        <div class="row" *ngIf="isMembershipsExists">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label">
+                                    <h5 class="mt-0">Membership Enquiry </h5>
+                                </div>
+                                <div class="select_label">
+                                    <div class="select_label">
+                                        <select   name="MembershipID" [(ngModel)]="addLeadMembershipModel.MembershipID" (ngModelChange)="onChangeMembership()"
+                                          #Membership="ngModel" [disabled]="model.IsMemberToLead"  tabindex="1">
+                                          <option *ngFor="let existingMembership of existingMembershipList" [ngValue]="existingMembership.MembershipID">
+                                            {{existingMembership.MembershipName}}
+                                          </option>
+                                        </select>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label">
+                                    <h5 class="mt-0">Assigned To</h5>
+                                </div>
+                                <!-- <div class="select_label">
+                                    <select name="AssignedToStaffID" [(ngModel)]="addLeadMembershipModel.AssignedToStaffID"
+                                        tabindex="2">
+                                        <option [ngValue]="null">Not Specified</option>
+                                        <option *ngFor="let staffListObj of assignedToStaffList" [(ngValue)]="staffListObj.StaffID">
+                                            {{staffListObj.StaffFullName}}
+                                        </option>
+                                    </select>
+                                </div> -->
+
+                                <div class="select_label">
+                                    <select class="form-control" name="AssignedToStaffID" [(ngModel)]="addLeadMembershipModel.AssignedToStaffID"
+                                      #AssignedTo="ngModel" tabindex="2">
+                                      <option [ngValue]="null">Not Specified</option>
+                                      <option *ngFor="let StaffListObj of assignedToStaffList" [ngValue]="StaffListObj.StaffID">
+                                        {{StaffListObj.StaffFullName}}
+                                      </option>
+                                    </select>
+                                  </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12" *ngIf="isPurchaseRestrictionAllowed && existingLeadMembershipObj?.RestrictedCustomerTypeNames">
+                                <div class="d-inline-flex align-items-center alert alert-warning p-2 content-sm-reg mb-0">
+                                  <i class="fal fa-registered brown-color pr-2 font-size-medium" aria-hidden="true"></i>
+                                  <span>Purchase is restricted. {{existingLeadMembershipObj?.RestrictedCustomerTypeNames}} cannot purchase this item.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="isMembershipsExists === false">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="alert alert-danger">
+                                    {{ErrorMessageText}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-4 col-sm-4"></div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="cancel_btn float-right">
+                            <button tabindex="4" type="button" mat-button (click)="onClosePopup()">Cancel</button>
+                            <button *ngIf="isMembershipsExists" tabindex="5" class="save primary_blue_btn" (click)="leadAssigntoSaveUpdate()">Proceed</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

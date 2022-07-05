@@ -1,0 +1,620 @@
+﻿<form #MemberFormData="ngForm" novalidate>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="alert alert-danger" *ngIf="showValidation && MemberFormData.invalid">
+        <div *ngIf="MemberFormData.invalid">
+          {{messages.Validation.Info_Required}}
+        </div>
+        <div *ngIf="Mobile?.errors || Phone?.errors">
+          {{messages.Validation.Phone_Invalid}}
+        </div>
+        <div *ngIf="Email?.errors?.pattern">
+          {{messages.Validation.Email_Invalid}}
+        </div>
+      </div>
+      <div class="alert alert-danger" *ngIf="!showValidation && MemberFormData.valid && isCustomerAddressRequired">
+        {{messages.Validation.Select_State_CountyName}}
+      </div>
+    </div>
+  </div>
+  <div class="white_bg">
+    <div class="section_title inside_margin">
+      <div class="row">
+        <div class="col-md-6 padding_left">
+          <h4>Personal Information</h4>
+        </div>
+        <!-- <div class="col-md-6 col-sm-6 padding_right">
+                  <mat-slide-toggle class="example-margin float-right" [(checked)]="memberModel.IsActive" [(ngModel)]="memberModel.IsActive"
+                      [disabled]="false" #IsActive="ngModel" (ngModelChange)="onStatusChange(memberModel.IsActive)"
+                      name="IsActive" required>
+                      {{memberModel.IsActive ? 'Active': 'Inactive'}}
+                  </mat-slide-toggle>
+              </div> -->
+      </div>
+    </div>
+    <div class="row tab-col-rev mob-col-rev">
+      <div class="col-lg-9 col-md-12 no_padding">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="field_label">
+              <h5>Email<span *ngIf="memberModel.CustomerID > 0" class="float-right"><a class="edit_mail float-right"
+                    href="javascript:void(0)" (click)="editCustomerEmailDialog()">Edit Email</a></span></h5>
+            </div>
+            <div [ngClass]="{
+                                      'has-danger': Email.invalid && (Email.dirty || Email.touched || showValidation),
+                                      'has-success': Email.valid && (Email.dirty || Email.touched ) }">
+              <input type="text" class="form-control " name="Email" [(ngModel)]="memberModel.Email" #Email="ngModel"
+                pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$" maxlength="50"
+                required tabindex="1" [disabled]="memberModel.CustomerID > 0" (blur)="onEmailUpdated()" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="row">
+              <div class="col-md-5 col-sm-4 no_padding">
+                <div class="field_label">
+                  <h5>Title <span>(optional)</span></h5>
+                </div>
+                <div>
+                  <div class="select_label">
+                    <select class="form-control" name="Title" [(ngModel)]="memberModel.Title" #Title="ngModel"
+                      tabindex="2">
+                      <option [ngValue]="undefined">
+                        Select Title
+                      </option>
+                      <option *ngFor="let title of titleList" [ngValue]="title">
+                        {{title}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7 col-sm-8 padding_right">
+                <div class="field_label">
+                  <h5>First Name</h5>
+                </div>
+                <div [ngClass]="{
+                                          'has-danger': FirstName.invalid && (FirstName.dirty || FirstName.touched ||showValidation),
+                                          'has-success': FirstName.valid && (FirstName.dirty || FirstName.touched )
+                                              }">
+                  <input type="text" class="form-control" name="FirstName" (blur)="trimName()"
+                    [(ngModel)]="memberModel.FirstName" #FirstName="ngModel" maxlength="30" required tabindex="3" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="field_label">
+              <h5>Last Name</h5>
+            </div>
+            <div [ngClass]="{
+                          'has-danger': LastName.invalid && (LastName.dirty || LastName.touched ||showValidation),
+                          'has-success': LastName.valid && (LastName.dirty || LastName.touched )
+                              }">
+              <input type="text" class="form-control" (blur)="trimName()" name="LastName"
+                [(ngModel)]="memberModel.LastName" #LastName="ngModel" maxlength="30" required tabindex="4" />
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="field_label">
+              <h5>Gender <span>(optional)</span></h5>
+            </div>
+            <div>
+              <div class="select_label">
+                <select class="form-control" name="Gender" [(ngModel)]="memberModel.Gender" #Gender="ngModel"
+                  tabindex="5">
+                  <option [ngValue]="undefined">
+                    Select Gender
+                  </option>
+                  <option *ngFor="let gender of genderList" [ngValue]="gender">
+                    {{gender}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="field_label">
+              <h5>Date of Birth <span>(optional)</span></h5>
+            </div>
+            <!-- <div [ngClass]="{
+                                         'has-danger': birthDate.invalid && (birthDate.dirty || birthDate.touched || showValidation),
+                                         'has-success': birthDate.valid && (birthDate.dirty || birthDate.touched )
+                                             }"> -->
+            <!-- <input name="birthDate" class="bg_transparent form-control date-picker" #birthDate="ngModel"
+                          [(ngModel)]="memberModel.BirthDate" matInput [max]="maxDate" [matDatepicker]="picker"
+                          placeholder="DD/MM/YYYY" readonly />
+                      <span *ngIf="memberModel.BirthDate" (click)="onBirthDateChange()" class="clear_dob"></span>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-datepicker-toggle class="date-picker-toggle" style="margin: 0" matSuffix [for]="picker">
+                      </mat-datepicker-toggle> -->
+            <date-picker [value]="memberModel.BirthDate" [max]="maxDate" [attr.tabindex]="6"
+              (onDateChange)="onBirthDateChange($event)"></date-picker>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <h5 class="field_label">Mobile <span>(optional)</span></h5>
+            <div [ngClass]="{
+                                'has-danger': Mobile.invalid && (Mobile.dirty || Mobile.touched || showValidation),
+                                'has-success': Mobile.valid && Phone.value && (Mobile.dirty || Mobile.touched )
+                                            }">
+              <international-phone-number name="Mobile" [(ngModel)]="memberModel.Mobile" #Mobile="ngModel"
+                [defaultCountry]="memberModel.Mobile ? '' : defaultCountry" [attr.tabindex]="7">
+              </international-phone-number>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <h5 class="field_label">Phone <span>(optional)</span></h5>
+            <div [ngClass]="{
+                          'has-danger': Phone.invalid && (Phone.dirty || Phone.touched || showValidation),
+                          'has-success': Phone.valid && Phone.value && (Phone.dirty || Phone.touched )
+                      }">
+              <div>
+                <international-phone-number name="Phone" [(ngModel)]="memberModel.Phone" #Phone="ngModel"
+                  [defaultCountry]="memberModel.Phone ? '' : defaultCountry" [attr.tabindex]="8">
+                </international-phone-number>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-12">
+        <div class="staff_img">
+          <div *ngIf="!isImageExists" class="upload_image_box" (click)="onShowImageCropperDialog()">
+            <!-- <my-image-cropper [roundedImage]="true" [croppedHeight]="200" [croppedWidth]="200"
+                                  [canvasHeight]="250" [canvasWidth]="300" (imageUrlChange)="onImageChange($event)"></my-image-cropper> -->
+            <div class="border_circle">
+              <i class="fal fa-cloud-upload-alt"></i>
+              <br>
+              <button type="button" class="save">Upload Image</button>
+            </div>
+            <div class="camera">
+              <i class="fal fa-camera"></i>
+            </div>
+          </div>
+          <div *ngIf="isImageExists">
+            <img class="img-responsive rounded-circle center-block" src="{{imagePath}}" alt="no image" />
+            <br>
+            <div class="changeimg_btn">
+              <button type="button" (click)="onShowImageCropperDialog()"><i class="fal fa-pen"></i></button>
+              <button type="button" (click)="onDeleteImage()" *ngIf="memberModel.CustomerID && memberModel.ImagePath"><i
+                  class="fal fa-trash-alt"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="isLoadCompnent">
+  <app-address (isCustomerAddressRequire)="RequiredCustomerAddress($event)" [customerAddressList]="memberModel.CustomerAddress" [defaultCountry]="defaultCountry"
+    [stateList]="stateList" [countryList]="countryList" [isMember]="true" [customerID]="memberID" [tabIndex]="9"></app-address></ng-container>
+  <div class="white_bg">
+    <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+        data-target="#generalinfo">
+        <div class="col-md-12">
+          <h4 class="panel-title accordion-toggle"> General Information <span class="optional">(optional)</span></h4>
+        </div>
+      </div>
+      <div id="generalinfo" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row flex-end">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <h5 class="field_label">Card Number <span class="info_tip"
+                  matTooltip="Used to check in members from the attendance screen" matTooltipPosition="above"
+                  matTooltipClass="custom-tooltip"> <i class="far fa-info-circle"></i></span></h5>
+              <input type="text" class="form-control" name="CardNumber" [(ngModel)]="memberModel.CardNumber"
+                tabindex="30" maxlength="20" (blur)="onUpdateCardNumber()" />
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <h5 class="field_label">Referred By </h5>
+              <input type="text" matInput [formControl]="searchPerson" [matAutocomplete]="MemberName" maxlength="30"
+                tabindex="31">
+              <mat-autocomplete #MemberName="matAutocomplete" [displayWith]="displayMemberName"
+                (optionSelected)='onReferredByChange($event.option.value)'>
+                <mat-option *ngFor="let person of allPerson" [value]="person">
+                  <span class="client_name">{{ person.FullName }}</span>
+                  <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                  <br>
+                  <span class="client_info">{{ person.Mobile }}</span>
+                  <br>
+                  <span class="client_info">{{ person.Email }}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <h5 class="field_label">Source </h5>
+              <!-- <div [ngClass]="{
+                                                      'has-danger': (Source.invalid && (Source.dirty || Source.touched || showValidation)) || (memberModel.EnquirySourceTypeID == 0),
+                                                      'has-success': Source.valid && (Source.dirty || Source.touched ) }"> -->
+              <div class="select_label">
+                <select class="form-control" name="Source" [(ngModel)]="memberModel.EnquirySourceTypeID"
+                  #Source="ngModel" tabindex="32">
+                  <option [ngValue]="undefined"> Select Source </option>
+                  <option *ngFor="let EnquirySourceObj of enquirySourceTypeList"
+                    [ngValue]="EnquirySourceObj.EnquirySourceTypeID">
+                    {{EnquirySourceObj.EnquirySourceTypeName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <h5 class="field_label">Company Name </h5>
+              <input type="text" name="CompanyName" [(ngModel)]="memberModel.CompanyName" class="form-control"
+                tabindex="33" maxlength="100" />
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <h5 class="field_label">Occupation</h5>
+              <input type="text" class="form-control" name="Occupation" [(ngModel)]="memberModel.Occupation"
+                tabindex="34" />
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 p-0">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="field_label">
+                    <h5>NFC Access</h5>
+                  </div>
+                    <input type="text" maxlength="16" name="NFCAccess" [(ngModel)]="memberModel.CardAccessID " numberControl
+                    #NFCAccess="ngModel" tabindex="35" (blur)="onUpdateNFCAccess()"/>
+                </div>
+                <div class="col-md-4 view_role_btn"><button type="button" disabled=""> Assign NFC</button></div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12">
+              <div class="field_label">
+                <h5>Notes <span class="reamin">(Remaining Characters: {{1500 -
+                                  memberModel.Description?.length}})</span></h5>
+              </div>
+              <textarea rows="3" [(ngModel)]="memberModel.Description" name="Description" tabindex="36"
+                maxlength="1500"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+        data-target="#permissionbox">
+        <div class="col-md-12">
+          <h4 class="panel-title accordion-toggle"> Permissions</h4>
+        </div>
+      </div>
+      <div id="permissionbox" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row flex-end">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-envelope floating"></i>
+                  </div>
+                  <div>
+                    <h5>Postal Mail</h5>
+                    <p>Toggle on if the customer is happy to receive postal mail</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="PostalMailAllowed"
+                    [(checked)]="memberModel.PostalMailAllowed" #PostalMailAllowed="ngModel"
+                    [(ngModel)]="memberModel.PostalMailAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-phone-square floating"></i>
+                  </div>
+                  <div>
+                    <h5>Phone Call</h5>
+                    <p>Toggle on if the customer is happy to receive calls</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="PhoneCallAllowed"
+                    [(ngModel)]="memberModel.PhoneCallAllowed" #PhoneCallAllowed="ngModel"
+                    [(checked)]="memberModel.PhoneCallAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-envelope-open-text floating"></i>
+                  </div>
+                  <div>
+                    <h5>Email</h5>
+                    <p>Toggle on if the customer is happy to receive system generated and manual
+                      emails
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="EmailAllowed"
+                    [(ngModel)]="memberModel.EmailAllowed" #EmailAllowed="ngModel"
+                    [(checked)]="memberModel.EmailAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="isSmsAllowed" class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-comments floating"></i>
+                  </div>
+                  <div>
+                    <h5>SMS</h5>
+                    <p>Toggle on if the customer is happy to receive system generated and manual SMS
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="SMSAllowed"
+                    [(ngModel)]="memberModel.SMSAllowed" #SMSAllowed="ngModel" [(checked)]="memberModel.SMSAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-bell floating"></i>
+                  </div>
+                  <div>
+                    <h5>Push Notification</h5>
+                    <p>Toggle on if customer is happy to receive push notifications</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="pushNotificationAllowed"
+                    [(ngModel)]="memberModel.PushNotificationAllowed" #pushNotificationAllowed="ngModel"
+                    [(checked)]="memberModel.PushNotificationAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-briefcase-medical floating"></i>
+                  </div>
+                  <div>
+                    <h5>First Aid</h5>
+                    <p>Toggle on if the customer is happy to receive first aid</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="FirstAidAllowed"
+                    [(ngModel)]="memberModel.FirstAidAllowed" #FirstAidAllowed="ngModel"
+                    [(checked)]="memberModel.FirstAidAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-comment-alt-lines"></i>
+                  </div>
+                  <div>
+                    <h5>Member Message</h5>
+                    <p>Toggle on if you wish to show the member a message on the member attendance
+                      portal</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="MemberMessageAllowed"
+                    [(ngModel)]="memberModel.MemberMessageAllowed" #MemberMessageAllowed="ngModel"
+                    [(checked)]="memberModel.MemberMessageAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-file-signature"></i>
+                  </div>
+                  <div>
+                    <h5>Contract Signed</h5>
+                    <p>Toggle on if the customer has signed a contract</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="ContractSigned"
+                    [(ngModel)]="memberModel.ContractSigned" #ContractSigned="ngModel"
+                    [(checked)]="memberModel.ContractSigned">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="isPartialPaymentAllow" class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-money-check-alt"></i>
+                  </div>
+                  <div>
+                    <h5>Partial Payment – Core</h5>
+                    <p>Toggle on if you are happy to allow the customer to make partial payments in
+                      core
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false"
+                    [(ngModel)]="memberModel.AllowPartPaymentOnCore" #AllowPartPaymentOnCore="ngModel"
+                    [(checked)]="memberModel.AllowPartPaymentOnCore" type="checkbox" name="AllowPartPaymentOnCore">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="isPartialPaymentAllow" class="col-lg-4 col-md-4 col-sm-12 ">
+              <div class="permission_box">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-box-usd floating"></i>
+                  </div>
+                  <div>
+                    <h5>Partial Payment – Widget</h5>
+                    <p>Toggle on if you are happy to allow the customer to make partial payments on
+                      widget</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false"
+                    [(ngModel)]="memberModel.AllowPartPaymentOnWidget" #AllowPartPaymentOnWidget="ngModel"
+                    [(checked)]="memberModel.AllowPartPaymentOnWidget" type="checkbox" name="AllowPartPaymentOnWidget">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 " *ngIf="isResetAndAlertAllowForClass">
+              <div class="permission_box rfc_sd">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-box-usd"></i>
+                  </div>
+                  <div>
+                    <h5>Reset Alert & Block - Classes</h5>
+                    <div class="flex-cls cust_r_f_column">
+                      <div class="block_counter d-flex">
+                        <span>Late Cancellations</span><input type="text" [disabled]="true"
+                          name="ClassLateCancellationCount" [(ngModel)]="memberModel.ClassLateCancellationCount"
+                          #ClassLateCancellationCount="ngModel" class="form-control">
+                      </div>
+                      <div class="d-flex block_counter">
+                        <span>No Shows</span><input type="text" [disabled]="true" name="ClassNoShowCount"
+                          [(ngModel)]="memberModel.ClassNoShowCount" #ClassNoShowCount="ngModel" class="form-control">
+                      </div>
+                    </div>
+                    <p *ngIf="memberModel.CustomerID  > 0 && memberModel.ClassResetDate && memberModel.ClassResetBy"
+                      class="optional">Last
+                      Update: {{memberModel.ClassResetDate | customdate: dateTimeFormat }} by
+                      {{memberModel.ClassResetBy}}</p>
+                    <p class="error" *ngIf="memberModel.IsClassBookingBlocked">Online Bookings Disabled</p>
+                  </div>
+                </div>
+                <div>
+                  <button class="reset" type="button"
+                    [disabled]="memberModel.CustomerID  == 0 || (memberModel.ClassNoShowCount == 0 && memberModel.ClassLateCancellationCount == 0)"
+                    (click)="resetBlockCounter(cancelItemType.Class)">Reset</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 " *ngIf="isResetAndAlertAllowForService">
+              <div class="permission_box rfc_sd">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-box-usd"></i>
+                  </div>
+                  <div>
+                    <h5>Reset Alert & Block - Services</h5>
+                    <div class="flex-cls cust_r_f_column">
+                      <div class="block_counter d-flex">
+                        <span>Late Cancellations</span><input type="text" [disabled]="true"
+                          name="ServiceLateCancellationCount" [(ngModel)]="memberModel.ServiceLateCancellationCount"
+                          #ServiceLateCancellationCount="ngModel" class="form-control">
+                      </div>
+                      <div class="d-flex block_counter">
+                        <span>No Shows</span><input type="text" [disabled]="true" name="ServiceNoShowCount"
+                          [(ngModel)]="memberModel.ServiceNoShowCount" #ServiceNoShowCount="ngModel"
+                          class="form-control">
+                      </div>
+                    </div>
+                    <p *ngIf="memberModel.CustomerID  > 0 && memberModel.ServiceResetDate && memberModel.ServiceResetBy"
+                      class="optional">Last
+                      Update: {{memberModel.ServiceResetDate | customdate: dateTimeFormat}} by
+                      {{memberModel.ServiceResetBy}}</p>
+                    <p class="error" *ngIf="memberModel.IsServiceBookingBlocked">Online Bookings Disabled</p>
+                  </div>
+                </div>
+                <div>
+                  <button class="reset" type="button"
+                    [disabled]="memberModel.CustomerID  == 0 || (memberModel.ServiceNoShowCount == 0 && memberModel.ServiceLateCancellationCount == 0)"
+                    (click)="resetBlockCounter(cancelItemType.Service)">Reset</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isRewardProgramAllow">
+              <div class="permission_box ">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-trophy-alt"></i>
+                  </div>
+                  <div>
+                  <h5>Reward Program</h5>
+                    <p>Toggle on if the customer is happy to enroll in the reward program</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" [(checked)]="memberModel.RewardProgramAllowed"
+                  [(ngModel)]="memberModel.RewardProgramAllowed" #RewardProgramAllowed="ngModel"
+                     (change)="onRewardProgramToggle($event)" name="RewardProgramAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12" >
+              <div class="permission_box ">
+                <div class="center_flex_alignment">
+                  <div>
+                    <i class="fal fa-box-usd"></i>
+                  </div>
+                  <div>
+                  <h5>Access Control</h5>
+                    <p>Toggle on if you are happy to allow the customer to use access control to gain entry into your branch.</p>
+                  </div>
+                </div>
+                <div>
+                  <mat-slide-toggle class="wellyx-checked" [disabled]="false" [(checked)]="memberModel.DoorAccessAllowed"
+                  [(ngModel)]="memberModel.DoorAccessAllowed" #AccessControlAllowed="ngModel"
+                     name="AccessControlAllowed">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="isAddLeadAllowed && memberID > 0">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="ptm">
+        <div>
+          <h4>Add as Lead</h4>
+          <p>Add this customer as a lead to track their membership enquiries</p>
+        </div>
+        <div>
+          <a href="javascript:void(0)" (click)="onProceedToLead()"><i class="fal fa-plus-circle"></i> &nbsp; Add as
+            Lead</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

@@ -1,0 +1,133 @@
+<div class="page_content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button *ngIf="isSaveServiceAllowed" class="save" [routerLink]="['../service/save', 0]">
+          Add Service</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion" data-target="#service_search">
+        <div class="col-md-12">
+          <h3 class="panel-title accordion-toggle">
+            Search Filter
+          </h3>
+        </div>
+      </div>
+      <div id="service_search" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+          </div>
+          <div class="row flex-end">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="field_label">
+                <h5>Service Name</h5>
+              </div>
+              <input name="serviceName" [(ngModel)]="searchParameters.serviceName" type="text">
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="field_label">
+                <h5>Service Category</h5>
+              </div>
+              <div class="select_label">
+                <select class="form-control" name="serviceCategoryID" [(ngModel)]="searchParameters.serviceCategoryID">
+                  <option *ngFor="let objServiceCategory of serviceCategoryList" [ngValue]="objServiceCategory.ServiceCategoryID">
+                    {{objServiceCategory.ServiceCategoryName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="field_label">
+                <h5>Status</h5>
+              </div>
+              <div class="select_label">
+                <select name="IsActive" [(ngModel)]="searchParameters.IsActive" class="form-control">
+                  <option *ngFor="let objStatus of statusList" [ngValue]="objStatus.StatusID">{{objStatus.StatusName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 offset-lg-0 offset-md-6 col-md-6 col-sm-6 space no_padding">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <button class="reset_btn" type="button" (click)="resetSearchFilters()">
+                    Reset </button>
+                </div>
+                <div class="col-md-6 col-sm-6 full_width_btn">
+                  <button class="search" (click)="onSearchForm()">Search</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grids_white_bg">
+    <div class="overflow-auto">
+    <div class="row grid_header responsive_grid_header">
+      <div class="col-md-2 col">
+        <h5>Service Name </h5>
+      </div>
+      <div class="col-md-2 col">
+        <h5>Category Name </h5>
+      </div>
+      <div class="col-md-4 col">
+        <h5>Description</h5>
+      </div>
+      <div class="col-md-2 col text-center">
+        <h5>Status</h5>
+      </div>
+      <div class="col-md-2 col text-center">
+        <h5>Actions</h5>
+      </div>
+    </div>
+    <div id="grid" *ngIf="isDataExists">
+      <div class="row grid_rows responsive_grid_rows" *ngFor="let objservice of services">
+
+        <div class="col-md-2 col">
+          <h5>{{objservice.ServiceName}} </h5>
+        </div>
+        <div class="col-md-2 col">
+          <h5>{{objservice.ServiceCategoryName}} </h5>
+        </div>
+        <div class="col-md-4 col">
+          <h5>{{objservice.Description}}</h5>
+        </div>
+        <div class="col-md-2 col text-center">
+          <h5>{{objservice.IsActive ? 'Active' : 'Inactive'}}</h5>
+        </div>
+        <div class="col-md-2 col text-center">
+          <h5>
+            <span class="blue" *ngIf="isSaveServiceAllowed">
+              <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" [routerLink]="['../service/save',objservice.ServiceID]">
+                <i class="fal fa-edit"></i>
+              </a>
+            </span>
+            <span class="red_del" *ngIf="isSaveServiceAllowed">
+              <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"  (click)="deleteService(objservice.ServiceID)" href="javascript:void(0)">
+                <i class="fal fa-trash-alt"></i>
+              </a>
+            </span>
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isDataExists">
+      <div class="row grid_rows">
+        <div class="col-md-12 col-sm-12 text-center">
+          <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+        </div>
+      </div>
+    </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+  </div>
+</div>

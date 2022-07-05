@@ -1,0 +1,83 @@
+<div class="page_content">
+  <div class="grids_white_bg zero_top">
+    <div class="overflow-auto">
+      <div class="row grid_header responsive_grid_header">
+        <div class="col padding_right">
+          <h5>Branch Name
+            <!-- <i class="fa fa-long-arrow-up float-right" aria-hidden="true"></i> -->
+          </h5>
+        </div>
+        <div class="col">
+          <h5>City
+            <!-- <i class="fa fa-long-arrow-up float-right" aria-hidden="true"></i> -->
+          </h5>
+        </div>
+        <div class="col">
+          <h5>Phone</h5>
+        </div>
+        <div class="col">
+          <h5>Email</h5>
+        </div>
+        <div class="col text-center">
+          <h5>Status
+            <!-- <i class="fa fa-long-arrow-up float-right" aria-hidden="true"></i> -->
+          </h5>
+        </div>
+        <div class="col text-center">
+          <h5>Actions</h5>
+        </div>
+
+      </div>
+      <div id="grid" *ngIf="isDataExists">
+        <div class="row grid_rows responsive_grid_rows" *ngFor="let branch of branches">
+          <div class="col padding_right">
+            <h5>{{branch.BranchName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{branch.CityName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{branch.Phone1}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{branch.Email}}</h5>
+          </div>
+          <div class="col text-center">
+            <h5>
+              {{branch.IsActive ? 'Active': 'Inactive'}}</h5>
+          </div>
+          <div class="col text-center">
+            <h5>
+              <span class="blue" *ngIf="isBranchSaveAllowed">
+                <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="onEditClick(branch.BranchID,true)"
+                  href="javascript:void(0)">
+                  <i class="fal fa-book-open"></i>
+                </a>
+              </span>
+              <span class="blue" *ngIf="isBranchSaveAllowed && branchId  == branch.BranchID">
+                <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" data-toggle="modal"
+                [routerLink]="['../branch/save', branch.BranchID]">
+                  <i class="fal fa-edit"></i>
+                </a>
+              </span>
+
+              <!-- <span class="red_del" *ngIf="isBranchSaveAllowed">
+              <a matTooltip="Delete" matTooltipPosition="above" (click)="deleteBranch(branch.BranchID)" href="javascript:void(0)">
+                <i class="fal fa-trash-alt"></i>
+              </a>
+            </span> -->
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+          <div class="col col-md-12 text-center">
+            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+  </div>
+</div>

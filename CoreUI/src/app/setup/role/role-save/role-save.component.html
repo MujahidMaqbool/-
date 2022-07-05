@@ -1,0 +1,66 @@
+<form #saveRoleForm="ngForm" (ngSubmit)="saveRole(saveRoleForm.valid)" novalidate>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button type="button" class="simple_btn" [routerLink]="['/setup/roles']"><i></i> Back To Search</button>
+        <button class="save" [disabled]="(saveInProgress)">Save</button></div>
+    </div>
+  </div>
+  <div class="white_bg">
+    
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+          <div class="alert alert-danger" *ngIf="saveRoleForm.invalid && saveRoleForm.submitted">
+              <div *ngIf="saveRoleForm.invalid">
+                  {{messages.Validation.Info_Required}}
+              </div>
+          </div>
+      </div>
+  </div>
+
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <h5 class="field_label">Role</h5>
+        <div [ngClass]="{
+        'has-danger': RoleName.invalid && (RoleName.dirty || RoleName.touched || saveRoleForm.submitted),
+         'has-success': RoleName.valid && (RoleName.dirty || RoleName.touched )
+            }">
+          <input type="text" name="RoleName" class="form-control" #RoleName="ngModel"
+            [(ngModel)]="rolesListData.RoleName" tabindex="1" maxlength="50" required>
+        </div>
+      </div>
+      <div class="col-md-8 col-sm-6">
+        <h5 class="field_label">Description</h5>
+        <input type="text" name="description" class="form-control" #description="ngModel"
+          [(ngModel)]="rolesListData.Description" maxlength="250" tabindex="2 ">
+      </div>
+    </div>
+    <div class="row small_space">
+      <div class="col-md-4 col-sm-6" *ngFor="let modulesObj of allRolesModuleList">
+        <div class="role_header">
+          <h3>{{modulesObj.ModuleName}}</h3>
+          <mat-slide-toggle class="float-right" id="{{'slidetoggle' + modulesObj.ModuleID}}"
+            [(checked)]="modulesObj.IsModuleSelected" name="{{modulesObj.ModuleID}}"
+            [(ngModel)]="modulesObj.IsModuleSelected"
+            (ngModelChange)="onModuleSelectionChange(modulesObj.ModuleID, modulesObj.IsModuleSelected)">
+          </mat-slide-toggle>
+          <div class="clearfix"></div>
+        </div>
+        <div class="role_details cstm_scroll_bg">
+          <div class="row">
+            <div class="col-xl-6 col-lg-12 col-md-12" *ngFor="let modulePagesObj of modulesObj.ModulePageList">
+              <div class="checkbox checkbox-success roles-inline">
+                <input id="{{'checkbox' + modulePagesObj.ModulePageID}}"
+                  name="{{modulePagesObj.ModulePageName + modulePagesObj.ModulePageID}}" type="checkbox"
+                  [(ngModel)]="modulePagesObj.IsPageSelected"
+                  (ngModelChange)="onPageSelectionChange(modulesObj.ModuleID,modulePagesObj.IsPageSelected)"
+                  [disabled]="modulePagesObj.IsDashboardPage">
+                <label for="{{'checkbox' + modulePagesObj.ModulePageID}}"> {{modulePagesObj.ModulePageName}} </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,377 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Branch Details</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="readonly_content">
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Branch Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Branch Name</h6>
+                                <p>{{branch.BranchName}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Email</h6>
+                                <p>{{branch.Email ? branch.Email : 'N/A'}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Phone</h6>
+                                <p>{{branch.Phone1}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Mobile</h6>
+                                <p>{{branch.Mobile ? branch.Mobile : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Fax</h6>
+                                <p>{{branch.Fax ? branch.Fax : 'N/A'}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Branch Address</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Country</h6>
+                                <p>{{branch.CountryName}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>State/County</h6>
+                                <p>{{branch.StateCountyName ? branch.StateCountyName : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>City</h6>
+                                <p>{{branch.CityName ? branch.CityName : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 1</h6>
+                                <p>{{branch.Address1 ? branch.Address1 : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 2</h6>
+                                <p>{{branch.Address2 ? branch.Address2 : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Postal Code / Zip Code</h6>
+                                <p>{{branch.PostalCode ? branch.PostalCode : 'N/A'}}</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Time, Calendar & Currency</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Time Zone</h6>
+                                <p>{{branch.TimeZone}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Currency</h6>
+                                <p>{{branch.Currency}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Time Format</h6>
+                                <p>{{branch.BranchTimeFormat12Hours? '12 hours': '24 hours' }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Branch Opening Hours</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card branch_time_view">
+                            <div class="overflow-auto">
+                                <div class="row grid_header text-center mob-scroll-grid">
+                                    <div class="col">
+                                      <h5>Day</h5>
+                                    </div>
+                                    <div class="col">
+                                      <h5>Monday</h5>
+                                    </div>
+                                    <div class="col">
+                                      <h5>Tuesday</h5>
+                                    </div>
+                                    <div class="col">
+                                      <h5>Wednesday</h5>
+                                    </div>
+                                    <div class="col">
+                                      <h5>Thursday</h5>
+                                    </div>
+                                    <div class="col">
+                                      <h5>Friday</h5>
+                                    </div>
+                                    <div class="col">
+                                      <h5>Saturday</h5>
+                                    </div>
+                                    <div class="col">
+                                      <h5>Sunday</h5>
+                                    </div>
+                                  </div>
+                                <!-- <div class="row grid_rows text-center mob-scroll-grid">
+                                    <div class="col column_flex_center">
+                                        <h5>Start</h5>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.MondayStartTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.TuesdayStartTime" tabindex="15" [readOnly]="true">
+                                        </dx-date-box>
+
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.WednesdayStartTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.ThursdayStartTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.FridayStartTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.SaturdayStartTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box class="branch-date-box" type="time" placeholder="-- --"
+                                            [(value)]="branch.SundayStartTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+
+                                </div> -->
+                                <div class="row grid_rows text-center mob-scroll-grid">
+                                    <div class="col column_flex_center">
+                                        <h5>Start</h5>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.MondayStartTime" [displayFormat]="timeFormat"
+                                            tabindex="14" [useMaskBehavior]="true" [interval]="15"
+                                            [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.TuesdayStartTime" tabindex="15" [useMaskBehavior]="true"
+                                            [interval]="15" [showDropDownButton]="false" [displayFormat]="timeFormat">
+                                        </dx-date-box>
+
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.WednesdayStartTime" [useMaskBehavior]="true"
+                                            [interval]="15" [showDropDownButton]="false" [displayFormat]="timeFormat"
+                                            tabindex="5" [interval]="15">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.ThursdayStartTime" [displayFormat]="timeFormat"
+                                            tabindex="5" [useMaskBehavior]="true" [interval]="15"
+                                            [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.FridayStartTime" [displayFormat]="timeFormat" tabindex="5"
+                                            [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.SaturdayStartTime" [displayFormat]="timeFormat"
+                                            tabindex="5" [useMaskBehavior]="true" [interval]="15"
+                                            [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.SundayStartTime" [displayFormat]="timeFormat" tabindex="5"
+                                            [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+
+                                </div>
+                                <!-- <div class="row grid_rows text-center mob-scroll-grid">
+                                    <div class="col column_flex_center">
+                                        <h5>End</h5>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.MondayEndTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.TuesdayEndTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.WednesdayEndTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.ThursdayEndTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.FridayEndTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.SaturdayEndTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box class="branch-date-box" placeholder="-- --" type="time"
+                                            [(value)]="branch.SundayEndTime" [readOnly]="true">
+                                        </dx-date-box>
+                                    </div>
+                                </div> -->
+                                <div class="row grid_rows text-center mob-scroll-grid">
+                                    <div class="col column_flex_center">
+                                        <h5>End</h5>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.MondayEndTime" [displayFormat]="timeFormat" tabindex="5"
+                                            [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.TuesdayEndTime" [displayFormat]="timeFormat" tabindex="5"
+                                            [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.WednesdayEndTime" [displayFormat]="timeFormat"
+                                            tabindex="5" [useMaskBehavior]="true" [interval]="15"
+                                            [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.ThursdayEndTime" [displayFormat]="timeFormat" tabindex="5"
+                                            [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.FridayEndTime" [displayFormat]="timeFormat" tabindex="5"
+                                            [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.SaturdayEndTime" [displayFormat]="timeFormat" tabindex="5"
+                                            [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                    <div class="col">
+                                        <dx-date-box placeholder="-- --" class="branch-date-box" type="time"
+                                            [(value)]="branch.SundayEndTime" [displayFormat]="timeFormat" tabindex="5"
+                                            [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false">
+                                        </dx-date-box>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="view_bg last_div_bz">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Policy Documents</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <h6>Terms of Service</h6>
+                                <p>{{branch.TermsOfServiceURL ? branch.TermsOfServiceURL : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <h6>Privacy Policy</h6>
+                                <p>{{branch.PrivacyPolicyURL ? branch.PrivacyPolicyURL : 'N/A'}}</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right scroll_close">
+                        <button type="button" (click)="onClosePopup()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

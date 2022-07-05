@@ -1,0 +1,184 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content popup_content full_screen_pop">
+            <div class="popup_header">
+                <h4>Edit Inventory Details</h4>
+            </div>
+            <div class="popup_content full-content-no-header">
+
+                <div class="popup_white_bg  pl-3 pr-3 ">
+                    <div class="row pb-2">
+                        <!-- <div class="col-md-3 pl-0">
+                            <h5 class="field-label">Branch</h5>
+                            <div class="select-label">
+                                <select class="form-control" [(ngModel)]="branchId">
+                                    <option value="">All</option>
+                                    <option *ngFor="let branch of branchList" [value]="branch.BranchID">
+                                        {{branch.BranchName}}</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="col-xl-2 col-lg-3  col-md-3 pl-0 mob-pr-0" *ngIf="productObj.classficationID == productClassification.Variant">
+                            <h5 class="field_label">Variant</h5>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="searchVariantName"
+                                    name="searchVariantName">
+                            </div>
+                        </div>
+                        <div class="col-xl-1 col-lg-2 col-md-2 space-36 p-0 full_width_btn" *ngIf="productObj.classficationID == productClassification.Variant">
+                            <button class="search m-0" type="button" (click)="getInventoryDetail()">
+                                Search</button>
+                        </div>
+                        <div [ngClass]="productObj.classficationID == productClassification.Variant ? 'offset-xl-8 offset-lg-5 offset-md-5 col-xl-1 col-lg-2 col-md-2 space-36 p-0' : 'offset-xl-10 offset-lg-10 offset-md-10  col-xl-1 col-lg-2 col-md-2 space-36 p-0'"
+                            *ngIf="productObj.classficationID == productClassification.Variant">
+                            <button class="reset_btn m-0 light-blue-color" [disabled]="!isBulkUpdate" type="button"
+                                (click)="editBulkUpdate(0,true)">
+                                Bulk Update</button>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="overflow-auto">
+                        <div class=" cstm_scroll_bg master_row mob-scroll-grid-lg">
+                            <div class="row align-items-center grid_header">
+                                <div class="col ">
+                                    <h5 *ngIf="isVaraintExist">Name</h5>
+                                    <h5 *ngIf="productObj.classficationID == productClassification.Variant && !isVaraintExist">
+                                        <div class="checkbox checkbox-success " >
+                                            <input id="aaa" name="aaa" [(ngModel)]="isSelectAll" type="checkbox" 
+                                                (click)="onSelectAll($event)">
+                                            <label for="aaa" class="font-weight-medium">Name</label>
+                                        </div>
+                                    </h5>
+                                </div>
+                                <div class="col">
+                                    <h5> Branch </h5>
+                                </div>
+                                <div class="col">
+                                    <h5>Current Stock</h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5>Retail Value</h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5>Actions</h5>
+                                </div>
+                            </div>
+                            <div
+                                [ngClass]="productObj.classficationID == productClassification.Variant ? 'p-edit-pricing-details  cstm_scroll_bg' : 'p-edit-pricing-details-wo-bar  cstm_scroll_bg'">
+                                <ng-container *ngFor="let inventory of InventoryDetail; let parentIndex = index">
+                                    <div class="row grid_rows grid_parent_rows_pos collapse-dd" *ngIf="inventory.ProductVariants.length > 0">
+                                        <div class="col">
+                                            <div class="cursor-pointer cst-collapse" data-toggle="collapse"
+                                                attr.data-target="#inventoryCollapse{{parentIndex}}"
+                                                aria-expanded="false"
+                                                attr.aria-label="inventoryCollapse{{parentIndex}}">
+                                                <h5>{{inventory.ProductName}}</h5>
+                                            </div>
+
+                                            <!-- <div class="cursor-pointer cst-collapse" data-toggle="collapse"
+                                        attr.data-target="#collapseExample{{i}}" aria-expanded="false"
+                                        attr.aria-label="collapseExample{{i}}">
+                                        <h5>Water</h5>
+                                    </div> -->
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{inventory.TotalCurrentStock}}</h5>
+                                             
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>{{inventory.TotalRetailValue | currency:
+                                                currencyFormat}}</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5></h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="collapse show" id="inventoryCollapse{{parentIndex}}"
+                                        *ngFor="let variant of inventory.ProductVariants; let childIndex = index">
+                                        <div class="row grid_rows grid_child_rows">
+                                            <div class="col">
+                                                <div class="checkbox checkbox-success d-flex"
+                                                    *ngIf="productObj.classficationID == productClassification.Variant && variant.ProductVariantName != ''">
+                                                    <input id="{{'checkbox'+parentIndex + childIndex + 0}}"
+                                                        name="{{'checkbox'+parentIndex + childIndex + 0}}"
+                                                        type="checkbox"
+                                                        [(ngModel)]="variant.ProductVariantBranches[0].isSelected"
+                                                        (click)="onSingleSelect($event,parentIndex,childIndex,0, variant.ProductVariantBranches[0].ProductVariantBranchID)">
+                                                    <label
+                                                        for="{{'checkbox'+parentIndex + childIndex + 0}}">{{variant.ProductVariantName}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <h5> {{ variant.ProductVariantBranches[0]?.BranchName}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{ variant.ProductVariantBranches[0]?.CurrentStock}}</h5>
+                                            </div>
+                                            <div class="col text-center">
+                                                <h5>{{ variant.ProductVariantBranches[0]?.RetailValue | currency:
+                                                    currencyFormat}}</h5>
+
+                                            </div>
+                                            <div class="col text-center grid-actions-btn">
+                                                <h5>
+                                                    <span class="blue">
+                                                        <a matTooltip="Edit" matTooltipPosition="above"
+                                                            (click)="editBulkUpdate( variant.ProductVariantBranches[0]?.ProductVariantBranchID ,false)"
+                                                            matTooltipClass="custom-tooltip">
+                                                            <i class="fal fa-edit"></i>
+                                                        </a>
+                                                    </span>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </ng-container>
+                                <div class="row grid-content no-hover" *ngIf="!isDataExists || isVaraintExist">
+                                    <div class="col-md-12 text-center">
+                                        <div class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div
+                        class="border-top d-flex justify-content-between align-items-end selected-items popup-pagination">
+                        <div>
+                            <p class="font-medium" *ngIf="productObj.classficationID == productClassification.Variant && !isVaraintExist">
+                                {{productVariantBranchIDList.length}}
+                                {{productVariantBranchIDList.length > 1? 'Records Selected' : 'Record Selected'}}
+                            </p>
+                        </div>
+                        <div>
+                            <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)">
+                            </app-pagination>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

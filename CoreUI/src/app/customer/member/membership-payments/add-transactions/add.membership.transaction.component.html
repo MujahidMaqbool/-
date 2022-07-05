@@ -1,0 +1,150 @@
+﻿<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>Add Transaction</h4>
+            </div>
+            <form #transactionForm="ngForm" (ngSubmit)="onSave(transactionForm.valid)" novalidate>
+                <div class="popup_content">
+                    <div class="popup_white_bg">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="alert alert-danger" *ngIf="transactionForm.invalid && transactionForm.submitted">
+                                    <div *ngIf="transactionForm.invalid ">
+                                        {{messages.Validation.Info_Required}}
+                                    </div>
+                                    <div *ngIf="transactionForm.invalid && CollectionDate?.invalid">
+                                        {{messages.Validation.DueDate_Invalid}}
+                                    </div>
+                                    <div *ngIf="Price?.errors?.pattern">
+                                        {{messages.Validation.InValid_Payment}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label top_zero">
+                                    <h5>Membership</h5>
+                                </div>
+                                <div [ngClass]="{
+                                        'has-danger': MembershipName.invalid && (MembershipName.dirty || MembershipName.touched || transactionForm.submitted),
+                                        'has-success': MembershipName.valid && (MembershipName.dirty || MembershipName.touched )
+                                    }">
+                                    <div class="select_label">
+                                        <select name="MembershipName" [(ngModel)]="selectedMembership" (ngModelChange)="onMembershipSelectionChange()"
+                                            #MembershipName="ngModel" class="form-control" tabindex="1" required>
+                                            <optgroup label="{{(membership.StartDate | customdate: dateFormat) + ' - ' + (membership.EndDate | customdate: dateFormat)}}"
+                                                *ngFor="let membership of membershipList">
+                                                <option class="membership_drpdwn" [ngValue]="membership">
+                                                    {{membership.MembershipName}}
+                                                    {{membership.IsAutoRoll ? "- Auto Roll" : ""}}
+                                                </option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label top_zero">
+                                    <h5>Payment Method</h5>
+                                </div>
+                                <div [ngClass]="{
+                                        'has-danger': PaymentMethod.invalid && (PaymentMethod.dirty || PaymentMethod.touched || transactionForm.submitted),
+                                        'has-success': PaymentMethod.valid && (PaymentMethod.dirty || PaymentMethod.touched )
+                                    }">
+                                    <div class="select_label">
+                                        <select name="PaymentMethod" [(ngModel)]="selectedGateway" (ngModelChange)="onGatewaySelectionChange()"
+                                            #PaymentMethod="ngModel" tabindex="2" class="form-control" required>
+                                            <option *ngFor="let gateway of paymentGatewayList" [ngValue]="gateway">
+                                                {{gateway.PaymentGatewayName}}
+                                                {{gateway.InstrumentName ? ' - ' + gateway.InstrumentName : ''}}
+                                                {{gateway.InstrumentLastDigit ? ' - ' + gateway.InstrumentLastDigit : ''}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Due Date</h5>
+                                </div>
+                                <!-- <div [ngClass]="{
+                                        'has-danger': CollectionDate.invalid && (CollectionDate.dirty || CollectionDate.touched || transactionForm.submitted),
+                                        'has-success': CollectionDate.valid && (CollectionDate.dirty || CollectionDate.touched )
+                                    }"> -->
+                                <!-- <input type="text" name="CollectionDate" class="form-control date-picker bg_transparent"
+                                    #CollectionDate="ngModel" [(ngModel)]="transactionModel.CollectionDate" matInput
+                                    [min]="minDate" [matDatepicker]="picker" tabindex="3" class="form-control" readonly
+                                    required />
+                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="picker">
+                                </mat-datepicker-toggle> -->
+                                <date-picker [value]="transactionModel.CollectionDate" [min]="minDate" [showClear]="false"
+                                    (onDateChange)="onTransactionDateChange($event)"></date-picker>
+                                <!-- </div> -->
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Amount
+                                        <span>(Excluding {{selectedMembership?.TotalTaxPercentage > 0 ?
+                                            selectedMembership?.TotalTaxPercentage + '%' : '0%' }} Tax)</span></h5>
+                                </div>
+                                <div [ngClass]="{
+                                    'has-danger': Price.invalid && (Price.dirty || Price.touched || transactionForm.submitted),
+                                    'has-success': Price.valid && (Price.dirty || Price.touched )
+                                }">
+                                    <input type="text" name="Price" [(ngModel)]="transactionModel.Price" [min]="1" maxlength="5"
+                                        (ngModelChange)="onPriceChange()" #Price="ngModel" tabindex="4" class="form-control"
+                                        numberControl required onkeypress="return isNumber(event)">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="tax-amount-row">
+                                <div class="d-flex justify-content-between w-50 pr-4">
+                                  <div class="">Tax: {{selectedMembership.AppliedTaxNames ? '(' + selectedMembership.AppliedTaxNames + ')' : null}}</div>
+                                  <div class="">{{taxAmount | currency: currencyFormat}}</div>
+                                </div>
+                                <div class="d-flex justify-content-between w-50 pl-4">
+                                  <div class=""><strong>Total Amount:</strong></div>
+                                  <div class="light-blue-color"><strong>{{totalAmount | currency: currencyFormat}}</strong></div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- <div class="col-md-12">
+                                <span class="payment_alert"> <b>Total Amount : </b> {{totalAmount | currency:
+                                    currencyFormat}}</span>
+                            </div> -->
+                            <div class="col-md-12">
+                                <div class="field_label">
+                                    <h5 class="field_label">Notes <span>(Remaining Characters: {{ 250 -
+                                        transactionModel?.Notes?.length }})</span></h5>
+                                </div>
+                                <div [ngClass]="{
+                                        'has-danger': Notes.invalid && (Notes.dirty || Notes.touched || transactionForm.submitted),
+                                        'has-success': Notes.valid && (Notes.dirty || Notes.touched )
+                                    }">
+                                    <textarea type="text" name="Notes" [(ngModel)]="transactionModel.Notes" #Notes="ngModel"
+                                        rows="5" tabindex="5" class="form-control" maxlength="250"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12" *ngIf="showProcessingDaysMessage">
+                              <span class="membership_processing_days alert-warning mt-2">
+                                  <i class="far fa-info-circle pr-1"></i>
+                                  <span *ngIf="!isShowPrecessDayStripeACH">Minimum Due date for Go Cardless is {{minDate | customdate: dateFormat}}</span>
+                                  <span *ngIf="isShowPrecessDayStripeACH">Minimum Due date for Stripe ACH is {{minDate | customdate: dateFormat}}</span>
+                              </span>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12">
+                        <div class="cancel_btn float-right">
+                            <button type="button" tabindex="6" (click)="onCloseDialog()">Close</button>
+                            <button type="submit" tabindex="7" class="save primary_blue_btn" [disabled]="(transactionForm.pristine)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Brand Details</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="section_content readonly_content">
+                    <div class="view_bg mb-0">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Brand Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Name</h6>
+                                <p>{{brandViewDetail.BrandName ? brandViewDetail.BrandName: 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Active</h6>
+                                <p>{{brandViewDetail.IsActive ? 'Yes': 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Type</h6>
+                                <p>{{brandViewDetail.BrandTypeName ? brandViewDetail.BrandTypeName: 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="brandViewDetail.AppSourceTypeID === appSourceTypeID.EnterPrise">
+                                <h6>Branch Permissions</h6>
+                                <p>{{brandViewDetail.HasBranchPermission ? 'Yes': 'No'}}</p>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <h6>Product Category</h6>
+                                <p>{{brandViewDetail.ProductCategoryNames ? brandViewDetail.ProductCategoryNames: 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <h6>Description</h6>
+                                <p>{{brandViewDetail.Description ? brandViewDetail.Description: 'N/A'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

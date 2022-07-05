@@ -1,0 +1,734 @@
+﻿
+a{text-decoration: none;}
+a:hover{text-decoration: none;}
+
+/*Form Secion*/
+.login_form_user{
+    margin: 0px;
+    background-image: url('../images/Path2.png'), linear-gradient(#2E79BC, #003D87);
+    background-repeat: no-repeat;
+    background-position: 0% 20%;
+    background-size: 75%, 100%;
+    height: 100vh;
+}
+.staff_attendence_bg{
+    background-image: url('../images/Path2.png'), linear-gradient(#6990A8, #134E70) !important;
+}
+.wrapper_user_attandance{
+    max-width: 480px;
+    margin: 0 auto;
+}
+.login_form_user .logo_div{
+    justify-content: center;
+    display: flex;
+    margin-bottom: 20px;
+}
+.login_form_user .logo_div img{
+    width: 240px;
+}
+.login_alignment_center {
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+.login_page_title {
+    position: absolute;
+    top: 10%;
+    background: #0087D8;
+    color: #fff;
+    padding: 18px 30px 18px 50px;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.login_page_title h3 {
+    margin-bottom: 0;
+    font-size: 1.85rem;
+}
+.login_page_title.attend_logout_btn {
+  padding: 12px 18px 12px 20px;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+  top: 6%;
+  cursor: pointer;
+}
+.login_page_title.attend_logout_btn h3 {
+  font-size: 1.1rem;
+  float: right;
+  padding-left: 10px;
+}
+.attend_logout_btn i {
+  font-size: 1.1rem;
+}
+.user_img_paddingleft {width: 62px; height: 62px;}
+.staff_label{
+    background: #fff !important;
+    color: #134E70 !important;
+}
+.wrapper_user_attandance form label{
+    color: #fff;
+    margin: 0;
+    font-size: 14px;
+    padding-bottom: 7px;
+}
+.wrapper_user_attandance form label:before{
+    display: none !important;
+}
+.login_input input[type="text"]{
+    background-color: transparent;
+    padding: 20px 10px !important;
+    /* padding-bottom: 10px!important; */
+    border: 0 !important;
+    border-bottom: 1px solid #3773a6 !important;
+    /* padding-left: 0 !important; */
+    color: #9EB8CA !important;
+    border-radius: 0;
+    position: relative;
+    font-size: 16px !important;
+}
+.white_border input[type="text"]{
+    border-bottom: 1px solid #ffffff3b !important;
+}
+.login_input input[type="text"]::placeholder{
+    color: #9EB8CA !important;
+}
+.login_input input:focus{
+    box-shadow: none;
+    outline: none;
+    border-bottom: 1px solid #fff !important;
+}
+.login_input  i{
+    color: #fff;
+    float: right;
+    position: absolute;
+    right: 25px;
+    top: 1.8em;
+    font-size: 20px;
+}
+.wrapper_user_attandance form .next_btn{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 6px 6px 6px 6px;
+    height: 50px;
+    font-size: 16px;
+    color: #0A476A;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.wrapper_user_attandance form .next_btn:hover{
+    background-color: rgba(0,0,0,0.2);
+    color: #fff;
+    transition: all 0.2s linear;
+}
+.wrapper_user_attandance form a{
+    text-align: center;
+    font-size: 14px;
+    color: #9EB8CB;
+}
+.wrapper_user_attandance form a:hover{
+    color: #fff;
+    transition: all 0.2s linear;
+}
+/*shift_scheduled*/
+.shift_scheduled{
+    text-align: center;
+    color: #fff;
+}
+.shift_scheduled p{
+    max-width: 340px;
+    margin: 0px auto 20px !important;
+}
+.shift_scheduled button{
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 6px 6px 6px 6px;
+    height: 50px;
+    font-size: 16px;
+    padding: 0px 60px;
+}
+.shift_scheduled button:hover{
+    background: #0A476A;
+    border: 1px solid #0A476A;
+    color: #fff;
+    transition: all 0.2s linear;
+}
+/*user_clockout_text*/
+.user_clockout_text{
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+.user_clockout_text span{
+    color: #60c2ff;
+    border-bottom: 1px solid;
+    margin-bottom: 7px;
+}
+/*checkout_note_field*/
+.checkout_note_field{
+    position: relative;
+}
+.checkout_note_field i{
+    color: #fff;
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.checkout_note_field input[type="text"]{
+    background: transparent;
+    border: 0 !important;
+    border-bottom: 1px solid #3773a6  !important;
+    padding: 20px 10px !important;
+    border-radius: 0;
+    color: #fff !important;
+}
+.checkout_note_field input[type="text"]:focus{
+    box-shadow: none;
+    background: transparent;
+    border-bottom: 1px solid #fff !important;
+}
+.checkout_note_field input[type="text"]::placeholder{
+    color: #fff;
+}
+
+.checkout_note_field input[type="password"]{
+    background: transparent;
+    border: 0 !important;
+    border-bottom: 1px solid #60c2ff !important;
+    padding: 20px 10px !important;
+    border-radius: 0;
+    color: #fff !important;
+}
+.checkout_note_field input[type="password"]:focus{
+    box-shadow: none;
+    background: transparent;
+    border-bottom: 1px solid #fff !important;
+}
+.checkout_note_field input[type="password"]::placeholder{
+    color: #fff;
+}
+
+/*user_add_account*/
+.user_account{
+    width: 100%;
+}
+
+.user_account .back_btn{
+    width: 100%;
+    background-color: transparent;
+    border-radius: 6px 6px 6px 6px;
+    border: 1px solid #fff;
+    height: 50px;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+.user_account .back_btn:hover{
+    background-color: rgba(0,0,0,0.2);
+    color: #fff;
+    transition: all 0.2s linear;
+}
+
+.user_add_account{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #3F79A7;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+.user_add_account > div {
+    flex-grow: 1;
+}
+.user_add_account p, .user_add_account span{
+    color: #fff;
+}
+.user_add_account i{
+    color: #fff !important;
+    font-size: 18px;
+    margin-top: 18px;
+}
+.switch_company_account {flex-basis: 260px;}
+.switch_company_account .company_name{
+    margin-top: 14px;
+}
+
+/*Account_Section*/
+.account_section .user_account{
+    float:left;
+    width: 100%;
+    border-bottom: 1px solid #3773a6;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.account_section small:first-child{
+    float:left;
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #3773a6;
+}
+.user_account .user_img{
+    max-width: 25%;
+}
+.user_account .user_img img{
+    border: 1px solid #fff;
+    border-radius: 6px;
+}
+.account_section .user_account .user_info a{
+    font-size: 18px;
+    color:#fff;
+    width: 100%;
+    font-size: 14px;
+}
+.account_section .user_account .user_info a p span i{
+    float: right;
+    font-size: 23px;
+}
+.account_section .user_account .user_info a p{
+    margin: 0;
+    font-size: 15px;
+}
+.account_section .user_account .user_info a p span{
+    font-size: 13px;
+}
+
+/*Account Section (Back Button)*/
+.account_section .back_btn{
+    width: 100%;
+    background-color: transparent;
+    border-radius: 6px 6px 6px 6px;
+    border: 1px solid #fff;
+    height: 50px;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+.account_section .back_btn:hover{
+    background-color: rgba(0,0,0,0.2);
+    color: #fff;
+    transition: all 0.2s linear;
+}
+/*User Password*/
+.account_section .user_login{
+    margin-bottom: 30px;
+    border: none;
+}
+.user_password button.next_btn{
+    width: 49%;
+}
+.user_password button:nth-child(3){
+    float: right;
+}
+.user_password button:nth-child(3):focus{
+    box-shadow: none;
+}
+.user_password button:nth-child(1){
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+}
+.user_password button:nth-child(1):hover{
+    background: #0A476A;
+    border: 1px solid #0A476A;
+    color: #fff;
+    transition: all 0.2s linear;
+}
+.user_password button:nth-child(2){
+    /*background: transparent;
+    border: 1px solid #fff;
+    color: #fff;*/
+    background-color: #fff;
+    border-radius: 6px 6px 6px 6px;
+    height: 50px;
+    font-size: 16px;
+    color: #0A476A;
+    margin-top: 10px;
+    float:right;
+}
+.user_password button:nth-child(2):hover{
+    background: #0A476A;
+    border: 1px solid #0A476A;
+    color: #fff;
+    transition: all 0.2s linear;
+}
+/*Password Reset Page*/
+.registrated_email{
+    margin-bottom: 15px !important;
+}
+.reset_content{
+    color: #fff;
+    margin-bottom: 25px;
+    text-align: center;
+}
+.reset_content small{
+    font-size: 14px;
+}
+.reset_content label:before{
+    display: none;
+}
+/*updat_password*/
+.updat_password form i{
+    position: relative;
+    right: 20px;
+    top: -35px;
+}
+
+
+/*CSS for User Attendance Pages*/
+input[type=number]{
+    -moz-appearance: textfield;
+}
+.attendance_time_section{
+    position: absolute;
+    right: 6%;
+    text-align: center;
+    top: 10%;
+}
+.attendance_time_section .date_time {
+    display: flex;
+    align-items: center;
+}
+.attendance_time_section .date_time i{
+    color: #9EB8CA;
+    font-size: 45px;
+    padding-right: 8px;
+}
+.attendance_time_section .date_time h6{
+    font-size: 50px;
+    color: #9EB8CA;
+    margin-bottom: 3px;
+}
+.attendance_time_section p{
+    font-size: 20px;
+    color: #9EB8CA;
+}
+
+.attendance_time_section .date_time .clocking_div{
+    float: left;
+    width: 78%;
+    font-size: 46px;
+    line-height: 90px;
+}
+.user_note i, .check-out i{
+    top: 0 !important;
+}
+.attendance_form .user_login{
+    margin-bottom: 0;
+}
+.attendance_form .reset_content{
+    margin-bottom: 35px;
+}
+.attendance_form .reset_content small{
+    font-size: 18px;
+}
+.attendance_form .reset_content label{
+    color: #60c2ff;
+    border-bottom: 1px solid;
+    margin: 0;
+}
+.user_note .next_btn{
+    background-color: rgba(21,146,230,0.33) !important;
+    border-color: rgba(21,146,230,1) !important;
+    border-radius: 4px !important;
+    border-style: solid;
+    box-sizing: border-box;
+    border-width: 1px;
+    color: #fff !important;
+    font-size: 14px !important;
+}
+.user_note .next_btn:hover{
+    background-color: rgba(182, 215, 243, 0.8) !important;
+    transition: all 0.2s linear;
+    border-color: rgba(182, 215, 243, 0.8) !important;
+    color: #0A476A !important;
+
+}
+
+/*User Clock In*/
+.attendance_form .reset_content p{
+    color: #5E95C8;
+    font-size: 16px;
+    padding-top: 10px;
+    margin-bottom: 0;
+}
+
+/*Member Checkin and Checkout Message Section*/
+.member_check_message{
+    margin-top: 12vh;
+}
+.member_checkin img{
+    position: relative;
+}
+.member_checkin .success{
+    position: absolute;
+    top: -10px;
+    right: 0;
+    background: #5CB85C;
+    color: #fff;
+    border-radius: 100px;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+}
+.member_checkin .success i{
+    line-height: 30px;
+}
+.membershipe {
+    margin: 15px 0;
+}
+.membershipe small{
+    background: #5CB85C;
+    padding: 5px 40px;
+    border-radius: 50px;
+}
+.member_message_div{
+    text-align: center;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+.member_message_div i{
+    float: right;
+    font-size: 22px;
+    cursor: pointer;
+}
+.member_message_div h5{
+    font-size: 18px;
+    color: #26344B;
+}
+.member_message_div p{
+    font-size: 16px;
+    color: #26344B;
+    margin: 0;
+}
+/*Error Message*/
+.member_checkin .error{
+    position: absolute;
+    top: -10px;
+    right: 0;
+    background: #D71E00;
+    color: #fff;
+    border-radius: 100px;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+}
+.member_checkin .error i{
+    line-height: 38px;
+    color: #fff;
+    font-size: 25px;
+}
+.error_content small{
+    background: #F9B703;
+    padding: 5px 40px;
+    border-radius: 50px;
+}
+/*Alert Message*/
+.member_checkin .alert_message{
+    position: absolute;
+    top: -10px;
+    right: 0;
+    background: #F9B703;
+    color: #fff;
+    border-radius: 100px;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+}
+.member_checkin .alert_message i{
+    line-height: 30px;
+}
+.alert_div{
+    background-color: #FFF3CD;
+}
+/*ENDED CSS for User Attendance Pages*/
+
+/*Footer Social Media Section*/
+.login_form_user .footer_section{
+    /* float: left; */
+    width: 100%;
+    background-color: rgba(0,0,0,0.2);
+    padding: 15px 0px;
+    position: absolute;
+    bottom: 0;
+}
+.login_form_user .footer_section ul{
+    float:left;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.login_form_user .footer_section ul li{
+    float: left;
+    list-style: none;
+    margin-right: 10px;
+}
+.login_form_user .footer_section ul li a{
+    float: left;
+    height: 45px;
+    width: 45px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    line-height: 45px;
+    font-size: 17px;
+}
+.login_form_user .footer_section ul li a:hover{
+    background-color: #9EB8CB;
+    transition: all 0.2s linear;
+    color: #26344B;
+}
+.login_form_user .footer_section p, .login_form .footer_section p a{
+    color: #fff;
+    text-align: right;
+    font-size: 14px;
+    padding-top: 12px;
+    margin-bottom: 0;
+}
+.login_form_user .footer_section p a{
+    border-bottom: 1px solid;
+}
+.login_form_user .footer_section p a:hover{
+    color:#9EB8CB;
+    transition: all 0.2s linear;
+}
+
+.clear_card {
+    right: 60px;
+    top: 31px;
+    position: absolute;
+    cursor: pointer;
+    font-size: 1.3em;
+    color: #fff;
+}
+
+.clear_card:before {
+    font-family: "Font Awesome 5 Pro";
+    content: "\f057";
+    font-weight: 300;
+}
+
+/*Media Queries*/
+@media screen and (max-width: 1200px) {
+       .member_check_message{
+        margin-top: 0vh;
+    }
+    .attendance_time_section .date-time{
+        font-size: 55px;
+    }
+    .attendance_time_section .date-time span{
+        font-size: 17px;
+        top: -10px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .wrapper {
+        margin-top: 10vh;
+    }
+    .attendance_form .wrapper{
+        margin-top: 0vh;
+    }
+    .attendance_time_section .date-time{
+        font-size: 65px;
+    }
+    .attendance_time_section .date-time span{
+        font-size: 20px;
+        top: -10px;
+    }
+    .login_form .logo_div{
+        margin-bottom: 15px;
+    }
+    .member_message_div{
+        padding: 12px;
+    }
+    .attendance_form .reset_content{
+        margin-bottom: 10px;
+    }
+
+    .member_message_div p{
+        font-size: 13px;
+    }
+    .check-out{margin-top: 30px;}
+    .login_page_title h3 {
+        font-size: 1.05rem;
+    }
+    .login_page_title {
+        top: 3%;
+        padding: 12px 18px 12px 28px;
+    }
+    .attendance_time_section {
+        right: 5%;
+        top: 3%;
+    }
+    .attendance_time_section .date_time i, .attendance_time_section .date_time h6 {
+        font-size: 36px;
+    }
+    .attendance_time_section p {
+        font-size: 18px;
+    }
+    .login_form_user .logo_div img {
+        width: 200px;
+    }
+}
+@media screen and (max-width:600px) {
+    .login_form{
+        height: 100%;
+    }
+    .login_form .footer_section{
+        position: relative;
+        background-color:  #0B486B;
+    }
+    .user_account .col-lg-3{
+        max-width: 26%;
+    }
+}
+@media screen and (max-width: 575px) {
+
+    .login_form .footer_section ul{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0px;
+    }
+    .login_form .footer_section p{
+        text-align: center;
+    }
+
+    .user_account .col-lg-9{
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login_page_title h3 {
+        font-size: 0.85rem;
+    }
+    .login_page_title {
+        padding: 10px 15px 10px 12px;
+    }
+    .attendance_time_section {
+        right: 4%;
+        top: 3%;
+    }
+    .attendance_time_section .date_time i, .attendance_time_section .date_time h6 {
+        font-size: 28px;
+    }
+    .attendance_time_section p {
+        font-size: 14px;
+    }
+    .login_form_user .logo_div img {
+        width: 160px;
+    }
+    .switch_company_account {
+        flex-basis: auto;
+    }
+
+
+}

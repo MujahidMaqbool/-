@@ -1,0 +1,65 @@
+<div class="zero_margin">
+    <div class="col-md-12">
+        <div class="waitlist_subtitle">
+            <h3>Connect Reader </h3>
+            <p>To connect your point of sale to a reader, click connect against the desired reader.</p>
+        </div>
+    </div>
+    <div class="row" *ngIf="hasstripeReader  === true">
+      <div class="col-md-12" *ngFor="let reader of stripeReaderList">
+        <div class="payment_types">
+            <div class="center_flex_alignment">
+                <img src="assets/images/stripe-logo.png" width="70px">
+                <h4 class="mb-0">{{reader.label}}</h4>
+            </div>
+
+            <div>
+                <button class="verified mb-0" type="button" *ngIf="isReaderConneted" [disabled]="isReaderConneted"
+                    (click)="onConnectReader(reader)"><i class=" fal fa-check-circle"></i>
+                    Connected
+                </button>
+                <button type="button" class="mb-0" *ngIf="!isReaderConneted" (click)="onConnectReader(reader)"><i
+                        class=" fal fa-check-circle"></i>
+                    Connect
+                </button>
+                <button type="button" class="mb-0" *ngIf="isReaderConneted" (click)="onDisconnectReader()"> Disconnect
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12"><div class="form_border my-10"></div></div>
+    </div>
+
+    <div class="row" *ngIf="!hasstripeReader">
+        <div class="col-md-12 col-sm-12 text-center">
+            <h5 class="no_record_found">No Records Found</h5>
+        </div>
+    </div>
+
+    <!-- <div class="payment_types">
+        <div>
+            <img src="assets/images/reader-img.png" width="70px" class="floating">
+        </div>
+        <div>
+            <h4>Reader</h4>
+        </div>
+
+        <div>
+            <button> Offline</button>
+
+        </div>
+    </div> -->
+    <!-- <div class="col-md-12">
+        <hr>
+    </div> -->
+    <!-- <div class="row payment_types">
+        <div class="col-md-4 padding_left"> <button class="full_width zero_margin" type="button"
+                (click)="getStripeTerminalConfig()">
+                Discover</button></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4 padding_right"> <button class="full_width zero_margin"> Register Reader </button></div>
+    </div> -->
+</div>

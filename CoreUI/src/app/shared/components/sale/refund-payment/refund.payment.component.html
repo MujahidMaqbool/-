@@ -1,0 +1,461 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_large_popup">
+            <div class="popup_header">
+                <h4>Refund</h4>
+            </div>
+                <div class="popup_content cstm_scroll_bg">
+                    <div class="popup_white_bg">
+                        <div class="row readonly_content">
+                            <div class="col">
+                                <div class="staff_details">
+                                    <h6>Customer</h6>
+                                    <p class="bottom_zero">{{refundSaleDetail.CustomerName}}</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="staff_details">
+                                    <h6>Company</h6>
+                                    <p class="bottom_zero">{{refundSaleDetail.CompanyName}}</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="staff_details">
+                                    <h6>Branch</h6>
+                                    <p class="bottom_zero">{{refundSaleDetail.BranchName}}</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="staff_details">
+                                    <h6>Invoice Number</h6>
+                                    <p class="bottom_zero">{{refundSaleDetail.InvoiceNumber ? refundSaleDetail.InvoiceNumber : refundSaleDetail.SaleInvoiceNumber}}</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="staff_details">
+                                    <h6>Invoice Date</h6>
+                                    <p class="bottom_zero">{{refundSaleDetail.InvoiceDate | customdate: dateTimeFormat}}</p>
+                                </div>
+                            </div>
+                            <div class="col" *ngIf="!isCancelledOrRescheduledRefund">
+                                <div class="staff_details">
+                                    <h6>Due Date</h6>
+                                    <p class="bottom_zero">{{refundSaleDetail.InvoiceDueDate | customdate: dateFormat}}</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="staff_details">
+                                    <h6>Invoice Status</h6>
+                                    <p class="bottom_zero">{{refundSaleDetail.InvoiceStatus ? refundSaleDetail.InvoiceStatus : refundSaleDetail.SaleStatusTypeName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="switch-refund">
+                        <div class="popup_white_bg" [ngStyle]="{'opacity':isCancelledOrRescheduledRefund === true ? '0.5' : '1' }">
+                          <div class="row">
+                            <div class="col cst-col">
+                              <label class="radio_container">
+                                <input type="radio" class="ng-valid" value="1" [checked]="refundType === enuRefundType.FlatAmountRefund" [disabled]="isCancelledOrRescheduledRefund"
+                                  id="full_amount" (click)="onAmountSelectionChange(enuRefundType.FlatAmountRefund)" name="full_amount">
+                                <span class="checkmark"></span>
+                              </label>
+                            </div>
+                            <div class="col">
+                                <h5>Flat Amount Refund</h5>
+                                <p>Refund all or custom amount from the total paid. Flat amount refund automatically includes tips and service charges (if any).</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="popup_white_bg">
+                          <div class="row">
+                            <div class="col cst-col">
+                              <label class="radio_container">
+                                <input type="radio" class="ng-valid" value="2" [checked]="refundType === enuRefundType.LineItemRefund" [disabled]="isCancelledOrRescheduledRefund"
+                                  id="full_amount1" (click)="onAmountSelectionChange(enuRefundType.LineItemRefund)" name="full_amount1">
+                                <span class="checkmark"></span>
+                              </label>
+                            </div>
+                            <div class="col">
+                                <h5>Line Item Refund</h5>
+                                <p>Refund for the line items individually. Tips and service charges (if any) can be refunded as line items.</p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="popup_white_bg pb-2 sale-refund">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="overflow-auto cstm_scroll_bg">
+                                    <div class="row grid_header mob-scroll-grid">
+                                        <div class="col-3">
+                                            <div class="inline-flex checkbox checkbox-success top_zero">
+                                                <input id="all_item_chk" name="" type="checkbox" class="ng-valid" [(ngModel)]="isCheckedAllItems" [(checked)]="isCheckedAllItems"
+                                                (ngModelChange)="onAllItemTypeSelectionChange($event)" [disabled]="refundType === enuRefundType.FlatAmountRefund || isCancelledOrRescheduledRefund">
+                                                <label for="all_item_chk"></label>
+                                                <h5>Item</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>Return/ Cancel</h5>
+                                        </div>
+                                        <div class="col text-center" *ngIf="isShowAddedToInventory">
+                                            <h5>Add to Inventory</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>Sessions / Quantity</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>Total Price</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>Total Discount</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>Total Tax</h5>
+                                        </div>
+                                        <div class="col text-center" *ngIf="refundType === enuRefundType.LineItemRefund">
+                                            <h5>Total Refund</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>Total Paid
+                                                <span class="info_tip invoice_info_tip"
+                                                    matTooltip="Total paid is calculated after deducting sales discount (if added to the invoice) from the item."
+                                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                                              </h5>
+                                              <h5>(Incl. Tax)</h5>
+                                        </div>
+                                    </div>
+                                    <div class="mob-scroll-grid">
+                                        <div class="row sale-detail-items align-items-center"
+                                            *ngFor="let objsaleDetail of refundSaleDetail.ItemList; index as i">
+                                            <div class="col-3 inline-flex checkbox checkbox-success top_zero">
+                                              <input id="{{'Chk_item' + i}}" name="" type="checkbox" class="ng-valid" [(ngModel)]="objsaleDetail.IsSelected" [(checked)]="objsaleDetail.IsSelected"
+                                              (ngModelChange)="onItemTypeSelectionChange($event, i)"  [disabled]="refundType === enuRefundType.FlatAmountRefund || (refundType === enuRefundType.LineItemRefund && objsaleDetail.RemainingItemAmountThatCanBeRefunded == 0) || isCancelledOrRescheduledRefund">
+                                              <label for="{{'Chk_item' + i}}"></label>
+                                              <div>
+                                                <h3 >{{objsaleDetail.ItemName}}</h3>
+                                                <p *ngIf="objsaleDetail.ItemVariantName">{{objsaleDetail.ItemVariantName}}</p>
+
+                                                <p  *ngIf="objsaleDetail.IsItemCancelled && objsaleDetail.ItemCancellationCharges > 0">Cancellation Fee: {{objsaleDetail.ItemCancellationCharges | currency: currencyFormat}}</p>
+                                                <p  *ngIf="objsaleDetail.IsItemCancelled && objsaleDetail.ItemCancellationCharges == 0 ">Cancelled</p>
+                                                <p  *ngIf="objsaleDetail.IsItemNoShow && objsaleDetail.NoShowCharges > 0">No Show Fee: {{objsaleDetail.NoShowCharges | currency: currencyFormat}}</p>
+                                                <p  *ngIf="objsaleDetail.IsItemNoShow && objsaleDetail.NoShowCharges == 0 ">No Show</p>
+                                                <!-- <p  *ngIf="objsaleDetail.IsItemRescheduled && objsaleDetail.ItemRescheduleCharges > 0">Reschedule Difference: {{objsaleDetail.ItemRescheduleCharges | currency: currencyFormat}}</p> -->
+                                                <p  *ngIf="objsaleDetail.IsItemRescheduled">Rescheduled</p>
+                                                <!-- <p  *ngIf="objsaleDetail.IsItemCancelled  ">Cancelled</p>
+                                                <p  *ngIf="objsaleDetail.IsItemNoShow ">No Show</p>
+                                                <p  *ngIf="objsaleDetail.IsItemReschedule ">Reschedule Difference</p> -->
+                                                <p *ngIf="objsaleDetail.ItemTypeID !== posItemType.Membership">Per Unit: {{objsaleDetail.ItemPricePerUnit | currency: currencyFormat}}</p>
+                                                <div *ngIf="objsaleDetail.ItemTypeID == posItemType.Class || objsaleDetail.ItemTypeID == posItemType.Service">
+                                                <p><i class="far fa-calendar-alt"></i>{{objsaleDetail.StartDate | customdate: dateFormat}}</p>
+                                                <p><i class="far fa-clock"></i>{{objsaleDetail.StartTime}} - {{objsaleDetail.EndTime}}</p>
+                                                </div>
+
+
+                                                <!-- <p *ngIf="activityType !=''">{{activityType}}</p> -->
+
+                                                <!-- <p *ngIf="objsaleDetail.ItemCancellationCharges > 0">Cancellation Fee:{{objsaleDetail.ItemCancellationCharges | currency: currencyFormat}}</p>
+                                                <p *ngIf="objsaleDetail.NoShowCharges > 0">No Show Fee :{{objsaleDetail.NoShowCharges | currency: currencyFormat}}</p> -->
+                                               <!-- //////// -->
+                                                <!-- <p  *ngIf="objsaleDetail.IsItemCancelled && objsaleDetail.ItemCancellationCharges > 0">Cancellation Fee: {{objsaleDetail.ItemCancellationCharges | currency: currencyFormat}}</p>
+                                                <p  *ngIf="objsaleDetail.IsItemCancelled && objsaleDetail.ItemCancellationCharges == 0 ">Cancelled</p>
+                                                <p  *ngIf="objsaleDetail.IsItemNoShow && objsaleDetail.NoShowCharges > 0">No Show Fee: {{objsaleDetail.NoShowCharges | currency: currencyFormat}}</p>
+                                                <p  *ngIf="objsaleDetail.IsItemNoShow && objsaleDetail.NoShowCharges == 0 ">No Show</p>
+                                                <p  *ngIf="objsaleDetail.IsItemReschedule && objsaleDetail.ItemRescheduleCharges > 0">Reschedule Fee Difference: {{objsaleDetail.ItemRescheduleCharges | currency: currencyFormat}}</p>
+                                                <p  *ngIf="objsaleDetail.IsItemReschedule && objsaleDetail.ItemRescheduleCharges == 0 ">Rescheduled</p> -->
+
+                                                <!-- //////// -->
+
+                                                <p *ngIf="objsaleDetail.IsMembershipBenefit && objsaleDetail.CustomerMembershipID > 0"><i class="far fa-crown"></i>{{objsaleDetail.MembershipName}}</p>
+                                                <p *ngIf="objsaleDetail.IsLineItemDiscount">Line Item Discount</p>
+                                                <p *ngIf="objsaleDetail.ItemTypeID == posItemType.Membership">{{objsaleDetail.MembershipPaymentName}}</p>
+                                                <p *ngIf="objsaleDetail.ItemTypeID == posItemType.Membership">{{objsaleDetail.MembershipPaymentInterval}} ({{objsaleDetail.StartDate | customdate: dateFormat}} - {{objsaleDetail.EndDate | customdate: dateFormat}})</p>
+                                                <p *ngIf="objsaleDetail.IsItemLineDiscount">Line Item Discount</p>
+                                                <div class="inline-flex checkbox checkbox-success" *ngIf="!isCancelledOrRescheduledRefund && objsaleDetail.IsMembershipBenefit && objsaleDetail.ItemTypeID != posItemType.Membership && refundType !== enuRefundType.FlatAmountRefund && !objsaleDetail.IsItemBenefitReverted">
+                                                    <input id="{{'Chk_benefit' + i}}" name="" type="checkbox" [disabled]="!objsaleDetail.IsSelected" [(ngModel)]="objsaleDetail.ItemsDetail.IsBenefitReverted" [checked]="objsaleDetail.ItemsDetail.IsBenefitReverted">
+                                                    <label for="{{'Chk_benefit' + i}}"></label>
+                                                    <p>Return Benefit</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="col text-center center_flex_alignment">
+                                                  <input class="item-counter not-allow text-center " type="number" [(ngModel)]="objsaleDetail.RemainingItemQtyRefunded" (ngModelChange)="onRefundQuantityChange($event, i)"
+                                                   min="0" [max]="objsaleDetail.ItemQty" name="number" readonly [disabled]="(refundType === enuRefundType.FlatAmountRefund) || (refundType === enuRefundType.LineItemRefund && !objsaleDetail.IsSelected)">
+                                                <span class="cst-counter-btn" [ngClass]="{ 'disabled-cst-counter': (refundType === enuRefundType.FlatAmountRefund) || (refundType === enuRefundType.LineItemRefund && !objsaleDetail.IsSelected) }">
+                                                    <div [ngClass]="{ 'disabled-cst-counter not-allow': objsaleDetail.RemainingItemQtyThatCanBeRefunded == objsaleDetail.RemainingItemQtyRefunded }">
+                                                        <i class="fal fa-angle-up" aria-hidden="true" (click)="onRefundQuantityChange('add', i)">
+
+                                                        </i>
+                                                    </div>
+                                                    <div [ngClass]="{ 'disabled-cst-counter not-allow': objsaleDetail.RemainingItemQtyRefunded == 0 || objsaleDetail.RemainingItemQtyRefunded == 1  }">
+                                                        <i class="fal fa-angle-down" aria-hidden="true" (click)="onRefundQuantityChange('minus', i)">
+
+                                                        </i>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <!-- inventory addition -->
+                                            <div class="col text-center center_flex_alignment" *ngIf="objsaleDetail.ItemTypeID == posItemType.Product && isShowAddedToInventory" [ngClass]="{ 'has-danger': !objsaleDetail.hasAddedToInventoryValid }">
+                                                    <input class="item-counter not-allow form-control text-center" type="number" [(ngModel)]="objsaleDetail.RemainingItemQtyAddedToInventoryRefunded" (ngModelChange)="onRefundQuantityChange($event, i)"
+                                                    min="0" [max]="objsaleDetail.ItemQty" name="inventoryNumber" readonly disabled>
+                                                <span class="cst-counter-btn" [ngClass]="{ 'disabled-cst-counter': (refundType === enuRefundType.FlatAmountRefund) || (refundType === enuRefundType.LineItemRefund && !objsaleDetail.IsSelected) }">
+                                                    <div [ngClass]="{ 'disabled-cst-counter not-allow': objsaleDetail.RemainingItemQtyAddedToInventoryRefunded == objsaleDetail.RemainingItemQtyThatCanBeRefunded }">
+                                                        <i class="fal fa-angle-up" aria-hidden="true" (click)="onInventoryQuantityChange('add', i)">
+
+                                                        </i>
+                                                    </div>
+                                                    <div [ngClass]="{ 'disabled-cst-counter not-allow': objsaleDetail.RemainingItemQtyAddedToInventoryRefunded == 0 || objsaleDetail.RemainingItemQtyAddedToInventoryRefunded == 1  }">
+                                                        <i class="fal fa-angle-down" aria-hidden="true" (click)="onInventoryQuantityChange('minus', i)">
+
+                                                        </i>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="col text-center" *ngIf="objsaleDetail.ItemTypeID != posItemType.Product && isShowAddedToInventory">
+                                                <h5></h5>
+                                            </div>
+                                            <div class="col text-center">
+                                                <h5>{{objsaleDetail.ItemQty}}</h5>
+                                            </div>
+                                            <div class="col text-center">
+                                                <h5>{{objsaleDetail.ItemPrice | currency: currencyFormat}}</h5>
+                                            </div>
+                                            <div class="col text-center">
+                                              <h5>{{objsaleDetail.ItemDiscountAmount | currency: currencyFormat}}</h5>
+                                            </div>
+                                            <div class="col text-center">
+                                                <h5>{{objsaleDetail.ItemTaxAmount | currency: currencyFormat}}</h5>
+                                            </div>
+                                            <div class="col text-center" *ngIf="refundType === enuRefundType.LineItemRefund"
+                                            [ngClass]="{ 'has-danger': !objsaleDetail.hasItemRefundAmountValid, 'has-success': objsaleDetail.ItemsDetail.RefundAmount > 0 }">
+                                                <input type="number"
+                                                [(ngModel)]="objsaleDetail.ItemsDetail.RefundAmount"
+                                                (ngModelChange)="checkItemRefundAmount(i)" min="0"
+                                                class="form-control text-center" pattern="^(0|[1-9]\d*)(\.\d+)?$" [disabled]="!objsaleDetail.IsSelected || isCancelledOrRescheduledRefund"
+                                                numberControl TwoDigitDecimaNumber />
+                                            </div>
+                                            <div class="col text-center">
+                                                <h5>
+                                                    {{objsaleDetail.ItemTotalDiscountedPrice  | currency: currencyFormat}}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="sales-subtotal no-border">
+                                    <div class="row align-items-center" *ngIf="!isCancelledOrRescheduledRefund">
+                                        <div class="col-9">
+                                            <h5>Sub Total (Excl. Tax)</h5>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h5>{{refundSaleDetail.SubTotalPrice | currency: currencyFormat}}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center" *ngIf="!isCancelledOrRescheduledRefund">
+                                        <div class="col-9">
+                                            <h5>Sale Discount</h5>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h5>{{refundSaleDetail.SaleDiscountAmount | currency: currencyFormat}}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center" *ngIf="!isCancelledOrRescheduledRefund">
+                                        <div class="col-9">
+                                            <h5>Tax <span *ngIf="refundSaleDetail.AppliedTaxNames">: ({{refundSaleDetail.AppliedTaxNames}})</span></h5>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h5>{{refundSaleDetail.TotalTaxAmount | currency: currencyFormat}}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center mt-2" *ngIf="!isCancelledOrRescheduledRefund">
+                                      <div class="col-3 inline-flex checkbox checkbox-success mt-0">
+                                        <input id="serviceCharges" name="serviceCharges" type="checkbox" [(ngModel)]="refundSaleDetail.IsSelectedServiceCharges"
+                                        (ngModelChange)="onServiceChargesSelectionChange($event)" [(checked)]="refundSaleDetail.IsSelectedServiceCharges"
+                                        [disabled]="refundType == enuRefundType.FlatAmountRefund || (refundType == enuRefundType.LineItemRefund && (refundSaleDetail.RemainingServiceChargesAmountThatCanBeRefunded == 0 || refundSaleDetail.ServiceChargesAmount == 0)) ">
+                                        <label for="serviceCharges"></label>
+                                        <h5>Service Charges</h5>
+                                      </div>
+                                      <div class="col"></div>
+                                      <div class="col"></div>
+                                      <div class="col"></div>
+                                      <div class="col"></div>
+                                      <div class="col"></div>
+                                      <div class="col text-right"
+                                      [ngClass]="{ 'has-danger': !refundSaleDetail.IsValidRefundedServiceChargesAmount, 'has-success': saveRefundDetail.RefundedServiceChargesAmount > 0 }">
+                                          <input class="form-control text-center" type="number" *ngIf="refundType == enuRefundType.LineItemRefund && refundSaleDetail.ServiceChargesAmount > 0"
+                                          [disabled]="!refundSaleDetail.IsSelectedServiceCharges"
+                                          [(ngModel)]="saveRefundDetail.RefundedServiceChargesAmount" (ngModelChange)="onRefundSCAmountChange()" min="0">
+                                      </div>
+                                      <div class="col text-right">
+                                          <h5>{{refundSaleDetail.ServiceChargesAmount | currency: currencyFormat}}</h5>
+                                      </div>
+                                    </div>
+                                  <div class="row align-items-center" *ngIf="!isCancelledOrRescheduledRefund">
+                                      <div class="col-3 inline-flex checkbox checkbox-success">
+                                        <input id="saleTips" name="saleTips" type="checkbox" [(ngModel)]="refundSaleDetail.IsSelectedTip"
+                                        (ngModelChange)="onTipSelectionChange($event)" [(checked)]="refundSaleDetail.IsSelectedTip"
+                                        [disabled]="refundType == enuRefundType.FlatAmountRefund || (refundType == enuRefundType.LineItemRefund && (refundSaleDetail.RemainingTipAmountThatCanBeRefunded == 0 || refundSaleDetail.TipAmount == 0))">
+                                        <label for="saleTips"></label>
+                                        <h5>Tips</h5>
+                                      </div>
+                                      <div class="col"></div>
+                                      <div class="col"></div>
+                                      <div class="col"></div>
+                                      <div class="col"></div>
+                                      <div class="col"></div>
+                                      <div class="col text-right"
+                                      [ngClass]="{ 'has-danger': !refundSaleDetail.IsValidRefundedTipAmount, 'has-success': saveRefundDetail.RefundedTipAmount > 0 }">
+                                          <input class="form-control text-center" type="number"  *ngIf="refundType == enuRefundType.LineItemRefund && refundSaleDetail.TipAmount > 0"
+                                          [disabled]="!refundSaleDetail.IsSelectedTip"
+                                          [(ngModel)]="saveRefundDetail.RefundedTipAmount " (ngModelChange)="onRefundTipAmountChange()" min="0">
+                                      </div>
+                                      <div class="col text-right">
+                                          <h5>{{refundSaleDetail.TipAmount | currency: currencyFormat}}</h5>
+                                      </div>
+                                  </div>
+                                </div>
+
+                                <div class="sales-total doted-top-border" *ngIf="!isCancelledOrRescheduledRefund">
+                                    <div class="row">
+                                      <div class="col-8">
+                                          <h5>Total Due
+                                          </h5>
+                                      </div>
+                                      <div class="col text-right">
+                                          <h5>{{refundSaleDetail.TotalDue | currency: currencyFormat}}</h5>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-8">
+                                          <h5>Total Paid</h5>
+                                      </div>
+                                      <div class="col text-right">
+                                          <h5>{{refundSaleDetail.TotalAmountPaid | currency: currencyFormat}}</h5>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-8">
+                                          <h5>Adjustment</h5>
+                                      </div>
+                                      <div class="col text-right">
+                                          <h5>{{refundSaleDetail.Adjustment | currency: currencyFormat}}</h5>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="sales-balance-due" *ngIf="!isCancelledOrRescheduledRefund">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <h5>Balance Due</h5>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h5>{{refundSaleDetail.BalanceAmount | currency: currencyFormat}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popup_white_bg" *ngIf="refundType === enuRefundType.FlatAmountRefund && isMembershipBenefit && refundSaleDetail.ItemList[0].ItemTypeID != posItemType.Membership">
+                        <div class="row">
+                          <div class="col-md-12">
+                              <div class="align_sp">
+                                  <div>
+                                    <p class="p-0">Toggle on to return all membership benefits consumed.</p>
+                                  </div>
+                                  <div>
+                                    <mat-slide-toggle class="wellyx-checked" name="isRevertAllMembershipBenefits" id="isRevertAllMembershipBenefits"
+                                        [(checked)]="saveRefundDetail.isRevertAllMembershipBenefits"
+                                        [(ngModel)]="saveRefundDetail.isRevertAllMembershipBenefits">
+                                    </mat-slide-toggle>
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                    </div>
+
+
+                    <div class="popup_white_bg">
+                        <div class="row">
+                          <div class="col-md-12">
+                              <div class="section_title"><h4 class="light-blue-color">Refund Invoice</h4></div>
+                          </div>
+                            <div class="col-md-12">
+                                <div class="row sale-refund-section">
+                                    <div class="col-6">
+                                        <h5>Refund Amount</h5>
+                                    </div>
+                                    <div class="col-3 text-right refundRewardPoints">
+                                       <ng-container *ngIf="saveRefundDetail.PaymentGatewayID === enumPaymentGateway.RewardPoints && refundSaleDetail.CustomerRewardPointsFundamentals != null">{{calculatedRewardPoints | number:'1.0-0'}} <abbr>{{calculatedRewardPoints > 1 ? 'Points' : 'Point'}}</abbr></ng-container>
+                                    </div>
+                                    <div class="col" [ngClass]="{ 'has-danger': !hasFlatRefundAmountValid }">
+                                        <div class="input-group" *ngIf="refundType === enuRefundType.FlatAmountRefund">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text gt-brand">{{currencyFormat}}</span>
+                                            </div>
+                                            <input class="form-control text-center no-focus font-weight-bold font-20" type="number"
+                                            [(ngModel)]="saveRefundDetail.RefundAmount" [formControl]="amntRefund"
+                                            (ngModelChange)="onChangeFlatRefundAmount()" [min]="minRefundValue"
+                                            required pattern="^(0|[1-9]\d*)(\.\d+)?$"
+                                            numberControl TwoDigitDecimaNumber />
+                                          </div>
+                                          <h3 *ngIf="refundType === enuRefundType.LineItemRefund" class="text-right">
+                                              {{saveRefundDetail.RefundAmount | currency: currencyFormat}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="field_label">Refund Method</h5>
+                                <div class="select_label">
+                                    <select name="PaymentGatewayID" [(ngModel)]="saveRefundDetail.PaymentGatewayID" (ngModelChange)="onChangeRefundMethod()" [disabled]="isCancelledOrRescheduledRefund && saveRefundDetail.PaymentGatewayID == enumPaymentGateway.Cash" [ngStyle]="{'cursor': isCancelledOrRescheduledRefund ? 'not-allowed' : '' }">
+                                        <option *ngFor="let refundMethod of refundSaleDetail.RefundMethods"
+                                         [ngValue]="refundMethod.PaymentGatewayID">
+                                            {{ (isCancelledOrRescheduledRefund && saveRefundDetail.PaymentGatewayID == enumPaymentGateway.Cash) ? 'Original payment method' : refundMethod.PaymentGatewayName}}
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" *ngIf="(activityType == '' || activityType == null || activityType == undefined) || refundSaleDetail?.Reasons">
+                                <h5 class="field_label">Refund Reason</h5>
+                                <div class="select_label">
+                                    <select name="ReasonId" [(ngModel)]="saveRefundDetail.ReasonID" [disabled]="data.StatusTypeID === enumSaleStatusType.OverPaid"
+                                        (ngModelChange)="onChangeRefundReason($event)">
+                                        <option *ngFor="let refundReason of refundSaleDetail.Reasons"
+                                            [ngValue]="refundReason.ReasonID">
+                                            {{refundReason.ReasonName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <h5 class="field_label">Notes <span class="optional">&nbsp;(Remaining Characters: {{ 150 -
+                                    saveRefundDetail?.Note?.length }})</span></h5>
+                                <div  *ngIf="activityType == '' || activityType == null || activityType == undefined" [ngClass]="{ 'has-danger': isOtherReasonRequired && (saveRefundDetail.Note == null || saveRefundDetail.Note == '' || saveRefundDetail.Note == undefined) }">
+                                    <textarea rows="3" class="form-control" name="Note"
+                                        [(ngModel)]="saveRefundDetail.Note" required [disabled]="!isOtherReasonRequired"
+                                        #ReasonNote="ngModel" placeholder="Type reason here" maxlength="150"></textarea>
+                                </div>
+                                <div  *ngIf="activityType">
+                                    <textarea rows="5" class="form-control" name="Note"
+                                        [(ngModel)]="saveRefundDetail.Note" placeholder="Type reason here" maxlength="150"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12">
+                        <div class="cancel_btn float-right">
+                            <button type="button" (click)="onClose()">Cancel</button>
+                            <button type="button" class="save primary_blue_btn" (click)="confirmationSaveRefundPoup()">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>

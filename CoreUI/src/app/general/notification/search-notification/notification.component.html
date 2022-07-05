@@ -1,0 +1,239 @@
+<div class="white_bg zero_top">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#notification_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+            </div>
+        </div>
+        <div id="notification_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <h5 class="field_label">Trigger Category</h5>
+                        <!-- <div class="select_label">
+                            <select class="form-control" tabindex="1" name="EventCategoryTypeID"
+                                [(ngModel)]="staffNotificationSearch.eventCategoryTypeID"
+                                #EventCategoryTypeID="ngModel">
+                                <option value="null">All</option>
+                                <option *ngFor="let eventCategory of EventCategoryTypesList"
+                                    [ngValue]="eventCategory.EventCategoryTypeID">
+                                    {{eventCategory.EventCategoryTypeName}}
+                                </option>
+                            </select>
+                        </div> -->
+                        <div class="select_label">
+                            <select class="form-control" name="eventCategory"
+                                [(ngModel)]="staffNotificationSearch.eventCategoryTypeID"
+                                (ngModelChange)="onChangeEventCategoryType(staffNotificationSearch.eventCategoryTypeID)">
+                                <option *ngFor="let eventCategory of EventCategoryTypesList"
+                                    [ngValue]="eventCategory.EventCategoryTypeID" required>
+                                    {{eventCategory.EventCategoryTypeName}}
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <h5 class="field_label">Trigger</h5>
+                        <!-- <div class="select_label">
+                            <select class="form-control" tabindex="2" name="EventType"
+                                [(ngModel)]="staffNotificationSearch.eventTypeID" #EventType="ngModel">
+                                <option value="null">All</option>
+                                <option *ngFor="let eventType of EventTypeList" [ngValue]="eventType.EventTypeID">
+                                    {{eventType.EventTypeName}}
+                                </option>
+                            </select>
+                        </div> -->
+                        <div class="select_label">
+                            <select class="form-control" name="eventType"
+                                [(ngModel)]="staffNotificationSearch.eventTypeID"
+                                (ngModelChange)="onChangeEventType(staffNotificationSearch.eventTypeID)">
+                                <option *ngFor="let eventType of eventTypeList" [ngValue]="eventType.EventTypeID">
+                                    {{eventType.EventTypeName}}
+                                    {{getTriggerCategoryName(eventType.EventCategoryTypeID)}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <h5 class="field_label">Contact Type</h5>
+                        <div class="select_label">
+                            <select class="form-control" tabindex="3" name="AudienceTypeID"
+                                [(ngModel)]="staffNotificationSearch.contactTypeID" #AudienceTypeID="ngModel">
+                                <option value="null">All</option>
+                                <option *ngFor="let audienceTypes of AudienceTypesList"
+                                    [ngValue]="audienceTypes.AudienceTypeID">
+                                    {{audienceTypes.AudienceTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <h5 class="field_label">Status</h5>
+                        <div class="select_label">
+                            <select class="form-control" tabindex="4" name="NotificationStatus"
+                                [(ngModel)]="staffNotificationSearch.Status" #NotificationStatus="ngModel">
+                                <!-- <option value="null">All</option> -->
+                                <option *ngFor="let notiStatus of notificationStatus" [ngValue]="notiStatus.value">
+                                    {{notiStatus.text}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-8 col-sm-8 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #notificationDateRef>
+                        </dateto-datefrom>
+
+                    </div>
+                    <div class="offset-xl-3 col-xl-3 col-lg-6 col-md-8 col-sm-8 space no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6"><button class="reset_btn" type="button"
+                                    (click)="resetNotificationFilters()">
+                                    Reset </button></div>
+                            <div class="col-md-6 col-sm-6 full_width_btn"><button class="search" type="button"
+                                    (click)="searchNotification()">
+                                    Search</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grids_white_bg">
+    <div class="auto_mark_btn text-right">
+        <h5>Notifications</h5>
+        <button type="button" *ngIf="isNotificationButtonForEveryOne"
+            [disabled]="viewNotificationList.length == 0 || !markAsReadIndicator" (click)="onMarkASReadForEveryone()">
+            Mark as Read
+            for Everyone</button>
+        <button (click)="onMarkASReadForMe()" [disabled]="viewNotificationList.length == 0 || !markAsReadIndicator">
+            Mark as Read for Me</button>
+    </div>
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col-md-2 col flex_bar_noti">
+                <div class="checkbox checkbox-success"><input id="trigger-category" [(ngModel)]="isSelectAll"
+                        [disabled]="viewNotificationList.length == 0 || !markAsReadIndicator"
+                        (change)="selectAllList($event)" name="trigger-category" type="checkbox"><label
+                        for="trigger-category">
+                    </label>
+                </div>
+                <h5>Trigger Category</h5>
+            </div>
+            <div class="col">
+                <h5>Trigger</h5>
+            </div>
+            <div class="col">
+                <h5>Date</h5>
+            </div>
+            <div class="col">
+                <h5>Contact Name</h5>
+            </div>
+            <div class="col">
+                <h5>Contact Type</h5>
+            </div>
+            <div class="col">
+                <h5>Notification</h5>
+            </div>
+            <div class="col">
+                <h5>Status</h5>
+            </div>
+            <div class="col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div id="grid">
+            <div class="row grid_rows responsive_grid_rows"
+                *ngFor="let notification of viewNotificationList; let myIndex = index">
+                <div class="col-md-2 col flex_bar_noti">
+
+
+                    <div class="checkbox checkbox-success">
+                        <input class="example-margin" type="checkbox"
+                            name="{{'Chk_service' + notification.StaffNotificationID}}"
+                            id="{{'Chk_service' + notification.StaffNotificationID}}"
+                            [(ngModel)]="notification.IsMarkAsReadForMe" [disabled]="notification.hasmarked"
+                            [(checked)]="notification.IsMarkAsReadForMe"
+                            (change)="MarkAsRead($event,notification.StaffNotificationID,myIndex)" />
+                        <label for="{{'Chk_service' + notification.StaffNotificationID}}"></label>
+                    </div>
+                    <h5>{{notification.EventCategoryTypeName}}</h5>
+
+
+                    <!-- <div class="checkbox checkbox-success">
+                        <input type="checkbox" name="trigger-list"
+                            id="{{'trigger-list' + notification.StaffNotificationID}}" [(ngModel)]="staffNotificationSearch.Status"
+                             (change)="MarkAsRead($event,notification,indx)" />
+                        <label for="{{'trigger-list' + notification.StaffNotificationID}}">{{notification.EventCategoryTypeName}}</label>
+                        <input type="checkbox" id="trigger-list" name="trigger-list"
+                            [(ngModel)]="notification.IsMarkAsReadForMe"
+                            (change)="MarkAsRead($event,notification,indx)" />
+                            <label for="trigger-list">
+                        </label>
+                    </div>-->
+
+                </div>
+                <div class="col">
+                    <h5>{{notification.EventTypeName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{notification.CreateOn | customdate : dateFormat}} {{notification.CreateOnTime |
+                        branchTimeFormat }}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{notification.StaffName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{notification.AudienceTypeName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{notification.Title}}
+                        <!-- <span *ngIf="notification.Body.length > 35">...</span>
+                        <span matTooltip="{{notification.Body}}" class="info_tip" matTooltipPosition="above"
+                            matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span> -->
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>{{notification.Status}}</h5>
+                </div>
+                <div class="col text-center">
+                    <h5> <span class="blue">
+                            <a *ngIf="notification.EventCategoryTypeID != enumEventCategory.Shift" matTooltip="Redirect"
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip" href="javascript:void(0)"
+                                (click)="onViewServiceNotificationDetail(notification)">
+                                <i class="fal fa-external-link-square"></i>
+                            </a>
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)" (click)="viewNotificationDialog(notification)">
+                                <i class="fal fa-book-open"></i>
+                            </a>
+                        </span></h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    <!-- <div class="pagination">
+        <div class="col-md-12 no_padding">
+            <mat-paginator #paginator [length]="totalRecords" [pageIndex]="pageIndex"
+                [pageSizeOptions]="pageSizeOptions" (page)="changePageSize($event)" [showFirstLastButtons]="true">
+            </mat-paginator>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+</div>

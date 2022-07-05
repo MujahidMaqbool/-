@@ -1,0 +1,130 @@
+﻿<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Supplier Details</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="section_content readonly_content">
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Supplier Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Name</h6>
+                                <p>{{supplierViewDetail.SupplierName? supplierViewDetail.SupplierName : "N/A"}}</p>
+
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Email</h6>
+                                <p>{{supplierViewDetail.Email? supplierViewDetail.Email : "N/A"}}</p>
+
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Website</h6>
+                                <p>{{supplierViewDetail.Website? supplierViewDetail.Website : "N/A"}}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Active</h6>
+                                <p>{{supplierViewDetail.IsActive ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Type</h6>
+                                <p>{{supplierViewDetail.Type ? supplierViewDetail.Type : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="supplierViewDetail.AppSourceTypeID == appSourceTypeID.EnterPrise">
+                                <h6>Branch Permissions</h6>
+                                <p>{{supplierViewDetail.HasBranchPermission? "Yes": "No"}}</p>
+                              </div>
+                            <div class="col-md-12 col-sm-12">
+                                <h6>Description</h6>
+                                <p>{{supplierViewDetail.Description? supplierViewDetail.Description : "N/A"}}</p>
+                              </div>
+                        </div>
+                    </div>
+
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Contact Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Title</h6>
+                                <p>{{supplierViewDetail.ContactTitle? supplierViewDetail.ContactTitle : "N/A"}}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>First Name</h6>
+                                <p>{{supplierViewDetail.ContactFirstName? supplierViewDetail.ContactFirstName : "N/A"}}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Last Name</h6>
+                                <p>{{supplierViewDetail.ContactLastName? supplierViewDetail.ContactLastName : "N/A"}}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Phone</h6>
+                                <p>{{supplierViewDetail.ContactPhone? supplierViewDetail.ContactPhone : "N/A"}}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Mobile</h6>
+                                <p>{{supplierViewDetail.ContactMobile? supplierViewDetail.ContactMobile : "N/A"}}</p>
+                              </div>
+                        </div>
+                    </div>
+
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Address</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Country</h6>
+                                {{supplierViewDetail.CountryName ? supplierViewDetail.CountryName: "N/A"}}
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>State/County</h6>
+                                <p>{{supplierViewDetail.StateCountyName ? supplierViewDetail.StateCountyName : 'N/A' }}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>City</h6>
+                                <p>{{supplierViewDetail.CityName ? supplierViewDetail.CityName : 'N/A'}}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 1</h6>
+                                <p>{{supplierViewDetail.AddressLine1 ? supplierViewDetail.AddressLine1 : 'N/A'}}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 2</h6>
+                                <p>{{supplierViewDetail.AddressLine2 ? supplierViewDetail.AddressLine2 : 'N/A'}}</p>
+                              </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Postal Code / Zip Code</h6>
+                                <p>{{supplierViewDetail.PostalCode ? supplierViewDetail.PostalCode : 'N/A' }}</p>
+                              </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right scroll_close">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

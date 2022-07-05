@@ -1,0 +1,28 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Reset</h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="space-10"></div>
+            <div class="delete_warning">
+                <div>
+                    <i class='fal fa-calendar-times' aria-hidden="true"></i>
+                </div>
+                <div>
+                    <p *ngIf="!isSetupPage">Reset all counts back to zero.</p>
+                    <p *ngIf="isSetupPage">Reset all counts back to zero for all customers.</p>
+                </div>
+            </div>
+            <div class="space-10"></div>
+        </div>
+        <div class="row popup_footer p-0">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right">
+                    <button (click)="onClose()">Cancel</button>
+                    <button class="primary_blue_btn" (click)="onYes()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

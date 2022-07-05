@@ -1,0 +1,169 @@
+<div class="page_content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button *ngIf="isSaveMembershipAllowed" class="save" [routerLink]="['../membership/save', 0]" data-toggle="modal"
+          data-target=".add_membership_pop">
+          Add Membership
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+
+  <div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion" data-target="#member_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+            </div>
+        </div>
+        <div id="member_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h5 class="field_label">Membership Name</h5>
+                        <input type="text" class="form-control" name="Name" maxlength="50" [(ngModel)]="membershipSearch.membershipName">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                      <h5 class="field_label">Membership Category</h5>
+                      <div class="select_label">
+                        <select class="form-control" name="membershipCategoryName" [(ngModel)]="membershipSearch.membershipCategoryID">
+                          <option [ngValue]="null">All</option>
+                          <option *ngFor="let membershipCategoryObj of membershipCategoryList" [ngValue]="membershipCategoryObj?.MembershipCategoryID">
+                            {{membershipCategoryObj?.CategoryName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                      <h5 class="field_label">Status</h5>
+                      <div class="select_label">
+                        <select class="form-control" name="IsActive" [(ngModel)]="membershipSearch.isActive">
+                          <option *ngFor="let statusObj of statusList" [ngValue]="statusObj.StatusID">
+                            {{statusObj.StatusName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-8 col-sm-6 mt-3">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 padding_left xs-pr-0">
+                                <button class="reset_btn" type="button" (click)="resetMembershipSearch()">
+                                    Reset
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 full_width_btn padding_right xs-pl-0">
+                                <button class="search" type="button" (click)="onSearchForm()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <div class="grids_white_bg">
+    <div id="membership">
+      <div class="overflow-auto">
+      <div class="row grid_header responsive_grid_header">
+        <div class="col">
+          <h5>
+              <a href="javascript:void(0)" (click)="changeSorting(1)" class="sort_icon">Created Date <i class="fas fa-sort-alt" aria-hidden="true"></i></a>
+          </h5>
+        </div>
+        <div class="col col-md-2">
+          <h5>
+            <a href="javascript:void(0)" (click)="changeSorting(2)" class="sort_icon">Membership Name <i class="fas fa-sort-alt" aria-hidden="true"></i></a>
+          </h5>
+        </div>
+        <div class="col">
+          <h5>Category</h5>
+        </div>
+        <div class="col">
+          <h5>Total Price</h5>
+        </div>
+        <div class="col text-center">
+          <h5>Member Limit</h5>
+        </div>
+        <div class="col text-center">
+          <h5>Active Members</h5>
+        </div>
+        <div class="col text-center">
+          <h5>Online</h5>
+        </div>
+        <div class="col text-center">
+          <h5>Status</h5>
+        </div>
+        <div class="col text-center">
+          <h5>Actions</h5>
+        </div>
+      </div>
+      <div id="grid" *ngIf="isDataExists">
+        <div id="grid" *ngIf="memberships.length > 0 ">
+          <div class="row grid_rows responsive_grid_rows" *ngFor="let membership of memberships">
+            <div class="col">
+              <h5>{{membership.CreatedOn | customdate: dateFormat}}</h5>
+            </div>
+            <div class="col-md-2 col">
+              <h5>{{membership.MembershipName}}</h5>
+            </div>
+            <div class="col">
+              <h5>{{membership.MembershipCategoryName}}</h5>
+            </div>
+            <div class="col">
+              <h5>{{membership.TotalPrice | currency: currencyFormat}}</h5>
+            </div>
+            <div class="col text-center">
+              <h5>{{membership.MemberLimit ? membership.MemberLimit : 'No Limit'}}</h5>
+            </div>
+            <div class="col text-center">
+              <h5>{{membership.ActiveMemberCount}}</h5>
+            </div>
+            <div class="col text-center">
+              <h5>{{membership.IsOnline ? 'Yes' : 'No'}}</h5>
+            </div>
+            <div class="col text-center">
+              <h5>{{membership.IsActive ? 'Active' : 'Inactive'}}</h5>
+            </div>
+            <div class="col text-center">
+              <h5>
+                <span class="blue" *ngIf="isSaveMembershipAllowed">
+                  <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewMembershipDetail(membership.MembershipID)"
+                    href="javascript:void(0)">
+                    <i class="fal fa-book-open"></i>
+                  </a>
+                </span>
+                <span class="blue" *ngIf="isSaveMembershipAllowed">
+                  <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" [routerLink]="['../membership/save',membership.MembershipID]">
+                    <i class="fal fa-edit"></i>
+                  </a>
+                </span>
+                <span class="red_del" *ngIf="isSaveMembershipAllowed">
+                  <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="deleteMembership(membership.MembershipID)" href="javascript:void(0)">
+                    <i class="fal fa-trash-alt"></i>
+                  </a>
+                </span>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+          <div class="col-md-12 col-sm-12 text-center">
+            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+          </div>
+        </div>
+      </div>
+      </div>
+      <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    </div>
+  </div>
+</div>

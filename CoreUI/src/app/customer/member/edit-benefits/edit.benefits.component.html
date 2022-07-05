@@ -1,0 +1,116 @@
+<form #updateMembershipBenefits="ngForm" (ngSubmit)="updateBenefits()">
+    <div class="view_staff_popup" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog-centered">
+            <div class="modal-content large_popup">
+                <div class="popup_header">
+                    <h4> {{memberMembershipBenefits.ItemName}}</h4>
+                </div>
+
+                <div class="popup_content cstm_scroll_bg">
+                    <div class="popup_white_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title zero_border mb-0">
+                                    <h4 class="pt-0">Benefits Adjustment</h4>
+                                </div>
+                                <p>Benefits Adjustment Increase or decrease the total number of benefits rolled over (if
+                                    applicable) or the number of benefits consumed by the member.</p>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="overflow-auto">
+                                    <div class="verticle-scroll-lg">
+                                        <div class="row grid_header text-center">
+                                            <div class="col">
+                                                <h5>Current Benefits Accrued</h5>
+                                            </div>
+                                            <div class="col"
+                                                *ngIf="memberMembershipBenefits.RollOverBenefitsOnEachInterval">
+                                                <h5>Previous Benefits Rolled Over</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>Benefits Allowed</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>Benefits Consumed</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>Benefits Remaining</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row grid_rows text-center">
+                                            <div class="col">
+                                                <h5>{{memberMembershipBenefits.MembershipTotalSessions}}</h5>
+                                            </div>
+                                            <div class="col"
+                                                *ngIf="memberMembershipBenefits.RollOverBenefitsOnEachInterval">
+                                                <h5><input class="mb-0 text-center" type="text" min="0" maxlength="3"
+                                                        required numberControl
+                                                        [(ngModel)]="memberMembershipBenefits.SessionAllowed"
+                                                        [formControl]="sessionAllowed"
+                                                        (ngModelChange)="onChangePBRO($event);  " (blur)="hasFieldsUpdated()"
+                                                        name="sessionAllowed" />
+                                                </h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>
+                                                    {{benefitsAllowed}}
+                                                </h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>
+                                                    <input type="text" class="form-control mb-0 text-center" min="0"
+                                                        [formControl]="sessionConsumed" numberControl required
+                                                        [(ngModel)]="memberMembershipBenefits.SessionConsumed"
+                                                        (ngModelChange)="onChangeBC($event);" (blur)="hasFieldsUpdated()" name="sessionComsumed"
+                                                        maxlength="3">
+                                                </h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{benefitsRemaining}}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <!-- <div class="col-md-6">
+                            <h5 class="field_label top_zero">Sessions Allowed</h5>
+                            <input type="text" class="form-control" [disabled]="true"
+                                [(ngModel)]="memberMembershipBenefits.SessionAllowed" name="sessionAllowed">
+                        </div> -->
+                            <!-- <div class="col-md-6">
+                            <h5 class="field_label top_zero">Sessions Consumed</h5>
+                            <input type="number" class="form-control" tabindex="6" min="0"
+                                (keydown)="preventNegtiveValue($event)" (blur)="onLeaveTextBox()"
+                                [(ngModel)]="memberMembershipBenefits.SessionConsumed" name="sessionComsumed"
+                                maxlength="2">
+                        </div> -->
+                            <!-- <input type="text" class="form-control" [(ngModel)]="memberMembershipBenefits.SessionConsumed"
+                            name="sessionComsumed"> -->
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="field_label">Notes<span>&nbsp;(Remaining Characters: {{ 500 -
+                                memberMembershipBenefits?.Notes?.length }})</span></h5>
+                            <textarea rows="3" [(ngModel)]="memberMembershipBenefits.Notes" (blur)="hasFieldsUpdated()" name="notes" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="cancel_btn float-right">
+                            <button class="left_margin_zero" type="button" (click)="onClose()">Close</button>
+                            <button class="primary_blue_btn" type="submit"
+                                [disabled]="(sessionAllowed?.errors && memberMembershipBenefits.RollOverBenefitsOnEachInterval) || sessionConsumed?.errors || !isFormEdit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

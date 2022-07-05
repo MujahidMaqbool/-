@@ -1,0 +1,327 @@
+<form #classFormData="ngForm" (ngSubmit)="saveClass(classFormData.valid)" novalidate>
+  <div class="popup_content no_padding">
+    <div class="row sch_mob_reverse">
+      <div class="col-lg-3 col-md-4 padding_right sm-pr-15 parallel_grid">
+        <div class="sch_white_bg smallScheduler sch_height_nohead" *ngIf="isShowScheduler">
+          <one-day-scheduler [dayViewFormat]="dayViewFormat" [staffID]="_cellDataSelection.StaffID"
+            [schedulerTimeFormat]="schedulerTimeFormat" [startDate]="currentDate"
+            (onStartDateChange)="smallCalendarDateChange($event)" #onedaySchedulerComp>
+          </one-day-scheduler>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-8 parallel_grid" id="schedulerClassFormDiv">
+        <div class="multi_section_scroll">
+          <div class="row">
+            <div [ngClass]="IsClassWaitList ? 'col-md-3 padding_left mob-m2 mob-pr-0' : 'col-md-4 padding_left'">
+              <div class="sch_class_head">
+                <h5 class="field_label">Show Online
+                  <span class="info_tip" matTooltip="Toggle on to allow customers to view this class online"
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <mat-slide-toggle tabindex="1" class="wellyx-checked " [(checked)]="saveClassObj.ShowOnline"
+                  [(ngModel)]="saveClassObj.ShowOnline" (ngModelChange)="onIsOnlineChange()" name="ShowOnline">
+                  {{saveClassObj.ShowOnline ? 'Yes': 'No'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+
+            <div [ngClass]="IsClassWaitList ? 'col-md-3 no_padding' : 'col-md-4 no_padding'" *ngIf="showHidePriceLabel">
+              <div class="sch_class_head">
+                <h5 class="field_label">Hide Price Online
+                  <span class="info_tip"
+                    matTooltip="Toggle on to hide the price of this class on the widget & customer app."
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <mat-slide-toggle class="wellyx-checked" [(checked)]="saveClassObj.IsHidePriceOnline"
+                  [(ngModel)]="saveClassObj.IsHidePriceOnline" name="HidePrice" [disabled]="!saveClassObj.ShowOnline">
+                  <!-- {{saveClassObj.IsHidePriceOnline ? 'Yes': 'No'}} -->
+                </mat-slide-toggle>
+              </div>
+            </div>
+
+            <div [ngClass]="IsClassWaitList ? 'col-md-3 padding_right' : 'col-md-4 padding_right'">
+              <div class="sch_class_head">
+                <h5 class="field_label">Is Featured
+                  <span class="info_tip"
+                    matTooltip="Toggle on to feature your classes on the home page of the online platforms"
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <mat-slide-toggle tabindex="2" class="wellyx-checked" [(checked)]="saveClassObj.IsFeatured"
+                  [(ngModel)]="saveClassObj.IsFeatured" name="IsFeatured" [disabled]="!saveClassObj.ShowOnline">
+                  {{saveClassObj.IsFeatured ? 'Yes': 'No'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+
+            <div class="col-md-3 padding_right" *ngIf="IsClassWaitList">
+              <div class="sch_class_head">
+                <h5 class="field_label">Waitlist Online
+                  <span class="info_tip"
+                    matTooltip="Allow customers to add themselves into this class waitlists on the widget and customer app."
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5> 
+                <mat-slide-toggle tabindex="2" class="wellyx-checked" [(checked)]="saveClassObj.EnableWaitList"
+                  [(ngModel)]="saveClassObj.EnableWaitList" name="EnableWaitList" [disabled]="!saveClassObj.ShowOnline">
+                </mat-slide-toggle>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="sch_white_bg sch_small_sction">
+            <div class="row">
+              <div class="col-sm-12 col-md-12">
+                <div class="alert alert-danger" *ngIf="isShowError">{{validationErrorMsg}}</div>
+                <div class="alert alert-danger"
+                  *ngIf="isShowPricePerSessionError || classFormData.invalid && (classFormData.dirty || classFormData.touched || classFormData.submitted)">
+                  {{messages.Validation.Info_Required}}</div>
+              </div>
+              <div class="col-md-12 no_padding">
+                <div class="row mob-p-0">
+                  <div class="col-lg-6 col-md-6 col-sm-6">
+                    <h5 class="field_label">Select Date</h5>
+                    <date-picker [value]="currentDate" [required]="true" *ngIf="currentDate" [showClear]="false"
+                      (onDateChange)="onSelectDate_valueChanged($event)">
+                    </date-picker>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <h5 class="field_label">Select Class</h5>
+                    <div class="select_label"
+                      [ngClass]="{'has-danger': ((ParentClassID.invalid || saveClassObj.ParentClassID == 0 || saveClassObj.ParentClassID == undefined) && (classFormData.dirty || classFormData.touched || classFormData.submitted)) }">
+                     
+                      <select class="form-control" name="ParentClassID" [(ngModel)]='saveClassObj.ParentClassID'
+                        (ngModelChange)="onParentClassChange($event)" tabindex="3" #ParentClassID="ngModel" required>
+                        <optgroup *ngFor='let classCategory of classCategoryList'
+                          label="{{classCategory.ClassCategoryName}}">
+                          <option *ngFor='let parentClass of classCategory.ParentClassList'
+                            [value]="parentClass.ParentClassID">{{parentClass.ParentClassName}}
+                          </option>
+                        </optgroup>                       
+                      </select>
+                    </div>
+
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                    <h5 class="field_label">Start Time</h5>
+                    <!-- displayFormat="HH:mm" -->
+
+                    <!-- *ngIf="saveClassObj.StartDate && saveClassObj.StartDate != 'NaN:NaN'" as per discussion with fahad we are commenting this code temporarly -->
+                    <dx-date-box class="full_width" [type]="dateTimeType" [displayFormat]="schedulerTimeFormat"
+                      tabindex="5" [interval]="15" [(value)]="saveClassObj.StartDate"
+                      (onValueChanged)="startDateChangeEvent($event)" [showClearButton]="true" [useMaskBehavior]="true">
+                      <dx-validator>
+                        <dxi-validation-rule type="required" message="{{messages.Validation.StartTime_Required}}">
+                        </dxi-validation-rule>
+                      </dx-validator>
+                    </dx-date-box>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                    <h5 class="field_label">End Time</h5>
+                    <dx-date-box class="full_width" [type]="dateTimeType" [displayFormat]="schedulerTimeFormat"
+                      tabindex="6" [interval]="15" [(value)]="saveClassObj.EndDate"
+                      (onValueChanged)="endDateChangeEvent($event)" [showClearButton]="true" [useMaskBehavior]="true">
+                      <dx-validator>
+                        <dxi-validation-rule type="required" message="{{messages.Validation.EndTime_Required}}">
+                        </dxi-validation-rule>
+                      </dx-validator>
+                    </dx-date-box>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                    <h5 class="field_label">Minimum Attendees</h5>
+                    <div>
+                      <input type="text" class="form-control" name="AttendeeMin" tabindex="7"
+                        [(ngModel)]="saveClassObj.AttendeeMin" (keydown)="preventCharactersForClassBooking($event)"
+                        pattern="[0-9]+(\.[0-9]+)?" maxlength="8">
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                    <h5 class="field_label">Maximum Attendees </h5>
+                    <div>
+                      <input type="text" class="form-control" name="AttendeeMax" tabindex="8"
+                        [(ngModel)]="saveClassObj.AttendeeMax" (keydown)="preventCharactersForClassBooking($event)"
+                        pattern="[0-9]+(\.[0-9]+)?" maxlength="8">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6" *ngIf="hasFacilityInPackage">
+                    <h5 class="field_label">Facility <span class="info_tip"
+                        matTooltip="Selecting a facility helps avoid conflicts between your scheduled activities"
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                          class="far fa-info-circle"></i></span>
+                    </h5>
+                    <div class="select_label">
+                      <select class="form-control" name="FacilityID" tabindex="4" [(ngModel)]="saveClassObj.FacilityID"
+                        #FacilityID="ngModel">
+                        <option *ngFor="let facility of FacilityList" [ngValue]="facility.FacilityID">
+                          {{facility.FacilityName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                    <h5 class="field_label">Streaming link <span class="info_tip" matTooltip="Add link to your online classes"
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span></h5>
+                    <div>
+                      <input type="text" class="form-control" name="StreamingLink" (blur)="onBlurStreamingLink()"
+                        [(ngModel)]="saveClassObj.StreamingLink" tabindex="9" maxlength="50">
+                    </div>
+                  </div>
+                  <div *ngIf="IsWaitListMaxCount" class="col-lg-3 col-md-6 col-sm-6">
+                    <h5 class="field_label">Waitlist Capacity</h5>
+                    <div>
+                      <input type="text" class="form-control" name="WaitListMaxCount" [(ngModel)]="saveClassObj.WaitListMaxCount" (keydown)="preventCharactersForClassBooking($event)" tabindex="10" maxlength="6">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sch_white_bg sch_small_sction">
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <h5 class="field_label">Staff</h5>
+                <div
+                  [ngClass]="{'has-danger':(StaffID.invalid || saveClassObj.AssignedToStaffID == 0) && (classFormData.dirty || classFormData.touched || classFormData.submitted)}">
+                  <div class="select_label">
+                    <select class="form-control" name="StaffID" tabindex="11"
+                      [(ngModel)]="saveClassObj.AssignedToStaffID"
+                      (ngModelChange)="onStaffChange(saveClassObj.AssignedToStaffID)" #StaffID="ngModel" required>
+                      <option *ngFor="let staff of InstructorList" [ngValue]="staff.StaffID">
+                        {{staff.StaffFullName}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <h5 class="field_label">Staff Pay </h5>
+                <input type="text" class="form-control" name="StaffPay" tabindex="12"
+                  (ngModelChange)="checkStaffPay($event)" [(ngModel)]="saveClassObj.StaffPay"
+                  pattern="[0-9]+(\.[0-9]+)?" maxlength="8" numberControl TwoDigitDecimaNumber />
+              </div>
+
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <h5 class="field_label">Cost Price </h5>
+                <input type="text" class="form-control" name="CostPrice" tabindex="13"
+                  (ngModelChange)="checkCostPrice($event)" [(ngModel)]="saveClassObj.CostPrice"
+                  pattern="[0-9]+(\.[0-9]+)?" maxlength="13" numberControl TwoDigitDecimaNumber />
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6" [ngClass]="{'has-danger': isShowPricePerSessionError }">
+                <h5 class="field_label">Price <span style="font-weight: 400;
+                color: #95989A; font-size: 13px;">(Excluding Tax)</span> <span class="info_tip"
+                    matTooltip="A price here will not affect members whose membership already includes this class"
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <input type="text" class="form-control" name="PricePerSession" tabindex="14"
+                  (ngModelChange)="onPriceChange($event, 'price')" [(ngModel)]="saveClassObj.PricePerSession"
+                  #PricePerSession="ngModel" (keydown)="preventCharacters($event)" pattern="[0-9]+(\.[0-9]+)?"
+                  maxlength="13" numberControl TwoDigitDecimaNumber />
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <h5 class="field_label">Tax</h5>
+                <mat-select class="form-control multi_select_tax" name="ClassTax" [(ngModel)]="selectedTaxList"
+                  (ngModelChange)="onPriceChange($event, 'tax')" tabindex="15" multiple>
+                  <mat-select-trigger *ngIf="selectedTaxList.length > 2">
+                    {{selectedTaxList.length > 0 ? selectedTaxList[0].TaxName : ''}}
+                    <span *ngIf="selectedTaxList.length >= 2" class="example-additional-selection">
+                      (+{{selectedTaxList.length - 1}} {{selectedTaxList.length === 2 ? 'other' : 'others'}})
+                    </span>
+                  </mat-select-trigger>
+
+                  <mat-option *ngFor="let taxObj of taxList" [value]="taxObj">
+                    {{taxObj.TaxName}} </mat-option>
+                </mat-select>
+              </div>
+              <div class="col-md-12">
+                <div class="sch_class_total_price">
+                  <h5>Retail Price<span class="float-right"> {{ totalPrice | currency: currencyFormat}}</span>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sch_white_bg sch_small_sction">
+            <div class="row">
+              <div class="col-md-12">
+                <div id="recurring_accordion">
+                  <div class="panel-heading row" [ngClass]="{ 'collapsed': !showRepeatControl }"
+                    data-parent="#recurring_accordion" data-target="#recurring_class" data-toggle="collapse"
+                    (click)="repeatSwitch_valueChanged()">
+                    <div class="col-md-12 no_padding">
+                      <h3 class="panel-title accordion-toggle"
+                        style="font-size: 14px; font-weight: 600;padding: 5px 0;">
+                        Recurring Class</h3>
+                    </div>
+                  </div>
+                  <div class="panel-collapse collapse" [ngClass]="{ 'show': showRepeatControl }" id="recurring_class">
+                    <div class="panel-body">
+                      <dx-form #devexpForm [formData]="recurrenceRuleFormData" [hidden]="!showRepeatControl">
+                        <dxi-item cssClass="recurrence-section" dataField="repeat" editorType="dxRecurrenceEditor"
+                          [editorOptions]="{ value: recurrenceRuleFormData.repeat , onValueChanged: onRecurrenceValueChanged  }"
+                          [label]="{text : 'Recurrence Rule'}">
+                        </dxi-item>
+                      </dx-form>
+                      <div *ngIf="recurrenceExceptionList.length > 0">
+                        <h5 class="field_label">Exceptions</h5>
+                        <div>
+                          <span *ngFor="let exceptDates of recurrenceExceptionList; let arrayIndex=index"
+                            class="excpt_dates">{{exceptDates | customdate: dateFormat}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sch_white_bg sch_small_sction">
+            <div class="row">
+              <div class="col-md-12">
+                <div id="search_accordion">
+                  <div class="panel-heading row"
+                    [ngClass]="{'collapsed': (saveClassObj?.Notes == '' || saveClassObj.Notes == null)}"
+                    data-parent="#search_accordion" data-target="#class_note" data-toggle="collapse">
+                    <div class="col-md-12 no_padding">
+                      <h3 class="panel-title accordion-toggle"
+                        style="font-size: 14px; font-weight: 600;padding: 5px 0;">
+                        Notes <span style="font-weight: 400;
+                                        color: #95989A;
+                                        font-size: 13px;">(Remaining
+                          Characters: {{ 250 -
+                          saveClassObj?.Notes?.length }})</span></h3>
+                    </div>
+                  </div>
+                  <div class="panel-collapse collapse" [ngClass]="{'show': (saveClassObj.Notes)}" id="class_note">
+                    <div class="panel-body">
+                      <textarea rows="4" [(ngModel)]="saveClassObj.Notes" (blur)="onBlurNotes()" name="Notes"
+                        maxlength="250">
+                                        </textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row popup_footer">
+    <div class="col-md-12 col-sm-12">
+      <div class="cancel_btn float-right">
+        <button type="button" (click)="onCloseSchedulerClassPopup()">Cancel</button>
+        <button type="submit" class="save primary_blue_btn" [disabled]="isSaveButtonDisabled">Save</button>
+      </div>
+      <div class="small_space"></div>
+    </div>
+  </div>
+</form>

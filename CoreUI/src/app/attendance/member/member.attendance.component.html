@@ -1,0 +1,74 @@
+<div class="login_form_user attendance_form">
+    <div class="container-fluid">
+        <div class="row login_alignment_center">
+            <!--Date and Time Section-->
+            <div class="attendance_time_section">
+                <time-clock></time-clock>
+            </div>
+            <!--Form Wrapper-->
+            <div class="col-lg-5 col-md-6 col-sm-8">
+                <div class="wrapper_user_attandance">
+                    <!--Logo Section-->
+                    <div class="member-detail-head merchant_name text-center">
+                        <!-- <img src="assets/images/wellyx_logo.svg" alt="logo" /> -->
+                        <h3>{{companyInfo.CompanyName}}</h3>
+                    </div>
+                    <div class="login_field">
+                        <!--Form Section-->
+                        <form #verifyMemberForm="ngForm" (ngSubmit)="onMemberClockIn()" novalidate>
+                            <div class="form-group">
+                                <label>Please enter your Card Number/Email</label>
+                                <div [ngClass]="{
+                                                'has-danger': cardNumberTxt.invalid && (cardNumberTxt.dirty || cardNumberTxt.touched || verifyMemberForm.submitted),
+                                                'has-success': cardNumberTxt.valid && (cardNumberTxt.dirty || cardNumberTxt.touched )
+                                            }">
+                                    <div class="login_input">
+                                        <input type="text" #cardNumberCtrl #cardNumberTxt="ngModel" name="member_cardnumber"
+                                            class="form-control" [(ngModel)]="cardNumber" tabindex="1" placeholder="XXXXXXXXXXXX"
+                                            maxlength="50" required />
+                                        <i class="fal fa-user"></i>
+                                        <span *ngIf="cardNumber" (click)="onClearCard()" class="clear_card"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <button class="btn next_btn" type="submit">Next</button>
+                            <div *ngIf="cardNumberNotExist" class="member-detail-box active">
+                                <p class="text-center">
+                                    <strong>User Not Found</strong>
+                                    <span class="float-right" (click)="onCloseMessage()">
+                                        <i class="fal fa-times-circle"></i>
+                                    </span>
+                                </p>
+                                <p>
+                                    {{messages.Generic_Messages.No_Email_Card_Number_Exist}}
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="login_page_title">
+        <h3>MEMBER ATTENDANCE</h3>
+    </div>
+    <!--Footer Social Media Section-->
+    <div class="footer_section abc">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                    <ul>
+                        <li><a href="https://www.facebook.com/wellyxtech" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://twitter.com/Wellyxtech" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/wellyxtech/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="https://www.youtube.com/channel/UCENBAYPvR2R7mREeUOHM2Xg" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <p>Powered by <a href="https://www.wellyx.com/">Wellyx</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

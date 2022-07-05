@@ -1,0 +1,184 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <button *ngIf="isSaveClientAllowed" type="button" class="save" (click)="onAddClient(0)">
+                Add Client</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion" data-target="#client_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+            </div>
+        </div>
+        <div id="client_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Name</h5>
+                        </div>
+                        <input type="text" class="form-control" name="Name" maxlength="50" id="client_name">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Mobile</h5>
+                        </div>
+                        <input type="text" class="form-control" name="Name" maxlength="50" id="client_mobile">
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Email</h5>
+                        </div>
+                        <div [ngClass]="{'has-danger': isEmailValid == false }">
+                        <input type="text" class="form-control" name="Email" maxlength="50" id="client_email" (blur)="validateEmail()"/>
+                        </div>
+                        <!-- <span class="text-danger" *ngIf="isEmailValid == false">
+                            {{messages.Validation.Email_Invalid}}
+                        </span> -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 offset-lg-0 offset-md-6 offset-sm-6 col-sm-6 no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button class="reset_btn" type="button" (click)="resetClientSearchFilter()">
+                                    Reset</button>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="full_width_btn ">
+                                    <button type="button" class="search" (click)="searchAllClients()">
+                                        Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+    <div class="row grid_header responsive_grid_header">
+            <div class="col-md-2 col">
+                <h5>Name</h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>Email</h5>
+            </div>
+            <div class="col-md-1 col">
+                <h5>Gender </h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>Mobile</h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>DOB</h5>
+            </div>
+            <div class="col-md-1 col">
+                <h5>Source</h5>
+            </div>
+            <div class="col-md-2 col text-center no_padding">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div id="grid" *ngIf="isDataExists">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let  clientobj of client">
+                <div class="col-md-2 col">
+                    <h5 *ngIf="!isSaveClientAllowed || clientobj.IsWalkedIn">{{clientobj.FirstName + ' ' +
+                    clientobj.LastName}}</h5>
+                    <h5 *ngIf="isSaveClientAllowed && !clientobj.IsWalkedIn">
+                        <a class="name_link" [routerLink]="['/client/details', clientobj.CustomerID]">
+                            {{clientobj.FirstName + ' ' + clientobj.LastName}}
+                        </a>
+                    </h5>
+                </div>
+                <div class="col-md-2 col">
+                    <h5>{{clientobj.Email}}</h5>
+                </div>
+                <div class="col-md-1 col">
+                    <h5>{{clientobj.Gender}}</h5>
+                </div>
+                <div class="col-md-2 col">
+                    <h5>{{clientobj.Mobile}}</h5>
+                </div>
+                <div class="col-md-2 col">
+                    <h5>{{clientobj.BirthDate | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col-md-1 col">
+                    <h5>{{clientobj.EnquirySourceTypeName}}</h5>
+                </div>
+                <div class="col-md-2 col text-center no_padding">
+                    <h5>
+                        <span class="brown">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onViewClientDetail(clientobj.CustomerID)" href="javascript:void(0)">
+                                <i class="fal fa-book-open"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="isSaveClientAllowed && !clientobj.IsWalkedIn">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onEditClient(clientobj)" href="javascript:void(0)">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <span class="green" *ngIf="isActivitiesAllowed">
+                            <a matTooltip="Activities" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                [routerLink]="['/client/details', clientobj.CustomerID ,'activities']">
+                                <i class="fal fa-address-card"></i>
+                            </a>
+                        </span>
+                        <span *ngIf="InvoiceHistory">
+                            <a matTooltip="Invoices" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                [routerLink]="['/client/details', clientobj.CustomerID ,'invoice-history']">
+                                <i class="fal fa-file-invoice"></i>
+                            </a>
+                        </span>
+                        <span *ngIf="BookingHistory">
+                            <a matTooltip="Bookings" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                [routerLink]="['/client/details', clientobj.CustomerID, 'bookings']">
+                                <i class="fal fa-book"></i>
+                            </a>
+                        </span>
+                        <span *ngIf="beneftisViewAllowedInPermission && benefitsViewInculdeInPackage && clientobj.IsBenefitView">
+                            <a matTooltip="Membership Benefits" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                               (click)="onViewCustomerBenefits(clientobj.CustomerID)" href="javascript:void(0)">
+                               <i class="fal fa-list-alt"></i>
+                            </a>
+                        </span>
+                        <span class="red_del" *ngIf="isSaveClientAllowed && !clientobj.IsWalkedIn">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onDeleteClient(clientobj.CustomerID)" href="javascript:void(0)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    <!-- <div class="pagination">
+        <div class="col-md-12 no_padding">
+            <mat-paginator #paginator [length]="[totalRecords]" [pageSize]="pageSize" [pageIndex]="pageIndex"
+                [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" (page)="changePageSize($event)">
+            </mat-paginator>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+</div>

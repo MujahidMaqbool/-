@@ -1,0 +1,1377 @@
+<div class="white_bg row zero_top">
+    <div class="col-md-12">
+        <div id="accordion" style="margin: 0;">
+             <!-- Region All Sales -->
+                <div class="card no_padding" *ngIf="allowedPages.AllSale">
+                    <div class="card-header" id="headingOne" (click)="onResetDateFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="true" aria-controls="collapseOne">
+                                All Sales
+                            </button>
+                        </h5>
+                    </div>
+                    <form #allSaleForm="ngForm" (ngSubmit)="exportAllSaleReport(fileFormatType.Pdf,true)" novalidate>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <!-- <p>This report is useful to run when you want to see all sales during a
+                                                specific date range, along with payment method or source. </p> -->
+                                                <p> This report is useful to run when you want to view all sales during a specific date range, along with source, payment method, status or gateway.</p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row mob-col-full flex-end">
+                                        <div class="col">
+                                            <h5 class="field_label"> Source Type</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="SaleSourceTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.SaleSourceTypeID"
+                                                    (ngModelChange)="onChangeAllSalesSaleType(saleReportSearchParameter.SaleSourceTypeID)">
+
+                                                    <option *ngFor="let sourceTypeObj of allSaleSourceTypeList"
+                                                        [ngValue]="sourceTypeObj.value">
+                                                        {{sourceTypeObj.text}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <h5 class="field_label">Payment Method</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentSaleType"
+                                                    [(ngModel)]="saleReportSearchParameter.SaleTypeID" (change)="onAllSalePaymentMethodChange()">
+                                                    <option *ngFor="let saleType of PaymentSaleType"
+                                                        [ngValue]="saleType.SaleTypeID">
+                                                        {{saleType.PaymentSaleTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="field_label">Payment Gateway</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentType"
+                                                    [(ngModel)]="saleReportSearchParameter.PaymentGateWayID">
+                                                    <option *ngIf="saleReportSearchParameter.SaleTypeID == 0" value="0">All</option>
+                                                    <option *ngFor="let paymentTypeObj of paymentTypeList"
+                                                        [ngValue]="paymentTypeObj.PaymentGatewayID">
+                                                        {{paymentTypeObj.PaymentGatewayName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="field_label">Payment Status</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentStatusTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.PaymentStatusTypeID">
+                                                    <option *ngFor="let pst of PaymentStatusType"
+                                                        [ngValue]="pst.PaymentStatusTypeID">
+                                                        {{pst.PaymentStatusTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-5 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateToAllSale($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                            #dateCompoRefForAllSale>
+                                            </dateto-datefrom>
+                                        </div>
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportAllSaleReport(fileType.Excel,true)"><i class="fal fa-file-excel"></i>
+                                        </button>
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewAllSaleReport(fileType.PDF,true)"><i class="fal fa-book-open"></i>
+                                        </button>
+
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button" (click)="resetAllSaleFilter()"><i
+                                                class="fal fa-undo" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Region All Sales -->
+
+            <!-- Region Sales Breakdown -->
+                <div class="card no_padding" *ngIf="allowedPages.SalesBreakdown">
+                    <!-- <div class="card no_padding" *ngIf="allowedPages.MembershipBenefitsRedemption"> -->
+                        <div class="card-header" id="headingTwelve" (click)="resetAllBreakdownFilter()">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwelve"
+                                    aria-expanded="false" aria-controls="collapseTwelve">
+                                    Sales Breakdown
+                                </button>
+                            </h5>
+                        </div>
+                        <form #redeemForm="ngForm" (ngSubmit)="exportBreakdownReport(fileType.PDF)" novalidate>
+                            <div id="collapseTwelve" class="collapse" aria-labelledby="headingTwelve" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="report_section">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <p>This report is useful to run when you want to view a detailed sales breakdown by category. This report provides information on fees charged, discounts, adjustments, taxes and payments. The data is based on sale created date and provides both a sales & payment summary.</p>
+                                            </div>
+                                        </div>
+                                        <div class="small_space"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                                <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #dateCompoRefForBreakDown>
+                                                </dateto-datefrom>
+                                            </div>
+                                        </div>
+                                        <div class="report_button text-right">
+                                            <button matTooltip="PDF File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                    aria-hidden="true"></i>
+                                            </button>
+                                            <button matTooltip="Excel File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="exportBreakdownReport(fileType.Excel)"><i
+                                                    class="fal fa-file-excel"></i>
+                                            </button>
+        
+        
+        
+                                            <button matTooltip="View File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="viewBreakdownReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                            </button>
+                                            <button matTooltip="Reset" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="resetAllBreakdownFilter()"><i class="fal fa-undo"
+                                                    aria-hidden="true"></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            <!-- End Region Sales Breakdown -->
+
+            <!-- Region Daily Sales Summary by Source -->
+                <div class="card no_padding" *ngIf="allowedPages.AllSaleSummary">
+                    <div class="card-header" id="headingFour" (click)="resetAllSaleSummaryFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
+                                aria-expanded="false" aria-controls="collapseFour">
+                                Daily Sales Summary by Source
+                            </button>
+                        </h5>
+                    </div>
+                    <form #saleBySourceForm="ngForm" (ngSubmit)="exportAllSaleSummaryReport(fileType.PDF)" novalidate>
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p> This report is useful to run when you want to view sales broken down by source during a specific date range or other filters. This report provides both a sales & payment summary. </p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <h5 class="field_label">Source Type</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="SaleSourceTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.SaleSourceTypeID">
+                                                    <option *ngFor="let sourceTypeObj of allSaleSourceTypeList"
+                                                    [ngValue]="sourceTypeObj.value">
+                                                    {{sourceTypeObj.text}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <h5 class="field_label">Payment Status</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentStatusTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.PaymentStatusTypeID">
+                                                    <option *ngFor="let pst of PaymentStatusType"
+                                                        [ngValue]="pst.PaymentStatusTypeID">
+                                                        {{pst.PaymentStatusTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                                #dateCompoRefForSaleSaleSummary></dateto-datefrom>
+                                        </div>
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportAllSaleSummaryReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewAllSaleSummaryReport(fileType.PDF)"><i
+                                                class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetAllSaleSummaryFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Daily Sales Summary by Source -->
+
+            <!-- Region Sales Summary by Item Type -->
+                <div class="card no_padding" *ngIf="allowedPages.AllSaleSummaryByItemReport">
+                    <div class="card-header" id="headingFive" (click)="resetAllSaleSummaryByCategoryFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+                                aria-expanded="false" aria-controls="collapseFive">
+                                Sales Summary by Item Type
+                            </button>
+                        </h5>
+                    </div>
+                    <form #saleBySourceCategoryForm="ngForm" (ngSubmit)="exportAllSaleSummaryByCategoryReport(fileType.PDF)"
+                        novalidate>
+                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p> This report is useful to run when you want to view sales broken down by source & item type during a specific date range or other filters. </p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="field_label">Item Type</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="ItemTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.ItemTypeID">
+                                                    <option *ngFor="let itemTypeObj of allItemTypeList"
+                                                        [ngValue]="itemTypeObj.ItemTypeID">
+                                                        {{itemTypeObj.ItemTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <h5 class="field_label">Source Type</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="SaleSourceTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.SaleSourceTypeID">
+                                                    <option *ngFor="let sourceTypeObj of allSaleSourceTypeList"
+                                                    [ngValue]="sourceTypeObj.value">
+                                                    {{sourceTypeObj.text}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <h5 class="field_label">Payment Status</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentStatusTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.PaymentStatusTypeID">
+                                                    <option *ngFor="let pst of PaymentStatusType"
+                                                        [ngValue]="pst.PaymentStatusTypeID">
+                                                        {{pst.PaymentStatusTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col col-5 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                                #dateCompoRefForSaleSummaryByCate></dateto-datefrom>
+                                        </div>
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportAllSaleSummaryByCategoryReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewAllSaleSummaryByCategoryReport(fileType.PDF)"><i
+                                                class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetAllSaleSummaryByCategoryFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Sales Summary by Item Type -->
+
+            <!-- Region Cash/Other Sales -->
+                <div class="card no_padding" *ngIf="allowedPages.AllCashOtherSale">
+                    <div class="card-header" id="headingTen" (click)="onResetCashOtherSaleDateFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTen"
+                                aria-expanded="false" aria-controls="collapseTen">
+                                Cash/Other Sales
+                            </button>
+                        </h5>
+                    </div>
+                    <form #allSaleForm="ngForm" (ngSubmit)="exportAllSaleReport(fileFormatType.Pdf,false)" novalidate>
+                        <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p>This report is useful to run when you want to view all sales processed through cash or other payment methods. This report can be customized for a specific date range, along with source, payment method or status.</p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row mob-col-full flex-end">
+                                        <div class="col">
+                                            <h5 class="field_label"> Source Type</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="SaleSourceTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.SaleSourceTypeID"
+                                                    (ngModelChange)="changePaymentMethod(saleReportSearchParameter.SaleSourceTypeID)">
+
+                                                    <option *ngFor="let sourceTypeObj of saleSourceTypeList"
+                                                        [ngValue]="sourceTypeObj.value">
+                                                        {{sourceTypeObj.text}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- as per discussed with tahir shb remove payment method in cash other sale report 04-08-20 -->
+                                        <!-- <div class="col">
+                                            <h5 class="field_label">Payment Method</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentType"
+                                                    [(ngModel)]="saleReportSearchParameter.PaymentGateWayID">
+                                                    <option value="0">All</option>
+                                                    <option *ngFor="let paymentTypeObj of paymentGateWayTypeListForCashOther"
+                                                        [ngValue]="paymentTypeObj.PaymentGatewayID">
+                                                        {{paymentTypeObj.PaymentGatewayName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                        <div class="col">
+                                            <h5 class="field_label">Payment Method</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentSaleType"
+                                                    [(ngModel)]="saleReportSearchParameter.SaleTypeID">
+                                                    <option *ngFor="let saleType of PaymentSaleTypeForCashOther"
+                                                        [ngValue]="saleType.SaleTypeID">
+                                                        {{saleType.PaymentSaleTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="field_label">Payment Status</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentStatusTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.PaymentStatusTypeID">
+                                                    <option *ngFor="let pst of PaymentStatusType"
+                                                        [ngValue]="pst.PaymentStatusTypeID">
+                                                        {{pst.PaymentStatusTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-6 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                            #dateCompoRefForAllCashOtherSale>
+                                            </dateto-datefrom>
+                                        </div>
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportAllSaleReport(fileType.Excel,false)"><i class="fal fa-file-excel"></i>
+                                        </button>
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewAllSaleReport(fileType.PDF,false)"><i class="fal fa-book-open"></i>
+                                        </button>
+
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button" (click)="onResetCashOtherSaleDateFilter()"><i
+                                                class="fal fa-undo" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Cash/Other Sales -->
+
+            <!-- Region Sales by Product -->
+                <div class="card no_padding" *ngIf="allowedPages.SaleByProductReport">
+                    <div class="card-header" id="headingSix" (click)="resetSaleByProductFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix"
+                                aria-expanded="true" aria-controls="collapseSix">
+                                Sales By Product
+                            </button>
+                        </h5>
+                    </div>
+                    <form #saleByProductForm="ngForm" (ngSubmit)="exportSaleByProductReport(fileType.PDF)" novalidate>
+                        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p>This report is useful to run when you want to view sales by products. This report can be customized for a specific date range, payment status, customers or other filters. </p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Search By Product</h5>
+                                            <div>
+                                                <input type="text" placeholder="Product Name" matInput class="form-control" [formControl]="searchProduct" [matAutocomplete]="Inventory" [(ngModel)]="clearProductInput" (ngModelChange)="onNameChangeproduct(clearProductInput)" maxlength="30">
+                                                <span *ngIf="clearProductInput != ''" (click)="resetProductDetail()" class="clear_dob right_cross_btn"></span>
+                                                <mat-autocomplete #Inventory="matAutocomplete" [displayWith]="displayProductName" (optionSelected)='getSelectedProduct($event.option.value)'>
+                                                    <mat-option *ngFor="let data of allProducts" [value]="data">
+                                                        <span class="client_name">{{ data.ProductName }}</span>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Product Category</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="ProductCategoryID"
+                                                    [disabled]="saleReportSearchParameter?.ProductID > 0" 
+                                                    [(ngModel)]="saleReportSearchParameter.ProductCategoryID"
+                                                    (ngModelChange)="filterProducts(saleReportSearchParameter.ProductCategoryID)">
+                                                    <option *ngFor="let productCategoryObj of productCategoryList"
+                                                        [ngValue]="productCategoryObj.ProductCategoryID">
+                                                        {{productCategoryObj.ProductCategoryName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Product Brand </h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="ProductBrandID"
+                                                    [disabled]="saleReportSearchParameter?.ProductID > 0" 
+                                                    [(ngModel)]="saleReportSearchParameter.BrandID">
+                                                    <option *ngFor="let productBrandObj of productBrandList"
+                                                        [ngValue]="productBrandObj.BrandID">
+                                                        {{productBrandObj.BrandName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Search By Staff</h5>
+
+                                            <input type="text" placeholder="Staff Name" [value]="personName" matInput
+                                                [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                                maxlength="30" [(ngModel)]="clearProductStaffInput"
+                                                (ngModelChange)="onStaffNameChange(clearProductStaffInput)">
+                                            <span *ngIf="clearProductStaffInput != ''" (click)="onClearStaffSaleByProduct()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                                (optionSelected)='getSelectedStaff($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FirstName + ' ' +
+                                                        person.LastName}}</span>
+                                                    <!-- <small class="client_type float-right">{{person.CustomerTypeName}}</small> -->
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Search By Customer</h5>
+                                            <input type="text" placeholder="Customer Name" matInput
+                                                [formControl]="searchCustomer" class="form-control"
+                                                [matAutocomplete]="ByProductCustomerName" maxlength="30"
+                                                [(ngModel)]="clearProductCustomerInput"
+                                                (ngModelChange)="onClientNameChange(clearProductCustomerInput)">
+                                            <span *ngIf="clearProductCustomerInput != ''"
+                                                (click)="onClearCustomerSaleByProduct()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #ByProductCustomerName="matAutocomplete"
+                                                [displayWith]="displayCustomerName"
+                                                (optionSelected)='getSelectedCustomer($event.option.value)'>
+                                                <mat-option *ngFor="let customer of allCustomer" [value]="customer">
+                                                    <span class="client_name">{{ customer.FirstName + ' ' +
+                                                        customer.LastName}}</span>
+                                                    <small
+                                                        class="client_type float-right">{{customer.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ customer.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ customer.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <h5 class="field_label">Payment Status</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentStatusTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.PaymentStatusTypeID">
+                                                    <option *ngFor="let pst of PaymentStatusType"
+                                                        [ngValue]="pst.PaymentStatusTypeID">
+                                                        {{pst.PaymentStatusTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                                #dateCompoRefForProductSale></dateto-datefrom>
+                                        </div>
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportSaleByProductReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewSaleByProductReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetSaleByProductFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Sales by Product -->
+
+            <!-- Region Sales by Service -->
+                <div class="card no_padding" *ngIf="allowedPages.SaleByServiceReport">
+                    <div class="card-header" id="headingSeven" (click)="resetSaleByServiceFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven"
+                                aria-expanded="true" aria-controls="collapseSeven">
+                                Sales By Service
+                            </button>
+                        </h5>
+                    </div>
+                    <form #saleByServiceForm="ngForm" (ngSubmit)="exportSaleByServiceReport(fileType.PDF)" novalidate>
+                        <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p>This report is useful to run when you want to view sales by service. This report can be customized for a specific date range, payment status, customers or other filters.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Service Category </h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="ServiceCategoryID"
+                                                    [(ngModel)]="saleReportSearchParameter.ServiceCategoryID"
+                                                    (ngModelChange)="filterService(saleReportSearchParameter.ServiceCategoryID)">
+                                                    <option *ngFor="let serviceCategoryObj of serviceCategoryList"
+                                                        [ngValue]="serviceCategoryObj.ServiceCategoryID">
+                                                        {{serviceCategoryObj.ServiceCategoryName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Service</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="ServiceID"
+                                                    [(ngModel)]="saleReportSearchParameter.ServiceID">
+                                                    <option [value]="0">All</option>
+                                                    <option *ngFor="let serviceObj of filteredServiceList"
+                                                        [ngValue]="serviceObj.ServiceID">
+                                                        {{serviceObj.ServiceName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Assigned To Staff</h5>
+
+                                            <input type="text" placeholder="Staff Name" matInput
+                                                [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                                maxlength="30" [(ngModel)]="clearServiceStaffInput"
+                                                (ngModelChange)="onStaffNameChange(clearServiceStaffInput)">
+                                            <span *ngIf="clearServiceStaffInput != ''"
+                                                (click)="onClearAssignedToStaffSaleByService()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                                (optionSelected)='getSelectedStaff($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FirstName + ' ' +
+                                                        person.LastName}}</span>
+                                                    <!-- <small class="client_type float-right">{{person.CustomerTypeName}}</small> -->
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Search By Customer</h5>
+                                            <input type="text" placeholder="Customer Name" matInput
+                                                [formControl]="searchCustomer" class="form-control"
+                                                [matAutocomplete]="ByServiceCustomerName" maxlength="30"
+                                                [(ngModel)]="clearServiceCustomerInput"
+                                                (ngModelChange)="onClientNameChange(clearServiceCustomerInput)">
+                                            <span *ngIf="clearServiceCustomerInput != ''"
+                                                (click)="onClearStaffSaleByService()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #ByServiceCustomerName="matAutocomplete"
+                                                [displayWith]="displayCustomerName"
+                                                (optionSelected)='getSelectedCustomer($event.option.value)'>
+                                                <mat-option *ngFor="let customer of allCustomer" [value]="customer">
+                                                    <span class="client_name">{{ customer.FirstName + ' ' +
+                                                        customer.LastName}}</span>
+                                                    <small
+                                                        class="client_type float-right">{{customer.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ customer.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ customer.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <h5 class="field_label">Payment Status</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="PaymentStatusTypeID"
+                                                    [(ngModel)]="saleReportSearchParameter.PaymentStatusTypeID">
+                                                    <option *ngFor="let pst of PaymentStatusType"
+                                                        [ngValue]="pst.PaymentStatusTypeID">
+                                                        {{pst.PaymentStatusTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                                #dateCompoRefForSaleByService></dateto-datefrom>
+                                        </div>
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportSaleByServiceReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewSaleByServiceReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetSaleByServiceFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Sales by Service -->
+
+            <!-- Region Sales by Class -->
+                <div class="card no_padding" *ngIf="allowedPages.SaleByClassReport">
+                    <div class="card-header" id="headingSaleByClass" (click)="resetSaleByClassFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#SaleByClasseReport"
+                                aria-expanded="true" aria-controls="SaleByClasseReport">
+                                Sales By Class
+                            </button>
+                        </h5>
+                    </div>
+                    <form #saleByClassForm="ngForm" (ngSubmit)="exportSaleByClassReport(fileType.PDF)" novalidate>
+                        <div id="SaleByClasseReport" class="collapse" aria-labelledby="headingSaleByClass" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p>This report is useful to run when you want to view sales by classes. This report can be customized for a specific date range, Instructor or other filters.</p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Class Category </h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="ClassCategoryID"
+                                                    [(ngModel)]="saleReportSearchParameter.ClassCategoryID"
+                                                    (ngModelChange)="filterClass(saleReportSearchParameter.ClassCategoryID)">
+                                                    <option *ngFor="let classCategoryObj of classCategoryList"
+                                                        [ngValue]="classCategoryObj.ClassCategoryID">
+                                                        {{classCategoryObj.ClassCategoryName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Class</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="ClassID"
+                                                    [(ngModel)]="saleReportSearchParameter.ClassID">
+                                                    <option [value]="0">All</option>
+                                                    <option *ngFor="let classObj of filteredClassList"
+                                                        [ngValue]="classObj.ParentClassID">
+                                                        {{classObj.ParentClassName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesByClassDateToLabelName" [dateFromLabelName]="SalesByClassDateFromLabelName"
+                                                #dateCompoRefForSaleByClass></dateto-datefrom>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Instructor</h5>
+
+                                            <input type="text" placeholder="Staff Name" matInput
+                                                [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                                maxlength="30" [(ngModel)]="clearClassStaffInput"
+                                                (ngModelChange)="onStaffNameChange(clearClassStaffInput)">
+                                            <span *ngIf="clearClassStaffInput != ''"
+                                                (click)="onClearAssignedToStaffSaleByClass()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                                (optionSelected)='getSelectedStaff($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FirstName + ' ' +
+                                                        person.LastName}}</span>
+
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportSaleByClassReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewSaleByClassReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetSaleByClassFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Sales by Class -->
+
+            <!-- Region Sales by Staff -->
+                <div class="card no_padding" *ngIf="allowedPages.SaleByStaffReport">
+                    <div class="card-header" id="headingEight" (click)="resetSaleByStaffFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight"
+                                aria-expanded="true" aria-controls="collapseEight">
+                                Sales By Staff
+                            </button>
+                        </h5>
+                    </div>
+                    <form #saleByStaffForm="ngForm" (ngSubmit)="exportSaleByStaffReport(fileType.PDF)" novalidate>
+                        <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p> This report is useful to run when you want to view sales by staff. This report can be customized for a specific date range, staff or other filters.</p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row mob-col-full flex-end">
+                                        <div class="col">
+                                            <h5 class="field_label">Item Type</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="ItemType"
+                                                    [(ngModel)]="saleReportSearchParameter.ItemTypeID">
+                                                    <option *ngFor="let itemObj of allItemTypeList"
+                                                        [ngValue]="itemObj.ItemTypeID">
+                                                        {{itemObj.ItemTypeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="field_label">Search By Staff</h5>
+
+                                            <input type="text" placeholder="Staff Name" [value]="personName" matInput
+                                                [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                                maxlength="30" [(ngModel)]="clearSalyByStaff_StaffInput"
+                                                (ngModelChange)="onStaffNameChange(clearSalyByStaff_StaffInput)">
+                                            <span *ngIf="clearSalyByStaff_StaffInput != ''" (click)="onClearSaleByStaff()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                                (optionSelected)='getSelectedStaff($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FirstName + ' ' +
+                                                        person.LastName}}</span>
+                                                    <!-- <small class="client_type float-right">{{person.CustomerTypeName}}</small> -->
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                        <!-- <div class="col">
+                                            <h5 class="field_label">Search By Customer</h5>
+                                            <input type="text" placeholder="Customer Name" matInput
+                                                [formControl]="searchCustomer" class="form-control"
+                                                [matAutocomplete]="ByStaffCustomerName" maxlength="30"
+                                                [(ngModel)]="clearSalyByStaffCustomerInput"
+                                                (ngModelChange)="onClientNameChange(clearSalyByStaffCustomerInput)">
+                                            <span *ngIf="clearSalyByStaffCustomerInput != ''"
+                                                (click)="onClearSaleByCustomer()" class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #ByStaffCustomerName="matAutocomplete"
+                                                [displayWith]="displayCustomerName"
+                                                (optionSelected)='getSelectedCustomer($event.option.value)'>
+                                                <mat-option *ngFor="let customer of allCustomer" [value]="customer">
+                                                    <span class="client_name">{{ customer.FirstName + ' ' +
+                                                        customer.LastName}}</span>
+                                                    <small
+                                                        class="client_type float-right">{{customer.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ customer.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ customer.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div> -->
+                                        <div class="col col-md-5 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                                #dateCompoRefForSaleByStaff></dateto-datefrom>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportSaleByStaffReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewSaleByStaffReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetSaleByStaffFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Sales by Staff -->
+
+            <!-- <div class="card no_padding">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="true" aria-controls="collapseTwo">
+                            Sale By Category
+                        </button>
+                    </h5>
+                </div>
+                <form #saleByCategoryForm="ngForm" (ngSubmit)="exportSaleByCategoryReport()" novalidate>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> Lorem ipsum test Lorem ipsum test Lorem ipsum test Lorem ipsum test. Lorem
+                                            ipsum
+                                            test
+                                            Lorem ipsum test Lorem ipsum test Lorem ipsum test.</p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3">
+                                        <h5 class="field_label">Sale Source Type</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="SaleSourceTypeID" [(ngModel)]="saleReportSearchParameter.SaleSourceTypeID">
+                                                <option *ngFor="let sourceTypeObj of saleSourceTypeList" [ngValue]="sourceTypeObj.value">
+                                                    {{sourceTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <h5 class="field_label">Item Type</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="SaleSourceTypeID" [(ngModel)]="saleReportSearchParameter.ItemTypeID">
+                                                <option *ngFor="let itemTypeObj of itemTypeList" [ngValue]="itemTypeObj.ItemTypeID">
+                                                    {{itemTypeObj.ItemTypeName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #dateCompoRefForSaleByCate></dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" type="submit"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="View File" matTooltipPosition="above" type="button" (click)="viewSaleByCategoryReport()"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above" type="reset" (click)="resetAllSaleByCategoryFilter()"><i
+                                            class="fal fa-undo" aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div> -->
+
+            <!-- Region Staff Tips -->
+                <div class="card no_padding" *ngIf="allowedPages.StaffTips">
+                    <div class="card-header" id="headingNine" (click)="resetAllStaffTipFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine"
+                                aria-expanded="false" aria-controls="collapseNine">
+                                Staff Tips
+                            </button>
+                        </h5>
+                    </div>
+                    <form #StaffTipForm="ngForm" (ngSubmit)="exportAllStaffTipReport(fileType.PDF)" novalidate>
+                        <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p> This report is useful to run when you want to see tips collected by a specific date range or individual staff. </p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Search By Staff</h5>
+
+                                            <input type="text" placeholder="Staff Name" [value]="personName" matInput
+                                                [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                                maxlength="30" [(ngModel)]="clearTipStaffInput"
+                                                (ngModelChange)="onStaffNameChange(clearTipStaffInput)">
+                                            <span *ngIf="clearTipStaffInput != ''" (click)="onClearStaffTip()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                                (optionSelected)='getSelectedStaff($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FirstName + ' ' +
+                                                        person.LastName}}</span>
+                                                    <!-- <small class="client_type float-right">{{person.CustomerTypeName}}</small> -->
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                            #dateCompoRefForStaffTip>
+                                            </dateto-datefrom>
+                                        </div>
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportAllStaffTipReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewAllStaffTipReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetAllStaffTipFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Region Staff Tips -->
+
+            <!-- Region Payments Summary -->
+                <div class="card no_padding" *ngIf="allowedPages.PaymentsSummary">
+                    <!-- <div class="card no_padding" *ngIf="allowedPages.MembershipBenefitsRedemption"> -->
+                        <div class="card-header" id="headingFourteen" (click)="resetAllPaymentsSummaryFilter()">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFourteen"
+                                    aria-expanded="false" aria-controls="collapseFourteen">
+                                    Payment Summary
+                                </button>
+                            </h5>
+                        </div>
+                        <form #redeemForm="ngForm" (ngSubmit)="exportPaymentsSummaryReport(fileType.PDF)" novalidate>
+                            <div id="collapseFourteen" class="collapse" aria-labelledby="headingFourteen" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="report_section">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <p>This report is useful to run when you want to view payments by payment method during a specific date range. This report is based on actual payment dates and not on sales created dates.</p>
+                                            </div>
+                                        </div>
+                                        <div class="small_space"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                                <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #dateCompoRefForPaymentsSummary>
+                                                </dateto-datefrom>
+                                            </div>
+                                        </div>
+                                        <div class="report_button text-right">
+                                            <button matTooltip="PDF File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                    aria-hidden="true"></i>
+                                            </button>
+                                            <button matTooltip="Excel File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="exportPaymentsSummaryReport(fileType.Excel)"><i
+                                                    class="fal fa-file-excel"></i>
+                                            </button>
+
+
+
+                                            <button matTooltip="View File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="viewPaymentsSummaryReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                            </button>
+                                            <button matTooltip="Reset" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="resetAllPaymentsSummaryFilter()"><i class="fal fa-undo"
+                                                    aria-hidden="true"></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            <!-- End Region Payments Summary -->
+
+            <!-- Region Payment Breakdown -->
+                <div class="card no_padding" *ngIf="allowedPages.PaymentBreakdown">
+                    <!-- <div class="card no_padding" *ngIf="allowedPages.MembershipBenefitsRedemption"> -->
+                        <div class="card-header" id="headingPaymentBreakdown" (click)="resetAllPaymentBreakdownFilter()">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsePaymentBreakdown"
+                                    aria-expanded="false" aria-controls="collapsePaymentBreakdown">
+                                    Payment Breakdown
+                                </button>
+                            </h5>
+                        </div>
+                        <form #redeemForm="ngForm" (ngSubmit)="exportPaymentBreakdownReport(fileType.PDF)" novalidate>
+                            <div id="collapsePaymentBreakdown" class="collapse" aria-labelledby="headingPaymentBreakdown" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="report_section">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <p>This report is useful to run when you want to view payment breakdown by category. This report is based on actual payment dates and not on sales created dates.</p>
+                                            </div>
+                                        </div>
+                                        <div class="small_space"></div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                                <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="PaymentBreakdownDateToLabelName" [dateFromLabelName]="PaymentBreakdownDateFromLabelName" #dateCompoRefForPaymentBreakDown>
+                                                </dateto-datefrom>
+                                            </div>
+                                        </div>
+                                        <div class="report_button text-right">
+                                            <button matTooltip="PDF File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                    aria-hidden="true"></i>
+                                            </button>
+                                            <button matTooltip="Excel File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="exportPaymentBreakdownReport(fileType.Excel)"><i
+                                                    class="fal fa-file-excel"></i>
+                                            </button>
+
+
+
+                                            <button matTooltip="View File" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="viewPaymentBreakdownReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                            </button>
+                                            <button matTooltip="Reset" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip" type="button"
+                                                (click)="resetAllPaymentBreakdownFilter()"><i class="fal fa-undo"
+                                                    aria-hidden="true"></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            <!-- End Region Payment Breakdown -->
+        
+            <!-- Region Daily Refunds -->
+                <div class="card no_padding" *ngIf="allowedPages.DailyRefunds">
+                    <div class="card-header" id="headingThirteen" (click)="resetAllDailyRefundsFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThirteen"
+                                aria-expanded="true" aria-controls="collapseThirteen">
+                                Daily Refunds
+                            </button>
+                        </h5>
+                    </div>
+                    <form #saleByStaffForm="ngForm" (ngSubmit)="exportDailyRefundsReport(fileType.PDF)" novalidate>
+                        <div id="collapseThirteen" class="collapse" aria-labelledby="headingThirteen" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p> This report is useful to run when you want to view all the refunds processed during a specific date range. This report is based on the date refund payments were recorded and not on the sale created date.</p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row flex-end">
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Search By Customer</h5>
+                                            <input type="text" placeholder="Customer Name" matInput
+                                                [formControl]="searchCustomerPS" class="form-control"
+                                                [matAutocomplete]="ByCustomerName" maxlength="30"
+                                                [(ngModel)]="clearSalyByStaffCustomerInput"
+                                                (ngModelChange)="onClientNameChange(clearSalyByStaffCustomerInput)">
+                                            <span *ngIf="clearSalyByStaffCustomerInput != ''"
+                                                (click)="onClearSaleByCustomer()" class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #ByCustomerName="matAutocomplete"
+                                                [displayWith]="displayCustomerName"
+                                                (optionSelected)='getSelectedCustomer($event.option.value)'>
+                                                <mat-option *ngFor="let customer of allCustomer" [value]="customer">
+                                                    <span class="client_name">{{ customer.FirstName + ' ' +
+                                                        customer.LastName}}</span>
+                                                    <small
+                                                        class="client_type float-right">{{customer.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ customer.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ customer.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                        <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                                #dateCompoRefForDailyRefunds></dateto-datefrom>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportDailyRefundsReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewDailyRefundsReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetAllDailyRefundsFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Region Daily Refunds -->
+
+             <!-- Region Membership Benefits Redemption -->
+                <div class="card no_padding" *ngIf="allowedPages.MembershipBenefitsRedemption">
+                    <div class="card-header" id="headingEleven" (click)="resetAllStaffTipFilter()">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEleven"
+                                aria-expanded="false" aria-controls="collapseEleven">
+                                Membership Benefits Redemption
+                            </button>
+                        </h5>
+                    </div>
+                    <form #redeemForm="ngForm" (ngSubmit)="exportRedeemReport(fileType.PDF)" novalidate>
+                        <div id="collapseEleven" class="collapse" aria-labelledby="headingEleven" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="report_section">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p>This report is useful for multi branch businesses to calculate and share the cost of membership benefits amongst themselves. This report can be customized by members home branches, memberships or a specific date range.</p>
+                                        </div>
+                                    </div>
+                                    <div class="small_space"></div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Home Branch</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="BranchID"
+                                                    [(ngModel)]="saleReportSearchParameter.BranchID" (ngModelChange)="onChangeBranch()">
+                                                    <option value="0">All</option>
+                                                    <option *ngFor="let branchObj of RedeemViewModel.BranchList"
+                                                        [ngValue]="branchObj.BranchID">
+                                                        {{branchObj.BranchName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <h5 class="field_label">Membership</h5>
+                                            <div class="select_label">
+                                                <select class="form-control" name="MembershipID"
+                                                    [(ngModel)]="saleReportSearchParameter.MembershipID">
+                                                    <option value="null">All</option>
+                                                    <option *ngFor="let membership of RedeemViewModel.MembershipList"
+                                                        [ngValue]="membership.MembershipID">
+                                                        {{membership.MembershipName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToLabelName]="SalesSummarybyItemTypeDateToLabelName" [dateFromLabelName]="SalesSummarybyItemTypeDateFromLabelName"
+                                            #dateCompoRefForRedeem>
+                                            </dateto-datefrom>
+                                        </div>
+                                    </div>
+                                    <div class="report_button text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                                aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="exportRedeemReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+
+
+                                        <button matTooltip="View File" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="viewRedeemReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                        </button>
+                                        <button matTooltip="Reset" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" type="button"
+                                            (click)="resetAllRedeemFilter()"><i class="fal fa-undo"
+                                                aria-hidden="true"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <!-- End Region Membership Benefits Redemption -->
+        </div>
+    </div>
+</div>

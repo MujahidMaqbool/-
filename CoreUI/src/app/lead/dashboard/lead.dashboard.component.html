@@ -1,0 +1,451 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="dashboard_bg zero_margin">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Lead Flow 
+                        <span matTooltip="Select dates to view the lead flow according to last updated activity. The charts below update if a new lead/enquiry is created or an existing is updated in the filtered date range."
+                            class="info_tip" matTooltipPosition="right" matTooltipClass="custom-tooltip dashboard-tooltip"><i class="far fa-info-circle"></i>
+                        </span>
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.LeadFlow)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8" *ngIf="isLeadFlowDataExists">
+                    <dx-chart id="chart" [dataSource]="leadFlowDashboard" [rotated]="true"
+                        [customizePoint]="leadFlowCustomizeColors" [valueAxis]="[
+                    {
+                        tickInterval: 1
+                    }]">
+                        <dxi-series type="bar" argumentField="LeadStatusTypeFriendlyName" valueField="TotalLead"
+                            color="#E383FF">
+                            <!-- <dxo-label [visible]="true" backgroundColor="#c18e92"></dxo-label> -->
+                        </dxi-series>
+                        <dxo-common-series-settings argumentField="LeadStatusTypeFriendlyName" type="stackedBar">
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" [visible]="false" horizontalAlignment="center"
+                            itemTextPosition="top">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="leadFlowCustomizePointTooltip">
+                        </dxo-tooltip>
+                    </dx-chart>
+                </div>
+                <div class="col-md-4 center_flex_alignment" *ngIf="isLeadFlowDataExists">
+                    <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="leadFlowDashboard"
+                        [customizePoint]="leadFlowCustomizeColors">
+                        <dxi-series argumentField="LeadStatusTypeFriendlyName" valueField="TotalLead">
+                            <dxo-label [visible]="true">
+                                <dxo-connector [visible]="true"></dxo-connector>
+                            </dxo-label>
+                        </dxi-series>
+                        <dxo-legend [margin]="0" horizontalAlignment="right" verticalAlignment="top"></dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="leadFlowCustomizePointTooltip">
+                        </dxo-tooltip>
+                    </dx-pie-chart>
+                </div>
+                        <div class="col-md-12 col-sm-12 text-center" *ngIf="!isLeadFlowDataExists">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-5 col-md-12 col-sm-12 padding_right mob-pr-15 parallel_grid">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <h5>
+                        Activities
+                        <span matTooltip="Select dates to view the lead activities according to last updated activity. The counts below updates when an email/SMS/notification is sent or received and other activities are created or updated."
+                        class="info_tip" matTooltipPosition="right" matTooltipClass="custom-tooltip dashboard-tooltip"><i class="far fa-info-circle"></i>
+                    </span>
+                    </h5>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onActivitiesDateChange($event)" #fromToDateComoRef>
+                    </dateto-datefrom>
+                    <!-- <input name="ActivtiesDateFrom" class="form-control float-right date-picker bg_transparent" [(ngModel)]="activtiesDateFrom"
+                       (ngModelChange)="onActivitiesDateChange(activtiesDateFrom)" (click)="onOpenCalendar(mat_ActivtiesDateFrom)"
+                        #ActivtiesDateFrom="ngModel" matInput [matDatepicker]="mat_ActivtiesDateFrom" [max]="maxDate"
+                        readonly />
+                    <mat-datepicker #mat_ActivtiesDateFrom></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="mat_ActivtiesDateFrom">
+                    </mat-datepicker-toggle> -->
+                </div>
+            </div>
+            <div class="das_activity" *ngFor="let activityObj of leadActivityTypeList">
+
+                <i class="fal center_flex_alignment" id="{{activityObj.ActivityTypeID}}" [ngClass]="{
+                            'fa-calendar bg_perpal': activityObj.ActivityTypeID == activityType.Appointment ,
+                            'fa-phone fa-flip-horizontal light_green_bg': activityObj.ActivityTypeID == activityType.Call ,
+                            'fa-mobile bg_blue_light': activityObj.ActivityTypeID == activityType.SMS ,
+                            'fa-envelope bg_pink': activityObj.ActivityTypeID == activityType.Email,
+                            'fa-car bg_black': activityObj.ActivityTypeID == activityType.Note,
+                            'fa-medal bg_yellow': activityObj.ActivityTypeID == activityType.Achievement,
+                            'fa-bell-on bg_magazine': activityObj.ActivityTypeID == activityType.AppNotification
+                        }" aria-hidden="true">
+                </i>
+
+                <h6>{{activityObj.ActivityTypeName}} <span class="float-right">{{activityObj.ActivityTypeCount}}</span>
+                </h6>
+            </div>
+
+            <!-- <div *ngIf="!isLeadActivitiesDataExists">
+                    <div class="row services">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+                    </div>
+                </div> -->
+        </div>
+    </div>
+    <div class="col-lg-7 col-md-12 col-sm-12 parallel_grid">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-5 col-md-3 col-sm-3">
+                    <h5>
+                        Summary
+                        <span
+                            matTooltip="Select dates to view the summary of all leads according to last updated activity. The counts below update if a new lead/enquiry is created or an existing is updated in the filtered date range."
+                            class="info_tip" matTooltipPosition="right" matTooltipClass="custom-tooltip dashboard-tooltip"><i class="far fa-info-circle"></i>
+                        </span>
+                    </h5>
+                </div>
+                <div class="col-lg-7 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.LeadSummary)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-sm-5">
+                    <div class="summary_lead light_gren">
+                        <p>New Leads<br><span>{{newLeadsCount}}</span></p>
+
+                        <i class="fal fa-user-plus float-right" aria-hidden="true"></i>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="summary_lead light_orange">
+                        <p>Lost Leads<br><span>{{lostLeadsCount}}</span></p>
+
+                        <i class="fal fa-user-times float-right" aria-hidden="true"></i>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="summary_lead light_blu">
+                        <p>Won Leads<br><span>{{wonLeadsCount}}</span></p>
+
+                        <i class="fal fa-thumbs-up float-right" aria-hidden="true"></i>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="summary_lead light_purple">
+                        <p>All Updated Enquiries<br><span>{{allActiveEnquiriesCount}}</span></p>
+
+                        <i class="fal fa-user-check float-right" aria-hidden="true"></i>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-7 center_flex_alignment">
+                    <dx-pie-chart id="pie" type="doughnut" [dataSource]="leadActivitySummary"
+                        [customizePoint]="leadActivitySummaryCustomizePoint">
+                        <dxo-legend [margin]="0" horizontalAlignment="right" verticalAlignment="top" [visible]="false">
+                        </dxo-legend>
+                        <dxi-series argumentField="LeadStatusTypeName"> </dxi-series>
+                        <dxo-tooltip [enabled]="true">
+                        </dxo-tooltip>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="SummaryLeadTooltip"></dxo-tooltip>
+                        <!-- [customizeTooltip]="bindArgumentNameandValueWithSummaryTooltip" -->
+                    </dx-pie-chart>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-6 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Lead Conversion
+                        <span
+                        matTooltip="Select dates to view the conversion of all enquiries into tours, trials, lost or sale."
+                        class="info_tip" matTooltipPosition="right" matTooltipClass="custom-tooltip dashboard-tooltip"><i class="far fa-info-circle"></i>
+                    </span>
+                    </h5>
+                </div>
+                
+                <div class="col-xl-4 col-lg-5 col-md-7 col-sm-7">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.EnquiryTourTrialSale)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+                <div class="col-xl-2 col-md-2">
+                    <div class="select_label">
+                      <select class="form-control" name="statusType" [(ngModel)]="leadDashBoradParameter.statusTypeID" #SaleType="ngModel" placeholder="Select view"
+                        (ngModelChange)="onStatusTypeChange(leadDashBoradParameter.statusTypeID)">
+                        <option *ngFor="let leadStatus of leadStatusTypeID" [ngValue]="leadStatus.LeadStatusTypeID">
+                          {{leadStatus.LeadStatusTypeName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+            </div>
+
+            <div class="small_space">
+                <dx-chart id="chart" [dataSource]="saleTourEnquiryStatus" [valueAxis]="[{
+                    name: 'enquiryTourObj.value',
+                    position: 'left',
+                    min:0,
+                    tickInterval: 2
+                }]">
+                    <!-- <dxi-series *ngFor=" let enquiryTourObj of leadEnquiryTour" [valueField]="enquiryTourObj.value"
+                        [name]="enquiryTourObj.name">
+                    </dxi-series> -->
+                    <dxo-common-series-settings argumentField="MonthNames" type="spline">
+                        <dxo-point hoverMode="allArgumentPoints"></dxo-point>
+                    </dxo-common-series-settings>
+                    <dxi-series valueField="Enquiry" name="Enquiry" color="#55D8FE"></dxi-series>
+                    <dxi-series valueField="Lost" name="Lost" color="#E97C82"></dxi-series>
+                    <dxi-series valueField="Tour" name="Tour" color="#D8D5FE"></dxi-series>
+                    <dxi-series valueField="Trial" name="Trial" color="#FEBF2C"></dxi-series>
+                    <dxi-series valueField="Sale" name="Sale" color="#BCD556"></dxi-series>
+                   
+                    <dxo-argument-axis [valueMarginsEnabled]="false" discreteAxisDivisionMode="crossLabels">
+                        <dxo-grid [visible]="true"></dxo-grid>
+                    </dxo-argument-axis>
+                    <dxo-crosshair [enabled]="true" color="#949494" [width]="1">
+                        <dxo-label [visible]="true" backgroundColor="#949494">
+                            <dxo-font color="#fff" [size]="12">
+                            </dxo-font>
+                        </dxo-label>
+                    </dxo-crosshair>
+                    <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="bottom" >
+                    </dxo-legend>
+                    <dxo-tooltip [enabled]="true" [customizeTooltip]="saleTourEnquiryTooltip">
+                    </dxo-tooltip>
+                </dx-chart>
+            </div>
+            <div *ngIf="!isLeadActivitiesDataExists">
+                <div class="row services">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Leads Assigned to Staff
+                        <span matTooltip="Select dates to view the name of the staff members who are currently assigned to leads."
+                            class="info_tip" matTooltipPosition="right" matTooltipClass="custom-tooltip dashboard-tooltip"><i
+                                class="far fa-info-circle"></i>
+                        </span>
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.WhoOwnstheMostLeads)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row small_space">
+                <div class="col-md-3 col-sm-4 no_padding" style="border-right: 1px solid rgb(252, 245, 245);"
+                    *ngIf="leadStatusTypeFriendlyViewModel">
+                    <div class="most_lead lead_items" *ngFor="let leadStatus of leadStatusTypeFriendlyViewModel">
+                        <h6>{{leadStatus.LeadStatusTypeFriendlyName}}
+                            <span class="color_size float-right" [ngClass]="{
+                                    'bg_lightperpal': leadStatus.LeadStatusTypeID == leadStatusType.Fresh,
+                                    'bg_sky_blue': leadStatus.LeadStatusTypeID == leadStatusType.PerposalMade,
+                                    'bg_cream': leadStatus.LeadStatusTypeID == leadStatusType.MeetingArranged,
+                                    'bg_yellow': leadStatus.LeadStatusTypeID == leadStatusType.PerposalSend,
+                                    'bg_dark_perpal': leadStatus.LeadStatusTypeID == leadStatusType.FinalMeeting,
+                                    'bg_sky_light': leadStatus.LeadStatusTypeID == leadStatusType.Sale,
+                                    'bg_brown': leadStatus.LeadStatusTypeID == leadStatusType.Lost
+                            }"></span>
+                        </h6>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-8">
+                    <dx-chart id="chart" [dataSource]="ownLeads" [valueAxis]="[{
+                        min:0,
+                         tickInterval: 2
+                     }]">
+                        <dxi-series valueField="{{leadStatusType.Fresh}}" name="Enquiry" stack="male" color="#D8D5FF">
+                        </dxi-series>
+                        <dxi-series valueField="{{leadStatusType.PerposalMade}}" name="Proposal Made" stack="male"
+                            color="#A2E6E4">
+                        </dxi-series>
+                        <dxi-series valueField="{{leadStatusType.MeetingArranged}}" name="Meeting Arranged" stack="male"
+                            color="#F8CAA6">
+                        </dxi-series>
+                        <dxi-series valueField="{{leadStatusType.PerposalSend}}" name="Proposal Sent" stack="male"
+                            color="#FEBF05">
+                        </dxi-series>
+                        <dxi-series valueField="{{leadStatusType.FinalMeeting}}" name="Final Meeting" stack="male"
+                            color="#F6A261">
+                        </dxi-series>
+                        <dxi-series valueField="{{leadStatusType.Lost}}" name="Lost" stack="male" color="#E97C82">
+                        </dxi-series>
+                        <dxi-series valueField="{{leadStatusType.Sale}}" name="Sale" stack="male" color="#BFE1FF">
+                        </dxi-series>
+                        <dxo-common-series-settings argumentField="Name" type="stackedBar">
+                        </dxo-common-series-settings>
+                        <dxo-legend horizontalAlignment="right" position="inside" [visible]="false">
+                            <dxo-border [visible]="false"></dxo-border>
+                        </dxo-legend>
+
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="whoOwnsMostLeadTooltip">
+                        </dxo-tooltip>
+                    </dx-chart>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Source of Lead
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.SourceofLead)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+
+                </div>
+            </div>
+            <div class="row small_space">
+                <div class="col-md-3 col-sm-4 no_padding" style="border-right: 1px solid #E5E5E5;">
+                    <div class="das_activity" *ngFor="let sourceObj of enquirySourceTypeList; let i = index">
+
+                        <ng-container *ngIf="(sourceObj.EnquirySourceTypeID == enquirySourceType.Facebook 
+                        || sourceObj.EnquirySourceTypeID == enquirySourceType.Instagram 
+                        || sourceObj.EnquirySourceTypeID == enquirySourceType.Twitter
+                        || sourceObj.EnquirySourceTypeID == enquirySourceType.WellyxCore); else other_content">
+                            <i class="fab center_flex_alignment" id="{{sourceObj.EnquirySourceTypeID}}" [ngClass]="{
+                            'fa-facebook-f bg_facebook': sourceObj.EnquirySourceTypeID == enquirySourceType.Facebook, 
+                            'fa-instagram bg_instagram': sourceObj.EnquirySourceTypeID == enquirySourceType.Instagram, 
+                            'fa-twitter bg_twitter': sourceObj.EnquirySourceTypeID == enquirySourceType.Twitter,                            
+                            'fa-creative-commons-share bg_wellyx_core': sourceObj.EnquirySourceTypeID == enquirySourceType.WellyxCore                            
+                        }" aria-hidden="true">
+                            </i>
+                        </ng-container>
+
+                        <ng-template #other_content>
+                            <ng-container>
+                                <i class="fa center_flex_alignment" id="{{sourceObj.EnquirySourceTypeID}}" [ngClass]="{
+                                    'fa-leaf bg_perpal': sourceObj.EnquirySourceTypeID == enquirySourceType.OrganicSearch ,
+                                    'fa-envelope bg_blue': sourceObj.EnquirySourceTypeID == enquirySourceType.EmailMarketing ,
+                                    'fa-tv bg_pink': sourceObj.EnquirySourceTypeID == enquirySourceType.DigitalAdvertising ,
+                                    'fa-globe-americas bg_orange': sourceObj.EnquirySourceTypeID == enquirySourceType.Website ,
+                                    'fa-share-alt bg_green': sourceObj.EnquirySourceTypeID == enquirySourceType.OtherSocialMediaPlatforms,
+                                    'fa-user-friends bg_black': sourceObj.EnquirySourceTypeID == enquirySourceType.Referral, 
+                                    'fa-file-pdf bg_leaflets': sourceObj.EnquirySourceTypeID == enquirySourceType.Leaflets,
+                                    'fa-walking bg_walkIn': sourceObj.EnquirySourceTypeID == enquirySourceType.WalkIn,
+                                    'fa-newspaper bg_newspaper': sourceObj.EnquirySourceTypeID == enquirySourceType.Newspaper, 
+                                    'fa-book bg_magazine': sourceObj.EnquirySourceTypeID == enquirySourceType.Magazine, 
+                                    'fal fa-phone-laptop bg_wellyx_widget': sourceObj.EnquirySourceTypeID == enquirySourceType.WellyxWidget,
+                                    'fa-chalkboard bg_signage': sourceObj.EnquirySourceTypeID == enquirySourceType.Signage,
+                                    'fa-tablet bg_wellyx_customer_app': sourceObj.EnquirySourceTypeID == enquirySourceType.WellyxCustomerApp,
+                                    'fa-chalkboard-teacher bg_staffapp': sourceObj.EnquirySourceTypeID == enquirySourceType.WellyxStaffApp
+                                }" aria-hidden="true">
+                                </i>
+                            </ng-container>
+                        </ng-template>
+
+                        <h6>{{sourceObj.EnquirySourceTypeName == 'Other Social Media Platforms' ? 'Social Media' : sourceObj.EnquirySourceTypeName == 'Referral' ? 'Online' : sourceObj.EnquirySourceTypeName}} <span
+                                class="float-right">{{sourceObj.EnquirySourceCount}}</span></h6>
+                    </div>
+
+                    <div class="source_lead_total">
+                        <h6>Total <span class="float-right">{{equirySourceTotalCount}}</span></h6>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-8 lead-dash-chart">
+                    <dx-chart id="chart" [dataSource]="sourceDayWiseFilteredList"
+                        [valueAxis]="[{ min:0,tickInterval: 2 }]">
+                        <dxi-series valueField="DigitalAdvertising" name="Digital Advertising" stack="male"
+                            color="#E97C82">
+                        </dxi-series>
+                        <dxi-series valueField="EmailMarketing" name="Email Marketing" stack="male" color="#0fa8cf">
+                        </dxi-series>
+                        <dxi-series valueField="OrganicSearch" name="Organic Search" stack="male" color="#D8D5FF">
+                        </dxi-series>
+                        <dxi-series valueField="Website" name="Website" stack="male" color="#F96E03">
+                        </dxi-series>
+                        <dxi-series valueField="SocialMedia" name="Social Media" stack="male" color="#5bb96a">
+                        </dxi-series>
+                        <dxi-series valueField="Online" name="Online" stack="male" color="#454c54">
+                        </dxi-series>
+                        <dxi-series valueField="Leaflets" name="Leaflets" stack="male" color="#E383FF">
+                        </dxi-series>
+                        <dxi-series valueField="WalkIn" name="WalkIn" stack="male" color="#0FCFC9">
+                        </dxi-series>
+                        <dxi-series valueField="Newspaper" name="Newspaper" stack="male" color="#FFB301">
+                        </dxi-series>
+                        <dxi-series valueField="Magazine" name="Magazine" stack="male" color="#564FC1">
+                        </dxi-series>
+                        <dxi-series valueField="Signage" name="Signage" stack="male" color="#607D8B">
+                        </dxi-series>
+                        <!-- 
+                        <dxi-series valueField="Facebook" name="Facebook" stack="male" color="#3B5998">
+                        </dxi-series>
+                        <dxi-series valueField="Instagram" name="Instagram" stack="male" color="#3F729B">
+                        </dxi-series>
+                        <dxi-series valueField="Twitter" name="Twitter" stack="male" color="#55ACEE">
+                        </dxi-series> -->
+
+                        <dxi-series valueField="WellyxCore" name="Wellyx-Core" stack="male" color="#3B5998">
+                        </dxi-series>
+                        <dxi-series valueField="WellyxWidget" name="Wellyx-Widget" stack="male" color="#F6A261">
+                        </dxi-series>
+                        <dxi-series valueField="WellyxCustomerApp" name="Wellyx-Customer App" stack="male" color="#55ACEE">
+                        </dxi-series>
+                        <dxi-series valueField="WellyxStaffApp" name="Wellyx-Staff App" stack="male" color="#1367B8">
+                        </dxi-series>
+                        <dxo-common-series-settings argumentField="Date" type="stackedBar"
+                            palette="'red', 'green', 'blue'">
+                        </dxo-common-series-settings>
+                        <dxo-legend horizontalAlignment="right" position="inside" [visible]="false">
+                            <dxo-border [visible]="false"></dxo-border>
+                        </dxo-legend>
+
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="sourceOfLeadTooltip">
+                        </dxo-tooltip>
+                        <dxo-size [height]="750">
+                        </dxo-size>
+
+                    </dx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="scheduler_space"></div>

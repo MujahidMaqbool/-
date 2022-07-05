@@ -1,0 +1,82 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <!-- <button *ngIf="allowedPages.Search_Member" class="simple_btn" type="button" role="navigation" [routerLink]="['/member']">
+                     Back to Search
+                </button> -->
+            <button *ngIf="allowedPages.Save" type="button" class="save" (click)="openAddNewStaffDocumentDialog()">
+                     Upload Document
+                </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg info_bar_bg">
+    <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+    <div class="row grid_header mob-scroll-grid">
+        <div class="col-md-2 col">
+            <h5>
+                <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                    Date
+                    <i class="fas fa-sort-alt"></i>
+                  </a>
+            </h5>
+        </div>
+        <div class="col-md-3 col">
+            <h5>File Name</h5>
+        </div>
+        <div class="col-md-5 col">
+            <h5>Description</h5>
+        </div>
+        <div class="col-md-2 col text-center">
+            <h5>Actions</h5>
+        </div>
+    </div>
+    <div id="grid" *ngIf="isDataExists">
+        <div class="row grid_rows mob-scroll-grid" *ngFor="let MemberDocobj of memberDocument">
+            <div class="col-md-2 col">
+                <h5>{{MemberDocobj.CreatedOn | customdate: dateFormat}}</h5>
+            </div>
+            <div class="col-md-3 col">
+                <h5>{{MemberDocobj.DocumentName}} </h5>
+            </div>
+            <div class="col-md-5 col">
+                <h5>{{MemberDocobj.Description}}</h5>
+            </div>
+            <div class="col-md-2 col text-center">
+                <h5>
+                   
+                        <span class="blue">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewdownloadFile(MemberDocobj.DocumentPath,true)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-book-open" *ngIf="MemberDocobj.DocumentPath !== '' "></i>
+                            </a>
+                        </span>
+                    <!-- <span class="blue">
+                            <a matTooltip="Download" matTooltipPosition="above" (click)="viewdownloadFile(MemberDocobj.DocumentPath,false)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-cloud-download" *ngIf="MemberDocobj.DocumentPath"></i>
+                            </a>
+                        </span> -->
+                    <span class="red_del" *ngIf="allowedPages.Save">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="deleteMemberDocument(MemberDocobj.CustomerDocumentID)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+    <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+            </div>
+        </div>
+    </div>
+</div>

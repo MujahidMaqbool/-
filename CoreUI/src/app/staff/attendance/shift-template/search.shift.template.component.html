@@ -1,0 +1,71 @@
+<div class="page_content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="company_btn float-right">
+                <button *ngIf="isSaveShiftTemplateAllowed" class="save" (click)="onAddClick()" data-toggle="modal" data-target=".add_branch_pop">
+                        Add Shift Template</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="grids_white_bg">
+        <div class="overflow-auto">
+        <div class="row grid_header mob-scroll-grid">
+            <div class="col">
+                <h5>Shift Time</h5>
+            </div>
+            <div class="col">
+                <h5>Unpaid Break</h5>
+            </div>
+            <div class="col">
+                <h5>Staff Position</h5>
+            </div>
+            <div class="col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div id="grid" *ngIf="isDataExists">
+            <div class="row grid_rows mob-scroll-grid " *ngFor="let shiftTemplate of shiftTemplates">
+                <div class="col">
+                    <h5>{{shiftTemplate.StartTime | branchTimeFormat}} - {{shiftTemplate.EndTime | branchTimeFormat}} </h5>
+                </div>
+                <div class="col">
+                    <h5>{{shiftTemplate.UnpaidBreak}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{shiftTemplate.StaffPositionName}}</h5>
+                </div>
+
+                <div class="col text-center">
+                    <h5>
+                        <span class="blue" *ngIf="isSaveShiftTemplateAllowed">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" data-toggle="modal"  data-target=".edit_staffposition_pop" href="javascript:void(0);" (click)="onEditClick(shiftTemplate.ShiftTemplateID)">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <span class="red_del" *ngIf="isSaveShiftTemplateAllowed">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="deleteShiftTemplate(shiftTemplate.ShiftTemplateID)" href="javascript:void(0)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows responsive_grid_rows ">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="pagination">
+            <div class="col-md-12 no_padding">
+                <mat-paginator #paginator [length]="totalRecords" [pageIndex]="pageIndex" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" [showFirstLastButtons]="true">
+                </mat-paginator>
+            </div>
+            <div class="clearfix"></div>
+        </div> -->
+    </div>
+</div>

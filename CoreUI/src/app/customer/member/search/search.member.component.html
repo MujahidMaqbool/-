@@ -1,0 +1,282 @@
+﻿<div class="page_content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button *ngIf="allowedPages.Save" type="button" class="simple_border_btn" [routerLink]="['/member/details', 0]">
+          Add Client
+        </button>
+        <button *ngIf="allowedPages.Save" type="button" class="save" [routerLink]="['/member/details', 0]">
+          Add Member
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <div class="white_bg">
+    <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+        data-target="#members_search">
+        <div class="col-md-12">
+          <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+        </div>
+      </div>
+      <div id="members_search" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row flex-end">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4">
+              <h5 class="field_label">Name</h5>
+              <input type="text" class="form-control" name="Name" maxlength="50" id="member_name">
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4">
+              <h5 class="field_label">Card Number</h5>
+              <input type="text" class="form-control" name="number" id="member_card" maxlength="50">
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4">
+              <h5 class="field_label">Email</h5>
+              <div [ngClass]="{'has-danger': isEmailValid == false }">
+                <input type="text" class="form-control" name="Email" id="member_email" maxlength="50"
+                  (blur)="validateEmail()" />
+              </div>
+              <!-- <span class="text-danger" *ngIf="isEmailValid == false">
+                                {{messages.Validation.Email_Invalid}}
+                            </span> -->
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4">
+              <h5 class="field_label">Membership(s)</h5>
+              <div class="select_label">
+                <select class="form-control" name="MembershipID" id="member_membership">
+                  <option *ngFor="let membership of membershipList" [value]="membership.MembershipID">
+                    {{membership.MembershipName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="col-md-3">
+                            <h5 class="field_label">Start Date</h5>
+                            <input type="text" name="DateFrom" class="form-control date-picker bg_transparent"
+                                [(ngModel)]="dateFrom" (ngModelChange)="onFromDateChange(dateFrom)" #DateFrom="ngModel"
+                                matInput [matDatepicker]="datefrom" placeholder="DD/MM/YYYY" readonly />
+                            <mat-datepicker #datefrom></mat-datepicker>
+                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom">
+                            </mat-datepicker-toggle>
+                            <date-picker [value]="memberSearchParameter.JoiningDateFrom"
+                                (onDateChange)="onFromDateChange($event)"></date-picker>
+                        </div> -->
+            <!-- <div class="col-md-3">
+                            <h5 class="field_label">End Date</h5>
+                            <input type="text" name="DateTo" class="form-control date-picker bg_transparent"
+                                [(ngModel)]="dateTo" (ngModelChange)="onToDateChange(dateTo)" #DateTo="ngModel"
+                                matInput [matDatepicker]="dateto" placeholder="DD/MM/YYYY" readonly />
+                            <mat-datepicker #dateto></mat-datepicker>
+                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto">
+                            </mat-datepicker-toggle>
+                            <date-picker [value]="memberSearchParameter.JoiningDateTo"
+                                (onDateChange)="onToDateChange($event)"></date-picker>
+                        </div> -->
+            <div class="col-lg-6 col-md-8 col-sm-8 input_heading no_padding">
+              <dateto-datefrom #memberDateSearch>
+              </dateto-datefrom>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4">
+              <h5 class="field_label">Membership Status</h5>
+              <div class="select_label">
+                <select class="form-control" name="MembershipStatusTypeID" id="member_status">
+                  <option *ngFor="let membershipStatus of membershipStatusTypeList"
+                    [value]="membershipStatus.MembershipStatusTypeID">
+                    {{membershipStatus.MembershipStatusTypeName }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-8 no_padding">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <button class="reset_btn" type="button" (click)="resetMemberSearchFilter()">
+                    Reset
+                  </button>
+                </div>
+                <div class="col-md-6 col-sm-6 full_width_btn">
+                  <button class="search" type="button" (click)="searchAllMembers()">Search</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grids_white_bg">
+    <div class="overflow-auto">
+      <div class="row grid_header responsive_grid_header">
+        <div class="col">
+          <h5>
+            <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+              Name
+              <i class="fa" [ngClass]="{
+                                            'hide': isMemberNameOrderASC === undefined,
+                                            'fa-long-arrow-down show': isMemberNameOrderASC,
+                                            'fa-long-arrow-up show': !isMemberNameOrderASC
+                                   }" aria-hidden="true"></i>
+            </a>
+          </h5>
+        </div>
+        <div class="col">
+          <h5>Card Number </h5>
+        </div>
+        <div class="col-md-5 col mob-merge-col no_padding">
+          <div class="row">
+            <div class="col">
+              <h5>Membership(s)</h5>
+            </div>
+            <div class="col">
+              <h5>
+                <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
+                  Start Date
+                  <i class="fa" [ngClass]="{
+                                    'hide': startDateSortASC === undefined,
+                                    'fa-long-arrow-up show': startDateSortASC,
+                                    'fa-long-arrow-down show': !startDateSortASC
+                                                        }" aria-hidden="true"></i>
+                </a>
+              </h5>
+            </div>
+            <div class="col">
+              <h5>Membership Status</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <h5>Email </h5>
+        </div>
+        <div class="col">
+          <h5>Mobile</h5>
+        </div>
+        <div class="col text-center">
+          <h5>Actions</h5>
+        </div>
+      </div>
+      <div id="grid" *ngIf="isDataExists">
+        <div class="row grid_rows responsive_grid_rows" *ngFor="let  memberDataobj of allMembers">
+          <div class="col lead_member">
+            <h5 *ngIf="allowedPages.Save">
+              <a class="name_link" [routerLink]="['/member/details',memberDataobj.CustomerID]">
+                {{memberDataobj.CustomerName }}
+              </a>
+              <span *ngIf="!allowedPages.Save">
+                {{memberDataobj.CustomerName }}
+              </span>
+              <span [ngClass]="{
+                            'active': memberDataobj.IsLead
+                        }">
+                {{memberDataobj.IsLead ? 'Lead' : ''}}
+              </span>
+            </h5>
+            <h5 *ngIf="!allowedPages.Save">
+              {{memberDataobj.CustomerName }}
+              <span [ngClass]="{
+                                'active': memberDataobj.IsLead
+                            }">
+                {{memberDataobj.IsLead ? 'Lead' : ''}}
+              </span>
+            </h5>
+          </div>
+          <div class="col">
+            <h5>{{memberDataobj.CardNumber ? memberDataobj.CardNumber: 'N/A'}}</h5>
+          </div>
+          <div class="col-md-5 col mob-merge-col no_padding">
+            <div class="row" *ngFor="let membershipobj of memberDataobj.MemberMembershipList">
+              <div class="col">
+                <h5>{{membershipobj.MembershipName }}
+                </h5>
+              </div>
+              <div class="col">
+                <h5>{{membershipobj.MembershipStartDate | customdate: dateFormat }}</h5>
+              </div>
+              <div class="col">
+                <h5>{{membershipobj.MembershipStatusTypeName}}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <h5>{{memberDataobj.Email}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{memberDataobj.Mobile}}</h5>
+          </div>
+          <div class="col text-center">
+            <h5>
+              <span class="brown">
+                <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="openMemberDetailDialog(memberDataobj.CustomerID)" href="javascript:void(0)">
+                  <i class="fal fa-book-open"></i>
+                </a>
+              </span>
+              <span class="blue" *ngIf="allowedPages.Save">
+                <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  [routerLink]="['/member/details',memberDataobj.CustomerID]">
+                  <i class="fal fa-edit"></i>
+                </a>
+              </span>
+              <span class="green" *ngIf="allowedPages.Activities">
+                <a matTooltip="Activities" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  [routerLink]="['/member/details', memberDataobj.CustomerID, 'activities']">
+                  <i class="fal fa-address-card"></i>
+                </a>
+              </span>
+              <span class="green" *ngIf="allowedPages.Memberships">
+                <a matTooltip="Memberships" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  [routerLink]="['/member/details', memberDataobj.CustomerID, 'memberships']">
+                  <i class="fal fa-user-circle"></i>
+                </a>
+              </span>
+              <span class="green" *ngIf="allowedPages.Payments">
+                <a matTooltip="Payments" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  [routerLink]="['/member/details', memberDataobj.CustomerID, 'payments']">
+                  <i class="fal fa-hand-holding-usd"></i>
+                </a>
+              </span>
+              <span class="green" *ngIf="allowedPages.Invoices">
+                <a matTooltip="Invoices" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  [routerLink]="['/member/details', memberDataobj.CustomerID, 'invoice-history']">
+                  <i class="fal fa-file-invoice"></i>
+                </a>
+              </span>
+              <span class="green" *ngIf="allowedPages.Bookings">
+                <a matTooltip="Bookings" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  [routerLink]="['/member/details', memberDataobj.CustomerID, 'bookings']">
+                  <i class="fal fa-calendar-check"></i>
+                </a>
+              </span>
+              <!-- as per discussion with tahir shb comment delete action on member -->
+              <!-- <span class="red_del" *ngIf="!allowedPages.Save">
+                <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="deleteMember(memberDataobj.CustomerID)" href="javascript:void(0)">
+                  <i class="fal fa-trash-alt"></i>
+                </a>
+              </span> -->
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+          <div class="col-md-12 col-sm-12 text-center">
+            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    <!-- <div class="pagination">
+            <div class="col-md-12 no_padding">
+                <mat-paginator #paginator [length]="[totalRecords]" [pageSize]="pageSize"
+                    [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" (page)="changePageSize($event)">
+                </mat-paginator>
+            </div>
+            <div class="clearfix"></div>
+        </div> -->
+  </div>
+</div>

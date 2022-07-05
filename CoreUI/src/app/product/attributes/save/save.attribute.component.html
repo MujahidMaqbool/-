@@ -1,0 +1,93 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_medium_popup">
+            <div class="popup_header">
+                <h4>Product Attribute</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+
+                <div class="row" *ngIf="submitted && (isShowRequired || attributeName.invalid)">
+                    <div class="col-md-12 p-0">
+                        <div class="alert alert-danger">
+                            {{messages.Validation.Info_Required}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="submitted && showDuplicateValueError">
+                    <div class="col-md-12 p-0">
+                        <div class="alert alert-danger">
+                            Variant value should be unique
+                        </div>
+                    </div>
+                </div>
+                <div class="sch_class_head space-10">
+                    <div>
+                        <h5 class="field_label">Active</h5>
+                    </div>
+                    <div>
+                        <mat-slide-toggle class="wellyx-checked mt-2" [(checked)]="attribute.AttributeBranchVM[0].IsActive" [(ngModel)]="attribute.AttributeBranchVM[0].IsActive" name="isActive">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12" [ngClass]="{
+                                        'has-danger': attributeName.invalid && (attributeName.dirty || attributeName.touched || inValidProductAttributeName),
+                                        'has-success': attributeName.valid && (attributeName.dirty || attributeName.touched )
+                                           }">
+                            <h5 class="field_label mt-0">Name</h5>
+                            <input type="text" class="form-control" id="attributeName" name="attributeName" [disabled]="disableInput"
+                                [(ngModel)]="attribute.AttributeName" #attributeName="ngModel" maxlength="50"
+                                tabindex="1" required autoFocusDirective />
+                        </div>
+                    </div>
+                </div>
+                <div class="popup_white_bg pb-3 " [class.invalid-inputs]="submitted">
+                    <div class="variant-title">
+                        <h5>Variant Value <a *ngIf="!disableInput" (click)="addNew()" href="javascript:void(0);" class="float-right"><i
+                                    class="fal fa-plus-circle"></i> Add New Variant</a></h5>
+                    </div>
+                    <div #scrollContainer [ngStyle]="{'pointer-events': disableInput ? 'none' : 'initial' }" [sortablejs]="attribute.AttributeValueVM" class="example-list mt-20 of-height-250 cstm_scroll_bg">
+                        <div class="variant-items" *ngFor="let variant of attribute.AttributeValueVM; let i = index">
+                            <div *ngIf="disableInput">&nbsp;</div>
+                            <div *ngIf="!disableInput" class="cursor-move"><i class="fal fa-grip-vertical cursor-move"></i></div>
+                            <div>
+                                <input type="text" autoFocusDirective class="form-control" [(ngModel)]="variant.AttributeValue" #i="ngModel" maxlength="50" [disabled]="disableInput || variant.isAssociated"
+                                    required (blur)="onBlur(i)" tabindex="{{i == 0 ? 2 : i+2}}" />
+                            </div>
+                            <div>
+                                <a *ngIf="attribute.AttributeValueVM.length > 1 && !disableInput && !variant.isAssociated" (click)="delete(i)" href="javascript:void(0);" role="button"><i class="fal fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div [ngStyle]="{'pointer-events': disableInput ? 'none' : 'initial' }" cdkDropList class="example-list mt-20" (cdkDropListDropped)="drop($event)">
+                        <div class="variant-items" *ngFor="let variant of attribute.AttributeValueVM; let i = index" cdkDrag>
+                            <div *ngIf="disableInput">&nbsp;</div>
+                            <div *ngIf="!disableInput" class="cursor-move"><i cdkDragHandle class="fal fa-grip-vertical cursor-move"></i></div>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="variant.AttributeValue" #i="ngModel" maxlength="50" [disabled]="disableInput || variant.isAssociated"
+                                    required (blur)="onBlur(i)" />
+                            </div>
+                            <div>
+                                <a *ngIf="attribute.AttributeValueVM.length > 1 && !disableInput && !variant.isAssociated" (click)="delete(i)" href="javascript:void(0);" role="button"><i class="fal fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                        <button type="submit" class="save primary_blue_btn" [disabled]="disableSaveBtn" (click)="onSave()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

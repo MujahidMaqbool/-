@@ -1,0 +1,57 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Write Off</h4>
+        </div>
+        <form #saveBadDebtFrom="ngForm" (ngSubmit)="onSave(saveBadDebtFrom.valid)" novalidate>
+            <div class="popup_content delete_popup">
+
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- <h6>Are you sure!</h6> -->
+                            <p class="pb-2">Writing off the remaining balance of this invoice will decrease your total earnings by this amount. Beware that you cannot process the invoice once it is written off.</p>
+                            <hr>
+                            <h5 class="field_label pt-1">Remaining Balance</h5>
+                            <input type="text" name="text" value="{{balanceAmount | currency: currencyFormat}}" class="form-control" disabled>
+
+                            <h5 class="field_label pt-2">Write Off Reason</h5>
+                            <div class="select_label">
+                                <select name="ReasonID" tabindex="1" [(ngModel)]="saveBadDebt.ReasonID"
+                                    #ReasonID="ngModel" (ngModelChange)="onModelChange()">
+                                    <!-- <option [value]='0'>-- Select --</option> -->
+                                    <option *ngFor="let badDebt of badDebtReasonFundamental"
+                                        [ngValue]="badDebt.ReasonID">
+                                        {{badDebt.ReasonName}}
+                                    </option>
+                                </select>
+                            </div>
+                            <!-- <h5 class="field_label">Other Reason <span>(Remaining Characters: {{ 150 -
+                            saveBadDebt?.Note?.length }})</span></h5> -->
+
+                            <div [ngClass]="{
+                            'has-danger':DebtNote.invalid &&  (DebtNote.touched || DebtNote.dirty || saveBadDebtFrom.submitted),
+                            'has-success':DebtNote.valid &&  (DebtNote.touched || DebtNote.dirty)
+                            }">
+                                <div class="ten_space">
+                                    <textarea rows="5" class="form-control" name="Note" tabindex="2"
+                                        [(ngModel)]="saveBadDebt.Notes" [disabled]="!isOtherReasonRequired" required
+                                        #DebtNote="ngModel" placeholder="Type reason here"
+                                        maxlength="150"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="row popup_footer">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right">
+                <button type="button" (click)="onClose()">No</button>
+                <button class="primary_blue_btn" type="submit">Confirm</button>
+            </div>
+        </div>
+    </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,185 @@
+
+<form #membershipClassFormData="ngForm" novalidate>
+  <div class="white_bg">
+     <div class="row flex-end">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="field_label">
+                <h5>Branch</h5>
+            </div>
+            <div class="select_label">
+                <div [ngClass]="{
+                    'has-danger': searchParam.BranchID == 0 && showValidation
+                   }">
+                    <select class="form-control" name="branch" [(ngModel)]="searchParam.BranchID" (ngModelChange)="onBranchChange($event)">
+                        <option [ngValue]="0"> All Branches </option>
+                        <option *ngFor="let branch of membershipBranchList" [ngValue]="branch.BranchID"> {{branch.BranchName}} </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="field_label">
+              <h5>Category</h5>
+          </div>
+          <div class="select_label">
+              <div [ngClass]="{
+                  'has-danger': searchParam.BranchID == 0 && showValidation
+                 }">
+                  <select class="form-control" name="category" [(ngModel)]="searchParam.CategoryID" (ngModelChange)="onCategoryChange($event)">
+                      <option [ngValue]="0"> All Categories </option>
+                      <option *ngFor="let category of membershipCategoryList" [ngValue]="category.ItemCategoryID"> {{category.ItemCategoryName}} </option>
+                  </select>
+              </div>
+          </div>
+      </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="field_label">
+                <h5>{{itemTypeName}}</h5>
+            </div>
+            <div class="select_label">
+                <div>
+                    <!-- <select class="form-control" name="item" [(ngModel)]="searchParam.ItemID" >
+                        <option [ngValue]="0"> All {{itemTypeHeading == 'Classes' ? 'Classes' : itemTypeHeading}} </option>
+                        <option *ngFor="let item of branchSpecificBenefitItemList" [ngValue]="ItemTypeID == enuMemberShipItemTypeName.Service ? item.ServiceID : item.ItemID"> {{item.ItemName}} </option>
+                    </select> -->
+                       <mat-select class="form-control multi_select_tax mb-1" placeholder="Select {{itemTypeHeading}}" name="mainSearch"
+                         #selectItem [(ngModel)]="selectedItemsList" tabindex="2" multiple>
+
+                         <mat-select-trigger *ngIf="selectedItemsList && selectedItemsList.length > 0">
+                           {{selectedItemsList && selectedItemsList.length > 0 &&
+                             selectedItemsList[0].ItemName ?
+                             selectedItemsList[0].ItemName :
+                             selectedItemsList && selectedItemsList.length >= 2 &&
+                             selectedItemsList[0].ItemName == undefined ?
+                             selectedItemsList[1].ItemName : ''}}
+                           <span *ngIf="selectedItemsList && selectedItemsList.length >= 2" class="example-additional-selection">
+                             (+{{selectedItemsList[0].ItemName == undefined ? selectedItemsList.length - 2 : (allItemsSelection.selected && selectedItemsList.length == 1) ? selectedItemsList.length : selectedItemsList.length - 1 }}
+                             {{selectedItemsList[0].ItemName == undefined && selectedItemsList.length === 3 ? 'other' : selectedItemsList.length === 2 ? 'other' : 'others'}})
+                           </span>
+                         </mat-select-trigger>
+                         <span *ngIf="branchSpecificBenefitItemList && branchSpecificBenefitItemList.length > 1">
+                           <mat-option #allItemsSelection (click)="toggleAllItemsSelection()" [value]="0">
+                            {{'All '+ itemTypeHeading}}</mat-option>
+                         </span>
+                         <mat-option *ngFor="let item of branchSpecificBenefitItemList" [value]="item" (click)="togglePerOneItem()">
+                          {{item.ItemName}} <p class="item-variant">{{item.ProductVariantName}}</p> </mat-option>
+                       </mat-select>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 no_padding">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <button class="reset_btn" type="button" (click)="onReset()">Reset</button>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="full_width_btn ">
+                        <button type="button" class="search" (click)="onSearch()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="grids_white_bg">
+    <div class="row section_title_action mb-2">
+      <div class="col no_padding"><h3>{{itemTypeHeading}}</h3></div>
+      <div class="col no_padding"><button class="delete_btn float-right" type="button" [disabled]="isDeleteAttButtonDisabled" (click)="onDeleteItemType(0)"> Delete All</button></div>
+    </div>
+    <div class="overflow-auto">
+      <div class="row grid_header responsive_grid_header">
+        <div class="col-md-2 col">
+            <span class="checkbox checkbox-success top_zero">
+              <input id="{{'trigger-all' + '-' + itemTypeName}}" [(ngModel)]="isSelectAllItemTypes" [disabled]="filterMembershipItemTypeList && filterMembershipItemTypeList.length > 0 ? false : true"
+                  (ngModelChange)="onAllItemTypeSelectionChange($event)" name="{{'trigger-all' + '-' + itemTypeName}}" type="checkbox">
+                  <label for="{{'trigger-all' + '-' + itemTypeName}}" class="semi_bold_font">
+                  <span></span> Branch</label>
+            </span>
+        </div>
+        <div class="col">
+          <h5>Category</h5>
+        </div>
+        <div class="col">
+          <h5>{{itemTypeName}}</h5>
+        </div>
+        <div class="col" *ngIf="ItemTypeID == enuMemberShipItemTypeName.Service">
+          <h5>Duration</h5>
+        </div>
+        <div class="col">
+          <h5>Benefits</h5>
+        </div>
+        <div class="col">
+          <h5>Price</h5>
+        </div>
+        <div class="col-md-1 col text-center">
+          <h5>Actions</h5>
+        </div>
+      </div>
+      <div id="grid">
+        <div class="row grid_rows responsive_grid_rows" *ngFor="let item of filterMembershipItemTypeList">
+          <div class="col-md-2 col">
+              <span class="checkbox checkbox-success top_zero">
+                <input type="checkbox" name="{{'Chk_item' + item.ItemID + item.ItemName + item.BranchID}}"
+                  id="{{'Chk_item' + item.ItemID + item.ItemName + item.BranchID}}" [(ngModel)]="item.IsSelected"
+                  [(checked)]="item.IsSelected" (ngModelChange)="onItemTypeSelectionChange()" />
+                <label for="{{'Chk_item' + item.ItemID + item.ItemName + item.BranchID}}"><span></span> {{item.BranchName}}</label>
+              </span>
+          </div>
+          <div class="col">
+            <h5>{{item.ItemCategoryName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{item.ItemName}}<span *ngIf="!item.IsActive" class="item-inactive">Inactive</span>
+              <p class="item-variant">{{item.ProductVariantName}}</p>
+            </h5>
+          </div>
+          <div class="col" *ngIf="ItemTypeID == enuMemberShipItemTypeName.Service">
+            <h5>{{item.DurationValue}} {{item.DurationTypeName}}</h5>
+          </div>
+          <div class="col">
+            <h5 *ngIf="item.NoLimits">No Limit</h5>
+            <h5 *ngIf="!item.NoLimits">{{item.TotalSessions}} {{
+                item.DurationTypeID == enuMemberShipBenefitDurations.Day ? 'Per Day' :
+                item.DurationTypeID == enuMemberShipBenefitDurations.Week ? 'Per Week' :
+                item.DurationTypeID == enuMemberShipBenefitDurations.FortnightBiweek ? 'Per Fortnight/Bi-week' :
+                item.DurationTypeID == enuMemberShipBenefitDurations.FourWeek ? 'Per Four Week' :
+                item.DurationTypeID == enuMemberShipBenefitDurations.Month ? 'Per Month' :
+                item.DurationTypeID == enuMemberShipBenefitDurations.Quarter ? 'Per Quarter' :
+                item.DurationTypeID == enuMemberShipBenefitDurations.SixMonth ? 'Per Six Month' :
+                item.DurationTypeID == enuMemberShipBenefitDurations.Year ? 'Per Year' : 'Per Membership'
+              }} </h5>
+          </div>
+          <div class="col">
+            <h5 *ngIf="item.IsFree">Free</h5>
+            <h5 *ngIf="!item.IsFree">{{item.DiscountPercentage}}% Off</h5>
+          </div>
+          <div class="col-md-1 col text-center">
+            <h5>
+              <span class="blue">
+                <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="onSaveMembershipItemType(item)" href="javascript:void(0)">
+                  <i class="fal fa-edit"></i>
+                </a>
+              </span>
+              <span class="red_del">
+                <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="onDeleteItemType(item)" href="javascript:void(0)">
+                  <i class="fal fa-trash-alt"></i>
+                </a>
+              </span>
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="(filterMembershipItemTypeList && filterMembershipItemTypeList.length == 0) || !filterMembershipItemTypeList">
+        <div class="row grid_rows">
+          <div class="col-md-12 col-sm-12 text-center">
+            <h5 class="no_record_found">No {{itemTypeHeading | lowercase}} found</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

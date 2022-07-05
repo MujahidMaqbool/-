@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12 flex-cls row-align-center">
+        <div class="view_main_bar">
+            <div class="column_flex_alignment">
+                <img src="{{impagePath}}" style="width:40px" class="img-responsive rounded-circle" alt="no image">
+                <h2 class="view_main_bar_item">{{personDetail.FirstName}} {{personDetail.LastName && personDetail.LastName.length > 0 ? personDetail.LastName : ''}}</h2>
+            </div>
+
+            <!-- <div class="view_main_bar_item">
+                <span>{{personDetail.FirstName}} {{personDetail.LastName && personDetail.LastName.length > 0 ? personDetail.LastName : ''}}</span>
+            </div> -->
+            <div>
+                <span class="enq_status">{{personDetail.CustomerTypeName}}</span>
+            </div>
+            <div class="view_main_bar_item">
+                <i class="fal fa-envelope"></i> {{personDetail.Email}}
+            </div>
+            <div *ngIf='personDetail.Mobile' class="view_main_bar_item">
+                <i class="fal fa-mobile-android-alt"></i> {{personDetail.Mobile}}
+            </div>
+            <!-- <div class="view_main_bar_item">
+                <i class="fal fa-map-marker-alt"></i> {{personDetail.Address1}}
+            </div> -->
+        
+        </div>
+        <div class="block_badge" *ngIf="personDetail.IsBlocked && isCustomerBooking">Blocked</div>
+    </div>
+</div>

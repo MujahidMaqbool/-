@@ -1,0 +1,103 @@
+<!-- <div class="attendance_login" style="width: 100%; position: relative;"> -->
+<!-- <img src="assets/images/logo_03.png" class="img-responsive center-block" width="200"> -->
+<!-- <span class="close_icon float-right" (click)="onClosePopup()" aria-hidden="true">&times;</span>
+    <div class="staff_img">
+        <img src="{{staffAttendanceModel.Staff.ImagePath}}" class="center-block rounded_image" width="100">
+    </div>
+    <h5 *ngIf="!staffAttendanceModel.IsStaffClockIn" class="text-center">
+        <span>{{staffAttendanceModel.Staff.FullName}}</span> you clocked in. Have a nice day!
+        <p class="text-center">Now that your are clocked in, What would you do?</p>
+    </h5>
+
+    <h5 *ngIf="staffAttendanceModel.IsStaffClockIn" class="text-center">
+        <span>{{staffAttendanceModel.Staff.FullName}}</span> you clocked out. Have a nice day!
+        <p class="text-center">Now that your are clocked out, What would you do?</p>
+    </h5>
+</div> -->
+
+
+
+<div class="login_form attendance_form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!--Date and Time Section-->
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 attendance_time_section">
+                <div class="attendance_time_section">
+                    <div class="date_time">
+                        <i class="fal fa-clock"></i>
+                        <h6>{{clock}}</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                    <p class="text-center">Wednesday 11, 2018 </p>
+                </div>
+            </div>
+            <!--Form Wrapper-->
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="row wrapper">
+                    <!--Logo Section-->
+                    <div class="col-lg-12 logo_div">
+                        <img src="assets/images/wellyx_logo.svg" alt="logo" />
+                    </div>
+                    <!--User Image-->
+                    <div class="col-lg-12 account_section">
+                        <div class="user_account user_login">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                    <!-- <img src="assets/img/user_img.png" class="img-fluid" alt="user_img" /> -->
+                                    <div class="staff_img">
+                                        <img src="{{staffAttendanceModel.Staff.ImagePath}}" class="center-block rounded_image"
+                                            width="100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Attendance's user name-->
+                    <div class="staff_img">
+                        <img src="{{staffAttendanceModel.Staff.ImagePath}}" class="center-block rounded_image" width="100">
+                    </div>
+                    <div class="col-lg-12 reset_content">
+                        <h5 *ngIf="!staffAttendanceModel.IsStaffClockIn" class="text-center">
+                            <span>{{staffAttendanceModel.Staff.FullName}}</span> you clocked in. Have a nice day!
+                            <p class="text-center">Now that your are clocked in, What would you do?</p>
+                        </h5>
+                        <h5 *ngIf="staffAttendanceModel.IsStaffClockIn" class="text-center">
+                            <span>{{staffAttendanceModel.Staff.FullName}}</span> you clocked out. Have a nice day!
+                            <p class="text-center">Now that your are clocked out, What would you do?</p>
+                        </h5>
+                    </div>
+                    <!--User Note-->
+                    <div class="col-lg-12 user_password check-out">
+                        <!--Form Section-->
+                        <form>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="note" placeholder="Add note here"><i
+                                    class="fa fa-pencil"></i>
+                            </div>
+                            <button type="submit" class="btn next_btn">Cancel</button>
+                            <button type="submit" class="btn next_btn">Clock In</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Footer Social Media Section-->
+    <div class="footer_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                    <ul>
+                        <li><a href="https://www.facebook.com/wellyxtech"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/Wellyxtech"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/wellyxtech/"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="https://www.youtube.com/channel/UCENBAYPvR2R7mREeUOHM2Xg"><i class="fa fa-youtube"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <p>Powered by <a href="https://www.wellyx.com/">Wellyx</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

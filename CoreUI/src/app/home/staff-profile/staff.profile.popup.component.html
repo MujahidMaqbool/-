@@ -1,0 +1,276 @@
+<div aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_large_popup">
+            <div class="popup_header">
+                <h4>Staff Profile</h4>
+            </div>
+            <form #staffProfileForm="ngForm" (ngSubmit)="saveStaffProfile(staffProfileForm.valid)" novalidate>
+                <div class="popup_content cstm_scroll_bg">
+                    <div class="popup_white_bg">
+                        <div class="section_container no_padding">
+                            <div class="col-md-12 col-sm-12 no_padding">
+                                <div class="alert alert-danger"
+                                    *ngIf="staffProfileForm.submitted && (staffProfileForm.invalid)">
+                                    <div *ngIf="staffProfileForm.invalid">
+                                        {{messages.Validation.Info_Required}}
+                                    </div>
+                                    <div *ngIf="Phone?.errors?.pattern ">
+                                        {{messages.Validation.Phone_Invalid}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mob-col-rev">
+                                <div class="col-md-12 col-sm-12 col-lg-8 no_padding">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-2">
+                                            <div class="field_label">
+                                                <h5>Title</h5>
+                                            </div>
+                                            <div [ngClass]="{
+                                                   'has-danger': Title.invalid && (Title.dirty || Title.touched ),
+                                                    'has-success': Title.valid && (Title.dirty || Title.touched )
+                                                       }">
+                                                <div class="select_label">
+                                                    <select class="form-control" name="Title"
+                                                        [(ngModel)]="staffProfileModel.Title" #Title="ngModel" required
+                                                        tabindex="1">
+                                                        <option *ngFor="let title of titleList" [ngValue]="title">
+                                                            {{title}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="field_label">
+                                                <h5>First Name</h5>
+                                            </div>
+                                            <div [ngClass]="{
+                                                        'has-danger': FirstName.invalid && (FirstName.dirty || FirstName.touched ),
+                                                        'has-success': FirstName.valid && (FirstName.dirty || FirstName.touched )
+                                                            }">
+                                                <input type="text" class="form-control" name="FirstName"
+                                                    [(ngModel)]="staffProfileModel.FirstName" #FirstName="ngModel"
+                                                    maxlength="30" required tabindex="2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="field_label">
+                                                <h5>Last Name</h5>
+                                            </div>
+                                            <input type="text" class="form-control" name="LastName"
+                                                [(ngModel)]="staffProfileModel.LastName" #LastName="ngModel"
+                                                maxlength="30" tabindex="3" />
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="field_label">
+                                                <h5>Phone <span>(optional)</span></h5>
+                                            </div>
+                                            <div>
+                                                <div [ngClass]="{
+                                                    'has-danger': Phone.invalid && (Phone.dirty || Phone.touched || staffProfileForm.submitted),
+                                                    'has-success': Phone.valid && (Phone.dirty || Phone.touched )
+                                               }">
+                                               
+                                                    <international-phone-number name="Phone"
+                                                        [(ngModel)]="staffProfileModel.Phone" #Phone="ngModel"
+                                                        tabindex="4" [defaultCountry]="staffProfileModel.Phone ? '': defaultBranchCountry">
+                                                    </international-phone-number>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="field_label">
+                                                <h5>Mobile</h5>
+                                            </div>
+                                            <div [ngClass]="{
+                                        'has-danger': Mobile.invalid && (Mobile.dirty || Mobile.touched || staffProfileForm.submitted),
+                                        'has-success': Mobile.valid && (Mobile.dirty || Mobile.touched )
+                                                       }">
+                                                <international-phone-number name="Mobile"
+                                                    [(ngModel)]="staffProfileModel.Mobile" #Mobile="ngModel"
+                                                    tabindex="5" [required]="true" [defaultCountry]="staffProfileModel.Mobile ? '' : defaultBranchCountry">
+                                                </international-phone-number>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="field_label">
+                                                <h5>Gender</h5>
+                                            </div>
+                                            <div [ngClass]="{
+                                                            'has-danger': Gender.invalid && (Gender.dirty || Gender.touched ),
+                                                            'has-success': Gender.valid && (Gender.dirty || Gender.touched )
+                                                                 }">
+                                                <div class="select_label">
+                                                    <select class="form-control" name="Gender"
+                                                        [(ngModel)]="staffProfileModel.Gender" #Gender="ngModel"
+                                                        required tabindex="6">
+                                                        <option *ngFor="let gender of genderList" [ngValue]="gender">
+                                                            {{gender}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="field_label">
+                                                <h5>Date Of Brith <span>(optional)</span> </h5>
+                                            </div>
+                                            <!-- <div [ngClass]="{
+                                                'has-danger': BirthDate.invalid && (BirthDate.dirty || BirthDate.touched || staffProfileForm.submitted),
+                                                'has-success': BirthDate.valid && (BirthDate.dirty || BirthDate.touched )
+                                                }"> -->
+                                            <!-- <input name="BirthDate" class="form-control date-picker bg_transparent"
+                                                    [(ngModel)]="staffProfileModel.BirthDate" #BirthDate="ngModel"
+                                                    matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" tabindex="10"
+                                                    readonly required />
+                                            </div> -->
+                                            <!-- <mat-datepicker #picker></mat-datepicker>
+                                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="picker">
+                                            </mat-datepicker-toggle> -->
+                                            <date-picker [value]="staffProfileModel.BirthDate" [max]="maxDate"
+                                                [tabindex]="7" (onDateChange)="onBirthDateChange($event)"></date-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-lg-4 no_padding">
+
+                                    <div class="staff_img">
+                                        <div *ngIf="!isImageExist" class="upload_image_box"
+                                            (click)="onShowImageCropperDialog()">
+                                            <!-- <my-image-cropper [roundedImage]="true" [croppedHeight]="200" [croppedWidth]="200"
+                                                        [canvasHeight]="250" [canvasWidth]="300" (imageUrlChange)="onImageChange($event)"></my-image-cropper> -->
+                                            <div class="border_circle">
+                                                <i class="fal fa-cloud-upload-alt"></i>
+                                                <br>
+                                                <button type="button" class="save">Upload Image</button>
+                                            </div>
+                                            <div class="camera">
+                                                <i class="fal fa-camera"></i>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="isImageExist">
+                                            <img class="img-responsive rounded-circle center-block" src="{{imagePath}}"
+                                                alt="no image" />
+                                            <br>
+                                            <div class="changeimg_btn">
+                                                <button type="button" (click)="onShowImageCropperDialog()"><i
+                                                        class="fal fa-pen"></i></button>
+                                                <button type="button" (click)="onDeleteImage()"
+                                                    *ngIf="staffProfileModel.StaffID && staffProfileModel.ImagePath"><i
+                                                        class="fal fa-trash-alt"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="section_title">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>Address</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="field_label">
+                                        <h5>Country</h5>
+                                    </div>
+                                    <div>
+                                        <div class="select_label">
+                                            <select class="form-control" (ngModelChange)="onCountryChange($event)"
+                                                name="countryName" [(ngModel)]="staffProfileModel.CountryID"
+                                                #countryName="ngModel" required tabindex="8">
+                                                <option [ngValue]="0">Select Country</option>
+                                                <option *ngFor="let country of countryList"
+                                                    [ngValue]="country.CountryID">
+                                                    {{country.CountryName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div [ngClass]="{
+                                        'has-danger': StateCountyName.invalid && (StateCountyName.dirty || StateCountyName.touched || staffProfileForm.submitted),
+                                        'has-success': StateCountyName.valid && (StateCountyName.dirty || StateCountyName.touched )
+                                           }">
+                                        <div class="field_label">
+                                            <h5>County/State</h5>
+                                        </div>
+                                        <input type="text" name="StateCountyName"
+                                            [(ngModel)]="staffProfileModel.StateCountyName" class="form-control"
+                                            tabindex="9" #StateCountyName="ngModel" maxlength="50" required />
+                                    </div>
+
+                                    <!-- <div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="state" [(ngModel)]="staffProfileModel.StateCountyID"
+                                                #state="ngModel" required tabindex="9">
+                                                <option *ngFor="let state of stateList" [ngValue]="state.StateCountyID">
+                                                    {{state.StateCountyName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <h5 class="field_label">Address Line 1</h5>
+                                    <div [ngClass]="{
+                                'has-danger': Address1.invalid && (Address1.dirty || Address1.touched ||staffProfileForm.submitted),
+                                'has-success': Address1.valid && (Address1.dirty || Address1.touched )
+                               }">
+                                        <input name="Address1" type="text" class="form-control"
+                                            [(ngModel)]="staffProfileModel.Address1" #Address1="ngModel" maxlength="250"
+                                            tabindex="10" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <h5 class="field_label">Address Line 2 <span>(optional)</span></h5>
+                                    <input name="Address2" type="text" [(ngModel)]="staffProfileModel.Address2"
+                                        maxlength="250" tabindex="11" />
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="field_label padding_right">
+                                        <h5>City </h5>
+                                    </div>
+                                    <div [ngClass]="{
+                                        'has-danger': CityName.invalid && (CityName.dirty || CityName.touched || staffProfileForm.submitted),
+                                        'has-success': CityName.valid && (CityName.dirty || CityName.touched )
+                                        }">
+                                        <div>
+                                            <input name="CityName" type="text" class="form-control"
+                                                [(ngModel)]="staffProfileModel.CityName" #CityName="ngModel"
+                                                maxlength="50" tabindex="12" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="field_label padding_right">
+                                        <h5>Post Code <span>(optional)</span></h5>
+                                    </div>
+                                    <div>
+                                        <input type="text" class="form-control" name="PostCode"
+                                            [(ngModel)]="staffProfileModel.PostCode" #PostCode="ngModel" maxlength="10"
+                                            tabindex="13" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-4 col-sm-4"></div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="cancel_btn float-right">
+                            <button tabindex="14" type="button" mat-button (click)="onClosePopup()">Cancel</button>
+                            <button tabindex="15" class="save primary_blue_btn">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

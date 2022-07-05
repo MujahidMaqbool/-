@@ -1,0 +1,143 @@
+<div class="modal-lg large_popup">
+    <div class="popup_header">
+        <h4>Billing Address</h4>
+    </div>
+    <div class="popup_content">
+        <form #BillingAddress="ngForm" (ngSubmit)="onSave(BillingAddress.valid)" novalidate>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="alert alert-danger" *ngIf="BillingAddress.invalid && BillingAddress.submitted">
+                        <div *ngIf="BillingAddress.invalid">
+                            {{messages.Validation.Info_Required}}
+                        </div>
+                        <div *ngIf="billingPhone?.errors || billingPhone?.invalid">
+                            {{messages.Validation.Phone_Invalid}}
+                        </div>
+                    </div>
+                    <div class="alert alert-danger" *ngIf="stateCountyCodeRequired">
+                        {{messages.Validation.Select_State_CountyName}}
+                    </div>
+                </div>
+            </div>
+            <div class="popup_white_bg">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Country</h5>
+                        </div>
+                        <div
+                            [ngClass]="{
+                'has-danger': (CountryID.invalid && (CountryID.dirty || CountryID.touched || BillingAddress.submitted)),
+                'has-success': CountryID.valid && (CountryID.dirty || CountryID.touched ) }">
+                            <div class="select_label">
+                                <select class="form-control" name="CountryID"
+                                    [(ngModel)]="customerBillingAddress.CountryID" #CountryID="ngModel" (ngModelChange)="onChangeSelectedCountry()"
+                                    tabindex="20">
+                                    <option *ngFor="let country of countryList" [ngValue]="country.CountryID">
+                                        {{country.CountryName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6" *ngIf="!customerBillingAddress.isStateCounty">
+                        <div class="field_label padding_right">
+                            <h5>State/County</h5>
+                        </div>
+                        <div [ngClass]="{
+                            'has-danger': StateCountyName.invalid && (StateCountyName.dirty || StateCountyName.touched || BillingAddress.submitted),
+                            'has-success': StateCountyName.valid && (StateCountyName.dirty || StateCountyName.touched )
+                         }">
+                         <input type="text" class="form-control" [(ngModel)]="customerBillingAddress.StateCountyName"
+                         name="StateCountyName" #StateCountyName="ngModel" maxlength="50" tabindex="21" required />
+                         </div>
+                        
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-4 col-sm-6" *ngIf="customerBillingAddress.isStateCounty">
+                        <div class="field_label">
+                          <h5>State / County</h5>
+                        </div>
+                        <div [ngClass]="{
+                            'has-danger': stateCountyCodeRequired,
+                            'has-success': !stateCountyCodeRequired
+                         }">
+                          <input type="text" class="form-control" placeholder="Enter state name" [name]="StateCountyName"
+                             maxlength="50" matInput [formControl]="searchState"
+                            [(ngModel)]="customerBillingAddress.StateCountyName" autocomplete="off" [matAutocomplete]="auto"
+                             tabindex="22" required />
+                          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                            (optionSelected)='getSelectedState($event.option.value)'>
+                            <mat-option *ngFor="let state of stateListCopy " [value]="state.StateCountyName">
+                              {{state.StateCountyName}} - {{state.StateCountyCode}}</mat-option>
+                          </mat-autocomplete>
+                        </div>
+          
+                      </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <h5 class="field_label">Address Line 1</h5>
+                        <div [ngClass]="{
+                           'has-danger': billingAddress1.invalid && (billingAddress1.dirty || billingAddress1.touched || BillingAddress.submitted),
+                           'has-success': billingAddress1.valid && (billingAddress1.dirty || billingAddress1.touched )
+                        }">
+                            <input type="text" name="billingAddress1" class="form-control" #billingAddress1="ngModel"
+                                [(ngModel)]="customerBillingAddress.Address1" maxlength="250" tabindex="22" required />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <h5 class="field_label">Address Line 2 <span>(optional)</span></h5>
+                        <input type="text" class="form-control" name="billingAddress2"
+                            [(ngModel)]="customerBillingAddress.Address2" maxlength="250" tabindex="23" />
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <h5 class="field_label">City</h5>
+                        <div [ngClass]="{
+                             'has-danger': (billingCityName.invalid && (billingCityName.dirty || billingCityName.touched || BillingAddress.submitted)),
+                             'has-success': billingCityName.valid && (billingCityName.dirty || billingCityName.touched )
+                        }">
+                            <input type="text" name="billingCityName" [(ngModel)]="customerBillingAddress.CityName"
+                                class="form-control" #billingCityName="ngModel" tabindex="24" maxlength="50" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <h5 class="field_label">Post Code</h5>
+                        <div [ngClass]="{
+                'has-danger': (billingPostCode.invalid && (billingPostCode.dirty || billingPostCode.touched || BillingAddress.submitted)),
+                'has-success': billingPostCode.valid && (billingPostCode.dirty || billingPostCode.touched)
+            }">
+                            <input type="text" name="billingPostCode" #billingPostCode="ngModel"
+                                [(ngModel)]="customerBillingAddress.PostalCode" class="form-control" tabindex="25"
+                                maxlength="10" required />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <h5 class="field_label">Phone <span>(optional)</span></h5>
+                        <div [ngClass]="{
+                    'has-danger': billingPhone.invalid && (billingPhone.dirty || billingPhone.touched || BillingAddress.submitted),
+                    'has-success': billingPhone.valid && (billingPhone.dirty || billingPhone.touched )
+                }">
+                            <div>
+                                <international-phone-number name="billingPhone"
+                                    [(ngModel)]="customerBillingAddress.Phone" #billingPhone="ngModel"
+                                    [defaultCountry]="currencyFormat" tabindex="26">
+                                </international-phone-number>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row popup_footer float-right">
+                <div class="col-md-12 cancel_btn no_padding">
+                    <button type="button" (click)="onClose()">Close</button>
+                    <button type="submit" class="save primary_blue_btn ">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+.staff-timesheet{
+    height: calc(100vh - 200px) !important;
+    background: #ffffff;
+    border-radius: 4px;
+    position: relative;
+
+}
+
+:host ::ng-deep body{
+    overflow: hidden;
+}

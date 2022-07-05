@@ -1,0 +1,337 @@
+<div class="white_bg row zero_top">
+    <div class="col-md-12">
+        <div id="accordion" style="margin: 0;">
+
+            <!-- All Lead Report -->
+            <div class="card no_padding" *ngIf="allowedPages.AllLeadReport">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" (click)="resetDateToFrom()" aria-expanded="true" aria-controls="collapseOne">
+                            All Leads
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p> This report is useful to run when you want to see Leads detail based on date range and memberships.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row flex-end">
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <h5 class="field_label">Search By Lead Name/Email/Mobile</h5>
+                                    <input type="text" placeholder="Lead Name" [(ngModel)]="customerName" matInput [formControl]="searchPerson" [matAutocomplete]="auto" maxlength="30">
+                                    <span *ngIf="customerName != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayLeadName" (optionSelected)='getSelectedLead($event.option.value)'>
+                                        <mat-option *ngFor="let person of allPerson" [value]="person">
+                                            <span class="client_name">{{ person.FirstName + ' ' +
+                                                person.LastName }}</span>
+                                            <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                            <br>
+                                            <span class="client_info">{{ person.Mobile }}</span>
+                                            <br>
+                                            <span class="client_info">{{ person.Email }}</span>
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <h5 class="field_label">Membership</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="MembershipID" [(ngModel)]="leadReportsSearchParameterObj.MembershipID" #Membership="ngModel">
+                                            <option *ngFor="let MembershipObj of membershipList"
+                                                [ngValue]="MembershipObj.MembershipID">
+                                                {{MembershipObj.MembershipName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <h5 class="field_label">Assigned To</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="AssignedToStaffID" [(ngModel)]="leadReportsSearchParameterObj.AssignedToStaffID" #AssignedTo="ngModel">
+                                            <option *ngFor="let StaffListObj of staffList"
+                                                [ngValue]="StaffListObj.StaffID">
+                                                {{StaffListObj.StaffFullName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <h5 class="field_label">Status</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="LeadStatusTypeID" [(ngModel)]="leadReportsSearchParameterObj.LeadStatusTypeID" #LeadStatus="ngModel">
+                                            <option *ngFor="let LeadStatusObj of leadStatusTypeList"
+                                                [ngValue]="LeadStatusObj.LeadStatusTypeID">
+                                                {{LeadStatusObj.LeadStatusTypeFriendlyName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                    <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #allLeadToFromDateComoRef>
+                                    </dateto-datefrom>
+                                </div>
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="exportAllLeadReport(fileType.PDF)"><i
+                                        class="fal fa-file-pdf" aria-hidden="true"></i>
+                                </button>
+                                <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllLeadReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                </button>
+                                <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                                <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewAllLeadReport(fileType.PDF)"><i
+                                        class="fal fa-book-open"></i>
+                                </button>
+                                <button matTooltip="Reset" matTooltipPosition="above" type="button" matTooltipClass="custom-tooltip" (click)="resetAllLeadReportFilters()"><i
+                                        class="fal fa-undo" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lead Activities Report -->
+            <div class="card no_padding" *ngIf="allowedPages.LeadActivitiesReport">
+                <div class="card-header" id="headingFour">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" (click)="resetDateToFrom()" aria-expanded="false" aria-controls="collapseFour">
+                            Lead Activities
+                        </button>
+                    </h5>
+                </div>
+                <form #leadActivityForm="ngForm" (ngSubmit)="exportAllLeadActivitiesReport(fileType.PDF)" novalidate>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p>This report is useful to run when you want to view all lead activities over a period of time.</p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row mob-col-full">
+                                    <div class="col">
+                                        <h5 class="field_label">Lead Name</h5>
+                                        <input type="text" placeholder="Lead Name" [value]="personName" [(ngModel)]="leadCustomerName" matInput [formControl]="searchPerson" [matAutocomplete]="auto" maxlength="30">
+                                        <span *ngIf="leadCustomerName != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayLeadName" (optionSelected)='getSelectedLead($event.option.value)'>
+                                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                <span class="client_name">{{ person.FirstName + ' ' +
+                                                        person.LastName}}</span>
+                                                <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                <br>
+                                                <span class="client_info">{{ person.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ person.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="field_label">Activities</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="ActivityTypeID" [(ngModel)]="leadReportsSearchParameterObj.ActivityTypeID">
+                                                <option *ngFor="let sourceTypeObj of activityList"
+                                                    [ngValue]="sourceTypeObj.value" style="font-size: 16px;">
+                                                    {{sourceTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col col-md-6 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #allLeadActivtiesToFromDateComoRef>
+                                        </dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllLeadActivitiesReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+                                    <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewExportAllLeadActivitiesReport(fileType.PDF)"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetLeadActivitiesFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Lead By Source Report -->
+            <div class="card no_padding" *ngIf="allowedPages.LeadBySourceReport">
+                <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFive" (click)="resetDateToFrom()" aria-expanded="true" aria-controls="collapseFive">
+                            Lead By Source
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p> This report is useful to run when you want to see the source of your prospects.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row mob-col-full">
+                                <div class="col">
+                                    <h5 class="field_label">Membership</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="custMembershipID" [(ngModel)]="leadReportsSearchParameterObj.MembershipID">
+                                            <option *ngFor="let MembershipObj of membershipList"
+                                                [ngValue]="MembershipObj.MembershipID">
+                                                {{MembershipObj.MembershipName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="field_label">Assigned To</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="LeadAssignedToStaffID" [(ngModel)]="leadReportsSearchParameterObj.AssignedToStaffID">
+                                            <option *ngFor="let StaffListObj of staffList"
+                                                [ngValue]="StaffListObj.StaffID">
+                                                {{StaffListObj.StaffFullName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="field_label">Source Type</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="EnquirySourceTypeID" [(ngModel)]="leadReportsSearchParameterObj.EnquirySourceTypeID">
+                                            <option *ngFor="let enquirySource of enquirySourceTypeList"
+                                                [ngValue]="enquirySource.EnquirySourceTypeID">
+                                                {{enquirySource.EnquirySourceTypeName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col col-md-5 input_heading no_padding">
+                                    <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #allLeadBySourceToFromDateComoRef>
+                                    </dateto-datefrom>
+                                </div>
+
+
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="exportAllLeadBySourceReport(fileType.PDF)"><i class="fal fa-file-pdf"
+                                        aria-hidden="true"></i>
+                                </button>
+                                <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllLeadBySourceReport(fileType.Excel)"><i
+                                        class="fal fa-file-excel"></i>
+                                </button>
+                                <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                                <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewAllLeadBySourceReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                </button>
+                                <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetLeadBySourceFilters()"><i class="fal fa-undo"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lead Lost Report -->
+            <div class="card no_padding" *ngIf="allowedPages.LeadLostReport">
+                <div class="card-header" id="headingSix">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSix" (click)="resetDateToFrom()" aria-expanded="true" aria-controls="collapseSix">
+                            Lead Lost
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p> This report is useful to run when you want to see prospects you were unable to convert into members. </p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <h5 class="field_label">Lost Reason</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="LostReasonTypeID" [(ngModel)]="leadReportsSearchParameterObj.LostReasonTypeID">
+                                            <option *ngFor="let lostReason of lostReasonTypeList"
+                                                [ngValue]="lostReason.LostReasonTypeID">
+                                                {{lostReason.LostReasonTypeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                    <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #allLeadLostToFromDateComoRef>
+                                    </dateto-datefrom>
+                                </div>
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="exportAllLeadLostReport(fileType.PDF)"><i
+                                        class="fal fa-file-pdf" aria-hidden="true"></i>
+                                </button>
+                                <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllLeadLostReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                </button>
+                                <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                                <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewAllLeadLostReport(fileType.PDF)"><i
+                                        class="fal fa-book-open"></i>
+                                </button>
+                                <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetLeadLostFilters()"><i class="fal fa-undo"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Booked Detail Report -->
+            <div class="card no_padding" *ngIf="allowedPages.AllBookedDetailReport">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" (click)="resetDateToFrom()" aria-expanded="true" aria-controls="collapseTwo">
+                            All Sales Detail By Lead
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <all-sale-booked-detail-report [customerTypeID]="CustomerTypeID" #customerSearch_LeadAllSaleDetailByInvoiceRef></all-sale-booked-detail-report>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Sale Detail Report -->
+            <!-- <div class="card no_padding" *ngIf="allowedPages.AllSaleDetailReport">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" (click)="resetDateToFrom()" aria-expanded="false" aria-controls="collapseThree">
+                            All Invoices History
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <all-sale-history-report [customerTypeID]="CustomerTypeID" #customerSearch_LeadAllSaleHistoryRef>
+                        </all-sale-history-report>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

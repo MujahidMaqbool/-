@@ -1,0 +1,7 @@
+<div style="text-align:center">
+	<webcam [height]="400" [width]="450" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" 
+	(initError)="handleInitError($event)" (cameraSwitched)="camSwitched($event)"></webcam>
+	<br />
+	<!-- <div class="actionBtn" (click)="triggerSnapshot();" title="Take Picture">📸</div> -->
+	<button *ngIf="showTakePhoto" class="save primary_blue_btn" (click)="triggerSnapshot();" title="Take Picture">Take Photo</button>
+</div>

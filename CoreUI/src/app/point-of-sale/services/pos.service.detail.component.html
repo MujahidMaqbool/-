@@ -1,0 +1,144 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>{{service.ServiceCategoryName}}</h4>
+                <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" mat-button (click)="onClose()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+            </div>
+            <div class="popup_content no_padding">
+                <div class="row service_detail">
+                    <div class="col-md-4 parallel_grid">
+                        <div class="service_white_bg pos_item waiting_icon zero_border">
+                            <div class="service_cart_info">
+                                <img src="{{service.ImagePath}}" class="img-responsive">
+                                <i *ngIf="service.IsBenefit || servicePackageDiscounted" class="fal fa-crown"></i>
+                                <div *ngIf="servicePackageDiscounted" class="off_dis">
+                                    {{servicePackageDiscount}}% Off</div>
+                                <div *ngIf="service.IsBenefit" class="off_dis">Free</div>
+
+                                <h3>{{service.Name}}</h3>
+                                <p>{{service.Description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding_left sm-pl-15 parallel_grid">
+                        <div class="service_white_bg">
+                            <h5 class="field_label">Select Date</h5>
+                            <!-- <input name="date" class="form-control bg_transparent" [min]="minServiceDate" [(ngModel)]="serviceDate"
+                                (ngModelChange)="onServiceDateChange()" placeholder="Date" [matDatepicker]="date"
+                                readonly />
+                            <mat-datepicker #date></mat-datepicker>
+                            <mat-datepicker-toggle class="date-picker-toggle service_datepicker" matSuffix [for]="date">
+                            </mat-datepicker-toggle> -->
+                            <date-picker [value]="serviceDate" [min]="minServiceDate" [showClear]="false"
+                                (onDateChange)="onServiceDateChange($event)"></date-picker>
+                            <label class="mem_label" *ngIf="!selectedStaff">Date selected is not available. Please
+                                select another day.
+                            </label>
+                            <div *ngIf="selectedStaff">
+                                <h5 class="field_label">Pick Your Desired Employee</h5>
+                                <div class="select_label">
+                                    <select [(ngModel)]="selectedStaff"
+                                        (ngModelChange)="onStaffChange(selectedStaff.StaffID)">
+                                        <option *ngFor="let staff of serviceStaffList" [ngValue]="staff">
+                                            <!-- <img src="{{staff.ImagePath}}" style="float: left; width: 33px; height: 33px"> -->
+                                            <span class="staff_name">{{staff.StaffFullName}}</span>
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="small_space"></div>
+                                <h5 class="field_label">Pick Your Desired Time</h5>
+                                <div class="time_slots cstm_scroll_bg">
+                                    <div class="panel_body" *ngFor="let timeSlot of selectedStaff?.TimeSlotList">
+                                        <input type="radio" id="{{'time' + timeSlot.StartTime + timeSlot.EndTime}}"
+                                            name="time_slot" [(ngModel)]="serviceTimeSlot"
+                                            (ngModelChange)="onServiceTimeChange()" [value]="timeSlot">
+                                        <label for="{{'time' + timeSlot.StartTime + timeSlot.EndTime}}"> <span></span>
+                                            {{ timeSlot.StartTime | branchTimeFormat}} - {{ timeSlot.EndTime |
+                                            branchTimeFormat}}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- <mat-accordion>
+                                <mat-expansion-panel (opened)="setStaffID(staff.StaffID)" *ngFor="let staff of serviceStaffList">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            <img src="{{staff.ImagePath}}" style="float: left; width: 33px; height: 33px">
+                                            <span class="staff_name">{{staff.StaffFullName}}</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="panel-body cstm_scroll_bg" *ngFor="let timeSlot of staff.TimeSlotList; let ind = index">
+                                        <input type="radio" id="{{'time' + ind + staff.StaffID}}" name="time_slot"
+                                            [(ngModel)]="serviceTimeSlot" (ngModelChange)="onServiceTimeChange()"
+                                            [value]="timeSlot">
+                                        <label for="{{'time' + ind + staff.StaffID}}"> <span></span>{{'2019-01-01T'+
+                                            timeSlot.StartTime | customdate: timeFormat}} - {{'2019-01-01T' +
+                                            timeSlot.EndTime |
+                                            customdate: timeFormat}}</label>
+
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion> -->
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding_left sm-pl-15 parallel_grid">
+                        <div class="service_white_bg pos-relative">
+
+                            <div class="row" *ngIf="isMembershipExpire">
+                                <div class="col-md-12 membership_end_warning">
+                                    <p>After membership expire "{{service.MembershipEndDate | customdate: dateFormat}}"
+                                        service will be charge on full
+                                        price</p>
+                                </div>
+                            </div>
+
+                            <div class="row pos_cart_header">
+                                <div class="col-md-12">
+                                    <h5>Book Appointment</h5>
+                                </div>
+                            </div>
+                            <div class="row pos_cart_row" *ngFor="let servicePackage of service.ServicePackageList">
+                                <div class="col-md-12">
+                                    <div class="appoint_border">
+                                        <input type="radio" id="{{'sp'+servicePackage.ServicePackageID}}"
+                                            name="service_package" [(ngModel)]="saleService.ServicePackageID"
+                                            (ngModelChange)="onServicePackageChange(servicePackage)"
+                                            [value]="servicePackage.ServicePackageID" />
+                                        <label for="{{'sp' + servicePackage.ServicePackageID}}">
+                                            <span></span>{{servicePackage.DurationValue + ' ' +
+                                            servicePackage.DurationTypeName}}
+                                        </label>
+
+                                        <span class="float-right">{{servicePackage.CurrentPrice | currency:
+                                            currencyFormat}}</span>
+                                        <span class="float-right pos_cross"
+                                            *ngIf="servicePackage.IsMembershipBenefit">{{servicePackage.Price
+                                            | currency: currencyFormat}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wait_list_btn" *ngIf="isAllowWaitList">
+                            <button type="button" (click)="openWaitlistDialog()"><i class="fal fa-user-clock"></i> Add to Waitlist</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row popup_footer pt-0">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" mat-button (click)="onClose()">Close</button>
+                        <button class="save primary_blue_btn" (click)="onAdd()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

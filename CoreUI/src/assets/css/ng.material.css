@@ -1,0 +1,327 @@
+/* Matdate picker css */
+mat-calendar.mat-calendar {
+    background-color: #fff;
+    color: rgba(0,0,0,.87);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
+    border-radius: 4px;
+}
+.cst-matcalender {
+    width: 330px;
+    position: absolute;
+    z-index: 99;
+    bottom: 130px;
+    left: 15%;
+    box-shadow: 5px 4px 20px 2px #e0e1e3;
+}
+.datepicker-container .mat-form-field-infix {
+    padding:0px !important;
+    margin-top:0px !important;
+    border:none !important;
+}
+
+.mat-option{
+    font-family: 'Open Sans', sans-serif !important;
+}
+.mat-paginator {
+    background-color: #fff!important;
+    max-height: 48px !important;
+    min-height: 0 !important;
+    border-bottom: 1px solid #E0E1E3;
+}
+.mat-paginator-range-actions {
+    min-height: 35px !important;
+    margin-top: -14px;
+    align-items: baseline !important;
+}
+
+.mat-paginator-container {
+    min-height: 35px !important;
+}
+
+.mat-paginator-page-size-select {
+    margin: -4px 4px 0 4px !important;
+    width: 80px !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #b7b7b7 !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #0fa9cf !important;
+}
+
+.mat-radio-label-content{
+    padding-left: 10px !important;
+}
+
+.mat-autocomplete-panel .client_type {
+    color: #fff;
+    background: #1B6EB8;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.mat-autocomplete-panel .client_name {
+    font-weight: 600;
+    color: #283138;
+    font-size: 14px;
+    max-width: 175px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 16px;
+}
+
+.mat-autocomplete-panel .client_info {
+    color: #283138;
+    font-size: 12px;
+}
+
+.mat-autocomplete-panel .mat-option{
+    line-height: 20px !important;
+    height: 85px !important;
+    border-bottom: 1px solid #f2f3f8;
+}
+.mat-autocomplete-panel .mat-option:nth-child(odd){
+    background: #f2f3f8;
+}
+.mat-autocomplete-panel .mat-option:hover{
+    background: transparent !important;
+}
+.mat-option-text i{
+    padding-right: 5px;
+}
+.mat-autocomplete-panel.mat-autocomplete-visible {
+    box-shadow: 0 0 10px 1px #9a9a9a;
+}
+.mat-horizontal-stepper-header {
+    pointer-events: none !important;
+}
+
+.mat-stepper-horizontal {
+    background: none !important;
+}
+.popup_ten_space .mat-horizontal-stepper-header-container{
+    margin: 10px 15px 0 15px !important;
+}
+.mat-horizontal-stepper-header-container {
+    background: #fff !important;
+    margin: 15px 15px 0 15px !important;
+    border-radius: 6px !important;
+    padding: 15px !important;
+    height: 72px;
+}
+
+.mat-horizontal-content-container {
+    /* background: #fff !important;
+    border-radius: 6px !important; */
+    padding: 0px !important;
+}
+
+mat-icon {
+    font-family: 'Material Icons' !important;
+}
+
+/* .mat-tab-label span.activity_count {
+    position: absolute;
+    z-index: 999;
+    background: #5CB85C ;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    top: 0;
+    color: #fff;
+    padding: 2px 0 0 0 !important;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 400;
+    right: 0;
+} */
+
+.mat-tab-label {
+    font-family: 'Open Sans', sans-serif !important;
+    min-width: 97px !important;
+    opacity: 1 !important;
+    height: 40px !important;
+    margin: 5px  7px  0 !important;;
+    border-radius: 5px 5px 0 0;
+    font-size: 14px !important;
+    color: #202D39  !important;
+    font-weight: 400 !important;
+    /* padding: 0 54px; */
+}
+
+.mat-tab-label-active {
+    border-bottom: 2px solid #1B6EB8;
+    color: #1B6EB8 !important;
+    z-index: 99;
+}
+.config_bg .mat-tab-labels {
+    background: #fff !important;
+    height: auto;
+    padding: 0 0 0;
+    border-radius: 5px !important;
+    margin: 15px 15px 0 15px;
+}
+.config_bg .mat-tab-label {
+    padding: 25px 24px;
+    margin-top: 0 !important;
+}
+.config_bg .mat-tab-header, .mat-tab-nav-bar {
+    border-bottom: none !important;
+}
+.mat-tab-labels {
+    background: #fff;
+    height: 50px;
+    padding: 5px 0;
+    border-radius: 5px 5px 0 0 !important;
+}
+.mat-tab-header, .mat-tab-nav-bar {
+    border-bottom: 1px solid #E5E5E5 !important;
+}
+.mat-tooltip {
+    color: white !important;
+    border-radius: 5px;
+    margin-left: 80px !important;
+    font-size: 16px !important;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #fff !important;
+}
+.mat-tab-group.mat-primary .mat-tab-label:focus, .mat-tab-group.mat-primary .mat-tab-link:focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:focus {
+    background-color: transparent !important;
+}
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+.mat-form-field-infix {
+    padding: .4375em 8px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 5px;
+    margin-top: 13px;
+}
+.mat-select-value-text{
+    overflow: initial !important;
+}
+.pagination .mat-select-arrow-wrapper::after {
+    content: "\f107";
+    font-family: "Font Awesome 5 Pro";
+    font-size: 14px;
+    color: #999;
+    right: 0;
+    top: -1px;
+    padding-top: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.mat-table {
+    overflow: auto;
+    max-height: 500px;
+}
+.mat-form-field-underline {
+    background-color: transparent !important;
+}
+
+.mat-select.mat-select-disabled .mat-select-arrow {
+    color:#000000 !important;
+}
+.dx-texteditor-input{
+    margin-bottom: 0 !important;
+    border: 0 !important;
+}
+.mat-tab-group{
+    font-family: 'Open Sans', sans-serif;
+}
+.mat-stepper-horizontal, .mat-stepper-vertical{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.mat-datepicker-toggle .mat-button-wrapper {
+    display: none;
+}
+/* .mat-datepicker-toggle {
+    background: url("/assets/images/calendar_1.png") no-repeat !important;
+} */
+.date-picker{
+    background: url("/assets/images/calendar_1.png") no-repeat !important;
+    background-position: center right 10px !important;
+    padding-right: 32px !important;
+}
+.date-picker-toggle {
+    position: absolute;
+    outline: none;
+    z-index: 88;
+    top: 2.8em;
+    right: 1.2em;
+}
+#member_search .date-picker-toggle {top: 2.4em;}
+#member_search label {display: inline-flex;}
+
+.dashboard_header .date-picker-toggle, .del_reward .date-picker-toggle{
+    top: 0.6em;
+}
+.simple_dp .date-picker-toggle {
+    top: 0.6em !important;
+}
+.mat-icon-button {
+    width: 30px !important;
+    height: 25px !important;
+}
+.custom-tooltip, .mat-tooltip {
+    background-color: rgba(50, 50, 50, 0.85) !important;
+    font-size: 12px !important;
+    position: relative;
+    left: -30px;
+    top: 8px;
+}
+.custom-tooltip.dashboard-tooltip {
+max-width: 536px;
+left: -70px;
+}
+.mat-simple-snackbar {
+    word-break: break-word;
+}
+.mat-expansion-panel-body {
+    padding: 0 15px 15px !important;
+    max-height: 200px;
+    overflow: auto;
+}
+.mat-calendar-next-button, .mat-calendar-previous-button {
+    height: 40px !important;
+    width: 40px !important;
+}
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: rgb(27, 110, 184,0.5) !important;
+}
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #1B6EB8 !important;
+}
+.mat-calendar-body-selected {
+    background-color: #1B6EB8 !important;
+}
+.mat-slide-toggle-content {
+    color: #202D39 !important;
+}
+.mat-step-icon, .mat-step-icon-not-touched {
+    height: 35px !important;
+    width: 35px !important;
+}
+.dx-widget{
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+.mat-datepicker-content {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.multi_select .mat-select-trigger {
+    line-height: 33px;
+}
+.mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+    background: #1B6EB8;
+}
+.mat-form-field-ripple {background: transparent !important;}

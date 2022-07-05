@@ -1,0 +1,160 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_large_popup">
+            <div class="popup_header">
+                <h4>My Attendance </h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <!-- <div class="sch_white_bg"> -->
+                <div class="ten_space"></div>
+                <div class="grids_white_bg zero_margin">
+                    <div id="mytasksSearch_Accordion">
+                        <div class="panel-heading collapsed row" data-toggle="collapse"
+                            data-parent="#mytasksSearch_Accordion" data-target="#mytasks_search">
+                            <div class="col-md-12 no_padding">
+                                <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+                            </div>
+                        </div>
+                        <div id="mytasks_search" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 no_padding">
+                                        <div class="filter_seprator"></div>
+                                    </div>
+                                </div>
+                                <div class="row mob-p-0 flex-end">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 input_heading no_padding inner-col-pl-0">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #allAttendanceToFromDateComoRef>
+                                        </dateto-datefrom>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 padding_right">
+                                        <button class="reset_btn" type="button" (click)="onReset()">
+                                            Reset</button>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 padding_right full_width_btn">
+                                        <button class="search" type="button" (click)="onLoadStaffAttendance()">
+                                            Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ten_space"></div>
+                <div class="grids_white_bg zero_margin">
+                    <div class="overflow-auto">
+                        <div class="row grid_header responsive_grid_header">
+                            <div class="col">
+                                <h5>Day </h5>
+                            </div>
+                            <div class="col">
+                                <h5>Staff </h5>
+                            </div>
+                            <div class="col">
+                                <h5>Shift Start</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Shift End</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Clock In</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Clock Out</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Scheduled</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Worked</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Difference</h5>
+                            </div>
+                        </div>
+                        <div id="grid" *ngIf="isDataExists">
+                            <div class="row grid_rows responsive_grid_rows "
+                                *ngFor="let timesheetObj of myAttendanceTimesheetList">
+                                <div class="col">
+                                    <h5>{{timesheetObj.ClockDate | customdate: dateFormatForView}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{timesheetObj.FirstName + ' ' + timesheetObj.LastName}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{timesheetObj.ShiftStartTime | branchTimeFormat}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>
+                                        {{timesheetObj.ShiftEndTime | branchTimeFormat}}
+                                    </h5>
+                                </div>
+                                <div class="col">
+                                    <div class="notes">
+                                        <h5>{{timesheetObj.ClockIn | branchTimeFormat}}</h5>
+                                    </div>
+                                    <!-- <div class="notes">
+                                    <h3>{{timesheetObj.ClockInNotes}}</h3>
+                                </div> -->
+                                </div>
+                                <div class="col">
+                                    <div class="notes">
+                                        <h5>{{timesheetObj.ClockOut | branchTimeFormat}}</h5>
+                                    </div>
+                                    <!-- <div class="notes">
+                                    <h3>{{timesheetObj.ClockOutNotes}}</h3>
+                                </div> -->
+                                </div>
+                                <div class="col">
+                                    <h5>{{timesheetObj.Scheduled}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{timesheetObj.Worked}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{timesheetObj.Difference}}
+                                        <span class="time_difference"
+                                            *ngIf="timesheetObj.Difference && timesheetObj.Difference.length > 0"
+                                            [ngClass]="{
+                                                    'negative': timesheetObj.IsNegative,
+                                                    'positive':!timesheetObj.IsNegative
+                                                    }">
+                                        </span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="!isDataExists">
+                            <div class="row grid_rows">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+                    <!-- <div class="pagination">
+                        <div class="col-md-12 no_padding">
+                            <mat-paginator #paginator [length]="[totalRecords]" [showFirstLastButtons]="true"
+                                [pageSizeOptions]="pageSizeOptions" (page)="changePageSize($event)">
+                            </mat-paginator>
+
+
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div> -->
+                </div>
+                <!-- </div> -->
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-4 col-sm-4"></div>
+                <div class="col-md-8 col-sm-8">
+                    <div class="cancel_btn float-right">
+                        <button tabindex="4" type="button" mat-button (click)="onClosePopup()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

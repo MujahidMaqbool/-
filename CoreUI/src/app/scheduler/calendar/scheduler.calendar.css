@@ -1,0 +1,257 @@
+/* Azeem Khalid - 22 November 2019
+    Added Following two classes to bold cell border on hour start
+*/
+::ng-deep .dx-scheduler-work-space-day .dx-scheduler-date-table-row:nth-child(4n) .dx-scheduler-date-table-cell,
+::ng-deep .dx-scheduler-work-space-week .dx-scheduler-date-table-row:nth-child(4n) .dx-scheduler-date-table-cell {
+    border-bottom: 2px solid #dfdfdf;
+}
+
+::ng-deep .dx-scheduler-work-space-day .dx-scheduler-time-panel-row:nth-child(4n) .dx-scheduler-time-panel-cell:after,
+::ng-deep .dx-scheduler-work-space-week .dx-scheduler-time-panel-row:nth-child(4n) .dx-scheduler-time-panel-cell:after {
+    height: 2px;
+    background-color: #dfdfdf;
+}
+.resourcesHeader{
+    background: linear-gradient(to bottom, #ffffff 0%,#ffffff 50%,#ebecef 100%);
+}
+.recourcesText h2{
+    font-size: 13px;
+    text-align: left;
+    margin: 11px 0 0 7px
+}
+::ng-deep .dx-tooltip-wrapper .dx-overlay-content .dx-popup-content {
+    padding: 0;
+    /* margin-bottom: 12px; */
+    white-space: normal;
+}
+::ng-deep .dx-button-mode-contained {
+    background-color: transparent;
+}
+::ng-deep .showtime-preview > div:first-child {
+    font-size: 12px;
+    white-space: normal;
+}
+::ng-deep .showtime-preview > div:not(:first-child) {
+    font-size: 11px;
+    white-space: normal;
+}
+::ng-deep .class-tooltip .class-info {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: top;
+    text-align: left;
+}
+::ng-deep .class-tooltip img {
+    height: 80px;
+    margin-bottom: 10px;
+}
+::ng-deep .class-tooltip .class-title {
+    font-size: 1.5em;
+    line-height: 40px;
+}
+
+.facility_icon i{
+    background: #DBE8F4;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    padding-top: 11px;
+    font-size: 15px;
+    color: #1B6EB8;
+}
+
+::ng-deep .avatar {
+    width: 40px;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    height: 40px;
+    margin-left: 10px;
+}
+
+/* Hide overlay popup */
+
+/** Change Cell height */
+
+:host ::ng-deep .dx-scheduler-time-panel-cell {
+    height: 30px;
+    padding-right: 10px;
+}
+:host ::ng-deep .dx-scheduler-cell-sizes-horizontal {
+    height: 30px;
+}
+
+/** Change Cell height */
+
+/** Change Cell background */
+::ng-deep .dx-template-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+/** Appointment width*/
+:host ::ng-deep .dx-scheduler-appointment {
+    box-shadow: none !important;
+    /* box-sizing: content-box;
+     padding-right: 20px; */
+}
+/* :host ::ng-deep .dx-scheduler-work-space-month .dx-scheduler-appointment
+ {
+    box-sizing: border-box;
+    padding-right: 0;
+} */
+
+/** Appointment width*/
+
+/** Change Cell background */
+
+::ng-deep .long-title h3 {
+    /* font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', 'Verdana'; */
+    font-weight: 200;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+::ng-deep .dx-scheduler-time-panel{
+    width: 55px;
+}
+
+::ng-deep .dx-scheduler-work-space-grouped:not(.dx-scheduler-timeline):not(.dx-scheduler-agenda):not(.dx-scheduler-work-space-month):not(.dx-scheduler-work-space-all-day):not(.dx-scheduler-work-space-vertical-grouped) .dx-scheduler-header-scrollable{
+    margin-left: 55px;
+}
+
+::ng-deep .dx-scheduler-work-space-both-scrollbar .dx-scheduler-date-table-scrollable{
+    margin-left: 55px;
+}
+
+::ng-deep .dx-scheduler-work-space-both-scrollbar.dx-scheduler-work-space.dx-scheduler-work-space-all-day.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count).dx-scheduler-work-space-all-day-collapsed[dx-group-row-count='1'] .dx-scheduler-header-scrollable
+{
+    height: 66px !important;
+}
+
+::ng-deep :not(.dx-scheduler-work-space-vertical-grouped)[dx-group-row-count='1'] .dx-scheduler-all-day-title:before{
+    width: 55px
+}
+/* Header Border */
+::ng-deep .dx-scheduler-work-space-grouped .dx-scheduler-group-row th, .dx-scheduler-work-space.dx-scheduler-work-space-grouped .dx-scheduler-last-group-cell {
+    border-color: rgba(221, 221, 221, 0.6) !important;
+}
+
+/* Body Calendar */
+::ng-deep .dx-scheduler-work-space.dx-scheduler-work-space-grouped:not(.dx-scheduler-agenda) .dx-scheduler-date-table-cell
+ {
+    border-right: 1px solid rgba(221, 221, 221, 0.6);
+}
+
+/** week view margin and border*/
+::ng-deep .dx-scheduler-work-space-both-scrollbar .dx-scheduler-header-scrollable.dx-scrollable{
+
+    margin: 0 0 0 54px;
+    border-left:  1px solid rgba(221, 221, 221, 0.6);
+}
+
+/** header highlighted color */
+::ng-deep .dx-scheduler-header-panel-cell.dx-scheduler-header-panel-current-time-cell:before{
+    background-color: transparent;
+}
+/* ::ng-deep .dx-scheduler-cell-sizes-horizontal {
+    width: 100px !important;
+} */
+
+::ng-deep [dx-group-row-count='1'] .dx-scheduler-all-day-title{
+    top: 96px !important
+}
+
+::ng-deep .dx-scheduler-work-space-day .dx-scheduler-date-table-cell {
+    cursor: pointer;
+}
+
+
+/** Custom Tooltip **/
+::ng-deep .tooltip_content{
+    height: 60px;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    opacity: 2;
+    z-index: 1501;
+}
+:host ::ng-deep .mat-tab-label-active {
+    border-bottom: 2px solid #5CB85C;
+    color: #5cb85c !important;
+    z-index: 99;
+}
+:host ::ng-deep body{
+    overflow: hidden;
+}
+
+/* header time*/
+:host ::ng-deep #MainSchedulerControl .dx-scheduler-header-panel {
+    margin-top: 0px !important;
+}
+
+/** hide label for recurrence/repeat For Class & blockTime */
+/* ::ng-deep #schedulerClassFormDiv .dx-layout-manager .dx-label-h-align.dx-flex-layout .dx-field-item-label {
+    display: none;
+} */
+/* ::ng-deep #schedulerBlockTimeFormDiv .dx-layout-manager .dx-label-h-align.dx-flex-layout .dx-field-item-label {
+    display: none;
+} */
+
+/* ::ng-deep .dx-tooltip-wrapper .dx-overlay-content {
+    top: -20px !important;
+}
+
+::ng-deep .dx-popover-wrapper.dx-position-bottom .dx-popover-arrow{
+    top: -20px !important;
+}
+
+:ng-deep .dx-popover-wrapper.dx-position-top .dx-popover-arrow{
+    bottom: -20px !important;
+} */
+
+/*
+    Azeem Khalid - 05/04/2019 03:20 PM
+
+    Added this class to handle following exception in browser
+    'Unable to preventDefault inside passive event listener due to target being treated as passive.'
+*/
+
+.sortable-handler {
+    touch-action: none;
+  }
+
+  /* ::ng-deep .dx-scheduler-appointment-recurrence .dx-scheduler-appointment-recurrence-icon{
+    float: left;
+    position: inherit;
+  } */
+
+  /* Media Quries */
+
+  @media(min-width:1024px) and (max-width: 1280px) {
+    ::ng-deep .avatar {
+        width: 32px;
+        align-items: center;
+        display: flex;
+        margin-left: 5px;
+    }
+    .facility_icon i{
+        height: 32px;
+        width: 32px;
+        padding-top: 8px;
+        font-size: 14px;
+    }
+    .recourcesText h2 {
+        font-size: 12px;
+        margin: 11px 0 0 5px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 50px;
+        white-space: nowrap;
+    }
+
+
+
+
+  }

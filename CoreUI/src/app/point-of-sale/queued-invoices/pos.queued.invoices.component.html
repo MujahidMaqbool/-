@@ -1,0 +1,140 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <div>
+                    <h4>Parked Sales</h4>
+                </div>
+                <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" mat-button (click)="onClose()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+            </div>
+            <div class="popup_content">
+                <div class="sch_white_bg">
+                    <div class="row flex-end mob-col-full">
+                        <div class="col padding_right sm-pr-15">
+                            <div class="field_label">
+                                <h5>Customer Name</h5>
+                            </div>
+                            <!-- <input type="text" class="form-control" name="customerName" [(ngModel)]="saleQueueSearchParams.CustomerName" maxlength="30"> -->
+                            <customer-search #customerSearch (notifyCustomerID)="onCustomerChange($event)">
+                            </customer-search>
+                        </div>
+                        <div class="col padding_right sm-pr-15">
+                            <div class="field_label">
+                                <h5>Staff Name</h5>
+                            </div>
+                            <!-- <input type="text" class="form-control" name="staffName" [(ngModel)]="saleQueueSearchParams.StaffName" /> -->
+                            <staff-search-autocomplete #staffSearch (notifyStaffID)="onStaffChange($event)">
+                            </staff-search-autocomplete>
+                        </div>
+                        <div class="col padding_right sm-pr-15">
+                            <div class="field_label">
+                                <h5>Created On</h5>
+                            </div>
+                            <!-- <input type="text" name="createdOn" class="form-control date-picker" readonly [(ngModel)]="queueCreatedOn"
+                                (ngModelChange)="onCreateDateChange(queueCreatedOn)" matInput
+                                [matDatepicker]="createDate" #createDate="ngModel" [max]="maxDate" placeholder="DD/MM/YYYY" />
+                            <mat-datepicker #createDate></mat-datepicker>
+                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="createDate">
+                            </mat-datepicker-toggle> -->
+                            <date-picker [value]="queueCreatedOn" [max]="maxDate" [showClear]="false"
+                                (onDateChange)="onCreateDateChange($event)"></date-picker>
+                        </div>
+                        <div class="col padding_right sm-pr-15">
+                            <div class="full_width_btn">
+                                <button class="reset" type="button" (click)="onReset()">Reset</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="full_width_btn">
+                                <button type="button" class="search" (click)="onSearchQueueInvoice()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sch_white_bg">
+                    <!-- <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="alert alert-warning">
+                                Warning: Invoice will no longer be availble once Viewed or Removed.
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="queued_invoices">
+                        <div class="overflow-auto">
+                            <div class="row grid_header mob-scroll-grid">
+                                <div class="col-md-2 col">
+                                    <h5>Date</h5>
+                                </div>
+                                <div class="col-md-4 col">
+                                    <h5>Customer Name</h5>
+                                </div>
+                                <div class="col-md-4 col">
+                                    <h5>Staff Name</h5>
+                                </div>
+                                <!-- <div class="col-md-2 col text-center">
+                                <h5>Quantity</h5>
+                            </div> 
+                            <div class="col-md-2 col text-center">
+                                <h5>Total</h5>
+                            </div>-->
+                                <div class="col-md-2 col text-center">
+                                    <h5>Actions</h5>
+                                </div>
+                            </div>
+                            <div id="grid" class="mob-scroll-grid" *ngIf="isDataExists">
+                                <div class="row grid_rows" *ngFor="let inovice of queuedInvoiceList">
+                                    <div class="col-md-2 col">
+                                        <h5>{{inovice.CreatedOn | customdate: dateandTimeFormat}}</h5>
+                                    </div>
+                                    <div class="col-md-4 col">
+                                        <h5>{{inovice.CustomerName && inovice.CustomerName !== '' ? inovice.CustomerName
+                                            :
+                                            '-- No Client--'}}</h5>
+                                    </div>
+                                    <div class="col-md-4 col">
+                                        <h5>{{inovice.StaffName}}</h5>
+                                    </div>
+                                    <div class="col-md-2 col text-center">
+                                        <h5>
+                                            <span class="brown">
+                                                <a matTooltip="Retrieve parked sale" matTooltipPosition="above"
+                                                    matTooltipClass="custom-tooltip" href="javascript:void(0)"
+                                                    (click)="onViewInvoice(inovice.QueueSaleID)">
+                                                    <i class="fal fa-cart-plus"></i></a>
+                                            </span>
+                                            <span class="red_del"><a matTooltip="Delete parked sale"
+                                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                                    (click)="onRemoveInvoice(inovice.QueueSaleID)"
+                                                    href="javascript:void(0)"><i
+                                                        class="fal fa-trash-alt"></i></a></span>
+                                        </h5>
+                                        <!-- <button type="button" class="save">View</button>
+                                    <button type="button" class="red_btn" ">Remove</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="!isDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">No Invoices in Queue</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" mat-button (click)="onClose()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="add_new_lead" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="medium_popup">
+                <div class="popup_header">
+                    <div class="col-md-12 col-sm-12 no_padding">
+                        <h4 *ngIf="staffAttendanceModel.StaffAttendanceID==0"> Clock-In Time</h4>
+                        <h4 *ngIf="staffAttendanceModel.StaffAttendanceID>0"> Clock-Out Time</h4>
+                    </div>
+                </div>
+                <form #staffAttendanceForm="ngForm" (ngSubmit)="saveAttendanceClockInOut(staffAttendanceForm.valid)"
+                    novalidate>
+                    <div class="popup_body">
+                        <div class="row">
+                            <div class="col-md-12 no_padding">
+                                <div class="white_bg">
+                                    <div class="row ">
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="alert alert-danger" *ngIf="isShowError">{{SHOW_ERROR_MSG}}</div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h6 class="top_zero">Shift Time: <span>{{selectedCellData.ShiftStartTime |
+                                                customdate: timeFormat}} -
+                                                    {{selectedCellData.ShiftEndTime | customdate: timeFormat}}</span>
+                                            </h6>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <h5 class="field_label">Clock In</h5>
+                                            <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat"
+                                                [interval]="15" [(value)]="staffAttendanceModel.ClockIn" name="ClockIn"
+                                                [showClearButton]="true" [useMaskBehavior]="true">
+                                            </dx-date-box>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <h5 class="field_label">Clock Out</h5>
+                                            <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat"
+                                                [interval]="15" [(value)]="staffAttendanceModel.ClockOut"
+                                                (onValueChanged)="clockout_valueChanged($event)" name="ClockOut"
+                                                [showClearButton]="true" [useMaskBehavior]="true">
+                                            </dx-date-box>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h5 class="field_label">Notes</h5>
+                                            <textarea name="ClockInDescription" rows="4" *ngIf="showClockInNotes"
+                                                placeholder="clock in notes" [(ngModel)]="staffAttendanceModel.ClockInNotes"></textarea>
+                                            <textarea name="ClockOutDescription" rows="4" *ngIf="showClockOutNotes"
+                                                placeholder="clock out notes" [(ngModel)]="staffAttendanceModel.ClockOutNotes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row popup_footer">
+                            <div class="col-md-12">
+                                <div class="cancel_btn float-right">
+                                    <button type="button" (click)="onClosePopup()">Cancel</button>
+                                    <button type="submit" class="primary_blue_btn">Save</button>
+                                    <button *ngIf="staffAttendanceModel.StaffAttendanceID > 0" type="button" class="sch_red"
+                                        (click)="deleteStaffShiftAttendance()">Delete</button>
+                                </div>
+                                <div class="small_space"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

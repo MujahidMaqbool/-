@@ -1,0 +1,53 @@
+<div class="" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <div>
+                    <h4>Attribute Details</h4>
+                </div>
+
+            </div>
+            <div class="popup_content cstm_scroll_bg section_container readonly_content">
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>Attribute Information</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6" [ngClass]="attributeViewDetail.AppSourceTypeID == enumAppsourceTypeID.EnterPrise ? 'col-md-3' : 'col-md-4'">
+                            <h6>Name</h6>
+                            <p>{{attributeViewDetail.AttributeName ? attributeViewDetail.AttributeName : "N/A"}}</p>
+                        </div>
+                        <div class="col-sm-6" [ngClass]="attributeViewDetail.AppSourceTypeID == enumAppsourceTypeID.EnterPrise ? 'col-md-3' : 'col-md-4'">
+                            <h6>Active</h6>
+                            <p>{{attributeViewDetail.isActive ? 'Yes' : "No"}}</p>
+                        </div>
+                        <div class="col-sm-6" [ngClass]="attributeViewDetail.AppSourceTypeID == enumAppsourceTypeID.EnterPrise ? 'col-md-3' : 'col-md-4'">
+                            <h6>Type</h6>
+                            <p>{{attributeViewDetail.Type ? attributeViewDetail.Type : "N/A"}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6" *ngIf="attributeViewDetail.AppSourceTypeID == enumAppsourceTypeID.EnterPrise">
+                            <h6>Branch Permissions</h6>
+                            <p>{{attributeViewDetail.HasBranchPermission ? "Yes" : "N/A"}}</p>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <h6>Variant Value</h6>
+                            <p>{{attributeViewDetail.VariantValue ? attributeViewDetail.VariantValue : "N/A"}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row popup_footer pt-0">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

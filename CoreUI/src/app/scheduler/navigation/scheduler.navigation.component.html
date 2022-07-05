@@ -1,0 +1,49 @@
+<div class="add_new_lead" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content">
+            <div class="sch_pop_width">
+                <div class="row">
+                    <div class="col-md-12 no_padding">
+                        <mat-tab-group (selectedTabChange)="onTabChange($event)">
+                            <mat-tab label="Class" *ngIf="isSaveClassAllowed && (activityTypeID == schedulerActvityType.class || showAllTab)">
+                                <save-scheduler-class (onClassUpdated)="onUpdateControl($event)" (onReloadScheduler)="onReloadScheduler($event)" [_cellDataSelection]="_cellDataSelection" (onCancel)="closeDialog()"></save-scheduler-class>
+                            </mat-tab>
+                            <mat-tab label="Service" *ngIf="isSaveServiceAllowed && (activityTypeID == schedulerActvityType.service || showAllTab)">
+                                <ng-container *ngIf="!isRescheduleService">
+                                    <save-scheduler-service
+                                        (onReloadScheduler)="onReloadScheduler($event)" [serviceComponentCalled]="serviceComponentCalled"
+                                        [_cellDataSelection]="_cellDataSelection" (onCancel)="closeDialog()"></save-scheduler-service>
+                                </ng-container>
+                                <!--For reschedule service-->
+                                <ng-container *ngIf="isRescheduleService">
+                                    <reschedule-service (onUpdateSchedulerService)="onUpdateControl($event)"
+                                        (onReloadScheduler)="onReloadScheduler($event)" [serviceComponentCalled]="serviceComponentCalled"
+                                        [_cellDataSelection]="_cellDataSelection" (onCancel)="closeDialog()"></reschedule-service>
+                                </ng-container>
+                            </mat-tab>
+                            <mat-tab label="Block Time" *ngIf="isSaveBlockTimeAllowed && (activityTypeID == schedulerActvityType.blockTime || showAllTab)">
+                                <save-scheduler-blocktime (onUpdateSchedulerBlockTime)="onUpdateControl($event)"
+                                    [blockTimeComponentCalled]="blockTimeComponentCalled" [_cellDataSelection]="_cellDataSelection" (onCancel)="closeDialog()"></save-scheduler-blocktime>
+                            </mat-tab>
+                            <mat-tab label="Call" *ngIf="isSaveCallAllowed && (activityTypeID == schedulerActvityType.call || showAllTab)">
+                                <save-scheduler-call (onUpdateSchedulerCallActivity)="onUpdateControl($event)"
+                                    [callActivityComponentCalled]="callActivityComponentCalled" [_cellDataSelection]="_cellDataSelection" (onCancel)="closeDialog()"></save-scheduler-call>
+                            </mat-tab>
+                            <mat-tab label="Appointment" *ngIf="isSaveAppointmentAllowed && (activityTypeID == schedulerActvityType.appointment || showAllTab)">
+                                <save-scheduler-appointment (onUpdateSchedulerAppointmentActivity)="onUpdateControl($event)"
+                                    [appointmentActivityComponentCalled]="appointmentActivityComponentCalled" [_cellDataSelection]="_cellDataSelection" (onCancel)="closeDialog()"></save-scheduler-appointment>
+                            </mat-tab>
+                            <mat-tab label="Task" *ngIf="isSaveTaskAllowed && (activityTypeID == schedulerActvityType.task || showAllTab)">
+                                <save-scheduler-task (onUpdateSchedulerTaskActivity)="onUpdateControl($event)"
+                                    [taskActivityComponentCalled]="taskActivityComponentCalled" [_cellDataSelection]="_cellDataSelection" (onCancel)="closeDialog()"></save-scheduler-task>
+                            </mat-tab>
+                            <!-- <mat-tab label="Attendee" *ngIf="activityTypeID == schedulerActvityType.class ">
+                                <attendee [attendeetabchange]="onAttendeTab" (onAttendeTab)="onAttendeControl($event)"></attendee>
+                            </mat-tab> -->
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

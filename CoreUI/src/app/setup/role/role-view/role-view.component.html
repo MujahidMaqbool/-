@@ -1,0 +1,47 @@
+<div aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content large_popup">
+      <div class="popup_header">
+        <h4>{{viewRoleDetail.RoleName}}</h4>
+      </div>
+      <div class="popup_content cstm_scroll_bg">
+        <div class="popup_white_bg">
+          <div class="row">
+            <div class="col-md-6 col-sm-6" *ngFor="let modulesObj of viewRoleDetail.RoleModuleList">
+              <div class="role_header">
+                <h3 class="no_float">{{modulesObj.ModuleName}}
+                  <span class="float-right" id="{{'checkbox' + modulesObj.ModuleName}}">
+                    On
+                  </span>
+                </h3>
+                <!-- <label class="float-right" for="{{'checkbox' + modulesObj.ModuleName}}"> On
+                  </label>                 -->
+                <div class="clearfix"></div>
+              </div>
+              <div class="role_details cstm_scroll_bg">
+                <div class="row">
+                  <div class="col-lg-6 col-md-12" *ngFor="let ModulePagesObj of modulesObj.ModulePageList">
+                    <div class="checkbox checkbox-success flex-cls">
+                      <input id="{{'checkbox' + ModulePagesObj.ModulePageID}}" name="{{ModulePagesObj.ModulePageName}}" type="checkbox" [(checked)]="ModulePagesObj.IsPageSelected"
+                        [disabled]="true">
+                      <label for="{{'checkbox' + ModulePagesObj.ModulePageID}}"> {{ModulePagesObj.ModulePageName}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row popup_footer">
+        <div class="col-md-12 col-sm-12">
+          <div class="cancel_btn float-right">
+            <button mat-button type="button" (click)="onClosePopup()">Close</button>
+          </div>
+          <div class="small_space"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,221 @@
+<div class="add_new_lead" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content">
+            <div class="sch_pop_width attendee_pop_width mob-col-width">
+                <div class="popup_header">
+                    <h4>Class Attendance</h4>
+                </div>
+                <div class="popup_content cstm_scroll_bg">
+
+                    <div class="popup_white_bg">
+                        <div class="row flex-end">
+                            <div class="col-md-4">
+                                <h5 class="field_label">Date</h5>
+                                <!-- <input name="DateFrom" [(ngModel)]="classSearchObj.ClassDate" (ngModelChange)="onDateChange($event)"
+                                                class="form-control date-picker d_picker_bg" #DateFrom="ngModel" matInput [matDatepicker]="datefrom"
+                                                readonly />
+                                            <mat-datepicker #datefrom></mat-datepicker>
+                                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom">
+                                            </mat-datepicker-toggle> -->
+                                <date-picker [value]="classSearchObj.ClassDate" [min]="minDate" [showClear]="false"
+                                    (onDateChange)="onDateChange($event)"></date-picker>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="field_label">Class</h5>
+                                <div class="select_label">
+                                    <select class="form-control" [disabled]="!isClassesExists"
+                                        [(ngModel)]="classSearchObj.ClassID">
+                                        <option [value]="0" [disabled]="true">-- Select Class --</option>
+                                        <option *ngFor="let classObj of searchDropDownClasses"
+                                            [value]="classObj.ClassID">
+                                            {{classObj.Name}} ({{classObj.StartTime | branchTimeFormat}} -
+                                            {{classObj.EndTime | branchTimeFormat}})
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 full_width_btn">
+                                <button class="search" [disabled]="!classSearchObj.ClassID" type="button"
+                                    (click)="searchClassAttendee()">
+                                    Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!isClassSearch" style="height: 400px;"
+                        class="popup_white_bg attendee_white_bg">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                            </h5>
+                        </div>
+                    </div>
+                    <div *ngIf="isClassSearch">
+                        <div class="popup_white_bg attendee_white_bg">
+                            <div class="row mob-full-col">
+                                <div class="col">
+                                    <h5 class="field_label zero_margin">{{classAttendanceDetail.ClassName}}</h5>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail"><i aria-hidden="true"
+                                            class="fal fa-calendar"></i>
+                                        <p>{{classAttendanceDetail.StartDate | customdate: dateFormForView}}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail"><i aria-hidden="true" class="fal fa-clock"></i>
+                                        <p>{{classAttendanceDetail.StartTime | branchTimeFormat}} -
+                                            {{classAttendanceDetail.EndTime | branchTimeFormat}}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail"><i aria-hidden="true" class="fal fa-user"></i>
+                                        <p>{{classAttendanceDetail.AssignedToStaffName}}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail"><i aria-hidden="true"
+                                            class="fal fa-building"></i>
+                                        <p>{{classAttendanceDetail.FacilityName ? classAttendanceDetail.FacilityName:
+                                            'N/A'}}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail"><i aria-hidden="true"
+                                            class="fal fa-hand-holding-usd"></i>
+                                        <p>{{classAttendanceDetail.PricePerSession | currency: currencyFormat}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="popup_white_bg attendee_white_bg">
+                            <div class="row mob-full-col">
+                                <div class="col class_attendence">
+                                    <h3>{{classAttendanceDetail.AttendeeMin == 0 ? 'No Limit' :
+                                        classAttendanceDetail.AttendeeMin}}<br><br><span>Minimum Attendees</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classAttendanceDetail.AttendeeMax == 0 ? 'No Limit' :
+                                        classAttendanceDetail.AttendeeMax}}<br><br><span>Maximum Attendees</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classAttendanceDetail.TotalAttendee}}<br><br><span>Booked</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classAttendanceDetail.SignedIn}}<br><br><span>Present</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classAttendanceDetail.TotalNoShow}}<br><br><span>No Show</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classAttendanceDetail.TotalWaitList}}<br><br><span>Waitlist</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classAttendanceDetail.TotalCanceled}}<br><br><span>Cancelled</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classStatus}}<br><br><span>Status</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="popup_white_bg ">
+                            <div class="row align-items-center pb-2">
+                                <div class="col-md-4 pos_search">
+                                    <h5 class="field_label">Attendees</h5>
+                                    <div class="attendee_search position-relative">
+                                        <input class="fomt-control mb-0" [(ngModel)]="searchText"
+                                            placeholder="Search attendee(s)" type="text">
+                                        <i class="fal fa-search"></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 pos_search">
+                                    <h5 class="field_label">Booking Status</h5>
+                                    <mat-select [(value)]="searchbookingStatus"
+                                        (selectionChange)="onSearchStatusChange()" class="form-control select_label">
+                                        <mat-option *ngFor="let option of searchBookingStatusOptions"
+                                            [value]="option.BookingStatusTypeID">
+                                            {{option.BookingStatusTypeName}}</mat-option>
+                                    </mat-select>
+                                </div>
+
+                            </div>
+
+                            <div class="row space-15">
+                                <div
+                                    *ngFor="let classAttendeObj of allAttendees | posAttendeeNameFilter : searchText"
+                                    [ngClass]="classAttendeObj !== -1 ? 'col-lg-3 col-md-4' : 'col-md-12'">
+                                    <div class="attendence_item" *ngIf="classAttendeObj !== -1; else noAttendeeFound">
+                                        <p [ngClass]="{
+                                                        'free': classAttendeObj.SaleStatusTypeID === saleStatusType.Free,
+                                                        'paid dark_paid': classAttendeObj.SaleStatusTypeID != saleStatusType.Free && classAttendeObj.SaleStatusTypeID != saleStatusType.WaitList
+                                                    }">{{classAttendeObj.SaleStatusTypeName}}</p>
+                                        <span *ngIf="classAttendeObj.IsCheckedIn" class="check_in_filled"><i class="fas fa-check-circle"></i> {{classAttendeObj.CheckedInDateTime | customdate: dateTimeFormat}}</span>
+                                        <img src="{{classAttendeObj.ImagePath}}"
+                                            class="img-responsive center-block  rounded-circle">
+                                        <h5>{{classAttendeObj.CustomerName}}<br><span>{{classAttendeObj.CustomerTypeName}}</span>
+                                        </h5>
+                                        <div class="col sch_service_action rounded_mat">
+                                            <button type="button"
+                                                [ngClass]="{'NoShowLabel': classAttendeObj.BookingStatusTypeID == bookingStatusValue.Cancelled || classAttendeObj.BookingStatusTypeID == bookingStatusValue.NoShow,
+                                            'waitlabel': classAttendeObj.BookingStatusTypeID == bookingStatusValue.WaitList}"
+                                                class="mt-2 m-0 w-100 rounded-status field-box-height text-center"
+                                                *ngIf="classAttendeObj.BookingStatusTypeID == bookingStatusValue.WaitList || classAttendeObj.BookingStatusTypeID == bookingStatusValue.Cancelled || classAttendeObj.BookingStatusTypeID == bookingStatusValue.NoShow ; else statusDropDown">
+                                                {{ classAttendeObj.BookingStatusTypeID == bookingStatusValue.Cancelled ?
+                                                "Cancelled": classAttendeObj.BookingStatusTypeID ==
+                                                bookingStatusValue.NoShow ? "No Show": "Waitlist" }}
+                                            </button>
+                                            <h5>
+                                                <ng-template #statusDropDown>
+                                                    <mat-select
+                                                        [ngClass]="{'statusBooked': classAttendeObj.BookingStatusTypeID === bookingStatusValue.Booked,
+                                                    'statusConfirmed': classAttendeObj.BookingStatusTypeID === bookingStatusValue.Present}"
+                                                        [(value)]="classAttendeObj.BookingStatusTypeID"
+                                                        (selectionChange)="onBookingStatusChange(classAttendeObj)"
+                                                        class="form-control select_label mt-2 rounded-status"
+                                                        [(ngModel)]="classAttendeObj.BookingStatusTypeID"
+                                                        panelClass="bookingStatusOptions withBorder">
+                                                        <mat-option [value]="bookingStatusValue.Booked"
+                                                            [disabled]="true" class="Booked">
+                                                            Booked</mat-option>
+                                                        <mat-option *ngFor="let option of bookingStatusOptions"
+                                                            [value]="option.BookingStatusTypeID"
+                                                            [hidden]="!canbookingStatusChange && (option.BookingStatusTypeID == bookingStatusValue.NoShow || option.BookingStatusTypeID == bookingStatusValue.Cancelled )"
+                                                            class="{{option.BookingStatusTypeName}}">
+                                                            {{option.BookingStatusTypeName}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </ng-template>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <ng-template #noAttendeeFound>
+                                        <h5 class="no_record_found text-center">No matching attendees in class</h5>
+                                    </ng-template>
+                            </div>
+
+                        </div>
+                        <div *ngIf="!isClassAttendeeExists">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" ng-reflect-dialog-result="true" aria-label="Close dialog"
+                            (click)="onClosePopup()">Cancel</button>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,226 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup" style="background-color: #eee;">
+            <div class="popup_header">
+                <h4>Edit Pricing Details</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mt-1">
+                    <div class="alert alert-danger mb-0" *ngIf="isShowPriceError">
+                        {{messages.Validation.Info_Required}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="popup_content cst-scroll-bar">
+                <div class="popup_white_bg  pt-3">
+                    <div class="row">
+                        <div class="col-md-12" *ngIf="data.isShowCheckBox && data.areaName != productAreaEnum.SaveProduct">
+                            <div class="wrapper-user-alert orange-bg mb-2">
+                                <p>Please note that the
+                                    {{data.selectedVariantLength}} records selected on this page will be updated.
+                                    Leaving the
+                                    disabled fields unchecked will preserve the existing values.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3>Pricing Information</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-end">
+                        <div class="col-lg-4 col-md-4 col-sm-6" *ngIf="!data.isShowCheckBox">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="Barcode" name="Barcode" type="checkbox" (click)="onSelectCheckBox($event)"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="Barcode" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">Barcode <span
+                                        class="optional">(Optional)</span></label>
+                            </div>
+                            <input type="text"
+                                [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox? !savePricingDetail.PriceCheckBoxVM.isBarCode : false"
+                                class="form-control mt-1 mb-2" [(ngModel)]="savePricingDetail.Barcode" maxlength="15" (ngModelChange)="isEnableSaveBtn()">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6" *ngIf="!data.isShowCheckBox">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="SKU" name="SKU" type="checkbox" (click)="onSelectCheckBox($event)"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="SKU" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">SKU <span
+                                        class="optional">(Optional)</span></label>
+                            </div>
+                            <input type="text"
+                                [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox?!savePricingDetail.PriceCheckBoxVM.isSKU: false"
+                                class="form-control mt-1 mb-2" [(ngModel)]="savePricingDetail.SKU" maxlength="15" (ngModelChange)="isEnableSaveBtn()">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6" *ngIf="data.isExceedPackage">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="Supplier" name="Supplier" type="checkbox" (click)="onSelectCheckBox($event)"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="Supplier" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">Supplier <span
+                                        class="optional">(Optional)</span></label>
+                            </div>
+                            <div class="select_label">
+                                <select class="form-control" name="supplierID" id="supplierID" (ngModelChange)="isEnableSaveBtn()"
+                                    [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox?!savePricingDetail.PriceCheckBoxVM.isSupplier: false"
+                                    [(ngModel)]="savePricingDetail.SupplierID" (ngModelChange)="onChangeSupplier()">
+                                    <option [ngValue]="null">Select Supplier</option>
+                                    <option *ngFor="let supplier of data.supplierList" [ngValue]="supplier.SupplierID">
+                                        {{supplier.SupplierName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6" *ngIf="data.isExceedPackage">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="SupplierCode" name="SupplierCode" (click)="onSelectCheckBox($event)"
+                                    type="checkbox"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="SupplierCode" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">Supplier Code <span class="optional">(Optional)</span></label>
+
+                            </div>
+                            <input type="text" class="form-control mt-1 mb-2" (ngModelChange)="isEnableSaveBtn()"
+                                [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox?!savePricingDetail.PriceCheckBoxVM.isSupplierCode:false"
+                                [(ngModel)]="savePricingDetail.SupplierCode" maxlength="15">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="ReorderThreshold" name="ReorderThreshold" (click)="onSelectCheckBox($event)"
+                                    type="checkbox"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="ReorderThreshold" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">Reorder
+                                    Threshold <span class="optional">(Optional)</span></label>
+
+                            </div>
+                            <input type="text" class="form-control mt-1 mb-2" (ngModelChange)="isEnableSaveBtn()"
+                                [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox?!savePricingDetail.PriceCheckBoxVM.isRecordThreshold:false"
+                                [(ngModel)]="savePricingDetail.ReorderThreshold" maxlength="10"
+                                (ngModelChange)="onChangeOnlyNumbers($event, 1)">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="ReorderQuantity" name="ReorderQuantity" (click)="onSelectCheckBox($event)"
+                                    type="checkbox"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="ReorderQuantity" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">Reorder
+                                    Quantity <span class="optional">(Optional)</span></label>
+
+                            </div>
+                            <input type="text" class="form-control mt-1 mb-2" (ngModelChange)="isEnableSaveBtn()"
+                                [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox?!savePricingDetail.PriceCheckBoxVM.isReOrderQty: false"
+                                [(ngModel)]="savePricingDetail.ReorderQuantity" maxlength="10"
+                                (ngModelChange)="onChangeOnlyNumbers($event, 2)">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6" *ngIf="data.isExceedPackage">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="SupplierPrice" name="SupplierPrice" (click)="onSelectCheckBox($event)"
+                                    type="checkbox"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="SupplierPrice" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">Supplier Price
+                                    <span class="optional">(Optional)</span></label>
+                            </div>
+                            <div class="input-group mt-1 mb-2">
+                                <span class="input-group-text" id="basic-addon1">{{data.currencySymbol}}</span>
+                                <input type="text" class="form-control" (ngModelChange)="isEnableSaveBtn()"
+                                    [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox?!savePricingDetail.PriceCheckBoxVM.isisSupplierPrice:false"
+                                    [(ngModel)]="savePricingDetail.SupplierPrice" maxlength="15" numberControl
+                                    TwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="Price" name="Price" type="checkbox" [(ngModel)]="savePricingDetail.PriceCheckBoxVM.isPrice" [disabled]="savePricingDetail.PriceCheckBoxVM.isTax" (click)="onSelectCheckBox($event)"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="Price" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">Price</label>
+                            </div>
+                            <div class="input-group mt-1 mb-2" [ngClass]="{ 'has-danger': isShowPriceError}">
+                                <span class="input-group-text" id="basic-addon1">{{data.currencySymbol}}</span>
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="savePricingDetail.Price" (ngModelChange)="isEnableSaveBtn()"
+                                    [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox?!savePricingDetail.PriceCheckBoxVM.isPrice:false"
+                                    (ngModelChange)="onPriceChange($event, 'price')" maxlength="15" numberControl
+                                    TwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div
+                                [ngClass]="{ 'checkbox checkbox-success' : data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox}">
+                                <input id="Tax" name="Tax" type="checkbox" (click)="onSelectCheckBox($event)"
+                                    *ngIf="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox">
+                                <label for="Tax" class="font-medium"
+                                    [ngClass]="{ 'mb-0' : data.areaName == productAreaEnum.SaveProduct}">Tax <span
+                                        class="optional">(Optional)</span></label>
+
+                            </div>
+                            <div class="select_label mt-1 mb-2">
+                                <mat-select class="form-control multi_select_tax" placeholder="Select Tax" (ngModelChange)="isEnableSaveBtn()"
+                                    name="ClassTax"
+                                    [disabled]="data.areaName == productAreaEnum.EditPricing && data.isShowCheckBox?!savePricingDetail.PriceCheckBoxVM.isTax:false"
+                                    [(ngModel)]="selectedTaxList" tabindex="10" multiple>
+                                    <mat-select-trigger *ngIf="selectedTaxList && selectedTaxList.length > 0">
+                                        {{selectedTaxList && selectedTaxList.length > 0 && selectedTaxList[0].TaxName ?
+                                        selectedTaxList[0].TaxName :
+                                        selectedTaxList && selectedTaxList.length >= 2 && selectedTaxList[0].TaxName ==
+                                        undefined ?
+                                        selectedTaxList[1].TaxName : ''}}
+                                        <span *ngIf="selectedTaxList && selectedTaxList.length >= 2"
+                                            class="example-additional-selection">
+                                            (+{{selectedTaxList[0].TaxName == undefined ? selectedTaxList.length - 2 :
+                                            selectedTaxList.length - 1 }}
+                                            {{selectedTaxList[0].TaxName == undefined && selectedTaxList.length === 3 ?
+                                            'other' :
+                                            selectedTaxList.length === 2 ? 'other' : 'others'}})
+                                        </span>
+                                    </mat-select-trigger>
+                                    <span *ngIf="data.taxList && data.taxList.length > 1">
+                                        <mat-option #allSelectedTax (click)="toggleAllTaxSelection()" [value]="0">All
+                                            Taxes</mat-option>
+                                    </span>
+                                    <mat-option *ngFor="let taxItem of data.taxList" [value]="taxItem"
+                                        (click)="tosslePerOneTax(taxItem)">
+                                        {{taxItem.TaxName}} </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="light-blue-badge mt-2">
+                                <h5 class="field_label m-0">Retail Price <div class="float-right">
+                                    {{savePricingDetail.TotalPrice ? data.currencySymbol : '' }}{{savePricingDetail.TotalPrice ? savePricingDetail.TotalPrice : ''}}</div>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onClose()">Cancel</button>
+                        <button type="button" class="save primary_blue_btn" (click)="onSavePricing()" [disabled]="!savebtnEnabled">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

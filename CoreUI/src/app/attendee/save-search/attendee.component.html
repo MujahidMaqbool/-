@@ -1,0 +1,377 @@
+<div class="add_new_lead" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content">
+      <div class="sch_pop_width attendee_pop_width">
+        <div class="popup_header">
+          <h4>Manage Attendees</h4>
+        </div>
+        <div class="popup_content cstm_scroll_bg">
+
+          <div class="popup_white_bg attendee_white_bg" *ngIf="classInfo">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="field_label top_zero">
+                  <h5>Date</h5>
+                </div>
+                <date-picker [value]="classInfo.ClassDate" [min]="minDate" [showClear]="false"
+                  (onDateChange)="onDateChange($event)"></date-picker>
+              </div>
+              <div class="col-md-4">
+                <div class="field_label top_zero">
+                  <h5>Class</h5>
+                </div>
+                <div class="select_label">
+                  <select class="form-control" [disabled]="!isClassesExists" [(ngModel)]="classInfo.ClassID"
+                    (ngModelChange)="searchClassAttendee()">
+                    <option [value]="0" [disabled]="true">-- Select Class --</option>
+                    <option *ngFor="let callObj of attendeeClass" [value]="callObj.ClassID">
+                      {{callObj.Name}} ({{callObj.StartTime | branchTimeFormat }} -
+                      {{callObj.EndTime | branchTimeFormat }})
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="offset-lg-2 offset-md-0 col-lg-2 col-md-4">
+                <div class="attendee_search_btn">
+                  <button [disabled]="!classInfo.ClassID" type="button" (click)="searchClassAttendee()">
+                    <i class="search" aria-hidden="true"></i> Search
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!classInfo?.ClassID" style="height: 400px;" class="popup_white_bg attendee_white_bg">
+
+            <div class="col-md-12 col-sm-12 text-center">
+              <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+              </h5>
+            </div>
+          </div>
+          <div *ngIf="classInfo.ClassID">
+            <div class="popup_white_bg attendee_white_bg">
+              <div class="row mob-full-col align-items-center">
+                <div class="col">
+                  <h5 class="field_label zero_margin">{{classDetailObj.ClassName}}
+                    <ng-container *ngIf="classDetailObj.RestrictedCustomerTypeNames && isPurchaseRestrictionAllowed">
+                    <span class="cursor-pointer" [id]="'manageAttendee'" (mouseenter)="toggleRestrictionTooltip()"
+                      (mouseleave)="toggleRestrictionTooltip()"><i class="far fa-registered red-color"></i></span>
+                    <dx-tooltip [target]="'#manageAttendee'" position="right"
+                      [(visible)]="purchaseRestrictionTooltip" [closeOnOutsideClick]="true">
+                      <div class="restriction-tooltip-text">
+                        <h2>Purchase Restriction</h2>
+                        <p>Purchase is restricted. {{classDetailObj.RestrictedCustomerTypeNames}} cannot purchase this item.</p>
+                      </div>
+                    </dx-tooltip>
+                    </ng-container>
+                  </h5>
+                </div>
+                <div class="col">
+                  <div class="class_attendence_detail">
+                    <i class="fal fa-calendar" aria-hidden="true"></i>
+                    <p>{{classDetailObj.StartDate | customdate: dateFormForView}}</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="class_attendence_detail">
+                    <i class="fal fa-clock" aria-hidden="true"></i>
+                    <p>{{classDetailObj.StartTime | branchTimeFormat  }} - {{classDetailObj.EndTime | branchTimeFormat }}</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="class_attendence_detail">
+                    <i class="fal fa-hand-holding-usd" aria-hidden="true"></i>
+                    <p>{{classDetailObj.PricePerSession | currency: currencyFormat}}</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="class_attendence_detail">
+                    <i class="fal fa-user" aria-hidden="true"></i>
+                    <p>{{classDetailObj.AssignedToStaffName}}</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="class_attendence_detail">
+                    <i class="fal fa-building" aria-hidden="true"></i>
+                    <p>{{classDetailObj.FacilityName ? classDetailObj.FacilityName : "N/A"}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="popup_white_bg attendee_white_bg">
+              <div class="row mob-full-col">
+                <div class="col class_attendence">
+                  <h3>{{classDetailObj.AttendeeMin == 0 ? 'No Limit' :
+                                        classDetailObj.AttendeeMin}}<br><br><span>Minimum
+                      Attendees</span></h3>
+                </div>
+                <div class="col class_attendence">
+                  <h3>{{classDetailObj.AttendeeMax == 0 ? 'No Limit' :
+                                        classDetailObj.AttendeeMax}}<br><br><span>Maximum
+                      Attendees</span></h3>
+                </div>
+                <div class="col class_attendence">
+                  <h3>{{classDetailObj.TotalAttendee}}<br><br><span>Booked</span></h3>
+                </div>
+                <div class="col class_attendence">
+                  <h3>{{classDetailObj.SignedIn}}<br><br><span>Present</span></h3>
+                </div>
+                <div class="col class_attendence">
+                  <h3>{{classDetailObj.TotalNoShow}}<br><br><span>No show</span></h3>
+                </div>
+                <div class="col class_attendence">
+                  <h3>{{classDetailObj.TotalWaitList}}<br><br><span>Waitlist</span></h3>
+                </div>
+                <div class="col class_attendence">
+                  <h3>{{classDetailObj.TotalCanceled}}<br><br><span>Cancelled</span></h3>
+                </div>
+                <div class="col class_attendence">
+                  <h3>{{classStatus}}<br><br><span>Status</span></h3>
+                </div>
+              </div>
+            </div>
+            <div class="popup_white_bg cstm_scroll_bg" style="overflow: auto;max-height:325px;">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="field_label">Attendee</h5>
+                </div>
+                <div class="col column_flex_alignment mob-attendee">
+                  <div class="attendee_search position-relative">
+                    <input type="text" placeholder="Add Attendee" [value]="personName" matInput
+                      [formControl]="searchPerson" [matAutocomplete]="auto">
+                    <span *ngIf="selectedPerson" (click)="onClearSelectedClient()" class="clear_client"></span>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                      (optionSelected)='onAttendeeChange($event.option.value)'>
+                      <mat-option *ngFor="let person of allPerson" [value]="person">
+                        <span class="client_name">{{ person.FirstName + ' ' + person.LastName
+                                                    }}</span>
+                        <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                        <br>
+                        <span class="client_info">{{ person.Mobile }}</span>
+                        <br>
+                        <span class="client_info">{{ person.Email }}</span>
+                      </mat-option>
+                    </mat-autocomplete>
+                    <i class="fal fa-search" aria-hidden="true"></i>
+                  </div>
+                  <div *ngIf="isSaveClientAllowed" class="add_attendee_icon" (click)="onAddClient()">
+                    <a role="button"><i class="fal fa-user-plus"></i></a>
+                  </div>
+                </div>
+                <div class="col-lg-8 col-md-6">
+                  <div class="company_btn attendee_btn text-right">
+                    <button type="button" (click)="openSMSActivityDialoge(null, true)"
+                      *ngIf="allAttendees && allAttendees.length > 1 && isShowGroupSMS">
+                      <i class="fal fa-comment" aria-hidden="true"></i> SMS to Attendees
+                    </button>
+                    <button type="button" (click)="openEmailActivityDialoge(null, true)"
+                      *ngIf="allAttendees && allAttendees.length > 1 && isShowGroupEmail">
+                      <i class="fal fa-envelope" aria-hidden="true"></i> Email to Attendees
+                    </button>
+                    <button type="button" (click)="openAppNotiActivityDialoge(null, true)"
+                      *ngIf="allAttendees && allAttendees.length > 1 && isShowGroupNotification">
+                      <i class="fal fa-mobile" aria-hidden="true"></i> Push Notification
+                    </button>
+                    <button type="button" *ngIf="allAttendees && allAttendees.length > 0"
+                      (click)="onDownloadClassAtendeesReport()">
+                      <i class="fal fa-file-chart-line"></i> Attendees Report
+                    </button>
+
+                    <div class="select_label ml-10">
+                      <select class="form-control" [(ngModel)]="searchbookingStatus"
+                        (ngModelChange)="onSearchStatusChange()">
+                        <!-- <option [value]="undefined" [disabled]="true">-- Select Class --</option> -->
+                        <option *ngFor="let option of searchBookingStatusOptions" [value]="option.BookingStatusTypeID">
+                          {{option.BookingStatusTypeName}}
+                        </option>
+                      </select>
+                    </div>
+
+                    <div class="add_attendee_icon">
+                      <a role="button"
+                      matTooltip="Booking Status" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-sliders-v"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row space-15">
+                <div class="col-md-12 mob-overflow cstm_scroll_bg">
+                  <div class="mob-scroll-grid">
+                    <div class="row grid_header">
+                      <div class="col">
+                        <h5>Customer</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Type</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Source </h5>
+                      </div>
+                      <div class="col">
+                        <h5>Payment Status</h5>
+                      </div>
+
+                      <div class="col">
+                        <h5>Invoice No.</h5>
+                      </div>
+
+                      <div class="col">
+                        <h5>Booking Status</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5>Actions</h5>
+                      </div>
+                    </div>
+                    <div class="row grid_rows" *ngFor="let classAttendeObj of allAttendees">
+                      <div class="col">
+                        <h5>{{classAttendeObj.CustomerName}}
+                          <span *ngIf="classAttendeObj.BenefitsStatus != ''" class="info_tip"
+                            matTooltip="{{classAttendeObj.BenefitsStatus}}" matTooltipPosition="above"
+                            matTooltipClass="custom-tooltip">
+                            <span class="membershipStatus-icon">
+                              {{classAttendeObj.MembershipStatusTypeID ==
+                                                            membershipStatus_Enum.Frozen ? 'F'
+                                                            :classAttendeObj.MembershipStatusTypeID ==
+                                                            membershipStatus_Enum.Terminated ? 'T'
+                                                            :classAttendeObj.MembershipStatusTypeID ==
+                                                            membershipStatus_Enum.Expired ? 'E' : 'S'}}
+                            </span></span>
+                          <span *ngIf="classAttendeObj.IsCheckedIn" class="check_in_info"
+                            matTooltip="Checked-in by Customer {{classAttendeObj.CheckedInDateTime | customdate: dateTimeFormat}}"
+                            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                            <i class="fal fa-check-circle"></i>
+                          </span>
+
+                        </h5>
+                      </div>
+
+                      <div class="col d-flex">
+                        <i *ngIf="(classAttendeObj.CustomerMembershipID && classAttendeObj.CustomerMembershipID > 0)  && (classAttendeObj.MembershipName !== '')"
+                          class="far fa-crown light-blue-color" matTooltip={{classAttendeObj.MembershipName}}
+                          matTooltipPosition="above" matTooltipClass="custom-tooltip">&nbsp;</i>
+                        <h5>{{classAttendeObj.CustomerTypeName}}</h5>
+                      </div>
+                      <div class="col ">
+                        <h5>{{classAttendeObj.AppSourceTypeName}}</h5>
+                      </div>
+                      <div class="col">
+                        <h5>{{classAttendeObj.SaleStatusTypeName}}</h5>
+                      </div>
+                      <div class="col">
+                        <h5>
+                          <a href="javascript:void(0)" class="link-blue-underline ml-0"
+                            (click)="onViewSale(classAttendeObj.InvoiceNumber, classAttendeObj.CustomerID ,classAttendeObj)">
+                            {{classAttendeObj.InvoiceNumber}}
+                          </a>
+                        </h5>
+                      </div>
+
+                      <div class="col sch_service_action">
+                        <button type="button"
+                          [ngClass]="{'NoShowLabel': classAttendeObj.BookingStatusTypeID == bookingStatusValue.Cancelled || classAttendeObj.BookingStatusTypeID == bookingStatusValue.NoShow,
+                                                'waitlabel': classAttendeObj.BookingStatusTypeID == bookingStatusValue.WaitList}"
+                          class="m-0 w-100 text-left"
+                          *ngIf="classAttendeObj.BookingStatusTypeID == bookingStatusValue.WaitList || classAttendeObj.BookingStatusTypeID == bookingStatusValue.Cancelled || classAttendeObj.BookingStatusTypeID == bookingStatusValue.NoShow ; else statusDropDown">
+                          {{ classAttendeObj.BookingStatusTypeID == bookingStatusValue.Cancelled ? 'Cancelled'
+                                                        : classAttendeObj.BookingStatusTypeID == bookingStatusValue.NoShow  ? 'No Show' : 'WaitList' }}
+                          <span *ngIf="classAttendeObj.BookingStatusTypeID == bookingStatusValue.WaitList">Add
+                            to Class</span>
+                        </button>
+                        <h5>
+                          <ng-template #statusDropDown>
+                            <mat-select
+                              [ngClass]="{'statusBooked': classAttendeObj.BookingStatusTypeID === bookingStatusValue.Booked,
+                                                       'statusConfirmed': classAttendeObj.BookingStatusTypeID === bookingStatusValue.Present}"
+                              [(value)]="classAttendeObj.BookingStatusTypeID"
+                              (selectionChange)="onBookingStatusChange(classAttendeObj)"
+                              class="form-control select_label" [(ngModel)]="classAttendeObj.BookingStatusTypeID"
+                              panelClass="bookingStatusOptions withBorder">
+                              <mat-option [value]="bookingStatusValue.Booked" [disabled]="true" class="Booked">
+                                Booked</mat-option>
+                              <mat-option *ngFor="let option of bookingStatusOptions"
+                                [value]="option.BookingStatusTypeID" class="{{option.BookingStatusTypeName}}"
+                                [hidden]="(classAttendeObj.IsWalkedIn || classAttendeObj.SaleStatusTypeID != SaleStatusType.Refund && classAttendeObj.SaleStatusTypeID != SaleStatusType.Paid && classAttendeObj.SaleStatusTypeID != SaleStatusType.PartialPaid && classAttendeObj.SaleStatusTypeID != SaleStatusType.Unpaid ) && (option.BookingStatusTypeID == bookingStatusValue.NoShow || option.BookingStatusTypeID == bookingStatusValue.Cancelled ) ">
+                                {{option.BookingStatusTypeName}}</mat-option>
+                            </mat-select>
+                          </ng-template>
+                        </h5>
+                      </div>
+
+                      <div class="col text-center">
+                        <h5>
+                          <span class="blue"
+                            *ngIf="!classAttendeObj.IsWalkedIn && isRescheduleAllow && classAttendeObj.BookingStatusTypeID === bookingStatusValue.Booked && (classAttendeObj.SaleStatusTypeID === SaleStatusType.Refund || classAttendeObj.SaleStatusTypeID === SaleStatusType.Paid || classAttendeObj.SaleStatusTypeID === SaleStatusType.PartialPaid || classAttendeObj.SaleStatusTypeID === SaleStatusType.Unpaid)">
+                            <a role="button" (click)="openClassRescheduleDialoge(classAttendeObj)"
+                              matTooltip="Reschedule" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="fal fa-history"></i></a>
+                          </span>
+                          <span class="blue" *ngIf="classAttendeObj.SMSAllowed">
+                            <a role="button" (click)="openSMSActivityDialoge(classAttendeObj, false)" matTooltip="SMS"
+                            matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="fal fa-comment"
+                                aria-hidden="true"></i></a>
+                          </span>
+                          <span class="blue" *ngIf="classAttendeObj.EmailAllowed">
+                            <a role="button" (click)="openEmailActivityDialoge(classAttendeObj, false)"
+                              matTooltip="Email" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="fal fa-envelope" aria-hidden="true"></i></a>
+                          </span>
+                          <span class="blue" *ngIf="classAttendeObj.AppNotificationAllowed">
+                            <a role="button" (click)="openAppNotiActivityDialoge(classAttendeObj, false)"
+                              matTooltip="Push Notification" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                aria-hidden="true" class="fal fa-mobile"></i>
+                            </a>
+                          </span>
+                          <span class="us-attendee-dot us-dot green"
+                            [ngClass]="{ 'non-mandatory-status' : classAttendeObj.FormStatusColor == 'Yellow',
+                                                                'mandatory-status' : classAttendeObj.FormStatusColor == 'Red'  }"
+                            *ngIf="classAttendeObj.FormStatusColor && !classAttendeObj.IsWalkedIn"> <a
+                              matTooltip="Fill Form" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                              (click)="openSubmitCustomerFormDialog(classAttendeObj.CustomerID, classAttendeObj.SaleDetailID, classAttendeObj.FormStatusColor)">
+                              <i class="fal fa-file-signature"></i>
+                            </a>
+                          </span>
+                          <span class="blue" *ngIf="classAttendeObj.BookingStatusTypeID == bookingStatusValue.WaitList || classAttendeObj.SaleStatusTypeID == SaleStatusType.PartialPaid || classAttendeObj.SaleStatusTypeID == SaleStatusType.Unpaid">
+                            <a role="button" matTooltip="Process" matTooltipPosition="above"
+                              (click)="onProcessPayment(classAttendeObj)" matTooltipClass="custom-tooltip">
+                              <i class="fal fa-hand-holding-usd"></i></a>
+                          </span>
+                          <span [hidden]="classAttendeObj.BookingStatusTypeID != bookingStatusValue.WaitList "
+                            class="red_del"> <a matTooltip="Cancel Booking" matTooltipPosition="above" post
+                              matTooltipClass="custom-tooltip" (click)="onDelete(classAttendeObj)"
+                              href="javascript:void(0)">
+                              <i aria-hidden="true" class="fal fa-trash-alt"></i>
+                            </a>
+                          </span>
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="!isClassAttendeeExists">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">
+                          {{messages.Generic_Messages.No_Record_Found}}
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="row popup_footer">
+          <div class="col-md-12 col-sm-12">
+            <div class="cancel_btn float-right">
+              <button type="button" ng-reflect-dialog-result="true" aria-label="Close dialog"
+                (click)="onClosePopup()">Cancel</button>
+            </div>
+            <div class="small_space"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,252 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <!-- <button *ngIf="allowedPages.Search_Member" class="simple_btn" type="button" role="navigation" [routerLink]="['/member']">
+                    Back to Search</button> -->
+            <!-- <button type="button" *ngIf="allowedPages.ProceedToLead" class="save simple_btn"
+                (click)="onProceedToLead()">
+                Proceed to Lead </button> -->
+            <button *ngIf="allowedPages.Save" type="button" (click)="onAddMembership()">
+                Add Membership </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="white_bg info_bar_bg">
+    <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#membership_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+            </div>
+        </div>
+        <div id="membership_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="field_label">Membership</h5>
+                        <div class="select_label">
+                            <select class="form-control" name="memberShipId"
+                                [(ngModel)]="membershipSearchModel.CustomerMembershipID"
+                                (ngModelChange)="onMembershipChange(membershipSearchModel.CustomerMembershipID)">
+                                <option [ngValue]="undefined">Select Membership</option>
+                                <option *ngFor="let member of membershipList" [ngValue]="member.CustomerMembershipID">
+                                    {{member.MembershipName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToPlaceHolder]="dateToPlaceHolder"
+                        [dateFromPlaceHolder]="dateFromPlaceHolder" #membershipSearchDate>
+                        </dateto-datefrom>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="field_label">Status</h5>
+                        <div class="select_label">
+                            <select class="form-control" name="StatusTypeId"
+                                [(ngModel)]="membershipSearchModel.MembershipStatusTypeID">
+                                <option [ngValue]="undefined">Select Status</option>
+                                <option *ngFor="let status of membershipStatusTypeList"
+                                    [ngValue]="status.MembershipStatusTypeID">
+                                    {{status.MembershipStatusTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="offset-lg-9 offset-md-6 col-lg-3 col-md-6 space no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6"><button type="button" class="reset_btn"
+                                    (click)="resetMembershipSearchFilters()"> Reset</button></div>
+                            <div class="col-md-6 col-sm-6 full_width_btn">
+                                <button type="button" (click)="memberShipSearch()" class="search">
+                                    Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                        Membership Name
+                        <i class="fas fa-sort-alt"></i>
+                    </a>
+                </h5>
+
+            </div>
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
+                        Start Date
+                        <i class="fas fa-sort-alt"></i>
+                    </a>
+                </h5>
+            </div>
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="changeSorting(3)" href="javascript:void(0)">
+                        End Date
+                        <i class="fas fa-sort-alt"></i>
+                    </a>
+                </h5>
+            </div>
+            <div class="col text-center">
+                <h5>Auto Roll <span class="info_tip"
+                        matTooltip="Memberships will remain active & available indefinitely." matTooltipPosition="above"
+                        matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                </h5>
+            </div>
+            <div class="col text-center">
+                <h5>Indefinitely Frozen <span class="info_tip tp_space"
+                        matTooltip="Allows you to pause the membership indefinitely with the understanding that your customer will continue with the contract at a future date."
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                            class="far fa-info-circle"></i></span></h5>
+            </div>
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="changeSorting(4)" href="javascript:void(0)">
+                        Status
+                        <i class="fas fa-sort-alt"></i>
+                    </a>
+                </h5>
+            </div>
+            <div class="col text-center">
+                <h5>Scheduled Cancellation Date</h5>
+            </div>
+            <div class="col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div id="grid" *ngIf="isDataExists">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let  memberMembershipobj of memberMembership">
+                <div class="col">
+                    <h5>{{memberMembershipobj.MembershipName }}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberMembershipobj.StartDate | customdate: dateFormat }}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberMembershipobj.EndDate | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col text-center">
+                    <h5>{{memberMembershipobj.IsAutoRoll ? 'Yes' : 'No'}}</h5>
+                </div>
+                <div class="col text-center">
+                    <h5>{{memberMembershipobj.IsOpenEndedFreeze ? 'Yes' : 'No'}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberMembershipobj.MembershipStatusTypeName}}</h5>
+                </div>
+                <div class="col text-center">
+                    <h5>{{memberMembershipobj.ScheduledCancellationDate | customdate: dateFormat}} <span
+                            *ngIf="memberMembershipobj.MembershipCancellationReasonTypeName != '' " class="info_tip"
+                            matTooltip="{{memberMembershipobj.MembershipCancellationReasonTypeName}}"
+                            matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span></h5>
+                </div>
+                <div class="col text-center">
+                    <h5>
+                        <!-- <span class="brown">
+                        <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="onViewPaymentsDetail(memberMembershipobj)">
+                            <i class="fal fa-book-open"></i>
+                        </a>
+                    </span>
+                    <span>
+                        <a role="button" (click)="onEditMembership()"><i class="fal fa-edit"></i></a>
+                    </span> -->
+                        <span class="blue">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="viewMembershipDetail(memberMembershipobj)" href="javascript:void(0)">
+                                <i class="fal fa-book-open"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="!memberMembershipobj.IsAutoRoll && (memberMembershipobj.MembershipStatusTypeID == membershipStatus.Active || memberMembershipobj.MembershipStatusTypeID == membershipStatus.Frozen)">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onEditMembership(memberMembershipobj)" href="javascript:void(0)">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <span class="red_del" *ngIf="(memberMembershipobj.MembershipStatusTypeID == membershipStatus.Active ||
+                           memberMembershipobj.MembershipStatusTypeID == membershipStatus.Frozen)
+                           && memberMembershipobj.ScheduledCancellationDate">
+                            <a matTooltip="Revert Cancel Membership" matTooltipPosition="above"
+                                matTooltipClass="custom-tooltip"
+                                (click)="onRevertCancelledMembership(memberMembershipobj.CustomerMembershipID, memberMembershipobj.MembershipID)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-undo-alt"></i>
+                            </a>
+                        </span>
+                        <!-- <span *ngIf="memberMembershipobj.MembershipStatusTypeID == membershipStatus.Active">
+                        <a (click)="onSuspendStatusChange(memberMembershipobj.CustomerMembershipID, memberMembershipobj.FreeClassSuspended)"
+                            href="javascript:void(0)" matTooltip="Enforcing this check will result in this member being bared from booking free classes."
+                            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                            <i class="fal" [ngClass]="{
+                                    'fa-calendar-check': memberMembershipobj.FreeClassSuspended,
+                                    'fa-calendar-times': !memberMembershipobj.FreeClassSuspended }">
+                            </i>
+                        </a>
+                    </span>-->
+                    <span class="blue" *ngIf="memberMembershipobj.HasActivityLog">
+                          <a href="javascript:void(0)" matTooltip="Activity Log" matTooltipClass="custom-tooltip" matTooltipPosition="above"
+                            (click)="openDialogForActivityLog(memberMembershipobj.CustomerMembershipID)"><i class="fal fa-search-plus"></i></a>
+                    </span>
+                        <span class="red_del" *ngIf="(memberMembershipobj.MembershipStatusTypeID == membershipStatus.Active ||
+                           memberMembershipobj.MembershipStatusTypeID == membershipStatus.Frozen)
+                           && allowedPages.CancelMembership">
+                            <a matTooltip="Cancel Membership" matTooltipPosition="above"
+                                matTooltipClass="custom-tooltip" (click)="onCancelMembership(memberMembershipobj)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-times-circle"></i>
+                            </a>
+                        </span>
+                        <!-- <span>
+                        <mat-slide-toggle *ngIf="memberMembershipobj.MembershipStatusTypeID == membershipStatus.Active"
+                            class="example-margin" name="FreeClassSuspendedToggel" [(ngModel)]="memberMembershipobj.FreeClassSuspended"
+                            (ngModelChange)="onSuspendStatusChange(memberMembershipobj.CustomerMembershipID, memberMembershipobj.FreeClassSuspended)"
+                            [(checked)]="memberMembershipobj.FreeClassSuspended">
+                            {{memberMembershipobj.FreeClassSuspended ? 'Suspended': 'Allowed'}}
+                            <span class="info_tip" matTooltip="Enforcing this check will result in this member being bared from booking free classes."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle">
+                                </i>
+                            </span>
+                        </mat-slide-toggle>
+                    </span> -->
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+
+    <!-- <div class="pagination">
+        <div class="col-md-12 no_padding">
+            <mat-paginator #paginator [length]="totalRecords" [pageIndex]="pageIndex"
+                [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" [showFirstLastButtons]="true">
+            </mat-paginator>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+</div>

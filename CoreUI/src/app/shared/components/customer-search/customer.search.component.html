@@ -1,0 +1,16 @@
+<div class="row">
+    <input type="text" placeholder="{{customerTypePlaceHolder}}" matInput class="form-control"
+    [(ngModel)]="showClearCustomerInput" [formControl]="searchPerson" [matAutocomplete]="auto" maxlength="30">
+        <span *ngIf="showClearCustomerInput != ''" (click)="onClearCustomer()" class="clear_client"></span>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCustomerName"
+        (optionSelected)='getSelectedClient($event.option.value)'>
+        <mat-option *ngFor="let person of allPerson" [value]="person">
+            <span class="client_name">{{ person.FullName }}</span>
+            <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+            <br>
+            <span class="client_info">{{ person.Mobile }}</span>
+            <br>
+            <span class="client_info">{{ person.Email }}</span>
+        </mat-option>
+    </mat-autocomplete>
+</div>

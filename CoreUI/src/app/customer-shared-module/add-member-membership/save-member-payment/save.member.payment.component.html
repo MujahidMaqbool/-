@@ -1,0 +1,92 @@
+<div class="white_bg">
+  <!-- <div class="section_title inside_margin">
+    <h4>Membership About To Be Created </h4>
+  </div> -->
+  <div class="membership_list">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="no_padding">Membership</h2>
+        <p>{{membershipPaymentSummary.MembershipName}}</p>
+      </div>
+      <div class="col-md-6">
+        <h2 class="no_padding">Duration</h2>
+        <p>This membership is valid from <b>{{membershipPaymentSummary.ValidFrom | customdate: dateFormat}}</b> to <b>{{membershipPaymentSummary.ValidTo
+            | customdate: dateFormat}}</b>.</p>
+      </div>
+    </div>
+    <div class="section_title inside_margin">
+      <h4>Payments </h4>
+      <p *ngIf="!hasPayments">This membership is completely free of charge.</p>
+    </div>
+    <div class="row" *ngIf="hasPayments">
+      <div class="col-md-12">
+        <div class="mob-overflow cstm_scroll_bg">
+          <div class="mob-scroll-grid">
+            <div class="row grid_header">
+              <div class="col">
+                <h5> Name </h5>
+              </div>
+              <div class="col">
+                <h5> Type </h5>
+              </div>
+              <div class="col">
+                <h5>Due Date</h5>
+              </div>
+              <div class="col">
+                <h5>Price</h5>
+              </div>
+              <div class="col">
+                <h5>Pro rata</h5>
+              </div>
+              <div class="col">
+                <h5>Tax</h5>
+              </div>
+              <div class="col">
+                <h5>Total Amount</h5>
+              </div>
+            </div>
+            <div *ngFor="let paymentPlan of membershipPaymentSummary.MembershipPaymentSummaryList">
+            <div class="row grid_rows" *ngIf="paymentPlan.Price > 0">
+                <div class="col">
+                  <h5> {{paymentPlan.MembershipPaymentName}} </h5>
+                </div>
+                <div class="col">
+                  <h5> {{ paymentPlan.MembershipPaymentTypeID === membershipPaymentType.Single ? 'Single' : 
+                  paymentPlan.MembershipPaymentTypeID === membershipPaymentType.Recurring ? 'Recurring' : '' }} </h5>
+                </div>
+                <div class="col">
+                  <h5>{{paymentPlan.DueDate | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col">
+                  <h5> {{paymentPlan.Price | currency: currencyFormat}}</h5>
+                </div>
+                <div class="col">
+                  <h5> {{paymentPlan.ProRataPrice | currency: currencyFormat}}</h5>
+                </div>
+                <div class="col">
+                  <h5> {{paymentPlan.TaxAmount | currency: currencyFormat}}</h5>
+                </div>
+                <div class="col">
+                  <h5> {{paymentPlan.TotalPrice | currency: currencyFormat}}</h5>
+                </div>
+            </div>
+          </div>
+            <div class="row grid_rows total_amount">
+              <div class="col"></div>
+              <div class="col"></div>
+              <div class="col"></div>
+              <div class="col"></div>
+              <div class="col"></div>
+              <div class="col">
+                <h5>Total :</h5>
+              </div>
+              <div class="col">
+                <h5>{{totalAmount | currency: currencyFormat}}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,425 @@
+﻿<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content full_screen_pop">
+      <div class="popup_header">
+        <mat-tab-group class="col-md-12 col-sm-12 p-0 no-border" (selectedTabChange)="onTabChange($event)" [selectedIndex]="activeTabIndex">
+          <mat-tab label="{{activityTypes.ProductDetails}}" >
+          </mat-tab>
+          <mat-tab *ngIf="allowedPages.Pricing_View" label="{{activityTypes.PricingDetails}}" >
+          </mat-tab>
+          <mat-tab *ngIf="allowedPages.Inventory_View" label="{{activityTypes.InventoryDetails}}" >
+          </mat-tab>
+      </mat-tab-group>
+      </div>
+
+      <div class="popup_content full-content-no-header">
+        <ng-container *ngIf="activeTabIndex == productWizardTabsEnum.ProductInformation">
+          <div *ngTemplateOutlet="ProductDetails"></div>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabIndex == productWizardTabsEnum.PricingDetails">
+        <div *ngTemplateOutlet="PricingDetails"></div>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabIndex == productWizardTabsEnum.InventoryDetails">
+        <div *ngTemplateOutlet="InventoryDetails"></div>
+        </ng-container>
+     </div>
+
+      <div class="row popup_footer pt-0">
+        <div class="col-md-12">
+          <div class="cancel_btn float-right">
+            <button type="button" (click)="onCloseDialog()">Close</button>
+          </div>
+        </div>
+      </div>
+
+        <!-- Product Details Template -->
+        <ng-template #ProductDetails>
+          <div class="view_bg p-2">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="section_title">
+                          <h4>Product Information</h4>
+                      </div>
+                  </div>
+              </div>
+              <div class="row readonly_content mb-2">
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                      <h6>Name</h6>
+                      <p>{{productViewDetail.ProductName ? productViewDetail.ProductName : 'N/A'}}</p>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                      <h6>Classification</h6>
+                      <p>{{productViewDetail.ProductClassificationName ? productViewDetail.ProductClassificationName : 'N/A'}}</p>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                      <h6>Category</h6>
+                      <p>{{productViewDetail.ProductCategoryName ? productViewDetail.ProductCategoryName : 'N/A'}}</p>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                    <h6>Brand</h6>
+                    <p>{{productViewDetail.BrandName ? productViewDetail.BrandName : 'N/A'}}</p>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                    <h6>Type</h6>
+                    <p>{{productViewDetail.Type ? productViewDetail.Type : 'N/A'}}</p>
+                   </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="productViewDetail.AppSourceTypeID === appSourceTypeID.EnterPrise">
+                    <h6>Branch Permissions</h6>
+                    <p>{{productViewDetail.HasBranchPermission ? "Yes" : 'No'}}</p>
+                   </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="productViewDetail.AppSourceTypeID === appSourceTypeID.EnterPrise">
+                      <h6>Branch Pricing</h6>
+                      <p>{{productViewDetail.AllowBranchEditPrice ? "Yes" : 'No'}}</p>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="productViewDetail.AppSourceTypeID === appSourceTypeID.EnterPrise">
+                      <h6>Branch Inventory</h6>
+                      <p>{{productViewDetail.AllowBranchTrackInventory ? "Yes" : 'No'}}</p>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-6">
+                    <h6>Purchase Restriction</h6>
+                    <p>{{productViewDetail.RestrictedCustomerTypeNames ? productViewDetail.RestrictedCustomerTypeNames +' '+'cannot purchase this item.' : 'N/A'}}</p>
+                   </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h6>Description</h6>
+                    <p>{{productViewDetail.ProductDescription ? productViewDetail.ProductDescription : 'N/A'}}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="section-title mb-2">
+                    <h3>Branches & Permissions</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="overflow-auto">
+                    <div class="responsive_grid_rows cstm_scroll_bg">
+
+                      <div class="row align-items-center grid_header">
+                        <div class="col col-md-2">
+                          <h5>Branch</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Active</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Show Online</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Hide Price Online</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Is Featured</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Track Inventory</h5>
+                        </div>
+                      </div>
+
+                      <div class="pv-product-details cstm_scroll_bg">
+                        <ng-container *ngFor="let branch of productViewDetail?.BranchAndPermissions">
+                          <div class="row align-items-center grid_rows">
+                            <div class="col col-md-2">
+                              <h5>{{branch?.BranchName}}</h5>
+                            </div>
+                            <div class="col">
+                              <h5>
+                                {{branch.IsActive? "Yes" : "No" }}
+                              </h5>
+                              </div>
+                              <div class="col">
+                              <h5>
+                                {{branch.IsOnline? "Yes" : "No" }}
+                              </h5>
+                              </div>
+                              <div class="col">
+                              <h5>
+                                {{branch.IsHidePriceOnline? "Yes" : "No" }}
+                              </h5>
+                              </div>
+                              <div class="col">
+                              <h5>
+                                {{branch.IsFeatured? "Yes" : "No" }}
+                              </h5>
+                              </div>
+                              <div class="col">
+                              <h5>
+                                {{branch.HasTrackInventory? "Yes" : "No" }}
+                              </h5>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+          </div>
+        </ng-template>
+
+        <!-- Pricing Details Template -->
+        <ng-template #PricingDetails >
+          <div class="view_bg p-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section_title mb-2">
+                        <h3>Pricing</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="overflow-auto">
+                  <div class="cstm_scroll_bg master_row mob-scroll-grid-lg">
+                    <div class="row align-items-center grid_header">
+                      <div class="col col-md-2">
+                        <h5>Name</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Branch</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Barcode</h5>
+                      </div>
+                      <div class="col">
+                        <h5>SKU</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Supplier</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Supplier Code</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Threshold Point</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Reorder Quantity</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Supplier Price</h5>
+                      </div>
+                      <div class="col">
+                        <h5>Retail Price</h5>
+                      </div>
+                    </div>
+
+                    <div class="pv-inventory-details cstm_scroll_bg">
+                      <ng-container *ngFor="let productPricing of productPricingDetail ; let i = index">
+                        <div class="row grid_rows grid_parent_rows_pos collapse-dd">
+                          <div class="col col-md-2">
+                              <div class="cursor-pointer cst-collapse" data-toggle="collapse" attr.data-target="#productCollapse{{i}}"
+                              aria-expanded="false" attr.aria-label="productCollapse{{i}}">
+                                <h5>{{productPricing.ProductName}}</h5>
+                                <span class="variant-des">{{productPricing.ProductVariantName}}</span>
+
+                              </div>
+                          </div>
+
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <h5>
+                            </h5>
+                          </div>
+                        </div>
+
+                        <!-- child content -->
+                        <ng-container *ngFor="let ProductPricingBranches of  productPricing?.ProductPricingDetailBranches; let j = index">
+                            <div class="row align-items-center grid_rows grid_child_rows collapse show" id="productCollapse{{i}}" >
+                              <div class="col col-md-2" >
+                                <h5></h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.BranchName}}</h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.Barcode ? ProductPricingBranches.Barcode : 'N/A'}}</h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.SKU ? ProductPricingBranches.SKU : 'N/A'}}</h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.SupplierName ? ProductPricingBranches.SupplierName : 'N/A'}}</h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.SupplierCode ? ProductPricingBranches.SupplierCode : 'N/A'}}</h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.ReorderThreshold}}</h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.ReorderQuantity}}</h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.SupplierPrice | currency: currencyFormat}}</h5>
+                              </div>
+                              <div class="col " >
+                                <h5>{{ProductPricingBranches.RetailPrice | currency: currencyFormat}}</h5>
+                              </div>
+                            </div>
+                        </ng-container>
+
+                      </ng-container>
+
+                      <div class="row grid_rows" *ngIf="!isDataExists">
+                        <div class="col-md-12 col-sm-12 text-center">
+                          <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  </div>
+              </div>
+              <div class="col-md-12 popup-pagination" *ngIf="activeTabIndex != productWizardTabsEnum.ProductInformation">
+                  <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- Inventory Details Template -->
+        <ng-template #InventoryDetails >
+          <div class="view_bg p-2">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="section_title mb-2">
+                          <h3>Inventory</h3>
+                      </div>
+                  </div>
+              </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="overflow-auto">
+                    <div class="cstm_scroll_bg master_row mob-scroll-grid-lg">
+                      <div class="row align-items-center grid_header">
+                        <div class="col col-md-2">
+                          <h5>Name</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Branch</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Current Stock</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Stock Value</h5>
+                        </div>
+                        <div class="col">
+                          <h5>Retail Value</h5>
+                        </div>
+                      </div>
+
+                      <div class="pv-inventory-details cstm_scroll_bg">
+                        <ng-container *ngFor="let productInventory of productInventoryDetail; let i = index">
+                          <div class="row grid_rows grid_parent_rows_pos collapse-dd">
+                            <div class="col col-md-2">
+                                <div class="cursor-pointer cst-collapse" data-toggle="collapse" attr.data-target="#inventryCollapse{{i}}"
+                                aria-expanded="false" attr.aria-label="inventryCollapse{{i}}">
+                                  <h5>{{productInventory.ProductName}}</h5>
+                                  <span class="variant-des">{{productInventory.ProductVariantName}}</span>
+
+                                </div>
+                            </div>
+                            <div class="col">
+                              <h5>
+                              </h5>
+                            </div>
+                            <div class="col">
+                              <h5>{{productInventory.TotalCurrentStock}}
+                              </h5>
+                            </div>
+                            <div class="col">
+                              <h5>{{productInventory.TotalStockValue  | currency : currencyFormat}}
+                              </h5>
+                            </div>
+                            <div class="col">
+                              <h5>{{productInventory.TotalRetailValue  | currency : currencyFormat}}
+                              </h5>
+                            </div>
+
+                          </div>
+
+                          <!-- child content -->
+                          <ng-container *ngFor="let ProductInventoryBranches of  productInventory?.ProductInventoryBranches; let j = index">
+                              <div class="row align-items-center grid_rows grid_child_rows collapse show"  id="inventryCollapse{{i}}">
+                                <div class="col col-md-2" >
+                                  <h5></h5>
+                                </div>
+                                <div class="col " >
+                                  <h5>{{ProductInventoryBranches.BranchName}}</h5>
+                                </div>
+                                <div class="col " >
+                                  <h5>{{ProductInventoryBranches.CurrentStock}}</h5>
+                                </div>
+                                <div class="col " >
+                                  <h5>{{ProductInventoryBranches.StockValue | currency: currencyFormat}}</h5>
+                                </div>
+                                <div class="col " >
+                                  <h5>{{ProductInventoryBranches.RetailValue | currency: currencyFormat}}</h5>
+                                </div>
+
+                              </div>
+                          </ng-container>
+                        </ng-container>
+
+                        <div class="row grid_rows" *ngIf="!isDataExists">
+                          <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 popup-pagination" *ngIf="activeTabIndex != productWizardTabsEnum.ProductInformation">
+                    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+                </div>
+            </div>
+          </div>
+        </ng-template>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Revive Staff</h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="small_space"></div>
+            <div class="delete_warning">
+                <div>
+                    <i class="fal fa-user-check"></i>
+                </div>
+                <div>
+                    <p>The email address has an archived staff profile against it. Would you like to continue and revive the profile ?</p>
+                </div>
+            </div>
+            <div class="small_space"></div>
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right">
+                    <button (click)="onNo()">No</button>
+                    <button class="primary_blue_btn" (click)="onYes()">Yes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

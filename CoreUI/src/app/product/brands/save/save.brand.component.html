@@ -1,0 +1,106 @@
+<div class="add_branch_pop" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content medium_popup">
+      <div class="popup_header">
+        <h4>Product Brand</h4>
+      </div>
+      <!-- start validation apply our Form-->
+      <form #SaveBrandData="ngForm">
+        <div class="popup_content">
+          <div class="row">
+            <div class="col-md-12 p-0">
+              <div class="alert alert-danger" *ngIf="showError">
+                {{messages.Validation.Info_Required}}
+              </div>
+            </div>
+          </div>
+
+          <div class="popup_white_bg py-2">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="sch_class_head p-0">
+                  <h5 class="field_label">Active</h5>
+                  <mat-slide-toggle tabindex="1" class="wellyx-checked" name="status" [checked]="brandSaveModel.IsActive"
+                  [(ngModel)]="brandSaveModel.IsActive">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="popup_white_bg">
+            <div class="row">
+              <div class="col-md-6">
+                <div [ngClass]="{
+                  'has-danger': brandName.invalid && (brandName.dirty || brandName.touched || inValidBrandName),
+                  'has-success': brandName.valid && (brandName.dirty || brandName.touched )
+                     }">
+                  <div class="field_label">
+                    <h5>Name</h5>
+                  </div>
+                    <input type="text" #brandName="ngModel" required [(ngModel)]="brandSaveModel.BrandName"
+                      maxlength="50" name="brandName" id="brandName" class="form-control" tabindex="2"
+                      (ngModelChange)="showValidation($event)" (blur)="trimName()" [disabled]="brandSaveModel.AppSourceTypeID == appSourceTypeID.EnterPrise" autoFocusDirective />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                  <div class="field_label">
+                    <h5>Product Category</h5>
+                  </div>
+                  <div class="select_label" [ngClass]="{
+                    'has-danger':  inValidProductCategory,
+                    'has-success': ProductCategory.valid && (ProductCategory.dirty || ProductCategory.touched)
+                       }">
+                    <mat-select class="form-control multi_select_tax" placeholder="Select Product Category" name="ProductCategory" id="ProductCategory"
+                      [(ngModel)]="selectedProductCategoryList" #ProductCategory tabindex="3" multiple required [disabled]="brandSaveModel.AppSourceTypeID == appSourceTypeID.EnterPrise">
+                      <mat-select-trigger *ngIf="selectedProductCategoryList && selectedProductCategoryList.length > 0">
+                        {{selectedProductCategoryList && selectedProductCategoryList.length > 0 && selectedProductCategoryList[0].CategoryTypeName ?
+                      selectedProductCategoryList[0].CategoryTypeName :
+                      selectedProductCategoryList && selectedProductCategoryList.length >= 2 && selectedProductCategoryList[0].CategoryTypeName == undefined ?
+                      selectedProductCategoryList[1].CategoryTypeName : ''}}
+                        <span *ngIf="selectedProductCategoryList && selectedProductCategoryList.length >= 2"
+                          class="example-additional-selection">
+                          (+{{selectedProductCategoryList[0].CategoryTypeName == undefined ? selectedProductCategoryList.length - 2 :
+                        selectedProductCategoryList.length - 1 }}
+                          {{selectedProductCategoryList[0].CategoryTypeName == undefined && selectedProductCategoryList.length === 3 ? 'other' :
+                        selectedProductCategoryList.length === 2 ? 'other' : 'others'}})
+                        </span>
+                      </mat-select-trigger>
+                      <span *ngIf="productCategoryList && productCategoryList.length > 1">
+                        <mat-option #allSelectedProductCategory (click)="toggleAllCatSelection()" [value]="0">All</mat-option>
+                      </span>
+                      <mat-option *ngFor="let categoryItem of productCategoryList" [value]="categoryItem"
+                        (click)="togglePerCat(categoryItem)">
+                        {{categoryItem.CategoryTypeName}} </mat-option>
+                    </mat-select>
+                  </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="field_label">
+                  <h5>Description &nbsp;<span>(Remaining Characters: {{250 - brandSaveModel.Description.length}})</span>
+                  </h5>
+                </div>
+                <textarea class="form-control" rows="6" maxlength="250" tabindex="4" [(ngModel)]="brandSaveModel.Description" name="description" id="description"
+                [disabled]="brandSaveModel.AppSourceTypeID == appSourceTypeID.EnterPrise"></textarea>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="row popup_footer">
+          <div class="col-md-12 col-sm-12">
+            <div class="cancel_btn float-right">
+              <button tabindex="5" type="button" mat-button (click)="onCloseDialog()">Cancel</button>
+              <button tabindex="6" class="save primary_blue_btn"
+                [disabled]="(SaveBrandData.pristine) || isDisabledSaveButton" (click)="onSave()">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- End validation -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<!--View Client Pop Up start-->
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <div>
+                    <h4>Membership Benefits</h4>
+                </div>
+            </div>
+            <div class="popup_content cstm_scroll_bg section_container">
+
+                <div class="view_bg">
+
+                    <div class="row flex-end">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="field_label">
+                                <h5>Membership</h5>
+                            </div>
+                            <div class="select_label">
+                                <mat-select class="form-control custom_select_option" name="memberShip"
+                                    [(ngModel)]="searchMembership" (ngModelChange)="getClientBenefit()">
+                                    <mat-select-trigger *ngIf="searchMembership">
+                                        <span [innerHTML]="searchMembership.MembershipName"></span>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let member of membershipList" [value]="member">
+                                        <span [innerHTML]="member.MembershipName"></span>
+                                        <!-- <span [ngStyle]="{'color':member.MembershipStatusTypeID == membershipStatus_Enum.Active ? 'green' : member.MembershipStatusTypeID == membershipStatus_Enum.Frozen ? 'blue' : member.MembershipStatusTypeID == membershipStatus_Enum.Terminated ? 'red' :member.MembershipStatusTypeID == membershipStatus_Enum.Expired ? 'Orange':'red'}">{{member.MembershipStatusName}}</span> -->
+                                    </mat-option>
+                                </mat-select>
+                                <!-- <select class="form-control" name="memberShipId"
+                                    [(ngModel)]="memberMembershipBenefitsSearchModel.MemberMembershipID"
+                                    (ngModelChange)="getClientBenefit()">
+                                    <option *ngFor="let member of membershipList" [ngValue]="member.CustomerMembershipID">
+                                        {{member.MembershipName}}
+                                    </option>
+                                </select> -->
+                            </div>
+                        </div>
+                        <!-- <div class="offset-md-4 col-md-3">
+                            <div class="full_width_btn ">
+                                <button type="button" class="search" (click)="getClientBenefit()">
+                                    Search</button>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                    <div class="cstm_scroll_bg overflow-auto master_row pt-3">
+                        <div class="row grid_header benefits_grid_header  mob-scroll-grid">
+                            <div class="col">
+                                <h5></h5>
+                            </div>
+                            <div class="col">
+                                <h5>Session Allowed </h5>
+                            </div>
+                            <div class="col">
+                                <h5>Session Consumed</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Session Remaining</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Session Interval</h5>
+                            </div>
+                            <div class="col">
+                                <h5>Status</h5>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="memberhsipBenefit">
+                            <ng-container *ngFor="let membenefit of memberhsipBenefit">
+                                <div class="row grid_rows member_benefits_grid mob-scroll-grid">
+                                    <div class="col">
+                                        <h5><b>{{membenefit.BenefitName}}</b></h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5><b>{{membenefit.NoLimits?'No Limits':membenefit.TotalSessions}}</b></h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5><b>{{membenefit.SessionConsumed}}</b></h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5><b>{{membenefit.NoLimits?'No Limits':membenefit.SessionRemaining}}</b></h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5><b>{{membenefit.DurationTypeName}}</b></h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5>{{membenefit.SessionStatus}}</h5>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="membenefit.MemberBenefitsBranch">
+                                    <ng-container *ngFor="let benefit of membenefit.MemberBenefitsBranch">
+                                        <div class="row grid_rows benefits_grid_header grid_branch_rows grid_child_rows mob-scroll-grid">
+                                            <div class="col">
+                                                <h5><b>{{benefit.BranchName}}</b></h5>
+                                            </div>
+                                        </div>
+                                        <ng-container *ngIf="benefit.MemberBenefitsItemDetail">
+                                            <div class="row grid_rows grid_child_rows mob-scroll-grid"
+                                                *ngFor="let item of benefit.MemberBenefitsItemDetail">
+                                                <div class="col">
+                                                    <h5>{{item.ItemName}}</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <h5>{{item.NoLimits?'No Limits': item.TotalSessions}}</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <h5>{{item.SessionConsumed}}</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <h5>{{item.NoLimits?'No Limits':item.SessionRemaining}}</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <h5>{{item.DurationTypeName}}</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <h5>{{item.SessionStatus}}</h5>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+
+                    </div>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right scroll_close">
+                        <button type="button" (click)="closePopup()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

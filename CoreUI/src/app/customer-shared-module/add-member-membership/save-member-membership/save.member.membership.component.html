@@ -1,0 +1,285 @@
+<div class="membership_list">
+  <div class="col-md-12 col-sm-12">
+    <div class="alert alert-danger" *ngIf="showValidation && memberMembershipForm.invalid">
+      {{messages.Validation.Info_Required}}
+    </div>
+    <div class="alert alert-danger" *ngIf="isRequiredCustomerAddressForACH">
+      {{paymentGateWayID == paymentGateway.GoCardless? messages.Validation.Required_Customer_Address : messages.Validation.Required_Customer_Address_forPayTab}}
+    </div>
+  </div>
+  <form #memberMembershipForm="ngForm" novalidate>
+    <div *ngIf="customerId && customerId > 0 && oldMembershipId && oldMembershipId > 0">
+
+      <div class="row">
+        <div class="col-md-6 parallel_grid no_padding">
+          <div class="white_bg bottom_zero">
+            <div class="row singal_membership top_zp">
+              <div class="col-lg-2 col-md-3">
+                <!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
+                <!-- <input type="radio" name="add" id="add" [value]="true" [(ngModel)]="isNewMembership" /> -->
+                <label class="radio_container">
+                  <input type="radio" name="add" id="add" [value]="true" [(ngModel)]="isNewMembership"
+                    (ngModelChange)="onRenewalTypeChange($event)">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="col-lg-10 col-md-9 mob-pl-15 padding_left">
+                <h5>New Membership</h5>
+                <p>Adding a New Membership will not affect your Current Memberships.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 no_padding">
+          <div class="white_bg bottom_zero">
+            <div class="row singal_membership top_zp">
+              <div class="col-lg-2 col-md-3">
+                <!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
+                <!-- <input type="radio" name="add" id="add" [value]="false" [(ngModel)]="isNewMembership" /> -->
+                <label class="radio_container">
+                  <input type="radio" name="add" id="add" [value]="false" [(ngModel)]="isNewMembership"
+                    (ngModelChange)="onRenewalTypeChange($event)">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="col-lg-10 col-md-9 mob-pl-15 padding_left">
+                <h5>Replace Membership</h5>
+                <p>This Membership will Replace One of Your Existing Membership.</p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="white_bg">
+      <div class="row mob-col-full flex-end">
+        <div class="col" *ngIf="!isNewMembership">
+          <div class="field_label">
+            <h5>Replace Membership </h5>
+          </div>
+          <div class="select_label">
+            <select *ngIf="!isNewMembership" class="form-control" name="oldMembership" [(ngModel)]="oldMembership"
+              (ngModelChange)="onOldMembershipChange($event)" required>
+              <option *ngFor="let oldMembership of oldMembershipList" [ngValue]="oldMembership">
+                {{oldMembership.MembershipName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field_label">
+            <h5>Membership </h5>
+          </div>
+          <div [ngClass]="{
+                            'has-danger': (membership.invalid && (membership.dirty || membership.touched || showValidation)) || (selectedMembershipId == 0) || (hasMembershipslist == true),
+                            'has-success': membership.valid && (membership.dirty || membership.touched ) }">
+            <div class="select_label">
+              <select class="form-control" name="membership" [(ngModel)]="selectedMembershipId"
+                (ngModelChange)="onMembershipChange()" #membership="ngModel" required tabindex="1">
+                <option *ngFor="let membership of membershipList" [ngValue]="membership.MembershipID">
+                  {{membership.MembershipName}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field_label">
+            <h5>Start Date <span class="info_tip"
+                matTooltip="Use the dropdown menu to select when the membership will begin." matTooltipPosition="above"
+                matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span></h5>
+          </div>
+          <date-picker [value]="startDate" [tabindex]="2" [required]="true" [min]="minStartDate" [showClear]="false"
+            (onDateChange)="onMembershipDateChange($event)"></date-picker>
+        </div>
+        <div class="col">
+          <div class="field_label">
+            <h5>Payment Method <span class="info_tip"
+                matTooltip="Use the dropdown menu to select how you would like the member to pay for membership."
+                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+            </h5>
+          </div>
+          <div [ngClass]="{
+                        'has-danger': (selectedGateway.invalid && (selectedGateway.dirty || selectedGateway.touched || showValidation)),
+                        'has-success': selectedGateway.valid && (selectedGateway.dirty || selectedGateway.touched) }">
+            <div class="select_label">
+              <select class="form-control" name="selectedGatway" [(ngModel)]="selectedGatewayId"
+                (ngModelChange)="onGatewayChange()" #selectedGateway="ngModel" required>
+                <option [ngValue]="gateway.PaymentGatewayID" *ngFor="let gateway of paymentGatewayList">
+                  {{gateway.PaymentGatewayName}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="small_space"></div>
+
+      <div class="row" *ngIf="hasPayments">
+        <div class="col-md-12">
+          <div class="d-inline-flex align-items-center alert alert-warning p-2 content-sm-reg m-0"
+          *ngIf="isPurchaseRestrictionAllowed && membershipListObj.RestrictedCustomerTypeNames">
+            <i class="fal fa-registered brown-color pr-2 font-size-medium" aria-hidden="true"></i>
+            <span>Purchase is restricted. {{membershipListObj.RestrictedCustomerTypeNames}} cannot purchase this item.</span>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <h4 class="align_sp mb-0">Adjust Payment Schedule
+            <span class="membership_processing_days alert-warning float-right" *ngIf="showProcessingDaysMessage">
+              <i class="fal fa-info-circle"></i>
+              <span *ngIf="showGoCardless"> Minimum collection date for GoCardless is {{minCollectionDate
+                                | customdate: dayViewFormat}}</span>
+              <span *ngIf="showStripeACH"> Minimum collection date for Stripe ACH is {{minCollectionDate |
+                                customdate: dayViewFormat}}</span>
+            </span>
+          </h4>
+          <div class="mob-overflow cstm_scroll_bg">
+            <div class="mob-scroll-grid">
+              <div class="row grid_header">
+                <div class="col">
+                  <h5>Payment Name</h5>
+                </div>
+                <div class="col">
+                  <h5>Payment Type</h5>
+                </div>
+                <div class="col">
+                  <h5>Amount</h5>
+                </div>
+                <div class="col">
+                  <h5>Pro Rate <span class="info_tip"
+                      matTooltip="You can prorate a contract to bridge the gap between the initial collection date and the official contract start date. You'll collect a prorated payment for this time period, and the member will get to use your facilities before the official contract begins."
+                      matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                        class="far fa-info-circle"></i></span></h5>
+                </div>
+                <div class="col">
+                  <h5>Collection Date <span class="info_tip"
+                      matTooltip="Use the dropdown menu to select when the charges will begin."
+                      matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                        class="far fa-info-circle"></i></span></h5>
+                </div>
+              </div>
+              <div class="row grid_rows" *ngFor="let paymentPlan of paymentPlanList; let ind = index">
+                <div class="col">
+                  <h5>{{paymentPlan.MembershipPaymentName}}</h5>
+                </div>
+                <div class="col">
+                  <h5>{{ paymentPlan.MembershipPaymentTypeID === membershipPaymentType.Single ?
+                                        'Deposit ' :
+                                        paymentPlan.MembershipPaymentTypeID === membershipPaymentType.Recurring ? 'Fee'
+                                        : '' }}
+                  </h5>
+                </div>
+                <div class="col">
+                  <div [ngClass]="{'has-danger': price.invalid}">
+                    <input type="text" numberControl class="form-control zero_margin" name="{{'membershipPrice' + ind}}"
+                      [(ngModel)]="paymentPlan.Price" min="0" maxlength="13" #price="ngModel" tabindex="3" required
+                      onkeypress="return isNumber(event)" />
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="checkbox checkbox-success" *ngIf="paymentPlan.IsProRata">
+                    <input type="checkbox" class="zero_margin" id="{{'skipProRata' + ind}}"
+                      name="{{'skipProRata' + ind}}" [(ngModel)]="paymentPlan.SkipProRata" tabindex="4" />
+                    <label for="{{'skipProRata' + ind}}">
+                      Skip Pro Rate <span class="info_tip" matTooltip="By checking this box, pro rate will not be applied.
+                                    " matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                          class="far fa-info-circle"></i></span>
+                    </label>
+                  </div>
+                  <h5 *ngIf="!paymentPlan.IsProRata">N/A</h5>
+                </div>
+                <div class="col simple_dp">
+                  <div [ngClass]="{
+                                    'has-danger': CollectionDate.invalid && CollectionDate.value
+                                }">
+                    <input type="text" class="form-control date-picker bg_transparent zero_margin"
+                      name="{{'collectionDate' + ind}}" placeholder="Collection Date" #CollectionDate="ngModel"
+                      [(ngModel)]="paymentPlan.CollectionDate" [min]="minCollectionDate"
+                      [matDatepicker]="collectionDatepicker" readonly matInput />
+                    <mat-datepicker #collectionDatepicker></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="collectionDatepicker">
+                    </mat-datepicker-toggle>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div *ngIf="hasMemberships && !hasPayments" class="no_record_found">
+        This membership is completely free of charge.
+      </div>
+    </div>
+
+    <div class="white_bg" *ngIf="showGoCardless || showStripe || showStripeACH || showPayTabs">
+      <div class="row" *ngIf="showGoCardless">
+        <div class="col-md-12">
+          <div class="pay_label">
+            <label class="active">GoCardless</label>
+          </div>
+        </div>
+        <div class="col-md-12 no_padding">
+          <!-- <add-gocardless-customer *ngIf="customerId > 0; else withAddAccount" [showAddAccount]="false" #goCardlessRef [customerID]="customerId"></add-gocardless-customer>
+                    <ng-template #withAddAccount>
+                        <add-gocardless-customer #goCardlessRef [customerID]="customerId"></add-gocardless-customer>
+                    </ng-template> -->
+          <add-gocardless-customer (CountrySchema)="CountrySchema($event)"
+            (paymentGateWayID)="selectedPaymentGateWayID($event)" #goCardlessRef [customerID]="customerId">
+          </add-gocardless-customer>
+        </div>
+      </div>
+      <div class="row" *ngIf="showStripe">
+        <div class="col-md-12">
+          <div class="pay_label">
+            <label class="active">Stripe</label>
+          </div>
+        </div>
+        <div class="col-md-12 no_padding">
+          <add-stripe-customer #stripeRef [showSaveCard]="false" [customerID]="customerId">
+          </add-stripe-customer>
+        </div>
+      </div>
+      <div class="row" *ngIf="showPayTabs">
+        <div class="col-md-12">
+          <div class="pay_label">
+            <label class="active">PayTabs</label>
+          </div>
+        </div>
+        <div class="col-md-12 ">
+          <pay-tabs-customer #paytabsRef [showSaveCard]="false" [customerID]="customerId">
+          </pay-tabs-customer>
+        </div>
+      </div>
+      <div class="row" *ngIf="showStripeACH">
+        <div class="col-md-12">
+          <div class="pay_label">
+            <label class="active">Stripe ACH</label>
+          </div>
+        </div>
+        <div class="col-md-12 no_padding">
+          <stripe-ach #stripeACHRef [customerID]="customerId"> </stripe-ach>
+        </div>
+      </div>
+
+    </div>
+    <div class="white_bg" *ngIf="AllowTermsandConditions">
+      <div class="row">
+        <!-- <div class="col-md-5">
+                    <a role="button">Company Name Terms & Conditions</a>
+                </div> -->
+        <div class="col-md-12">
+          <div class="checkbox checkbox-success zero_margin inline-flex">
+            <input id="terms-condition" type="checkbox" name="termsAgreement" [(ngModel)]="isTermAgreed"
+              [(checked)]="isTermAgreed"><label for="terms-condition">
+              I have read and agree to the Terms & Conditions. *
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

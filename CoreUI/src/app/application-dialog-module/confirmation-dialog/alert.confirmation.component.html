@@ -1,0 +1,37 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>{{Title}}</h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="space-10">
+            </div>
+            <div class="delete_warning">
+                <div>
+                    <i class="fal fa-exclamation-triangle" *ngIf="!isChangeIcon"></i>
+                    <i class="fal fa-luggage-cart" *ngIf="isChangeIcon"></i>
+                </div>
+                <div>
+                    <div *ngIf="Heading">
+                        <h6>{{Heading}}</h6>
+                    </div>
+                    <p>{{Message}}</p>
+                </div>
+            </div>
+            <div class="space-10"></div>
+        </div>
+        <div class="row popup_footer top_zp">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right" *ngIf="!showConfirmCancelButton">
+                    <button (click)="onNo()" *ngIf="!showButton">No</button>
+                    <button (click)="onNo()" *ngIf="showButton">Close</button>
+                    <button class="primary_blue_btn" (click)="onYes()" *ngIf="!showButton">Yes</button>
+                </div>
+                <div class="cancel_btn float-right" *ngIf="showConfirmCancelButton">
+                    <button (click)="onNo()" >Cancel</button>
+                    <button class="primary_blue_btn" (click)="onYes()" >Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,237 @@
+﻿<div class="view_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Lead Details</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="readonly_content">
+                    <div class="view_bg info_bar_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="view_main_bar">
+                                    <div>
+                                        <img src="{{imagePath}}" style="width:40px"
+                                            class="img-responsive rounded-circle">
+                                    </div>
+                                    <div class="view_main_bar_item">
+                                        <span>{{viewLeadDetailDataObj.Title + ' ' + viewLeadDetailDataObj.FirstName + '
+                                            ' + viewLeadDetailDataObj.LastName}}</span>
+                                        <span class="enq_status">Lead</span>
+                                    </div>
+                                    <div class="view_main_bar_item">
+                                        <i class="fal fa-envelope"></i> {{viewLeadDetailDataObj.Email}}</div>
+
+                                    <div *ngIf="viewLeadDetailDataObj.Mobile" class="view_main_bar_item"><i class="fal fa-mobile"></i>
+                                        {{viewLeadDetailDataObj.Mobile}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Personal Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Gender</h6>
+                                <p>{{(!viewLeadDetailDataObj.Gender) ? 'Not Specified' : viewLeadDetailDataObj.Gender}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Date Of Birth</h6>
+                                <p>
+                                    {{viewLeadDetailDataObj.BirthDate ? (viewLeadDetailDataObj.BirthDate | customdate: dateFormat) :
+                                    'N/A' }}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Phone</h6>
+                                <p>{{viewLeadDetailDataObj.Phone ? viewLeadDetailDataObj.Phone : 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>General Information</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Referred By</h6>
+                                <p>{{viewLeadDetailDataObj.ReferenceCustomerName ? viewLeadDetailDataObj.ReferenceCustomerName : 'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Source</h6>
+                                <p>{{viewLeadDetailDataObj.EnquirySourceTypeName ?
+                                    viewLeadDetailDataObj.EnquirySourceTypeName:
+                                    'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Company Name</h6>
+                                <p>{{viewLeadDetailDataObj.CompanyName ? viewLeadDetailDataObj.CompanyName : 'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Occupation</h6>
+                                <p>{{viewLeadDetailDataObj.Occupation ? viewLeadDetailDataObj.Occupation : 'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Created Date</h6>
+                                <p>{{viewLeadDetailDataObj.CreatedOn ? (viewLeadDetailDataObj.CreatedOn | customdate: dateFormat) : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-12">
+                                <h6>Notes</h6>
+                                <p>
+                                    {{viewLeadDetailDataObj.Description ? viewLeadDetailDataObj.Description : 'N/A'}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Enquiries</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 overflow-auto">
+                            <div class="verticle-scroll-lg">
+                                <div class="row grid_header view_membership_detail">
+                                    <div class="col-md-5 col padding_right">
+                                        <h5>
+                                            Enquired Membership</h5>
+                                    </div>
+                                    <div class="col-md-5 col">
+                                        <h5>Lead Status
+                                        </h5>
+                                    </div>
+                                    <div class="col-md-2 col text-center">
+                                        <h5>Assigned To
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="row grid_rows view_membership_content ng-star-inserted"
+                                    *ngFor="let membership of viewLeadDetailDataObj.CustomerMembershipList">
+                                    <div class="col-md-5 col padding_right">
+                                        <h5>{{membership.MembershipName}} </h5>
+                                    </div>
+                                    <div class="col-md-5 col">
+                                        <h5>{{membership.LeadStatusTypeFriendlyName}}</h5>
+                                    </div>
+                                    <div class="col-md-2 col text-center">
+                                        <h5>{{membership.AssignedToStaffName == 0 ? 'Not Specified' : membership.AssignedToStaffName }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Home Address</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Country</h6>
+                                <p>{{viewLeadDetailDataObj.CountryName ? viewLeadDetailDataObj.CountryName: defaultCountry}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>State/County</h6>
+                                <p>{{viewLeadDetailDataObj.StateCountyName ? viewLeadDetailDataObj.StateCountyName:
+                                    'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>City</h6>
+                                <p>{{viewLeadDetailDataObj.CityName ? viewLeadDetailDataObj.CityName: 'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 1</h6>
+                                <p>{{viewLeadDetailDataObj.Address1 ? viewLeadDetailDataObj.Address1: 'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 2</h6>
+                                <p>{{viewLeadDetailDataObj.Address2 ? viewLeadDetailDataObj.Address2: 'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Postal Code / Zip Code</h6>
+                                <p>{{viewLeadDetailDataObj.PostCode ? viewLeadDetailDataObj.PostCode: 'N/A'}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg last_div_bz">
+                        <div class="row readonly_content">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Permissions</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Postal Mail </h6>
+                                <p>{{viewLeadDetailDataObj.PostalMailAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Phone Call</h6>
+                                <p>{{viewLeadDetailDataObj.PhoneCallAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Email</h6>
+                                <p>{{viewLeadDetailDataObj.EmailAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>SMS</h6>
+                                <p>{{viewLeadDetailDataObj.SMSAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Push Notification</h6>
+                                <p>{{viewLeadDetailDataObj.PushNotificationAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>First Aid</h6>
+                                <p>{{viewLeadDetailDataObj.FirstAidAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="isPartialPaymentAllow">
+                                <h6>Partial Payment - Core</h6>
+                                <p>{{viewLeadDetailDataObj.AllowPartPaymentOnCore ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="isPartialPaymentAllow">
+                                <h6>Partial Payment - Widget</h6>
+                                <p>{{viewLeadDetailDataObj.AllowPartPaymentOnWidget ? 'Yes' : 'No'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right scroll_close">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

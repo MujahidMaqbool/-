@@ -1,0 +1,31 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="small_popup">
+        <div class="popup_header">
+            <h4> Schedule Termination </h4>
+        </div>
+        <div class="popup_content">
+           
+                <div class="popup_white_bg row">
+                    <div class="col-md-12">
+                        <h5 class="field_label top_zero">Are you sure you want to delete ?</h5>
+                        <p>The reward program will be deleted. All customers enrolled in the reward program will be removed and all points terminated.
+                            Select termination date from below. This cannot be undone!
+                        </p>
+                    </div>
+
+                    <div class="col-md-12 del_reward">
+                        <date-picker [value]="DeleteDate" [min]="minDate" [showClear]="false" 
+                    (onDateChange)="onDateChange($event)"></date-picker>
+                    </div>
+                </div>
+          
+                <div class="row popup_footer cancel_btn float-right">
+                    <div class="col-md-12 col-sm-12 no_padding">
+                        <button (click)="onCancel()">Cancel</button>
+                        <button class="primary_blue_btn" (click)="onConfirm()" >Confirm</button>
+                    </div>
+                </div>
+      
+        </div>
+    </div>
+</div>

@@ -1,0 +1,237 @@
+    <div class="row">
+        <div class="col-md-12">
+            <div class="company_btn float-right">
+                <button class="simple_btn" type="button" role="navigation" [routerLink]="['/product/suppliers']">
+                    Back to Search
+                </button>
+
+                <button class="save" (click)="onSave(SupplierInformation)" [disabled]="isSaveClicked">Save</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+
+
+    <div class="row" *ngIf="SupplierInformation.invalid && errorMsg != '' ">
+      <div class="col-md-12" >
+        <div class="section_title no-border mb-0 alert alert-danger" >
+          {{ errorMsg }}
+        </div>
+      </div>
+    </div>
+
+    <form #SupplierInformation="ngForm" novalidate>
+
+    <div class="white_bg">
+      <div class="row align-items-center section_title no-border mb-0">
+          <div class="col">
+              <h4>Active</h4>
+          </div>
+          <div class="col">
+              <mat-slide-toggle class="wellyx-checked float-right m-label-0" name="isActive" id="isActive" [(checked)]="isActive" [(ngModel)]="isActive">
+              </mat-slide-toggle>
+          </div>
+      </div>
+    </div>
+
+    <div class="white_bg">
+        <div class="row">
+
+        </div>
+        <div class="row section_title inside_margin">
+            <div class="col-md-6 padding_left">
+                <h4>Supplier Information</h4>
+            </div>
+
+        </div>
+          <div class="section_content">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="field_label">
+                        <h5>Name</h5>
+                    </div>
+                    <div [ngClass]="{
+                                    'has-danger': supplierName.invalid && (supplierName.dirty || supplierName.touched || showError),
+                                    'has-success': supplierName.valid && (supplierName.dirty || supplierName.touched ) }">
+
+                        <input type="text" name="supplierName" id="supplierName" class="form-control" #supplierName="ngModel"  [(ngModel)]="supplierObj.SupplierName" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                            maxlength="30" pattern=".*\S+.*" (ngModelChange)="showValidation($event,SupplierInformation , supplierValidationENUM.SupplierName)" required autoFocusDirective />
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="field_label">
+                        <h5>Email <span>(optional)</span></h5>
+                    </div>
+
+                        <input type="text" name="email" id="email" class="form-control" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                            pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                            #email="ngModel" [(ngModel)]="supplierObj.Email"
+                            (ngModelChange)="showValidation($event,SupplierInformation ,supplierValidationENUM.Email)"
+                            maxlength="50" />
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="field_label">
+                        <h5>Website <span>(optional)</span></h5>
+                    </div>
+                    <div>
+                        <input type="text" name="website" id="website" class="form-control" #website="ngModel" [(ngModel)]="supplierObj.Website" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                            maxlength="50" />
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="field_label">
+                        <h5>Description <span>(Remaining Characters: {{ 1500 -
+                          supplierObj?.Description?.length }})</span></h5>
+                    </div>
+                    <textarea rows="4" name="description" id="description" maxlength="1500" [(ngModel)]="supplierObj.Description" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                    class="form-control" #description="ngModel"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section_title">
+                    <h4>Contact Information <span class="optional">(optional)</span></h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="row">
+                    <div class="col-md-5 col-sm-4 no_padding">
+                        <div class="field_label">
+                            <h5>Title</h5>
+
+                                <div class="select_label">
+                                    <select class="form-control" name="title" id="title" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise" [(ngModel)]="supplierObj.ContactTitle">
+                                        <option  [ngValue]= "''">
+                                            Select Title
+                                        </option>
+                                        <option *ngFor="let title of titleList" [ngValue]="title">
+                                          {{title}}
+                                        </option>
+                                    </select>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-8 padding_right mob-pl-0">
+                        <div class="field_label required">
+                            <h5>First Name</h5>
+
+                                <input type="text" class="form-control" name="firstName" id="firstName" #contactFirstName="ngModel" [(ngModel)]="supplierObj.ContactFirstName" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                                    maxlength="50" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="field_label required">
+                    <h5>Last Name</h5>
+
+                        <input type="text" class="form-control" name="lastName" id="lastName" maxlength="50"  #contactLastName="ngModel" [(ngModel)]="supplierObj.ContactLastName" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                            />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="defaultCountry" >
+                <div class="field_label">
+                    <h5>Phone</h5>
+                </div>
+                <div [ngClass]="{
+                  'has-danger': phone.invalid && (phone.dirty || phone.touched ||SupplierInformation.submitted),
+                  'has-success': phone.valid && phone.value && (phone.dirty || phone.touched )
+              }">
+              <div  [ngClass]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise ? 'disablePhone' : ''">
+                <international-phone-number name="phone" id="phone" [(ngModel)]="supplierObj.ContactPhone" #phone="ngModel"
+                  [defaultCountry]="supplierObj.ContactPhone ? '' : defaultCountry">
+                </international-phone-number>
+              </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="defaultCountry">
+                <div class="field_label required">
+                    <h5>Mobile</h5>
+                </div>
+
+                <div [ngClass]="{
+                  'has-danger': mobile.invalid && (mobile.dirty || mobile.touched ||SupplierInformation.submitted),
+                  'has-success': mobile.valid && mobile.value && (mobile.dirty || mobile.touched )
+              }">
+              <div [ngClass]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise ? 'disablePhone' : ''">
+                <international-phone-number name="mobile" id="mobile" [(ngModel)]="supplierObj.ContactMobile" #mobile="ngModel"
+                  [defaultCountry]="supplierObj.ContactMobile ? '' : defaultCountry">
+                </international-phone-number>
+              </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section_title">
+                    <h4>Address <span class="optional">(optional)</span></h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>Country </h5>
+                </div>
+                <div class="select_label">
+                    <select class="form-control"#countryName="ngModel" name="countryName" id="countryName" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                    [(ngModel)]="supplierObj.CountryID">
+                        <option [ngValue]= 0> Select Country </option>
+                        <option *ngFor="let country of countryList" [ngValue]="country.CountryID">
+                          {{country.CountryName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>State / County </h5>
+                </div>
+                <input type="text" [(ngModel)]="supplierObj.StateCountyName" class="form-control" #stateCountyID="ngModel" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                name="stateCountyID" id="stateCountyID" maxlength="50">
+
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>Address Line 1 </h5>
+                </div>
+                <input type="text" [(ngModel)]="supplierObj.AddressLine1" class="form-control" #addressLine1="ngModel" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                name="addressLine1" id="addressLine1" maxlength="50">
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>Address Line 2 </h5>
+                </div>
+                <input type="text" [(ngModel)]="supplierObj.AddressLine2" class="form-control" #addressLine2="ngModel" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                name="addressLine2" id="addressLine2" maxlength="50">
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>City </h5>
+                </div>
+                <div>
+                  <input type="text" [(ngModel)]="supplierObj.CityName" class="form-control" #cityName="ngModel" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                  name="cityName" id="cityName" maxlength="50">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="field_label">
+                    <h5>Postal Code / Zip Code </h5>
+                </div>
+                <input type="text" [(ngModel)]="supplierObj.PostalCode" class="form-control" #postalCode="ngModel" [disabled]="supplierObj.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                name="postalCode" id="postalCode" maxlength="50">
+                       </div>
+        </div>
+    </div>
+
+  </form>

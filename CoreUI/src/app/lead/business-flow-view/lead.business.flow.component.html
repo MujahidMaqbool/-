@@ -1,0 +1,773 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn text-right">
+            <button *ngIf="allowedPages.Lead_Save" type="button" class="save" (click)="openAddLeadDialog()">
+                Add Lead
+            </button>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#bflow_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+            </div>
+        </div>
+        <div id="bflow_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Name</h5>
+                        </div>
+                        <input type="text" class="form-control" name="Name" maxlength="50"
+                            [(ngModel)]="searchParameterObj.CustomerName">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Membership</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="MembershipID"
+                                [(ngModel)]="searchParameterObj.MembershipID" #Membership="ngModel">
+                                <option *ngFor="let MembershipObj of membershipList"
+                                    [ngValue]="MembershipObj.MembershipID">
+                                    {{MembershipObj.MembershipName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Email</h5>
+                        </div>
+                        <input type="text" class="form-control" name="Email" maxlength="50"
+                            [(ngModel)]="searchParameterObj.Email" />
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Assigned To</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="AssignedToStaffID"
+                                [(ngModel)]="searchParameterObj.AssignedToStaffID" #AssignedTo="ngModel">
+                                <option [ngValue]="-1">Not Specified</option>
+                                <option *ngFor="let StaffListObj of staffList" [ngValue]="StaffListObj.StaffID">
+                                    {{StaffListObj.StaffFullName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Date From</h5>
+                        </div>
+                         <input type="text" name="DateFrom" class="form-control bg_transparent" [(ngModel)]="dateFrom" (ngModelChange)="onFromDateChange(dateFrom)"
+                            #DateFrom="ngModel" matInput [matDatepicker]="datefrom" placeholder="DD/MM/YYYY" readonly />
+                        <mat-datepicker #datefrom></mat-datepicker>
+                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom">
+                        </mat-datepicker-toggle>
+                        <date-picker [value]="searchParameterObj.DateFrom" (onDateChange)="onFromDateChange($event)"></date-picker>
+                    </div> -->
+                    <!-- <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Date To</h5>
+                        </div>
+                         <input type="text" name="DateTo" class="form-control bg_transparent" [(ngModel)]="dateTo" (ngModelChange)="onToDateChange(dateTo)"
+                            #DateTo="ngModel" matInput [matDatepicker]="dateto" placeholder="DD/MM/YYYY" readonly />
+                        <mat-datepicker #dateto></mat-datepicker>
+                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto">
+                        </mat-datepicker-toggle>
+                        <date-picker [value]="searchParameterObj.DateTo" (onDateChange)="onToDateChange($event)"></date-picker>
+                    </div> -->
+                    <div class="col-md-6 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToPlaceHolder]="dateToPlaceHolder" [dateFromPlaceHolder]="dateFromPlaceHolder" #dateSearch >
+                        </dateto-datefrom>
+                    </div>
+                    <div class="offset-3 col-md-3 space">
+                        <div class="row">
+                            <div class="col-md-6 padding_left">
+                                <button class="reset_btn" type="button" (click)="resetFilter()">
+                                    Reset
+                                </button>
+                            </div>
+                            <div class="col-md-6 padding_right full_width_btn">
+                                <button class="search" type="button" (click)="getLeadsStatus()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto m-pb-20">
+        <div class="row grid_header bf-grid-row">
+            <div class="bf-leads-head bf_header_bg1">
+                <h5>{{leadStatusTypeList && leadStatusTypeList[0].LeadStatusTypeFriendlyName}} <i
+                        class="fal fa-long-arrow-alt-right float-right"></i></h5>
+            </div>
+            <div class="bf-leads-head bf_header_bg2">
+                <h5>{{leadStatusTypeList && leadStatusTypeList[1].LeadStatusTypeFriendlyName}} <i
+                        class="fal fa-long-arrow-alt-right float-right"></i></h5>
+            </div>
+            <div class="bf-leads-head bf_header_bg3">
+                <h5>{{leadStatusTypeList&& leadStatusTypeList[2].LeadStatusTypeFriendlyName}} <i
+                        class="fal fa-long-arrow-alt-right float-right"></i></h5>
+            </div>
+            <div class="bf-leads-head bf_header_bg4">
+                <h5>{{leadStatusTypeList && leadStatusTypeList[3].LeadStatusTypeFriendlyName}} <i
+                        class="fal fa-long-arrow-alt-right float-right"></i></h5>
+            </div>
+            <div class="bf-leads-head bf_header_bg5">
+                <h5>{{leadStatusTypeList && leadStatusTypeList[4].LeadStatusTypeFriendlyName}} <i
+                        class="fal fa-long-arrow-alt-right float-right"></i></h5>
+            </div>
+        </div>
+
+        <!--leads bind here-->
+        <div class="row bf-grid-row" [ngClass]="{'cursor_not_allow': !allowedPages.BusinessFlow_Save}">
+            <!--Enquiry-->
+            <div class="bf-leads bf-leads-box cst-scroll border_right"
+                [ngClass]="{'app_disabled': !allowedPages.BusinessFlow_Save}" droppable
+                (onDrop)="onLeadDrop($event,leadStatusType.Fresh)" [dragOverClass]="'drop-target'">
+                <div *ngFor="let freshLeadObj of fresh">
+                    <div class="row new_lead" [draggable] [dragData]="freshLeadObj" [dragEnabled]="dragEnabled"
+                        (dragstart)="onDragStart()" (dragend)="onDragEnd()">
+                        <div class="col-md-12 no_padding">
+                            <h5 class="floating">
+                                {{freshLeadObj.CustomerName}}
+                            </h5>
+                            <p><i class="fal fa-phone-volume"></i> <span>{{freshLeadObj.Mobile}}</span></p>
+                        </div>
+                        <div class="clearfix">
+                        </div>
+                        <div class="col-md-6 padding_left">
+                            <h3><i class="fal fa-user"></i> &nbsp;
+                                <span>{{freshLeadObj.AssignToStaffName == "" ? 'Not Specified' : freshLeadObj.AssignToStaffName}}</span>
+                            </h3>
+                        </div>
+                        <div class="col-md-6 no_padding text-right">
+                            <div class="new_lead_icon">
+                                <span class="bf_mem_label">{{freshLeadObj.MembershipName}}</span>
+                                <a data-toggle="dropdown" href="javascript:void(0)"
+                                    (click)="getActivitybyLeadID(freshLeadObj.CustomerID)">
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                                <div class="dropdown-menu lead_dropdwn" [ngClass]="{'none_display': displayNone}">
+                                    <h4>Planned / Overdue <span
+                                            class="bg_primary float-right">{{leadActivity.length}}</span></h4>
+                                    <div class="bf_dd_content">
+                                        <div class="row lead_item" *ngFor="let activity of leadActivity">
+                                            <div class="col-md-12 no_padding">
+                                                <div class="bf_dd_title float-right">
+                                                    <span class="bf_call_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Call">Call</span>
+                                                    <span class="bf_app_bg"
+                                                        *ngIf=" activity.ActivityTypeID == activityType.Appointment">Appointment</span>
+                                                    <span class="bf_email_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Email ">Email</span>
+                                                    <span class="bf_note_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
+                                                    <span class="bf_sms_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+
+                                                </div>
+                                                <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
+                                                <div class="lead_assigen_to">
+                                                    <i class="fal fa-user" matTooltip="View" matTooltipPosition="above"
+                                                        matTooltipClass="custom-tooltip"></i>
+                                                    {{activity.AssignedToStaffName ? activity.AssignedToStaffName :
+                                                    'N/A'
+                                                    }}
+                                                </div>
+                                                <div *ngIf="activity.FollowUpDate" class="lead_activty_datetime"
+                                                    [ngClass]="{
+                                                    'red_icon':activity.IsOverDue
+                                                 }" matTooltip="{{activity.OverDueDay ? activity.AssignedToStaffName + ' ' + activity.TooltipInfo :''}}"
+                                                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                                    {{activity.FollowUpDate | customdate: dateFormat}}
+                                                </div>
+
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Appointment || activity.ActivityTypeID == activityType.Call"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.Time ? activity.Time : activity.FollowUpEndTime |
+                                                    date:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div class="lead_assigen_icon float-right">
+                                                    <span class="green"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowMarkAsDoneIcon">
+                                                        <a (click)="onMarkAsDone(freshLeadObj, activity.CustomerActivityID, activity.ActivityTypeID)"
+                                                            href="javascript:void(0)" matTooltip="Mark as Done"
+                                                            matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"><i
+                                                                class="fal fa-check-circle"></i></a>
+                                                    </span>
+                                                    <span class="red_del"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowDeleteIcon">
+                                                        <a (click)="onDeleteActivity(activity.CustomerActivityID,freshLeadObj.CustomerID, activity.ActivityTypeID )"
+                                                            href="javascript:void(0)" matTooltip="Delete"
+                                                            matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"><i
+                                                                class="fal fa-trash-alt"></i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!isActivityExits">
+                                        <div class="col-md-12 col-sm-12 text-center">
+                                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                                            </h5>
+
+                                        </div>
+                                        <div class="bf_dd_btn" *ngIf="allowedPages.Activities_Save">
+                                            <button
+                                                [routerLink]="['/lead/details',freshLeadObj.CustomerID, 'activities']">
+                                                <i class="fal fa-plus"></i> Add Activities</button>
+                                        </div>
+                                    </div>
+                                    <div class="bf_dd_btn" *ngIf="allowedPages.Activities_View && isActivityExits">
+                                        <button
+                                            [routerLink]="['/lead/details',freshLeadObj.CustomerID , 'activities']"><i
+                                                class="fal fa-plus" aria-hidden="true"></i> View More</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="singal_lead_height"></div>
+            </div>
+
+            <!--Perposal Made-->
+            <div class="bf-leads bf-leads-box cst-scroll border_right"
+                [ngClass]="{'app_disabled': !allowedPages.BusinessFlow_Save}" droppable
+                (onDrop)="onLeadDrop($event,leadStatusType.PerposalMade)" [dragOverClass]="'drop-target'">
+                <div *ngFor="let perposalObj of perposalMade" [draggable] [dragData]="perposalObj"
+                    [dragEnabled]="dragEnabled" (dragstart)="onDragStart()" (dragend)="onDragEnd()">
+                    <div class="row new_lead">
+                        <div class="col-md-12 no_padding">
+                            <h5 class="floating">
+                                {{perposalObj.CustomerName}}
+                            </h5>
+                            <p><i class="fal fa-phone-volume"></i> <span>{{perposalObj.Mobile}}</span></p>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-6 padding_left">
+                            <h3> <i class="fal fa-user"></i> &nbsp;
+                                <span>{{perposalObj.AssignToStaffName == "" ? 'Not Specified' : perposalObj.AssignToStaffName}}</span>
+                            </h3>
+                        </div>
+
+                        <div class="col-md-6 no_padding text-right">
+                            <div class="new_lead_icon">
+                                <span class="bf_mem_label">{{perposalObj.MembershipName}}</span>
+                                <a data-toggle="dropdown" href="javascript:void(0)"
+                                    (click)="getActivitybyLeadID(perposalObj.CustomerID)">
+                                    <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                                <div class="dropdown-menu lead_dropdwn" [ngClass]="{'none_display': displayNone}">
+                                    <h4>Planned / Overdue <span
+                                            class="bg_green float-right">{{leadActivity.length}}</span>
+                                    </h4>
+                                    <div class="bf_dd_content">
+                                        <div class="row lead_item" *ngFor="let activity of leadActivity">
+                                            <div class="col-md-12 no_padding">
+                                                <div class="bf_dd_title float-right">
+                                                    <span class="bf_call_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Call">Call</span>
+                                                    <span class="bf_app_bg"
+                                                        *ngIf=" activity.ActivityTypeID == activityType.Appointment">Appointment</span>
+                                                    <span class="bf_email_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Email">Email</span>
+                                                    <span class="bf_note_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
+                                                    <span class="bf_sms_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                </div>
+                                                <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
+                                                <div class="lead_assigen_to">
+                                                    <i class="fal fa-user"></i> {{activity.AssignedToStaffName ?
+                                                    activity.AssignedToStaffName
+                                                    : 'N/A' }}
+                                                </div>
+                                                <div *ngIf="activity.FollowUpDate" class="lead_activty_datetime"
+                                                    [ngClass]="{
+                                                        'red_icon':activity.IsOverDue
+                                                     }"
+                                                    matTooltip="{{activity.OverDueDay ? activity.AssignedToStaffName + ' ' + activity.TooltipInfo :''}}"
+                                                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                                    {{activity.FollowUpDate | customdate: dateFormat}}
+                                                </div>
+
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Appointment || activity.ActivityTypeID == activityType.Call"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.Time ? activity.Time : activity.FollowUpEndTime |
+                                                    date:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div class="lead_assigen_icon float-right">
+                                                    <span class="green"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowMarkAsDoneIcon">
+                                                        <a (click)="onMarkAsDone(perposalObj, activity.CustomerActivityID, activity.ActivityTypeID)"
+                                                            href="javascript:void(0)" *ngIf="!activity.MarkedAsDone"
+                                                            matTooltip="Mark as Done" matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"><i
+                                                                class="fal fa-check-circle"></i></a>
+                                                    </span>
+                                                    <span class="red_del"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowDeleteIcon">
+                                                        <a (click)="onDeleteActivity(activity.CustomerActivityID,perposalObj.CustomerID, activity.ActivityTypeID )"
+                                                            href="javascript:void(0)" matTooltip="Delete"
+                                                            matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"><i
+                                                                class="fal fa-trash-alt"></i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!isActivityExits">
+                                        <div class="col-md-12 col-sm-12 text-center">
+                                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                                            </h5>
+                                        </div>
+                                        <div class="bf_dd_btn" *ngIf="allowedPages.Activities_Save">
+                                            <button
+                                                [routerLink]="['/lead/details',perposalObj.CustomerID, 'activities']">
+                                                <i class="fal fa-plus" aria-hidden="true"></i> Add Activities</button>
+                                        </div>
+                                    </div>
+                                    <div class="bf_dd_btn" *ngIf="allowedPages.Activities_View && isActivityExits">
+                                        <button [routerLink]="['/lead/details',perposalObj.CustomerID , 'activities']">
+                                            <i class="fal fa-plus" aria-hidden="true"></i> View More</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="singal_lead_height"></div>
+            </div>
+
+            <!--Meeting Arranged-->
+            <div class="bf-leads bf-leads-box cst-scroll border_right"
+                [ngClass]="{'app_disabled': !allowedPages.BusinessFlow_Save}" droppable
+                (onDrop)="onLeadDrop($event,leadStatusType.MeetingArranged)" [dragOverClass]="'drop-target'">
+                <div *ngFor="let meetingObj of meetingArranged">
+                    <div class="row new_lead" [draggable] [dragData]="meetingObj" [dragEnabled]="dragEnabled"
+                        (dragstart)="onDragStart()" (dragend)="onDragEnd()">
+                        <div class="col-md-12 no_padding">
+                            <h5 class="floating">
+                                {{meetingObj.CustomerName}}
+                            </h5>
+                            <p><i class="fal fa-phone-volume"></i> <span>{{meetingObj.Mobile}}</span></p>
+
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-6 padding_left">
+                            <h3><i class="fal fa-user"></i> &nbsp;
+                                <span>{{meetingObj.AssignToStaffName == "" ? 'Not Specified' : meetingObj.AssignToStaffName }}</span>
+                            </h3>
+                        </div>
+                        <div class="col-md-6 no_padding text-right">
+                            <div class="new_lead_icon">
+                                <span class="bf_mem_label">{{meetingObj.MembershipName}}</span>
+                                <a data-toggle="dropdown" href="javascript:void(0)"
+                                    (click)="getActivitybyLeadID(meetingObj.CustomerID)">
+                                    <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                                <div class="dropdown-menu lead_dropdwn" [ngClass]="{'none_display': displayNone}">
+                                    <h4>Planned / Overdue <span
+                                            class="bg_green float-right">{{leadActivity.length}}</span>
+                                    </h4>
+                                    <div class="bf_dd_content cstm_scroll_bg">
+                                        <div class="row lead_item" *ngFor="let activity of leadActivity">
+                                            <div class="col-md-12 no_padding">
+                                                <div class="bf_dd_title float-right">
+                                                    <span class="bf_call_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Call">Call</span>
+                                                    <span class="bf_app_bg"
+                                                        *ngIf=" activity.ActivityTypeID == activityType.Appointment">Appointment</span>
+                                                    <span class="bf_email_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Email">Email</span>
+                                                    <span class="bf_note_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
+                                                    <span class="bf_sms_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                </div>
+                                                <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
+                                                <div class="lead_assigen_to">
+                                                    <i class="fal fa-user"></i> {{activity.AssignedToStaffName ?
+                                                    activity.AssignedToStaffName
+                                                    : 'N/A'}}
+                                                </div>
+                                                <div *ngIf="activity.FollowUpDate" class="lead_activty_datetime"
+                                                    [ngClass]="{
+                                                    'red_icon':activity.IsOverDue
+                                                    }"
+                                                    matTooltip="{{activity.OverDueDay ? activity.AssignedToStaffName + ' ' + activity.TooltipInfo :''}}"
+                                                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                                    {{activity.FollowUpDate | customdate: dateFormat}}
+                                                </div>
+
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Appointment || activity.ActivityTypeID == activityType.Call"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.Time ? activity.Time : activity.FollowUpEndTime |
+                                                    date:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div class="lead_assigen_icon float-right">
+                                                    <span class="green"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowMarkAsDoneIcon">
+                                                        <a (click)="onMarkAsDone(meetingObj, activity.CustomerActivityID, activity.ActivityTypeID)"
+                                                            href="javascript:void(0)" *ngIf="!activity.MarkedAsDone"
+                                                            matTooltip="Mark as Done" matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"><i
+                                                                class="fal fa-check-circle"></i></a>
+                                                    </span>
+                                                    <span class="red_del"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowDeleteIcon">
+                                                        <a (click)="onDeleteActivity(activity.CustomerActivityID,meetingObj.CustomerID, activity.ActivityTypeID )"
+                                                            href="javascript:void(0)" matTooltip="Delete"
+                                                            matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"><i
+                                                                class="fal fa-trash-alt"></i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="!isActivityExits">
+                                        <div class="col-md-12 col-sm-12 text-center">
+                                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                                            </h5>
+                                        </div>
+                                        <div class="bf_dd_btn" *ngIf="allowedPages.Activities_Save">
+                                            <button
+                                                [routerLink]="['/lead/details',meetingObj.CustomerID, 'activities']">
+                                                <i class="fal fa-plus" aria-hidden="true"></i> Add Activities</button>
+
+                                        </div>
+                                    </div>
+                                    <div class="bf_dd_btn" *ngIf="allowedPages.Activities_View && isActivityExits">
+                                        <button [routerLink]="['/lead/details',meetingObj.CustomerID, 'activities']">
+                                            <i class="fal fa-plus" aria-hidden="true"></i> View More</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="singal_lead_height"></div>
+            </div>
+
+            <!--Perposal Send-->
+            <div class="bf-leads bf-leads-box cst-scroll border_right"
+                [ngClass]="{'app_disabled': !allowedPages.BusinessFlow_Save}" droppable
+                (onDrop)="onLeadDrop($event,leadStatusType.PerposalSend)" [dragOverClass]="'drop-target'">
+                <div *ngFor="let perposalSendObj of perposalSend">
+                    <div class="row new_lead" [draggable] [dragData]="perposalSendObj" [dragEnabled]="dragEnabled"
+                        (dragstart)="onDragStart()" (dragend)="onDragEnd()">
+                        <div class="col-md-12 no_padding">
+                            <h5 class="floating">
+                                {{perposalSendObj.CustomerName}}
+                            </h5>
+                            <p><i class="fal fa-phone-volume"></i> <span>{{perposalSendObj.Mobile}}</span></p>
+                        </div>
+                        <div class="col-md-6 padding_left">
+                            <h3> <i class="fal fa-user"></i> &nbsp;
+                                <span>{{perposalSendObj.AssignToStaffName == "" ? 'Not Specified' : perposalSendObj.AssignToStaffName}}</span>
+                            </h3>
+                        </div>
+                        <div class="col-md-6 no_padding text-right">
+                            <div class="new_lead_icon">
+                                <span class="bf_mem_label">{{perposalSendObj.MembershipName}}</span>
+                                <a data-toggle="dropdown" href="javascript:void(0)"
+                                    (click)="getActivitybyLeadID(perposalSendObj.CustomerID)">
+                                    <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                                <div class="dropdown-menu lead_dropdwn" [ngClass]="{'none_display': displayNone}">
+                                    <h4>Planned / Overdue <span
+                                            class="bg_green float-right">{{leadActivity.length}}</span>
+                                    </h4>
+                                    <div class="bf_dd_content">
+                                        <div class="row lead_item" *ngFor="let activity of leadActivity">
+                                            <div class="col-md-12 no_padding">
+                                                <div class="bf_dd_title float-right">
+                                                    <span class="bf_call_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Call">Call</span>
+                                                    <span class="bf_app_bg"
+                                                        *ngIf=" activity.ActivityTypeID == activityType.Appointment">Appointment</span>
+                                                    <span class="bf_email_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Email">Email</span>
+                                                    <span class="bf_note_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
+                                                    <span class="bf_sms_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                </div>
+                                                <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
+                                                <div class="lead_assigen_to">
+                                                    <i class="fal fa-user"></i> {{activity.AssignedToStaffName ?
+                                                    activity.AssignedToStaffName
+                                                    : 'N/A'}}
+                                                </div>
+                                                <div *ngIf="activity.FollowUpDate" class="lead_activty_datetime"
+                                                    [ngClass]="{
+                                                               'red_icon':activity.IsOverDue
+                                                            }"
+                                                    matTooltip="{{activity.OverDueDay ? activity.AssignedToStaffName + ' ' + activity.TooltipInfo :''}}"
+                                                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                                    {{activity.FollowUpDate | customdate: dateFormat}}
+                                                </div>
+
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Appointment || activity.ActivityTypeID == activityType.Call"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.Time ? activity.Time : activity.FollowUpEndTime |
+                                                    date:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div class="lead_assigen_icon float-right">
+                                                    <span class="green"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowMarkAsDoneIcon">
+                                                        <a (click)="onMarkAsDone(perposalSendObj, activity.CustomerActivityID, activity.ActivityTypeID)"
+                                                            href="javascript:void(0)" *ngIf="!activity.MarkedAsDone"><i
+                                                                class="fal fa-check-circle"></i></a>
+                                                    </span>
+                                                    <span class="red_del"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowDeleteIcon">
+                                                        <a (click)="onDeleteActivity(activity.CustomerActivityID,perposalSendObj.CustomerID, activity.ActivityTypeID )"
+                                                            href="javascript:void(0)"><i
+                                                                class="fal fa-trash-alt"></i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!isActivityExits">
+                                        <div class="col-md-12 col-sm-12 text-center">
+                                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                                            </h5>
+                                        </div>
+                                        <div class="bf_dd_btn" *ngIf="allowedPages.Activities_Save">
+                                            <button
+                                                [routerLink]="['/lead/details',perposalSendObj.CustomerID, 'activities']">
+                                                <i class="fal fa-plus" aria-hidden="true"></i> Add Activities</button>
+                                        </div>
+                                    </div>
+                                    <div class="bf_dd_btn" *ngIf="allowedPages.Activities_View && isActivityExits">
+                                        <button
+                                            [routerLink]="['/lead/details',perposalSendObj.CustomerID, 'activities']">
+                                            <i class="fal fa-plus" aria-hidden="true"></i> View More</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="singal_lead_height"></div>
+            </div>
+
+            <!--Final Meeting-->
+            <div class="bf-leads bf-leads-box cst-scroll" [ngClass]="{'app_disabled': !allowedPages.BusinessFlow_Save}"
+                droppable (onDrop)="onLeadDrop($event,leadStatusType.FinalMeeting)" [dragOverClass]="'drop-target'">
+                <div *ngFor="let finlaObj of finalMeeting" [draggable] [dragData]="finlaObj" [dragEnabled]="dragEnabled"
+                    (dragstart)="onDragStart()" (dragend)="onDragEnd()">
+                    <div class="row new_lead">
+                        <div class="col-md-12 no_padding">
+                            <h5 class="floating">
+                                {{finlaObj.CustomerName}}
+                            </h5>
+                            <p><i class="fal fa-phone-volume"></i><span>{{finlaObj.Mobile}}</span></p>
+                        </div>
+                        <div class="col-md-6 padding_left">
+                            <h3> <i class="fal fa-user"></i> &nbsp;
+                                <span> {{finlaObj.AssignToStaffName == "" ? 'Not Specified' : finlaObj.AssignToStaffName}}</span>
+                            </h3>
+                        </div>
+                        <div class="col-md-6 no_padding text-right">
+                            <div class="new_lead_icon">
+                                <span class="bf_mem_label">{{finlaObj.MembershipName}}</span>
+                                <a data-toggle="dropdown" href="javascript:void(0)"
+                                    (click)="getActivitybyLeadID(finlaObj.CustomerID)">
+                                    <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                                <div class="dropdown-menu lead_dropdwn"
+                                    [ngClass]="{'none_display': displayNone}">
+                                    <h4>Planned / Overdue <span
+                                            class="bg_green float-right">{{leadActivity.length}}</span>
+                                    </h4>
+                                    <div class="bf_dd_content cstm_scroll_bg">
+                                        <div class="row lead_item" *ngFor="let activity of leadActivity">
+                                            <div class="col-md-12 no_padding">
+                                                <div class="bf_dd_title float-right">
+                                                    <span class="bf_call_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Call">Call</span>
+                                                    <span class="bf_app_bg"
+                                                        *ngIf=" activity.ActivityTypeID == activityType.Appointment">Appointment</span>
+                                                    <span class="bf_email_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Email">Email</span>
+                                                    <span class="bf_note_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
+                                                    <span class="bf_sms_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                </div>
+                                                <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
+                                                <div class="lead_assigen_to">
+                                                    <i class="fal fa-user"></i> {{activity.AssignedToStaffName ?
+                                                    activity.AssignedToStaffName
+                                                    : 'N/A'}}
+                                                </div>
+                                                <div *ngIf="activity.FollowUpDate" class="lead_activty_datetime"
+                                                    [ngClass]="{
+                                                            'red_icon':activity.IsOverDue
+                                                             }"
+                                                    matTooltip="{{activity.OverDueDay ? activity.AssignedToStaffName + ' ' + activity.TooltipInfo :''}}"
+                                                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                                    {{activity.FollowUpDate | customdate: dateFormat}}
+                                                </div>
+
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Appointment || activity.ActivityTypeID == activityType.Call"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.Time ? activity.Time : activity.FollowUpEndTime |
+                                                    date:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div class="lead_assigen_icon float-right">
+                                                    <span class="green"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowMarkAsDoneIcon">
+                                                        <a (click)="onMarkAsDone(finlaObj, activity.CustomerActivityID, activity.ActivityTypeID)"
+                                                            href="javascript:void(0)" *ngIf="!activity.MarkedAsDone"
+                                                            matTooltip="Mark as Done" matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"><i
+                                                                class="fal fa-check-circle"></i></a>
+                                                    </span>
+                                                    <span class="red_del"
+                                                        *ngIf="allowedPages.Activities_Save && activity.ShowDeleteIcon">
+                                                        <a (click)="onDeleteActivity(activity.CustomerActivityID,finlaObj.CustomerID, activity.ActivityTypeID )"
+                                                            href="javascript:void(0)" matTooltip="Delete"
+                                                            matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"><i
+                                                                class="fal fa-trash-alt"></i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!isActivityExits">
+                                        <div class="col-md-12 col-sm-12 text-center">
+                                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                                            </h5>
+                                        </div>
+                                        <div class="bf_dd_btn" *ngIf="allowedPages.Activities_Save">
+                                            <button [routerLink]="['/lead/details',finlaObj.CustomerID, 'activities']">
+                                                <i class="fal fa-plus" aria-hidden="true"></i>Add Activities</button>
+                                        </div>
+                                    </div>
+                                    <div class="bf_dd_btn" *ngIf="allowedPages.Activities_View && isActivityExits">
+                                        <button [routerLink]="['/lead/details',finlaObj.CustomerID, 'activities']">
+                                            <i class="fal fa-plus" aria-hidden="true"></i> View More</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="singal_lead_height"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- If no record exits -->
+    <div *ngIf="isDataExists">
+        <div class="row grid_rows">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--on Lead LOST or WON-->
+<!-- <div class="bf_btn" [hidden]="!onDrag">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div [hidden]="!allowedPages.Lead_Save" class="col-md-3">
+            <div cdkDropList #dropListDelete="cdkDropList" (cdkDropListDropped)="deleteLead($event)">
+                <button class="grey_btn"><i class="fal fa-trash-alt"></i> Trash</button>
+            </div>
+        </div>
+
+        <div [hidden]="!allowedPages.Lead_Membership_Save" class="col-md-3">
+            <div cdkDropList #dropListLost="cdkDropList" (cdkDropListDropped)="openLeadLost($event)">
+                <button>Lost</button>
+            </div>
+        </div>
+        <div [hidden]="!allowedPages.Lead_ProceedToMember" class="col-md-3">
+            <div cdkDropList #dropListWon="cdkDropList" (cdkDropListDropped)="openProceedToMember($event)">
+                <button class="won_btn"> Won</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="bf_btn" [hidden]="!onDrag">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <div [hidden]="!allowedPages.Lead_DeleteEnquiry">
+                <div droppable (onDrop)="onDeleteEnquiry($event)" (dragenter)="isDragOverDelete = true"
+                    (dragleave)="isDragOverDelete = false">
+                    <button class="bf_del_btn " [ngClass]="{'drag_del': isDragOverDelete}">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div [hidden]="!allowedPages.Lead_Membership_Save">
+                <div droppable (onDrop)="openLeadLost($event)" (dragenter)="isDragOverLost = true"
+                    (dragleave)="isDragOverLost = false">
+                    <button class="lost_btn" [ngClass]="{'drag_lost': isDragOverLost}">Lost</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div [hidden]="!allowedPages.Lead_ProceedToMember">
+                <div droppable (onDrop)="onLeadWon($event)" (dragenter)="isDragOverWon = true"
+                    (dragleave)="isDragOverWon = false">
+                    <button class="won_btn" [ngClass]="{'drag_won': isDragOverWon}">Won</button>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+
+
+    </div>
+</div>

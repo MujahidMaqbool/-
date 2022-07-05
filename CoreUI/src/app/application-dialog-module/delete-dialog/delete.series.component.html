@@ -1,0 +1,27 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="series_popup" >
+        <div class="popup_header">
+            <h4>Confirm Delete</h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="ten_space"></div>
+            <div class="delete_warning">
+                <div>
+                    <i class="fal fa-trash-alt"></i>
+                </div>
+                <div>
+                    <h5>Are you sure you want to delete this {{receiveData.heading}}?</h5>
+                    <p>This cannot be undone!</p>
+
+                </div>
+            </div>
+            <div class="ten_space"></div>
+                <div class="cancle_attendee cancel_btn">
+                    <button (click)="onNo()">Cancel</button>
+                    <button class="primary_blue_btn" (click)="onDeleteOnlyThis()">Yes, Delete this only</button>
+                    <button class="primary_blue_btn" (click)="onDeleteSeries()">Yes, Delete series</button>
+                    
+                </div>
+        </div>
+    </div>
+</div>

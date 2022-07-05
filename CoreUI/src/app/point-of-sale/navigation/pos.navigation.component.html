@@ -1,0 +1,48 @@
+﻿<div class="row">
+    <div class="col-md-12 top_nav zero_margin">
+        <ul>
+            <li>
+                <a *ngIf="allowedPages.ServiceBooking || allowedPages.ClassBooking || allowedPages.ProductBooking" class="nav-link" [routerLinkActive]="['active']" [routerLink]="['pos']" (click)="getUrl('')" role="tab">
+                    POS
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Invoices">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['pos-history']" (click)="getUrl('')" role="tab">
+                    Invoices
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Bookings">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" [ngClass]="
+                { 'active' : url == 'service-bookings' || url == 'class-bookings'
+                }" 
+                aria-expanded="false">
+                    Bookings
+                </a>
+                <div class="dropdown-menu sub_menu_nav">
+                    <a *ngIf="allowedPages.ServiceBooking" class="dropdown-item" id="1" [routerLinkActive]="['active']" [routerLink]="['service-bookings']" (click)="getUrl('service-bookings')" role="tab">Services</a>
+                    <a *ngIf="allowedPages.ClassBooking" class="dropdown-item" [routerLinkActive]="['active']" (click)="getUrl('class-bookings')" [routerLink]="['class-bookings']"
+                        role="tab">
+                        Classes</a>
+                </div>
+            </li>
+            <li *ngIf="allowedPages.ViewWaitList">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['pos-waitlist']" (click)="getUrl('')" role="tab">
+                    Waitlist
+                </a>
+            </li>
+            <li *ngIf="allowedPages.ViewForm">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['search-form']" (click)="getUrl('')" role="tab">
+                    Forms
+                </a>
+            </li>
+            <!-- <li *ngIf="allowedPages.Attendance">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['class-attendance']" role="tab">
+                    Class Attendance
+                </a>
+            </li> -->
+        </ul>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,201 @@
+<div class="add_new_lead" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content">
+            <div class="sch_pop_width attendee_pop_width">
+                <div class="popup_header">
+                    <h4>Reschedule Class</h4>
+                </div>
+                <div class="popup_content cstm_scroll_bg">
+                    <div class="popup_white_bg row">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="view_main_bar">
+                                    <div class="column_flex_alignment">
+                                        <img src="{{impagePath}}" style="width:40px" class="img-responsive rounded-circle" alt="no image">
+                                    </div>
+                                    <div class="view_main_bar_item">
+                                        <i class="fal fa-user-alt"></i> {{data.attendeeObj?.CustomerName}}
+                                    </div>
+                                    <div>
+                                        <span class="enq_status">{{data.attendeeObj?.CustomerTypeName}}</span>
+                                    </div>
+                                    <div class="view_main_bar_item">
+                                        <i class="fal fa-envelope"></i> {{data.attendeeObj?.Email}}
+                                    </div>
+                                    <div class="view_main_bar_item" *ngIf="data.attendeeObj?.Mobile">
+                                        <i class="fal fa-mobile-android-alt"></i> {{data.attendeeObj?.Mobile}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popup_white_bg attendee_white_bg">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="field_label top_zero">
+                                    <h5>Date</h5>
+                                </div>
+                                <date-picker [value]="classInfo.ClassDate" [min]="minDate" [showClear]="false"
+                                    (onDateChange)="onDateChange($event)"></date-picker>
+                            </div>
+                            <div class="col-md-4" *ngIf="hasMemberhsip">
+                                <div class="field_label top_zero">
+                                    <h5>Select Membership</h5>
+                                </div>
+                                <select class="form-control"
+                                [(ngModel)]="data.attendeeObj.CustomerMembershipID" (ngModelChange)="onChangeMembership()">
+                                <option [ngValue]="0" [disabled]="true">Select Membership</option>
+
+                                <option *ngFor="let membership of customerMembershipList" [value]="membership.CustomerMembershipID">
+                                    {{membership.MembershipName}}
+                                </option>
+                                <option [ngValue] = null>Apply no membership</option>
+                            </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="field_label top_zero">
+                                    <h5>Class</h5>
+                                </div>
+                                <div class="select_label">
+                                    <select class="form-control"
+                                        [(ngModel)]="classInfo.ClassID" (ngModelChange)="selectClassToBeSchedule()">
+                                        <option [value]="0" [disabled]="true">-- Select Class --</option>
+                                        <option *ngFor="let callObj of attendeeClass" [value]="callObj.ClassID">
+                                            {{callObj.Name}} ({{callObj.StartTime }} -
+                                            {{callObj.EndTime }})
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!isClassSearch" style="height: 180px;"
+                    class="popup_white_bg attendee_white_bg">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                        </h5>
+                    </div>
+                </div>
+                <div *ngIf="isClassSearch">
+
+                        <div class="popup_white_bg attendee_white_bg">
+                            <div class="row mob-full-col align-items-center">
+                                <div class="col">
+                                    <h5 class="field_label zero_margin">{{classDetailObj.ClassName}}
+                                      <ng-container *ngIf="classDetailObj.RestrictedCustomerTypeNames && isPurchaseRestrictionAllowed">
+                                        <span class="cursor-pointer" [id]="'rescheduleClass'" (mouseenter)="toggleRestrictionTooltip()"
+                                          (mouseleave)="toggleRestrictionTooltip()"><i class="far fa-registered red-color"></i></span>
+                                        <dx-tooltip [target]="'#rescheduleClass'" position="right"
+                                          [(visible)]="purchaseRestrictionTooltip" [closeOnOutsideClick]="true">
+                                          <div class="restriction-tooltip-text">
+                                            <h2>Purchase Restriction</h2>
+                                            <p>Purchase is restricted. {{classDetailObj.RestrictedCustomerTypeNames}} cannot purchase this item.</p>
+                                          </div>
+                                        </dx-tooltip>
+                                      </ng-container>
+                                    </h5>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail">
+                                        <i class="fal fa-calendar" aria-hidden="true"></i>
+                                        <p> {{classDetailObj.StartDate | customdate: dateFormForView}} </p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail">
+                                        <i class="fal fa-clock" aria-hidden="true"></i>
+                                        <p> {{classDetailObj.StartTime }} - {{classDetailObj.EndTime }} </p>
+                                    </div>
+                                </div>
+                                <div class="col" *ngIf="selectedClassHasBenefits">
+                                    <div class="class_attendence_detail">
+                                        <i class="fal fa-hand-holding-usd" aria-hidden="true"></i>
+                                        <p> <span style="text-decoration: line-through;">{{classDetailObj.PricePerSession | currency: currencyFormat}}</span> {{itemTotalPrice | currency: currencyFormat}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="col" *ngIf="!selectedClassHasBenefits">
+                                    <div class="class_attendence_detail">
+                                        <i class="fal fa-hand-holding-usd" aria-hidden="true"></i>
+                                        <p> <span >{{classDetailObj.PricePerSession | currency: currencyFormat}}</span> </p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail">
+                                        <i class="fal fa-user" aria-hidden="true"></i>
+                                        <p>{{classDetailObj.AssignedToStaffName}}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="class_attendence_detail">
+                                        <i class="fal fa-building" aria-hidden="true"></i>
+                                        <p>{{classDetailObj.FacilityName ? classDetailObj.FacilityName : "N/A"}}</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="view_main_bar_item us-dot"
+                                    *ngIf="formsList && formsList.CustomFormView?.length > 0"
+                                    [ngClass]="{'mandatory-status': formStatus === 'mandatory','non-mandatory-status': formStatus === 'non-mandatory',  'normal': formStatus === 'normal' }">
+                                    <button class="pos_form_btn" (click)="onViewForm()"> <i class="fal fa-file-signature"></i>
+                                      Forms</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="popup_white_bg attendee_white_bg">
+                            <div class="row mob-full-col">
+                                <div class="col class_attendence">
+                                    <h3>{{classDetailObj.AttendeeMin == 0 ? 'No Limit' :
+                                        classDetailObj.AttendeeMin}}<br><br><span>Minimum
+                                            Attendees</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classDetailObj.AttendeeMax == 0 ? 'No Limit' :
+                                        classDetailObj.AttendeeMax}}<br><br><span>Maximum
+                                            Attendees</span></h3>
+                                </div>
+
+                                <div class="col class_attendence">
+                                    <h3>{{classDetailObj.TotalAttendee}}<br><br><span>Booked</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classDetailObj.SignedIn}}<br><br><span>Present</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classDetailObj.TotalNoShow}}<br><br><span>No show</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classDetailObj.TotalWaitList}}<br><br><span>Waitlist</span></h3>
+                                </div>
+                                <div class="col class_attendence">
+                                    <h3>{{classDetailObj.TotalCanceled}}<br><br><span>Cancelled</span></h3>
+                                </div>
+
+                                <div class="col class_attendence">
+                                    <h3>{{classStatus}}<br><br><span>Status</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row popup_footer pt-0">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="cancel_btn float-right">
+                            <div class="row popup_footer cancel_btn float-right">
+                                <div class="col-md-12 col-sm-12 no_padding">
+                                    <button (click)="onCancel()">Cancel</button>
+                                    <button class="primary_blue_btn" (click)="onReschedule()" [disabled]='!isClassSearch'>Reschedule</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="small_space"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

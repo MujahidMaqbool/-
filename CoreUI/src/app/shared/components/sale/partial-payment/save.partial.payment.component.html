@@ -1,0 +1,618 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content">
+      <div class="popup_content full_screen_pop">
+        <div class="pos-popup-header">
+          <div class="row align-items-center justify-content-between">
+            <div class="col">
+              <h3>Checkout</h3>
+            </div>
+          </div>
+        </div>
+        <div class="pos-popup-content pos-partial-payment pb-1">
+          <div class="row">
+            <div class="col-lg-6 col-md-12 no_padding">
+              <div class="sch_white_bg pb-1">
+                <div class="overflow-auto">
+                  <div class="row grid_header mob-scroll-grid">
+                    <div class="col-md-3 col pr-0">
+                      <h5>Item</h5>
+                    </div>
+                    <div class="col text-center p-0">
+                      <h5>Sessions/ Quantity</h5>
+                    </div>
+                    <div class="col text-center">
+                      <h5>Total Price</h5>
+                    </div>
+                    <div class="col text-center">
+                      <h5>Total Discount</h5>
+                    </div>
+                    <div class="col text-center">
+                      <h5>Total Tax</h5>
+                    </div>
+                    <div class="col text-center">
+                      <h5>Total (Incl.Tax)</h5>
+                    </div>
+                  </div>
+                  <div class="sales_summary mob-scroll-grid">
+                    <div class="cart_grid cstm_scroll_bg" [ngClass]="{'partial-pos-has-split-item': savePartialInvocie.PaymentModeList && savePartialInvocie.PaymentModeList.length > 0}">
+                      <div class="row pos_cart_row py-2" *ngFor="let item of saleDetail.ItemList; let i = index">
+                        <div class="col-md-3 col pr-0">
+                          <h4 class="heading-title">
+                            {{item.ItemName}}
+                            </h4>
+                          <p class="pos_mem_label pb-0" *ngIf="item.ItemVariantName">
+                            {{item.ItemVariantName}}
+                          </p>
+                          <p class="pos_mem_label pb-0" *ngIf="item.ItemTypeID === posItemType.Class">
+                            {{item.StartDate | customdate: longDateFormat}} |
+                            {{item.StartTime | branchTimeFormat}} - {{item.EndTime | branchTimeFormat}}
+                          </p>
+                          <p class="pos_mem_label pb-0" *ngIf="item.ItemTypeID === posItemType.Service">
+                            {{item.StartDate | customdate: longDateFormat}} |
+                            {{item.StartTime | branchTimeFormat}} -
+                            {{item.EndTime | branchTimeFormat}}
+                          </p>
+                          <p class="pos_mem_label pb-0">
+                            Per Unit: {{item.ItemPricePerUnit | currency: currencyFormat}}</p>
+                          <p class="pos_mem_label pb-0" *ngIf="item.DiscountType">
+                            <i class="far fa-crown"></i> {{item.DiscountType}}</p>
+                          <!-- <p class="pos_mem_label pb-0" *ngIf="item.IsWaitlistItem">Added To Waitlist</p> -->
+                        </div>
+                        <div class="col text-center p-0">
+                          <h5>{{item.ItemQty}}</h5>
+                        </div>
+                        <div class="col text-center">
+                          <h5>{{item.ItemPrice | currency: currencyFormat}}</h5>
+                        </div>
+                        <div class="col text-center dis_border">
+                          <h5>{{item.ItemDiscountAmount | currency: currencyFormat}}</h5>
+                        </div>
+                        <div class="col text-center">
+                          <h5>{{item.ItemTaxAmount | currency: currencyFormat }}</h5>
+                        </div>
+                        <div class="col text-center">
+                          <h5 class="light-blue-color font-bold">{{item.ItemTotalPrice | currency: currencyFormat}}</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch_white_bg py-1 pos-calculations-list" [ngClass]="{'partial-pos-has-splitpayment': savePartialInvocie.PaymentModeList && savePartialInvocie.PaymentModeList.length > 0}">
+                <div class="row">
+                  <div class="col-md-12 p-0">
+                    <div class="sales-subtotal">
+                      <div class="row">
+                        <div class="col-8">
+                          <h5>Sub Total (Excl. Tax)</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{saleDetail.SubTotalPrice | currency: currencyFormat }}</h5>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="hasDiscountInPackage">
+                        <div class="col">
+                          <h5>Sale Discount</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{discountAmount | currency: currencyFormat }}</h5>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="hasDiscountInPackage">
+                        <div class="col-8">
+                          <h5>Early Payment Discount</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{earlyPaymentDiscountAmount | currency: currencyFormat }}</h5>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h5>Tax <span *ngIf="saleDetail.AppliedTaxNames"> ({{saleDetail.AppliedTaxNames}})</span></h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{taxAmount | currency: currencyFormat }}</h5>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="hasServiceChargesInPackage">
+                        <div class="col">
+                          <h5>Services Charges</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{serviceCharges | currency: currencyFormat}}</h5>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="hasTipsInPackage">
+                        <div class="col">
+                          <h5>Tips {{tipAmount && tipAmount > 0 ? ': ' + tipStaffName : ''}}</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{tipAmount | currency: currencyFormat}}</h5>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="isBranchHaveAnyDefaultRewardProgram && data?.chargedType == enumChargeType.Reschedule">
+                        <div class="col-8">
+                          <h5>Reward Points Earned</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{data?.TotalEarnedRewardPoints | number:'1.0-0'}}</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="sales-total no_border pb-0">
+                      <div class="row">
+                            <div class="col-8"><h5 class="font-medium">Total Previously Paid</h5></div>
+                            <div class="col text-right"><h5>{{saleDetail.TotalAmountPaid | currency: currencyFormat}}</h5></div>
+                          </div>
+                          <div class="row">
+                            <div class="col"><h5 class="font-medium">Adjustment</h5></div>
+                            <div class="col text-right"><h5>{{saleDetail.Adjustment | currency: currencyFormat}}</h5></div>
+                          </div>
+                      <div class="row">
+                        <div class="col">
+                          <h5 class="font-medium">Due Date</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{dueDate | customdate: longDateFormat}}</h5>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h5>Total Due</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{totalAmount | currency: currencyFormat}}</h5>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 no_padding">
+                          <span class="payment_btn total_bill">Amount Paid<span
+                              class="float-right semi_bold">{{amountPaid | currency: currencyFormat}}</span></span>
+                        </div>
+                      </div>
+
+                      <!-- Split Payment -->
+
+                      <div class="split-payment-list cstm_scroll_bg"
+                        *ngIf="hasSplitPaymentInPackage && isAllowedSplitPayment && savePartialInvocie.PaymentModeList && savePartialInvocie.PaymentModeList.length > 0">
+                        <div class="row" *ngFor="let paymentMode of savePartialInvocie.PaymentModeList;let i = index">
+                          <div class="col-8">
+                            <h5 class="font-medium">{{paymentMode.PaymentTypeID == paymentType.Cash ? 'Cash' :
+                              paymentMode.PaymentTypeID == paymentType.Other ? 'Other' : paymentMode.PaymentTypeID == paymentType.RewardPoint ? 'Reward Points' : 'Card'}} <span class="pl-1"
+                                *ngIf="paymentMode.LastDigit"> **** **** **** {{paymentMode.LastDigit}}</span></h5>
+                          </div>
+                          <div class="col text-right">
+                            <h5>{{paymentMode.Amount | currency: currencyFormat}} <i
+                                class="fal fa-trash-alt red_text pl-2"
+                                (click)="onDeletePaymentMode(paymentMode, i)"></i></h5>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col">
+                          <h5 class="font-medium">Balance Due</h5>
+                        </div>
+                        <div class="col text-right">
+                          <h5>{{(amountPaid - totalAmount) | currency: currencyFormat}}</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="col-lg-6 col-md-12 px-0 pl-lg-3">
+              <div class="popup_white_bg pos-calculation-box pt-0">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row border_bottom" *ngIf="hasCustomerInfo">
+                      <div class="col-xl-10 col-lg-8 view_main_bar p-0">
+                        <div class="view_main_bar_item right_space flex_bar_noti">
+                          <i class="fal fa-user"></i> <span
+                            class="info_overflow font-medium">{{customerBasicInfo.FirstName}}</span>
+                          <span class="enq_status">{{customerBasicInfo.CustomerTypeName}}</span>
+                        </div>
+                        <div *ngIf='customerBasicInfo.Mobile' class="view_main_bar_item right_space flex_bar_noti">
+                          <i class="fal fa-mobile"></i>
+                          <div class="info_overflow"> {{customerBasicInfo.Mobile}}</div>
+                        </div>
+                        <div class="view_main_bar_item right_space flex_bar_noti">
+                          <i class="fal fa-envelope"></i>
+                          <div class="info_overflow"> {{customerBasicInfo.Email}}</div>
+                        </div>
+                      </div>
+                      <div class="col-xl-2 col-lg-4 d-flex justify-content-md-end justify-content-center align-items-center p-0">
+                        <div *ngIf="customerBasicInfo.IsBlocked" class="block_badge">Blocked</div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row pos-payment-method-box">
+                  <div class="col">
+                    <div class="pos_payment_options" [ngClass]="{'active': paymentTypeId === paymentType.Cash}"
+                      (click)="onPaymentTypeChange(paymentType.Cash)">
+                      <i class="fal fa-money-bill"></i>
+                      <h5>Cash</h5>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="pos_payment_options" [ngClass]="{'active': paymentTypeId === paymentType.Card}"
+                      (click)="onPaymentTypeChange(paymentType.Card)">
+                      <i class="fal fa-credit-card"></i>
+                      <h5>Card</h5>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="pos_payment_options" [ngClass]="{'active': paymentTypeId === paymentType.Other}"
+                      (click)="onPaymentTypeChange(paymentType.Other)">
+                      <i class="fal fa-landmark"></i>
+                      <h5>3rd Party</h5>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="pos_payment_options"
+                      [ngClass]="{'active': paymentTypeId === paymentType.StripeTerminal}"
+                      (click)="onPaymentTypeChange(paymentType.StripeTerminal)">
+                      <i class="fab fa-stripe"></i>
+                      <h5>Terminal</h5>
+                    </div>
+                  </div>
+                  <div class="col"  *ngIf="isAllowedRewardPointsCustomerForPayment && isAllowedRewardPointsForPayment">
+                    <div class="pos_payment_options" [ngClass]="{'active': paymentTypeId === paymentType.RewardPoint}"
+                      (click)="onPaymentTypeChange(paymentType.RewardPoint)">
+                      <i class="fal fa-trophy-alt"></i>
+                      <h5 class="text-nowrap">Reward Program</h5>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="border_bottom"></div>
+                  </div>
+                </div>
+
+                <mat-tab-group (selectedTabChange)="onCardTabChanged($event)" *ngIf="paymentTypeId === paymentType.Card && (isPayTabsIntegrated === true || isStripeIntegrated === true)">
+                  <mat-tab label="Stripe" *ngIf="isStripeIntegrated == true">
+                    <div class="col-md-12 col-sm-12 no_padding"
+                      *ngIf="savePartialInvocie.PaymentMode.PaymentGatewayID === paymentGateway.Stripe_Card ">
+                      <add-stripe-customer #stripeRef [showSaveCard]="!isWalkedIn"
+                        [customerID]="customerBasicInfo?.CustomerID"></add-stripe-customer>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="PayTabs" *ngIf="isPayTabsIntegrated == true">
+                    <div class="col-md-12 col-sm-12"
+                      *ngIf="savePartialInvocie.PaymentMode.PaymentGatewayID === paymentGateway.PayTabs && showPayTabCard">
+                      <pay-tabs-customer #paytabsRef [showSaveCard]="!isWalkedIn" [areaID]="1"
+                        [customerID]="customerBasicInfo?.CustomerID">
+                      </pay-tabs-customer>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+
+                <!-- reward Points Detail -->
+
+                <div class="row" *ngIf="isShowRewardPoint">
+                  <div class="col-md-12 col-sm-12 no_padding mt-3">
+                      <div class="saved-payment-cards">
+                    <div class="row">
+                      <div class="col-md-6 pr-md-0 mob-mb-15">
+                        <div class="reward-box pos-points-balance">
+                          <div class="left-box-desc">
+                            <div class="d-flex align-items-center"><i class="fal fa-hands-usd" aria-hidden="true"></i>
+                              <div>
+                                <h3>Points Balance</h3>
+                                <h5 class="light-blue-color font-bold">{{customerRewardPointsDetailForPOS.PointsBalance}}</h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="reward-box pos-points-balance">
+                          <div class="left-box-desc">
+                            <div class="d-flex align-items-center"><i class="fal fa-hand-holding-usd"
+                                aria-hidden="true"></i>
+                              <div>
+                                <h3>Redemption Value</h3>
+                                <h5 class="light-blue-color font-bold">{{customerRewardPointsDetailForPOS.PointBalanceRedemptionValue | currency: currencyFormat}}</h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12">
+                        <div class="reward-box pos-points-balance pos-points-redeem my-3">
+                          <div class="left-box-desc row">
+                            <div class="col-5 d-flex align-items-center p-0"><i aria-hidden="true"
+                                class="fal fa-hands-usd"></i>
+                              <div>
+                                <h3>Redemption Requirement</h3>
+                                <h5 class="font-bold">{{customerRewardPointsDetailForPOS.MinimumPointsRequiredtoRedeem}}</h5>
+                              </div>
+                            </div>
+                            <div class="col d-flex align-items-center pl-0"><i class="sm-hide" style="height: 56px;max-width:0;"></i>
+                              <p>This is the minimum number of points a customer is required to have, in order to use
+                                reward points as a payment method.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="reward-box pos-points-balance pos-points-redeem mb-3">
+                          <div class="left-box-desc row">
+                            <div class="col-5 d-flex align-items-center p-0"><i aria-hidden="true"
+                                class="fal fa-hands-usd"></i>
+                              <div>
+                                <h3>Redeem Limit</h3>
+                                <h5 class="font-bold">{{customerRewardPointsDetailForPOS.MaximumPointsRedeemLimit | number:'1.0-0'}}</h5>
+                              </div>
+                            </div>
+                            <div class="col d-flex align-items-center pl-0"><i class="sm-hide" style="height: 56px;max-width:0;"></i>
+                              <p>This is the number of points eligible per transaction that the customer can use, with the remaining balance to be collected by other payment methods.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="paymentTypeId === paymentType.Card && (isPayTabsIntegrated == false && isStripeIntegrated == false)">
+                  <div class="col-md-12">
+                    <span class="text-danger pt-2">
+                      Card payments are not setup. Please contact your administrator.
+                    </span>
+                  </div>
+                </div>
+                <div class="row sticky_bottom">
+                  <div class="col-md-12 col-sm-12">
+                    <h5 class="field_label">Payment Notes <span>(Remaining Characters: {{ 150 -
+                      savePartialInvocie?.Note?.length }})</span></h5>
+                    <textarea rows="3" name="PaymentNote" maxlength="150" [(ngModel)]="savePartialInvocie.Note"></textarea>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="row align-items-center split-payment-section">
+                      <div class="p-0" [ngClass]="{'col-9 col-md-8' :!hasSplitPaymentInPackage || !isAllowedSplitPayment, 'col-7 col-md-6' :hasSplitPaymentInPackage && isAllowedSplitPayment }">
+                      <!-- <div class="col-7 p-0"> -->
+                        <h3 class="d-flex align-items-center">Pay
+                          <span class="text-danger pl-1"
+                            *ngIf="splitamntPaid?.errors?.pattern || splitamntPaid?.errors">{{messages.Validation.InValid_Payment}}</span>
+                          <span class="pos-pay-points" *ngIf="paymentTypeId === paymentType.RewardPoint">{{redeemPoints}} {{redeemPoints > 1 ? 'Points' : 'Point'}}</span>
+                        </h3>
+                      </div>
+                      <div class="col d-flex" [ngClass]="{'pr-0' :!hasSplitPaymentInPackage || !isAllowedSplitPayment}">
+                        <div class="input-group pos_textfield">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">{{currencyFormat}}</span>
+                          </div>
+                          <input type="text"
+                          [(ngModel)]="splitAmountPaid" [formControl]="splitamntPaid"
+                          (ngModelChange)="onPaidAmountChange()" required
+                          class="form-control" pattern="[0-9]+(\.[0-9]+)?"
+                          maxlength="13" numberControl step=".01"/>
+                        </div>
+                      <!-- <div class="col"> -->
+                        <!-- <input type="text"
+                          [(ngModel)]="splitAmountPaid" [formControl]="splitamntPaid"
+                          (ngModelChange)="onPaidAmountChange()" required
+                          class="form-control pos_textfield" pattern="[0-9]+(\.[0-9]+)?"
+                          maxlength="13" numberControl step=".01"/> -->
+                      </div>
+                      <div class="col p-0" *ngIf="hasSplitPaymentInPackage && isAllowedSplitPayment">
+                      <!-- <div class="col p-0"> -->
+                        <button type="submit" class="split-btn" [disabled]="(splitamntPaid?.errors)" (click)="onPay(false, true)">Split Payment</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-md-12 col-sm-12" *ngIf="!hasItemsInCart">
+                    <span class="text-danger">Please select an item to pay.</span>
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-8 p-0">
+                  <div class="pos-actions-btn">
+                    <button type="button" [disabled]="(grossAmount == 0 || totalAmount < 0) || (isBookingStatusChanged)"
+                      (click)="onShowDiscountCalculator()" *ngIf="hasDiscountInPackage">Early Payment Discount</button>
+
+                    <button type="button" [disabled]="isBookingStatusChanged" (click)="onShowTipsCalculator()" *ngIf="hasTipsInPackage">Tips</button>
+
+                    <button type="button" [disabled]="isBookingStatusChanged" *ngIf="hasServiceChargesInPackage"
+                      (click)="onShowServiceChargeCalculator()">Service Charges</button>
+                  </div>
+                </div>
+                <div class="col-md-4 pr-0 sm-pl-0">
+                  <button class="pos-pay-btn bg-green" (click)="onPay(false, false)"
+                   [disabled]="(( paymentTypeId === paymentType.Card && (isPayTabsIntegrated == false && isStripeIntegrated == false))  || saveInProgress || receiptId || splitamntPaid?.errors)">
+                    Pay</button>
+                </div>
+              </div>
+              <div class="row mob-mb-15">
+                <div class="col-md-8 p-0">
+                  <div class="pos-actions-btn">
+                    <button type="button" class="float-left" (click)="onClose()">Close</button>
+                    <mat-form-field class="datepicker-container">
+                      <button type="button" [disabled]="isBookingStatusChanged" (click)="picker.open()">Due Date</button>
+                      <input matInput [min]="minDueDate" [matDatepicker]="picker" class="d-none" [(ngModel)]="dueDate" />
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-4 pr-0 sm-pl-0">
+                  <button class="pos-pay-btn" (click)="onPay(true, false)"
+                  [disabled]="(( paymentTypeId === paymentType.Card && (isPayTabsIntegrated == false && isStripeIntegrated == false))   || saveInProgress || receiptId || splitamntPaid?.errors)">
+                    Pay & Print
+                  </button>
+                </div>
+              </div>
+
+              <div *ngIf="showDiscountCalc">
+                <div *ngTemplateOutlet="calculator"></div>
+              </div>
+              <div *ngIf="showDiscountPin">
+                <div *ngTemplateOutlet="discountpin"></div>
+              </div>
+              <div *ngIf="showTipsCalculator">
+                <div *ngTemplateOutlet="calculator"></div>
+              </div>
+              <div *ngIf="showServiceChargeCalculator">
+                <div *ngTemplateOutlet="calculator"></div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #calculator>
+  <div class="calculator pos_calculator" (clickOutside)="closeCalculator()">
+    <div class="popup_header mini-pop-header">
+      <h4 *ngIf="showTipsCalculator">Tips</h4>
+      <h4 *ngIf="showDiscountCalc">Enter Discount</h4>
+      <h4 *ngIf="showServiceChargeCalculator">Service Charges</h4>
+    </div>
+    <div class="mini-pop-content">
+      <div class="row">
+        <div class="col-md-12 no_padding" *ngIf="showTipsCalculator">
+          <div class="select_label">
+            <select [(ngModel)]="tipStaffID" (ngModelChange)="onTipStaffChange()" [disabled]="saleDetail.TipStaffID > 0 || isBookingStatusChanged">
+              <option [value]="0">No Tip</option>
+              <option *ngFor="let staff of staffForTipList" [value]="staff.StaffID">
+                {{staff.StaffFullName}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-12 no_padding">
+          <input type="text" readonly name="DiscountNumber" #DiscountNumber="ngModel" [(ngModel)]="calculatorResult"
+            maxlength="7" />
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onCalculatorValueChange(calculatorValue.Seven)">{{calculatorValue.Seven}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onCalculatorValueChange(calculatorValue.Eight)">{{calculatorValue.Eight}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Nine)">{{calculatorValue.Nine}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Four)">{{calculatorValue.Four}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Five)">{{calculatorValue.Five}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Six)">{{calculatorValue.Six}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.One)">{{calculatorValue.One}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Two)">{{calculatorValue.Two}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onCalculatorValueChange(calculatorValue.Three)">{{calculatorValue.Three}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange('.')">.</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Zero)">{{calculatorValue.Zero}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalulatorValueReset()"><i class="far fa-redo"></i></button>
+        </div>
+        <div class="no_padding"
+          [ngClass]="{'col-md-12 text-center': showTipsCalculator, 'col-md-6': !showTipsCalculator}">
+          <button class="btn calculation_type" (click)="onCalculate(false)"
+          [disabled]="!tipStaffID && showTipsCalculator">{{currencyFormat}}</button>
+        </div>
+        <div class="col-md-6 no_padding" *ngIf="!showTipsCalculator">
+          <button class="btn calculation_type" (click)="onCalculate(true)">%</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #discountpin>
+  <div class="calculator pos_calculator password-box" (clickOutside)="closeDicsountPin()">
+    <div class="popup_header mini-pop-header">
+      <h4>Enter Password</h4>
+    </div>
+    <div class="mini-pop-content">
+      <div class="row">
+        <div class="col-md-12 no_padding">
+          <input type="password" readonly name="discountPinResult" #Passwordpin="ngModel" [(ngModel)]="discountPinResult"
+            maxlength="10" />
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onDiscountPinValueChange(calculatorValue.Seven)">{{calculatorValue.Seven}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onDiscountPinValueChange(calculatorValue.Eight)">{{calculatorValue.Eight}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Nine)">{{calculatorValue.Nine}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Four)">{{calculatorValue.Four}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Five)">{{calculatorValue.Five}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Six)">{{calculatorValue.Six}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.One)">{{calculatorValue.One}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Two)">{{calculatorValue.Two}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onDiscountPinValueChange(calculatorValue.Three)">{{calculatorValue.Three}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"> </button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Zero)">{{calculatorValue.Zero}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinReset()"><i class="far fa-redo"></i></button>
+        </div>
+        <div class="col-md-6 no_padding">
+          <button class="btn font-size-medium" (click)="onDiscountPinCancel()">Cancel</button>
+        </div>
+        <div class="col-md-6 no_padding">
+          <button class="btn calculation_type font-size-medium" (click)="onDiscountPinVerify()">Enter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

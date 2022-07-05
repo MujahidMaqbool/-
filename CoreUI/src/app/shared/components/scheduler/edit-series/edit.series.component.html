@@ -1,0 +1,25 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg medium_popup">
+        <div class="popup_header">
+            <h4>Edit {{heading}}</h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="space-15">
+                <div class=" delete_warning ">
+                    <div><i class="fal fa-calendar-check"></i></div>
+                     <span *ngIf="!isShowClassSeriesText"> Do you want to edit this {{heading}} or the whole series of 
+                         {{heading == 'Class' ? 'Classes' : heading == 'Shift' ? 'Shifts' : 'Block Times'}}
+                         ?</span>
+                    <span *ngIf="isShowClassSeriesText"> Do you want to edit only this or manage attendee?</span>
+                </div>
+            </div>
+            <div class="space-15"></div>
+            <div class="cancle_attendee cancel_btn">
+                <button (click)="closePopup()">Cancel</button>
+                <button *ngIf="isShowAttendeeButton && isAddAttendeeAllowed" (click)="onManageAttendeeClick()">Manage Attendees</button>
+                <button (click)="onNo()">Edit this Only</button>
+                <button class="save primary_blue_btn" *ngIf="!isShowClassSeriesText" (click)="onYes()">Edit Series</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li *ngIf="allowedPages.AutomationSave">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['search']" role="tab">
+                    Automation
+                </a>
+            </li>
+            <li *ngIf="allowedPages.AutomationViewLog">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['log']" role="tab">
+                    Log
+                </a>
+            </li>
+        
+
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

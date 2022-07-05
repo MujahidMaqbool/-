@@ -1,0 +1,98 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content medium_popup">
+      <div class="popup_header">
+        <h4>Enroll in Reward Program</h4>
+      </div>
+      <div class="popup_content">
+        <div class="popup_white_bg">
+          <div class="row">
+            <div class="col-md-12" *ngIf="isShowNODataMessage">
+              <div class="alert alert-danger">
+                <div>There is no reward program currently in this branch.</div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+              <h5 class="field_label">Select Reward Program</h5>
+              <div class="select_label">
+                <mat-select class="form-control custom_select_option cst-mb-5" name="rewardProgram"
+                  [(ngModel)]="customerRewardProgramsObj" (ngModelChange)="onIsRewardChange(enumIsTransferRewardProgram.Yes)">
+                  <mat-select-trigger *ngIf="customerRewardProgramsObj">
+                    <span [innerHTML]="customerRewardProgramsObj.RewardProgramName"></span>
+                    <span
+                      [ngClass]="{
+                                                  'select-membership-benefit-active': customerRewardProgramsObj.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Enrolled
+                                }">{{customerRewardProgramsObj.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Enrolled ? customerRewardProgramsObj.RewradProgramStatusName:''}}</span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let crp of customerRewardProgramsList" [value]="crp">
+                    <span [innerHTML]="crp.RewardProgramName"></span>
+                    <span
+                      [ngClass]="{
+                                                  'select-membership-benefit-active': crp.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Enrolled
+                                                  }">{{crp.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Enrolled ? crp.RewradProgramStatusName:''}}</span>
+                  </mat-option>
+                </mat-select>
+              </div>
+              <p class="py-2" *ngIf="customerRewardProgramsObj.RewardProgramStatusTypeID == 0 && receiveData.isRewardProgramList && receiveData.rewardProgramStatusID">
+                The customer is currently enrolled in a reward program. Enrolling the customer into a new reward program
+                will terminate the existing program and the accumulated points. Do you wish to transfer the points
+                across to the new reward program?</p>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="customerRewardProgramsObj.RewardProgramStatusTypeID == 0 && receiveData.isRewardProgramList && receiveData.rewardProgramStatusID">
+          <div class="row">
+            <div class="col-md-6 pr-md-3 px-0">
+              <div class="checkbox mob-checkbox-full radio_container white-block font-bold">
+                <input id="enrolledYes" name="rewardEnrolled" type="radio"
+                  [checked]="isRefund === enumIsTransferRewardProgram.Yes"
+                  (click)="onIsRewardChange(enumIsTransferRewardProgram.Yes)"><label for="enrolledYes"> Yes</label>
+              </div>
+            </div>
+            <div class="col-md-6 p-0">
+              <div class="checkbox mob-checkbox-full radio_container white-block font-bold">
+                <input id="enrolledNo" name="rewardEnrolled" type="radio"
+                  [checked]="isRefund === enumIsTransferRewardProgram.No"
+                  (click)="onIsRewardChange(enumIsTransferRewardProgram.No)"><label for="enrolledNo"> No</label>
+              </div>
+            </div>
+          </div>
+          <div class="popup_white_bg">
+            <div class="row align-items-end mob-col-full">
+              <div class="col col-md-3 pr-md-0" [ngClass]="{'cst-disable': isRefund === enumIsTransferRewardProgram.No}">
+                <h5 class="field_label">Transfer Points</h5>
+                <input type="text" name="transferPoints" [(ngModel)]="receiveData.pointsBalance"
+                  (ngModelChange)="onChangeTransferPoints()" required class="form-control" TwoDigitDecimaNumber
+                  [readOnly]="isRefund === enumIsTransferRewardProgram.No ? true : false" [formControl]="pointsBalance">
+              </div>
+              <div class="col col-md-1 text-center">
+                <h5 class="pb-md-1">=</h5>
+              </div>
+              <div class="col pl-md-0">
+                <h5 class="field_label">Current Redemption Value</h5>
+                <input type="text" name="currentRedemption" [(ngModel)]="receiveData.redemptionValue" required=""
+                  class="form-control" disabled>
+              </div>
+              <div class="col pl-md-0">
+                <h5 class="field_label">New Redemption Value</h5>
+                <input type="text" name="newRedemption" [(ngModel)]="newRedemptionValue" required="" TwoDigitDecimaNumber
+                  class="form-control" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row popup_footer">
+        <div class="col-md-12">
+          <div class="cancel_btn float-right">
+            <button type="button" (click)="onCloseDialog()">Cancel</button>
+            <button type="button" class="save primary_blue_btn" (click)="onConfirm()"
+              [disabled]="customerRewardProgramsObj.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Enrolled || isShowNODataMessage || pointsBalance?.errors">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

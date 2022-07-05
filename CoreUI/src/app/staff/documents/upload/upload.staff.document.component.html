@@ -1,0 +1,60 @@
+﻿<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>Upload</h4>
+            </div>
+            <form #staffDocumentFormData="ngForm" (ngSubmit)="saveStaffDocument(staffDocumentFormData.valid)" novalidate>
+                <div class="popup_content">
+                    <div class="sch_white_bg">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="alert alert-danger" *ngIf="staffDocumentFormData.invalid && staffDocumentFormData.submitted">
+                                <div *ngIf="DocumentName?.errors?.required">
+                                    {{validationMessage}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="field_label">
+                                <h5>Document Name</h5>
+                            </div>
+
+                            <div [ngClass]="{'has-danger': DocumentName.invalid && (DocumentName.dirty || DocumentName.touched || staffDocumentFormData.submitted),
+                                             'has-success': DocumentName.valid && (DocumentName.dirty || DocumentName.touched )}">
+                                <input type="text" name="DocumentName" required class="form-control" [(ngModel)]="staffDocumentDataObj.StaffDocumentName"
+                                    #DocumentName="ngModel" maxlength="50" />
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="custom-file">
+                                <input type="file" 
+                                    class="custom-file-input" 
+                                    id="document"
+                                    [(ngModel)]="staffDocumentDataObj.DocumentPath" 
+                                    name="document" 
+                                    (change)="fileChangeEvent($event)"
+                                    accept="image/jpeg, image/jpg, image/png, application/pdf">
+                                <label class="custom-file-label" for="document">{{fileName ? fileName : 'Choose file (Only JPG, PNG or PDF. Max size 2MB)'}}</label>
+                            </div>
+                            <div class="field_label">
+                                <h5>Description</h5>
+                            </div>
+                            <textarea rows="5" name="DocumentDescription" [(ngModel)]="staffDocumentDataObj.Description" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="cancel_btn float-right">
+                            <button type="button" (click)="onCloseDialog()">Cancel</button>
+                            <button class="save primary_blue_btn" [disabled]="(staffDocumentFormData.pristine)">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

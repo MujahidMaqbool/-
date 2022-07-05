@@ -1,0 +1,80 @@
+<div class="add_branch_pop" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="medium_popup">
+      <div class="popup_header">
+        <h4>{{pageTitle}}</h4>
+        <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" mat-button (click)="onClosePopup()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+      </div>
+      <form #serviceForm="ngForm" (ngSubmit)="saveServiceCategory(serviceForm.valid)" novalidate>
+        <div class="popup_content">
+          <div class="popup_white_bg">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="alert alert-danger" *ngIf="serviceForm.invalid && serviceForm.submitted">
+                  <div *ngIf="name?.errors?.required">
+                    {{messages.Validation.Info_Required}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <mat-slide-toggle tabindex="1" class="example-margin " [(checked)]="serviceCategory.IsActive"
+                  [(ngModel)]="serviceCategory.IsActive" [disabled]="false" name="status">
+                  {{serviceCategory.IsActive ? 'Active': 'Inactive'}}
+                </mat-slide-toggle>
+                <div [ngClass]="{
+                        'has-danger': name.invalid && (name.dirty || name.touched || serviceForm.submitted),
+                        'has-success': name.valid && (name.dirty || name.touched )
+                      }">
+                  <div class="field_label">
+                    <h5>Name</h5>
+                  </div>
+                  <input type="text" class="form-control" [(ngModel)]="serviceCategory.ServiceCategoryName" (blur)="onCategoryNameUpdated()" #name="ngModel"
+                    name="name" tabindex="2" maxlength="50" required>
+                </div>
+                <div class="field_label">
+                  <h5>Description <span> &nbsp;(Remaining Characters: {{ 250 -
+                    serviceCategory?.Description?.length }})</span></h5>
+                </div>
+                <textarea [(ngModel)]="serviceCategory.Description" rows="4" maxlength="250" tabindex="3" name="description"></textarea>
+
+              </div>
+              <div class="col-md-5">
+                <div *ngIf="!isImageExists" class="upload_image_box square_img" (click)="showImageCropperDialog()">
+                  <!-- <my-image-cropper [canvasHeight]="200" [canvasWidth]="250" [croppedHeight]="150" [croppedWidth]="150"
+                    (imageUrlChange)="onImageUrlChange($event)"></my-image-cropper> -->
+                  <i class="fal fa-cloud-upload"></i>
+                  <br>
+                  <button type="button" class="save">Upload Image</button>
+                </div>
+                <div *ngIf="isImageExists && (imagePath && imagePath != '')" class="col-md-9 col-sm-9">
+                  <img src="{{imagePath}}" alt="no image" />
+                  <!-- <div class="col-md-9 col-sm-9 padding_left"> -->
+                  <div class="changeimg_btn square_img_action">
+                    <button type="button" (click)="showImageCropperDialog()"><i class="fal fa-pen"></i></button>
+                    <button class="delete_img" type="button" (click)="onDeleteImage()" *ngIf="serviceCategory.ServiceCategoryID && serviceCategory.ImagePath"><i class="fal fa-trash-alt"></i></button>
+                  </div>
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row popup_footer">
+          <div class="col-md-4 col-sm-4"></div>
+          <div class="col-md-8 col-sm-8">
+            <div class="cancel_btn float-right">
+              <button tabindex="4" mat-button type="button" (click)="onClosePopup()">Cancel</button>
+              <button tabindex="5" class="save primary_blue_btn" [disabled]="(serviceForm.pristine)">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

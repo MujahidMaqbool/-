@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li class="back_to_menu">
+                <a class="nav-link" role="navigation" [routerLink]="['/lead']">
+                    <i class="fal fa-arrow-left"></i> Lead Search
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.Save">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+                    [routerLink]="['/lead/details', leadID]" role="tab">
+                    {{leadID > 0 ? 'Lead Detail' : 'Add Lead'}}
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.Activities && leadID > 0">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['activities']" role="tab">
+                    Activities
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.Memberships && leadID > 0">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['lead-membership']" role="tab">
+                    Enquiries
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.Invoices && leadID > 0">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['invoice-history']" role="tab">
+                    Invoices
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.Bookings && leadID > 0">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['bookings']" role="tab">
+                    Bookings
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.Gateways && leadID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['gateways']" role="tab">
+                    Gateway Accounts
+                </a>
+            </li>
+            <li *ngIf="leadID > 0 && allowedLeadPages.viewForm">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['search-forms']" role="tab">
+                    Forms <span [ngClass]="countCustomerForm.FormsCount == 0 ? '' : !countCustomerForm.IsMandatory?
+                  'form-unsubmitted':'form-madatory' "
+                        class="form-badage">{{countCustomerForm.FormsCount == 0? '' : countCustomerForm.FormsCount}}</span>
+                </a>
+            </li>
+            <li *ngIf="leadID > 0 && allowedLeadPages.ViewRewardProgram">
+                <a [routerLinkActive]="['active']" [routerLink]="['reward-programs']" role="tab">
+                  Reward Programs
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.NextOfKin && leadID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['next-of-kin']" role="tab">
+                    Next of Kin
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.ReferredBy && leadID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['referral-detail']" role="tab">
+                    Referrals
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.Documents && leadID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['documents']" role="tab">
+                    Documents
+                </a>
+            </li>
+            <li *ngIf="allowedLeadPages.ViewWaitList && leadID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['waitlist']" role="tab">
+                    Waitlist
+                </a>
+            </li>
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

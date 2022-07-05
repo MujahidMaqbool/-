@@ -1,0 +1,194 @@
+<div class="row" *ngIf="showProductPricingError">
+    <div class="col-md-12">
+        <div class="alert alert-danger">
+            {{messages.Validation.Please_Add_Price_To_Save_The_Product_Successfully}}
+        </div>
+    </div>
+</div>
+
+<div class="white_bg">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-title pt-2">
+                <h3>Pricing</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="overflow-auto">
+                <div class="responsive_grid_header cstm_scroll_bg master_row collapse-dd">
+                    <div class="row align-items-center grid_header">
+                        <div class="col">
+                            <h5>
+                                Name
+                            </h5>
+                        </div>
+                        <div class="col">
+                            <h5> Branch </h5>
+                        </div>
+                        <div class="col">
+                            <h5>Barcode</h5>
+                        </div>
+                        <div class="col">
+                            <h5>SKU</h5>
+                        </div>
+                        <div class="col" *ngIf="isExceedPackage">
+                            <h5>Supplier</h5>
+                        </div>
+                        <div class="col" *ngIf="isExceedPackage">
+                            <h5>Supplier Code</h5>
+                        </div>
+                        <div class="col">
+                            <h5>Reorder Threshold</h5>
+                        </div>
+                        <div class="col">
+                            <h5>Reorder Quantity</h5>
+                        </div>
+                        <div class="col" *ngIf="isExceedPackage">
+                            <h5>Supplier Price</h5>
+                        </div>
+                        <div class="col">
+                            <h5>Price</h5>
+                        </div>
+                        <div class="col">
+                            <h5>Tax</h5>
+                        </div>
+                        <div class="col">
+                            <h5>Retail Price</h5>
+                        </div>
+                        <div class="col text-center">
+                            <h5>Actions</h5>
+                        </div>
+                    </div>
+
+                    <ng-container *ngFor="let productVariant of productVariantPricingModel; let parentIndex = index">
+                        <div class="row align-items-center grid_rows grid_parent_rows_pos">
+                            <div class="col">
+                                <div class="cursor-pointer cst-collapse" data-toggle="collapse"
+                                    attr.data-target="#collapseExample{{parentIndex}}" aria-expanded="false"
+                                    attr.aria-label="collapseExample{{parentIndex}}">
+                                    <h5>{{productVariant.ProductVariantName}}</h5>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h5></h5>
+                            </div>
+                            <div class="col">
+                                <h5> </h5>
+                            </div>
+                            <div class="col">
+                                <h5></h5>
+                            </div>
+                            <div class="col">
+                                <h5></h5>
+                            </div>
+                            <div class="col">
+                                <h5></h5>
+                            </div>
+                            <div class="col">
+                                <h5></h5>
+                            </div>
+                            <div class="col" *ngIf="isExceedPackage">
+                                <h5></h5>
+                            </div>
+                            <div class="col" *ngIf="isExceedPackage">
+                                <h5></h5>
+                            </div>
+                            <div class="col" *ngIf="isExceedPackage">
+                                <h5></h5>
+                            </div>
+                            <div class="col">
+                                <h5></h5>
+                            </div>
+                            <div class="col">
+                                <h5></h5>
+                            </div>
+                            <div class="col text-center">
+                                <h5>
+                                    <span class="blue">
+                                        <a matTooltip="Packaging" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip" (click)="onSavePackaging()">
+                                            <i class="fal fa-box"></i>
+                                        </a>
+                                    </span>
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center grid_rows grid_child_rows collapse show"
+                            *ngFor="let productVariantBranch of productVariant.ProductVariantBranchViewModel; let childIndex = index"
+                            id="collapseExample{{parentIndex}}">
+                            <div class="col" *ngIf="areaName == productAreaEnum.SaveProduct">
+                            </div>
+                            <div class="col">
+                                <h5>{{productVariantBranch.BranchName}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{productVariantBranch.Barcode}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{productVariantBranch.SKU}}</h5>
+                            </div>
+                            <div class="col" *ngIf="isExceedPackage">
+                                <h5>{{productVariantBranch.SupplierName}}</h5>
+                            </div>
+                            <div class="col" *ngIf="isExceedPackage">
+                                <h5>{{productVariantBranch.SupplierCode}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{productVariantBranch.ReorderThreshold}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{productVariantBranch.ReorderQuantity}}</h5>
+                            </div>
+                            <div class="col" *ngIf="isExceedPackage">
+                                <h5>{{productVariantBranch.SupplierPrice | currency: currencyFormat}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{productVariantBranch.Price | currency: currencyFormat}}</h5>
+                            </div>
+                            <ng-container>
+                                <div class="col">
+                                    <h5 *ngFor="let tax of productVariantBranch.CollapseItemTaxVM">{{tax.TaxName}}
+                                        <span role="button" class="plus_mem blue-color"
+                                            (click)="onToggleClick(parentIndex, childIndex, parentIndex + childIndex)"
+                                            *ngIf="productVariantBranch.ItemTaxVM.length > 1 && toggleStatuses[parentIndex + childIndex].collapse == true">
+                                            (+
+                                            {{productVariantBranch.ItemTaxVM.length - 1}}
+                                            {{productVariantBranch.ItemTaxVM.length == 2 ? 'other':'others'}})
+                                        </span>
+                                    </h5>
+                                </div>
+                            </ng-container>
+
+                            <div class="col">
+                                <h5>{{productVariantBranch.TotalPrice | currency: currencyFormat}}</h5>
+                            </div>
+                            <div class="col text-center">
+                                <h5>
+                                    <span class="blue">
+                                        <a matTooltip="Edit Branch" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip"
+                                            (click)="onBulkUpdate(false, parentIndex, childIndex)">
+                                            <i class="fal fa-edit"></i>
+                                        </a>
+                                    </span>
+                                </h5>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+
+            <div class="row grid_rows"
+                *ngIf="!productVariantPricingModel || productVariantPricingModel == null || productVariantPricingModel?.length == 0">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

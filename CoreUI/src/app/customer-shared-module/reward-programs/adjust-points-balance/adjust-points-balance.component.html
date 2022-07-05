@@ -1,0 +1,52 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>Adjust Points Balance</h4>
+            </div>
+            <div class="popup_content">
+                <div class="popup_white_bg">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="overflow-auto">
+                          <div class="mob-scroll-grid-sm">
+                          <div class="row grid_header">
+                              <div class="col">
+                                  <h5>Adjustment Reason</h5>
+                              </div>
+                              <div class="col-3 text-center">
+                                  <h5>Current Balance</h5>
+                              </div>
+                              <div class="col-3">
+                                  <h5>New Balance</h5>
+                              </div>
+                          </div>
+                          <div class="row grid_rows py-2">
+                              <div class="col pl-0">
+                                  <input type="text" name="adjustmentReason" [formControl]="adjustReason" [(ngModel)]="adjustRewardPointsBalance.AdjustReason" maxlength="50" required class="form-control mb-0">
+                              </div>
+                              <div class="col-3 text-center">
+                                  <h5>{{receiveData.pointsBalance? receiveData.pointsBalance: 0}}</h5>
+                              </div>
+                              <div class="col-3 pr-0">
+                                  <input type="text" name="adjustmentNewBalance" [formControl]="adjustNewBalance" TwoDigitDecimaNumber [(ngModel)]="adjustRewardPointsBalance.AdjustNewBalance" maxlength="10" numberControl required class="form-control text-center mb-0">
+                              </div>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Cancel</button>
+                        <button type="button" class="save primary_blue_btn"  [disabled]="(adjustReason?.errors || adjustNewBalance?.errors)" (click)="onAdjustPointsBalance()">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

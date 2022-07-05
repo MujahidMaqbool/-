@@ -1,0 +1,298 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="company_btn float-right">
+        <button type="button" class="simple_btn" role="navigation" [routerLink]="['/product/products']">
+        Back to Search</button>
+        <button class="simple_btn" (click)="onPrevious()" *ngIf="showPrevious">Previous</button>
+        <button class="save" (click)="onNext()" *ngIf="showContinue">Next</button>
+        <button class="save" (click)="onSave()" *ngIf="showSave" [disabled]="isSaveClicked">Save</button>
+      </div>
+  </div>
+</div>
+
+<mat-horizontal-stepper #stepper>
+  <ng-template matStepperIcon="edit">
+    <mat-icon>edit</mat-icon>
+  </ng-template>
+
+  <!-- Product Information -->
+  <mat-step>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-danger" *ngIf="showProductInformationError">
+          {{messages.Validation.Info_Required}}
+        </div>
+        <div class="alert alert-danger" *ngIf="!showProductInformationError && isShowDefaultImageSetError">
+          One image must be selected as default
+        </div>
+      </div>
+    </div>
+
+    <ng-template matStepLabel>Product Information</ng-template>
+    <form #productInformation="ngForm" novalidate>
+       <fieldset [disabled]="saveProductModel.AppSourceTypeID == appSourceTypeID.EnterPrise">
+        <div class="white_bg">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-title pt-2">
+                <h3>Product Information</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="row align-items-end md-col-half mob-col-full">
+            <div class="col">
+              <h5 class="field_label">Name</h5>
+              <div [ngClass]="{ 'has-danger': productName.invalid && (productName.dirty || productName.touched || showProductInformationError),
+                                'has-success': productName.valid && (productName.dirty || productName.touched ) }">
+
+                <input type="text" [(ngModel)]="saveProductModel.ProductName" class="form-control" #productName="ngModel"
+                  name="productName" maxlength="100" pattern=".*\S+.*" (ngModelChange)="onChangeProductInformation()"
+                  required autoFocusDirective />
+              </div>
+            </div>
+
+            <div class="col">
+              <h5 class="field_label">Classification</h5>
+              <div class="select_label">
+                <select class="form-control" name="classificationID" id="classificationID"
+                  [(ngModel)]="saveProductModel.ProductClassificationID" #ClassificationID="ngModel" >
+                  <option *ngFor="let classification of classificationList" [ngValue]="classification.value">
+                    {{classification.text}}
+                  </option>
+                </select>
+              </div>
+
+            </div>
+            <div class="col">
+              <h5 class="field_label">Category</h5>
+              <div [ngClass]="{ 'has-danger': productCategoryID.invalid && (productCategoryID.dirty || productCategoryID.touched || showProductInformationError),
+                'has-success': productCategoryID.valid && (productCategoryID.dirty || productCategoryID.touched ) }">
+                <div class="select_label">
+                  <select class="form-control" name="productCategoryID" id="productCategoryID"
+                    (ngModelChange)="onChangeProductInformation()" [(ngModel)]="saveProductModel.ProductCategoryID"
+                    #productCategoryID="ngModel" required >
+                    <option [ngValue]="null">Select Category</option>
+                    <option *ngFor="let productCategory of productCategoryList"
+                      [ngValue]="productCategory.ProductCategoryID">
+                      {{productCategory.ProductCategoryName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <h5 class="field_label">Brand <span class="info-text">(Optional)</span></h5>
+              <div class="select_label">
+                <select class="form-control" name="brandID" id="brandID" [(ngModel)]="saveProductModel.BrandID" >
+                  <option [ngValue]="0">Select Brand</option>
+                  <option *ngFor="let brand of brandList" [ngValue]="brand.BrandID">
+                    {{brand.BrandName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <h5 class="field_label">Purchase Restriction
+                <span class="info_tip"
+                  matTooltip="By checking a customer type, you can restrict a particular customer type from viewing or buying this product on the widget and customer app. For core & staff app, a tag will be displayed for information purposes only, however you can still sell the product to all customers."
+                  matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                <span class="info-text">(Optional)</span>
+              </h5>
+              <div class="select_label">
+                <mat-select class="form-control cst-mb-5" placeholder="Select Purchase Restriction" id="mainSearch" name="mainSearch" #selectItem
+                  [disabled]="saveProductModel.AppSourceTypeID == appSourceTypeID.EnterPrise"
+                  [(ngModel)]="selectedRestrictedList" tabindex="10" multiple >
+
+                  <mat-select-trigger *ngIf="selectedRestrictedList && selectedRestrictedList.length > 0">
+                    {{selectedRestrictedList && selectedRestrictedList.length > 0 &&
+                    selectedRestrictedList[0].text ?
+                    selectedRestrictedList[0].text :
+                    selectedRestrictedList && selectedRestrictedList.length >= 2 &&
+                    selectedRestrictedList[0].text == undefined ?
+                    selectedRestrictedList[1].text : ''}}
+                    <span *ngIf="selectedRestrictedList && selectedRestrictedList.length >= 2"
+                      class="example-additional-selection">
+                      (+{{selectedRestrictedList[0].text == undefined ? selectedRestrictedList.length
+                      - 2 :
+                      selectedRestrictedList.length - 1 }}
+                      {{selectedRestrictedList[0].text == undefined && selectedRestrictedList.length
+                      === 3 ? 'other' :
+                      selectedRestrictedList.length === 2 ? 'other' : 'others'}})
+                    </span>
+                  </mat-select-trigger>
+                  <span>
+                    <mat-option #allRestrictionSelection [value]="0" (click)="toggleAllRestrictionSelection()">
+                      All</mat-option>
+                  </span>
+                  <mat-option *ngFor="let option of restrictedList" [value]="option" (click)="togglePerOneRestriction()">
+                    {{option.text}} </mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5 class="field_label">Description <span>(Remaining Characters: {{ 450 -
+                  saveProductModel?.Description?.length }})</span></h5>
+              <textarea rows="6" maxlength="450" [(ngModel)]="saveProductModel.Description" class="form-control"
+                #description="ngModel" name="description" ></textarea>
+            </div>
+          </div>
+        </div>
+       </fieldset>
+
+    </form>
+      <div class="white_bg">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-title pt-2">
+              <h3>Media <span class="info_tip"
+                  matTooltip="Upload images of your product to display across all platforms. A maximum of five images can be uploaded and the default image is used as thumbnail on products’ listing screens."
+                  matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="row align-items-center sm-col-full">
+          <div class="cst-col-5" *ngFor="let productMedia of saveProductModel.ProductMediaVM; let i = index">
+            <div class="media-gallery-wrapper">
+              <div class="media-gallery" [ngClass]="{ 'media-active': productMedia.IsDefault }"
+                (click)="showImageCropperDialog(i)">
+                <img id="{{i}}"
+                  src="{{productMedia.ImageFile ? 'data:image/jpeg;base64,' + productMedia.ImageFile : productMedia.ServerImageAddress + productMedia.ImagePath}}"
+                  class="img-fluid" (error)="onErrorImage(i)"  alt="logo" />
+                <div class="media-action" *ngIf="saveProductModel.HasBranchPermission">
+                  <a href="javascript:void(0)" (click)="onDeleteImage($event, i)" class="delete-icon"><i
+                      class="fal fa-trash-alt"></i></a>
+                  <a href="javascript:void(0)" (click)="onSetDefaultImage($event, i)" class="tick-icon">
+                    <i class="fal fa-check-circle"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cst-col-5"
+            *ngIf="(saveProductModel.ProductMediaVM == null || saveProductModel.ProductMediaVM && saveProductModel.ProductMediaVM.length < 5) && saveProductModel.HasBranchPermission">
+            <div class="media-gallery-wrapper" (click)="showImageCropperDialog(null)">
+              <div role="button" class="media-placeholder d-flex align-items-center justify-content-center h-100">
+                <i class="fal fa-plus-circle"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+  </mat-step>
+
+  <!-- Branches & Permission -->
+  <mat-step>
+    <ng-template matStepLabel>Branches & Permissions</ng-template>
+    <form #productBranchesPermission="ngForm" novalidate>
+
+      <div class="white_bg">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-title pt-2">
+              <h3>Branches & Permissions</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="overflow-auto">
+              <div class="responsive_grid_header cstm_scroll_bg">
+                <div class="row align-items-center grid_header">
+                  <div class="col">
+                    <h5>Branch</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Active</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Show Online</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Hide Price Online</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Is Featured</h5>
+                  </div>
+                  <div class="col text-center" *ngIf="isExceedPackage">
+                    <h5>Track Inventory</h5>
+                  </div>
+                </div>
+                <fieldset [disabled]="!saveProductModel.HasBranchPermission">
+
+                <div class="row align-items-center grid_rows"
+                  *ngFor="let data of saveProductModel.ProductBranchPermissionVM;let i = index">
+                  <div class="col">
+                    <h5>{{data.BranchName}}</h5>
+                  </div>
+
+                  <div class="col text-center">
+                    <div class="checkbox checkbox-success d-flex justify-content-center mt-0">
+                      <input type="checkbox" [(ngModel)]="data.IsActive" name="{{'Chk_item' + i}}"
+                        id="{{'Chk_item' +i}}" [(checked)]="data.IsActive"
+                        (change)="onChangeIsActive($event,data)">
+                      <label for="{{'Chk_item' +i}}"></label>
+                    </div>
+                  </div>
+                  <div class="col text-center">
+                    <div class="checkbox checkbox-success d-flex justify-content-center mt-0">
+                      <input type="checkbox" [(ngModel)]="data.IsOnline" name="{{'showOnline' + i}}"
+                        [disabled]="!data.IsActive" id="{{'showOnline' +i}}"
+                        [(checked)]="data.IsOnline" (change)="onChangeIsOnline($event,data)">
+                      <label for="{{'showOnline' +i}}"></label>
+                    </div>
+                  </div>
+                  <div class="col text-center">
+                    <div class="checkbox checkbox-success d-flex justify-content-center mt-0">
+                      <input type="checkbox" [(ngModel)]="data.IsHidePriceOnline" name="{{'hidePrice' + i}}"
+                        [disabled]="!data.IsActive || !data.IsOnline" id="{{'hidePrice' +i}}"
+                        [(checked)]="data.IsHidePriceOnline">
+                      <label for="{{'hidePrice' +i}}"></label>
+                    </div>
+                  </div>
+                  <div class="col text-center">
+                    <div class="checkbox checkbox-success d-flex justify-content-center mt-0">
+                      <input type="checkbox" [(ngModel)]="data.IsFeatured" name="{{'isFeatured' + i}}"
+                        [disabled]="!data.IsActive || !data.IsOnline " id="{{'isFeatured' +i}}"
+                        [(checked)]="data.IsFeatured">
+                      <label for="{{'isFeatured' +i}}"></label>
+                    </div>
+                  </div>
+                  <div class="col text-center" *ngIf="isExceedPackage">
+                    <div class="checkbox checkbox-success d-flex justify-content-center mt-0">
+                      <input type="checkbox" [(ngModel)]="data.HasTrackInventory" name="{{'trackInventory' + i}}"
+                        id="{{'trackInventory' +i}}" [(checked)]="data.HasTrackInventory">
+                      <label for="{{'trackInventory' +i}}"></label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+
+  <ng-container *ngIf="productID == 0">
+    <!-- Pricing -->
+    <mat-step>
+      <ng-template matStepLabel>Pricing</ng-template>
+      <div class="wizard-pricing-selector">
+        <app-save-product-price #saveProductPriceRef [areaName]="productAreaEnum.SaveProduct" [taxList]="taxList" [productClassificationID]="saveProductModel.ProductClassificationID"
+          [supplierList]="supplierList" [branchList]="saveProductModel.ProductBranchPermissionVM" [isExceedPackage]="isExceedPackage"
+          [measurementUnitList]="measurementUnitList" [variantName]="variantName"></app-save-product-price>
+      </div>
+    </mat-step>
+  </ng-container>
+
+
+</mat-horizontal-stepper>

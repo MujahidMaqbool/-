@@ -1,0 +1,84 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content medium_popup">
+      <div class="popup_header">
+        <div class="col-md-6 col-sm-6 padding_left">
+          <h4>{{pageTitle}}</h4>
+        </div>
+      </div>
+      <form #taxForm="ngForm" (ngSubmit)="saveTax(taxForm.valid)" novalidate>
+        <div class="popup_content">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 no_padding">
+              <div *ngIf="(taxForm.invalid && taxForm.submitted)">
+                <div class="alert alert-danger"
+                  *ngIf="taxForm.form.controls.TaxName?.errors?.required || taxForm.form.controls.TaxPercentage?.errors?.required ">
+                  {{messages.Validation.Info_Required}}
+                </div>
+                <div class="alert alert-danger"
+                  *ngIf="taxForm.form.controls.TaxPercentage?.errors?.min || taxForm.form.controls.TaxPercentage?.errors?.max || zeroValueValidation">
+                  {{messages.Validation.Invalid_Tax}}
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="popup_white_bg py-2">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="sch_class_head p-0">
+                  <h5 class="field_label">Active</h5>
+                  <mat-slide-toggle tabindex="1" [(ngModel)]="singleTax.IsActive"
+                    [disabled]="singleTax.AppSourceTypeID === enum_AppSourceType.EnterPrise && singleTax.HasBranchPermission === false"
+                    class="wellyx-checked" name="status">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="popup_white_bg">
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12" [ngClass]="{
+                               'has-danger': TaxName.invalid && (TaxName.dirty || TaxName.touched || taxForm.submitted ),
+                               'has-success': TaxName.valid && (TaxName.dirty || TaxName.touched )
+                                   }">
+                <div class="field_label top_zero">
+                  <h5>Name</h5>
+                </div>
+                <input type="text" name="TaxName" [(ngModel)]="singleTax.TaxName"
+                  [disabled]="singleTax.AppSourceTypeID === enum_AppSourceType.EnterPrise" class="form-control"
+                  #TaxName="ngModel" maxlength="50" tabindex="1" required />
+              </div>
+              <div class="col-md-12 col-sm-12" [ngClass]="{
+                                    'has-danger': (TaxPercentage.invalid && (TaxPercentage.dirty || TaxPercentage.touched || taxForm.submitted)) || (zeroValueValidation === true),
+                                    'has-success': TaxPercentage.valid && (TaxPercentage.dirty || TaxPercentage.touched )
+                                   }">
+                <div class="field_label">
+                  <h5>Value</h5>
+                </div>
+                <div class="d-flex">
+                  <input type="number" name="TaxPercentage" [(ngModel)]="singleTax.TaxPercentage " class="form-control"
+                    [min]="0" [max]="100" #TaxPercentage="ngModel" tabindex="2" (ngModelChange)="onTaxValueChange()"
+                    required [disabled]="singleTax.AppSourceTypeID === enum_AppSourceType.EnterPrise" TwoDigitDecimaNumber />
+                  <span class="dollar_prefix right_radius">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row popup_footer">
+          <div class="col-md-4 col-sm-4"></div>
+          <div class="col-md-8 col-sm-8">
+            <div class="cancel_btn float-right">
+              <button tabindex="4" type="button" mat-button (click)="onClosePopup()">Close</button>
+              <button tabindex="3" class="save primary_blue_btn" [disabled]="(taxForm.pristine) || isDisabledSaveButton">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

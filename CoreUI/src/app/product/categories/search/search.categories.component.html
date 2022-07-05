@@ -1,0 +1,144 @@
+<div class="row">
+  <div class="col-md-12" *ngIf="allowedPages.Save_Category">
+    <div class="company_btn float-right"><button href="javascript:void(0)" (click)="onAddCategory(null)"> Add Category
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="white_bg">
+  <div id="search_accordion">
+    <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+      data-target="#product_search">
+      <div class="col-md-12">
+        <h3 class="panel-title accordion-toggle">Search Filter</h3>
+      </div>
+    </div>
+    <div id="product_search" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row align-items-end">
+          <div class="col-md-12">
+            <div class="filter_seprator"></div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h5 class="field_label">Product Category</h5>
+            <input type="text" class="form-control" [(ngModel)]="searchCategory.CategoryName" name="categoryName"
+              maxlength="50">
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h5 class="field_label">Type</h5>
+            <div class="select_label">
+              <select class="form-control" [(ngModel)]="searchCategory.CategoryTypeID" name="categoryTypeID" [disabled]="!isMultiBranch">
+                <option [ngValue]="null">All</option>
+                <option *ngFor="let type of categoryTypeList" [ngValue]="type.TypeID">{{type.TypeName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h5 class="field_label">Status</h5>
+            <div class="select_label">
+              <select class="form-control" [(ngModel)]="searchCategory.CategoryStatusID" name="categoryStatusID">
+                <option [ngValue]="null">All</option>
+                <option *ngFor="let status of categoryStatusList" [ngValue]="status.StatusID">{{status.StatusName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 no_padding">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <button class="reset_btn" type="button" (click)="onReset()">
+                  Reset</button>
+              </div>
+
+              <div class="col-md-6 col-sm-12 full_width_btn">
+                <button class="search" type="button" (click)="onSearchFilters()">
+                  Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="grids_white_bg" id="grid">
+  <div class="cstm_scroll_bg overflow-auto">
+    <div class="row align-items-center grid_header responsive_grid_header">
+      <div class="col">
+        <h5>
+          <a class="primary-color" (click)="changeSorting(1)" href="javascript:void(0)">
+            Product Category
+            <i class="fas fa-sort-alt"></i>
+          </a>
+        </h5>
+      </div>
+      <div class="col">
+        <h5>
+          <a class="primary-color" (click)="changeSorting(2)" href="javascript:void(0)">
+            Type
+            <i class="fas fa-sort-alt"></i>
+          </a>
+        </h5>
+      </div>
+
+      <div class="col">
+        <h5>Status</h5>
+      </div>
+      <div class="col text-center">
+        <h5>Actions</h5>
+      </div>
+    </div>
+
+    <ng-container *ngFor="let category of categoriesList">
+      <div class="row align-items-center grid_rows  responsive_grid_rows">
+        <div class="col">
+          <!-- <div class="cursor-pointer cst-collapse" data-toggle="collapse" attr.data-target="#collapseExample{{i}}"
+                aria-expanded="false" attr.aria-label="collapseExample{{i}}"> -->
+          <h5>{{category.ProductCategoryName}}</h5>
+          <!-- </div> -->
+        </div>
+        <div class="col">
+          <h5>{{category.CategoryTypeName}}</h5>
+        </div>
+        <div class="col">
+          <h5>{{category.IsActive ? 'Active' : 'Inactive'}}</h5>
+        </div>
+        <div class="col text-center grid-actions-btn">
+          <h5>
+            <span class="blue" *ngIf="allowedPages.View_Category">
+              <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" href="javascript:void(0)"
+                (click)="onViewCategory(category.ProductCategoryID)">
+                <i class="fal fa-book-open"></i>
+              </a>
+            </span>
+            <span class="blue" *ngIf="category.HasBranchPermission && allowedPages.Save_Category">
+              <a matTooltip="Edit"  matTooltipPosition="above"
+                matTooltipClass="custom-tooltip" (click)="onAddCategory(category.ProductCategoryID)">
+                <i class="fal fa-edit"></i>
+              </a>
+            </span>
+            <span class="red_del" *ngIf="allowedPages.Delete_Category && category.HasBranchPermission">
+              <a matTooltip="Delete" matTooltipPosition="above"
+                matTooltipClass="custom-tooltip" (click)="onDelete(category.ProductCategoryID)">
+                <i class="fal fa-trash-alt"></i>
+              </a>
+            </span>
+          </h5>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <div class="row grid_rows" *ngIf="!isDataExists">
+    <div class="col-md-12 col-sm-12 text-center">
+      <div class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</div>
+    </div>
+  </div>
+
+  <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

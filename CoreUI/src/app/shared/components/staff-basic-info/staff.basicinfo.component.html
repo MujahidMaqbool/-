@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="view_main_bar">
+            <div>
+                <img src="{{impagePath}}" style="width:40px" class="img-responsive rounded-circle" alt="no image">
+            </div>
+            <div class="view_main_bar_item">
+                 <span class="name_length">{{personDetail.FirstName}} {{personDetail.LastName}}</span>
+            </div>
+            <div class="view_main_bar_item flex_bar_noti"><i class="fal fa-envelope"></i><div class="name_length"> {{personDetail.Email}}</div></div>
+            <div *ngIf="personDetail.Mobile" class="view_main_bar_item flex_bar_noti"><i class="fal fa-mobile-android-alt"></i> <div class="name_length">{{personDetail.Mobile}}</div></div>
+            
+        </div>
+    </div>
+</div>

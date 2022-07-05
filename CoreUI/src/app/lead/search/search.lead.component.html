@@ -1,0 +1,311 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <button *ngIf="allowedPages.Save" type="button" class="save" (click)="onAddEditLead(0)">
+                Add Lead
+            </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#lead_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+            </div>
+        </div>
+        <div id="lead_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Name</h5>
+                        </div>
+                        <input type="text" class="form-control" name="CustomerName" maxlength="50"
+                            [(ngModel)]="salesSearchParameterObj.CustomerName">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Membership</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="MembershipID"
+                                [(ngModel)]="salesSearchParameterObj.MembershipID" #Membership="ngModel">
+                                <option *ngFor="let MembershipObj of membershipList"
+                                    [ngValue]="MembershipObj.MembershipID">
+                                    {{MembershipObj.MembershipName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Assigned To</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="AssignedToStaffID"
+                                [(ngModel)]="salesSearchParameterObj.AssignedToStaffID" #AssignedTo="ngModel">
+                                <option value="-1">Not Specified</option>
+                                <option *ngFor="let StaffListObj of staffList" [ngValue]="StaffListObj.StaffID">
+                                    {{StaffListObj.StaffFullName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Email</h5>
+                        </div>
+                        <input type="text" class="form-control" name="Email" #Email="ngModel"
+                            pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                            maxlength="50" [(ngModel)]="salesSearchParameterObj.Email" />
+                        <!-- <span class="text-danger" *ngIf="Email?.errors?.pattern">
+                            {{messages.Validation.Email_Invalid}}
+                        </span> -->
+                    </div>
+                    <!--  <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Date From</h5>
+                        </div>
+                        <input type="text" name="DateFrom" class="form-control bg_transparent " [(ngModel)]="dateFrom"
+                            (ngModelChange)="onFromDateChange(dateFrom)" #DateFrom="ngModel" matInput [matDatepicker]="datefrom"
+                            placeholder="DD/MM/YYYY" readonly />
+                        <mat-datepicker #datefrom></mat-datepicker>
+                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom">
+                        </mat-datepicker-toggle>
+                        <date-picker [value]="salesSearchParameterObj.DateFrom" (onDateChange)="onFromDateChange($event)"></date-picker>
+                    </div>-->
+                    <!--  <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Date To</h5>
+                        </div>
+                        <input type="text" name="DateTo" class="form-control bg_transparent " [(ngModel)]="dateTo"
+                            (ngModelChange)="onToDateChange(dateTo)" #DateTo="ngModel" matInput [matDatepicker]="dateto"
+                            placeholder="DD/MM/YYYY" readonly />
+                        <mat-datepicker #dateto></mat-datepicker>
+                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto">
+                        </mat-datepicker-toggle>
+                        <date-picker [value]="salesSearchParameterObj.DateTo" (onDateChange)="onToDateChange($event)"></date-picker>
+                    </div> -->
+                    <div class="col-lg-6 col-md-8 col-sm-8 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToPlaceHolder]="dateToPlaceHolder"
+                            [dateFromPlaceHolder]="dateFromPlaceHolder" #leadDateSearch>
+                        </dateto-datefrom>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Status</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="LeadStatusTypeID"
+                                [(ngModel)]="salesSearchParameterObj.LeadStatusTypeID" #LeadStatus="ngModel">
+                                <option *ngFor="let LeadStatusObj of leadStatusTypeList"
+                                    [ngValue]="LeadStatusObj.LeadStatusTypeID">
+                                    {{LeadStatusObj.LeadStatusTypeFriendlyName }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-8 no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button class="reset_btn" type="button" (click)="resetSalesSearchFilters()">
+                                    Reset
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 full_width_btn">
+                                <button class="search" type="button" (click)="salesSearch()"
+                                    [disabled]="Email?.errors?.pattern">
+                                    Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                        Name
+                        <i class="fas fa-sort-alt"></i>
+
+                        <!-- <i class="fas" [ngClass]="{
+                            'hide': isSalesNameOrderASC === undefined,
+                            'fa-sort-alt show': isSalesNameOrderASC,
+                            'fa-sort-alt show': !isSalesNameOrderASC
+                                   }" aria-hidden="true"></i> -->
+                    </a>
+                </h5>
+            </div>
+            <div class="col">
+                <h5>Email</h5>
+            </div>
+            <div class="col">
+                <h5>Mobile</h5>
+            </div>
+            <div class="col-md-6 col mob-merge-col no_padding">
+                <div class="row">
+                    <div class="col">
+                        <h5>Enquired Membership</h5>
+                    </div>
+                    <div class="col">
+                        <h5>
+                            <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
+                                Created On
+                                <i class="fas fa-sort-alt"></i>
+                            </a>
+                        </h5>
+                    </div>
+                    <div class="col">
+                        <h5>Status</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Assigned To
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div id="grid" *ngIf="isDataExists">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let leadDataobj of leadGridDataObj; let i = index">
+                <div class="col lead_member">
+                    <h5 *ngIf="allowedPages.Save ">
+                        <i *ngIf="leadDataobj.CustomerMembershipList.length > 1" class="fal" aria-hidden="true" [ngClass]="{
+                            'fa-caret-right': toggleStatuses[i].collapse == true,
+                            'fa-sort-down': toggleStatuses[i].collapse == false
+                        }" (click)="onToggleClick(i)"></i>
+                        <a class="name_link" [routerLink]="['/lead/details',leadDataobj.CustomerID]">
+                            {{leadDataobj.CustomerName }}
+                        </a>
+                        <span [ngClass]="{
+                            'active': leadDataobj.IsMember
+                        }">
+                            {{leadDataobj.IsMember ? 'Member' : ''}}
+                        </span>
+                        <br>
+                    </h5>
+                    <h5 *ngIf="!allowedPages.Save">
+                        {{leadDataobj.CustomerName }}
+                        <span [ngClass]="{
+                                'active': leadDataobj.IsMember
+                            }">
+                            {{leadDataobj.IsMember ? 'Member' : ''}}
+                        </span>
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>{{leadDataobj.Email}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{leadDataobj.Mobile}}</h5>
+                </div>
+                <div class="col-md-6 col mob-merge-col no_padding">
+                    <div class="row align-items-center" *ngFor="let leadmembershipobj of leadDataobj.Membership">
+                        <div class="col">
+                            <h5>{{leadmembershipobj.MembershipName }}
+                                <span class="plus_mem" (click)="onToggleClick(i)"
+                                    *ngIf="leadDataobj.CustomerMembershipList.length > 1 && toggleStatuses[i].collapse == true">
+                                    (+
+                                    {{leadDataobj.CustomerMembershipList.length - 1}} others) </span>
+                            </h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{leadmembershipobj.CreatedOn}}</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{leadmembershipobj.LeadStatusTypeFriendlyName}}</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{leadmembershipobj.AssignedToStaffName }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-center">
+                    <h5>
+                        <span class="blue">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onViewLeadDetail(leadDataobj.CustomerID)" href="javascript:void(0)">
+                                <i class="fal fa-book-open"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="allowedPages.Save">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onAddEditLead(leadDataobj.CustomerID)" href="javascript:void(0)">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <!-- <span class="green" *ngIf="allowedPages.Activities">
+                            <a matTooltip="Activities" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                [routerLink]="['/lead/details',leadDataobj.CustomerID, 'activities']">
+                                <i class="fal fa-id-card"></i>
+                            </a>
+                        </span>
+                        <span *ngIf="allowedPages.invoices">
+                            <a matTooltip="Invoices" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                [routerLink]="['/lead/details', leadDataobj.CustomerID ,'invoice-history']">
+                                <i class="fal fa-file-invoice"></i>
+                            </a>
+                        </span>
+                        <span *ngIf="allowedPages.bookings">
+                            <a matTooltip="Bookings" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                [routerLink]="['/lead/details', leadDataobj.CustomerID, 'bookings']">
+                                <i class="fal fa-book"></i>
+                            </a>
+                        </span>
+                       
+                        <span *ngIf="allowedPages.enquriesView">
+                            <a matTooltip="Enquiries" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                [routerLink]="['/lead/details', leadDataobj.CustomerID, 'lead-membership']">
+                                <i class="fal fa-headset"></i>
+                            </a> 
+                        </span>-->
+                        <span class="blue"
+                        *ngIf="allowedPages.BenefitsView && benefitsViewInculdeInPackage && leadDataobj.IsBenefitView">
+                        <a matTooltip="Membership Benefits" matTooltipPosition="above"
+                            matTooltipClass="custom-tooltip"
+                            (click)="onViewCustomerBenefits(leadDataobj.CustomerID)" href="javascript:void(0)">
+                            <i class="fal fa-list-alt"></i>
+                        </a>
+                        </span> 
+                        <span class="red_del" *ngIf="allowedPages.delete">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="deleteLead(leadDataobj.CustomerID)" href="javascript:void(0)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    <!-- <div class="pagination">
+        <div class="col-md-12 no_padding">
+            <mat-paginator #paginator [length]="[totalRecords]" [pageSize]="pageSize"
+                [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" (page)="changePageSize($event)">
+            </mat-paginator>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+</div>

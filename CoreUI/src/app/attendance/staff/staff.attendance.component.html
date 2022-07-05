@@ -1,0 +1,140 @@
+<div class="login_form_user attendance_form staff_attendence_bg">
+    <div class="container-fluid">
+        <div class="row login_alignment_center">
+
+            <!--Form Wrapper-->
+            <div class="col-lg-5 col-md-6 col-sm-8">
+                <div class="wrapper_user_attandance">
+                    <!--Logo Section-->
+                    <div class="logo_div">
+                        <img src="assets/images/wellyx_logo.svg" alt="logo" />
+                    </div>
+                    <div class="login_field">
+                        <!--Form Section-->
+                        <div *ngIf="(!isClockInSuccess && !isClockOutSuccess)">
+                            <div *ngIf="!isStaffVerified">
+                                <form #verifyStaffForm="ngForm" (ngSubmit)="onVerifyStaff(verifyStaffForm.valid)"
+                                    novalidate>
+                                    <div class="form-group">
+                                        <label>Please enter your User ID</label>
+                                        <div [ngClass]="{
+                                            'has-danger': email.invalid && (email.dirty || email.touched || verifyStaffForm.submitted),
+                                            'has-success': email.valid && (email.dirty || email.touched )
+                                        }">
+                                            <div class="login_input white_border">
+                                                <input type="text" #email="ngModel" name="staff_email" class="form-control"
+                                                    [(ngModel)]="staffEmail" placeholder="e.g. abc@xyz.com" required />
+                                                <i class="fal fa-user"></i>
+
+                                            </div>
+                                            <span *ngIf="emailNotExist">Email does not exist.</span>
+                                        </div>
+
+                                    </div>
+                                    <button class="btn next_btn" type="submit">Next</button>
+                                </form>
+                            </div>
+                            <!-- <div class="attendance_bg"> -->
+                            <!-- <div class="attendance_login"> -->
+                            <div *ngIf="isStaffVerified">
+                                <div class="staff_img">
+                                    <img src="{{staffAttendanceModel.Staff.ImagePath}}" class="center-block login_image"
+                                        width="100">
+                                </div>
+                                <div class="shift_scheduled" *ngIf="!isStaffHasShift && !staffAttendanceModel.IsShiftTimeNotStarted">
+                                    <p> You do not have any shift scheduled today. Please contact your manager.</p>
+
+                                    <button class="btn empty_btn" type="button" (click)="onCancel()">Back</button>
+                                </div>
+                                <div class="shift_scheduled" *ngIf="!isStaffHasShift && !staffAttendanceModel.StaffShift && !staffAttendanceModel.StaffAttendance && staffAttendanceModel.IsShiftTimeNotStarted">
+                                    <p> Your shift time is not started yet. Please contact your manager.</p>
+                                    <button class="btn empty_btn" type="button" (click)="onCancel()">Back</button>
+                                </div>
+                                <div *ngIf="isStaffHasShift && !isStaffClockIn">
+                                    <h5 class="user_clockout_text text-center"><span>{{staffAttendanceModel.Staff.FullName}}</span>
+                                        would you like to clock in?
+                                        <p>Shift Time: {{staffAttendanceModel.StaffShift.StartTime | branchTimeFormat }} -
+                                            {{staffAttendanceModel.StaffShift.EndTime | branchTimeFormat}}
+                                        </p>
+                                    </h5>
+                                    <div class="form-group checkout_note_field">
+                                        <input type="text" class="form-control" name="clockInNotes" [(ngModel)]="staffClockinModel.ClockInNotes"
+                                            placeholder="Add notes here">
+                                        <i class="fa fa-pencil"></i>
+                                    </div>
+                                </div>
+                                <div *ngIf="isStaffHasShift && isStaffClockIn">
+                                    <h5 class="user_clockout_text text-center"><span>{{staffAttendanceModel.Staff.FullName}}</span>
+                                        would you like to clock out?
+                                        <p class="text-center">You started your work at
+                                            {{staffAttendanceModel.StaffAttendance.ClockIn | branchTimeFormat}}
+                                        </p>
+                                    </h5>
+                                    <div class="form-group checkout_note_field">
+                                        <input type="text" class="form-control" name="clockOutNotes" [(ngModel)]="staffClockoutModel.ClockOutNotes"
+                                            placeholder="Add notes here">
+                                        <i class="fa fa-pencil"></i>
+                                    </div>
+                                </div>
+                                <form #verifyStaffForm="ngForm">
+                                    <div class="form-group">
+                                        <div class="user_password clockin_btn " *ngIf="isStaffHasShift">
+                                            <button class="btn next_btn" type="button" (click)="onCancel()">Cancel</button>
+                                            <button *ngIf="!isStaffClockIn" class="btn next_btn" (click)="onStaffClockIn()">Clockin</button>
+                                            <button *ngIf="isStaffClockIn" class="btn next_btn" (click)="onStaffClockOut()">Clockout</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div *ngIf="isClockInSuccess || isClockOutSuccess">
+                            <div class="col-lg-12 reset_content">
+                                <h5 *ngIf="isClockInSuccess" class="text-center">
+                                    <span>{{staffAttendanceModel.Staff.FullName}}</span> you clocked in. Have a nice
+                                    day!
+                                    <p class="text-center">Now that your are clocked in, What would you do?</p>
+                                </h5>
+                                <h5 *ngIf="isClockOutSuccess" class="text-center">
+                                    <span>{{staffAttendanceModel.Staff.FullName}}</span> you clocked out. Have a nice
+                                    day!
+                                    <p class="text-center">Now that your are clocked out, What would you do?</p>
+                                </h5>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Title Section-->
+    <div class="login_page_title staff_label">
+        <h3>STAFF ATTENDANCE</h3>
+    </div>
+
+    <!--Date and Time Section-->
+    <div class="attendance_time_section">
+        <time-clock></time-clock>
+    </div>
+    <!--Footer Social Media Section-->
+    <div class="footer_section">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                    <ul>
+                        <li><a href="https://www.facebook.com/wellyxtech"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://twitter.com/Wellyxtech"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/wellyxtech/"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="https://www.youtube.com/channel/UCENBAYPvR2R7mREeUOHM2Xg"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <p>Powered by <a href="https://www.wellyx.com/">Wellyx</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

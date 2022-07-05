@@ -1,0 +1,396 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+
+        <div class="modal-content popup_content full_screen_pop">
+            <div class="popup_header" *ngIf="areaName != productAreaEnum.SaveProduct">
+                <h4>Edit Pricing Details</h4>
+            </div>
+            <div class="row" *ngIf="showProductPricingError">
+                <div class="col-md-12 p-0">
+                    <div class="alert alert-danger">
+                        {{messages.Validation.Please_Add_Price_To_Save_The_Product_Successfully}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="popup_content full-content-no-header cstm_scroll_bg">
+
+                <div class="popup_white_bg  pl-3 pr-3">
+                    <div class="row pb-2" *ngIf="areaName != productAreaEnum.SaveProduct">
+                        <!-- <div class="col-md-3 pl-0">
+                            <h5 class="field-label">Branch</h5>
+                            <div class="select-label">
+                                <select class="form-control" [(ngModel)]="branchId">
+                                    <option value="null">All</option>
+                                    <option *ngFor="let branch of branchList" [value]="branch.BranchID">
+                                        {{branch.BranchName}}</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="col-xl-2 col-lg-3  col-md-3 pl-0 mob-pr-0" *ngIf="productobj.classficationID == productClassification.Variant">
+                            <h5 class="field_label">Variant Name</h5>
+                            <div>
+                                <input type="text" class="form-control" [(ngModel)]="searchVariantName"
+                                    name="searchVariantName">
+                            </div>
+                        </div>
+                        <div class="col-xl-1 col-lg-2 col-md-2 space-36 p-0 full_width_btn" *ngIf="productobj.classficationID == productClassification.Variant">
+                            <button class="search m-0" type="button" (click)="getProductPricingList()">
+                                Search</button>
+                        </div>
+
+
+                        <div *ngIf="productobj.classficationID == productClassification.Variant"
+                            [ngClass]="productobj.classficationID == productClassification.Variant ? 'offset-xl-8 offset-lg-5 offset-md-5 col-xl-1 col-lg-2 col-md-2 space-36 p-0' : 'offset-xl-10 offset-lg-10 offset-md-10  col-xl-1 col-lg-2 col-md-2 space-36 p-0' ">
+                            <button class="reset_btn m-0 light-blue-color"
+                                [disabled]="productobj.areaName == productAreaEnum.EditPricing?!isBulkUpdate:false"
+                                type="button" (click)="onBulkUpdate(1, null, null,null,null)">
+                                Bulk Update</button>
+                        </div>
+                    </div>
+                    <!-- <div class="row" *ngIf="productobj.classficationID == 2">
+                        <div class="col-md-12 p-0">
+                            <div class="section-title section-title d-flex justify-content-between">
+                                <h3>Pricing</h3>
+                                <div>
+                                    <button class="filter-button text-blue-button" type="button"
+                                        (click)="onBulkUpdate(1, null, null,null,null)">
+                                        Bulk Update</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="overflow-auto">
+                        <div class="cstm_scroll_bg master_row mob-scroll-grid-lg">
+                            <div class="row align-items-center grid_header">
+                                <div class="col">
+                                    <h5 *ngIf="productobj.classficationID == productClassification.Variant && productVariantPricingEditList.length > 0">
+                                        <div class="checkbox checkbox-success">
+                                            <input id="aaa" name="aaa" type="checkbox" [(ngModel)]="isSelectAll"
+                                                (click)="onSelectAll($event)">
+                                            <label for="aaa" class="font-weight-medium">Name</label>
+                                        </div>
+                                    </h5>
+                                    <h5 *ngIf="productVariantPricingEditList.length == 0">
+                                        Name
+                                    </h5>
+                                </div>
+                                <div class="col">
+                                    <h5> Branch </h5>
+                                </div>
+                                <div class="col">
+                                    <h5>Barcode</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>SKU</h5>
+                                </div>
+                                <div class="col" *ngIf="isExceedPackage">
+                                    <h5>Supplier</h5>
+                                </div>
+                                <div class="col" *ngIf="isExceedPackage">
+                                    <h5>Supplier Code</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>Reorder Threshold</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>Reorder Quantity</h5>
+                                </div>
+                                <div class="col" *ngIf="isExceedPackage">
+                                    <h5>Supplier Price</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>Price</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>Tax</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>Retail Price</h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5>Actions</h5>
+                                </div>
+                            </div>
+                            <div
+                                [ngClass]="productobj.classficationID == productClassification.Variant ? 'p-edit-pricing-details  cstm_scroll_bg' : 'p-edit-pricing-details-wo-bar  cstm_scroll_bg'">
+
+                                <ng-container
+                                    *ngFor="let product of productVariantPricingEditList; let parentIndex = index">
+                                    <div class="row grid_rows grid_parent_rows_pos collapse-dd">
+                                        <div class="col">
+                                            <div class="cursor-pointer cst-collapse" data-toggle="collapse"
+                                                attr.data-target="#collapseExample{{parentIndex}}" aria-expanded="false"
+                                                attr.aria-label="collapseExample{{parentIndex}}">
+                                                <h5>{{product.ProductName}}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5> </h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col" *ngIf="isExceedPackage">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col" *ngIf="isExceedPackage">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col" *ngIf="isExceedPackage">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col text-center grid-actions-btn">
+                                            <h5>
+                                                <span class="blue" *ngIf="productobj.classficationID == productClassification.Standard && productobj.appSourceTypeID == appSourceTypeID.OnSite">
+                                                    <a matTooltip="Packaging" matTooltipPosition="above"
+                                                        matTooltipClass="custom-tooltip"
+                                                        (click)="onSavePackaging(product)">
+                                                        <i class="fal fa-box"></i>
+                                                    </a>
+                                                </span>
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="collapse show" id="collapseExample{{parentIndex}}"
+                                        *ngFor="let productVariant of product.VariantList; let childIndex = index">
+                                        <div class="row grid_rows grid_child_rows">
+                                            <div class="col">
+                                                <div *ngIf="productobj.areaName == productAreaEnum.EditPricing && productobj.classficationID === productClassification.Variant"
+                                                    class="cursor-pointer cst-collapse" >
+                                                    <div class="checkbox checkbox-success d-flex">
+                                                    <input id="{{'checkbox'+ parentIndex + childIndex + 0}}"
+                                                        name="{{'checkbox'+ parentIndex + childIndex+ 0}}"
+                                                        [(ngModel)]="productVariant.ProductVariantBranchVM[0].isSelected"
+                                                        (click)="onSingleSelect($event,parentIndex,childIndex,0, productVariant.ProductVariantBranchVM[0].ProductVariantBranchID)"
+                                                        type="checkbox">
+                                                    <label
+                                                        for="{{'checkbox'+ parentIndex + childIndex + 0}}">{{productVariant.ProductVariantName}}</label>
+                                                </div>
+                                                </div>
+                                                <!-- <div class="cursor-pointer cst-collapse" data-toggle="collapse"
+                                            attr.data-target="#collapseExample{{i}}" aria-expanded="false"
+                                            attr.aria-label="collapseExample{{i}}">
+                                            <h5>Water</h5>
+                                        </div> -->
+                                            </div>
+                                            <div class="col">
+                                                <h5>
+                                                    {{productVariant.ProductVariantBranchVM[0]?.BranchName}}
+                                                </h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5> {{productVariant.ProductVariantBranchVM[0]?.Barcode}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariant.ProductVariantBranchVM[0]?.SKU}}</h5>
+                                            </div>
+                                            <div class="col" *ngIf="isExceedPackage">
+                                                <h5>{{productVariant.ProductVariantBranchVM[0]?.SupplierName}}</h5>
+                                            </div>
+                                            <div class="col" *ngIf="isExceedPackage">
+                                                <h5>{{productVariant.ProductVariantBranchVM[0]?.SupplierCode}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariant.ProductVariantBranchVM[0]?.ReorderThreshold}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariant.ProductVariantBranchVM[0]?.ReorderQuantity}}</h5>
+                                            </div>
+                                            <div class="col" *ngIf="isExceedPackage">
+                                                <h5>{{productVariant.ProductVariantBranchVM[0]?.SupplierPrice | currency: currencySymbol}}
+                                                </h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariant.ProductVariantBranchVM[0]?.Price | currency: currencySymbol}}
+                                                </h5>
+                                            </div>
+                                            <div class="col">
+                                                <div
+                                                    *ngFor="let tax of productVariant.ProductVariantBranchVM[0].CollapseItemTaxVM">
+                                                    <div>
+                                                        <h5>{{tax.TaxName}}
+                                                            <span role="button" class="plus_mem blue-color"
+                                                                (click)="onToggleClick(parentIndex, childIndex, 0, parentIndex + childIndex + 0)"
+                                                                *ngIf="productVariant.ProductVariantBranchVM[0]?.ItemTaxVM.length > 1 && toggleStatuses[parentIndex + childIndex]?.collapse == true">
+                                                                (+
+                                                                {{productVariant.ProductVariantBranchVM[0]?.ItemTaxVM.length - 1}}
+                                                                {{productVariant.ProductVariantBranchVM[0]?.ItemTaxVM.length == 2 ?
+                                                                'other':'others'}})
+                                                            </span>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariant.ProductVariantBranchVM[0]?.RetailPrice | currency: currencySymbol}}
+                                                </h5>
+                                            </div>
+                                            <div class="col text-center grid-actions-btn">
+                                                <h5>
+                                                    <span class="blue">
+                                                        <a matTooltip="{{pricingDetailTooltip}}"
+                                                            matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                                            (click)="onBulkUpdate(3,productVariant.ProductVariantBranchVM[0], parentIndex, childIndex,0)">
+                                                            <i class="fal fa-edit"></i>
+                                                        </a>
+                                                    </span>
+                                                    <span class="blue" *ngIf="productobj.classficationID == productClassification.Variant">
+                                                        <a matTooltip="Packaging" matTooltipPosition="above"
+                                                            matTooltipClass="custom-tooltip"
+                                                            (click)="onSavePackaging(productVariant)">
+                                                            <i class="fal fa-box"></i>
+                                                        </a>
+                                                    </span>
+
+                                                    <!-- <span class="blue">
+                                                        <a matTooltip="Edit variant in all branches."
+                                                            matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                                            (click)="onBulkUpdate(2, productVariant ,parentIndex, childIndex)">
+                                                            <i class="fal fa-edit"></i>
+                                                        </a>
+                                                    </span> -->
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="row grid_rows grid_child_rows collapse show"
+                                            id="childCollapseExample{{childIndex}}"
+                                            *ngFor="let productVariantBranch of productVariant.ProductVariantBranchVM; let subChildIndex = index">
+                                            <div class="col">
+                                                <div class="checkbox checkbox-success d-flex "
+                                                    *ngIf="productobj.classficationID == 2">
+                                                    <input id="{{'checkbox'+ parentIndex + childIndex + subChildIndex}}"
+                                                        name="{{'checkbox'+ parentIndex + childIndex+ subChildIndex}}"
+                                                        [(ngModel)]="productVariantBranch.isSelected"
+                                                        (click)="onSingleSelect($event,parentIndex,childIndex,subChildIndex, productVariantBranch.ProductVariantBranchID)"
+                                                        type="checkbox">
+                                                    <label
+                                                        for="{{'checkbox'+ parentIndex + childIndex + subChildIndex}}"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col" *ngIf="areaName == productAreaEnum.SaveProduct">
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariantBranch.BranchName}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariantBranch.Barcode}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariantBranch.Sku}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariantBranch.SupplierName}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariantBranch.SupplierCode}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariantBranch.ReorderThreshold}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{productVariantBranch.ReorderQuantity}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{currencySymbol}}{{productVariantBranch.SupplierPrice}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{currencySymbol}}{{productVariantBranch.Price}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row"
+                                                    *ngFor="let tax of productVariantBranch.CollapseItemTaxVM">
+                                                    <div class="col">
+                                                        <h5>{{tax.TaxName}}
+                                                            <span role="button" class="plus_mem blue-color"
+                                                                (click)="onToggleClick(parentIndex, childIndex, subChildIndex, parentIndex + childIndex + subChildIndex)"
+                                                                *ngIf="productVariantBranch?.ItemTaxVM.length > 1 && toggleStatuses[parentIndex + childIndex]?.collapse == true">
+                                                                (+
+                                                                {{productVariantBranch?.ItemTaxVM.length - 1}}
+                                                                {{productVariantBranch?.ItemTaxVM.length == 2 ?
+                                                                'other':'others'}})
+                                                            </span>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{currencySymbol}}{{productVariantBranch.RetailPrice}}</h5>
+                                            </div>
+                                            <div class="col text-center grid-actions-btn">
+                                                <h5>
+                                                    <span class="blue">
+                                                        <a matTooltip="Edit variant in this branch only."
+                                                            matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                                            (click)="onBulkUpdate(3,productVariantBranch, parentIndex, childIndex,subChildIndex)">
+                                                            <i class="fal fa-edit"></i>
+                                                        </a>
+                                                    </span>
+                                                </h5>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </ng-container>
+
+                                <div class="row grid-content no-hover"
+                                    *ngIf="!productVariantPricingEditList || productVariantPricingEditList == null || productVariantPricingEditList?.length == 0">
+                                    <div class="col-md-12 text-center">
+                                        <div class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div
+                        class="border-top d-flex justify-content-between align-items-end selected-items popup-pagination">
+                        <div>
+                            <p class="font-medium" *ngIf="productobj.classficationID == productClassification.Variant && productVariantPricingEditList.length">{{productVariantBranchIDList.length}}
+                                {{productVariantBranchIDList.length > 1? 'Records Selected' : 'Record Selected'}}
+                            </p>
+                        </div>
+                        <div>
+                            <app-pagination *ngIf="productobj.areaName === productAreaEnum.EditPricing" #appPagination
+                                (paginationEvent)="reciviedPagination($event)"></app-pagination>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row popup_footer" *ngIf="productobj.areaName == productAreaEnum.EditPricing">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" class="wellyx-button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

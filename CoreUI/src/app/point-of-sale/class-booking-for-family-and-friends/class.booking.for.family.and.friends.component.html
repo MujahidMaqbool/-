@@ -1,0 +1,76 @@
+
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+      <div class="popup_header">
+        <h4>Booking for Family and Friends</h4>
+      </div>
+      <div class="popup_content">
+        <div class="view_bg">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="alert alert-danger" *ngIf="errorMessage">
+                  <div>
+                  {{errorMessage}}
+                  </div>
+                </div>
+              <div class="field_label">
+                <h5>People Attending</h5>
+              </div>
+              <div class="position-relative">
+                <span class="position-absolute increase-Decrease-wrapper">
+                  <button type="button" [disabled]="bookingForFamilyAndFriends.TotalAttendeeAdded == 0 || bookingForFamilyAndFriends.TotalAttendeeAdded == null" class="btn qty_btn"
+                    (click)="onUpdateQuantityPeopleAttending('minus')">
+                    <i class="fal fa-minus-circle"></i>
+                  </button>
+                  <button type="button" class="btn qty_btn"
+                    (click)="onUpdateQuantityPeopleAttending('add')">
+                    <i class="fal fa-plus-circle"></i>
+                  </button>
+                </span>
+                <div [ngClass]="{
+                  'has-danger': (errorMessage && (errorMessage != messages.Error.Membership_Benefits_Field_Cannot_Accept_Value_Greater_Than_The_Number_Of_People_Attending && errorMessage != messages.Error.Membership_Benefits_Field_Cannot_Be_Empty_Please_Enter_A_Value_Of_Zero_Or_Greater_Than_Zero))
+                  }">
+                <input class="form-control" type="text" min="1" max="{{maxAttendee}}" [(ngModel)]="bookingForFamilyAndFriends.TotalAttendeeAdded" readonly #totalAttendeeAdded="ngModel"
+                  numberControl (ngModelChange)="onTotalAttendeeAddedChangeOnlyNumbers($event)" [tabindex]="1" maxlength="3">
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-md-12" *ngIf="isShowConsumeMembershipBenefit">
+              <div class="field_label">
+                <h5>Consume Membership Benefits</h5>
+              </div>
+              <div class="position-relative">
+                <span class="position-absolute increase-Decrease-wrapper">
+                  <button type="button" [disabled]="bookingForFamilyAndFriends.TotalBenefitsUse == 0 || bookingForFamilyAndFriends.TotalBenefitsUse == null" class="btn qty_btn"
+                    (click)="onUpdateQuantityConsumeMembershipBenefits('minus')">
+                    <i class="fal fa-minus-circle"></i>
+                  </button>
+                  <button type="button" class="btn qty_btn"
+                    (click)="onUpdateQuantityConsumeMembershipBenefits('add')">
+                    <i class="fal fa-plus-circle"></i>
+                  </button>
+                </span>
+              <div [ngClass]="{
+                'has-danger': (bookingForFamilyAndFriends.TotalBenefitsUse > maxBenefit) || (errorMessage && (errorMessage == messages.Error.Membership_Benefits_Field_Cannot_Accept_Value_Greater_Than_The_Number_Of_People_Attending || errorMessage == messages.Error.Membership_Benefits_Field_Cannot_Be_Empty_Please_Enter_A_Value_Of_Zero_Or_Greater_Than_Zero))
+                }">
+              <input class="form-control" #totalBenefitsUse="ngModel" type="text" min="0" [max]="maxBenefit" [(ngModel)]="bookingForFamilyAndFriends.TotalBenefitsUse"
+              numberControl (ngModelChange)="onTotalBenefitsUseChangeOnlyNumbers($event)" readonly
+              [tabindex]="2" maxlength="3">
+            </div>
+          </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+      <div class="row popup_footer top_zp">
+        <div class="col-md-12 col-sm-12">
+          <div class="cancel_btn float-right">
+            <button type="button" mat-button (click)="onClosePopup()">Cancel</button>
+            <button class="primary_blue_btn"  [disabled]="bookingForFamilyAndFriends.TotalAttendeeAdded == 0 || bookingForFamilyAndFriends.TotalAttendeeAdded == null" (click)="onClassAddToCart()">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

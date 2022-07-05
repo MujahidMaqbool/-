@@ -1,0 +1,39 @@
+<form [formGroup]="form" (ngSubmit)="saveFavouriteView()">
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Save View</h4>
+        </div>
+
+        <div class="popup_content cstm_scroll_bg">
+            <div class="popup_white_bg">
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="addFavouriteView-Popup-circle">
+                            <i class="fal fa-stars"></i>
+                        </span>                        
+                    </div>
+                    <div class="col-md-9">
+                        <h5 class="field_label top_zero">Like what you see ?</h5>
+                        <p>Save this filtered view as your favourite, so you can easily switch between the default and the custom views.</p>
+                        <div class="form-group" ng-class="{'has-error': f.name.errors }">
+                            <h5 class="field_label mt-0">Name </h5>
+                            <input type="text" formControlName="name" class="form-control" maxlength="60" placeholder="Favourite View Name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row popup_footer">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right">
+                    <button class="left_margin_zero" type="button" (click)="onClose()">Cancel</button>
+                    <button class="primary_blue_btn" type="submit" [disabled]="isSaveButtonDisabled">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</form>

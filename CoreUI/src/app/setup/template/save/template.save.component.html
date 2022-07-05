@@ -1,0 +1,252 @@
+<div class="add_template_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content large_popup" style="width: 1330px !important">
+      <div class="popup_header">
+        <h4>{{pageTitle}}</h4>
+        <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" mat-button (click)="onCloseDialog()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+      </div>
+      <div class="popup_content">
+        <div class="row">
+          <div class="col-lg-3 col-md-4 no_padding parallel_grid">
+            <div class="row temp_white_bg">
+              <div class="col-md-12">
+                <h5 class="field_label">Select Module</h5>
+                <div class="select_label">
+                  <select class="form-control" name="MID" [(ngModel)]="moduleID"
+                    [disabled]="disableModule" (ngModelChange)="onModuleChange(moduleID)">
+                    <option *ngFor="let module of moduleList" [ngValue]="module.ModuleID" required>
+                      {{module.ModuleName}}
+                    </option>
+                  </select>
+                </div>
+                <h5 class="field_label">Select Template Variable</h5>
+                <div class="select_label">
+                  <select class="form-control" name="templateVariable" [(ngModel)]="variableModuleID" (ngModelChange)="onModuleChangeTemplateVariable(variableModuleID)">
+                    <option *ngFor="let module of moduleIlteredVariableList" [ngValue]="module.ModuleID" required>
+                      {{module.ModuleName}}
+                    </option>
+                  </select>
+                </div>
+                <div class="small_space"></div>
+                <h5 class="field_label">Place Holder fields</h5>
+                <ul class="cstm_scroll_bg general_temp_placeholder">
+                  <li [draggable] [dragData]="variable.TemplateVariableName" [dragEnabled]="true" class="nav-item"
+                    *ngFor="let variable of variableList">
+                    <i class="fas fa-plus-circle" style="color:green;"></i> {{variable.TemplateVariableName}} <i class="fa fa-bars float-right"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-9 col-md-8 padding_right mob-pl-0 parallel_grid">
+            <div class="temp_white_bg">
+              <mat-tab-group (selectedTabChange)="onTabChange($event)">
+                <mat-tab label="{{templateTypes.Email}}" *ngIf="templateDetailsDataObj.IsEmail">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div *ngTemplateOutlet="email"></div>
+                    </div>
+                  </div>
+                </mat-tab>
+                <mat-tab label="{{templateTypes.SMS}}" *ngIf="templateDetailsDataObj.IsSMS">
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div *ngTemplateOutlet="sms"></div>
+                    </div>
+                  </div>
+                </mat-tab>
+                <mat-tab label="{{templateTypes.PushNotification}}" *ngIf="templateDetailsDataObj.IsNotification">
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div *ngTemplateOutlet="notification"></div>
+                    </div>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #email>
+  <form #emailTemplateForm="ngForm" (ngSubmit)="onSaveEmailTemplate(emailTemplateForm.valid)" novalidate>
+    <div id="errorMessagesPanel">
+      <div class="alert alert-danger small_space" *ngIf="emailTemplateForm.submitted && emailTemplateForm.invalid && isInvalidData">
+        {{messages.Validation.Info_Required}}
+      </div>
+      <div class="alert alert-danger small_space" *ngIf="isInvalidEmailBody">
+        {{emailMaxLengthMessage}}
+      </div>
+      <div class="alert alert-danger small_space" *ngIf="moduleID == 0"> Module is required.</div>
+
+      <div class="col-md-12 col-sm-12 small_space padding_left">
+        <mat-slide-toggle class="example-margin" [(checked)]="templateEmailModel.IsActive" [(ngModel)]="templateEmailModel.IsActive"
+          [disabled]="false" name="status" tabindex="1">
+          {{templateEmailModel.IsActive ? 'Active': 'Inactive'}}
+        </mat-slide-toggle>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 xs-pr-0 padding_left">
+          <div class="field_label">
+            <h5>Title</h5>
+          </div>
+          <div [ngClass]="{
+                                              'has-danger': txtNameEmail.invalid &&
+                                              (txtNameEmail.dirty || (emailTemplateForm.submitted && isInvalidData)),
+                                              'has-success': txtNameEmail.valid && (txtNameEmail.dirty)}">
+            <input type="text" name="txtNameEmail" class="form-control" #txtNameEmail="ngModel" [(ngModel)]="templateEmailModel.TemplateTextTitle"
+              (blur)="onEmailTitleUpdated()" maxlength="50" tabindex="2" required />
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 xs-pl-0 padding_right">
+          <div class="field_label">
+            <h5>Subject</h5>
+          </div>
+          <div [ngClass]="{
+                                              'has-danger': txtSubject.invalid &&
+                                              (txtSubject.dirty || txtSubject.touched || (emailTemplateForm.submitted && isInvalidData)),
+                                              'has-success': txtSubject.valid && (txtSubject.dirty || txtSubject.touched )
+                                                  }">
+            <input type="text" class="form-control" name="txtSubject" #txtSubject="ngModel" [(ngModel)]="templateEmailModel.TemplateTextEmailSubject"
+              (blur)="onEmailSubjectUpdated()" maxlength="50" tabindex="3" required />
+          </div>
+        </div>
+      </div>
+
+      <div class="field_label">
+        <h5>Description <span>(Remaining Characters: {{ _maxEmailBodyLength -
+            templateEmailModel?.TemplateTextDescription?.length }})</span></h5>
+      </div>
+      <div [ngClass]="{
+                                'has-danger': (txtDescriptionEmail.invalid && emailTemplateForm.submitted && isInvalidData)
+                            }">
+        <!-- <textarea rows="7" droppable (onDrop)="onDropPlaceHoder($event)" style="height:100px !important"
+                              name="txtDescriptionEmail" class="form-control" #txtDescriptionEmail="ngModel"
+                              [(ngModel)]="templateEmailModel.TemplateTextDescription" maxlength="_maxBodyLength" tabindex="4"
+                              (blur)="onEmailDescriptionUpdated()" required></textarea> -->
+        <email-editor droppable (onDrop)="onDropPlaceHoder($event)" [value]="templateEmailModel.TemplateTextDescription"
+          (onEmailBodyChange)="onEmailDescriptionUpdated($event)"></email-editor>
+        <input type="text" name="txtDescriptionEmail" #txtDescriptionEmail="ngModel" [(ngModel)]="templateEmailModel.TemplateTextDescription"
+          required [maxlength]="_maxEmailBodyLength" style="display: none" />
+      </div>
+
+    </div>
+    <div class="cancel_btn float-right small_space">
+      <button tabindex="5" mat-button type="button" class="simple_border_btn" (click)="onCloseDialog()">Cancel</button>
+      <button tabindex="6" class="save primary_blue_btn">Save</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #sms>
+  <form #TemplateFormSMS="ngForm" (ngSubmit)="onSaveSMSTemplate(TemplateFormSMS.valid)" novalidate>
+    <div id="errorMessagesPanel">
+      <div class="alert alert-danger small_space" *ngIf="TemplateFormSMS.submitted && TemplateFormSMS.invalid && isInvalidData">
+        <div *ngIf="TemplateFormSMS.submitted && TemplateFormSMS.invalid && isInvalidData">
+          {{messages.Validation.Info_Required}}
+        </div>
+        <div *ngIf="isInvalidSMSBody">
+          {{smsMaxLengthMessage}}
+        </div>
+        <div *ngIf="moduleID == 0">
+          Module is required.
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 small_space padding_left">
+        <mat-slide-toggle class="example-margin" [(checked)]="templateSMSModel.IsActive" [(ngModel)]="templateSMSModel.IsActive"
+          [disabled]="false" name="status" tabindex="1">
+          {{templateSMSModel.IsActive ? 'Active': 'Inactive'}}
+        </mat-slide-toggle>
+      </div>
+      <div class="field_label">
+        <h5>Title</h5>
+      </div>
+      <div [ngClass]="{
+                        'has-danger': txtName.invalid &&
+                         (txtName.dirty || txtName.touched || (TemplateFormSMS.submitted && isInvalidData)),
+                        'has-success': txtName.valid && (txtName.dirty || txtName.touched )
+                            }">
+        <input type="text" class="form-control" name="txtName" #txtName="ngModel" [(ngModel)]="templateSMSModel.TemplateTextTitle"
+          (blur)="onSMSTitleUpdated()" maxlength="50" tabindex="1" required />
+      </div>
+      <div class="field_label">
+        <h5>Description <span>(Remaining Characters: {{ _maxSMSBodyLength -
+            templateSMSModel?.TemplateTextDescription?.length }})</span></h5>
+      </div>
+      <div [ngClass]="{
+                     'has-danger': txtDescription.invalid &&
+                     (txtDescription.dirty || txtDescription.touched || (TemplateFormSMS.submitted && isInvalidData)),
+                     'has-success': txtDescription.valid && (txtDescription.dirty || txtDescription.touched )
+                            }">
+        <textarea rows="12" droppable (onDrop)="onDropPlaceHoder($event)" style="height:294px !important" name="txtDescription"
+          class="form-control" #txtDescription="ngModel" [(ngModel)]="templateSMSModel.TemplateTextDescription"
+          (ngModelChange)="onSMSDescriptionUpdated()" [maxlength]="_maxSMSBodyLength" tabindex="2" required>
+        </textarea>
+      </div>
+    </div>
+    <div class="cancel_btn float-right small_space">
+      <button tabindex="3" mat-button type="button" class="simple_border_btn" (click)="onCloseDialog()">Cancel</button>
+      <button tabindex="4" class="save primary_blue_btn">Save</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #notification>
+  <form #TemplateFormNotification="ngForm" (ngSubmit)="onSaveNotificationTemplate(TemplateFormNotification.valid)" novalidate>
+    <div id="errorMessagesPanel">
+      <div class="alert alert-danger small_space" *ngIf="TemplateFormNotification.submitted && TemplateFormNotification.invalid && isInvalidData">
+        <div *ngIf="TemplateFormNotification.submitted && TemplateFormNotification.invalid && isInvalidData">
+          {{messages.Validation.Info_Required}}
+        </div>
+        <div *ngIf="isInvalidNotificationBody">
+          {{notificationMaxLengthMessage}}
+        </div>
+        <div *ngIf="moduleID == 0">
+          Module is required.
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 small_space padding_left">
+        <mat-slide-toggle class="example-margin" [(checked)]="templateNotificationModel.IsActive" [(ngModel)]="templateNotificationModel.IsActive"
+          [disabled]="false" name="status" tabindex="1">
+          {{templateNotificationModel.IsActive ? 'Active': 'Inactive'}}
+        </mat-slide-toggle>
+      </div>
+      <div class="field_label">
+        <h5>Title</h5>
+      </div>
+      <div [ngClass]="{
+                        'has-danger': txtName.invalid &&
+                         (txtName.dirty || txtName.touched || (TemplateFormNotification.submitted && isInvalidData)),
+                        'has-success': txtName.valid && (txtName.dirty || txtName.touched )
+                            }">
+        <input type="text" class="form-control" name="txtName" #txtName="ngModel" [(ngModel)]="templateNotificationModel.TemplateTextTitle"
+          (blur)="onNotificationTitleUpdated()" maxlength="50" tabindex="1" required />
+      </div>
+      <div class="field_label">
+        <h5>Description <span>(Remaining Characters: {{ _maxNotificationBodyLength -
+          templateNotificationModel?.TemplateTextDescription?.length }})</span></h5>
+      </div>
+      <div [ngClass]="{
+                     'has-danger': txtDescription.invalid &&
+                     (txtDescription.dirty || txtDescription.touched || (TemplateFormNotification.submitted && isInvalidData)),
+                     'has-success': txtDescription.valid && (txtDescription.dirty || txtDescription.touched )
+                            }">
+        <textarea rows="7" droppable (onDrop)="onDropPlaceHoder($event)" style="height:100px !important" name="txtDescription"
+          class="form-control" #txtDescription="ngModel" [(ngModel)]="templateNotificationModel.TemplateTextDescription"
+          (ngModelChange)="onNotificationDescriptionUpdated()" [maxlength]="_maxNotificationBodyLength" tabindex="2" required>
+        </textarea>
+      </div>
+    </div>
+    <div class="cancel_btn float-right small_space">
+      <button tabindex="3" mat-button type="button" class="simple_border_btn" (click)="onCloseDialog()">Cancel</button>
+      <button tabindex="4" class="save primary_blue_btn">Save</button>
+    </div>
+  </form>
+</ng-template>

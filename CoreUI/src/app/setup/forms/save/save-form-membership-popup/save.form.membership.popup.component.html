@@ -1,0 +1,54 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <div class="col-md-6 col-sm-6 no_padding">
+                    <h4>Memberships</h4>
+                </div>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="staff_provide_service">
+                                <div class="checkbox checkbox-success full_width">
+                                    <input type="checkbox" id="">
+                                    <h3>Membership Name</h3>
+                                    <button class="btn-sm de_seleect_btn float-right" (click)="onIsSelectAll(false)">
+                                        Deselect All
+                                    </button>
+                                    <button class="btn-sm de_seleect_btn float-right" (click)="onIsSelectAll(true)">
+                                        Select All
+                                    </button>
+                                    <!-- </label> -->
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="checkbox checkbox-success" *ngFor="let membership of membershipList">
+                                        <input class="example-margin" type="checkbox" name="{{'Chk_membership' + membership.MembershipID}}"
+                                        id="{{'Chk_membership' + membership.MembershipID}}" [(ngModel)]="membership.IsSelected"
+                                        [(checked)]="membership.IsSelected" >
+                                        <label for="{{'Chk_membership' + membership.MembershipID}}">{{membership.MembershipName}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-9 col-sm-9 saved_service">
+                    <p>Please close and click save/next to confirm changes.</p>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="cancel_btn float-right">
+                        <button type="button" mat-button (click)="onSelect()">Close</button>
+                        <!-- <button class="save primary_blue_btn" (click)="onSelect()">Save</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

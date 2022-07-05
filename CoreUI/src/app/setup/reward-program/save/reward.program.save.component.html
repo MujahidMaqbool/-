@@ -1,0 +1,1185 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right xs-btn-width">
+            <button type="button" class="simple_btn" role="navigation" [routerLink]="['/setup/reward-program']">
+                Back to Search
+            </button>
+            <button type="button" class="simple_btn" (click)="onResetRewardProgram()" *ngIf="isShowResetButton">
+                Reset </button>
+            <button class="save simple_btn" (click)="onPrevious()" [disabled]="!showPrevious">Back</button>
+                <button class="save " (click)="onNext()"  *ngIf="showContinue">Next</button>
+                <button class="save " (click)="onSave()"  *ngIf="showSave" [disabled]="isSaveClicked">Save</button>
+        </div>
+    </div>
+</div>
+
+
+
+<mat-horizontal-stepper #stepper>
+    <ng-template matStepperIcon="edit">
+        <mat-icon>edit</mat-icon>
+    </ng-template>
+
+    <mat-step #stepper>
+        <div class="row">
+            <div class="col-md-12" *ngIf="showPercentageValidationClient || showPercentageValidationLead || showPercentageValidationMember">
+                <div class="alert alert-danger">
+                        {{messages.Error.Please_Set_The_Minimum_PercentageBetween}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" *ngIf="showExpirayDaysValidation">
+                <div class="alert alert-danger">
+                        {{messages.Validation.No_of_Expiray_Days}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="alert alert-danger" *ngIf="ShowError || showDescriptionValidation">
+                  {{messages.Validation.Info_Required}}
+              </div>
+            </div>
+          </div>
+        <ng-template matStepLabel>Reward Program</ng-template>
+        <form #RewardProgramData="ngForm" novalidate>
+
+        <div class="white_bg">
+            <div class="row column_flex_alignment wizard_active_bar">
+                <div class="col-md-10">
+                    <h1>Active</h1>
+                    <p>Toggle on to allow customers to earn and redeem reward points. Toggling off will result in new
+                        customers being unable to enroll in this reward program, but does not affect existing customers.
+                    </p>
+                </div>
+                <div class="col-md-2 text-right">
+                    <mat-slide-toggle [checked]="rewardProgram.IsActive" 
+                    (change)="onChangeRewardProgramState($event)" 
+                    [(ngModel)]="rewardProgram.IsActive" class="wellyx-checked" name="IsActive">
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+        <div class="white_bg">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="space-10">Reward Program Information</h1>
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-md-7">
+                    <h3>Reward Program Name</h3>
+                    <p>This is the unique name of your reward program. This will be displayed on core, widget & app for
+                        staff & customers.</p>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-3" [ngClass]="{
+                    'has-danger': RewardProgramName.invalid && (RewardProgramName.dirty || RewardProgramName.touched ||ShowError),
+                    'has-success': RewardProgramName.valid && (RewardProgramName.dirty || RewardProgramName.touched )
+                        }" >
+                    <input type="text" [(ngModel)]="rewardProgram.RewardProgramName" class="form-control" pattern=".*\S+.*" 
+                    #RewardProgramName="ngModel" name="RewardProgramName" maxlength="50" (ngModelChange)="showValidation($event)" required >
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-md-7">
+                    <h3>Customer Enrollment</h3>
+                    <p>Select how to enroll customers into the reward program. Automatic enrollment will add all new
+                        customers to the default reward program. Customer opt-in will allow customers the option to
+                        enroll in the reward program during checkout or when purchasing memberships and manual
+                        enrollment will require staff to enroll customers manually.</p>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-3">
+                    <div class="select_label">
+                        <select name="customerEnrollmentId" [(ngModel)]="rewardProgram.RewardProgramEnrollmentTypeID" #customerEnrollmentId="ngModel" required>
+                            <option *ngFor="let option of customerEnrollmentList" [value]="option.RewardProgramEnrollmentTypeID">
+                                {{option.RewardProgramEnrollmentTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-md-7">
+                    <h3>Minimum Points Required to Redeem</h3>
+                    <p>These are the number of redeemable points a customer is required to have, in order to use reward
+                        points as a payment method. For example, you can require customers to need at least 1000 points
+                        in order to use points as a payment method in the POS, widget & app.</p>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-3" class="col-md-3" [ngClass]="{
+                                    'has-danger': MinimumPointsRequiredtoRedeem.invalid && (MinimumPointsRequiredtoRedeem.dirty || MinimumPointsRequiredtoRedeem.touched),
+                                    'has-success': MinimumPointsRequiredtoRedeem.valid && (MinimumPointsRequiredtoRedeem.dirty || MinimumPointsRequiredtoRedeem.touched )
+                                        }">
+                    <input type="text" #MinimumPointsRequiredtoRedeem="ngModel" name="MinimumPointsRequiredtoRedeem"
+                        [(ngModel)]="rewardProgram.MinimumPointsRequiredtoRedeem" min="0" maxlength="6" numberControl
+                        class="form-control" onkeydown="if(event.key==='.'){event.preventDefault();}"
+                        oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-md-7">
+                    <h3>Reward Redeem Limit</h3>
+                    <p>Limit the number of points eligible per transaction based on the value of the transaction and
+                        leave the remaining balance to be collected from other payment methods. Set the percentage
+                        (between 0% to 100%) of the total transaction to be paid by reward points; 100% means the full
+                        transaction can be paid for by reward point, 0% would mean that reward program cannot be used as
+                        a payment method in widget & app.</p>
+                </div>
+                <div class="col-md-5 mob-pa label_with_input  r_f_column r_label_input  reward_r_f_column">
+                    <div [ngClass]="{
+                        'has-danger': MemberRedeemLimit.invalid
+                                      && (MemberRedeemLimit.dirty || MemberRedeemLimit.touched)
+                                      || ((!MemberRedeemLimit.value)  || MemberRedeemLimit.value == null || MemberRedeemLimit.value > 100)
+                                      && (MemberRedeemLimit.dirty || MemberRedeemLimit.touched) && showPercentageValidationMember ,
+                        'has-success': (MemberRedeemLimit.value)
+                                       && MemberRedeemLimit.valid && (MemberRedeemLimit.dirty || MemberRedeemLimit.touched)
+                        }">
+                        <div class="d-flex cst-disable-checkbox"><span class="invoice_prefix left_radius">For
+                                Member</span><input type="text" required numberControl min="0" max="100" maxlength="6" class="form-control"
+                                [(ngModel)]="rewardProgram.MemberRedeemLimit" numberControl class="form-control"
+                               
+                                (ngModelChange)="onPercentageChangeOnlyNumbers($event, customerType.Member)" #MemberRedeemLimit="ngModel"
+                                name="MemberRedeemLimit" required><span class="dollar_prefix right_radius">%</span>
+                        </div>
+                    </div>
+                    <div [ngClass]="{
+                        'has-danger': ClientRedeemLimit.invalid
+                                      && (ClientRedeemLimit.dirty || ClientRedeemLimit.touched)
+                                      || ((!ClientRedeemLimit.value)  || ClientRedeemLimit.value == null || ClientRedeemLimit.value > 100)
+                                      && (ClientRedeemLimit.dirty || ClientRedeemLimit.touched) && showPercentageValidationClient ,
+                        'has-success': (ClientRedeemLimit.value)
+                                       && ClientRedeemLimit.valid && (ClientRedeemLimit.dirty || ClientRedeemLimit.touched)
+                        }">
+                        <div class="d-flex cst-disable-checkbox"><span class="invoice_prefix left_radius">For
+                                Client</span><input type="text" required numberControl min="0" max="100" numberControl class="form-control"
+                                 maxlength="6" class="form-control"
+                                [(ngModel)]="rewardProgram.ClientRedeemLimit"
+                                (ngModelChange)="onPercentageChangeOnlyNumbers($event, customerType.Client)" #ClientRedeemLimit="ngModel"
+                                name="ClientRedeemLimit" required><span class="dollar_prefix right_radius">%</span>
+                        </div>
+                    </div>
+                    <div [ngClass]="{
+                        'has-danger': LeadRedeemLimit.invalid
+                                      && (LeadRedeemLimit.dirty || LeadRedeemLimit.touched)
+                                      || ((!LeadRedeemLimit.value)  || LeadRedeemLimit.value == null || LeadRedeemLimit.value > 100)
+                                      && (LeadRedeemLimit.dirty || LeadRedeemLimit.touched) && showPercentageValidationLead,
+                        'has-success': (LeadRedeemLimit.value)
+                                       && LeadRedeemLimit.valid && (LeadRedeemLimit.dirty || LeadRedeemLimit.touched)
+                        }">
+                        <div class="d-flex cst-disable-checkbox"><span class="invoice_prefix left_radius">For
+                                Lead</span><input type="text" required numberControl min="0" max="100" maxlength="6" class="form-control"
+                                [(ngModel)]="rewardProgram.LeadRedeemLimit" numberControl class="form-control"
+                                
+                                (ngModelChange)="onPercentageChangeOnlyNumbers($event, customerType.Lead)" #LeadRedeemLimit="ngModel"
+                                name="LeadRedeemLimit" required><span class="dollar_prefix right_radius">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-md-7">
+                    <h3>Points Expiry</h3>
+                    <p>Toggle on to allow reward points to expire after a certain number of days. Toggling off will
+                        result in points never expiring.</p>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-3 text-right">
+                    <mat-slide-toggle [checked]="rewardProgram.IsPointsExpiry" 
+                    [(ngModel)]="rewardProgram.IsPointsExpiry" class="wellyx-checked" 
+                    (change)="onChangePointsExpiry($event)"
+                    name="PointExpiryIsActive">
+                    </mat-slide-toggle>
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+            <div class="media wizard_items">
+                <div class="mr-3"></div>
+                <div class="row media-body column_flex_alignment">
+                    <div class="col-lg-7 col-md-6">
+                        <h3>Expiry Days</h3>
+                    </div>
+                    <div class="col-lg-2 col-md-1"></div>
+                    <div class="col-lg-3 col-md-5 mob-pa r_f_column">
+                        <div [ngClass]="{
+                            'has-danger': PointsExpiryDuration.invalid
+                                          && (PointsExpiryDuration.dirty || PointsExpiryDuration.touched)
+                                          || ((!PointsExpiryDuration.value)  || PointsExpiryDuration.value == null || PointsExpiryDuration.value == 0)
+                                          && (PointsExpiryDuration.dirty || PointsExpiryDuration.touched) && showExpirayDaysValidation,
+                            'has-success': (PointsExpiryDuration.value)
+                                           && PointsExpiryDuration.valid && (PointsExpiryDuration.dirty || PointsExpiryDuration.touched)
+                            }">
+                            <div class="d-flex"><input type="text" numberControl min="1" numberControl maxlength="4" 
+                                onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                                [disabled]="!rewardProgram.IsPointsExpiry" [required]="rewardProgram.IsPointsExpiry"
+                                [(ngModel)]="rewardProgram.PointsExpiryDuration" name="PointsExpiryDuration" 
+                                (ngModelChange)="onExpirayDayValidation($event)"
+                                #PointsExpiryDuration="ngModel" class="form-control text-center"><span
+                                class="invoice_prefix right_radius">Days</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-md-7">
+                    <h3>Discounted Membership Benefits</h3>
+                    <p>All discounted membership benefits will be added to this reward program,those that are already created or created in the future.
+                        The earning criteria defined for classes, services and product in the next step will automatically be applied to discounted membership benefits too. </p>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-3 text-right">
+                    <mat-slide-toggle [checked]="rewardProgram.IsDiscountedMembershipBenefits" 
+                    [(ngModel)]="rewardProgram.IsDiscountedMembershipBenefits" class="wellyx-checked" name="discountedmembershipbenefit">
+                    </mat-slide-toggle>
+                </div>
+               
+            </div>
+        </div>
+        
+      
+          <div class="white_bg">
+            <div class="row column_flex_alignment wizard_active_bar">
+                <div class="col-md-7">
+                    <h1>Design Your Reward Program</h1>
+                    <p>This is the reward program design which is distinctive to your personalized setup. Write your
+                        reward program’s descriptions, rules or any further detail that you would like your customers to
+                        know about in regards to their program.
+                    </p>
+                </div>
+                <div class="col-md-5 text-right">
+                    <div class="company_btn xs-btn-width">
+                        <button class="border_btn" (click)="onResetDescription()">Reset</button>
+                        <button (click)="viewTemplate()" class="sky_blue_btn">Preview</button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-12 membership_editor reward-editor">
+                <div [ngClass]="{ 'has-danger': showDescriptionValidation }">
+                  <div class="email_edditor field_label">
+                    <h5>Description <span> &nbsp;(Remaining Characters: {{ 50000 -
+                        rewardProgram.RewardProgramDetailVM?.Description?.length }})</span>
+                    </h5>
+                    <email-editor maxlength="50000" [value]="rewardProgram.RewardProgramDetailVM?.Description" (onEmailBodyChange)="onDescriptionUpdated($event)">
+                    </email-editor>
+                    <input type="text" name="Description" #Description="ngModel" required [(ngModel)]="rewardProgram.RewardProgramDetailVM.Description"
+                      style="display: none" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel> Reward Purchases</ng-template>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <div class="alert alert-danger" *ngIf="showRedemptionValueValidation 
+                  || showRedemptionPointsValidation 
+                  || showAmountSpentValidation
+                  || showMemberEarnedPointsValidation
+                  || showClientEarnedPointsValidation
+                  || showLeadEarnedPointsValidation
+                  || showBenefittedEarnedPointsValidation
+                  || showClassAmountSpentValidation
+                  || showclassMemberEarnedValidation
+                  || showclassClientEarnedValidation
+                  || showclassLeadEarnedValidation
+                  || showclassBenefittedEarnedPointsValidation
+                  || showServiceAmountSpentValidation
+                  || showServiceMemberEarnedValidation
+                  || showServiceClientEarnedValidation
+                  || showServiceLeadEarnedValidation
+                  || showServiceBenefittedEarnedPointsValidation
+                  || showProductAmountSpentValidation
+                  || showProductMemberEarnedValidation
+                  || showProductClientEarnedValidation
+                  || showProductLeadEarnedValidation
+                  || showProductBenefittedEarnedPointsValidation
+                  || showMembershipAmountSpentValidation
+                  || showMembershipMemberEarnedValidation
+                  || showMembershipClientEarnedValidation
+                  || showMembershipLeadEarnedValidation
+                  || showMembershipBenefittedEarnedPointsValidation
+                  ">
+                      {{messages.Validation.Info_Required}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" *ngIf="redemptionValueValidation">
+                    <div class="alert alert-danger">
+                        <div *ngIf="redemptionValueValidation">
+                            Redemption Value should be greater than 0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <form #RewardProgramPurchasesForm="ngForm" novalidate>
+        <div class="white_bg">
+            <div class="row column_flex_alignment">
+                <div class="col-md-12">
+                    <h1 class="space-10">Reward Points Settings</h1>
+                    <div class="form_border"></div>
+                </div>
+                <div class="form_border"></div>
+            </div>
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-lg-4 col-md-6">
+                    <h3>Points Redemption Ratio</h3>
+                    <p>Set the value each reward point can be redeemed for. The points and value are added to the
+                        customers profile and they can be used as a payment method.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 column_flex_alignment">
+                    <div>
+                        <h5 class="field_label">Redemption Value</h5>
+                        <div [ngClass]="{
+                        'has-danger': RedemptionValue.invalid
+                                      && (RedemptionValue.dirty || RedemptionValue.touched)
+                                      || ((!RedemptionValue.value)  || RedemptionValue.value == 0 || RedemptionValue.value == null )
+                                      && (RedemptionValue.dirty || RedemptionValue.touched) || showRedemptionValueValidation,
+                        'has-success': (RedemptionValue.value && RedemptionValue.value != 0 )
+                                       && RedemptionValue.valid && (RedemptionValue.dirty || RedemptionValue.touched) 
+                        }">
+                            <div class="d-flex cst-disable-checkbox"><span
+                                    class="dollar_prefix left_radius">{{currencyFormat}}</span><input type="text"
+                                    name="RedemptionValue" #RedemptionValue="ngModel" required numberControl min="0.01"
+                                    maxlength="6" class="form-control" [(ngModel)]="rewardProgram.RedemptionValue" TwoDigitDecimaNumber
+                                    (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.RedemptionValue)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="equal_sign">=</div>
+                    <div [ngClass]="{
+                                            'has-danger': RedemptionPoints.invalid
+                                                          && (RedemptionPoints.dirty || RedemptionPoints.touched)
+                                                          || ((!RedemptionPoints.value)  || RedemptionPoints.value == null)
+                                                          && (RedemptionPoints.dirty || RedemptionPoints.touched) && showRedemptionPointsValidation,
+                                            'has-success': (RedemptionPoints.value)
+                                                           && RedemptionPoints.valid && (RedemptionPoints.dirty || RedemptionPoints.touched)
+                                            }">
+                        <h5 class="field_label">Reward Points</h5>
+                        <input type="text" required numberControl name="RedemptionPoints" #RedemptionPoints="ngModel" min="0" maxlength="6"
+                            numberControl class="form-control" onkeydown="if(event.key==='.'){event.preventDefault();}"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" class="form-control "
+                            [(ngModel)]="rewardProgram.RedemptionPoints" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.RedemptionPoints)">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="white_bg">
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-lg-4 col-md-12" >
+                    <h3>Reward All Purchases</h3>
+                    <p>Award all purchases of memberships, classes, services and products for a specific value or set
+                        an earned value for each type of purchase separately by configuring the advanced settings.
+                        Entering a value of 0 would exclude the purchase type from the reward program.</p>
+                </div>
+                <div class="col-lg-8 col-md-12 column_flex_alignment reward_points_blocks end_flex">
+                    <div>
+                        <h5 class="field_label">Amount Spent</h5>
+                        <div>
+                            <div class="d-flex cst-disable-checkbox" [ngClass]="{
+                                'has-danger': AmountSpent.invalid
+                                              && (AmountSpent.dirty || AmountSpent.touched)
+                                              || ((!AmountSpent.value)  || AmountSpent.value == null)
+                                              && (AmountSpent.dirty || AmountSpent.touched) && showAmountSpentValidation,
+                                'has-success': (AmountSpent.value)
+                                               && AmountSpent.valid && (AmountSpent.dirty || AmountSpent.touched)
+                                }"><span
+                                    class="dollar_prefix left_radius">{{currencyFormat}}</span>
+                                    <input type="text" class="form-control " [required]="!rewardProgram.IsAdvanceSetting"  numberControl min="0" maxlength="6"
+                                    name="AmountSpent" [disabled]="rewardProgram.IsAdvanceSetting" TwoDigitDecimaNumber
+                                    [(ngModel)]="rewardProgramEarningRuleFrontEnd.AmountSpent" 
+                                    #AmountSpent="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.AmountSpent)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="equal_sign" style="width: 10px;">=</div>
+                    <div [ngClass]="{
+                        'has-danger': MemberEarnedPoints.invalid
+                                      && (MemberEarnedPoints.dirty || MemberEarnedPoints.touched)
+                                      || ((!MemberEarnedPoints.value)  || MemberEarnedPoints.value == null)
+                                      && (MemberEarnedPoints.dirty || MemberEarnedPoints.touched) && showMemberEarnedPointsValidation,
+                        'has-success': (MemberEarnedPoints.value)
+                                       && MemberEarnedPoints.valid && (MemberEarnedPoints.dirty || MemberEarnedPoints.touched)
+                        }">
+                        <h5 class="field_label">Member Earned Points</h5>
+                        <input type="text" [disabled]="rewardProgram.IsAdvanceSetting"  #MemberEarnedPoints="ngModel" min="0" maxlength="6" 
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                        [required]="!rewardProgram.IsAdvanceSetting" numberControl (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.MemberEarnedPoints)"
+                        name="MemberEarnedPoints" [(ngModel)]="rewardProgramEarningRuleFrontEnd.MemberEarnedPoints">
+                    </div>
+                    <div [ngClass]="{
+                        'has-danger': ClientEarnedPoints.invalid
+                                      && (ClientEarnedPoints.dirty || ClientEarnedPoints.touched)
+                                      || ((!ClientEarnedPoints.value)  || ClientEarnedPoints.value == null)
+                                      && (ClientEarnedPoints.dirty || ClientEarnedPoints.touched) && showClientEarnedPointsValidation,
+                        'has-success': (ClientEarnedPoints.value)
+                                       && ClientEarnedPoints.valid && (ClientEarnedPoints.dirty || ClientEarnedPoints.touched)
+                        }">
+                        <h5 class="field_label">Client Earned Points</h5>
+                        <input type="text" [disabled]="rewardProgram.IsAdvanceSetting" [required]="!rewardProgram.IsAdvanceSetting" 
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                        numberControl (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.ClientEarnedPoints)" min="0" maxlength="6"  #ClientEarnedPoints="ngModel" 
+                        name="ClientEarnedPoints" [(ngModel)]="rewardProgramEarningRuleFrontEnd.ClientEarnedPoints">
+                    </div>
+                    <div [ngClass]="{
+                        'has-danger': LeadEarnedPoints.invalid
+                                      && (LeadEarnedPoints.dirty || LeadEarnedPoints.touched)
+                                      || ((!LeadEarnedPoints.value)  || LeadEarnedPoints.value == null)
+                                      && (LeadEarnedPoints.dirty || LeadEarnedPoints.touched) && showLeadEarnedPointsValidation,
+                        'has-success': (LeadEarnedPoints.value)
+                                       && LeadEarnedPoints.valid && (LeadEarnedPoints.dirty || LeadEarnedPoints.touched)
+                        }">
+                        <h5 class="field_label">Lead Earned Points</h5>
+                        <input type="text" [disabled]="rewardProgram.IsAdvanceSetting"   min="0" maxlength="6"  #LeadEarnedPoints="ngModel" numberControl
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                        (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.LeadEarnedPoints)" [required]="!rewardProgram.IsAdvanceSetting"
+                        name="LeadEarnedPoints" [(ngModel)]="rewardProgramEarningRuleFrontEnd.LeadEarnedPoints">
+                    </div>
+                    <div class="seprate_border" style="width: 10px;"></div>
+                    <div [ngClass]="{
+                        'has-danger': BenefittedEarnedPoints.invalid
+                                      && (BenefittedEarnedPoints.dirty || BenefittedEarnedPoints.touched)
+                                      || ((!BenefittedEarnedPoints.value)  || BenefittedEarnedPoints.value == null)
+                                      && (BenefittedEarnedPoints.dirty || BenefittedEarnedPoints.touched) && showBenefittedEarnedPointsValidation,
+                        'has-success': (BenefittedEarnedPoints.value)
+                                       && BenefittedEarnedPoints.valid && (BenefittedEarnedPoints.dirty || BenefittedEarnedPoints.touched)
+                        }">
+                        <h5 class="field_label">Free Benefits Points</h5>
+                        <input type="text" [disabled]="rewardProgram.IsAdvanceSetting"   min="0" maxlength="6"  #BenefittedEarnedPoints="ngModel" numberControl
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                        (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.BenefittedEarnedPoints)" [required]="!rewardProgram.IsAdvanceSetting"
+                        name="BenefittedEarnedPoints" [(ngModel)]="rewardProgramEarningRuleFrontEnd.BenefittedEarnedPoints">
+                    </div>
+                    <div class="text-right">
+                        <h5 class="field_label">Advanced Settings</h5>
+                        <mat-slide-toggle [checked]="rewardProgram.IsAdvanceSetting"  
+                        [(ngModel)]="rewardProgram.IsAdvanceSetting" class="wellyx-checked" name="AdvanceSettingIsActive" 
+                        (change)="onChangeAdvanceSettings($event)">
+                        </mat-slide-toggle>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+
+            </div>
+    <div *ngIf="rewardProgram.IsAdvanceSetting">
+        <!-- <div *ngFor="let earningRuleException of rewardProgram.RewardProgramEarningRuleVM"> -->
+            <div class="row wizard_items column_flex_alignment" >
+                <div class="col-lg-4 col-md-12">
+                    <div class="checkbox checkbox-success mt-0 ml-15">
+                        <input type="checkbox" name="class" id="class" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="isClassSelected" (change)="onClassesSelect()">
+                        <label for="class"> Classes <span *ngIf="classesExceptionCount?.length" class="optional">| Exceptions ({{classesExceptionCount.length}} Class(es))</span></label>
+                        <p class="wizard_items_p">All classes will be added to this reward program, those that are
+                            already created or created
+                            in the future. If you wish to add exceptions or update the earned value for specific
+                            classes, please click on Add Exception.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12  column_flex_alignment reward_points_blocks">
+                    <div>
+                        <div>
+                            <div class="d-flex cst-disable-checkbox"[ngClass]="{
+                                'has-danger': classAmountSpent.invalid
+                                              && (classAmountSpent.dirty || classAmountSpent.touched)
+                                              || ((!classAmountSpent.value)  || classAmountSpent.value == null)
+                                              && (classAmountSpent.dirty || classAmountSpent.touched) && showClassAmountSpentValidation,
+                                'has-success': (classAmountSpent.value)
+                                               && classAmountSpent.valid && (classAmountSpent.dirty || classAmountSpent.touched)
+                                }" ><span class="dollar_prefix left_radius">{{currencyFormat}}</span>
+                                <input type="text" name="classAmountSpent" class="form-control" numberControl min="0" maxlength="6"
+                                #classAmountSpent="ngModel" [required]="rewardProgram.IsAdvanceSetting && isClassSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.classAmountSpent)"
+                                [(ngModel)]="classEarningRule.AmountSpent" [disabled]="!isClassSelected" TwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="equal_sign_2">=</div>
+                    <div [ngClass]="{
+                        'has-danger': classMemberEarnedPoints.invalid
+                                      && (classMemberEarnedPoints.dirty || classMemberEarnedPoints.touched)
+                                      || ((!classMemberEarnedPoints.value)  || classMemberEarnedPoints.value == null)
+                                      && (classMemberEarnedPoints.dirty || classMemberEarnedPoints.touched) && showclassMemberEarnedValidation,
+                        'has-success': (classMemberEarnedPoints.value)
+                                       && classMemberEarnedPoints.valid && (classMemberEarnedPoints.dirty || classMemberEarnedPoints.touched)
+                        }" >
+                        <input type="text" name="classMemberEarnedPoints" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isClassSelected"
+                        (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.classMemberEarnedPoints)" #classMemberEarnedPoints="ngModel"
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+
+                        [(ngModel)]="classEarningRule.MemberEarnedPoints" [disabled]="!isClassSelected">
+                    </div>
+                    <div [ngClass]="{
+                        'has-danger': classClientEarnedPoints.invalid
+                                      && (classClientEarnedPoints.dirty || classClientEarnedPoints.touched)
+                                      || ((!classClientEarnedPoints.value)  || classClientEarnedPoints.value == null)
+                                      && (classClientEarnedPoints.dirty || classClientEarnedPoints.touched) && showclassClientEarnedValidation,
+                        'has-success': (classClientEarnedPoints.value)
+                                       && classClientEarnedPoints.valid && (classClientEarnedPoints.dirty || classClientEarnedPoints.touched)
+                        }" >
+                        <input type="text" name="classClientEarnedPoints" min="0" maxlength="6" numberControl [required]="rewardProgram.IsAdvanceSetting && isClassSelected" #classClientEarnedPoints="ngModel"
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                        [(ngModel)]="classEarningRule.ClientEarnedPoints" [disabled]="!isClassSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.classClientEarnedPoints)">
+                    </div>
+                    <div [ngClass]="{
+                        'has-danger': classLeadEarnedPoints.invalid
+                                      && (classLeadEarnedPoints.dirty || classLeadEarnedPoints.touched)
+                                      || ((!classLeadEarnedPoints.value)  || classLeadEarnedPoints.value == null)
+                                      && (classLeadEarnedPoints.dirty || classLeadEarnedPoints.touched) && showclassLeadEarnedValidation,
+                        'has-success': (classLeadEarnedPoints.value)
+                                       && classLeadEarnedPoints.valid && (classLeadEarnedPoints.dirty || classLeadEarnedPoints.touched)
+                        }" >
+                        <input type="text" name="classLeadEarnedPoints" min="0" numberControl maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isClassSelected" #classLeadEarnedPoints="ngModel"
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                        [(ngModel)]="classEarningRule.LeadEarnedPoints" [disabled]="!isClassSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.classLeadEarnedPoints)">
+                    </div>
+
+                    <div class="seprate_border width_10"></div>
+                    <div [ngClass]="{
+                        'has-danger': classBenefittedEarnedPoints.invalid
+                                      && (classBenefittedEarnedPoints.dirty || classBenefittedEarnedPoints.touched)
+                                      || ((!classBenefittedEarnedPoints.value)  || classBenefittedEarnedPoints.value == null)
+                                      && (classBenefittedEarnedPoints.dirty || classBenefittedEarnedPoints.touched) && showclassBenefittedEarnedPointsValidation,
+                        'has-success': (classBenefittedEarnedPoints.value)
+                                       && classBenefittedEarnedPoints.valid && (classBenefittedEarnedPoints.dirty || classBenefittedEarnedPoints.touched)
+                        }" >
+                        <input type="text" name="classBenefittedEarnedPoints" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isClassSelected" #classBenefittedEarnedPoints="ngModel" 
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                        [(ngModel)]="classEarningRule.BenefittedEarnedPoints" [disabled]="!isClassSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.classBenefittedEarnedPoints)">
+                    </div>
+                    <div class="text-right">
+                        <button class="exception_btn" (click)="addExceptionDialog(classEarningRule.ItemTypeID)" [disabled]="!isClassSelected">Add Exception</button>
+                    </div>
+    
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+            <div class="row wizard_items column_flex_alignment" >
+                <div class="col-lg-4 col-md-12">
+                    <div class="checkbox checkbox-success mt-0 ml-15">
+                        <input type="checkbox" name="service" id="service" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="isServiceSelected" (change)="onServiceSelect()">
+                        <label for="service">Services <span *ngIf="serviceExceptionCount?.length > 0" class="optional">| Exceptions ({{serviceExceptionCount.length}} Service(s))</span></label>
+                        <p class="wizard_items_p">All services will be added to this reward program, those that are
+                            already created or created in the future. If you wish to add exceptions or update the earned
+                            value for specific services, please click on Add Exception.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12 column_flex_alignment reward_points_blocks">
+                    <div>
+                        <div>
+                            <div class="d-flex cst-disable-checkbox" [ngClass]="{
+                                'has-danger': serviceAmountSpent.invalid
+                                              && (serviceAmountSpent.dirty || serviceAmountSpent.touched)
+                                              || ((!serviceAmountSpent.value)  || serviceAmountSpent.value == null)
+                                              && (serviceAmountSpent.dirty || serviceAmountSpent.touched) && showServiceAmountSpentValidation,
+                                'has-success': (serviceAmountSpent.value)
+                                               && serviceAmountSpent.valid && (serviceAmountSpent.dirty || serviceAmountSpent.touched)
+                                }"><span class="dollar_prefix left_radius">{{currencyFormat}}</span>
+                                <input name="serviceAmountSpent" type="text" class="form-control" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isServiceSelected" 
+                                #serviceAmountSpent="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.serviceAmountSpent)"
+                                [(ngModel)]="serviceEarningRule.AmountSpent" [disabled]="!isServiceSelected" TwoDigitDecimaNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="equal_sign_2">=</div>
+                    <div [ngClass]="{
+                        'has-danger': serviceMemberEarnedPoints.invalid
+                                      && (serviceMemberEarnedPoints.dirty || serviceMemberEarnedPoints.touched)
+                                      || ((!serviceMemberEarnedPoints.value)  || serviceMemberEarnedPoints.value == null)
+                                      && (serviceMemberEarnedPoints.dirty || serviceMemberEarnedPoints.touched) && showServiceMemberEarnedValidation,
+                        'has-success': (serviceMemberEarnedPoints.value)
+                                       && serviceMemberEarnedPoints.valid && (serviceMemberEarnedPoints.dirty || serviceMemberEarnedPoints.touched)
+                        }">
+                        <input type="text" name="serviceMemberEarnedPoints" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isServiceSelected"
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                        #serviceMemberEarnedPoints="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.serviceMemberEarnedPoints)"
+                        [(ngModel)]="serviceEarningRule.MemberEarnedPoints" [disabled]="!isServiceSelected">
+                    </div>
+                    <div [ngClass]="{
+                        'has-danger': serviceClientEarnedPoints.invalid
+                                      && (serviceClientEarnedPoints.dirty || serviceClientEarnedPoints.touched)
+                                      || ((!serviceClientEarnedPoints.value)  || serviceClientEarnedPoints.value == null)
+                                      && (serviceClientEarnedPoints.dirty || serviceClientEarnedPoints.touched) && showServiceClientEarnedValidation,
+                        'has-success': (serviceClientEarnedPoints.value)
+                                       && serviceClientEarnedPoints.valid && (serviceClientEarnedPoints.dirty || serviceClientEarnedPoints.touched)
+                        }">
+                        <input type="text" name="serviceClientEarnedPoints" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isServiceSelected"
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                         [(ngModel)]="serviceEarningRule.ClientEarnedPoints" [disabled]="!isServiceSelected"  #serviceClientEarnedPoints="ngModel"
+                         (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.serviceClientEarnedPoints)">
+                    </div>
+
+                    <div [ngClass]="{
+                        'has-danger': serviceLeadEarnedPoints.invalid
+                                      && (serviceLeadEarnedPoints.dirty || serviceLeadEarnedPoints.touched)
+                                      || ((!serviceLeadEarnedPoints.value)  || serviceLeadEarnedPoints.value == null)
+                                      && (serviceLeadEarnedPoints.dirty || serviceLeadEarnedPoints.touched) && showServiceLeadEarnedValidation,
+                        'has-success': (serviceLeadEarnedPoints.value)
+                                       && serviceLeadEarnedPoints.valid && (serviceLeadEarnedPoints.dirty || serviceLeadEarnedPoints.touched)
+                        }">
+                        <input type="text" name="serviceLeadEarnedPoints" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isServiceSelected"
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                        [(ngModel)]="serviceEarningRule.LeadEarnedPoints" [disabled]="!isServiceSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.serviceLeadEarnedPoints)" #serviceLeadEarnedPoints="ngModel">
+                    </div>
+
+                    <div class="seprate_border width_10"></div>
+                    <div [ngClass]="{
+                        'has-danger': serviceBenefittedEarnedPoints.invalid
+                                      && (serviceBenefittedEarnedPoints.dirty || serviceBenefittedEarnedPoints.touched)
+                                      || ((!serviceBenefittedEarnedPoints.value)  || serviceBenefittedEarnedPoints.value == null)
+                                      && (serviceBenefittedEarnedPoints.dirty || serviceBenefittedEarnedPoints.touched) && showServiceBenefittedEarnedPointsValidation,
+                        'has-success': (serviceBenefittedEarnedPoints.value)
+                                       && serviceBenefittedEarnedPoints.valid && (serviceBenefittedEarnedPoints.dirty || serviceBenefittedEarnedPoints.touched)
+                        }">
+                        <input type="text"  name="serviceBenefittedEarnedPoints" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isServiceSelected"
+                        #serviceBenefittedEarnedPoints="ngModel" 
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                        [(ngModel)]="serviceEarningRule.BenefittedEarnedPoints" [disabled]="!isServiceSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.serviceBenefittedEarnedPoints)">
+                    </div>
+                    <div class="text-right">
+                        <button class="exception_btn" (click)="addExceptionDialog(serviceEarningRule.ItemTypeID)" [disabled]="!isServiceSelected">Add Exception</button>
+                    </div>
+    
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+    
+            </div>
+            <div class="row wizard_items column_flex_alignment" >
+                <div class="col-lg-4 col-md-12">
+                    <div class="checkbox checkbox-success mt-0 ml-15">
+                        <input type="checkbox" name="product" id="product" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="isProductSelected" (change)="onProductSelect()">
+                        <label for="product">Products <span *ngIf="productExceptionCount?.length > 0" class="optional">| Exceptions ({{productExceptionCount.length}} Product(s)) </span></label>
+                        <p class="wizard_items_p">All products will be added to this reward program, those that are
+                            already created or created in the future. If you wish to add exceptions or update the earned
+                            value for specific products, please click on Add Exception.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12 column_flex_alignment reward_points_blocks">
+                    <div>
+                        <div>
+                            <div class="d-flex cst-disable-checkbox"  [ngClass]="{
+                                'has-danger': productAmountSpent.invalid
+                                              && (productAmountSpent.dirty || productAmountSpent.touched)
+                                              || ((!productAmountSpent.value)  || productAmountSpent.value == null)
+                                              && (productAmountSpent.dirty || productAmountSpent.touched) && showProductAmountSpentValidation,
+                                'has-success': (productAmountSpent.value)
+                                               && productAmountSpent.valid && (productAmountSpent.dirty || productAmountSpent.touched)
+                                }"><span class="dollar_prefix left_radius">{{currencyFormat}}</span><input
+                                    type="text" name="productAmountSpent" class="form-control" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isProductSelected"
+                                    #productAmountSpent="ngModel" TwoDigitDecimaNumber
+                                    [(ngModel)]="productEarningRule.AmountSpent" [disabled]="!isProductSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.productAmountSpent)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="equal_sign_2">=</div>
+                    <div [ngClass]="{
+                        'has-danger': productMemberEarnedPoints.invalid
+                                      && (productMemberEarnedPoints.dirty || productMemberEarnedPoints.touched)
+                                      || ((!productMemberEarnedPoints.value)  || productMemberEarnedPoints.value == null)
+                                      && (productMemberEarnedPoints.dirty || productMemberEarnedPoints.touched) && showProductMemberEarnedValidation,
+                        'has-success': (productMemberEarnedPoints.value)
+                                       && productMemberEarnedPoints.valid && (productMemberEarnedPoints.dirty || productMemberEarnedPoints.touched)
+                        }">
+                        <input type="text" name="productMemberEarnedPoints"  numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isProductSelected"
+                        #productMemberEarnedPoints="ngModel" onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                        [(ngModel)]="productEarningRule.MemberEarnedPoints" [disabled]="!isProductSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.productMemberEarnedPoints)">
+                    </div>
+                    
+                    <div [ngClass]="{
+                        'has-danger': productClientEarnedPoints.invalid
+                                      && (productClientEarnedPoints.dirty || productClientEarnedPoints.touched)
+                                      || ((!productClientEarnedPoints.value)  || productClientEarnedPoints.value == null)
+                                      && (productClientEarnedPoints.dirty || productClientEarnedPoints.touched) && showProductClientEarnedValidation,
+                        'has-success': (productClientEarnedPoints.value)
+                                       && productClientEarnedPoints.valid && (productClientEarnedPoints.dirty || productClientEarnedPoints.touched)
+                        }">
+                        <input type="text" name="productClientEarnedPoints" onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                        numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isProductSelected" 
+                        #productClientEarnedPoints="ngModel"
+                        [(ngModel)]="productEarningRule.ClientEarnedPoints" [disabled]="!isProductSelected" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.productClientEarnedPoints)">
+                    </div>
+                    <div [ngClass]="{
+                        'has-danger': productLeadEarnedPoints.invalid
+                                      && (productLeadEarnedPoints.dirty || productLeadEarnedPoints.touched)
+                                      || ((!productLeadEarnedPoints.value)  || productLeadEarnedPoints.value == null)
+                                      && (productLeadEarnedPoints.dirty || productLeadEarnedPoints.touched) && showProductLeadEarnedValidation,
+                        'has-success': (productLeadEarnedPoints.value)
+                                       && productLeadEarnedPoints.valid && (productLeadEarnedPoints.dirty || productLeadEarnedPoints.touched)
+                        }">
+                        <input type="text" name="productLeadEarnedPoints" onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                        numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isProductSelected"
+                        #productLeadEarnedPoints="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.productLeadEarnedPoints)"
+                        [(ngModel)]="productEarningRule.LeadEarnedPoints" [disabled]="!isProductSelected">
+                    </div>
+                    <div class="seprate_border width_10"></div>
+                    <div [ngClass]="{
+                        'has-danger': productBenefittedEarnedPoints.invalid
+                                      && (productBenefittedEarnedPoints.dirty || productBenefittedEarnedPoints.touched)
+                                      || ((!productBenefittedEarnedPoints.value)  || productBenefittedEarnedPoints.value == null)
+                                      && (productBenefittedEarnedPoints.dirty || productBenefittedEarnedPoints.touched) && showProductBenefittedEarnedPointsValidation,
+                        'has-success': (productBenefittedEarnedPoints.value)
+                                       && productBenefittedEarnedPoints.valid && (productBenefittedEarnedPoints.dirty || productBenefittedEarnedPoints.touched)
+                        }">
+                        <input type="text" name="productBenefittedEarnedPoints" 
+                        onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                         numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isProductSelected"
+                        #productBenefittedEarnedPoints="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.productBenefittedEarnedPoints)"
+                         [(ngModel)]="productEarningRule.BenefittedEarnedPoints" [disabled]="!isProductSelected">
+                    </div>
+                    <div class="text-right">
+                        <button class="exception_btn" (click)="addExceptionDialog(productEarningRule.ItemTypeID)" [disabled]="!isProductSelected">Add Exception</button>
+                    </div>
+    
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+    
+            </div>
+            <div class="row wizard_items column_flex_alignment" >
+                <div class="col-lg-4 col-md-12">
+                    <div class="checkbox checkbox-success mt-0 ml-15">
+                        <input type="checkbox" name="memberships" id="memberships" [(ngModel)]="isMembershipSelected" (change)="onMembershipSelect()"
+                            class="ng-untouched ng-pristine ng-valid">
+                        <label for="memberships">Memberships<span *ngIf="membershipExceptionCount?.length > 0" class="optional">| Exceptions ({{membershipExceptionCount.length}} Membership(s))</span></label>
+                        <p class="wizard_items_p">All memberships will be added to this reward program, those that are
+                            already created or created in the future. If you wish to add exceptions or update the earned
+                            value for specific memberships, please click on Add Exception.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12 column_flex_alignment reward_points_blocks">
+                    <div>
+                        <div>
+                            <div class="d-flex cst-disable-checkbox" [ngClass]="{
+                                'has-danger': membershipAmountSpent.invalid
+                                              && (membershipAmountSpent.dirty || membershipAmountSpent.touched)
+                                              || ((!membershipAmountSpent.value)  || membershipAmountSpent.value == null)
+                                              && (membershipAmountSpent.dirty || membershipAmountSpent.touched) && showMembershipAmountSpentValidation,
+                                'has-success': (membershipAmountSpent.value)
+                                               && membershipAmountSpent.valid && (membershipAmountSpent.dirty || membershipAmountSpent.touched)
+                                }"><span class="dollar_prefix left_radius">{{currencyFormat}}</span><input
+                                    type="text" name="membershipAmountSpent" class="form-control" numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isMembershipSelected"
+                                    #membershipAmountSpent="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.membershipAmountSpent)" TwoDigitDecimaNumber
+                                     [(ngModel)]="membershipEarningRule.AmountSpent" [disabled]="!isMembershipSelected">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="equal_sign_2">=</div>
+                    <div [ngClass]="{
+                        'has-danger': membershipMemberEarnedPoints.invalid
+                                      && (membershipMemberEarnedPoints.dirty || membershipMemberEarnedPoints.touched)
+                                      || ((!membershipMemberEarnedPoints.value)  || membershipMemberEarnedPoints.value == null)
+                                      && (membershipMemberEarnedPoints.dirty || membershipMemberEarnedPoints.touched) && showMembershipMemberEarnedValidation,
+                        'has-success': (membershipMemberEarnedPoints.value)
+                                       && membershipMemberEarnedPoints.valid && (membershipMemberEarnedPoints.dirty || membershipMemberEarnedPoints.touched)
+                        }">
+                        <input type="text" name="membershipMemberEarnedPoints" onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                         numberControl min="0" maxlength="6" [required]="rewardProgram.IsAdvanceSetting && isMembershipSelected"
+                        #membershipMemberEarnedPoints="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , enum_Reward_Program_Validation.membershipMemberEarnedPoints)"
+                        [(ngModel)]="membershipEarningRule.MemberEarnedPoints" [disabled]="!isMembershipSelected">
+                    </div>
+                    <!-- <div >
+                        <input type="text" name="membershipClientEarnedPoints" 
+                         #membershipClientEarnedPoints="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , 25)"
+                         [(ngModel)]="membershipEarningRule.ClientEarnedPoints" disabled>
+                    </div> -->
+                    <!-- <div>
+                        <input type="text" name="membershipLeadEarnedPoints"
+                        #membershipLeadEarnedPoints="ngModel" (ngModelChange)="showValidtionRewardPurchasesScreen($event , 26)"
+                         [(ngModel)]="membershipEarningRule.LeadEarnedPoints" disabled>
+                    </div> -->
+                    <!-- <div class="seprate_border width_10"></div> -->
+                    <!-- <div >
+                        <input type="text" name="membershipBenefittedEarnedPoints"
+                       #membershipBenefittedEarnedPoints="ngModel"
+                        [(ngModel)]="membershipEarningRule.BenefittedEarnedPoints" disabled>
+                    </div> -->
+                   
+                    <div></div>
+                    <div></div>
+                    <div class="width_10"></div>
+                    <div></div>
+                    <div class="text-right">
+                        <button class="exception_btn" (click)="addExceptionDialog(membershipEarningRule.ItemTypeID)" [disabled]="!isMembershipSelected">Add Exception</button>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+        <div class="row wizard_items">
+            <div class="col-lg-4 col-md-12">
+                <!-- <div class="checkbox checkbox-success  ml-40">
+                    <input type="checkbox" name="recuringpayment" id="recuringpayment" [(ngModel)]="isAdhocPaymentSelected" [disabled]="!isMembershipSelected" 
+                        class="ng-untouched ng-pristine ng-valid">
+                    <label for="recuringpayment">Recurring Payments</label>
+                    <p class="wizard_items_p">All recurring payments will be added to this reward program. The
+                        earning criteria defined for memberships will automatically be applied to recurring payments
+                        too.
+                    </p>
+                </div> -->
+                <div class="checkbox checkbox-success  ml-40">
+                    <input type="checkbox" name="adhocPayment" id="adhocPayment"
+                        class="ng-untouched ng-pristine ng-valid" [(ngModel)]="rewardProgram.IsAhdhocMembershipPayment" [disabled]="!isMembershipSelected">
+                    <label for="adhocPayment">Ad-hoc Payments</label>
+                    <p class="wizard_items_p">All ad-hoc membership payments will be added to this reward program.
+                        The earning criteria defined for memberships will automatically be applied to ad-hoc
+                        payments too.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12">
+            </div>
+        </div>
+    </div>
+        </div>
+        </form>
+    </mat-step>
+
+            <!-- //activity area -->
+
+    <mat-step>
+        <ng-template matStepLabel>Reward Activities</ng-template>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="alert alert-danger" *ngIf="RewardProgramActivitesForm.invalid">
+                    {{messages.Validation.Info_Required}}
+                </div>
+            </div>
+        </div>
+        <form #RewardProgramActivitesForm="ngForm" novalidate>
+        <div class="white_bg">
+            <div class="row wizard_items column_flex_alignment">
+                <div class="col-md-5">
+                    <h3>Reward Activities</h3>
+                    <p>Add variety to your reward program by allowing customers to earn points through different
+                        activities.</p>
+                </div>
+                <div class="col-md-7">
+                </div>
+                <div class="col-md-12">
+                    <div class="form_border"></div>
+                </div>
+            </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input type="checkbox" name="customer_birthday" id="customer_birthday" [(ngModel)]="isCustomerBirthdaySelected"
+                                (change)="onCustomerBirthdaySelect()" class="ng-untouched ng-pristine ng-valid">
+                            <label for="customer_birthday"> Customer Birthday </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <h5 class="field_label">Member Earned Points</h5>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isCustomerBirthdaySelected" 
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="customerBirthdayActivityRule.MemberEarnedPoints" [(ngModel)]="customerBirthdayActivityRule.MemberEarnedPoints" [disabled]="!isCustomerBirthdaySelected">
+                        </div>
+                        <div>
+                            <h5 class="field_label">Client Earned Points</h5>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isCustomerBirthdaySelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="customerBirthdayActivityRule.ClientEarnedPoints" [(ngModel)]="customerBirthdayActivityRule.ClientEarnedPoints" [disabled]="!isCustomerBirthdaySelected">
+                        </div>
+                        <div>
+                            <h5 class="field_label">Lead Earned Points</h5>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isCustomerBirthdaySelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="customerBirthdayActivityRule.LeadEarnedPoints" [(ngModel)]="customerBirthdayActivityRule.LeadEarnedPoints" [disabled]="!isCustomerBirthdaySelected">
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input tabindex="20" type="checkbox" name="rewardprogramoptin" id="rewardprogramoptin" [(ngModel)]="isRewardProgramOptinSelected"
+                            (change)="onRewardProgramOptinSelect()"   class="ng-untouched ng-pristine ng-valid">
+                            <label for="rewardprogramoptin"> Reward Program Opt-In </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isRewardProgramOptinSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="rewardprogramoptinActivityRule.MemberEarnedPoints " [(ngModel)]="rewardprogramoptinActivityRule.MemberEarnedPoints" [disabled]="!isRewardProgramOptinSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isRewardProgramOptinSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                             numberControl min="0" maxlength="6" name="rewardprogramoptinActivityRule.ClientEarnedPoints" [(ngModel)]="rewardprogramoptinActivityRule.ClientEarnedPoints" [disabled]="!isRewardProgramOptinSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isRewardProgramOptinSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="rewardprogramoptinActivityRule.LeadEarnedPoints" [(ngModel)]="rewardprogramoptinActivityRule.LeadEarnedPoints" [disabled]="!isRewardProgramOptinSelected">
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input type="checkbox" name="WidgedAppBookings" id="WidgedAppBookings" [(ngModel)]="isWidgetAndAppBookingSelected"
+                            (change)="onWidgetAndAppSelect()"   class="ng-untouched ng-pristine ng-valid">
+                            <label for="WidgedAppBookings"> Widget & App Bookings </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isWidgetAndAppBookingSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                             numberControl min="0" maxlength="6" name="widgetAndAppBookingActivityRule.MemberEarnedPoints" [(ngModel)]="widgetAndAppBookingActivityRule.MemberEarnedPoints" [disabled]="!isWidgetAndAppBookingSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isWidgetAndAppBookingSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                             numberControl min="0" maxlength="6" name="widgetAndAppBookingActivityRule.ClientEarnedPoints" [(ngModel)]="widgetAndAppBookingActivityRule.ClientEarnedPoints" [disabled]="!isWidgetAndAppBookingSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isWidgetAndAppBookingSelected" 
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" 
+                             numberControl min="0" maxlength="6" name="widgetAndAppBookingActivityRule.LeadEarnedPoints" [(ngModel)]="widgetAndAppBookingActivityRule.LeadEarnedPoints" [disabled]="!isWidgetAndAppBookingSelected">
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input tabindex="20" type="checkbox" name="Referrals" id="Referrals" [(ngModel)]="isReferalSelected"
+                                class="ng-untouched ng-pristine ng-valid" (change)="onReferalSelect()">
+                            <label for="Referrals"> Referrals </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isReferalSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="referalActivityRule.MemberEarnedPoints" [(ngModel)]="referalActivityRule.MemberEarnedPoints" [disabled]="!isReferalSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isReferalSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="referalActivityRule.ClientEarnedPoints" [(ngModel)]="referalActivityRule.ClientEarnedPoints" [disabled]="!isReferalSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isReferalSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="referalActivityRule.LeadEarnedPoints" [(ngModel)]="referalActivityRule.LeadEarnedPoints" [disabled]="!isReferalSelected">
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input type="checkbox" name="NewCustomers" id="NewCustomers" [(ngModel)]="isNewCustomerSelected" 
+                            (change)="onNewCustomerSelect()" class="ng-untouched ng-pristine ng-valid">
+                            <label for="NewCustomers"> New Customers </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isNewCustomerSelected" 
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="customerActivityRule.MemberEarnedPoints" [(ngModel)]="customerActivityRule.MemberEarnedPoints" [disabled]="!isNewCustomerSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isNewCustomerSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="customerActivityRule.ClientEarnedPoints" [(ngModel)]="customerActivityRule.ClientEarnedPoints" [disabled]="!isNewCustomerSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isNewCustomerSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                            numberControl min="0" maxlength="6" name="customerActivityRule.LeadEarnedPoints" [(ngModel)]="customerActivityRule.LeadEarnedPoints" [disabled]="!isNewCustomerSelected">
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input tabindex="20" type="checkbox" name="MemberCheckIn" id="MemberCheckIn" [(ngModel)]="isMembershipCheckinSelected" 
+                            (change)="onMembershipCheckinSelect()" class="ng-untouched ng-pristine ng-valid">
+                            <label for="MemberCheckIn"> Member Check-In </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <input type="text" min="0" maxlength="6" [required]="isMembershipCheckinSelected"
+                             onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             name="memberCheckinActivityRule.MemberEarnedPoints" [disabled]="!isMembershipCheckinSelected" [(ngModel)]="memberCheckinActivityRule.MemberEarnedPoints">
+                        </div>
+                        <div>
+                        </div>
+            
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input tabindex="20" type="checkbox" name="ClassPresent" id="ClassPresent" [(ngModel)]="isClassPresentSelected" 
+                            (change)="onClassPresentSelect()" class="ng-untouched ng-pristine ng-valid">
+                            <label for="ClassPresent"> Class - Present </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isClassPresentSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="classPresentActivityRule.MemberEarnedPoints" [(ngModel)]="classPresentActivityRule.MemberEarnedPoints" [disabled]="!isClassPresentSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isClassPresentSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="classPresentActivityRule.ClientEarnedPoints" [(ngModel)]="classPresentActivityRule.ClientEarnedPoints" [disabled]="!isClassPresentSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isClassPresentSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="classPresentActivityRule.LeadEarnedPoints" [(ngModel)]="classPresentActivityRule.LeadEarnedPoints" [disabled]="!isClassPresentSelected">
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input tabindex="20" type="checkbox" name="ServiceCompleted" id="ServiceCompleted" [(ngModel)]="isServiceCompleteSelected"
+                            (change)="onServiceCompletedSelect()" class="ng-untouched ng-pristine ng-valid">
+                            <label for="ServiceCompleted"> Service - Completed</label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isServiceCompleteSelected"
+                             oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="serviceCompletedActivityRule.MemberEarnedPoints"  [(ngModel)]="serviceCompletedActivityRule.MemberEarnedPoints" [disabled]="!isServiceCompleteSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isServiceCompleteSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="serviceCompletedActivityRule.ClientEarnedPoints" [(ngModel)]="serviceCompletedActivityRule.ClientEarnedPoints" [disabled]="!isServiceCompleteSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isServiceCompleteSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="serviceCompletedActivityRule.LeadEarnedPoints " [(ngModel)]="serviceCompletedActivityRule.LeadEarnedPoints" [disabled]="!isServiceCompleteSelected">
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                </div>
+                <div class="row wizard_items column_flex_alignment">
+                    <div class="col-md-7">
+                        <div class="checkbox checkbox-success mt-0">
+                            <input tabindex="20" type="checkbox" name="Forms" id="Forms" class="ng-untouched ng-pristine ng-valid"
+                             [(ngModel)]="isFormSelected" (change)="onFormSelect()" > 
+                            <label for="Forms"> Forms <span *ngIf="formsExceptionCount?.length > 0" class="optional">| Exceptions ({{formsExceptionCount.length}} Form(s))</span> </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5 column_flex_alignment reward_points_blocks">
+                        <div style="margin-right: 12px !important;">
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isFormSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="formsActivityRule.MemberEarnedPoints" [(ngModel)]="formsActivityRule.MemberEarnedPoints" [disabled]="!isFormSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isFormSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="formsActivityRule.ClientEarnedPoints" [(ngModel)]="formsActivityRule.ClientEarnedPoints" [disabled]="!isFormSelected">
+                        </div>
+                        <div>
+                            <input type="text" onkeydown="if(event.key==='.'){event.preventDefault();}" [required]="isFormSelected"
+                            oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                             numberControl min="0" maxlength="6" name="formsActivityRule.LeadEarnedPoints" [(ngModel)]="formsActivityRule.LeadEarnedPoints" [disabled]="!isFormSelected">
+                        </div>
+                        <div class="text-right">
+                            <button class="exception_btn" (click)="openFormException()" [disabled]="!isFormSelected">Add Exception</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                   
+                </div>
+
+        </div>
+        </form>
+    </mat-step>
+</mat-horizontal-stepper>

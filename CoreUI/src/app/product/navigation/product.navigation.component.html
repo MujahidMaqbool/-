@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+          <li>
+              <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['categories']" role="tab">Categories</a>
+          </li>
+          <li>
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['brands']" role="tab">Brands</a>
+          </li>
+            <li>
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['suppliers']" role="tab">Suppliers</a>
+            </li>
+            <li>
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['attributes']" role="tab">Attributes</a>
+            </li>
+            <li>
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['products']" role="tab">Products</a>
+            </li>
+            <li>
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['purchase-order']" role="tab">Purchase Orders</a>
+            </li>
+
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

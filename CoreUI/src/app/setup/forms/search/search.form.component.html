@@ -1,0 +1,139 @@
+<div class="row">
+    <div class="col-md-12" *ngIf="allowedPages.saveForm">
+        <div class="company_btn float-right">
+            <button class="save" data-toggle="modal" [routerLink]="['../form/save', 0]">
+                Add Form
+            </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#form_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle">
+                    Search Filter
+                </h3>
+            </div>
+        </div>
+        <div id="form_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                </div>
+                <div class="row flex-end">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Form Name</h5>
+                        </div>
+                        <input type="text" [(ngModel)]="parentFormSearchParam.formName" class="form-control"
+                            tabindex="1" name="className">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Status</h5>
+                        </div>
+                        <div class="select_label">
+                            <select [(ngModel)]="parentFormSearchParam.isActive">
+                                <option *ngFor="let customForm of customFormStatus" [ngValue]="customForm.value">
+                                    {{customForm.text}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 offset-lg-3 offset-sm-6 col-md-4 col-sm-6 mt-3">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 padding_left xs-pr-0">
+                                <button class="reset_btn" (click)="onResetForm()" type="button"> Reset</button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 full_width_btn padding_right xs-pl-0">
+                                <button tabindex="4" (click)="onSearchForm()" class="search"
+                                    type="button">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>Form Name </h5>
+            </div>
+            <div class="col">
+                <h5>Date Created </h5>
+            </div>
+            <div class="col">
+                <h5>Mandatory Online</h5>
+            </div>
+            <div class="col">
+                <h5>Status</h5>
+            </div>
+            <div class="col col-md-2 text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="grid" *ngFor="let form of formsList">
+            <div class="row grid_rows responsive_grid_rows">
+                <div class="col">
+                    <h5> {{form?.FormName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{form?.CreatedOn | customdate: dateFormat }}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{form.IsMandatory? 'Yes': 'No' }}</h5>
+                </div>
+                <div class="col">
+                    <h5>
+                      {{form.IsActive? 'Active' : 'Inactive'}}</h5>
+                </div>
+                <div class="col col-md-2 text-center">
+                    <h5>
+                        <span class="blue">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)">
+                                <i class="fal fa-book-open" (click)="viewForm(form.FormID)"></i>
+                            </a>
+                        </span>
+                        <span class="blue">
+                            <a matTooltip="PDF" matTooltipPosition="above" (click)="openPDF(form.FormID)" matTooltipClass="custom-tooltip">
+                                <i class="fal fa-file-pdf"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="allowedPages.saveForm">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                [routerLink]="['../form/save', form.FormID]">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <span class="red_del" *ngIf="allowedPages.saveForm">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)">
+                                <i class="fal fa-trash-alt" (click)="deleteForm(form.FormID)"></i>
+                            </a>
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+
+</div>

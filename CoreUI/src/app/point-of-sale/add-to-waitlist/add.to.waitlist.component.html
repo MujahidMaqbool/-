@@ -1,0 +1,170 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup" *ngIf="isShowData">
+            <div class="popup_header">
+                <h4>Add to Waitlist</h4>
+            </div>
+            <div class="popup_content no_padding">
+                <div class="row service_detail">
+                    <div class="col-md-4 parallel_grid">
+                        <div class="service_white_bg pos_item waiting_icon zero_border">
+                            <div class="service_cart_info">
+                                <img src="{{service.ImagePath}}" class="img-responsive">
+                                <i *ngIf="service.IsBenefit || servicePackageDiscounted" class="fal fa-crown"></i>
+                                <div *ngIf="servicePackageDiscounted" class="off_dis">
+                                    {{servicePackageDiscount}}% Off</div>
+                                <div *ngIf="service.IsBenefit" class="off_dis">Free</div>
+                                <h3>{{service.Name}}</h3>
+                                <p>{{service.Description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding_left waiting_icon sm-pl-15 parallel_grid">
+                        <div class="service_white_bg pos-relative">
+                            <div class="row flex-end">
+                                <div class="col-md-6 pl-0">
+                                    <h5 class="field_label">Select Date</h5>
+                                    <date-picker [value]="serviceDate" [min]="minServiceDate" [showClear]="false"
+                                        [diabaledDays]="disabledDays" (onDateChange)="onServiceDateChange($event)"
+                                        #datePickerComp></date-picker>
+                                </div>
+                                <div class="col-md-6 pr-0">
+                                    <h5 class="field_label">Pick Desired Attendant</h5>
+                                    <div class="select_label">
+                                        <select [(ngModel)]="selectedStaff"
+                                            (ngModelChange)="onStaffChange(selectedStaff.StaffID)">
+                                            <option *ngFor="let staff of serviceStaffList" [ngValue]="staff">
+                                                <!-- <img src="{{staff.ImagePath}}" style="float: left; width: 33px; height: 33px"> -->
+                                                <span class="staff_name">{{staff.StaffFullName}}</span>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pl-0">
+                                    <h5 class="field_label">Select Appointment</h5>
+                                    <div class="select_label">
+                                        <select [(ngModel)]="selectedServicePackage"
+                                            (ngModelChange)="onServicePackageChange(selectedServicePackage)">
+                                            <option *ngFor="let servicePackage of service.ServicePackageList"
+                                                [ngValue]="servicePackage">
+                                                {{servicePackage.DurationValue + ' ' + servicePackage.DurationTypeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pr-0">
+                                    <h5 class="field_label">Pick Your Desired Time</h5>
+                                    <div [ngClass]="{
+                                        'has-danger': (timeBracketSelect.invalid || ((!timeBracketSelect.value) || timeBracketSelect.value.length == 0))
+                                                      && (timeBracketSelect.dirty || timeBracketSelect.touched)
+                                        }">
+                                        <div class="select_label">
+                                            <!-- <select [(ngModel)]="selectedTimeBracket" (ngModelChange)="onServiceBracketTimeChange(selectedTimeBracket.BranchWorkTimeBracketID)">
+                                            <option *ngFor="let timeBracket of waitListWorkTimeBrackets" [ngValue]="timeBracket">
+                                                {{timeBracket.BracketName}}
+                                            </option>
+                                        </select> -->
+
+                                            <mat-select class="form-control" name="TimeBrackets"
+                                                [(ngModel)]="selectedTimeBracket" multiple required
+                                                #timeBracketSelect="ngModel">
+                                                <mat-select-trigger
+                                                    *ngIf="selectedTimeBracket.length - 1 == waitListWorkTimeBrackets.length">
+                                                    {{anyTimeBracket.BracketName}}
+                                                </mat-select-trigger>
+                                                <mat-select-trigger
+                                                    *ngIf="selectedTimeBracket && selectedTimeBracket.length > 0 && selectedTimeBracket.length - 1 != waitListWorkTimeBrackets.length">
+                                                    {{selectedTimeBracket && selectedTimeBracket.length > 0 &&
+                                                    selectedTimeBracket[0].BracketName ?
+                                                    selectedTimeBracket[0].BracketName :
+                                                    selectedTimeBracket && selectedTimeBracket.length >= 2 &&
+                                                    selectedTimeBracket[0].BracketName == undefined ?
+                                                    selectedTimeBracket[1].BracketName : ''}}
+                                                    <span *ngIf="selectedTimeBracket && selectedTimeBracket.length >= 2"
+                                                        class="example-additional-selection">
+                                                        (+{{selectedTimeBracket[0].BracketName == undefined ?
+                                                        selectedTimeBracket.length - 2 :
+                                                        selectedTimeBracket.length - 1 }}
+                                                        {{selectedTimeBracket[0].BracketName == undefined &&
+                                                        selectedTimeBracket.length === 3 ? 'other' :
+                                                        selectedTimeBracket.length === 2 ? 'other' : 'others'}})
+                                                    </span>
+                                                </mat-select-trigger>
+                                                <span *ngIf="waitListWorkTimeBrackets">
+                                                    <mat-option #allSelectedTimeBracket
+                                                        (click)="toggleAllTimeBracketSelection()"
+                                                        [value]="anyTimeBracket">{{anyTimeBracket.BracketName}}
+                                                    </mat-option>
+                                                </span>
+                                                <mat-option *ngFor="let timeBracket of waitListWorkTimeBrackets"
+                                                    [value]="timeBracket" (click)="tosslePerOneTimeBracket()">
+                                                    {{timeBracket.BracketName}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 no_padding">
+                                    <h5 class="field_label">Notes</h5>
+                                    <textarea type="text" name="Notes" [(ngModel)]="note" rows="2" tabindex="5"
+                                        class="form-control" maxlength="200"></textarea>
+                                    <p class="error" *ngIf="isShowDateError">Waitlist is not available for selected date, please choose another date.
+                                    </p>
+                                    <p class="error" *ngIf="isTimeBracketError">Please select your desired time.
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="wait_list_btn">
+                                <button type="button" (click)="onAddToCartItem()"><i class="fal fa-user-clock"></i> Add
+                                    to Waitlist Request <i class="fal fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding_left sm-pl-15 parallel_grid">
+                        <div class="service_white_bg">
+                            <div class="row pos_cart_header">
+                                <div class="col-md-12">
+                                    <h5>Waitlist Request</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 no_padding">
+                                    <div class="waiting_item"
+                                        *ngFor="let cartItem of cartWaitListService; let i = index">
+                                        <div>
+                                            <p>{{cartItem.ServiceDate | customdate: longDateFormat}} -
+                                                {{cartItem.StaffFullName}}
+                                                <br>{{cartItem.ServiceDurationValue + ' ' +
+                                                cartItem.ServiceDurationTypeName}} -
+                                                {{cartItem.ServiceBranchWorkTimeBracketName}}
+                                                ({{cartItem.ServiceStartTimeForShow}} -
+                                                {{cartItem.ServiceEndTimeForShow}})
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:void(0)" (click)="onDeleteCartItem(i)"><i
+                                                    class="fal fa-trash-alt float-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" mat-button (click)="onClosePopup()">Cancel</button>
+                        <button class="save primary_blue_btn"
+                            [disabled]="!cartWaitListService || cartWaitListService.length == 0"
+                            (click)="onAddToWaitList()">Add to Waitlist</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

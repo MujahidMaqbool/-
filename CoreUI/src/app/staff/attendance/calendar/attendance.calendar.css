@@ -1,0 +1,129 @@
+.recourcesText h2{
+    font-size: 14px;
+    text-align: left;
+    margin: 3px 0 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 14px;
+}
+.recourcesText h3{
+    font-size: 11px;
+    text-align: left;
+    margin: 3px 0 0 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 14px;
+}
+::ng-deep .avatar {
+    width: 40px;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    height: 40px;
+}
+::ng-deep .dx-scheduler-appointment {
+    border-left: 0;
+    border-right: 0;
+}
+
+:host ::ng-deep [appointmenttemplate="attendance-template"] .today_green_btn {
+    padding-top: 0px;
+}
+:host ::ng-deep .today_green_btn .dx-button-content{
+    width: auto !important;
+    min-width:  auto;
+}
+/* 
+::ng-deep .dx-scheduler-cell-sizes-horizontal{
+    height: 50px;
+} */
+
+:host ::ng-deep .dx-scheduler-header-panel{
+    margin-top: 0px !important;
+}
+
+:host ::ng-deep .dx-scheduler-timeline .dx-scheduler-header-panel-cell:not(.dx-scheduler-header-panel-week-cell) {
+    width: 60px !important;
+}
+
+:host ::ng-deep .dx-scheduler-timeline.dx-scheduler-work-space-grouped[dx-group-column-count='1'] .dx-scheduler-sidebar-scrollable{
+    width: 180px !important;
+}
+
+:host ::ng-deep .dx-scheduler-timeline.dx-scheduler-work-space-grouped[dx-group-column-count='1'] .dx-scheduler-group-table, .dx-scheduler-timeline.dx-scheduler-work-space-grouped[dx-group-column-count='1'] .dx-scheduler-sidebar-scrollable, .dx-scheduler-timeline.dx-scheduler-work-space-grouped[dx-group-column-count='1'] .dx-scheduler-sidebar-scrollable:before{
+    width: 180px !important;
+}
+:host ::ng-deep .dx-scheduler-date-table .dx-scheduler-date-table-row:before{
+    width: 180px !important;
+}
+
+:host ::ng-deep .dx-scheduler-sidebar-scrollable:before {
+    width: 180px !important;
+}
+
+:host ::ng-deep .dx-scheduler-group-row:before, .dx-scheduler-header-row:before, .dx-scheduler-all-day-table-row:before{
+    width: 180px !important;
+}
+
+:host ::ng-deep .dx-scheduler-timeline.dx-scheduler-work-space-grouped[dx-group-column-count='1'] .dx-scheduler-date-table-scrollable, .dx-scheduler-timeline.dx-scheduler-work-space-grouped[dx-group-column-count='1'] .dx-scheduler-header-scrollable{
+    margin-left: 180px !important;
+}
+
+:host ::ng-deep .dx-scheduler-timeline.dx-scheduler-work-space-grouped[dx-group-column-count='1'] .dx-scheduler-header-scrollable{
+    margin-left: 180px !important;
+}
+
+::ng-deep .sch_ten_column [appointmenttemplate="attendance-template"] tr.dx-scheduler-header-row .dx-template-wrapper.ng-star-inserted {
+    padding-top: 14px !important;
+}
+:host ::ng-deep .dx-scheduler-work-space-grouped.dx-scheduler-timeline .dx-scheduler-last-group-cell{
+    border-right: 0px;    
+}
+/* :host ::ng-deep .dx-scheduler-cell-sizes-horizontal {
+        width: 200px !important;
+} */
+::ng-deep .dx-scheduler-timeline .dx-scheduler-date-table .dx-scheduler-date-table-cell{
+    height: 50px !important;
+    width: 60px;
+    cursor: pointer !important;
+}
+::ng-deep .dx-scheduler-timeline .dx-scheduler-date-table .dx-scheduler-date-table-row{
+    flex-grow: 0
+}
+::ng-deep .dx-scheduler-timeline .dx-scheduler-date-table tbody{
+    min-height: 50px;
+}
+:host ::ng-deep{
+    overflow: hidden;
+}
+.dx-scheduler-view-switcher.dx-tabs .dx-tab.dx-tab-selected {
+    border-radius: 4px !important;
+}
+.attendence_left_bar{
+    height: calc(100vh - 200px);
+    
+}
+.attendence_left_scroll{
+    max-height: calc(100vh - 455px); 
+    overflow: auto;
+}
+.staff_attendence_height{
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+}
+:host ::ng-deep .dx-scheduler-view-switcher.dx-tabs .dx-tab.dx-tab-selected:nth-child(1) {
+    border-radius: 4px;
+}
+.staff_shift_height{
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+}
+.staff_shift_height .avatar{
+    margin-right: 5px;
+}
+.resourcesHeader.dx-template-wrapper {
+    width: 100%;
+}

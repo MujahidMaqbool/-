@@ -1,0 +1,24 @@
+<div class="page_content">
+  <!-- <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button class="save" (click)="saveActivitiesColor()" [disabled]="disableSaveButton">
+          Save
+        </button>
+      </div>
+    </div>
+  </div> -->
+  <div class="white_bg">
+
+
+    <div class="row">
+      <div class="col-md-3 col-sm-6" *ngFor="let schActivityColor of schActivityColorList" [ngClass]="schActivityColor.showForSave == true?'':'disabled_block'">
+        <div *ngIf="schActivityColor.showForSave">
+          <h5 class="field_label">{{schActivityColor.SchedulerActivityTypeName}}</h5>
+          <dx-color-box [(value)]="schActivityColor.SchedulerActivityTypeColorFriendly" (onValueChanged)="setSaveButtonStatus()"></dx-color-box>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

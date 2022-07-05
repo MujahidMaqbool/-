@@ -1,0 +1,173 @@
+<div class="page_content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button *ngIf="isSaveTemplateAllowed" type="button" class="save" (click)="onAddTemplate()">
+          Add Template
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+        data-target="#template_search">
+        <div class="col-md-12">
+          <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+        </div>
+      </div>
+      <div id="template_search" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Template Title</h5>
+              <input type="text" class="form-control" name="TemplateTextTitle"
+                [(ngModel)]="templateSearchParameter.TemplateTextTitle">
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Module</h5>
+              <div class="select_label">
+                <select class="form-control" name="Module" [(ngModel)]="templateSearchParameter.ModuleID">
+                  <option *ngFor="let templatemoduleObj of moduleList" [ngValue]="templatemoduleObj.ModuleID">
+                    {{templatemoduleObj.ModuleName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Template Type</h5>
+              <div class="select_label">
+                <select class="form-control" name="TemplateType" [(ngModel)]="templateSearchParameter.TemplateTypeID">
+                  <option *ngFor="let templatetypeObj of templateTypeList" [ngValue]="templatetypeObj.TemplateTypeID">
+                    {{templatetypeObj.TemplateTypeName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Status</h5>
+              <div class="select_label">
+                <select class="form-control" name="IsActive" [(ngModel)]="templateSearchParameter.IsActive">
+                  <option *ngFor="let statusObj of statusList" [ngValue]="statusObj.StatusID">
+                    {{statusObj.StatusName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="offset-lg-9 offset-md-6 col-lg-3 col-md-6 space no_padding">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <button class="reset_btn" type="button" (click)="resetTemplateSearch()">
+                    Reset</button>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="full_width_btn ">
+                    <button type="button" class="search" (click)="templatefSearch()">Search</button>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grids_white_bg">
+    <div class="overflow-auto">
+    <div class="row grid_header responsive_grid_header">
+      <div class="col-md-3 col">
+        <h5>
+          <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+            Title
+            <i class="fal" [ngClass]="{
+                                            'hide': isTemplateTitile === undefined,
+                                            'fa-long-arrow-up show': isTemplateTitile,
+                                            'fa-long-arrow-down show': !isTemplateTitile }" aria-hidden="true"></i>
+          </a>
+        </h5>
+      </div>
+      <div class="col-md-3 col">
+        <h5>
+          <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
+            Module Name
+            <i class="fa float-right" [ngClass]="{
+                                                'hide': isPositionOrderASC === undefined,
+                                                'fa-long-arrow-up show':isPositionOrderASC,
+                                                'fa-long-arrow-down show':!isPositionOrderASC
+                                   }" aria-hidden="true">
+            </i>
+          </a>
+        </h5>
+      </div>
+      <div class="col-md-2 col">
+        <h5>Type </h5>
+      </div>
+      <div class="col-md-2 col text-center">
+        <h5>Status</h5>
+      </div>
+      <div class="col-md-2 col text-center">
+        <h5>Actions</h5>
+      </div>
+    </div>
+    <div id="grid" *ngIf="isDataExists">
+      <div class="row grid_rows responsive_grid_rows" *ngFor="let templateDataObj of templateGridObj">
+        <div class="col-md-3 col">
+          <h5>{{templateDataObj.TemplateTextTitle}}</h5>
+        </div>
+        <div class="col-md-3 col">
+          <h5>{{templateDataObj.ModuleName}}</h5>
+        </div>
+        <div class="col-md-2 col">
+          <h5>{{templateDataObj.TemplateTypeName}}</h5>
+        </div>
+        <div class="col-md-2 col text-center">
+          <h5>
+            {{templateDataObj.IsActive ? 'Active' : 'Inactive'}}
+          </h5>
+        </div>
+        <div class="col-md-2 col text-center">
+          <h5>
+            <span class="blue" *ngIf="isSaveTemplateAllowed">
+              <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                (click)="onEditTemplate(templateDataObj.TemplateTextID,templateDataObj.ModuleID,templateDataObj.TemplateTypeID)"
+                href="javascript:void(0);">
+                <i class="fal fa-edit"></i>
+              </a>
+            </span>
+            <span class="red_del" *ngIf="isSaveTemplateAllowed">
+              <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                (click)="deleteTemplate(templateDataObj.TemplateTextID,templateDataObj.ModuleID,templateDataObj.TemplateTypeID)"
+                href="javascript:void(0)">
+                <i class="fal fa-trash-alt"></i>
+              </a>
+            </span>
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isDataExists">
+      <div class="row grid_rows">
+        <div class="col-md-12 col-sm-12 text-center">
+          <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+        </div>
+      </div>
+    </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+  </div>
+</div>

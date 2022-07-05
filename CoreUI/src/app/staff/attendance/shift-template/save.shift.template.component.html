@@ -1,0 +1,97 @@
+<div aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg">
+        <div class="medium_popup">
+            <div class="popup_header">
+                <h4>{{pageTitle}}</h4>
+                <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" mat-button (click)="onClosePopup()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+            </div>
+            <form #shiftTemplateForm="ngForm" (ngSubmit)="saveShiftTemplate(shiftTemplateForm.valid)" novalidate>
+                <div class="popup_content">
+                    <div class="popup_white_bg">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="alert alert-danger" *ngIf="shiftTemplateForm.submitted && (shiftTemplateForm.invalid || !isEndTimeValid)">
+                                    <div *ngIf="!isEndTimeValid">
+                                        {{messages.Validation.Endtime_Should_Greater_Than_Start_Time}}
+                                    </div>
+                                    <div *ngIf="UnpaidBreak?.errors?.required">
+                                        {{messages.Validation.Info_Required}}
+                                    </div>
+                                    <div *ngIf="UnpaidBreak?.errors?.pattern ">
+                                        {{messages.Validation.Unpaid_Break}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <h5 class="form_label">Start Time</h5>
+                                <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat" (onValueChanged)="onShiftTemplateTimeStart($event)"
+                                    [(value)]="schedulerStartTime" [useMaskBehavior]="true" tabindex="1">
+                                </dx-date-box>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div [ngClass]="{
+                                    'has-danger': !isEndTimeValid && shiftTemplateForm.submitted,
+                                    'has-success': isEndTimeValid && shiftTemplateForm.submitted
+                                }">
+                                    <h5 class="form_label">End Time</h5>
+                                    <dx-date-box class="full_width form-control" type="time" [displayFormat]="schedulerTimeFormat" (onValueChanged)="onShiftTemplateTimeEnd($event)"
+                                        [(value)]="schedulerEndTime" [useMaskBehavior]="true" tabindex="2">
+                                    </dx-date-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div [ngClass]="{
+                                    'has-danger': UnpaidBreak.invalid && (UnpaidBreak.dirty || UnpaidBreak.touched || shiftTemplateForm.submitted),
+                                    'has-success': UnpaidBreak.valid && (UnpaidBreak.dirty || UnpaidBreak.touched ) }">
+                                    <div class="field_label">
+                                        <h5>Unpaid Break <span>(In Minutes)</span></h5>
+                                    </div>
+                                    <input type="text" name="UnpaidBreak" [(ngModel)]="shiftTemplate.UnpaidBreak" class="form-control"
+                                        #UnpaidBreak="ngModel" tabindex="3" pattern="[0-9]{1,4}" maxlength="4"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Staff Position</h5>
+                                </div>
+                                <div class="select_label">
+                                    <select [(ngModel)]="shiftTemplate.StaffPositionID" class="form-control" name="staffpositionname"
+                                        #staffpositionname="ngModel" tabindex="4" required>
+                                        <option *ngFor="let staffPosition of staffPositionList" [ngValue]="staffPosition.StaffPositionID">
+                                            {{staffPosition.StaffPositionName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="field_label">
+                                    <h5>Shift Notes <span style="font-weight: 400;
+                                        color: #95989A;
+                                        font-size: 13px;">(Remaining
+                                            Characters: {{ 250 -
+                                                shiftTemplate?.Description?.length }})</span></h5>
+                                </div>
+                                <textarea type="text" maxlength="250" name="ShiftDescription" rows="3" tabindex="5"
+                                    [(ngModel)]="shiftTemplate.Description" #ShiftDescription="ngModel" maxlength="250"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row popup_footer">
+                        <div class="col-md-12 col-sm-12 no_padding">
+                            <div class="cancel_btn float-right">
+                                <button tabindex="6" type="button" mat-button (click)="onClosePopup()">Cancel</button>
+                                <button tabindex="7" class="save primary_blue_btn">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

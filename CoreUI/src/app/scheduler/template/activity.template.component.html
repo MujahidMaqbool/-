@@ -1,0 +1,119 @@
+<div *ngIf="!getTimeDifferenceInMinutes(singleActivityData.startDate | customdate:'shortTime', singleActivityData.endDate | customdate:'shortTime')">
+    <!-- donot show activityTypeText & DateTime in case of ShiftIntervals-->
+
+    <!-- Used in Month View only -->
+    <div *ngIf="currentView == schedulerStaticStrings.GetSchedulerStaticString.Month">
+        <!-- Font size small in case of Month Whatever the Time Difference is -->
+        <div class="sch_activity_container_15">
+           
+            <!-- Activity Icons -->
+
+            <span *ngIf="singleActivityData.recurrenceRule && singleActivityData.recurrenceRule != ''" class="dx-scheduler-appointment-recurrence-icon dx-icon-repeat"
+                [ngStyle]="{'background':  LightenColor(singleActivityData.SchedulerActivityTypeColor, 85)}"></span>
+            <!-- donot show time in case of ShiftIntervalList -->
+            <div class="sch_activity_time" *ngIf="!singleActivityData.disabled">
+                <label>{{(singleActivityData.startDate | customdate: schedulerTimeFormat) + ' - ' +
+                    (singleActivityData.endDate | customdate: schedulerTimeFormat)}}</label>
+            </div>
+            <div class="sch_icons">
+                <i class="fal fa-heartbeat" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Class"></i>
+                <i class="fal fa-tasks" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Task"></i>
+                <i class="fal fa-phone" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Call"></i>
+                <i class="fal fa-calendar-alt" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}"
+                    *ngIf="singleActivityData.ActivityType == schedulerOptions.Appointment"></i>
+                <i class="fal fa-spa" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Service"></i>
+                <i class="fal fa-user-clock" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}"
+                    *ngIf="singleActivityData.ActivityType == schedulerOptions.BlockTime"></i>
+            </div>
+        </div>
+    </div>
+    <!-- Donot use in Month View -->
+    <div *ngIf="currentView != schedulerStaticStrings.GetSchedulerStaticString.Month">
+        <!-- *ngIf="singleActivityData.ActivityType !== schedulerOptions.BlockTime"> -->
+        <div class="sch_activity_container">
+            <div>
+                <div class="sch_activity_text">
+                    {{singleActivityData.text}}
+                    <span *ngIf="singleActivityData.recurrenceRule && singleActivityData.recurrenceRule != ''" class="dx-scheduler-appointment-recurrence-icon dx-icon-repeat"
+                        [ngStyle]="{'background':  LightenColor(singleActivityData.SchedulerActivityTypeColor, 85)}"></span>
+                </div>
+                <!-- donot show time in case of ShiftIntervalList -->
+                <div class="sch_activity_time" *ngIf="showTimeInTemplate && !singleActivityData.disabled">
+                    <label>{{(singleActivityData.startDate | customdate: schedulerTimeFormat) + ' - ' +
+                        (singleActivityData.endDate | customdate: schedulerTimeFormat)}}</label>
+                </div>
+                <!-- donot show font in case of ShiftIntervalList -->
+                <div class="sch_activity_user" *ngIf="!singleActivityData.disabled">
+                    <i class="fal fa-user"></i>
+                    <label *ngIf="singleActivityData.ActivityType == schedulerOptions.Class">{{singleActivityData.StaffFullName}}</label>
+                    <label *ngIf="singleActivityData.ActivityType == schedulerOptions.Service">{{singleActivityData.CustomerName}}</label>
+                    <label *ngIf="singleActivityData.ActivityType !== schedulerOptions.Class && singleActivityData.ActivityType !== schedulerOptions.Service">{{singleActivityData.StaffFullName}}</label>
+                </div>
+            </div>
+            <!-- Fonts size not big in case of Month View -->
+            <div class="sch_activity_label">
+                <!-- Activity Icons -->
+               
+                <div class="sch_icons">
+                    <i class="fal fa-heartbeat" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}"
+                        *ngIf="singleActivityData.ActivityType == schedulerOptions.Class"></i>
+                    <i class="fal fa-tasks" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Task"></i>
+                    <i class="fal fa-phone" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Call"></i>
+                    <i class="fal fa-calendar-alt" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}"
+                        *ngIf="singleActivityData.ActivityType == schedulerOptions.Appointment"></i>
+                    <i class="fal fa-spa" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Service"></i>
+                    <i class="fal fa-user-clock" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}"
+                        *ngIf="singleActivityData.ActivityType == schedulerOptions.BlockTime"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- In case of paid services only //&& singleActivityData.SaleStatusTypeID === 2 -->
+    <span class="appointment_status" *ngIf="singleActivityData.SaleStatusTypeID">{{singleActivityData.SaleStatusTypeName}}</span>
+    <!-- In case of not-show/completed(attended) only-->
+    <span class="appointment_status" *ngIf="singleActivityData.BookingStatusTypeID">{{singleActivityData.BookingStatusTypeName}}</span>
+    <!-- In Case of Task Mark as Done-->
+    <span class="appointment_status" *ngIf="singleActivityData.MarkAsDone">Completed</span>
+</div>
+<div *ngIf="getTimeDifferenceInMinutes(singleActivityData.startDate | customdate:'shortTime', singleActivityData.endDate | customdate:'shortTime')">
+    <div class="sch_activity_container_15">
+
+        <!-- Used in Month View only -->
+        <div class="sch_activity_text" *ngIf="currentView == schedulerStaticStrings.GetSchedulerStaticString.Month">
+            <span *ngIf="singleActivityData.recurrenceRule && singleActivityData.recurrenceRule != ''" class="dx-scheduler-appointment-recurrence-icon dx-icon-repeat"
+                [ngStyle]="{'background':  LightenColor(singleActivityData.SchedulerActivityTypeColor, 85)}"></span>
+            <span *ngIf="showTimeInTemplate"> {{(singleActivityData.startDate | customdate: schedulerTimeFormat) + ' - ' +
+                (singleActivityData.endDate | customdate: schedulerTimeFormat)}}</span>
+        </div>
+
+        <!-- Donot use in Month View -->
+        <div class="sch_activity_text" *ngIf="currentView != schedulerStaticStrings.GetSchedulerStaticString.Month">
+            <span>{{singleActivityData.text}}</span>
+            <span *ngIf="singleActivityData.recurrenceRule && singleActivityData.recurrenceRule != ''" class="dx-scheduler-appointment-recurrence-icon dx-icon-repeat"
+                [ngStyle]="{'background':  LightenColor(singleActivityData.SchedulerActivityTypeColor, 85)}"></span>
+            <br>
+            <span *ngIf="showTimeInTemplate && !singleActivityData.disabled"> {{(singleActivityData.startDate | customdate:
+                schedulerTimeFormat) + ' - ' +
+                (singleActivityData.endDate | customdate: schedulerTimeFormat)}}</span>
+           
+        </div>
+        <!-- In case of paid services only -->
+        <span class="appointment_status" *ngIf="singleActivityData.SaleStatusTypeID && singleActivityData.SaleStatusTypeID === 2">{{singleActivityData.SaleStatusTypeName}}</span>
+        <!-- In case of not-show/completed(attended) only-->
+        <span class="appointment_status" *ngIf="singleActivityData.BookingStatusTypeID">{{singleActivityData.BookingStatusTypeName}}</span>
+        <!-- In Case of Task Mark as Done-->
+        <span class="appointment_status" *ngIf="singleActivityData.MarkAsDone">Completed</span>
+
+        <div class="sch_icons">
+           
+            <!-- Activity Icons -->
+            <i class="fal fa-heartbeat" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Class"></i>
+            <i class="fal fa-tasks" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Task"></i>
+            <i class="fal fa-phone" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Call"></i>
+            <i class="fal fa-calendar-alt" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Appointment"></i>
+            <i class="fal fa-spa" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.Service"></i>
+            <i class="fal fa-user-clock" [ngStyle]="{'color':  singleActivityData.SchedulerActivityTypeColor}" *ngIf="singleActivityData.ActivityType == schedulerOptions.BlockTime"></i>
+        </div>
+    </div>
+</div>

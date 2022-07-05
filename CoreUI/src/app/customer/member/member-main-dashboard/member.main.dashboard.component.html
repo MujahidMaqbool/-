@@ -1,0 +1,638 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg zero_margin">
+            <div class="dashboard_header">
+                <h3>Members Snapshot</h3>
+            </div>
+            <div class="small_space"></div>
+            <div class="row" *ngIf="isMemberSnapshotExists">
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item blue_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-users"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.TotalActiveMember}} </h2>
+                            <h6>Total Active Members</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-user-check"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.MoreThanFiftyTimes}}</h2>
+                            <h6>Members attended more than fifty times</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-user-plus"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.IncreasingFrequency}} <span
+                                    matTooltip="Compared to the previous 30 days, this is a list of members who have started using the branch more."
+                                    class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span>
+                            </h2>
+                            <h6>Members increasing attendence frequency</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-file-signature"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.ExpiredContractPeriod}} </h2>
+                            <h6>Members who have attended over the last seven days</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item blue_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-user-clock"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.TotalMemberships}} </h2>
+                            <h6>Membership started in the last seven days</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item red_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.NotAttended}} <span
+                                    matTooltip="There has been a significant decrease in the member's attendance to your branch over the last 2 months"
+                                    class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span></h2>
+                            <h6>Members on red alert</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item blue_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-bed"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.SleepingMembers}}<span
+                                    matTooltip="These member have not been into your branch for more than three months but they have an active membership."
+                                    class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span> </h2>
+                            <h6>Sleeping Members</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-recycle"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.MembershipRetention}}</h2>
+                            <h6>Members on fourteen day retention alert</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item red_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-credit-card"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.MissedPayment}}</h2>
+                            <h6>Members who have missed a payment</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item red_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fab fa-cc-mastercard"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.PrePayMembers}} </h2>
+                            <h6>Pre-pay membership expiring in 30 days</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Visits in Club
+                        <span
+                            matTooltip="Member visits are recorded by marking attendance from the member attendance check in."
+                            class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.VisitInClub)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <dx-chart id="chart" [dataSource]="memberClubVisits" *ngIf="ismembersClubVisitsExists" [valueAxis]="[
+                    {
+                        tickInterval: 1
+                    }]">
+                        <dxi-series *ngFor="let visit of clubVisits" [valueField]="visit.value" [name]="visit.name"
+                            color="#E97C82">
+                        </dxi-series>
+                        <dxo-common-series-settings argumentField="Date" value="Total" type="spline">
+                            <dxo-point hoverMode="allArgumentPoints"></dxo-point>
+                        </dxo-common-series-settings>
+                        <dxo-argument-axis [valueMarginsEnabled]="false" discreteAxisDivisionMode="crossLabels">
+                            <dxo-grid [visible]="true"></dxo-grid>
+                        </dxo-argument-axis>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="bottom">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="VisitInClubcustomizeTooltip">
+                        </dxo-tooltip>
+                    </dx-chart>
+
+
+                    <div *ngIf="!ismembersClubVisitsExists">
+                        <div class="row services">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Sales Revenue
+                    </h5>
+                </div>
+
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.MembersActivities)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+
+            </div>
+
+            <div class="row small_space">
+                <div class="col-md-3 col-sm-3">
+                    <div class="boder_box">
+                        <h4>
+                            Memberships
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel"
+                            [dataSource]="memberMemberShipBooking" *ngIf="ismemberShipBookingExists"
+                            [customizePoint]="memberMemberShipBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeMemberhipBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+                        <div>
+                            <div *ngIf="!ismemberShipBookingExists">
+                                <div class="row services">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="boder_box">
+                        <h4>
+                            Classes
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberBooking"
+                            *ngIf="ismemberBookingExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeClassesBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+                        <div>
+                            <div *ngIf="!ismemberBookingExists">
+                                <div class="row services">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col-md-3 col-sm-3" *ngIf="allowedPages.ServiceDashboard">
+                    <div class="boder_box">
+                        <h4>
+                            Services
+                        </h4>
+
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberServices"
+                            *ngIf="ismemberServicesExists" [customizePoint]="memberServicecustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeServicesLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeServicesBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+
+                        <div *ngIf="!ismemberServicesExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col-md-3 col-sm-3" *ngIf="allowedPages.ProductDashboard">
+                    <div class="boder_box">
+                        <h4>
+                            Products
+                        </h4>
+
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberProducts"
+                            *ngIf="ismemberProductsExists" [customizePoint]="memberProductcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeProductBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+
+                        <div *ngIf="!ismemberProductsExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-12 parallel_grid mob-parallel-off padding_right mob-pr-15">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-4 col-md-4 col-sm-3">
+                    <h5>
+                        Attendance
+                    </h5>
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-9">
+
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.Attendance)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <dx-chart id="chart" [dataSource]="memberAttendanceSummary" (onPointClick)="onPointClick($event)"
+                        *ngIf="ismembersAttendanceExists" [valueAxis]="[
+                        {
+                            tickInterval: 1
+                        }]">
+                        <dxi-series valueField="TotalAttendance" name="Attendance" color="#D8D5FF"></dxi-series>
+                        <dxo-common-series-settings argumentField="ClockInDate" type="bar" hoverMode="allArgumentPoints"
+                            selectionMode="allArgumentPoints">
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="attendancecustomizeTooltip">
+                        </dxo-tooltip>
+
+                    </dx-chart>
+
+                    <div *ngIf="!ismembersAttendanceExists">
+                        <div class="row services">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 parallel_grid mob-parallel-off" *ngIf="allowedPages.ProductDashboard">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-4 col-md-4 col-sm-3">
+                    <h5>
+                        Membership by Status
+                    </h5>
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-9">
+
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.MembersbyStatus)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+
+                    <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberByStatus"
+                        *ngIf="isMemberByStatusExists" [customizePoint]="memberByStatuscustomizePoint">
+                        <dxi-series argumentField="MembershipStatusTypeName" valueField="Total">
+                            <dxo-label [visible]="true">
+                                <dxo-connector [visible]="true"></dxo-connector>
+                            </dxo-label>
+                        </dxi-series>
+                        <dxo-legend horizontalAlignment="left" verticalAlignment="top"></dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip">
+                        </dxo-tooltip>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="MembershipbyStatuscustomizeTooltip">
+                        </dxo-tooltip>
+                    </dx-pie-chart>
+
+                    <div *ngIf="!isMemberByStatusExists">
+                        <div class="row services">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-md-12 col-sm-12" *ngIf="allowedPages.ServiceBookedAndAttendance">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-8">
+                    <h5>
+                        Services Booked & Completed
+                    </h5>
+                </div>
+                <div class="col-md-4">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.ServicesBookedandCompleted)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+
+            <div class="row space">
+                <div class="col-md-12 col-sm-12 space" *ngIf="isMemberServiceAndAttendanceExists">
+                    <dx-chart id="chart" [dataSource]="memberServiceAndAttendance" palette="Harmony Light" [valueAxis]="[
+                        {
+                            name: 'attendance',
+                            position: 'right',
+                            min : 0,
+                            tickInterval: 1
+                        }, {
+                                        name: 'services',
+                                        position: 'left',
+                                        showZero: true,
+                                        min : 0,
+                                        tickInterval: 1,
+                                        valueMarginsEnabled: false
+                                    }]">
+                        <dxo-argument-axis>
+                            <dxo-label overlappingBehavior="stagger"></dxo-label>
+                        </dxo-argument-axis>
+                        <dxo-tooltip [enabled]="true" [shared]="true">
+                        </dxo-tooltip>
+                        <dxo-common-series-settings argumentField="Date"> </dxo-common-series-settings>
+                        <dxi-series type="bar" valueField="TotalSaleService" axis="services" name="Booked" color="#BCD556">
+                        </dxi-series>
+                        <dxi-series type="spline" valueField="TotalAttendance" axis="attendance" name="Completed" color="#E97C82">
+                        </dxi-series>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                        <dxo-label [visible]="true" format="fixedPoint" [customizeText]="customizeProductLabel">
+                            <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                        </dxo-label>
+                    </dx-chart>
+                </div>
+
+                <div *ngIf="!isMemberServiceAndAttendanceExists">
+                    <div class="row services">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div> -->
+
+
+<div class="row" *ngIf="allowedPages.ServiceBookedAndAttendance">
+    <div class="col-md-12 col-sm-12">
+
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Services Booked Vs Service Completed
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.ServicesBookedandCompleted)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+
+                </div>
+
+            </div>
+            <div class="row small_space">
+                <div class="col-md-12 col-sm-12" *ngIf="isMemberServiceAndAttendanceExists">
+
+                    <dx-chart id="chart" [dataSource]="memberServiceAndAttendance" palette="Harmony Light" [valueAxis]="[{
+                name: 'TotalAttendance',
+                position: 'left',
+                min:0,
+                tickInterval: 2
+            }, {
+                name: 'TotalSaleService',
+                position: 'right',
+                showZero: true,
+                min:0,
+                tickInterval: 2,
+                valueMarginsEnabled: false
+            }]">
+                        <dxo-argument-axis>
+                            <dxo-label overlappingBehavior="stagger"></dxo-label>
+                        </dxo-argument-axis>
+                        <dxo-tooltip [enabled]="true" [shared]="true">
+                        </dxo-tooltip>
+                        <dxo-common-series-settings argumentField="Date">
+                        </dxo-common-series-settings>
+                        <dxi-series type="bar" valueField="TotalSaleService" name="Booked" color="#BCD556">
+                        </dxi-series>
+                        <dxi-series type="spline" valueField="TotalAttendance" name="Completed" color="#E97C82">
+                        </dxi-series>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                    </dx-chart>
+
+                    <!-- <dx-chart id="chart" [dataSource]="memberServiceAndAttendance" palette="Harmony Light" [valueAxis]="[
+            {
+                name: 'attendance',
+                position: 'right',
+                tickInterval: 1
+            }, {
+                            name: 'services',
+                            position: 'left',
+                            showZero: true,
+                            tickInterval: 1,
+                            valueMarginsEnabled: false
+                        }]">
+              <dxo-argument-axis>
+                <dxo-label overlappingBehavior="stagger"></dxo-label>
+              </dxo-argument-axis>
+              <dxo-tooltip [enabled]="true" [shared]="true">
+              </dxo-tooltip>
+              <dxo-common-series-settings argumentField="Date"> </dxo-common-series-settings>
+              <dxi-series type="bar" valueField="TotalSaleService" axis="services" name="Booked" color="#BCD556">
+              </dxi-series>
+              <dxi-series type="spline" valueField="TotalAttendance" axis="attendance" name="Completed" color="#E97C82">
+              </dxi-series>
+              <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+              </dxo-legend>
+            </dx-chart> -->
+                </div>
+            </div>
+
+            <div *ngIf="!isMemberServiceAndAttendanceExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-6 col-lg-4 col-md-3 col-sm-3">
+                    <h5>
+                        Membership Payments
+                    </h5>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
+                    <div class="select_label">
+                        <select  name="paymentStatus" [(ngModel)]="memberDashboardSearchParam.paymentStatusTypeID" (change)="onMemberPaymentDateChange()">
+                            <option *ngFor="let payment of PaymentStatusType" [value]="payment.value">{{payment.text}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.Payment)" #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div id="chart-demo">
+                        <dx-chart palette="Harmony Light" [dataSource]="memberPayment">
+
+                            <dxi-series valueField="Paid" argumentField="MonthNames" name="Paid" color="#BCD556">
+                            </dxi-series>
+                            <dxi-series valueField="Failed" argumentField="MonthNames" name="Failed" color="#FEBF05">
+                            </dxi-series>
+                            <dxi-series valueField="PendingBankSubmission" argumentField="MonthNames"
+                                name="Pending Bank Submission" color="#E97C82">
+                            </dxi-series>
+                            <!-- <dxi-series valueField="y65"  argumentField="country" name="Overdue"></dxi-series> -->
+                            <dxo-common-series-settings [type]="types[0]">
+                                <!-- <dxo-label [visible]="true" [format]="{type: 'decimal', precision: '0'}"></dxo-label>   -->
+                            </dxo-common-series-settings>
+                            <dxo-margin [bottom]="20"></dxo-margin>
+                            <dxo-argument-axis [valueMarginsEnabled]="false" type="discrete"></dxo-argument-axis>
+                            <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                            </dxo-legend>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="memberPaymentcustomizeTooltip">
+                            </dxo-tooltip>
+
+                        </dx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="scheduler_space"></div>

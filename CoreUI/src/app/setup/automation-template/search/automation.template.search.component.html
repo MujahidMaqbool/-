@@ -1,0 +1,201 @@
+<div class="page_content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button type="button" *ngIf="isSaveTemplateAllowed" class="save" (click)="openSaveTemplateDialog(0)">
+          Add Automation Template
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+        data-target="#template_search">
+        <div class="col-md-12">
+          <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+        </div>
+      </div>
+      <div id="template_search" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+          </div>
+          <div class="row flex-end">
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Trigger Category</h5>
+              <div class="select_label">
+                <select class="form-control" name="eventCategory"
+                  [(ngModel)]="searchAutomationTemplate.EventCategoryTypeID">
+                  <option *ngFor="let eventCategory of triggerCategoryList"
+                    [ngValue]="eventCategory.EventCategoryTypeID">
+                    {{eventCategory.EventCategoryTypeName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Contact Type</h5>
+              <div class="select_label">
+                <select class="form-control" name="audience" [(ngModel)]="searchAutomationTemplate.IsCustomer">
+                  <option [ngValue]="null" required> All </option>
+                  <option [ngValue]="true" required> Customer </option>
+                  <option [ngValue]="false" required> Staff </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Template Type</h5>
+              <div class="select_label">
+                <select class="form-control" name="communication"
+                  [(ngModel)]="searchAutomationTemplate.CommunicationTypeID">
+                  <option *ngFor="let communication of templateTypeList" [ngValue]="communication.CommunicationTypeID">
+                    {{communication.CommunicationTypeName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Template Title</h5>
+              <input type="text" class="form-control" [(ngModel)]="searchAutomationTemplate.TemplateTextTitle"
+                (blur)="onTitleUpdated()" name="TemplateTextTitle">
+            </div>
+            <!-- Added below param by Asim on 14/09/2021 -->
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Template Category</h5>
+              <div class="select_label">
+                <select class="form-control" name="templateCategory" [(ngModel)]="searchAutomationTemplate.IsFixed">
+                  <option [ngValue]="null" required> All </option>
+                  <option [ngValue]="true" required> Default </option>
+                  <option [ngValue]="false" required> Customized </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <h5 class="field_label">Status</h5>
+              <div class="select_label">
+                <select class="form-control" name="IsActive" [(ngModel)]="searchAutomationTemplate.IsActive">
+                  <option *ngFor="let statusObj of statusTypeList" [ngValue]="statusObj.StatusID">
+                    {{statusObj.StatusName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="offset-lg-3 offset-md-3 col-sm-6 col-lg-3 col-md-6 no_padding mt-2">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <button class="reset_btn" type="button" (click)="resetForm()">
+                    Reset</button>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="full_width_btn ">
+                    <button type="button" class="search" (click)="onSearchform()">Search</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grids_white_bg">
+    <div class="overflow-auto">
+      <div class="row grid_header responsive_grid_header">
+        <div class="col">
+          <h5>
+            Trigger Category
+          </h5>
+        </div>
+        <div class="col">
+          <h5>
+            Trigger
+          </h5>
+        </div>
+        <div class="col">
+          <h5>Contact Type </h5>
+        </div>
+        <div class="col">
+          <h5>Template Type</h5>
+        </div>
+        <div class="col">
+          <h5>Title</h5>
+        </div>
+        <div class="col">
+          <h5>Template Category</h5>
+        </div>
+        <div class="col">
+          <h5>Status</h5>
+        </div>
+        <div class="col">
+          <h5>Actions</h5>
+        </div>
+      </div>
+      <div id="grid" *ngIf="isDataExists">
+        <div class="row grid_rows responsive_grid_rows" *ngFor="let template of templateList">
+          <div class="col">
+            <h5>{{template.EventCategoryTypeName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{template.EventTypeName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{template.AudienceTypeName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{template.CommunicationTypeName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{template.TemplateTextTitle}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{template.TemplateCategory}}</h5>
+          </div>
+          <div class="col">
+            <h5>
+              {{template.IsActive ? 'Active' : 'Inactive'}}
+            </h5>
+          </div>
+          <div class="col">
+            <h5>
+              <span class="blue">
+                <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="onOpenDialog(template.TemplateTextID)" href="javascript:void(0);">
+                   <i class="fal fa-book-open"></i>
+                </a>
+              </span>
+              <span class="blue" *ngIf="isSaveTemplateAllowed">
+                <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="openSaveTemplateDialog(template.TemplateTextID, false)" href="javascript:void(0);">
+                  <i class="fal fa-edit"></i>
+                </a>
+              </span>
+              <span class="red_del" *ngIf="isSaveTemplateAllowed && template.IsFixed === false">
+                <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="deleteAutomationTemplate(template.TemplateTextID)" href="javascript:void(0)">
+                  <i class="fal fa-trash-alt"></i>
+                </a>
+              </span>
+              <span class="blue" *ngIf="isSaveTemplateAllowed">
+                <a matTooltip="Copy Template" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="openSaveTemplateDialog(template.TemplateTextID, true)" href="javascript:void(0);">
+                  <i class="fal fa-copy"></i>
+                </a>
+              </span>
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="row grid_rows" *ngIf="!isDataExists">
+        <div class="col-md-12 col-sm-12 text-center">
+          <h5 class="no_record_found">No Records Found</h5>
+        </div>
+      </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+  </div>
+</div>

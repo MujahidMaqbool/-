@@ -1,0 +1,36 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>UAE Stripe Connect</h4>
+        </div>
+        <form #connectStripeForm="ngForm">
+            <div class="popup_content">
+                <div class="space-15"></div>
+                <div class="row popup_white_bg top_zero">
+                    <div class="col-md-12">
+                        <h5 class="field_label top_zero">Email</h5>
+                        <div [ngClass]="{
+                            'has-danger': Email.invalid && (Email.dirty || Email.touched || connectStripeForm.submitted),
+                            'has-success': Email.valid && (Email.dirty || Email.touched )
+                        }">
+                            <input type="text" required class="form-control" name="Email" [(ngModel)]="connectStripeAccount.email"
+                                #Email="ngModel"
+                                pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                                maxlength="50" tabindex="1" />
+                        </div>
+                    </div>
+                </div>
+                <div class="space-15"></div>
+            </div>
+            <div class="row popup_footer top_zp">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right">
+                        <button (click)="onCancel()" type="button">Cancel</button>
+                        <button class="primary_blue_btn" [disabled]="connectStripeForm.invalid" (click)="onEmailSave()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>

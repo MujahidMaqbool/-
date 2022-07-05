@@ -1,0 +1,959 @@
+<!-- <div class="row vertical_right">
+  <div class="col-md-7 col-lg-5 col-xl-5">
+    <div class="company_btn text-right pos_actions">
+      <button *ngIf="isQueueInvoiceAllowed" class="save" (click)="onViewQueuedInvoices()">
+        <i class="fal fa-file-alt"></i> Retrieve Sale</button>
+      <button *ngIf="isQueueInvoiceAllowed" class="orange_btn" (click)="onQueueInvoice()">
+        <i class="fal fa-hourglass"></i> Park Sale</button>
+      <button class="red_btn" (click)="onCancelOrder()">
+        <i class="fal fa-times-circle"></i> Discard Sale</button>
+    </div>
+  </div>
+</div> -->
+
+<div class="my-3"></div>
+
+<!-- Top Main Navigation Starts-->
+<div class="row">
+  <div class=" col-lg-6 col-md-6 pr-md-0">
+    <div class="pos_product pos_height" [ngClass]="{'pos-membership-wrapper': isCustomerMembership}">
+      <mat-tab-group (selectedTabChange)="onTabChange($event)">
+        <mat-tab label="Products" *ngIf="isProductsAllowed">
+          <ng-template mat-tab-label>
+            <i class="fal fa-archive pr-2"></i>
+            <span>Products</span>
+          </ng-template>
+          <div *ngTemplateOutlet="products"></div>
+        </mat-tab>
+        <mat-tab label="Classes" *ngIf="isClassesAllowed">
+          <ng-template mat-tab-label>
+            <i class="fal fa-users-class pr-2"></i>
+            <span>Classes</span>
+          </ng-template>
+          <div *ngTemplateOutlet="classes"></div>
+        </mat-tab>
+        <mat-tab label="Services" *ngIf="isServicesAllowed">
+          <ng-template mat-tab-label>
+            <i class="fal fa-spa pr-2"></i>
+            <span>Services</span>
+          </ng-template>
+          <div *ngTemplateOutlet="services"></div>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="pos-membership-selection" *ngIf="isCustomerMembership">
+        <div class="field_label d-xl-none">
+          <h5>Membership</h5>
+        </div>
+        <div class="select_label">
+          <select class="form-control" [(ngModel)]="customerMembershipId" name="CustomerMembershipID"
+            (change)="onSelectCustomerMembership()">
+            <option *ngFor="let membership of customerMemberhsip" [ngValue]="membership.CustomerMembershipID">
+              {{membership.MembershipName}}
+            </option>
+            <option [value]="null">Apply No Membership</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class=" col-lg-6 col-md-6">
+    <div *ngTemplateOutlet="pos_cart"></div>
+  </div>
+</div>
+<!-- Top Main Navigation End-->
+
+
+<!-- Region Product-Area Starts-->
+<ng-template #products>
+  <div class="pos-search-category-bar">
+    <div class="row row-align-center" *ngIf="isShowSearchText">
+      <div class="col-xl-9 col-md-12 mb-md-0 mb-lg-1 d-md-flex align-items-center mob-full-col pr-xl-0">
+        <div class="col p-0">
+          <div class="grouped-icon">
+            <input type="text" #SearchInput placeholder="Search Products" (keydown.enter)="onSearchTextChange($event)"
+              [(ngModel)]="searchText" (ngModelChange)="onSearchProduct()" />
+            <i class="fal fa-search"></i>
+            <span *ngIf="searchText" (click)="onClearSearchText()" class="clear_client pos_clear_client"></span>
+          </div>
+        </div>
+        <div class="col col-lg-3 pr-0">
+          <div class="pos-category-tag" (click)="onSearchChange('Category')">
+            <i class="fal fa-th-list"></i>
+            <span>Categories</span>
+          </div>
+        </div>
+        <div class="col col-lg-3 pr-0">
+          <div class="pos-category-tag" (click)="onSearchChange('Brands')">
+            <i class="fal fa-th-list"></i>
+            <span>Brands</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-12 text-right" *ngIf="isBarCodeScannerAllowed">
+        <mat-slide-toggle class="wellyx-checked" [(checked)]="isBarCodeSearch" [(ngModel)]="isBarCodeSearch"
+          (ngModelChange)="onFocusSearchInput()" name="isBarCode">
+          Use barcode scanner
+        </mat-slide-toggle>
+
+        <!-- <div class="checkbox checkbox-success">
+        <input id="isBarCode" type="checkbox" [(ngModel)]="isBarCodeSearch" (click)="onFocusSearchInput()">
+        <label for="isBarCode">
+          Use barcode scanner
+        </label>
+      </div> -->
+      </div>
+    </div>
+
+    <!-- POS Category List -->
+    <div class="row row-align-center" *ngIf="isShowSearchBYCategory">
+      <div class="col-md-12">
+        <div class="pos-category-lists">
+          <div class="pos-category-icon" (click)="onSearchChange('')"><i class="fal fa-search"></i></div>
+          <mat-tab-group (selectedTabChange)="onSelectCategory($event)">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <span>All Items</span>
+              </ng-template>
+            </mat-tab>
+            <mat-tab *ngFor="let productCategory of productsCategoryList" label="{{productCategory.ProductCategoryID}}">
+              <ng-template mat-tab-label>
+                <span>{{productCategory.ProductCategoryName}}</span>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+    <div class="row row-align-center" *ngIf="isShowSearchBYBrand">
+      <div class="col-md-12">
+        <div class="pos-category-lists">
+          <div class="pos-category-icon" (click)="onSearchChange('')"><i class="fal fa-search"></i></div>
+          <mat-tab-group (selectedTabChange)="onSelectBrand($event)">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <span>All Items</span>
+              </ng-template>
+            </mat-tab>
+            <mat-tab *ngFor="let brand of brandList" label="{{brand.BrandID}}">
+              <ng-template mat-tab-label>
+                <span>{{brand.BrandName}}</span>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POS Products List -->
+  <div class="pos_items_height with-pagination cstm_scroll_bg" [ngClass]="{'pos_tab_items_height' :isShowSearchText }"
+    *ngIf="!isBarCodeSearch && hasProducts">
+    <div class="row">
+      <div *ngFor="let product of posProducts  ; index as i"
+        [ngClass]="posProducts.length > 0 ? 'col-xl-3 col-md-4 col-sm-6 pro-list-box mob-pro-box' : 'col-md-12'">
+        <div *ngIf="posProducts.length > 0; else noProductsFound" class="pos_item" role="button"
+          (click)="onProductAddToCart(product)">
+          <i *ngIf="product.IsMembershipBenefit && !product.IsConsumed && !product.IsBenefitsSuspended && product.RemainingSession != 0"
+            class="fal fa-crown"></i>
+          <div
+            *ngIf="product.ProductClassificationID == productClassificationType.Standard && product.IsMembershipBenefit && !product.IsConsumed && !product.IsFree && !product.IsBenefitsSuspended && product.RemainingSession != 0 &&  product.DiscountPercentage < 100"
+            class="off_dis">{{product.DiscountPercentage}}% Off</div>
+          <div
+            *ngIf="product.ProductClassificationID == productClassificationType.Standard && product.IsMembershipBenefit && !product.IsConsumed && (product.IsFree || product.DiscountPercentage == 100) && !product.IsBenefitsSuspended && product.RemainingSession != 0"
+            class="off_dis">Free</div>
+          <img src="{{product.ImagePath ? product.ServerImageAddress + product.ImagePath : productPlaceHolderImage}}" (error)="onErrorImage(i)" class="img-responsive" alt="logo">
+
+          <ng-container *ngIf="product.RestrictedCustomerTypeNames && isPurchaseRestrictionAllowed">
+            <div class="purchase-restriction">
+              <span [id]="'product'+i" (mouseenter)="toggleTooltipTemplate(product)"
+                (mouseleave)="toggleTooltipTemplate(product)"><i class="far fa-registered red-color pr-0"></i></span>
+              <dx-tooltip [target]="'#product'+i" position="right" [(visible)]="product.WithTooltipVisible"
+                [closeOnOutsideClick]="true">
+                <div class="restriction-tooltip-text">
+                  <h2>Purchase Restriction</h2>
+                  <p>Purchase is restricted. {{product.RestrictedCustomerTypeNames}} cannot purchase this item.</p>
+                </div>
+              </dx-tooltip>
+            </div>
+          </ng-container>
+          <!-- {{product.IsStockBelowThreshold && product.InventoryOverselling ?  (product?.CurrentStock)*-1 : product.IsStockBelowThreshold && !product.InventoryOverselling ? 0 : product?.CurrentStock}} -->
+          <h4 [ngClass]="{'variant-counter': product.Name}">
+            {{product.Name}} <span class="counter-box "
+              [ngClass]="{'box-alert':product.IsStockBelowThreshold || product.ReorderThreshold >= product?.CurrentStock}"
+              *ngIf="product.HasTrackInventory">{{product?.CurrentStock}}</span>
+          </h4>
+        </div>
+
+
+        <ng-template #noProductsFound>
+          <h5 class="no_record_found text-center">No Matching Products</h5>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- POS Barcode Products List -->
+  <div class="pos_items_height with-pagination cstm_scroll_bg" *ngIf="isBarCodeSearch && hasProducts" >
+    <div class="row">
+      <div *ngFor="let product of posProducts ; index as i"
+      [ngClass]="posProducts.length > 0 ? 'col-xl-3 col-md-4 col-sm-6 mob-pro-box' : 'col-md-12'">
+
+        <div  class="pos_item" (click)="onProductAddToCart(product)">
+          <i *ngIf="product.IsMembershipBenefit && !product.IsBenefitsSuspended && product.RemainingSession != 0"
+            class="fal fa-crown"></i>
+          <div
+            *ngIf="product.IsMembershipBenefit && !product.IsFree && !product.IsBenefitsSuspended && product.RemainingSession != 0 &&  product.DiscountPercentage < 100"
+            class="off_dis">{{product.DiscountPercentage}}% off</div>
+          <div
+            *ngIf="(product.IsFree || product.DiscountPercentage == 100) && !product.IsBenefitsSuspended && product.RemainingSession != 0"
+            class="off_dis">Free</div>
+         <img src="{{product.ImagePath ? product.ServerImageAddress + product.ImagePath : productPlaceHolderImage}}" (error)="onErrorImage(i)" class="img-responsive">
+
+          <ng-container *ngIf="product.RestrictedCustomerTypeNames && isPurchaseRestrictionAllowed">
+            <div class="purchase-restriction">
+              <span [id]="'product'+i" (mouseenter)="toggleTooltipTemplate(product)"
+                (mouseleave)="toggleTooltipTemplate(product)"><i class="far fa-registered red-color pr-0"></i></span>
+              <dx-tooltip [target]="'#product'+i" position="right" [(visible)]="product.WithTooltipVisible"
+                [closeOnOutsideClick]="true">
+                <div class="restriction-tooltip-text">
+                  <h2>Purchase Restriction</h2>
+                  <p>Purchase is restricted. {{product.RestrictedCustomerTypeNames}} cannot purchase this item.</p>
+                </div>
+              </dx-tooltip>
+            </div>
+          </ng-container>
+
+          <h4 [ngClass]="{'variant-counter': product.Name}">
+            {{product.Name}} <span class="counter-box " [ngClass]="{'box-alert':product.IsStockBelowThreshold || product.ReorderThreshold >= product?.CurrentStock}"
+              *ngIf="product.HasTrackInventory">{{product?.CurrentStock}}</span>
+          </h4>
+          <!-- <p>{{product.Description}}</p>
+                      <h5>{{product.Price | currency: currencySymbol}}</h5> -->
+        </div>
+        <ng-template #noProductsFound>
+          <h5 class="no_record_found text-center">No Matching Products</h5>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pos_items_height with-pagination cstm_scroll_bg text-center" *ngIf="!hasProducts">
+    <div class="col-lg-12 col-md-12 no_record_found">{{messages.Generic_Messages.No_Record_Found}}</div>
+  </div>
+
+  <!-- POS Pagionation -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row align-items-center justify-content-end pos-item-pagination">
+        <div class="offset-xl-2 offset-lg-0 offset-md-0 col-xl-8 col-lg-8 col-md-8 pl-md-0">
+          <ul class="pagination" *ngIf="productCustomPager.pages && productCustomPager.pages.length">
+            <li class="page-item" [ngClass]="{'disabled':productCustomPager.currentPage === 1}">
+              <a class="page-link" aria-label="Previous" (click)="setPage(1)">
+                <span aria-hidden="true">&laquo;</span>
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous Last</span>
+              </a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled':productCustomPager.currentPage === 1}">
+              <a class="page-link" aria-label="Previous" (click)="setPage(productCustomPager.currentPage - 1)">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+
+            <li class="page-item d-flex align-items-center px-lg-3 px-md-2 px-2">
+              Page <span class="page-link active">{{productCustomPager.currentPage}}</span> of
+              {{productCustomPager.totalPages}}
+            </li>
+
+            <li class="page-item"
+              [ngClass]="{'disabled':productCustomPager.currentPage === productCustomPager.totalPages}">
+              <a class="page-link" aria-label="Next" (click)="setPage(productCustomPager.currentPage + 1)">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+            <li class="page-item"
+              [ngClass]="{'disabled':productCustomPager.currentPage === productCustomPager.totalPages}">
+              <a class="page-link" aria-label="Next" (click)="setPage(productCustomPager.totalPages)">
+                <span aria-hidden="true">&raquo;</span>
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next Last</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+        <div class="col-xl-2 col-lg-4 col-md-4 text-md-right text-center pr-md-0 pl-lg-0 pt-md-0 pt-2" *ngIf="productCustomPager.pages && productCustomPager.pages.length">
+          <p>
+            <span id="startDataPage">{{productCustomPager.currentRecord}}
+            </span>
+            - <span id="activeDataPage">
+              {{productCustomPager.lastTotalRecord}}
+            </span>
+            of <span id="totalData">{{totalRecord}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</ng-template>
+<!-- Region Product-Area End -->
+
+
+<!-- Region Class-Area Starts-->
+<ng-template #classes>
+  <div class="pos-search-category-bar">
+    <div class="row" *ngIf="isShowSearchText">
+      <div class="col-xl-3 col-lg-3 pr-lg-0 mb-md-0 mb-lg-1">
+        <date-picker [value]="classStartDate" [min]="minClassStartDate" [isPOSSearch]="true" [showClear]="false"
+          (onDateChange)="onClassStartDate($event)"></date-picker>
+      </div>
+      <div class="col-xl-8 col-lg-9">
+        <div class="row row-align-center mob-full-col">
+          <div class="col p-0">
+            <div class="grouped-icon">
+              <input type="text" placeholder="Search Classes" [(ngModel)]="searchText">
+              <i class="fal fa-search"></i>
+              <span *ngIf="searchText" (click)="onClearSearchText()" class="clear_client pos_clear_client"></span>
+            </div>
+          </div>
+          <div class="col col-md-4 pr-0">
+            <div class="pos-category-tag" (click)="onSearchChange('Category')">
+              <i class="fal fa-th-list"></i>
+              <span>Categories</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="row row-align-center" *ngIf="isShowSearchBYCategory">
+      <div class="col-md-12">
+        <div class="pos-category-lists">
+          <div class="pos-category-icon" (click)="onSearchChange('')"><i class="fal fa-search"></i></div>
+
+          <mat-tab-group (selectedTabChange)="onSelectCategory($event)">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <span>All Items</span>
+              </ng-template>
+            </mat-tab>
+            <mat-tab *ngFor="let classCategory of classesCategoryList" label="{{classCategory.ClassCategoryID}}">
+              <ng-template mat-tab-label>
+                <span>{{classCategory.ClassCategoryName}}</span>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <div class="row pos_items_height cstm_scroll_bg" [ngClass]="{'pos_tab_items_height' :isShowSearchText }"
+    *ngIf="hasClasses && activeTab == POS_ITEM_TYPE.Class">
+    <div class="col-lg-12 col-md-12" *ngFor="let classModel of posClasses; let occ=index">
+      <div class="overflow-auto">
+        <div class="mob-lg-scroll-grid">
+          <div class="row class_header">
+            <div class="col-md-12">
+              <p class="text-left">{{classModel.OccurrenceDate | customdate: dateFormat}} </p>
+            </div>
+          </div>
+          <div class="list_view_class"
+            *ngFor="let classItem of classModel.ClassPOSList | searchProductByName: searchText | searchClassByCategory: selectedCategory; let i=index">
+            <div class="row row_flex_alignment" *ngIf="classItem !== -1; else noClassFound">
+              <div class="col padding_right class_batch">
+                <i *ngIf="classItem.IsMembershipBenefit && !classItem.IsBenefitsSuspended  && classItem.RemainingSession != 0"
+                  class="fal fa-crown"></i>
+                <div
+                  *ngIf="classItem.IsMembershipBenefit && !classItem.IsFree && !classItem.IsBenefitsSuspended && classItem.RemainingSession != 0 && classItem.DiscountPercentage < 100"
+                  class="off_dis">{{classItem.DiscountPercentage}}% Off
+                </div>
+                <div
+                  *ngIf="classItem.IsMembershipBenefit && (classItem.IsFree || classItem.DiscountPercentage == 100) && !classItem.IsBenefitsSuspended && classItem.RemainingSession != 0"
+                  class="off_dis">Free
+                </div>
+                <img class="img-responsive" src="{{classItem.ImagePath}}" width="110" />
+
+                <ng-container *ngIf="classItem.RestrictedCustomerTypeNames && isPurchaseRestrictionAllowed">
+                  <div class="purchase-restriction">
+                    <span class="cursor-pointer" [id]="'classItem'+i+occ"
+                      (mouseenter)="toggleTooltipTemplate(classItem)" (mouseleave)="toggleTooltipTemplate(classItem)"><i
+                        class="far fa-registered red-color pr-0"></i></span>
+                    <dx-tooltip [target]="'#classItem'+i+occ" position="right"
+                      [(visible)]="classItem.WithTooltipVisible" [closeOnOutsideClick]="true">
+                      <div class="restriction-tooltip-text">
+                        <h2>Purchase Restriction</h2>
+                        <p>Purchase is restricted. {{classItem.RestrictedCustomerTypeNames}} cannot purchase this item.
+                        </p>
+                      </div>
+                    </dx-tooltip>
+                  </div>
+                </ng-container>
+
+              </div>
+              <div class="col padding_right">
+                <h5>{{classItem.Name}}</h5>
+
+              </div>
+              <div class="col padding_right">
+                <h5>
+                  <span class="flex_cls">
+                    <i class="fal fa-clock" aria-hidden="true"></i>
+                    {{classItem.StartTime | branchTimeFormat }} - {{classItem.EndTime | branchTimeFormat }}
+                  </span>
+                </h5>
+              </div>
+              <div class="col padding_right">
+                <h5>
+                  <span class="flex_cls">
+                    <i class="fal fa-building"></i>
+                    {{classItem.FacilityName ? classItem.FacilityName : 'N/A'}}</span>
+                </h5>
+              </div>
+              <div class="col padding_right">
+                <h5>
+                  <span class="flex_cls">
+                    <i class="fal fa-user" aria-hidden="true"></i>{{classItem.AssignedToStaffName}}</span>
+                </h5>
+              </div>
+              <div class="col padding_right text-center">
+                <h5>
+                  <span
+                    *ngIf="classItem.IsMembershipBenefit && !classItem.IsBenefitsSuspended && classItem.RemainingSession != 0"
+                    class="pos_price_mark">{{classItem.PricePerSession | currency: currencySymbol}}</span>
+                  <span class="actual_amout">{{classItem.ItemCurrentPrice | currency: currencySymbol}}</span>
+                  <!-- <span *ngIf="classItem.IsFree" class="free">Free</span> -->
+                </h5>
+              </div>
+              <div class="col no_padding text-center class_status_btn">
+                <button
+                  *ngIf="classItem.IsAvailable && !classItem.IsAddedToCart && !classItem.IsAlreadyBooked && !classItem.IsBookedAgain"
+                  [disabled]="disableClassBookingButton"
+                  (click)="onClassAddToCart(classItem, classModel.OccurrenceDate)">
+                  <!-- {{classItem.IsFree ? 'Book Class' : 'Add to Cart'}} -->
+                  Add to Cart
+                </button>
+                <span
+                  *ngIf="!classItem.IsAddedToCart && !classItem.IsAlreadyBooked && classItem.Status == classStatus.BookingNotStarted">
+                  <booking-start-timer [bookingStartTime]="classItem.BookingStartDateTime"
+                    (onBookingAvailable)="changeStatusToAvailable(classItem)"></booking-start-timer>
+                </span>
+                <!-- [disabled]="!classItem.IsFamilyAndFriendItem && selectedClient && !selectedClient.IsWalkedIn" -->
+                <button
+                  *ngIf="classItem.IsAvailable && classItem.IsAddedToCart && classItem.Status != classStatus.Full && !classItem.IsBookedAgain"
+                  [disabled]="!classItem.IsClassBookingForFamilyAndFriends || !selectedClient || selectedClient.IsWalkedIn"
+                  class="added_to_cart" (click)="onClassBookAgain(classItem, classModel.OccurrenceDate)">Added to
+                  Cart</button>
+                <button *ngIf="classItem.IsAlreadyBooked && !classItem.IsBookedAgain && !classItem.IsShowWaitListButton"
+                  class="added_to_cart">
+                  Class Booked </button>
+                <button *ngIf="classItem.IsBookedAgain" class="added_to_cart"
+                  (click)="onClassBookAgain(classItem, classModel.OccurrenceDate)">
+                  Book Again</button>
+                <!-- <button *ngIf="classItem.IsAvailable && classItem.IsAlreadyBooked" class="added_to_cart">
+                            Class Booked </button> -->
+                <!-- <button *ngIf="classItem.StatusName == classStatus.BookingNotStarted && classItem.IsAlreadyBooked" class="added_to_cart">
+                            Class Booked </button> -->
+                <button
+                  *ngIf="!classItem.IsAvailable && classItem.Status != classStatus.BookingNotStarted && !classItem.IsAlreadyBooked && !classItem.IsShowWaitListButton"
+                  class="class-status-text">
+                  {{classItem.StatusName}}
+                </button>
+                <button *ngIf="classItem.IsAddedToCart && classItem.IsShowWaitListButton"
+                  class="class-status-waitlist">Added to
+                  Waitlist</button>
+                <button *ngIf="!classItem.IsAddedToCart && classItem.IsShowWaitListButton" class="class-status-waitlist"
+                  (click)="onClassAddToCart(classItem, classModel.OccurrenceDate)">
+                  <span class="full">{{classItem.StatusName}}</span> Add to Waitlist
+                </button>
+              </div>
+            </div>
+            <ng-template #noClassFound>
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="no_record_found">No Matching Classes</h5>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pos_items_height cstm_scroll_bg text-center" *ngIf="!hasClasses">
+    <div class="col-lg-12 col-md-12">
+      <div class="no_record_found"> {{messages.Generic_Messages.No_Record_Found}} </div>
+    </div>
+  </div>
+</ng-template>
+<!-- Region Class-Area End -->
+
+
+<!-- Region Service-Area Starts-->
+<ng-template #services>
+
+  <div class="pos-search-category-bar">
+    <div class="row row-align-center" *ngIf="isShowSearchText">
+      <div class="col-xl-8 col-md-12 d-md-flex align-items-center mob-full-col">
+        <div class="col p-0">
+          <div class="grouped-icon">
+            <input type="text" placeholder="Search Services" [(ngModel)]="searchText">
+            <i class="fal fa-search"></i>
+            <span *ngIf="searchText" (click)="onClearSearchText()" class="clear_client pos_clear_client"></span>
+          </div>
+        </div>
+        <div class="col col-md-4 pr-0">
+          <div class="pos-category-tag" (click)="onSearchChange('Category')">
+            <i class="fal fa-th-list"></i>
+            <span>Categories</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-12"></div>
+    </div>
+
+    <div class="row row-align-center" *ngIf="isShowSearchBYCategory">
+      <div class="col-md-12">
+        <div class="pos-category-lists">
+          <div class="pos-category-icon" (click)="onSearchChange('')"><i class="fal fa-search"></i></div>
+
+          <mat-tab-group (selectedTabChange)="onSelectCategory($event)">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <span>All Items</span>
+              </ng-template>
+            </mat-tab>
+            <mat-tab *ngFor="let serviceCategory of servicesCategoryList" label={{serviceCategory.ServiceCategoryID}}>
+              <ng-template mat-tab-label>
+                <span>{{serviceCategory.ServiceCategoryName}}</span>
+              </ng-template>
+            </mat-tab>
+
+          </mat-tab-group>
+
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-md-6 pos_search">
+      <input type="text" class="pos_search" placeholder="Search Services" [(ngModel)]="searchText">
+      <i class="fal fa-search"></i>
+    </div>
+    <div class="col-md-6">
+
+    </div>
+  </div> -->
+  <div class="row pos_items_height cstm_scroll_bg" *ngIf="hasServices">
+    <div
+      *ngFor="let service of posServices | searchProductByName: searchText | searchServiceByCategory: selectedCategory; let i=index"
+      [ngClass]="service !== -1 ? 'col-md-3 col-sm-6 mob-pro-box' : 'col-md-12'">
+      <div class="pos_item" *ngIf="service !== -1; else noServicesFound">
+        <a role="button" (click)="onViewServiceDetail(service)">
+          <span *ngIf="service.IsAddedToCart && !service.IsAddedToWaitList" class="already_in_cart">Added to Cart</span>
+          <span *ngIf="service.IsAddedToCart && service.IsAddedToWaitList" class="already_in_cart">Added to
+            Waitlist</span>
+          <i *ngIf="service.IsMembershipBenefit && !service.IsBenefitsSuspended && !service.IsConsumed"
+            class="fal fa-crown"></i>
+          <!-- <div *ngIf="service.IsMembershipBenefit && !service.IsFree" class="off_dis">{{service.DiscountPercentage}}% off</div> -->
+          <!-- <div *ngIf="service.IsFree" class="off_dis">Free</div> -->
+          <img src="{{service.ImagePath}}" class="img-responsive">
+          <ng-container *ngIf="service.RestrictedCustomerTypeNames && isPurchaseRestrictionAllowed">
+            <div class="purchase-restriction">
+              <span [id]="'service'+i" (mouseenter)="toggleTooltipTemplate(service)"
+                (mouseleave)="toggleTooltipTemplate(service)"><i class="far fa-registered red-color pr-0"></i></span>
+              <dx-tooltip [target]="'#service'+i" position="right" [(visible)]="service.WithTooltipVisible"
+                [closeOnOutsideClick]="true">
+                <div class="restriction-tooltip-text">
+                  <h2>Purchase Restriction</h2>
+                  <p>Purchase is restricted. {{service.RestrictedCustomerTypeNames}} cannot purchase this item.</p>
+                </div>
+              </dx-tooltip>
+            </div>
+          </ng-container>
+
+          <h4>{{service.Name}}</h4>
+        </a>
+        <!-- <p class="pos_mem_label" *ngIf="service.IsMembershipBenefit">Membership Benefit</p> -->
+        <!-- <p>{{service.Description}}</p>
+                <h5>{{service.Price | currency: currencySymbol}}</h5> -->
+      </div>
+      <ng-template #noServicesFound>
+        <h5 class="no_record_found text-center">No Matching Services</h5>
+      </ng-template>
+    </div>
+
+
+
+  </div>
+  <div class="row pos_items_height cstm_scroll_bg text-center" *ngIf="!hasServices">
+    <div class="col-lg-12 col-md-12 text-center no_record_found">{{messages.Generic_Messages.No_Record_Found}}</div>
+  </div>
+</ng-template>
+<!-- Region Service-Area End-->
+
+<!-- Region POS-Cart-Area Starts-->
+<ng-template #pos_cart>
+  <div class="pos_product pos_height mob-mt-15">
+    <div class="row">
+      <div class="col-xl-10 col-md-9 pos_search">
+        <input class="pos_search" [value]="personName" type="text" placeholder="Search Customer" matInput
+          [formControl]="searchPerson" [matAutocomplete]="auto" maxlength="30">
+        <i class="fal fa-search"></i>
+        <span *ngIf="selectedClient" (click)="onCheckIsPaymentDataExist(1)" class="clear_client"></span>
+
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+          (optionSelected)='getSelectedClient($event.option.value)'>
+          <mat-option *ngFor="let client of clientList" [value]="client">
+            <i class="fal fa-user"></i>
+            <span class="client_name">{{ client.FullName }}</span>
+            <small class="client_type float-right">{{client.CustomerTypeName}}</small>
+            <br>
+            <span *ngIf='client.Mobile' class="client_info"><i class="fal fa-mobile"></i> {{ client.Mobile }}</span>
+            <br>
+            <span class="client_info"><i class="fal fa-envelope"></i> {{ client.Email }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+      <div *ngIf="isSaveClientAllowed" class="col-xl-2 col-md-3 pl-md-0">
+        <button class="pos_addclient_btn font-medium" (click)="onCheckIsPaymentDataExist(2)">
+          Add Client</button>
+      </div>
+    </div>
+    <div class="overflow-auto">
+      <div class="row pos_cart_header mob-scroll-grid">
+        <div class="col-md-4 col">
+          <h5>Item</h5>
+        </div>
+        <div class="col-md-3 col padding_left">
+          <h5>Quantity</h5>
+        </div>
+        <div class="col padding_left">
+          <h5>Per Unit</h5>
+        </div>
+        <div *ngIf="hasDiscountInPackage" class="col padding_left">
+          <h5>Discount</h5>
+        </div>
+        <div class="col padding_left">
+          <h5>Total</h5>
+        </div>
+      </div>
+      <div class="pos_payment cstm_scroll_bg mob-scroll-grid">
+        <div class="row pos_cart_row py-2" *ngFor="let cartItem of posCartItems; let ind=index">
+          <!-- <div class="col-md-1 cart_item">
+                    <p *ngIf="cartItem.ItemTypeID === posItemType.Product">P</p>
+                    <p *ngIf="cartItem.ItemTypeID === posItemType.Class" class="pos_class">C</p>
+                    <p *ngIf="cartItem.ItemTypeID === posItemType.Service" class="pos_service">S</p>
+                </div> -->
+          <div class="col-md-4 col">
+            <h5 class="font-bold">
+              <!-- <span *ngIf="cartItem.IsSessionConsumed" class="expired" style="display:table; margin-top: 3px;">Items
+                more than benefits</span> -->
+
+              {{cartItem.Name}}
+              <span class="pos-variant-name">{{cartItem.ItemVariantName}}</span>
+              <span *ngIf="cartItem.IsOutdated" class="expired">Outdated</span>
+              <span *ngIf="cartItem.FamilyAndFriendIsNotAvailable" class="expired">F&F booking not allowed</span>
+              <span *ngIf="cartItem.IsNotAvailable" class="expired">Not Available</span>
+              <span *ngIf="cartItem.IsItemOutOfStock" class="expired">Out of stock</span>
+
+              <!-- <span *ngIf="cartItem.IsOutdated" class="expired">Outdated</span> -->
+
+            </h5>
+            <!-- <p class="pos_mem_label" *ngIf="cartItem.DiscountType && !cartItem.IsWaitlistItem">{{cartItem.DiscountType}}
+            </p> -->
+            <ng-container *ngIf="cartItem.ItemTypeID === posItemType.Class">
+              <p><i class="far fa-calendar-alt"></i>{{cartItem.ClassStartDate | customdate: longDateFormat}}</p>
+              <p><i class="far fa-clock"></i>{{cartItem.ClassStartTime}} - {{cartItem.ClassEndTime}}</p>
+            </ng-container>
+            <ng-container *ngIf="cartItem.ItemTypeID === posItemType.Service">
+              <p><i class="far fa-calendar-alt"></i>{{cartItem.ServiceDate | customdate: longDateFormat}}</p>
+              <p><i class="far fa-clock"></i>
+                {{'2019-01-01T'+cartItem.ServiceStartTime | customdate: timeFormat}} -
+                {{'2019-01-01T'+cartItem.ServiceEndTime | customdate: timeFormat}}
+              </p>
+            </ng-container>
+            <p class="d-flex align-items-center pos_mem_label" *ngIf="cartItem.DiscountType">
+              <i *ngIf="cartItem.DiscountType != discountType.POSDiscount" class="far fa-crown"></i>
+              <span class="name_length pr-0">{{cartItem.DiscountType}}</span>&nbsp;
+              <i *ngIf="cartItem.DiscountType != discountType.POSDiscount"
+                class="far fa-times-circle red-color-cross pt-1"
+                (click)="onRemoveBenefitFromCartItem(cartItem,true)"></i>
+            </p>
+            <p *ngIf="cartItem.IsWaitlistItem">Added To Waitlist</p>
+          </div>
+          <div class="col-md-3 col padding_left">
+            <button type="button" [disabled]="(cartItem.IsQuantityDisabled || cartItem.Qty == 1)" class="btn qty_btn"
+              (click)="onUpdateQuantity(cartItem, 'minus')">
+              <i class="fal fa-minus-circle"></i>
+            </button>
+            <input type="text" class="" [ngClass]="{
+              'red_text' : cartItem.IsSessionConsumed
+            }" (keypress)="onkeyPress($event)" [disabled]="cartItem.IsQuantityDisabled" name="itemQty"
+              [(ngModel)]="cartItem.Qty" (ngModelChange)="onQuantityChange(cartItem)" min="1" readonly>
+            <button type="button" [disabled]="cartItem.IsQuantityDisabled" class="btn qty_btn"
+              (click)="onUpdateQuantity(cartItem, 'add')">
+              <i class="fal fa-plus-circle"></i>
+            </button>
+          </div>
+          <div class="col padding_left">
+            <h5>{{cartItem.PricePerSession | currency: currencySymbol}}</h5>
+          </div>
+          <div class="col padding_left pos-discount" *ngIf="hasDiscountInPackage && cartItem.ItemTypeID != posItemType.Class">
+            <span *ngIf="(!cartItem.IsFamilyAndFriendItem && cartItem.IsMembershipBenefit && (!cartItem.IsBenefitsSuspended && cartItem.RemainingSession != 0)
+                      || (cartItem.IsMembershipBenefit && cartItem.DiscountPercentage > 0 && !cartItem.IsBenefitsSuspended && cartItem.RemainingSession != 0 )
+                      || (cartItem.PricePerSession == 0))
+                      || (cartItem.IsFamilyAndFriendItem && cartItem.IsCartItemUseBenefit)">
+              {{cartItem.TotalDiscount | currency: currencySymbol}}
+            </span>
+            <span class="cursor dis_border" *ngIf="(!cartItem.IsMembershipBenefit && cartItem.PricePerSession != 0 )
+                      || ((cartItem.IsBenefitsSuspended || cartItem.RemainingSession == 0) && cartItem.PricePerSession != 0)
+                      || (cartItem.IsFamilyAndFriendItem && !cartItem.IsCartItemUseBenefit)"
+              (click)="onShowDiscountCalculator(cartItem, ind)">
+              {{cartItem.TotalDiscount | currency: currencySymbol}}
+            </span>
+          </div>
+          <div class="col padding_left pos-discount" *ngIf="hasDiscountInPackage && cartItem.ItemTypeID == posItemType.Class">
+            <span *ngIf="cartItem.IsCartItemUseBenefit || cartItem.PricePerSession == 0">
+              {{cartItem.TotalDiscount | currency: currencySymbol}}
+            </span>
+            <span class="cursor dis_border" *ngIf="!cartItem.IsCartItemUseBenefit && cartItem.PricePerSession != 0"
+              (click)="onShowDiscountCalculator(cartItem, ind)">
+              {{cartItem.TotalDiscount | currency: currencySymbol}}
+            </span>
+          </div>
+          <div class="col padding_left">
+            <h5 class="light-blue-color font-bold">{{cartItem.TotalAmountExcludeTaxForPOS | currency: currencySymbol}}
+            </h5>
+            <a role="button" (click)="onRemoveItemFromCart(cartItem)">
+              <i class="fal fa-trash-alt float-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <div *ngIf="showDiscountCalc">
+          <div *ngTemplateOutlet="calculator"></div>
+        </div>
+        <div *ngIf="showDiscountPin">
+          <div *ngTemplateOutlet="discountpin"></div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row payment_btn">
+      <div class="col-md-12 col-lg-12">
+        <div class="sales-subtotal">
+          <div class="row">
+            <div class="col">
+              <h5>Sub Total</h5>
+            </div>
+            <div class="col text-right">
+              <h5>{{grossAmount | currency: currencySymbol}}</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h5>Tax</h5>
+            </div>
+            <div class="col text-right">
+              <h5>{{taxAmount | currency: currencySymbol}}</h5>
+            </div>
+          </div>
+        </div>
+        <div class="sales-total pb-3">
+          <div class="row">
+            <div class="col">
+              <h5>Total Due: {{posCartItems.length}}
+                {{ posCartItems.length == 1 || posCartItems.length == 0  ? 'Item' : 'Items'}}</h5>
+            </div>
+            <div class="col text-right">
+              <h5>{{grossAmount + taxAmount | currency: currencySymbol}}</h5>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <!-- <div class="grand_total">
+          <h1>
+            <b class="semi_bold_font">Subtotal</b> &nbsp; {{grossAmount | currency: currencySymbol}}
+            <span class="float-right">
+              <b class="semi_bold_font">Tax</b> &nbsp; {{taxAmount | currency: currencySymbol}}
+            </span>
+          </h1>
+        </div> -->
+
+      </div>
+      <div class="col-md-12 col-lg-12 no_padding" style="background: #eee;
+            padding: 10px 0 0 !important;">
+        <div class="row">
+          <div class="col-lg-8 col-md-9 p-0">
+            <div class="company_btn pos_actions">
+              <button class="red_btn" (click)="onCheckIsPaymentDataExist(3)">
+                Discard Sale</button>
+              <button *ngIf="isQueueInvoiceAllowed" class="save" (click)="onViewQueuedInvoices()">
+                Retrieve Sale</button>
+              <button *ngIf="isQueueInvoiceAllowed" class="orange_btn" (click)="onQueueInvoice()">
+                Park Sale</button>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-3 pr-0 pl-md-2 sm-pl-0 mob-mt-15">
+            <button type="button" (click)="onPayment()">
+              Pay
+              <!-- <span class="items">{{posCartItems.length}} Items</span>
+            <span class="float-right">
+              <span class="semi_bold" style="margin-left: 10px">
+                {{grossAmount + taxAmount | currency: currencySymbol}}</span>
+            </span> -->
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- Region POS-Cart-Area End-->
+
+
+<!-- Region POS-Calculator-Area Starts-->
+<ng-template #calculator>
+  <div class="calculator pos_calculator" (clickOutside)="closeCalculator()">
+    <div class="popup_header mini-pop-header">
+      <h4 *ngIf="showDiscountCalc">Enter Discount</h4>
+    </div>
+    <div class="mini-pop-content">
+      <div class="row">
+        <div class="col-md-12 no_padding">
+          <input type="text" name="DiscountNumber" #DiscountNumber="ngModel" [(ngModel)]="calculatorResult"
+            maxlength="7" />
+          <!-- <button class="btn" style="width: 98%">{{calculatorResult}}</button> -->
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onCalculatorValueChange(calculatorValue.Seven)">{{calculatorValue.Seven}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onCalculatorValueChange(calculatorValue.Eight)">{{calculatorValue.Eight}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Nine)">{{calculatorValue.Nine}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Four)">{{calculatorValue.Four}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Five)">{{calculatorValue.Five}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Six)">{{calculatorValue.Six}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.One)">{{calculatorValue.One}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Two)">{{calculatorValue.Two}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onCalculatorValueChange(calculatorValue.Three)">{{calculatorValue.Three}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange('.')">.</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalculatorValueChange(calculatorValue.Zero)">{{calculatorValue.Zero}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onCalulatorValueReset()"><i class="far fa-redo"></i></button>
+        </div>
+        <div class="col-md-6 no_padding">
+          <button class="btn calculation_type" (click)="onCalculate(false)">{{currencySymbol}}</button>
+        </div>
+        <div class="col-md-6 no_padding" *ngIf="!showTipsCalculator">
+          <button class="btn calculation_type" (click)="onCalculate(true)">%</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- Region POS-Calculator-Area End-->
+
+
+<!-- Region POS-Discount-Pin-Area Starts-->
+<ng-template #discountpin>
+  <div class="calculator pos_calculator password-box" (clickOutside)="closeDiscountPin()">
+    <div class="popup_header mini-pop-header">
+      <h4>Enter Password</h4>
+    </div>
+    <div class="mini-pop-content">
+      <div class="row">
+        <div class="col-md-12 no_padding">
+          <input type="password" readonly name="Passwordpin" #Passwordpin="ngModel" [(ngModel)]="discountPinResult"
+            maxlength="10" />
+          <!-- <button class="btn" style="width: 98%">{{discountPinResult}}</button> -->
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onDiscountPinValueChange(calculatorValue.Seven)">{{calculatorValue.Seven}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onDiscountPinValueChange(calculatorValue.Eight)">{{calculatorValue.Eight}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Nine)">{{calculatorValue.Nine}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Four)">{{calculatorValue.Four}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Five)">{{calculatorValue.Five}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Six)">{{calculatorValue.Six}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.One)">{{calculatorValue.One}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Two)">{{calculatorValue.Two}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"
+            (click)="onDiscountPinValueChange(calculatorValue.Three)">{{calculatorValue.Three}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn"> </button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinValueChange(calculatorValue.Zero)">{{calculatorValue.Zero}}</button>
+        </div>
+        <div class="col-md-4 no_padding">
+          <button class="btn" (click)="onDiscountPinReset()"><i class="far fa-redo"></i></button>
+        </div>
+        <div class="col-md-6 no_padding">
+          <button class="btn font-size-medium" (click)="onDiscountPinCancel()">Cancel</button>
+        </div>
+        <div class="col-md-6 no_padding">
+          <button class="btn calculation_type font-size-medium" (click)="onDiscountPinVerify()">Enter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- Region POS-Discount-Pin-Area End-->

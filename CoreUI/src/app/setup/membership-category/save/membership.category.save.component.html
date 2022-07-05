@@ -1,0 +1,89 @@
+<div class="add_branch_pop" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content medium_popup">
+      <div class="popup_header">
+        <h4>{{pageTitle}}</h4>
+      </div>
+      <!-- start validation apply our Form-->
+      <form #membershipCategoryForm="ngForm" (ngSubmit)="saveMembershipCategory(membershipCategoryForm.valid)" novalidate>
+        <div class="popup_content">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                  <div class="alert alert-danger" *ngIf="membershipCategoryForm.invalid && membershipCategoryForm.submitted">
+                    <div *ngIf="name?.errors?.required">
+                      {{messages.Validation.Info_Required}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+          <div class="popup_white_bg py-2">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="sch_class_head p-0">
+                  <h5 class="field_label">Active</h5>
+                  <mat-slide-toggle tabindex="1" class="wellyx-checked" [(checked)]="membershipCategory.IsActive"
+                    [(ngModel)]="membershipCategory.IsActive" [disabled]="false" name="status">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="popup_white_bg">
+            <div class="row">
+              <div class="col-md-7 ">
+                <div [ngClass]="{
+                        'has-danger': name.invalid && (name.dirty || name.touched || membershipCategoryForm.submitted),
+                        'has-success': name.valid && (name.dirty || name.touched )
+                      }">
+                  <div class="field_label">
+                    <h5>Name</h5>
+                  </div>
+                  <input type="text" class="form-control" [(ngModel)]="membershipCategory.CategoryName"
+                    #name="ngModel" name="name" tabindex="2" maxlength="50" (blur)="onCategoryNameUpdated()" required>
+                </div>
+
+                <div class="field_label">
+                  <h5>Description &nbsp;<span>(Remaning Characters: {{250 - membershipCategory.Description.length}})</span></h5>
+                </div>
+                <textarea [(ngModel)]="membershipCategory.Description" rows="5" maxlength="250" tabindex="3"
+                  name="description">
+                                                      </textarea>
+
+              </div>
+
+              <div class="col-md-5 ">
+                <div *ngIf="!isImageExists" class="upload_image_box square_img" (click)="showImageCropperDialog()">
+                  <!-- <my-image-cropper [canvasHeight]="200" [canvasWidth]="250" [croppedHeight]="150" [croppedWidth]="150"
+                      (imageUrlChange)="onImageUrlChange($event)"></my-image-cropper> -->
+                  <i class="fal fa-cloud-upload"></i> <br>
+                  <button type="button" class="save">Upload Image</button>
+                </div>
+                <div *ngIf="isImageExists && (imagePath && imagePath != '')">
+                  <img class="img-responsive center-block" src="{{imagePath}}" alt="no image" />
+                  <div class="changeimg_btn square_img_action">
+                    <button type="button" (click)="showImageCropperDialog()"><i class="fal fa-pen"></i></button>
+                    <button class="delete_img" type="button" (click)="onDeleteImage()"
+                      *ngIf="membershipCategory.MembershipCategoryID && membershipCategory.ImagePath"><i
+                        class="fal fa-trash-alt"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row popup_footer">
+          <div class="col-md-12 col-sm-12">
+            <div class="cancel_btn float-right">
+              <button tabindex="4" type="button" mat-button (click)="onClosePopup()">Cancel</button>
+              <button tabindex="5" class="save primary_blue_btn"
+                [disabled]="(membershipCategoryForm.pristine)">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- End validation -->
+    </div>
+  </div>
+</div>

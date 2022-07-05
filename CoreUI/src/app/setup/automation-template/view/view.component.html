@@ -1,0 +1,64 @@
+<div class="view_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content">
+      <div class="popup_header">
+        <h4>Automation Template</h4>
+      </div>
+      <div class="popup_content cstm_scroll_bg">
+        <div class="readonly_content">
+          <div class="view_bg">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="section_title">
+                  <h4>Automation Information</h4>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="templateText" class="row">
+              <div class="col-md-3 col-sm-6">
+                <h6>Template Type</h6>
+                <p>{{templateText.CommunicationType}}</p>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <h6>Trigger Category</h6>
+                <p>{{templateText.TriggerCategory}}</p>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <h6>Trigger</h6>
+                <p>{{templateText.TriggerType}}</p>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <h6>Contact Type</h6>
+                <p>{{templateText.ContactType}}</p>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <h6>Title</h6>
+                <p>{{templateText.TemplateTextTitle}}</p>
+              </div>
+              <div class="col-md-3 col-sm-6" *ngIf="templateText.CommunicationTypeId != enu_CommunicationType.SMS">
+                <h6>Subject</h6>
+                <p>{{templateText.TemplateTextSubject}}</p>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <h6>Template Category</h6>
+                <p>{{templateText.TemplateType}}</p>
+              </div>
+              <div class="col-md-12 col-sm-12">
+                <h6>Description</h6>
+                <p [innerHTML]="templateText.TemplateTextDescription"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row popup_footer top_zp">
+        <div class="col-md-12">
+          <div class="cancel_btn float-right scroll_close">
+            <button type="button" (click)="onCloseDialog()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

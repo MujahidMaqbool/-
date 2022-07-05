@@ -1,0 +1,816 @@
+<form #branchForm="ngForm" (ngSubmit)="saveBranch(branchForm.valid, branchForm)" novalidate>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button class="simple_btn" type="button" role="navigation" [routerLink]="['/setup/branch']">
+          Back to Search
+        </button>
+        <button *ngIf="!branchForSave.isViewMode" [disabled]="(branchForm.pristine)"> Save</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div *ngTemplateOutlet="errormessage"></div>
+  <div class="white_bg">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section_title">
+          <h4>Branch Information</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col" [ngClass]="{
+                    'has-danger': BranchName.invalid && (BranchName.dirty || BranchName.touched || branchForm.submitted),
+                    'has-success': BranchName.valid && (BranchName.dirty || BranchName.touched )
+                  }">
+        <div class="field_label">
+          <h5>Branch Name </h5>
+        </div>
+        <input type="text" [(ngModel)]="branch.BranchName" [disabled]="branchForSave.isViewMode" class="form-control"
+          #BranchName="ngModel" name="BranchName" maxlength="80" tabindex="1" required>
+        <div class="form-control-feedback" *ngIf="BranchName.errors && (BranchName.dirty || BranchName.touched)">
+        </div>
+      </div>
+      <div class="col">
+        <div class="field_label">
+          <h5>Email <span>(optional)</span></h5>
+        </div>
+        <div [ngClass]="{
+                                      'has-danger': email.invalid && (email.dirty || email.touched || branchForm.submitted),
+                                      'has-success': email.valid && (email.dirty || email.touched ) }">
+          <input type="text" [(ngModel)]="branch.Email" class="form-control" name="email" #email="ngModel"
+            pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$" tabindex="4">
+          <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="field_label">
+          <h5>Phone</h5>
+        </div>
+        <div [ngClass]="{
+                                    'has-danger': phoneno.invalid && (phoneno.dirty || phoneno.touched || branchForm.submitted),
+                                    'has-success': phoneno.valid && (phoneno.dirty || phoneno.touched ) }">
+          <international-phone-number name="phoneno" [(ngModel)]="branch.Phone1" #phoneno="ngModel" tabindex="6"
+            maxlength="15" [required]="true"
+            [defaultCountry]="branch.Phone1 ? '' : defaultBranchCountry">
+          </international-phone-number>
+          <div class="form-control-feedback" *ngIf="phoneno.errors && (phoneno.dirty || phoneno.touched)">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="field_label">
+          <h5>Mobile <span>(optional)</span></h5>
+        </div>
+        <div [ngClass]="{
+                      'has-danger': Mobile.invalid && (Mobile.dirty || Mobile.touched || branchForm.submitted),
+                      'has-success': Mobile.valid && (Mobile.dirty || Mobile.touched )
+                                     }">
+          <international-phone-number name="Mobile" [(ngModel)]="branch.Mobile" #Mobile="ngModel" tabindex="7"
+            [defaultCountry]="branch.Mobile ? '' : defaultBranchCountry">
+          </international-phone-number>
+        </div>
+      </div>
+      <div class="col">
+        <div [ngClass]="{
+                      'has-danger': Fax.invalid && (Fax.dirty || Fax.touched || branchForm.submitted),
+                      'has-success': Fax.valid && (Fax.dirty || Fax.touched )
+                         }">
+          <div class="field_label">
+            <h5>Fax <span>(optional)</span></h5>
+          </div>
+          <international-phone-number name="Fax" [(ngModel)]="branch.Fax" #Fax="ngModel" tabindex="5" maxlength="15"
+            [defaultCountry]="branch.Fax ? '' : defaultBranchCountry">
+          </international-phone-number>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="white_bg">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section_title">
+          <h4>Branch Address</h4>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <div class="field_label top_zero">
+          <h5>Country</h5>
+        </div>
+        <div [ngClass]="{
+                          'has-danger': (countryName.invalid && (countryName.dirty || countryName.touched || branchForm.submitted)) || (branch.CountryID==0),
+                          'has-success': countryName.valid && (countryName.dirty || countryName.touched ) }">
+          <div class="select_label">
+            <select [(ngModel)]="branch.CountryID" class="form-control" name="countryName" #countryName="ngModel"
+              tabindex="8" disabled>
+              <option *ngFor="let country of countryList" [ngValue]="country.CountryID">
+                {{country.CountryName}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div [ngClass]="{
+                    'has-danger': StateCountyName.invalid && (StateCountyName.dirty || StateCountyName.touched || branchForm.submitted),
+                    'has-success': StateCountyName.valid && (StateCountyName.dirty || StateCountyName.touched )
+                       }">
+          <div class="field_label top_zero">
+            <h5>State/County</h5>
+          </div>
+          <input type="text" name="StateCountyName" [(ngModel)]="branch.StateCountyName" class="form-control"
+            tabindex="9" #StateCountyName="ngModel" maxlength="50" required />
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" [ngClass]="{
+                  'has-danger': address1.invalid && (address1.dirty || address1.touched || branchForm.submitted),
+                  'has-success': address1.valid && (address1.dirty || address1.touched )
+                  }">
+        <div class="field_label top_zero">
+          <h5>Address Line 1</h5>
+        </div>
+        <input type="text" [(ngModel)]="branch.Address1" class="form-control" #address1="ngModel" name="address1"
+          tabindex="10" maxlength="50" required>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="field_label">
+          <h5>Address Line 2 <span>(optional)</span></h5>
+        </div>
+        <input type="text" [(ngModel)]="branch.Address2" class="form-control" #address2="ngModel" name="address2"
+          maxlength="50" tabindex="11">
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="field_label">
+          <h5>City <span>(optional)</span></h5>
+        </div>
+        <div>
+          <input type="text" name="CityName" [(ngModel)]="branch.CityName" class="form-control" #CityName="ngModel"
+            tabindex="12">
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="field_label">
+          <h5>Postal Code / Zip Code</h5>
+        </div>
+        <div [ngClass]="{
+                    'has-danger': PostalCode.invalid && (PostalCode.dirty || PostalCode.touched || branchForm.submitted),
+                    'has-success': PostalCode.valid && (PostalCode.dirty || PostalCode.touched )
+                                   }">
+          <input type="text" [(ngModel)]="branch.PostalCode" class="form-control" name="PostalCode" tabindex="13"
+            #PostalCode="ngModel" maxlength="10" required />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="white_bg">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section_title">
+          <h4>Time, Calendar & Currency</h4>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="field_label">
+          <h5>Time Zone</h5>
+        </div>
+        <div [ngClass]="{
+                      'has-danger': (timeZone.invalid && (timeZone.dirty || timeZone.touched || branchForm.submitted)),
+                      'has-success': timeZone.valid && (timeZone.dirty || timeZone.touched ) }">
+        
+          <input type="text" [(ngModel)]="branch.TimeZone" class="form-control" name="timeZone" #timeZone="ngModel"
+            tabindex="2" required readonly />
+       
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="field_label">
+          <h5>Currency</h5>
+        </div>
+        <div [ngClass]="{
+                        'has-danger': (currency.invalid && (currency.dirty || currency.touched || branchForm.submitted)),
+                        'has-success': currency.valid && (currency.dirty || currency.touched ) }">
+          <input type="text" [(ngModel)]="branch.Currency" class="form-control" name="currency" #currency="ngModel"
+            tabindex="3" required readonly />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="field_label">
+          <h5>Time Format</h5>
+        </div>
+        <div
+          [ngClass]="{
+                          'has-danger': (BranchTimeFormat12Hours.invalid && (BranchTimeFormat12Hours.dirty || BranchTimeFormat12Hours.touched || BranchTimeFormat12Hours.submitted)) || (BranchTimeFormat12Hours.CountryID==0),
+                          'has-success': BranchTimeFormat12Hours.valid && (BranchTimeFormat12Hours.dirty || BranchTimeFormat12Hours.touched ) }">
+          <div class="select_label">
+            <select [(ngModel)]="branch.BranchTimeFormat12Hours" class="form-control"
+              (ngModelChange)="onFormatChanged()" name="BranchTimeFormat12Hours" #BranchTimeFormat12Hours="ngModel"
+              tabindex="8">
+              <option *ngFor="let format of branchTimeFormats" [ngValue]="format.value">
+                {{format.text}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section_title">
+          <h4>Branch Opening Hours</h4>
+        </div>
+      </div>
+    </div>
+    <div class="card center_place">
+      <div class="overflow-auto">
+        <div class="row grid_header text-center mob-scroll-grid">
+          <div class="col">
+            <h5>Day</h5>
+          </div>
+          <div class="col">
+            <h5>Monday</h5>
+          </div>
+          <div class="col">
+            <h5>Tuesday</h5>
+          </div>
+          <div class="col">
+            <h5>Wednesday</h5>
+          </div>
+          <div class="col">
+            <h5>Thursday</h5>
+          </div>
+          <div class="col">
+            <h5>Friday</h5>
+          </div>
+          <div class="col">
+            <h5>Saturday</h5>
+          </div>
+          <div class="col">
+            <h5>Sunday</h5>
+          </div>
+        </div>
+        <div class="row grid_rows text-center mob-scroll-grid">
+          <div class="col column_flex_center">
+            <h5>Start</h5>
+          </div>
+          <div class="col">
+
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.MondayStartTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="14" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onStartTimeFocusIn( weekDays.Monday)"
+              (onValueChanged)="onStartDateChange($event, weekDays.Monday)">
+            </dx-date-box>
+          </div>
+          <div class="col">
+
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.TuesdayStartTime"
+              tabindex="15" (keydown)="preventCharacters($event)" [useMaskBehavior]="true" [interval]="15"
+              [showDropDownButton]="false" [displayFormat]="timeFormat"
+              (onFocusIn)="onStartTimeFocusIn( weekDays.Tuesday)"
+              (onValueChanged)="onStartDateChange($event, weekDays.Tuesday)">
+            </dx-date-box>
+
+          </div>
+          <div class="col">
+
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.WednesdayStartTime"
+              [useMaskBehavior]="true" [interval]="15" [showDropDownButton]="false"
+              (onFocusIn)="onStartTimeFocusIn( weekDays.Wednesday)" (keydown)="preventCharacters($event)"
+              [displayFormat]="timeFormat" tabindex="5" [interval]="15"
+              (onValueChanged)="onStartDateChange($event, weekDays.Wednesday)">
+            </dx-date-box>
+          </div>
+          <div class="col">
+
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.ThursdayStartTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onStartTimeFocusIn( weekDays.Thursday)"
+              (onValueChanged)="onStartDateChange($event, weekDays.Thursday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.FridayStartTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onStartTimeFocusIn( weekDays.Friday)"
+              (onValueChanged)="onStartDateChange($event, weekDays.Friday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.SaturdayStartTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5"
+              (onFocusIn)="onStartTimeFocusIn( weekDays.Saturday)" [useMaskBehavior]="true" [interval]="15"
+              [showDropDownButton]="false" (onValueChanged)="onStartDateChange($event, weekDays.Saturday)"
+              (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.SundayStartTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onStartTimeFocusIn( weekDays.Sunday)"
+              (onValueChanged)="onStartDateChange($event, weekDays.Sunday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+
+        </div>
+        <div class="row grid_rows text-center mob-scroll-grid">
+          <div class="col column_flex_center">
+            <h5>End</h5>
+          </div>
+          <div class="col">
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.MondayEndTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onEndTimeFocusIn( weekDays.Monday)"
+              (onValueChanged)="onEndDateChange($event, weekDays.Monday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.TuesdayEndTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onEndTimeFocusIn( weekDays.Tuesday)"
+              (onValueChanged)="onEndDateChange($event, weekDays.Tuesday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.WednesdayEndTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onEndTimeFocusIn( weekDays.Wednesday)"
+              (onValueChanged)="onEndDateChange($event, weekDays.Wednesday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.ThursdayEndTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onEndTimeFocusIn( weekDays.Thursday)"
+              (onValueChanged)="onEndDateChange($event, weekDays.Thursday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.FridayEndTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onEndTimeFocusIn( weekDays.Friday)"
+              (onValueChanged)="onEndDateChange($event, weekDays.Friday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.SaturdayEndTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onEndTimeFocusIn( weekDays.Saturday)"
+              (onValueChanged)="onEndDateChange($event, weekDays.Saturday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+          <div class="col">
+            <dx-date-box placeholder="HH:MM" class="branch-date-box" type="time" [(value)]="branch.SundayEndTime"
+              (keydown)="preventCharacters($event)" [displayFormat]="timeFormat" tabindex="5" [useMaskBehavior]="true"
+              [interval]="15" [showDropDownButton]="false" (onFocusIn)="onEndTimeFocusIn( weekDays.Sunday)"
+              (onValueChanged)="onEndDateChange($event, weekDays.Sunday)" (onClosed)="onTimeBlur()">
+            </dx-date-box>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section_title">
+          <h4>Policy Documents</h4>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+        <div class="field_label">
+          <h5>Terms of Services</h5>
+        </div>
+        <div class="row url_btn text-right">
+          <div class="col no_padding" [ngClass]="{
+                  'has-danger': TermsOfServiceURL.invalid && (TermsOfServiceURL.dirty || TermsOfServiceURL.touched || branchForm.submitted),
+                  'has-success': TermsOfServiceURL.valid && (TermsOfServiceURL.dirty || TermsOfServiceURL.touched ) }">
+              <input class="form-control" type="text" [(ngModel)]="branch.TermsOfServiceURL" #TermsOfServiceURL="ngModel"
+              pattern="http(s)?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" name="TermsOfServiceURL" #ServiceUrlCtrl tabindex="28" />
+          </div>
+          <div>
+            <button *ngIf="ServiceUrlCtrl.value" type="button" (click)="copyUrl(branch.TermsOfServiceURL,'')"
+              matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+              <i class="fal fa-link">
+              </i>
+            </button>
+          </div>
+          <div><a *ngIf="ServiceUrlCtrl.value" href="{{branch.TermsOfServiceURL}}" target="_blank">Open
+              URL</a></div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+        <div class="field_label">
+          <h5>Privacy Policy</h5>
+        </div>
+        <div class="row url_btn text-right">
+          <div class="col no_padding"[ngClass]="{
+            'has-danger': PrivacyPolicyURL.invalid && (PrivacyPolicyURL.dirty || PrivacyPolicyURL.touched || branchForm.submitted),
+            'has-success': PrivacyPolicyURL.valid && (PrivacyPolicyURL.dirty || PrivacyPolicyURL.touched ) }">
+            <input class="form-control" type="text" [(ngModel)]="branch.PrivacyPolicyURL" #PrivacyPolicyURL="ngModel"
+            pattern="http(s)?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" name="PrivacyPolicyURL" #PolicyUrlCtrl tabindex="29" />
+
+           
+          </div>
+          <div>
+            <button *ngIf="PolicyUrlCtrl.value" type="button" (click)="copyUrl(branch.PrivacyPolicyURL, '')"
+              matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+              <i class="fal fa-link"></i>
+            </button>
+          </div>
+          <div>
+            <a *ngIf="PolicyUrlCtrl.value" href="{{branch.PrivacyPolicyURL}}" target="_blank">Open
+              URL</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <mat-tab label="Configuration">
+
+                <div class="popup_content cstm_scroll_bg branch_config_height">
+                  <div [ngClass]="{
+                      'form_make_readonly'  : branchForSave.isViewMode,
+                      'form_make_unreadonly': !branchForSave.isViewMode
+                      }">
+                    <div *ngTemplateOutlet="errormessage"></div>
+                    <div class="view_bg">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                          <div class="section_title">
+                            <h4>Email Configuration</h4>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 checkbox checkbox-success top_zero">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="SuspendCustomerEmail" type="checkbox" id="SuspendCustomerEmail"
+                              [(ngModel)]="branch.SuspendCustomerEmail" #SuspendCustomerEmail="ngModel"
+                              [(checked)]="branch.SuspendCustomerEmail" />
+                            <label for="SuspendCustomerEmail">
+                              Suspend Customer Email
+                              <span class="info_tip" matTooltip="This check suspends all outgoing emails."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                  class="far fa-info-circle"></i></span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6 col-sm-6 checkbox checkbox-success top_zero">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="RestrictCustomerInvoiceEmail" type="checkbox" id="RestrictCustomerInvoiceEmail"
+                              [(ngModel)]="branch.RestrictCustomerInvoiceEmail" #RestrictCustomerInvoiceEmail="ngModel"
+                              [(checked)]="branch.RestrictCustomerInvoiceEmail" />
+                            <label for="RestrictCustomerInvoiceEmail">
+                              Don't email invoice to customers when total due amount is zero
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row flex-end">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                          <h5 class="field_label">
+                            Reply to Email <span>(optional)</span>
+                            <span class="info_tip"
+                              matTooltip="An email address that receives all email responses from your customers"
+                              matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                          </h5>
+                          <div
+                            [ngClass]="{
+                    'has-danger': branchReplyToEmail.invalid && (branchReplyToEmail.dirty || branchReplyToEmail.touched || branchForm.submitted),
+                    'has-success': branchReplyToEmail.valid && (branchReplyToEmail.dirty || branchReplyToEmail.touched ) }">
+                            <input type="text" [(ngModel)]="branch.BranchReplyToEmail" class="form-control"
+                              name="branchReplyToEmail" #branchReplyToEmail="ngModel"
+                              pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                              tabindex="29" maxlength="50" (blur)="onBranchReplyToEmailUpdated()">
+                          </div>
+
+
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                          <h5 class="field_label">
+                            From Name <span>(optional)</span>
+                            <span class="info_tip"
+                              matTooltip="A customized name that appears as a sender’s name in the customer’s inbox"
+                              matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                          </h5>
+                          <input name="branchEmailFromName" id="branchEmailFromName" type="text"
+                            [(ngModel)]="branch.BranchEmailFromName" #branchEmailFromName="ngModel" maxlength="50"
+                            (blur)="onBranchEmailFromNameUpdated()" tabindex="28">
+                          <div
+                            [ngClass]="{
+                          'has-danger': branchReplyToEmail.invalid && (branchReplyToEmail.dirty || branchReplyToEmail.touched || branchForm.submitted),
+                          'has-success': branchReplyToEmail.valid && (branchReplyToEmail.dirty || branchReplyToEmail.touched ) }">
+
+                          </div>
+                          <input type="text" placeholder="From Email Address" [(ngModel)]="branch.BranchReplyToEmail" maxlength="50" (blur)="onBranchReplyToEmailUpdated()">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="view_bg">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                          <div class="section_title">
+                            <h4>Online Payment Methods</h4>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div *ngIf="isClietPaymentInPackage" class="col-lg-6 col-md-6 col-sm-6 checkbox checkbox-success top_zero">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="DontRequireClientPaymentMethodwhenTotalZero" type="checkbox"
+                              id="DontRequireClientPaymentMethodwhenTotalZero"
+                              [(ngModel)]="branch.DontRequireClientPaymentMethodwhenTotalZero"
+                              #DontRequireClientPaymentMethodwhenTotalZero="ngModel"
+                              [(checked)]="branch.DontRequireClientPaymentMethodwhenTotalZero" />
+                            <label for="DontRequireClientPaymentMethodwhenTotalZero">
+                              Do not require payment method from clients in case cart total is zero
+                            </label>
+                          </div>
+
+                        </div>
+                        <div *ngIf="isMemberPaymentInPackage" class="col-lg-6 col-md-6 col-sm-6 checkbox checkbox-success top_zero">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="DontRequireMemberPaymentMethodwhenTotalZero" type="checkbox"
+                              id="DontRequireMemberPaymentMethodwhenTotalZero"
+                              [(ngModel)]="branch.DontRequireMemberPaymentMethodwhenTotalZero"
+                              #DontRequireMemberPaymentMethodwhenTotalZero="ngModel"
+                              [(checked)]="branch.DontRequireMemberPaymentMethodwhenTotalZero" />
+                            <label for="DontRequireMemberPaymentMethodwhenTotalZero">
+                              Do not require payment method from members in case cart total is zero
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div *ngIf="isPartialPaymentAllow" class="view_bg mt-0">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                          <div class="section_title">
+                            <div class="checkbox checkbox-success inline-flex">
+                              <input name="partpayment" type="checkbox" id="partpayment"
+                                [(ngModel)]="branch.AllowPartPayment" #AllowPartPayment="ngModel"
+                                [(checked)]="branch.AllowPartPayment" (ngModelChange)="onPartialPaymentChange()" />
+                              <label for="partpayment" class="payment_title">
+                                Partial Payment
+                                <ng-container *ngIf="isMemberPaymentInPackage">
+                                  (Not for memberships)
+                                </ng-container>
+                              </label>
+                              <span class="info_tip"
+                                matTooltip="This allows you to take partial or no payment at the point of purchase."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                  class="far fa-info-circle"></i></span>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row grid_rows zero_border">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                          <div class="field_label">
+                            <h5>Partial Payment Friendly Name
+                              <span class="info_tip" matTooltip="Maximum character limit is 30."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                  class="far fa-info-circle"></i></span>
+                            </h5>
+                          </div>
+                          <input type="text" class="form-control" name="PartialPaymentFriendlyName"
+                            [(ngModel)]="branch.WidgetPartPaymentFriendlyName"
+                            [(checked)]="branch.WidgetPartPaymentFriendlyName" [disabled]="!branch.AllowPartPayment"
+                            maxlength="30" (focusout)="trimPartialPaymentFriendlyName()" />
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                          <div class="field_label">
+                            <h5>Partial Payment Label
+                              <span class="info_tip"
+                                matTooltip="Let your customers know about partial payment option by displaying these labels underneath individual items on widget. Maximum character limit is 40."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                  class="far fa-info-circle"></i></span>
+                            </h5>
+                          </div>
+                          <input type="text" class="form-control" name="PartialPaymentLable"
+                            [(ngModel)]="branch.PartialPaymentLable" [(checked)]="branch.PartialPaymentLable"
+                            [disabled]="!branch.AllowPartPayment" maxlength="40"
+                            (focusout)="trimPartialPaymentLable()" />
+                        </div>
+                        <div class="col-md-2 col-sm-4 padding_right xs-pr-15" *ngIf="isMemberAllow">
+                          <div class="field_label">
+                            <h5>Member <span class="info_tip"
+                                matTooltip="Minimum percentage of the total invoice to be paid. For member by default set to 100% for full payment."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                  class="far fa-info-circle"></i></span></h5>
+                          </div>
+                          <input type="text" class="form-control percent_width" min="0" max="100"
+                            name="WidgetPartPaymentForMember" [(ngModel)]="branch.WidgetPartPaymentForMember"
+                            [(checked)]="branch.WidgetPartPaymentForMember" numberControl maxlength="5"
+                            [disabled]="!branch.AllowPartPayment" /> %
+                        </div>
+                        <div class="col-md-2 col-sm-4 padding_left xs-pl-15" *ngIf="isClientLeadAllow">
+                          <div class="field_label">
+                            <h5>Client
+                              <ng-container *ngIf="isMemberPaymentInPackage">
+                                /Lead
+                              </ng-container>
+                               <span class="info_tip"
+                                matTooltip={{clientLeadPercentageToolTip}}
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                  class="far fa-info-circle"></i></span></h5>
+                          </div>
+                          <input type="text" class="form-control percent_width" min="0" max="100"
+                            name="WidgetPartPaymentForNonMember" [(ngModel)]="branch.WidgetPartPaymentForNonMember"
+                            [(checked)]="branch.WidgetPartPaymentForNonMember" numberControl maxlength="5"
+                            [disabled]="!branch.AllowPartPayment" /> %
+                        </div>
+                      </div>
+                    </div>
+                    <div class="view_bg" *ngIf="isShowAllBenefits">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                          <div class="section_title">
+                            <h4>Membership Benefits
+                              <span class="info_tip"
+                                matTooltip="This check allows you to suspend membership benefits when a membership payment has failed"
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                  class="far fa-info-circle"></i></span>
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 checkbox checkbox-success top_zero">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="allsuspendbenefits" type="checkbox" id="all_benefits"
+                              [(ngModel)]="branch.isSelectAllBenefits" (ngModelChange)="onsuspendAllChange()" />
+                            <label for="all_benefits" class="semi_bold_font">
+                              Suspend All Benefits
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="border_padding"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 checkbox checkbox-success"
+                          *ngIf="isDoorCheckedInInPackage">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="SuspendDoorCheckInBenefits" type="checkbox" id="SuspendDoorCheckInBenefits"
+                              [(ngModel)]="branch.SuspendDoorCheckInBenefits" #SuspendDoorCheckInBenefits="ngModel"
+                              [(checked)]="branch.SuspendDoorCheckInBenefits" (ngModelChange)="onCheckBenefits()" />
+                            <label for="SuspendDoorCheckInBenefits">
+                              Suspend Door Check-ins
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 checkbox checkbox-success " *ngIf="isServiceInPackage">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="SuspendServiceBenefits" type="checkbox" id="SuspendServiceBenefits"
+                              [(ngModel)]="branch.SuspendServiceBenefits" #SuspendServiceBenefits="ngModel"
+                              [(checked)]="branch.SuspendServiceBenefits" (ngModelChange)="onCheckBenefits()" />
+                            <label for="SuspendServiceBenefits">
+                              Suspend Service Benefits
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 checkbox checkbox-success " *ngIf="isClassInPackage">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="SuspendClassBenefits" type="checkbox" id="SuspendClassBenefits"
+                              [(ngModel)]="branch.SuspendClassBenefits" #SuspendClassBenefits="ngModel"
+                              [(checked)]="branch.SuspendClassBenefits" (ngModelChange)="onCheckBenefits()" />
+                            <label for="SuspendClassBenefits">
+                              Suspend Class Benefits
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 checkbox checkbox-success " *ngIf="isProductInPackage">
+                          <div class="checkbox checkbox-success top_zero inline-flex">
+                            <input name="SuspendProductBenefits" type="checkbox" id="SuspendProductBenefits"
+                              [(ngModel)]="branch.SuspendProductBenefits" #SuspendProductBenefits="ngModel"
+                              [(checked)]="branch.SuspendProductBenefits" (ngModelChange)="onCheckBenefits()" />
+                            <label for="SuspendProductBenefits">
+                              Suspend product Benefits
+                            </label>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                    <div class="view_bg mt-0 last_div_bz">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="section_title">
+                            <h4>Policy Documents</h4>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                          <div class="field_label">
+                            <h5>Terms of Services</h5>
+                          </div>
+                          <div class="row url_btn text-right">
+                            <div class="col no_padding">
+                              <input class="form-control" type="text" [(ngModel)]="branch.TermsOfServiceURL"
+                                #TermsOfServiceURL="ngModel" name="TermsOfServiceURL" #ServiceUrlCtrl tabindex="28" />
+                            </div>
+                            <div>
+                              <button *ngIf="ServiceUrlCtrl.value" type="button"
+                                (click)="copyUrl(branch.TermsOfServiceURL,'')" matTooltip="Copy Url"
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                <i class="fal fa-link">
+                                </i>
+                              </button>
+                            </div>
+                            <div><a *ngIf="ServiceUrlCtrl.value" href="//{{branch.TermsOfServiceURL}}"
+                                target="_blank">Open
+                                Url</a></div>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                          <div class="field_label">
+                            <h5>Privacy Policy</h5>
+                          </div>
+                          <div class="row url_btn text-right">
+                            <div class="col no_padding">
+                              <input class="form-control" type="text" [(ngModel)]="branch.PrivacyPolicyURL"
+                                #PrivacyPolicyURL="ngModel" name="PrivacyPolicyURL" #PolicyUrlCtrl tabindex="29" />
+                            </div>
+                            <div>
+                              <button *ngIf="PolicyUrlCtrl.value" type="button"
+                                (click)="copyUrl(branch.PrivacyPolicyURL, '')" matTooltip="Copy URL"
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                <i class="fal fa-link"></i>
+                              </button>
+                            </div>
+                            <div>
+                              <a *ngIf="PolicyUrlCtrl.value" href="//{{branch.PrivacyPolicyURL}}" target="_blank">Open
+                                Url</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab> -->
+
+  <!-- Messages Template -->
+  <ng-template #errormessage>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="alert alert-danger" *ngIf="branchForm.submitted && (branchForm.invalid || !isValidEndTime)">
+          <div *ngIf="branchForm.invalid ||
+                StateCountyName.errors?.required">
+            {{messages.Validation.Info_Required}}
+          </div>
+          <div *ngIf="!isValidEndTime">
+            {{messages.Validation.Endtime_Should_Greater_Than_Start_Time}}
+          </div>
+          <div *ngIf="email?.errors?.pattern">
+            {{messages.Validation.Email_Invalid}}
+          </div>
+          <div *ngIf="phoneno?.errors || Mobile?.errors">
+            {{messages.Validation.Phone_Invalid}}
+          </div>
+          <div *ngIf="Fax?.errors">
+            {{messages.Validation.Fax_Invalid}}
+          </div>
+          <div #ServiceUrlCtrl *ngIf="TermsOfServiceURL.errors && (TermsOfServiceURL.dirty || TermsOfServiceURL.touched)">
+              Please enter valid Term of Services URL
+          </div>
+          <div #PolicyUrlCtrl *ngIf="PrivacyPolicyURL.errors && (PrivacyPolicyURL.dirty || PrivacyPolicyURL.touched)">
+              Please enter valid Privacy Policy URL
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+</form>

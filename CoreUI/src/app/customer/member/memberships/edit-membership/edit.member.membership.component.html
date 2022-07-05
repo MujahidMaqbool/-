@@ -1,0 +1,53 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>Edit Membership</h4>
+            </div>
+            <div class="popup_content">
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title mb-2">
+                                <h5 class="field_label m-0">Membership</h5>
+                            <h5 class="light-blue-color font-medium my-1">{{receiveMembershipData.MembershipName}}</h5>
+                                <p>The membership is valid from {{startDate | customdate: dateFormat}} to {{endDate | customdate: dateFormat}}.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 input_heading no_padding">
+                            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                  [dateToLabelName]="dateToLabelName"
+                                  [dateFromLabelName]="dateFromLabelName"
+                                  [receiveFromDate]="receiveMembershipData.StartDate"
+                                  [receiveToDate]="receiveMembershipData.EndDate"
+                                  [fromMaxDate]="receiveMembershipData.StartDate"
+                                  [toMinDate]="receiveMembershipData.EndDate"
+                                  #editMembershipDate>
+                              </dateto-datefrom>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="field_label">
+                                <h5 class="mt-0">Notes <span>(Remaining Characters: {{250 - receiveMembershipData?.Description?.length}})</span></h5>
+                            </div>
+                            <textarea name="editMembershipNotes" rows="6" [(ngModel)]="receiveMembershipData.Description" maxlength="250"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                        <button type="submit" class="primary_blue_btn" (click)="onSaveMembership()" [disabled]="isSaveButtonDisabled">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+{
+    "tfvc.location": "C://Program Files//Microsoft Visual Studio//2022//Community//Common7//IDE//CommonExtensions//Microsoft//TeamFoundation//Team Explorer//TF.exe",
+    // "team.teamProject": "https://dev.azure.com/wellyx/"
+    "tfvc.restrictWorkspace": true
+}

@@ -1,0 +1,288 @@
+<form #companyDetailsForm="ngForm" (ngSubmit)="saveCompanyDetails(companyDetailsForm.valid)" novalidate>
+  <div class="row">
+    <div class="col-md-12 ">
+      <div class="company_btn float-right">
+        <button *ngIf="isCompanySaveAllowed" class="save" [disabled]="(companyDetailsForm.pristine)">
+          Save</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <div class="white_bg">
+    <div class="alert alert-danger" *ngIf="companyDetailsForm.invalid && companyDetailsForm.submitted">
+      <div *ngIf="
+                     Companyname?.errors?.required ||
+                     Email?.errors?.required ||
+                     Phone1?.errors?.required ||
+                     Address1?.errors?.required ||
+                     StateCounty?.errors?.required ||
+                     Country?.errors?.required ||
+                     ContactEmail?.errors?.required ||
+                     PostalCode.errors?.required ||
+                     StateCountyName.errors?.required
+                     ">
+        {{messages.Validation.Info_Required}}
+      </div>
+      <div *ngIf="Email?.errors?.pattern">
+        {{messages.Validation.Email_Invalid}}
+      </div>
+      <div *ngIf="Phone1?.errors">
+        {{messages.Validation.Phone_Invalid}}
+      </div>
+      <div *ngIf="Fax?.errors">
+        {{messages.Validation.Fax_Invalid}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section_title">
+          <h4>Company Information</h4>
+        </div>
+      </div>
+    </div>
+    <div class="section_content">
+      <div class="row vertical_center mob-col-rev">
+        <div class="col-lg-9 col-md-12 no_padding">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div [ngClass]="{
+                                    'has-danger': Email.invalid && (Email.dirty || Email.touched || companyDetailsForm.submitted),
+                                    'has-success': Email.valid && (Email.dirty || Email.touched )
+                                       }">
+                <div class="field_label">
+                  <h5>Email</h5>
+                </div>
+                <input type="text" name="Email" [(ngModel)]="companyDetails.Email" class="form-control" tabindex="1"
+                  #Email="ngModel" pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                  [disabled]="true" required />
+              </div>
+            </div>
+            <div class="col-md-8 col-sm-6"></div>
+          </div>
+          <div class="row flex-end">
+            <div class="col-lg-4 col-md-6 col-sm-6" [ngClass]="{
+                  'has-danger': Companyname.invalid && (Companyname.dirty || Companyname.touched || companyDetailsForm.submitted),
+                  'has-success': Companyname.valid && (Companyname.dirty || Companyname.touched )
+                     }">
+              <div class="field_label">
+                <h5>Company Name</h5>
+              </div>
+              <input type="text" name="Companyname" [(ngModel)]="companyDetails.CompanyName" class="form-control"
+                #Companyname="ngModel" tabindex="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="field_label">
+                <h5>Company Tax Number <span>(optional)</span></h5>
+              </div>
+              <input type="text" name="NTN" [(ngModel)]="companyDetails.NTN" class="form-control" tabindex="3" maxlength="50" #NTN="ngModel" />
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="field_label">
+                <h5>Company Registration Number <span>(optional)</span></h5>
+              </div>
+              <input type="text" name="RegNo" [(ngModel)]="companyDetails.RegNo" class="form-control" maxlength="50" tabindex="4"
+                #RegNo="ngModel" />
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="field_label">
+                <h5>Website <span>(optional)</span></h5>
+              </div>
+              <input type="text" name="Website" [(ngModel)]="companyDetails.Website" class="form-control" tabindex="5"
+                #Website="ngModel" />
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div [ngClass]="{
+                                   'has-danger': Phone1.invalid && (Phone1.dirty || Phone1.touched || companyDetailsForm.submitted),
+                                   'has-success': Phone1.valid && (Phone1.dirty || Phone1.touched )
+                                      }">
+                <div class="field_label">
+                  <h5>Phone</h5>
+                </div>
+                <international-phone-number name="Phone1" [(ngModel)]="companyDetails.Phone1" #Phone1="ngModel"
+                  tabindex="6" maxlength="15" [required]="true">
+                </international-phone-number>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div [ngClass]="{
+                  'has-danger': Fax.invalid && (Fax.dirty || Fax.touched || companyDetailsForm.submitted),
+                  'has-success': Fax.valid && (Fax.dirty || Fax.touched )
+                     }">
+                <div class="field_label">
+                  <h5>Fax <span>(optional)</span></h5>
+                </div>
+                <international-phone-number name="Fax" [defaultCountry]="companyDetails.Fax ? '' : currencyFormat" [(ngModel)]="companyDetails.Fax" #Fax="ngModel" tabindex="7"
+                  maxlength="15">
+                </international-phone-number>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-12">
+          <div class="staff_img">
+            <div *ngIf="!isImageExist" class="upload_image_box square_img" (click)="showImageCropperDialog()">
+              <!-- <my-image-cropper [height]="44" [width]="272" [canvasHeight]="200" [canvasWidth]="350" [croppedHeight]="44"
+                  [croppedWidth]="272" (imageUrlChange)="onImageChange($event)">
+                </my-image-cropper> -->
+              <i class="fal fa-cloud-upload-alt"></i>
+              <br>
+              <button type="button" class="save">Upload Logo</button>
+            </div>
+            <div *ngIf="isImageExist && (imagePath && imagePath != '')">
+              <img class="img-responsive center-block" src="{{imagePath}}" alt="no image" />
+              <div class="changeimg_btn square_img_action">
+                <button type="button" (click)="showImageCropperDialog()"><i class="fal fa-pen"></i></button>
+                <button class="delete_img" type="button" (click)="onDeleteImage()" *ngIf="companyDetails.CountryID && companyDetails.ImagePath"><i
+                    class="fal fa-trash-alt"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="white_bg">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section_title">
+          <h4>Address</h4>
+        </div>
+      </div>
+    </div>
+    <div class="section_content">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="field_label">
+            <h5>Country</h5>
+          </div>
+          <div [ngClass]="{
+                       'has-danger': ((Country.invalid || companyDetails.CountryID == 0) && (Country.dirty || Country.touched || companyDetailsForm.submitted)),
+                       'has-success': Country.valid && (Country.dirty || Country.touched )
+                          }">
+            <div class="select_label">
+              <select [(ngModel)]="companyDetails.CountryID" class="form-control"
+                name="Country" tabindex="8" #Country="ngModel" [disabled]="true" required>
+                <option *ngFor="let country of countryList" [ngValue]="country.CountryID">{{ country.CountryName }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div [ngClass]="{
+            'has-danger': StateCountyName.invalid && (StateCountyName.dirty || StateCountyName.touched || companyDetailsForm.submitted),
+            'has-success': StateCountyName.valid && (StateCountyName.dirty || StateCountyName.touched )
+               }">
+            <div class="field_label">
+              <h5>County/State</h5>
+            </div>
+            <input type="text" name="StateCountyName" [(ngModel)]="companyDetails.StateCountyName" class="form-control" tabindex="9"
+              #StateCountyName="ngModel" maxlength="50" required />
+          </div>
+
+
+          <!-- <input type="text" [(ngModel)]="companyDetails.StateCountyName" name="StateCountyName" maxlength="50"
+            tabindex="9" /> -->
+          <!-- <div [ngClass]="{
+                     'has-danger': ((StateCounty.invalid || companyDetails.StateCountyID == 0) && (StateCounty.dirty || StateCounty.touched || companyDetailsForm.submitted)),
+                     'has-success': StateCounty.valid && (StateCounty.dirty || StateCounty.touched )
+                        }">
+            <div class="select_label">
+              <select [(ngModel)]="companyDetails.StateCountyID" name="StateCounty" class="form-control" tabindex="9"
+                #StateCounty="ngModel" [disabled]="true" required>
+                <option *ngFor="let state of stateCountyListByCountryId" [ngValue]="state.StateCountyID">{{
+                  state.StateCountyName }}</option>
+              </select>
+            </div>
+          </div> -->
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div [ngClass]="{
+                                     'has-danger': Address1.invalid && (Address1.dirty || Address1.touched || companyDetailsForm.submitted),
+                                     'has-success': Address1.valid && (Address1.dirty || Address1.touched )
+                                        }">
+            <div class="field_label">
+              <h5>Address Line 1</h5>
+            </div>
+            <input type="text" name="Address1" [(ngModel)]="companyDetails.Address1" class="form-control" tabindex="10"
+              #Address1="ngModel" maxlength="250" required />
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="field_label">
+            <h5>Address Line 2 <span>(optional)</span></h5>
+          </div>
+          <input type="text" name="Address2" [(ngModel)]="companyDetails.Address2" class="form-control" tabindex="11"
+            #Address2="ngModel" maxlength="250" />
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="field_label">
+            <h5>City <span>(optional)</span></h5>
+          </div>
+          <div>
+            <input type="text" name="CityName" [(ngModel)]="companyDetails.CityName" class="form-control" #CityName="ngModel"
+              tabindex="12">
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div [ngClass]="{
+                           'has-danger': PostalCode.invalid && (PostalCode.dirty || PostalCode.touched || companyDetailsForm.submitted),
+                           'has-success': PostalCode.valid && (PostalCode.dirty || PostalCode.touched )
+                              }">
+            <div class="field_label">
+              <h5>Postal Code / Zip Code</h5>
+            </div>
+            <input type="text" name="PostalCode" [(ngModel)]="companyDetails.PostalCode" class="form-control" tabindex="13"
+              #PostalCode="ngModel" maxlength="10" required />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section_title">
+          <h4>Apps Links</h4>
+        </div>
+      </div>
+    </div>
+    <div class="section_content">
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <div class="field_label widget_label">
+            <h5 class="top_zero"><i class="fab fa-app-store"></i>&nbsp; App Store</h5>
+          </div>
+          <div class="row url_btn text-right">
+            <div class="col no_padding"><input class="form-control" name="AppStoreUrl" #AppStoreUrl="ngModel"
+                [(ngModel)]="companyDetails.AppleStoreURL" tabindex="14" type="text"></div>
+            <div>
+              <button type="button" (click)="copyUrl(companyDetails.AppleStoreURL, '')" matTooltip="Copy URL"
+                matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                <i class="fal fa-link"></i>
+              </button>
+            </div>
+            <div><a [ngClass]="IsAppleStoreURL?'app_disabled':''" target="_blank" href="{{companyDetails.AppleStoreURL}}">Open URL</a></div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-sm-6">
+          <div class="field_label widget_label">
+            <h5 class="top_zero"><i class="fab fa-google-play"></i>&nbsp; Google Play</h5>
+          </div>
+          <div class="row url_btn text-right">
+            <div class="col no_padding"><input class="form-control" tabindex="15" name="GooglePlayStoreURL"
+                #GooglePlayStoreURL="ngModel" [(ngModel)]="companyDetails.GooglePlayStoreURL" type="text"></div>
+            <div>
+              <button type="button" (click)="copyUrl(companyDetails.GooglePlayStoreURL, '')" matTooltip="Copy URL"
+                matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                <i class="fal fa-link"></i>
+              </button>
+            </div>
+            <div><a [ngClass]="IsGooglePlayStoreURL?'app_disabled':''"  target="_blank" href="{{companyDetails.GooglePlayStoreURL}}">Open URL</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

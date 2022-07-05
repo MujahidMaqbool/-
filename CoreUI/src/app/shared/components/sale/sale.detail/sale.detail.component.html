@@ -1,0 +1,668 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content extra_large_popup">
+      <div class="popup_header">
+        <h4>{{data.detailType == enuSaleDetailType.InvoiceDetail ? 'Invoice' : 'Refund'}} Details</h4>
+      </div>
+      <div class="popup_content cstm_scroll_bg">
+        <div class="popup_white_bg">
+          <div class="row readonly_content">
+            <div class="col">
+              <div class="staff_details">
+                <h6>Customer</h6>
+                <p class="bottom_zero">{{saleDetail.CustomerName}}</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="staff_details">
+                <h6>Company</h6>
+                <p class="bottom_zero">{{saleDetail.CompanyName}}</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="staff_details">
+                <h6>Branch</h6>
+                <p class="bottom_zero">{{saleDetail.BranchName}}</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="staff_details">
+                <h6>Invoice Number</h6>
+                <p class="bottom_zero" *ngIf="saleDetail.SaleInvoiceNumber">{{saleDetail.SaleInvoiceNumber}}</p>
+                <p class="bottom_zero" *ngIf="saleDetail.InvoiceNumber">{{saleDetail.InvoiceNumber}}</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="staff_details">
+                <h6>Invoice Date</h6>
+                <p class="bottom_zero">{{saleDetail.InvoiceDate | customdate: dateTimeFormat}}</p>
+              </div>
+            </div>
+            <div class="col" *ngIf="saleDetail.InvoiceDueDate">
+              <div class="staff_details">
+                <h6>Due Date</h6>
+                <p class="bottom_zero">{{saleDetail.InvoiceDueDate | customdate: dateFormat}}</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="staff_details">
+                <h6>Invoice Status</h6>
+                <p class="bottom_zero" *ngIf="saleDetail.SaleStatusTypeName">{{saleDetail.SaleStatusTypeName}}</p>
+                <p class="bottom_zero" *ngIf="saleDetail.InvoiceStatus">{{saleDetail.InvoiceStatus}}</p>
+              </div>
+            </div>
+            <div class="col" *ngIf="saleDetail.RefundMethod">
+              <div class="staff_details">
+                <h6>Refund Method</h6>
+                <p class="bottom_zero">{{saleDetail.RefundMethod}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="popup_white_bg pb-2">
+
+          <!-- Invoices Items Details -->
+          <div class="row" *ngIf="data.detailType == enuSaleDetailType.InvoiceDetail">
+            <div class="col-md-12 px-2">
+              <div class="overflow-auto pb-2">
+                <div class="row grid_header mob-scroll-grid">
+                  <div class="col-3">
+                    <h5>Item</h5>
+                  </div>
+                  <div class="col text-center" *ngIf="saleDetail.IsStatusChanged">
+                    <h5></h5>
+                  </div>
+                  <div class="col text-center" *ngIf="saleDetail.IsRefunded">
+                    <h5>Returned/ Cancelled</h5>
+                  </div>
+                  <div class="col text-center" *ngIf="saleDetail.IsShowAddedToInventory">
+                    <h5>Added to Inventory</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Sessions/ Quantity</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Price</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Discount</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Tax</h5>
+                  </div>
+                  <div class="col text-center" *ngIf="saleDetail.IsRefunded">
+                    <h5>Total Refunded</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Paid (Incl. Tax)
+                      <span class="invo_detail_info_tip"
+                          matTooltip="Total paid is calculated after deducting sales discount (if added to the invoice) from the item."
+                          matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="mob-scroll-grid">
+
+                  <!-- Invoice Items Details -->
+                  <div class="md-scroll cstm_scroll_bg" *ngIf="data.detailType == enuSaleDetailType.InvoiceDetail">
+                    <div class="row sale-detail-items align-items-center" *ngFor="let saleitem of saleDetail.ItemList">
+                      <div class="col-3">
+                        <h3 >{{saleitem.ItemName}}</h3>
+                        <p *ngIf="saleitem.ItemVariantName">{{saleitem.ItemVariantName}}</p>
+
+                        <!-- <span *ngIf="ItemTypeID == 9"class="pos-variant-name">{{saleitem.ItemName}}</span> -->
+                        <!-- <p *ngIf="saleitem.IsItemCancelled ">Cancelled</p>
+                        <p *ngIf="saleitem.IsItemNoShow ">No Show</p>
+                        <p *ngIf="saleitem.IsItemReschedule ">Reschedule Difference</p> -->
+                        <p *ngIf="saleitem.ItemCancellationCharges > 0">Cancellation Fee:
+                          {{saleitem.ItemCancellationCharges | currency: currencyFormat}}</p>
+                        <p *ngIf="saleitem.ItemCancellationCharges == 0 && saleitem.IsItemCancelled ">Cancelled</p>
+                        <p *ngIf="saleitem.NoShowCharges > 0">No Show Fee: {{saleitem.NoShowCharges | currency:
+                          currencyFormat}}</p>
+                        <p *ngIf="saleitem.NoShowCharges == 0 && saleitem.IsItemNoShow ">No Show</p>
+                        <!-- <p *ngIf="saleitem.IsItemRescheduled && saleitem.ItemRescheduleCharges > 0">Reschedule Difference: {{saleitem.ItemRescheduleCharges | currency: currencyFormat}}</p> -->
+                        <p *ngIf="saleitem.IsItemRescheduled ">Rescheduled</p>
+                        <p *ngIf="saleitem.ItemTypeID != posItemType.Membership">Per Unit: {{saleitem.ItemPricePerUnit |
+                          currency: currencyFormat}}</p>
+                        <div
+                          *ngIf="saleitem.ItemTypeID == posItemType.Class || saleitem.ItemTypeID == posItemType.Service">
+                          <p><i class="far fa-calendar-alt"></i>{{saleitem.StartDate | customdate: longDateFormat}}</p>
+                          <p><i class="far fa-clock"></i>{{saleitem.StartTime}} - {{saleitem.EndTime}}</p>
+                        </div>
+
+                        <p *ngIf="saleitem.IsMembershipBenefit && saleitem.CustomerMembershipID > 0"><i
+                            class="far fa-crown"></i>{{saleitem.MembershipName}}</p>
+                        <p *ngIf="saleitem.ItemTypeID == posItemType.Membership">{{saleitem.MembershipPaymentName}}</p>
+                        <p *ngIf="saleitem.ItemTypeID == posItemType.Membership">{{saleitem.MembershipPaymentInterval}}
+                          ({{saleitem.StartDate | customdate: dateFormat}} - {{saleitem.EndDate | customdate:
+                          dateFormat}})</p>
+                        <p *ngIf="saleitem.IsPOSLineItemDiscount">Line Item Discount</p>
+                        <!-- <p *ngIf="saleitem.ItemCancellationCharges > 0">Cancellation Fee: {{saleitem.ItemCancellationCharges | currency: currencyFormat}}</p>
+                        <p *ngIf="saleitem.ItemCancellationCharges == 0 && saleitem.IsItemCancelled ">Cancelled</p>
+                        <p *ngIf="saleitem.NoShowCharges > 0">No Show Fee: {{saleitem.NoShowCharges | currency: currencyFormat}}</p>
+                        <p *ngIf="saleitem.NoShowCharges == 0 && saleitem.IsItemNoShow ">No Show</p> -->
+                        <p *ngIf="saleitem.IsItemBenefitReverted && saleitem.IsMembershipBenefit">Benefit Reverted</p>
+                      </div>
+                      <div class="col text-center" *ngIf="saleDetail.IsStatusChanged">
+                        <h5 class="red_text">
+                          {{saleitem.IsItemCancelled ? 'Cancelled' : saleitem.IsItemNoShow ? 'No Show' : ''}}
+                        </h5>
+                      </div>
+                      <div class="col text-center" *ngIf="saleDetail.IsRefunded">
+                        <h5 class="red_text">{{saleitem.RefundedQty}}</h5>
+                      </div>
+                      <div class="col text-center" *ngIf="saleitem.ItemTypeID == posItemType.Product && saleDetail.IsShowAddedToInventory && saleDetail.IsRefunded">
+                        <h5>{{saleitem.InventoryAddedQty}}</h5>
+                      </div>
+                      <div class="col text-center" *ngIf="saleitem.ItemTypeID != posItemType.Product && saleDetail.IsShowAddedToInventory">
+                        <h5>{{saleitem.InventoryAddedQty}}</h5>
+                      </div>
+                      <!-- <div class="col text-center"  *ngIf="saleitem.IsItemCancelled && saleDetail.IsRefunded">
+                        <h5 class="red_text">Cancelled</h5>
+                      </div>
+                      <div class="col text-center"  *ngIf="saleitem.IsItemNoShow && saleDetail.IsRefunded">
+                        <h5 class="red_text">No Show</h5>
+                      </div> -->
+                      <div class="col text-center">
+                        <h5>{{saleitem.ItemQty}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5>{{saleitem.ItemPrice | currency: currencyFormat}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5><span *ngIf="saleitem.ItemDiscountAmount > 0">-</span>{{saleitem.ItemDiscountAmount |
+                          currency: currencyFormat}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5>{{saleitem.ItemTaxAmount | currency: currencyFormat}}</h5>
+                      </div>
+                      <div class="col text-center" *ngIf="saleDetail.IsRefunded">
+                        <h5 [ngClass]="{'red_text': saleitem.RefundedAmount > 0}"> <span
+                            *ngIf="saleitem.RefundedAmount > 0">-</span> {{saleitem.RefundedAmount | currency:
+                          currencyFormat}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class="light-blue-color">{{saleitem.ItemTotalDiscountedPrice | currency: currencyFormat}}
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="sales-subtotal">
+                <div class="row">
+                  <div class="col-8">
+                    <h5>Sub Total (Excl. Tax)</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5>{{saleDetail.SubTotalPrice | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h5>Sale Discount</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5>{{saleDetail.SaleDiscountAmount | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h5>Tax <span *ngIf="saleDetail.AppliedTaxNames">: ({{saleDetail.AppliedTaxNames}})</span> </h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5>{{saleDetail.TotalTaxAmount | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-3">
+                    <h5>Service Charges</h5>
+                  </div>
+                  <div class="col text-center">
+                    <span class="red_text" *ngIf="saleDetail.RefundedServiceChargesAmount > 0"><i
+                        class="fas fa-check-circle"></i></span>
+                  </div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col" *ngIf="saleDetail.IsShowAddedToInventory"></div>
+                  <div class="col  text-center">
+                    <h5 class="red_text" *ngIf="saleDetail.RefundedServiceChargesAmount > 0">
+                      -{{saleDetail.RefundedServiceChargesAmount | currency: currencyFormat}}</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5> {{saleDetail.ServiceChargesAmount | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-3">
+                    <h5>Tips</h5>
+                  </div>
+                  <div class="col text-center">
+                    <span *ngIf="saleDetail.RefundedTipAmount > 0" class="red_text"><i
+                        class="fas fa-check-circle"></i></span>
+                  </div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col" *ngIf="saleDetail.IsShowAddedToInventory"></div>
+                  <div class="col text-center">
+                    <h5 class="red_text" *ngIf="saleDetail.RefundedTipAmount > 0">-{{saleDetail.RefundedTipAmount |
+                      currency: currencyFormat}}</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5> {{saleDetail.TipAmount | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sales-total">
+                <div class="row">
+                  <div class="col-8">
+                    <h5>Total Due
+                    </h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5>{{saleDetail.TotalDue | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h5>Total Paid</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5>{{saleDetail.TotalAmountPaid | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                    <h5>Adjustment</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5>{{saleDetail.Adjustment | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sales-balance-due">
+                <div class="row">
+                  <div class="col-8">
+                    <h5>Balance Due</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5>{{saleDetail.BalanceAmount | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Refund Items Details -->
+          <div class="row" *ngIf="data.detailType == enuSaleDetailType.RefundDetail">
+            <div class="col-md-12 px-2">
+              <div class="overflow-auto pb-2" *ngIf="saleDetail.ItemList && saleDetail.ItemList.length > 0">
+                <div class="row grid_header mob-scroll-grid">
+                  <div class="col-3">
+                    <h5>Item</h5>
+                  </div>
+                  <div class="col text-center" *ngIf="saleDetail.IsStatusChanged">
+                    <h5></h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Returned / Cancelled</h5>
+                  </div>
+                  <div class="col text-center" *ngIf="saleDetail.IsShowAddedToInventory">
+                    <h5>Added to Inventory</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Sessions / Quantity</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Price</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Discount</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Tax</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Refunded</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Total Paid (Incl. Tax)
+                      <span class="invo_detail_info_tip"
+                          matTooltip="Total paid is calculated after deducting sales discount (if added to the invoice) from the item."
+                          matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                    </h5>
+
+                  </div>
+                </div>
+                <div class="mob-scroll-grid">
+
+                  <!-- Refund Items loop-->
+                  <div class="md-scroll cstm_scroll_bg">
+                    <div class="row sale-detail-items align-items-center" *ngFor="let saleitem of saleDetail.ItemList">
+                      <div class="col-3">
+                        <h3 >{{saleitem.ItemName}}</h3>
+                        <p *ngIf="saleitem.ItemVariantName">{{saleitem.ItemVariantName}}</p>
+                        <!-- <p *ngIf="saleitem.IsItemCancelled ">Cancelled</p>
+                            <p *ngIf="saleitem.IsItemNoShow ">No Show</p>
+                          <p  *ngIf="saleitem.IsItemReschedule ">Reschedule Difference</p> -->
+                        <p *ngIf="saleitem.ItemCancellationCharges > 0">Cancellation Fee:
+                          {{saleitem.ItemCancellationCharges | currency: currencyFormat}}</p>
+                        <p *ngIf="saleitem.ItemCancellationCharges == 0 && saleitem.IsItemCancelled ">Cancelled</p>
+                        <p *ngIf="saleitem.NoShowCharges > 0">No Show Fee: {{saleitem.NoShowCharges | currency:
+                          currencyFormat}}</p>
+                        <p *ngIf="saleitem.NoShowCharges == 0 && saleitem.IsItemNoShow ">No Show</p>
+                        <!-- <p *ngIf="saleitem.IsItemRescheduled && saleitem.ItemRescheduleCharges > 0">Reschedule Difference: {{saleitem.ItemRescheduleCharges | currency: currencyFormat}}</p> -->
+                        <p *ngIf="saleitem.IsItemRescheduled ">Rescheduled</p>
+                        <p *ngIf="saleitem.ItemTypeID != posItemType.Membership">Per Unit: {{saleitem.ItemPricePerUnit |
+                          currency: currencyFormat}}</p>
+                        <div
+                          *ngIf="saleitem.ItemTypeID == posItemType.Class || saleitem.ItemTypeID == posItemType.Service">
+                          <p><i class="far fa-calendar-alt"></i>{{saleitem.StartDate | customdate: longDateFormat}}</p>
+                          <p><i class="far fa-clock"></i>{{saleitem.StartTime}} - {{saleitem.EndTime}}</p>
+                        </div>
+
+                        <p *ngIf="saleitem.IsMembershipBenefit && saleitem.CustomerMembershipID > 0"><i
+                            class="far fa-crown"></i>{{saleitem.MembershipName}}</p>
+                        <p *ngIf="saleitem.ItemTypeID == posItemType.Membership">{{saleitem.MembershipPaymentName}}</p>
+                        <p *ngIf="saleitem.ItemTypeID == posItemType.Membership">{{saleitem.MembershipPaymentInterval}}
+                          ({{saleitem.StartDate | customdate: dateFormat}} - {{saleitem.EndDate | customdate:
+                          dateFormat}})</p>
+                        <p *ngIf="saleitem.IsPOSLineItemDiscount">Line Item Discount</p>
+                        <!-- <p *ngIf="saleitem.ItemCancellationCharges > 0">Cancellation Fee: {{saleitem.ItemCancellationCharges | currency: currencyFormat}}</p>
+                            <p *ngIf="saleitem.ItemCancellationCharges == 0 && saleitem.IsItemCancelled ">Cancelled</p>
+                            <p *ngIf="saleitem.NoShowCharges > 0">No Show Fee: {{saleitem.NoShowCharges | currency: currencyFormat}}</p>
+                            <p *ngIf="saleitem.NoShowCharges == 0 && saleitem.IsItemNoShow ">No Show</p> -->
+                        <p *ngIf="saleitem.IsItemBenefitReverted && saleitem.IsMembershipBenefit">Benefit Reverted</p>
+                      </div>
+                      <div class="col text-center" *ngIf="saleDetail.IsStatusChanged">
+                        <h5 class="red_text">{{saleitem.IsItemCancelled ? 'Cancelled' : saleitem.IsItemNoShow ? 'No
+                          Show' : ''}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class="red_text">{{saleitem.ItemRefundedQty}}</h5>
+                      </div>
+                      <div class="col text-center" *ngIf="saleitem.ItemTypeID == posItemType.Product && saleDetail.IsShowAddedToInventory && saleDetail.IsRefunded">
+                        <h5>{{saleitem.InventoryAddedQty > 0 ? saleitem.InventoryAddedQty : ''}}</h5>
+                      </div>
+                      <div class="col text-center" *ngIf="saleitem.ItemTypeID != posItemType.Product && saleDetail.IsShowAddedToInventory">
+                        <h5></h5>
+                      </div>
+                      <!-- <div class="col text-center"  *ngIf="saleitem.IsItemCancelled">
+                            <h5 class="red_text">Cancelled</h5>
+                          </div>
+                          <div class="col text-center"  *ngIf="saleitem.IsItemNoShow">
+                            <h5 class="red_text">No Show</h5>
+                          </div> -->
+                      <div class="col text-center">
+                        <h5>{{saleitem.ItemQty}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5>{{saleitem.ItemPrice | currency: currencyFormat}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5>{{saleitem.ItemDiscountAmount | currency: currencyFormat}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5>{{saleitem.ItemTaxAmount | currency: currencyFormat}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class="red_text"><span *ngIf="saleitem.ItemRefundedAmount > 0">-</span>
+                          {{saleitem.ItemRefundedAmount | currency: currencyFormat}}</h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class="light-blue-color">{{saleitem.ItemTotalDiscountedPrice | currency: currencyFormat}}
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="sales-subtotal"
+                *ngIf="saleDetail.RefundedServiceChargesAmount > 0 || saleDetail.RefundedTipAmount > 0">
+                <div class="row align-items-center" *ngIf="saleDetail.RefundedServiceChargesAmount > 0">
+                  <div class="col-3">
+                    <h5>Service Charges</h5>
+                  </div>
+                  <div class="col text-center">
+                    <span class="red_text"><i class="fas fa-check-circle"></i></span>
+                  </div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col" *ngIf="saleDetail.IsShowAddedToInventory"></div>
+                  <div class="col  text-center">
+                    <h5 class="red_text">-{{saleDetail.RefundedServiceChargesAmount | currency: currencyFormat}}</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5> {{saleDetail.ServiceChargesAmount | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <!-- <div class="row align-items-center">
+                    <div class="col-5">
+                      <h5>Service Charges</h5>
+                    </div>
+                    <div class="col text-center">
+                      <span class="red_text"><i class="fas fa-check-circle"></i></span>
+                    </div>
+                    <div class="col  text-center">
+                      <h5 class="red_text">{{saleDetail.RefundedServiceChargesAmount | currency: currencyFormat}}</h5>
+                    </div>
+                  </div> -->
+                <div class="row align-items-center" *ngIf="saleDetail.RefundedTipAmount > 0">
+                  <div class="col-3">
+                    <h5>Tips</h5>
+                  </div>
+                  <div class="col text-center">
+                    <span class="red_text"><i class="fas fa-check-circle"></i></span>
+                  </div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col" *ngIf="saleDetail.IsShowAddedToInventory"></div>
+                  <div class="col text-center">
+                    <h5 class="red_text">-{{saleDetail.RefundedTipAmount | currency: currencyFormat}}</h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5> {{saleDetail.TipAmount | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <!-- <div class="row align-items-center">
+                    <div class="col-5">
+                      <h5>Tips</h5>
+                    </div>
+                    <div class="col text-center">
+                      <span class="red_text"><i class="fas fa-check-circle"></i></span>
+                    </div>
+                    <div class="col text-center">
+                      <h5 class="red_text">{{saleDetail.RefundedTipAmount | currency: currencyFormat}}</h5>
+                    </div>
+                  </div> -->
+              </div>
+              <div class="sales-balance-due">
+                <div class="row">
+                  <div class="col-3">
+                    <h5>Refunded Amount</h5>
+                  </div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                  <div class="col" *ngIf="saleDetail.IsShowAddedToInventory"></div>
+                  <div class="col text-center">
+                    <h5 class="red_text"><span *ngIf="saleDetail.TotalRefundedAmount > 0">-</span>
+                      {{saleDetail.TotalRefundedAmount | currency: currencyFormat}}</h5>
+                  </div>
+                  <div class="col"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Refund reason -->
+        <div class="popup_white_bg py-2"
+          *ngIf="(saleDetail.RecentRefundReasonName || saleDetail.RefundReasonName) && !saleDetail.SaleNotes">
+          <div class="row">
+            <div class="col-md-12 px-2">
+              <div class="row grid_header">
+                <div class="col-md-4">
+                  <h5>Refund Reason</h5>
+                </div>
+                <div class="col-md-8">
+                  <h5>Refund Notes</h5>
+                </div>
+              </div>
+              <div class="row grid_rows no_border">
+                <div class="col-md-4">
+                  <h5 *ngIf="saleDetail.RecentRefundReasonName">{{saleDetail.RecentRefundReasonName}}</h5>
+                  <h5 *ngIf="saleDetail.RefundReasonName">{{saleDetail.RefundReasonName}}</h5>
+                </div>
+                <div class="col-md-8">
+                  <h5 *ngIf="saleDetail.RecentRefundNote">{{saleDetail.RecentRefundNote}}</h5>
+                  <h5 *ngIf="saleDetail.RefundNote">{{saleDetail.RefundNote}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="popup_white_bg" *ngIf="isRewardProgramInPackage && saleDetail.EarnedRewardPointsIsToBeCalculated != null">
+          <div class="row readonly_content column_flex_alignment">
+            <div class="col-md-6 col-sm-6">
+              <h5 class="pl-2">Reward Program</h5>
+              <p class="pl-2 pb-0"><i class="fal fa-trophy-alt light-blue-color" aria-hidden="true"></i> Reward Points Earned </p>
+            </div>
+            <div class="col-md-6 col-sm-6 text-right">
+              <h5 class="mb-0 pr-2" *ngIf="saleDetail.EarnedRewardPointsIsToBeCalculated">To Be Calculated</h5>
+              <h5 class="mb-0 pr-2" *ngIf="!saleDetail.EarnedRewardPointsIsToBeCalculated">{{saleDetail.RewardPointsEarned}}</h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sale Deatil Notes -->
+
+        <div class="popup_white_bg py-2" *ngIf="saleDetail.SaleNotes">
+          <div class="row">
+            <div class="col-md-12 px-2">
+              <div class="row grid_header">
+                <div class="col-md-3">
+                  <h5>Action Type</h5>
+                </div>
+                <div class="col-md-3">
+                  <h5>Reason</h5>
+                </div>
+                <div class="col-md-6">
+                  <h5>Notes</h5>
+                </div>
+              </div>
+              <div class="row grid_rows py-2" *ngFor="let saleNote of saleDetail.SaleNotes">
+                <div class="col-md-3">
+                  <h5 *ngIf="saleNote.ReasonCategoryName">{{saleNote.ReasonCategoryName}}</h5>
+                </div>
+                <div class="col-md-3">
+                  <h5 *ngIf="saleNote.ReasonName">{{saleNote.ReasonName}}</h5>
+                </div>
+                <div class="col-md-6">
+                  <h5 *ngIf="saleNote.Notes">{{saleNote.Notes}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Payment History -->
+        <div class="popup_white_bg py-2" *ngIf="hasPayments">
+          <div class="row">
+            <div class="col-md-12 px-2">
+              <div class="section_title bottom_zero zero_border">
+                <h3 class="light-blue-color font-weight-bold pl-3 pb-3">Payment History</h3>
+              </div>
+              <div class="overflow-auto">
+                <div class="row grid_header mob-scroll-grid">
+                  <div class="col">
+                    <h5>Date</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Reference Number</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Total Paid</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Adjustment</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Payment Status</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Payment Method</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Payment Gateway</h5>
+                  </div>
+                  <div class="col-2">
+                    <h5>Payment Reference</h5>
+                  </div>
+                </div>
+                <div class="mob-scroll-grid" id="grid">
+                  <div class="row grid_rows view_membership_content"
+                    *ngFor="let objInvoiceDetail of saleDetail.PaymentList">
+                    <div class="col">
+                      <h5>{{objInvoiceDetail.CreatedOn | customdate: dateFormat}} </h5>
+                    </div>
+                    <div class="col">
+                      <h5>{{objInvoiceDetail.ReferenceNo}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5>{{objInvoiceDetail.TotalPaid | currency: currencyFormat}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5>{{objInvoiceDetail.Adjustment | currency: currencyFormat}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5>{{objInvoiceDetail.PaymentStatusTypeName}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5>{{objInvoiceDetail.PaymentMethod}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5>{{objInvoiceDetail.PaymentGatewayName}}</h5>
+                    </div>
+                    <div class="col-2">
+                      <h5>{{objInvoiceDetail.PaymentReferenceNo}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row popup_footer">
+        <div class="col-md-12">
+          <div class="cancel_btn float-right">
+            <button type="button" (click)="onCloseDialog()">Close</button>
+            <button *ngIf="!saleDetail.RefundMethod" type="button" class="save primary_blue_btn" (click)="onPrint()">Print Receipt</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

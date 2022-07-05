@@ -1,0 +1,189 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+
+        <div class="modal-content extra_large_popup">
+            <div class="popup_header">
+                <h4>Add Exception</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" *ngIf="isShowErrorMessage">
+                                Please fill the required information
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-5">
+                            <div class="field_label ">
+                                <h5>Form Name</h5>
+                            </div>
+                            <div class="select_label">
+                                <mat-select class="form-control multi_select_tax" placeholder="Select Form"
+                                    name="mainSearch" #selectItem [(ngModel)]="selectedItemTypeList" tabindex="10"
+                                    multiple>
+
+                                    <mat-select-trigger *ngIf="selectedItemTypeList && selectedItemTypeList.length > 0">
+                                        {{selectedItemTypeList && selectedItemTypeList.length > 0 &&
+                                    selectedItemTypeList[0].FormName ?
+                                    selectedItemTypeList[0].FormName :
+                                    selectedItemTypeList && selectedItemTypeList.length >= 2 &&
+                                    selectedItemTypeList[0].FormName == undefined ?
+                                    selectedItemTypeList[1].FormName : ''}}
+                                        <span *ngIf="selectedItemTypeList && selectedItemTypeList.length >= 2"
+                                            class="example-additional-selection">
+                                            (+{{selectedItemTypeList[0].FormName == undefined ? selectedItemTypeList.length
+                                        - 2 :
+                                        selectedItemTypeList.length - 1 }}
+                                            {{selectedItemTypeList[0].FormName == undefined && selectedItemTypeList.length
+                                        === 3 ? 'other' :
+                                        selectedItemTypeList.length === 2 ? 'other' : 'others'}})
+                                        </span>
+                                    </mat-select-trigger>
+                                    <span *ngIf="allExceptionItemTypeList && allExceptionItemTypeList.length > 1">
+                                        <mat-option #allSelectedItemTypeList (click)="onSelectAllItemType()"
+                                            [value]="0">
+                                            All</mat-option>
+                                    </span>
+                                    <mat-option *ngFor="let option of allExceptionItemTypeList" [value]="option"
+                                        (click)="onToggleItemTypeSelect()">
+                                        {{option.FormName}} </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-2 view_role_btn px-md-0">
+                            <button type="button" (click)="onAddExceptionListInGrid()"> Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg last_div_bz">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-5">
+                            <div class="field_label ">
+                                <h5>Form Name</h5>
+                            </div>
+                            <input [value]="itemName" type="text" placeholder="Search Form" matInput
+                                [formControl]="searchItem" [matAutocomplete]="auto" maxlength="30">
+                            <!-- <span *ngIf="selectedSearchItem" class="clear_client"></span> -->
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayItemName"
+                                >
+                                <mat-option *ngFor="let option of copySearchItemTypeList" [value]="option">
+                                    <span class="client_name">{{ option.FormName }}</span>
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                        <div class="col-lg-1 col-md-2 view_role_btn px-md-0">
+                            <button type="button" (click)="onSearchClick(searchItem.value)"> Search</button>
+                        </div>
+                        <div class="col-lg-8 col-md-5 text-right select_all space">
+                            <button [disabled]="!isDeleteExemptedbtnDisabled" (click)="onExcemptClick()">Exempt
+                                All</button> |
+                            <button [disabled]="!isDeleteExemptedbtnDisabled" (click)="onDeleteAllClick()">Delete
+                                All</button>
+                        </div>
+                    </div>
+
+                    <div class="reward_grid overflow-auto">
+                        <div class="row  grid_header mob-scroll-grid">
+                            <div class="col">
+                                <span class="checkbox checkbox-success top_zero">
+                                    <input [(ngModel)]="isSelectAllItemTypes" [disabled]='gridTableList.length == 0'
+                                        (ngModelChange)="onAllItemTypeSelectionChange($event)" name="itemNameGrid"
+                                        id="itemNameGrid" type="checkbox">
+                                    <label for="itemNameGrid" class="semi_bold_font">
+                                        <span></span> Form</label>
+                                </span>
+                            </div>
+                            <div class="col">
+                                <h5>Member Earned Value
+                                </h5>
+                            </div>
+                            <div class="col">
+                                <h5>Client Earned Value
+                                </h5>
+                            </div>
+                            <div class="col">
+                                <h5>Lead Earned Value
+                                </h5>
+                            </div>
+                            <div class="col col-md-1 text-center">
+                                <h5>Actions</h5>
+                            </div>
+                        </div>
+                        <div class="row column_flex_alignment reward_grid_rows  mob-scroll-grid"
+                            *ngFor="let option of gridTableList ;let i = index">
+
+                            <div class="col">
+                                <span class="checkbox checkbox-success top_zero d-flex">
+                                    <input type="checkbox" name="{{'Chk_item' + option.FormID + option.FormName}}"
+                                        id="{{'Chk_item' + option.FormID + option.FormName}}"
+                                        [(ngModel)]="option.IsSelected" [(checked)]="option.IsSelected"
+                                        (ngModelChange)="onItemTypeSelectionChange()" />
+                                    <label class="mb-0" for="{{'Chk_item' + option.FormID + option.FormName}}">
+                                        {{option.FormName}} <span class="item-inactive" *ngIf="!option?.IsActive">Inactive</span></label>
+                                </span>
+                            </div>
+                            <div class="col" [ngClass]="{
+                                'has-danger': memberEarnedPoints.invalid
+                                                && (memberEarnedPoints.dirty || memberEarnedPoints.touched)
+                                                || ((!memberEarnedPoints.value) || memberEarnedPoints.value == null)
+                                                && showError,
+                                'has-success': (option.MemberEarnedPoints != null)
+                                                && memberEarnedPoints.valid && (memberEarnedPoints.dirty || memberEarnedPoints.touched)
+                                }">
+
+                                <input minlength="0" maxlength="6" onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                                (ngModelChange)="onValidationCheck()" type="text" name="memberEarnedPoints" #memberEarnedPoints="ngModel" [(ngModel)]="option.MemberEarnedPoints" required numberControl>
+                            </div>
+                            <div class="col" [ngClass]="{
+                                'has-danger': clientEarnedPoints.invalid
+                                                && (clientEarnedPoints.dirty || clientEarnedPoints.touched)
+                                                || ((!clientEarnedPoints.value) || clientEarnedPoints.value == null)
+                                                && showError,
+                                'has-success': (option.MemberEarnedPoints != null)
+                                                && clientEarnedPoints.valid && (clientEarnedPoints.dirty || clientEarnedPoints.touched)
+                                }">
+                                <input  minlength="0" maxlength="6" onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                                 (ngModelChange)="onValidationCheck()" type="text" name="clientEarnedPoints" #clientEarnedPoints="ngModel" [(ngModel)]="option.ClientEarnedPoints"  required numberControl>
+                            </div>
+                            <div class="col" [ngClass]="{
+                                'has-danger': leadEarnedPoints.invalid
+                                                && (leadEarnedPoints.dirty || leadEarnedPoints.touched)
+                                                || ((!leadEarnedPoints.value) || leadEarnedPoints.value == null)
+                                                && showError,
+                                'has-success': (option.MemberEarnedPoints != null)
+                                                && leadEarnedPoints.valid && (leadEarnedPoints.dirty || leadEarnedPoints.touched)
+                                }">
+                                <input minlength="0" maxlength="6" onkeydown="if(event.key==='.'){event.preventDefault();}" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                                 (ngModelChange)="onValidationCheck()" type="text" name="leadEarnedPoints" #leadEarnedPoints="ngModel" [(ngModel)]="option.LeadEarnedPoints"  required numberControl>
+                            </div>
+                            <div class="col col-md-1 text-center red_del">
+                                <a (click)="onDeleteItem(i,option)"><i class="fal fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="gridTableList.length == 0">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">
+                                    {{messages.Generic_Messages.No_Record_Found}}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="closeDialog()">Close</button>
+                        <button type="submit" class="save primary_blue_btn" [disabled]="isShowErrorMessage "
+                            (click)="onSave()">Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

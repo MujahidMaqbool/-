@@ -1,0 +1,23 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="small_popup">
+        <div class="popup_header">
+            <h4>View Notification</h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="ten_space"></div>
+            <div class="delete_warning">
+                <div>
+                    <h5>{{notiObj.Title}}</h5>
+                    <p [innerHTML]="notiObj.Body"></p>
+                </div>
+            </div>
+            <div class="ten_space"></div>
+
+            <div class="row cancel_btn float-right">
+                <div class="col-md-12 col-sm-12 no_padding">
+                    <button (click)="onNo()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

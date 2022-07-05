@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <!-- <button class="simple_btn" type="button" role="navigation">
+                    Back to Search</button> -->
+            <button type="button" class="save" (click)="onAddGateway()">
+                Add Gateway</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg info_bar_bg">
+    <div class="view_main_bar">
+        <person-info *ngIf="shouldGetPersonInfo"></person-info>
+    </div>
+</div>
+
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+    <div class="row grid_header responsive_grid_header">
+        <div class="col">
+            <h5>Gateway</h5>
+        </div>
+        <div class="col">
+            <h5>Payment Method</h5>
+        </div>
+        <div class="col">
+            <h5>Brand</h5>
+        </div>
+        <div class="col">
+            <h5>Account/Card Number</h5>
+        </div>
+        <div class="col">
+            <h5> <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">Created On <i
+              class="fas fa-sort-alt"></i></a>
+            </h5>
+        </div>
+        <div class="col">
+            <h5> <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">Status <i
+              class="fas fa-sort-alt"></i></a>
+            </h5>
+        </div>
+        <div class="col text-center">
+            <h5>Actions</h5>
+        </div>
+    </div>
+    <div *ngIf="isDataExists">
+        <div class="row grid_rows responsive_grid_rows" *ngFor="let gateway of customerGatewayList">
+            <div class="col">
+                <h5>{{gateway.PaymentGatewayName}}</h5>
+            </div>
+            <div class="col">
+                <h5>{{gateway.SaleTypeName}}</h5>
+            </div>
+            <div class="col">
+                <h5>{{gateway.Brand}}</h5>
+            </div>
+            <div class="col">
+                <h5>****{{gateway.Last4}}</h5>
+            </div>
+            <div class="col">
+                <h5>{{gateway.CreatedOn | customdate: dateFormat}}</h5>
+            </div>
+            <div class="col">
+                <h5>{{gateway.MandateStatusName}} <span *ngIf="gateway.PaymentGatewayID === gatewayType.GoCardless" class="info_tip"
+                    matTooltip="{{gateway.StatusMessage}}" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                </h5>
+                <h5><span *ngIf="gateway.PaymentGatewayID === gatewayType.PayTabs && gateway.IsArchived" class="info_tip"
+                    matTooltip="This gateway has been deactive on your request" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                </h5>
+            </div>
+            <div class="col text-center">
+                <h5>
+                    <!-- <span *ngIf="gateway.IsDefault">
+                        <a>
+                            Default
+                        </a>
+                    </span>
+                    <span class="brown" (click)="onMakeDefaultGateway(gateway)" *ngIf="!gateway.IsDefault && gateway.PaymentGatewayID === gatewayType.Stripe">
+                        <a matTooltip="Make Default" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                            <i class="fal fa-check-circle"></i></a>
+                    </span> -->
+                    <span class="blue" *ngIf="gateway.SaleTypeID == 2 && !gateway.IsArchived && gateway.PaymentGatewayID == gatewayType.Stripe_Card">
+                        <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" href="javascript:void(0);"
+                          (click)="onEditGateway(gateway)">
+                          <i class="fal fa-edit"></i>
+                        </a>
+                      </span>
+                    <span *ngIf="!gateway.IsArchived" class="red_del" (click)="onDeleteGateway(gateway)">
+                        <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip" href="javascript:void(0)">
+                            <i class="fal fa-trash-alt"></i>
+                        </a>
+                    </span>
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+    <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+            </div>
+        </div>
+    </div>
+</div>

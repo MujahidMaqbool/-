@@ -1,0 +1,198 @@
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#form_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle">
+                    Search Filter
+                </h3>
+            </div>
+        </div>
+        <div id="form_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                </div>
+                <div class="row flex-end">
+                    <div class="col">
+                        <div class="field_label">
+                            <h5>Customer</h5>
+                        </div>
+                        <input type="text" maxlength="50" placeholder="Search Customer" class="form-control" matInput
+                            [matAutocomplete]="auto" tabindex="1" [(ngModel)]="clearCustomerInput"
+                            [formControl]="searchPerson" name="className">
+                        <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayClientName"
+                            (optionSelected)='getSelectedClient($event.option.value)'>
+                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                <span class="client_name">{{ person.FirstName + ' ' + person.LastName }}</span>
+                                <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                <br>
+                                <span class="client_info">{{ person.Mobile }}</span>
+                                <br>
+                                <span class="client_info">{{ person.Email }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </div>
+                    <div class="col">
+                        <div class="field_label">
+                            <h5>Form Name</h5>
+                        </div>
+                        <input type="text" maxlength="50" placeholder="Search Form" class="form-control" tabindex="2"
+                            [(ngModel)]="customerFormSearchModel.formName" name="formName">
+                    </div>
+                    <div class="col">
+                        <div class="field_label">
+                            <h5>Status</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" [(ngModel)]="customerFormSearchModel.formStatusID"
+                                name="formStatusID">
+                                <option *ngFor="let customerForm of customerFormStatus" [ngValue]="customerForm.value">
+                                    {{customerForm.text}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-5 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #bookingRef>
+                        </dateto-datefrom>
+                        <!-- <div class="field_label">
+                            <h5>From</h5>
+                        </div>
+                        <input type="text" class="form-control" tabindex="4" name="className">
+                    </div>
+                    <div class="col">
+                        <div class="field_label">
+                            <h5>To</h5>
+                        </div>
+                        <input type="text" class="form-control" tabindex="5" name="className"> -->
+                    </div>
+
+                    <div class="offset-9 col-lg-3 no_padding space">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6"><button class="reset_btn" type="button"
+                                    (click)="resetSearchFilter()"> Reset </button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 full_width_btn"><button class="search" type="button"
+                                    (click)="getCustomerForm()">
+                                    Search</button></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>Customer Name </h5>
+            </div>
+            <div class="col">
+                <h5>Form Name </h5>
+            </div>
+            <div class="col">
+                <h5>Configuration </h5>
+            </div>
+            <div class="col">
+                <h5>Mandatory</h5>
+            </div>
+            <div class="col">
+                <h5>Item Purchased </h5>
+            </div>
+            <div class="col">
+                <h5>Status </h5>
+            </div>
+            <div class="col">
+                <h5>Date Created </h5>
+            </div>
+            <div class="col">
+                <h5>Last Updated</h5>
+            </div>
+            <div class="col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="grid">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let customerForms of customerForm">
+                <div class="col">
+                    <h5>{{customerForms.CustomerName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.FormName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.ConfigurationsName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.IsMandatory? 'Yes':'No'}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.ItemPurchased}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.FormStatus}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.CreatedOn | customdate: dateFormat}} - {{customerForms.CreatedOnTime | branchTimeFormat }}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.ModifiedOn | customdate: dateFormat}} {{customerForms.ModifiedOn != null?'-':''}} {{customerForms.ModifiedOnTime | branchTimeFormat }}</h5>
+                </div>
+                <div class="col text-center">
+                    <h5 *ngIf="!customerForms.IsWalkedIn">
+                        <span class="blue">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)" (click)="onViewForm(customerForms.CustomerFormID)">
+                                <i class="fal fa-book-open"></i>
+                            </a>
+                        </span>
+                        <span class="blue">
+                            <a matTooltip="PDF" matTooltipPosition="above" (click)="openPDF(customerForms.CustomerFormID)" matTooltipClass="custom-tooltip">
+                                <i class="fal fa-file-pdf"></i>
+                            </a>
+                        </span>
+                        <!-- <span>
+                            <a matTooltip="Email" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)">
+                                <i class="fal fa-envelope"></i>
+                            </a>
+                        </span>
+                        <span>
+                            <a matTooltip="SMS" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)">
+                                <i class="fal fa-comment-dots"></i>
+                            </a>
+                        </span> -->
+                        <span class="blue" *ngIf="allowedPages.SaveForm">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)" (click)="onEditForm(customerForms.CustomerFormID)">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <span class="red_del" *ngIf="allowedPages.SaveForm">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)" (click)="onDeleteForm(customerForms.CustomerFormID)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">No record found.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+
+</div>

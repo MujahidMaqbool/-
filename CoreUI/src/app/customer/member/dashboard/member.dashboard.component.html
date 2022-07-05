@@ -1,0 +1,464 @@
+<div class="row">
+    <div class="col-md-4 col-lg-4">
+        <div class="dashboard_bg zero_margin">
+            <div class="dashboard_header">
+                <h3>Member Information</h3>
+            </div>
+            <div class="dash_cstm_height cstm_scroll_bg">
+                <div class="small_space"></div>
+                <div class="row singal_info">
+                    <div class="col-md-3 col-sm-3">
+                        <img src="{{imagePath}}" class="img-reponsive rounded-circle center-block" style="width: 100%;">
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <h6>{{memberInfo.MemberTitle + ' ' + memberInfo.MemberFullName}}</h6>
+                        <p>{{memberInfo.MemberEmail}}<br>{{memberInfo.MemberMobile}}<br>{{memberInfo.MemberAddress}}
+                            <br>DOB: {{memberInfo.MemberJoiningDate | customdate: dateFormat}}
+                            <br>Since: {{memberInfo.CreatedOn | customdate: dateFormat}}
+                        </p>
+                        <br>
+                        <h6>Next of Kin</h6>
+                        <p>{{memberInfo.KinFullName}}<br>{{memberInfo.kinEmail}}<br>{{memberInfo.KinMobile}}<br>{{memberInfo.KinAddress}}
+                            <br>{{memberInfo.KinPostCode}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 mob-plr-15 no_padding">
+        <div class="dashboard_bg zero_margin">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-7 col-md-6 col-sm-6">
+                    <h5>
+                        Active Memberships
+                    </h5>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-6">
+                    <div class="full_width_btn" *ngIf="isAddAttendanceAllowed"><button class="search float-righ" type="button" (click)="redirectToMemberAtttendance()">
+                            Add Attendance</button>
+                    </div>
+                </div>
+            </div>
+            <div class="dash_cstm_height cstm_scroll_bg">
+                <div class="small_space"></div>
+                <div class="row singal_info" *ngFor="let activeMembershipObj of memberActiveMemberships">
+                    <div class="col-sm-12 col-md-12">
+                        <!-- activeMembershipObj.MembershipDuration + ' Days ' +  -->
+                        <h6>{{activeMembershipObj.MembershipName}} </h6>
+                        <p>Start Date: {{activeMembershipObj.StartDate}}
+                            <span class="float-right">End Date:{{activeMembershipObj.EndDate}}</span>
+                        </p>
+                        <p>Auto Roll: {{activeMembershipObj.IsAutoRoll ? 'Yes' : 'No'}} </p>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="small_space"></div>
+                        <mat-progress-bar mode="determinate" class="mem_bar" matTooltip="{{'Membership Completion  ' +  activeMembershipObj.MembershipPercentage + '%'}}" matTooltipPosition="above" value="{{activeMembershipObj.MembershipPercentage}}"></mat-progress-bar>
+
+                        <hr>
+                    </div>
+
+                </div>
+                <div *ngIf="!isActiveMembershipsExist">
+                    <div class="row services">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4">
+        <div class="dashboard_bg zero_margin">
+            <div class="dashboard_header">
+                <h3>
+                    Activities
+                </h3>
+            </div>
+            <div class="dash_cstm_height cstm_scroll_bg">
+                <div class="das_activity center_alignment" *ngFor="let memberActivityObj of memberActivities" [ngClass]="{
+                        'dark_green': memberActivityObj.ActivityTypeID == activityType.Appointment,
+                        'reddish': memberActivityObj.ActivityTypeID == activityType.Call,
+                        'blue': memberActivityObj.ActivityTypeID == activityType.Email,
+                        'perpall': memberActivityObj.ActivityTypeID == activityType.Note,
+                        'app_noti': memberActivityObj.ActivityTypeID == activityType.AppNotification,
+                        'sms': memberActivityObj.ActivityTypeID == activityType.SMS,
+                        'achievement': memberActivityObj.ActivityTypeID == activityType.Achievement,
+                        'membermessage': memberActivityObj.ActivityTypeID == activityType.MemberMessage
+                     }">
+
+                    <div class="activity_icons" [ngClass]="{
+                                                    'appointment': memberActivityObj.ActivityTypeID == activityType.Appointment,
+                                                    'call': memberActivityObj.ActivityTypeID == activityType.Call,
+                                                    'email': memberActivityObj.ActivityTypeID == activityType.Email,
+                                                    'note': memberActivityObj.ActivityTypeID == activityType.Note,
+                                                    'app_notification': memberActivityObj.ActivityTypeID == activityType.AppNotification,
+                                                    'sms': memberActivityObj.ActivityTypeID == activityType.SMS,
+                                                    'achievement': memberActivityObj.ActivityTypeID == activityType.Achievement,
+                                                    'membermessage': memberActivityObj.ActivityTypeID == activityType.MemberMessage
+                                                    }">
+                        <i class="fal" aria-hidden="true" [ngClass]="{
+                                                    'fa-calendar-alt': memberActivityObj.ActivityTypeID == activityType.Appointment,
+                                                    'fa-phone fa-flip-horizontal': memberActivityObj.ActivityTypeID == activityType.Call,
+                                                    'fa-envelope': memberActivityObj.ActivityTypeID == activityType.Email,
+                                                    'fa-clipboard': memberActivityObj.ActivityTypeID == activityType.Note,
+                                                    'fa-calendar-check': memberActivityObj.ActivityTypeID == activityType.AppNotification,
+                                                    'fa-sms': memberActivityObj.ActivityTypeID == activityType.SMS,
+                                                    'fa-trophy': memberActivityObj.ActivityTypeID == activityType.Achievement,
+                                                    'fa-comment': memberActivityObj.ActivityTypeID == activityType.MemberMessage
+                                            }"></i>
+                    </div>
+
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.Appointment">
+                        {{ activityTypeNames.Appointment}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.Call">
+                        {{ activityTypeNames.Call}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.SMS">
+                        {{ activityTypeNames.SMS}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.Email">
+                        {{ activityTypeNames.Email}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.Note">
+                        {{ activityTypeNames.Note}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.MemberMessage">
+                        {{ activityTypeNames.MemberMessage}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.Achievement">
+                        {{ activityTypeNames.Achievements}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.AppNotification">
+                        {{ activityTypeNames.AppNotification}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                    <h6 *ngIf="memberActivityObj.ActivityTypeID == activityType.Task">
+                        {{ activityTypeNames.Task}}
+                        <span class="float-right">{{memberActivityObj.ActivityTypeCount}}</span>
+                    </h6>
+                </div>
+                <div *ngIf="!isMemberActivitiesExists">
+                    <div class="row services">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <h5>
+                        Member Check-In History
+                    </h5>
+                </div>
+            </div>
+            <div class="small_space"></div>
+            <div class="row">
+                <div class="col-md-5ths col-xs-6">
+                    <div class="snapshot_item blue_border">
+                        <div class="snapshot_bar_icon center_flex_alignment"><i class="fal fa-users"></i></div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2>{{memberInfo.TotalVisits ? memberInfo.TotalVisits: '-'}} </h2>
+                            <h6>Total Number of Visits</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment"><i class="fal fa-user-check"></i></div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2>{{ memberInfo.ClockInDate ? (memberInfo.ClockInDate | customdate: dateFormat) : '-'}} </h2>
+                            <h6>Last Check-in Date</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment"><i class="fal fa-user-check"></i></div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2>{{memberInfo.ItemType ? memberInfo.ItemType: '-' }} </h2>
+                            <h6>Last Check-in Activity Type</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment"><i class="fal fa-user-check"></i></div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2>{{memberInfo.ItemName ? memberInfo.ItemName: '-'}} </h2>
+                            <h6>Last Check-in Activity Title</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6">
+                    <div class="snapshot_item blue_border">
+                        <div class="snapshot_bar_icon center_flex_alignment"><i class="fal fa-users"></i></div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2>{{memberInfo.AssignedStaff ? memberInfo.AssignedStaff: '-'}} </h2>
+                            <h6>Last Assigned Staff</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Door Check-In
+                    </h5>
+                </div>
+
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom  (sendDateTo)="reciviedDateToForVisitInClub($event)"
+                    #vcfromToDateComoRef>
+                </dateto-datefrom>
+                    <!-- <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <label class="dash_label">From</label>
+                            <input type="text" name="DateFrom" class="form-control date-picker bg_transparent float-right" [(ngModel)]="dateFrom" (ngModelChange)="onFromDateChange(dateFrom)" #DateFrom="ngModel" matInput [matDatepicker]="datefrom" [placeholder]="dateToPlaceHolderValue"
+                                [max]="maxDate" readonly (click)="onOpenCalendar(datefrom)" />
+                            <mat-datepicker #datefrom></mat-datepicker>
+                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom"></mat-datepicker-toggle>
+                        </div>
+                        <div class="col-md-6 col-sm-6 mb-2 pb-1">
+                            <label class="dash_label">To</label>
+                            <input type="text" name="DateTo" class="form-control date-picker bg_transparent float-right" [(ngModel)]="dateTo" (ngModelChange)="onToDateChange(dateTo)" #DateTo="ngModel" matInput [matDatepicker]="dateto" [placeholder]="dateFromPlaceHolderValue" [min]="dateFrom"
+                                [max]="branchDate" (click)="onOpenCalendar(dateto)" readonly />
+                            <mat-datepicker #dateto></mat-datepicker>
+                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto"> </mat-datepicker-toggle>
+                        </div>
+                    </div> -->
+
+
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <dx-chart id="chart" [dataSource]="memberAttendanceSummary"  *ngIf="ismemberAttendanceExists" [customizePoint]="memberAttendancecustomizePoint" [valueAxis]="[
+                    {
+                        name: 'TotalAttendance',
+                        position: 'left',
+                        showZero: true,
+                        min:0,
+                        tickInterval: 1,
+                        valueMarginsEnabled: false
+                    }]">
+                        <dxi-series valueField="TotalAttendance" name="Attendance" color="#BFE1FF"></dxi-series>
+                        <dxo-common-series-settings argumentField="ClockInDate" type="bar" hoverMode="allArgumentPoints" selectionMode="allArgumentPoints">
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="bindmemberAttendanceValueWithTooltip">
+                        </dxo-tooltip>
+
+                    </dx-chart>
+
+                    <div *ngIf="!ismemberAttendanceExists">
+                        <div class="row services">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Net Sales
+                        <span matTooltip="Information related to sales revenue divided between branch and your online platforms."
+                            class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                            class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.MemberActivity)" #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+
+            </div>
+            <div class="row small_space">
+                <div class="col">
+                    <div class="boder_box">
+                        <h4>
+                            Total Sales
+                            <span class="float-right"> {{totalSaleCount.TotalSale | currency:currencyFormat}}</span>
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="MemberTotalRevenue" *ngIf="isMemberTotalRevenueExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeMemberShipTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+
+                        <div *ngIf="!isMemberTotalRevenueExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col">
+                    <div class="boder_box">
+                        <h4>
+                            Memberships
+                            <span class="float-right"> {{totalSaleCount.TotalMembershipSale | currency:currencyFormat}}</span>
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberMemberShipBooking" *ngIf="ismemberMembershipBookingExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeMemberShipTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+
+                        <div *ngIf="!ismemberMembershipBookingExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col">
+                    <div class="boder_box">
+                        <h4>
+                            Classes
+                            <span class="float-right">{{totalSaleCount.TotalClassSale | currency:currencyFormat}}</span>
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberBooking" *ngIf="ismemberBookingExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeClassTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+                        <div *ngIf="!ismemberBookingExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col" *ngIf="allowedPages.ServiceDashboard">
+                    <div class="boder_box">
+                        <h4>
+                            Services
+                            <span class="float-right">{{totalSaleCount.TotalServiceSale | currency:currencyFormat}}</span>
+                        </h4>
+
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberServices" *ngIf="ismemberServicesExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeServicesLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeServicesTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+
+                        <div *ngIf="!ismemberServicesExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col" *ngIf="allowedPages.ProductDashboard">
+                    <div class="boder_box">
+                        <h4>
+                            Products
+                            <span class="float-right">{{totalSaleCount.TotalProductSale | currency:currencyFormat}}</span>
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberProducts" *ngIf="ismemberProductsExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeProductLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeProductTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+
+
+                        <div *ngIf="!ismemberProductsExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="scheduler_space"></div>

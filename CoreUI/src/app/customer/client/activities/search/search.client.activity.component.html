@@ -1,0 +1,256 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right mob-full-btn">
+            <!-- <button *ngIf="isSearchClientAllowed" type="button" class="simple_btn" role="navigation" [routerLink]="['/client/Search']">
+                    Back to Search</button> -->
+            <!-- <button *ngIf="!(personInfo?.IsWalkedIn) && isProceedToLeadAllowed" class="simple_btn" type="button"
+                (click)="onProceedToLead()" matTooltip="Convert a client to a lead for membership enquirers"
+                matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                Proceed to Lead1</button>
+            <button *ngIf="!(personInfo?.IsWalkedIn) && isProceedToMemberAllowed" class="simple_btn" type="button"
+                (click)="onProceedToMember()" matTooltip="Convert a client to a member" matTooltipPosition="above"
+                matTooltipClass="custom-tooltip">
+                Process Membership</button> -->
+            <button *ngIf="!(personInfo?.IsWalkedIn) && isSaveActivityAllowed" type="button" (click)="onAddActivity()">
+                Add Activity</button>
+        </div>
+    </div>
+</div>
+<div class="white_bg info_bar_bg">
+    <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+<div class="white_bg">
+    <div class="activities">
+        <mat-tab-group (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
+            <mat-tab label="{{activityTypes.All}}">
+                <ng-template mat-tab-label>
+                    {{activityTypes.All}}
+                </ng-template>
+                <div *ngTemplateOutlet="activities"></div>
+            </mat-tab>
+            <mat-tab label="{{activityTypes.Call}}">
+                <ng-template mat-tab-label>
+                    {{activityTypes.Call + 's'}}
+                    <!-- <span class="activity_count">{{activityCount.CallCount}}</span> -->
+                </ng-template>
+                <div *ngTemplateOutlet="activities"></div>
+            </mat-tab>
+            <mat-tab label="{{activityTypes.Appointment}}">
+                <ng-template mat-tab-label>
+                    {{activityTypes.Appointment + 's'}}
+                    <!-- <span class="activity_count">{{activityCount.AppointmentCount}}</span> -->
+                </ng-template>
+                <div *ngTemplateOutlet="activities"></div>
+            </mat-tab>
+            <mat-tab label="{{activityTypes.Email}}">
+                <ng-template mat-tab-label>
+                    {{activityTypes.Email + 's'}}
+                    <!-- <span class="activity_count">{{activityCount.EmailCount}}</span> -->
+                </ng-template>
+                <div *ngTemplateOutlet="activities"></div>
+            </mat-tab>
+            <mat-tab label="{{activityTypes.SMS}}">
+                <ng-template mat-tab-label>
+                    {{activityTypes.SMS}}
+                    <!-- <span class="activity_count">{{activityCount.SMSCount}}</span> -->
+                </ng-template>
+                <div *ngTemplateOutlet="activities"></div>
+            </mat-tab>
+            <mat-tab label="{{activityTypes.Note}}">
+                <ng-template mat-tab-label>
+                    {{activityTypes.Note + 's'}}
+                    <!-- <span class="activity_count">{{activityCount.NoteCount}}</span> -->
+                </ng-template>
+                <div *ngTemplateOutlet="activities"></div>
+            </mat-tab>
+            <mat-tab label="{{activityTypes.Achievements}}">
+                <ng-template mat-tab-label>
+                    {{activityTypes.Achievements + 's'}}
+                </ng-template>
+                <div *ngTemplateOutlet="activities"></div>
+            </mat-tab>
+            <mat-tab label="{{activityTypes.AppNotification}}">
+                <ng-template mat-tab-label>
+                    {{activityTypes.AppNotification + 's'}}
+                    <!-- <span class="activity_count">{{activityCount.AppNotificationCount}}</span> -->
+                </ng-template>
+                <div *ngTemplateOutlet="activities"></div>
+            </mat-tab>
+
+        </mat-tab-group>
+        <div class="pagination">
+            <div class="col-md-12 no_padding">
+                <mat-paginator #paginator [length]="totalRecords" [pageIndex]="pageIndex"
+                    [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" [showFirstLastButtons]="true">
+                </mat-paginator>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <ng-template #activities>
+        <div class="small_space"></div>
+        <div *ngIf="isDataExists">
+            <div class="media activity_bg center_flex_alignment" *ngFor="let activity of allActivities" [ngClass]="{
+                    'dark_green': activity.ActivityTypeID == activityType.Appointment,
+                    'reddish': activity.ActivityTypeID == activityType.Call,
+                    'blue': activity.ActivityTypeID == activityType.Email,
+                    'perpall': activity.ActivityTypeID == activityType.Note,
+                    'task': activity.ActivityTypeID == activityType.Task,
+                    'sms': activity.ActivityTypeID == activityType.SMS,
+                    'app_noti': activity.ActivityTypeID == activityType.AppNotification,
+                    'achievement': activity.ActivityTypeID == activityType.Achievement,
+                    'membermessage': activity.ActivityTypeID == activityType.MemberMessage
+                 }">
+                <div class="mr-3">
+                    <div class="activity_icons" [ngClass]="{
+                                                    'appointment': activity.ActivityTypeID == activityType.Appointment,
+                                                    'call': activity.ActivityTypeID == activityType.Call,
+                                                    'email': activity.ActivityTypeID == activityType.Email,
+                                                    'note': activity.ActivityTypeID == activityType.Note,
+                                                    'task': activity.ActivityTypeID == activityType.Task,
+                                                    'sms': activity.ActivityTypeID == activityType.SMS,
+                                                    'app_notification': activity.ActivityTypeID == activityType.AppNotification,
+                                                    'achievement': activity.ActivityTypeID == activityType.Achievement,
+                                                    'membermessage': activity.ActivityTypeID == activityType.MemberMessage
+                                                 }">
+                        <i class="fal" aria-hidden="true" [ngClass]="{
+                                                 'fa-calendar-alt': activity.ActivityTypeID == activityType.Appointment,
+                                                 'fa-phone fa-flip-horizontal': activity.ActivityTypeID == activityType.Call,
+                                                 'fa-envelope': activity.ActivityTypeID == activityType.Email,
+                                                 'fa-clipboard': activity.ActivityTypeID == activityType.Note,
+                                                 'fa-calendar': activity.ActivityTypeID == activityType.Task,
+                                                 'fa-sms': activity.ActivityTypeID == activityType.SMS,
+                                                 'fa-calendar-check': activity.ActivityTypeID == activityType.AppNotification,
+                                                 'fa-trophy': activity.ActivityTypeID == activityType.Achievement,
+                                                 'fa-comment-alt-dots': activity.ActivityTypeID == activityType.MemberMessage
+                                            }"></i>
+                    </div>
+                </div>
+                <div class="media-body activity_note">
+                    <div class="row">
+                        <div class="col-md-12 no_padding">
+                            <div class="floating">
+                                <h6 [ngClass]="{
+                                    'dark_green_title': activity.ActivityTypeID == activityType.Appointment,
+                                    'reddish_title': activity.ActivityTypeID == activityType.Call,
+                                    'blue_title': activity.ActivityTypeID == activityType.Email,
+                                    'perpall_title': activity.ActivityTypeID == activityType.Note,
+                                    'task_title': activity.ActivityTypeID == activityType.Task,
+                                    'sms_title': activity.ActivityTypeID == activityType.SMS,
+                                    'app_noti_title': activity.ActivityTypeID == activityType.AppNotification,
+                                    'achievement_title': activity.ActivityTypeID == activityType.Achievement,
+                                    'membermessage_title': activity.ActivityTypeID == activityType.MemberMessage
+                                 }">{{activity.ActivityTypeName}}  {{activity.ActivitySubTypeName? '(' + activity.ActivitySubTypeName +')':''}}</h6>
+                            </div>
+                            <div class="act_icon text-right">
+                                <div class="activity_actions">
+                                    <span class="genral_cls"
+                                        *ngIf="(activity.ActivityOutComeName && activity.ActivityOutComeName !== '')">
+                                        <b>Outcome:</b> {{activity.ActivityOutComeName}}
+                                    </span>
+
+                                    <span class="genral_cls"
+                                        *ngIf="(activity.ActivityWhatNextName && activity.ActivityWhatNextName !== '')">
+                                        <b>What Next:</b> {{activity.ActivityWhatNextName}}
+                                    </span>
+
+                                    <span class="genral_cls"
+                                        *ngIf="(activity.ContactReasonTypeName && activity.ContactReasonTypeName !== '')">
+                                        <b>Contact Reason:</b> {{activity.ContactReasonTypeName}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <h4 class="activity_title">
+                                {{activity.ActivityTypeID == activityType.Email ? activity.EmailSubject :
+                                activity.Title}}
+                            </h4>
+                            <p
+                                [innerHTML]="activity.ActivityTypeID == activityType.Email ? activity.EmailBody : activity.Description">
+                            </p>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12 no_padding">
+                            <h5 class="floating">
+                                <span *ngIf="(activity.AssignedToStaffName && activity.AssignedToStaffName !== '')">
+                                    <i class="fal fa-user"></i> &nbsp; Assigned To:
+                                    {{activity.AssignedToStaffName}}
+                                </span>
+                                <span *ngIf="activity.CreatedOn">
+                                    <i class="fal fa-clock"></i> Created On:
+                                    {{activity.CreatedOn | customdate : dateFormat}}
+                                    {{activity.StartTime?'-':''}}
+                                    {{activity.StartTime}}
+                                </span>
+                                <span *ngIf="activity.ModifiedOn">
+                                    <i class="fal fa-clock"></i> Last Updated:
+                                    {{activity.ModifiedOn | customdate : dateFormat}}
+                                    {{activity.ModifiedTime?'-':''}}
+                                    {{activity.ModifiedTime}}
+                                </span>
+                                <span *ngIf="activity.FollowUpDate">
+                                    <i class="fal fa-calendar" aria-hidden="true"></i> Follow Up:
+                                    {{activity.FollowUpDate
+                                    | customdate : dateFormat}} 
+                                    {{activity.FollowUpEndTime?'-':''}}
+                                    {{activity.FollowUpEndTime | branchTimeFormat}} &nbsp;
+                                </span>
+                            </h5>
+                            <div class="grid_rows float-right act_icon">
+                                <h5 style="padding: 0 !important;">
+                                    <!--Mark As Complete Icon-->
+                                    <span class="green"
+                                        *ngIf="(!personInfo?.IsWalkedIn) && isSaveActivityAllowed && activity.ShowMarkAsDoneIcon">
+                                        <a matTooltip="Mark as done" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip"
+                                            (click)="onActivityMarkAsDone(activity.CustomerActivityID, activity.ActivityTypeID)"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-check-circle"></i>
+                                        </a>
+                                    </span>
+                                    <!-- Edit Task Icon -->
+                                    <span class="blue"
+                                        *ngIf="(!personInfo?.IsWalkedIn) && isSaveActivityAllowed && activity.ShowEditIcon">
+                                        <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                            (click)="onEditActivity(activity.CustomerActivityID, activity.ActivityTypeID,activity.ActivitySubTypeID)"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-edit"></i>
+                                        </a>
+                                    </span>
+                                    <!--View Member Icon-->
+                                    <span class="brown" *ngIf="activity.ShowViewIcon">
+                                        <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                            (click)="onViewTaskActivity(activity.CustomerActivityID)"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-book-open"></i>
+                                        </a>
+                                    </span>
+                                    <!--Delete Icon-->
+                                    <span class="red_del"
+                                        *ngIf="(!personInfo?.IsWalkedIn) && isSaveActivityAllowed && activity.ShowDeleteIcon">
+                                        <a matTooltip="Delete" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip"
+                                            (click)="onDeleteActivity(activity.CustomerActivityID, activity.ActivityTypeID)"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-trash-alt"></i>
+                                        </a>
+                                    </span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

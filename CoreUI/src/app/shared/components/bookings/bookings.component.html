@@ -1,0 +1,205 @@
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#booking_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+            </div>
+        </div>
+        <div id="booking_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col" *ngIf="isPOSBooking">
+                        <div class="field_label">
+                            <h5>Customer</h5>
+                        </div>
+                        <input type="text" placeholder="Search Customer" [value]="personName" matInput
+                            [formControl]="searchPerson" [matAutocomplete]="auto" maxlength="30"
+                            [(ngModel)]="clearCustomerInput">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                            (optionSelected)='getSelectedClient($event.option.value)'>
+                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                <span class="client_name">{{ person.FirstName + ' ' + person.LastName }}</span>
+                                <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                <br>
+                                <span class="client_info">{{ person.Mobile }}</span>
+                                <br>
+                                <span class="client_info">{{ person.Email }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </div>
+                    <div class="col" *ngIf="!isPOSBooking && hasClassesAndServices">
+                        <div class="field_label">
+                            <h5>Type</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="dropdown" class="bg_transparent" name="PersonTypeID"
+                                [(ngModel)]="searchBooked.ItemTypeID" #PersonTypeID="ngModel">
+                                <option *ngFor="let objitem of itemType" [ngValue]="objitem.ItemTypeID">
+                                    {{objitem.ItemTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-5 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #bookingRef>
+                        </dateto-datefrom>
+                    </div>
+                    <div class="col">
+                        <div class="field_label">
+                            <h5>Booking Status</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="dropdown" class="bg_transparent" name="PersonTypeID"
+                                [(ngModel)]="searchBooked.BookingStatusTypeID">
+                                <option [ngValue]="0">All</option>
+                                <option *ngFor="let bookingStatus of bookingStatusList" [ngValue]="bookingStatus.value">
+                                    {{bookingStatus.text}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="full_width_btn">
+                            <button class="reset" type="reset" (click)="onReset()">Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="full_width_btn">
+                            <button type="button" class="search" (click)="onSearchBooking()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto cstm_scroll_bg">
+        <div class="responsive_grid_header">
+    <div class="row grid_header">
+        <div class="col">
+            <h5>
+                <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                    Booking
+                    <i class="fas fa-sort-alt"></i>
+                  </a>
+            </h5>
+
+        </div>
+         <!-- <div class="col">
+            <h5>Sale No</h5>
+        </div> -->
+        <div class="col">
+            <h5>Staff</h5>
+        </div>
+        <div class="col" *ngIf="isPOSBooking">
+            <h5>Customer</h5>
+        </div>
+        <div class="col">
+            <h5>Booking Type</h5>
+        </div>
+        <div class="col">
+            <h5>Item Name</h5>
+        </div>
+        <div class="col">
+            <h5>Item Price</h5>
+        </div>
+        <div class="col">
+            <h5>
+                <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
+                    Payment Status
+                    <i class="fas fa-sort-alt"></i>
+                  </a>
+            </h5>
+        </div>
+        <div class="col">
+            <h5>
+                <a class="sort_icon" (click)="changeSorting(3)" href="javascript:void(0)">
+                    Booking Status
+                    <i class="fas fa-sort-alt"></i>
+                  </a>
+            </h5>
+        </div>
+        <div class="col">
+            <h5>
+                <a class="sort_icon" (click)="changeSorting(4)" href="javascript:void(0)">
+                    Created Date
+                    <i class="fas fa-sort-alt"></i>
+                  </a>
+            </h5>
+        </div>
+        <div class="col" *ngIf="isPOSBookingAction">
+            <h5>Actions</h5>
+        </div>
+    </div>
+    <div id="grid" *ngIf="isDataExists">
+        <div class="row grid_rows " *ngFor="let  bookedClassObj of bookedClasses">
+            <div class="col" *ngIf="isPOSBooking">
+                <h5>{{bookedClassObj.StartDate | customdate: dateFormat }} <br><span class="booking_time">
+                    {{bookedClassObj.StartTime | branchTimeFormat  }} - {{ bookedClassObj.EndTime | branchTimeFormat  }} {{ ' - ' +
+                        (bookedClassObj.ServiceDuration + bookedClassObj.CleaningTime) + ' ' + 'Minute(s)' }}</span> </h5>
+            </div>
+            <div class="col" *ngIf="!isPOSBooking">
+                <h5>{{bookedClassObj.StartDate | customdate: dateFormat }} <br><span class="booking_time">
+                        {{bookedClassObj.StartTime | branchTimeFormat  }} - {{ bookedClassObj.EndTime | branchTimeFormat  }} {{ ' - ' +
+                        bookedClassObj.ServiceDuration + ' ' + 'Minute(s)'}}</span> </h5>
+            </div>
+            <!-- <div class="col">
+                <h5>{{bookedClassObj.BillNo }}</h5>
+            </div> -->
+            <div class="col">
+                <h5>{{bookedClassObj.StaffName}}</h5>
+            </div>
+            <div class="col" *ngIf="isPOSBooking">
+                <h5>{{bookedClassObj.CustomerName}}<span class="badges_layout">{{bookedClassObj.CustomerTypeName}}</span></h5>
+            </div>
+            <div class="col">
+                <h5>
+                  <span *ngIf="bookedClassObj.CustomerMembershipID && bookedClassObj.CustomerMembershipID > 0"
+                      matTooltip="{{bookedClassObj.MembershipName}}" matTooltipPosition="above" class="ml-0" matTooltipClass="custom-tooltip">
+                      <i class="far fa-crown light-blue-color font-size-small"></i>
+                  </span>&nbsp; {{bookedClassObj.ItemTypeName}}
+                </h5>
+            </div>
+            <div class="col">
+                <h5>{{bookedClassObj.ItemName}}</h5>
+            </div>
+            <div class="col">
+                <h5 *ngIf="bookedClassObj.ItemPrice && bookedClassObj.ItemPrice > 0">{{bookedClassObj.ItemPrice | currency: currencyFormat}}</h5>
+                <h5 *ngIf="!bookedClassObj.ItemPrice || bookedClassObj.ItemPrice == 0">Free</h5>
+            </div>
+            <div class="col">
+                <h5>{{bookedClassObj.SaleStatusTypeName }}</h5>
+            </div>
+            <div class="col">
+                <h5>{{bookedClassObj.BookingStatusTypeName }}</h5>
+            </div>
+            <div class="col">
+                <h5> {{bookedClassObj.CreatedOn | customdate: dateFormat}}</h5>
+            </div>
+            <div class="col" *ngIf="isPOSBookingAction" >
+                <span *ngIf="!bookedClassObj.IsWalkedIn && bookedClassObj.HasForm" class="us-dot green" [ngClass]="{'non-mandatory-status' : bookedClassObj.HasUnSubmittedForm && !bookedClassObj.HasMandatoryForm, 'mandatory-status' : bookedClassObj.HasUnSubmittedForm && bookedClassObj.HasMandatoryForm }">
+                    <a matTooltip="Fill Forms" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                    class="us-pos-dot" (click)="openSubmitCustomerFormDialog(bookedClassObj)" href="javascript:void(0)">
+                       <i class="fal fa-file-signature"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

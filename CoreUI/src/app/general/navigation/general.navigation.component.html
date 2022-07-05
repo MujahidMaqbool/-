@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li>
+                <a class="nav-link" role="tab" *ngIf="allowedPages.homeDashboard" [routerLinkActive]="['active']"  [routerLink]="['dashboard']">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" role="tab" *ngIf="allowedPages.isTodaytaskView" [routerLinkActive]="['active']" [routerLink]="['today']">
+                    Today
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" role="tab" *ngIf="allowedPages.isNotificationView" [routerLinkActive]="['active']" [routerLink]="['notifications']">
+                    Notifications
+                </a>
+            </li>
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+</div>
+
+<div class="col-md-12 no_padding">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,339 @@
+<div class="white_bg">
+  <div id="search_accordion">
+    <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+      data-target="#sale_histroy_search">
+      <div class="col-md-12">
+        <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+
+      </div>
+    </div>
+    <div id="sale_histroy_search" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row flex-end">
+          <div class="col-md-12">
+            <div class="filter_seprator"></div>
+          </div>
+          <div class="col-lg-3 col-md-3" *ngIf="isPOSHistory">
+            <div class="field_label">
+              <h5>Customer</h5>
+            </div>
+            <input type="text" placeholder="Search Customer" tabindex="1" [value]="personName" matInput
+              [formControl]="searchPerson" [matAutocomplete]="auto" maxlength="30" [(ngModel)]="clearCustomerInput">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+              (optionSelected)='getSelectedClient($event.option.value)'>
+              <mat-option *ngFor="let person of allPerson" [value]="person">
+                <span class="client_name">{{ person.FirstName + ' ' + person.LastName }}</span>
+                <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                <br>
+                <span class="client_info">{{ person.Mobile }}</span>
+                <br>
+                <span class="client_info">{{ person.Email }}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+
+          <div class="col-lg-3 col-md-3">
+            <div class="field_label">
+              <h5>Invoice Number</h5>
+            </div>
+            <div style="display: flex;">
+              <span
+                class="invoice_prefix">INV-{{companyID > 9 ? companyID : '0' + companyID}}-{{branchID > 9 ? branchID : '0' + branchID}}-</span>
+              <input type="number" name="SaleInvoiceNumber" tabindex="2" [(ngModel)]="searchSaleHistory.SaleInvoiceNumber"
+                #SaleNo="ngModel" maxlength="28" placeholder="Enter Invoice Number" class="form-control"
+                pattern="^(0|[1-9]\d*)(\.\d+)?$" (keydown)="preventCharactersForNumber($event)"
+                (ngModelChange)="onNumberChange('INV', $event)" />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3">
+            <div class="field_label">
+              <h5>Payment Number</h5>
+            </div>
+            <div style="display: flex;">
+              <span
+                class="invoice_prefix">PMT-{{companyID > 9 ? companyID : '0' + companyID}}-{{branchID > 9 ? branchID : '0' + branchID}}-</span>
+              <input type="number" name="SaleInvoicePaymentNumber" tabindex="3" [(ngModel)]="searchSaleHistory.SaleInvoicePaymentNumber" #Billno="ngModel"
+                maxlength="28" placeholder="Enter Payment Number" class="form-control" pattern="^(0|[1-9]\d*)(\.\d+)?$"
+                (keydown)="preventCharactersForNumber($event)" (ngModelChange)="onNumberChange('PMT', $event)" />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3">
+            <div class="field_label">
+              <h5>Payment Status</h5>
+            </div>
+            <div class="select_label">
+              <select name="SaleStatusTypeID" [(ngModel)]="searchSaleHistory.SaleStatusTypeID"
+                #SaleStatusTypeID="ngModel">
+                <option [value]='0'>All</option>
+                <option *ngFor="let saleStatusType of saleStatusTypeList" [value]="saleStatusType.SaleStatusTypeID">
+                  {{saleStatusType.SaleStatusTypeName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3">
+            <div class="field_label">
+              <h5>Source</h5>
+            </div>
+            <div class="select_label">
+              <select name="SaleStatusTypeID" [(ngModel)]="searchSaleHistory.AppSourceTypeID"
+                #SaleStatusTypeID="ngModel">
+                <option [value]='0'>All</option>
+                <option *ngFor="let appSourceType of appSourceTypeList" [value]="appSourceType.AppSourceTypeID">
+                  {{appSourceType.AppSourceTypeName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 no_padding input_heading">
+            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToPlaceHolder]="dateToPlaceHolder"
+              [dateFromPlaceHolder]="dateFromPlaceHolder" #todayTaskRef>
+            </dateto-datefrom>
+          </div>
+          <div class="col-lg-3 col-md-3">
+            <div class="field_label">
+              <h5>Terms</h5>
+            </div>
+            <div class="select_label">
+              <select name="InvoiceDueTerm" [(ngModel)]="searchSaleHistory.InvoiceDueTerm"
+                #InvoiceDueTerm="ngModel">
+                <option *ngFor="let term of termsTypeList" [value]="term.InvoiceDueTerm">
+                  {{term.InvoiceDueTermName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 no_padding mt-3" [ngClass]="{'offset-lg-3 offset-md-0': !isPOSHistory}">
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <div class="full_width_btn">
+                  <button class="reset" type="reset" (click)="onReset()">Reset</button>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div class="full_width_btn">
+                  <button type="button" class="search" (click)="onSearchSaleHistory()">Search</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Invoices List Start -->
+
+<div class="grids_white_bg">
+  <div class="cstm_scroll_bg overflow-auto master_row collapse-dd">
+    <div class="row grid_header mob-scroll-grid">
+      <div class="col">
+        <h5></h5>
+      </div>
+      <div class="col">
+        <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+          <h5>Date <i class="fas fa-sort-alt"></i></h5>
+        </a>
+      </div>
+      <div class="col">
+        <h5>Reference Number</h5>
+      </div>
+      <div class="col">
+        <h5>Total Due</h5>
+      </div>
+      <div class="col">
+        <h5>Total Paid</h5>
+      </div>
+      <div class="col">
+        <h5>Adjustment</h5>
+      </div>
+      <div class="col">
+        <h5>Balance Due</h5>
+      </div>
+      <div class="col">
+        <h5>Payment Status</h5>
+      </div>
+      <div class="col">
+        <h5>Source</h5>
+      </div>
+      <div class="col">
+        <h5>Payment Method</h5>
+      </div>
+      <div class="col">
+        <h5>Due Date</h5>
+      </div>
+      <div class="col text-center">
+        <h5>Actions</h5>
+      </div>
+    </div>
+
+    <ng-container>
+      <ng-container *ngFor="let saleItem of invoiceSaleHistory ; let i = index">
+        <div class="row grid_rows grid_parent_rows_pos mob-scroll-grid">
+          <div class="col">
+            <div class="cst-collapse" data-toggle="collapse" attr.data-target="#collapseExample{{i}}"
+            aria-expanded="false" attr.aria-label="collapseExample{{i}}"  *ngIf="saleItem.InvoiceSaleDetail.length > 0">
+            <h5>{{saleItem.CustomerName}}</h5>
+          </div>
+          <h5 *ngIf="saleItem.InvoiceSaleDetail == null || saleItem.InvoiceSaleDetail?.length == 0">{{saleItem.CustomerName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{saleItem.CreationDate | customdate: dateFormat}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{saleItem.ReferenceNumber}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{saleItem.TotalDue | currency: currencyFormat}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{saleItem.TotalPaid | currency: currencyFormat}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{saleItem.Adjustment | currency: currencyFormat}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{saleItem.BalanceAmount | currency: currencyFormat}}</h5>
+          </div>
+          <div class="col">
+            <h5><span *ngIf="saleItem.IsOverDue"
+              matTooltip="Overdue" class="ps-overdue" matTooltipPosition="above"
+              matTooltipClass="custom-tooltip">
+            </span> {{saleItem.StatusTypeName}}</h5>
+
+          </div>
+          <div class="col">
+            <h5>{{saleItem.AppSourceTypeName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{saleItem.PaymentMethod}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{saleItem.InvoiceDueDate | customdate: dateFormat}}</h5>
+          </div>
+          <div class="col text-center">
+            <span class="blue"
+            *ngIf="saleItem.IsSaleLogsExist">
+                  <a href="javascript:void(0)" matTooltip="Activity Log" matTooltipClass="custom-tooltip" matTooltipPosition="above"
+                    (click)="openDialogForActivityLog(saleItem)"><i class="fal fa-search-plus"></i></a> &nbsp;
+            </span>
+            <span class="blue">
+            <a href="javascript:void(0)" matTooltip="View" matTooltipClass="custom-tooltip" matTooltipPosition="above"
+              (click)="onViewSaleDetail(saleItem, enuSaleDetailType.InvoiceDetail)"><i class="fal fa-book-open"></i></a></span> &nbsp;
+              <span class="blue">
+            <a href="javascript:void(0)" matTooltip="PDF" matTooltipClass="custom-tooltip" matTooltipPosition="above"
+              (click)="onDownloadSaleDetail(saleItem)"><i class="fal fa-file-pdf"></i></a></span>&nbsp;
+
+            <span class="red_del"
+              *ngIf="saleItem.TotalPaid >= 1 && enum_SaleCurrentStatusType.WrittenOff != saleItem.StatusTypeID">
+              <a matTooltip="Refund" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                (click)="onOpenRefundPaymentDialog(saleItem)">
+                <i class="fal fa-undo"></i>
+              </a>&nbsp;
+            </span>
+
+            <!-- <span  class="blue"
+               *ngIf="(saleItem.TotalPaid < saleItem.TotalDue) && saleItem.BalanceAmount > 0 && enum_SaleCurrentStatusType.Closed != saleItem.StatusTypeID && ((saleItem.TotalDue + saleItem.Adjustment) != 0) && !saleItem.IsMembershipSale  && enum_SaleCurrentStatusType.WrittenOff != saleItem.StatusTypeID  && enum_SaleCurrentStatusType.Voided != saleItem.StatusTypeID"> -->
+               <span  class="blue"
+               *ngIf="(saleItem.TotalPaid < saleItem.TotalDue) && saleItem.BalanceAmount > 0 && enum_SaleCurrentStatusType.Closed != saleItem.StatusTypeID && !saleItem.IsMembershipSale  && enum_SaleCurrentStatusType.WrittenOff != saleItem.StatusTypeID  && enum_SaleCurrentStatusType.Voided != saleItem.StatusTypeID">
+               <!-- <span  class="blue"
+               *ngIf="saleItem.BalanceAmount > 0">  -->
+               <a (click)="onOpenPartialPaymentDialog(saleItem)" matTooltip="Process" matTooltipPosition="above"
+                matTooltipClass="custom-tooltip">
+                <i class=" fal fa-hand-holding-usd"></i>
+              </a>&nbsp;
+            </span>
+
+            <!-- <span class="blue"
+              *ngIf="saleItem.BalanceAmount > 0 && !saleItem.IsMembershipSale && enum_SaleCurrentStatusType.WrittenOff != saleItem.StatusTypeID"> -->
+              <span class="blue"
+              *ngIf="saleItem.BalanceAmount > 0 && !saleItem.IsMembershipSale && enum_SaleCurrentStatusType.WrittenOff != saleItem.StatusTypeID && enum_SaleCurrentStatusType.Voided != saleItem.StatusTypeID">
+              <a matTooltip="Write off" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                (click)="onOpenBadDebtDialog(saleItem)">
+                <i class="fal fa-eraser"></i>
+              </a>&nbsp;
+            </span>
+
+            <!-- <span class="red_del"
+              *ngIf="saleItem.TotalPrice == saleItem.BalanceAmount && saleItem.InvoiceSaleDetail == 0 && enum_SaleCurrentStatusType.Voided != saleItem.SaleStatusTypeId"> -->
+              <span class="red_del"
+              *ngIf="saleItem.TotalPaid == 0 && saleItem.InvoiceSaleDetail.length == 0 && enum_SaleCurrentStatusType.Voided != saleItem.StatusTypeID && enum_SaleCurrentStatusType.WrittenOff != saleItem.StatusTypeID">
+              <a matTooltip="Void" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                (click)="onOpenSaleVoidDialog(saleItem)">
+                <i class="fal fa-ban"></i>
+              </a>
+            </span>
+          </div>
+        </div>
+
+        <ng-container *ngFor="let saleDetail of saleItem.InvoiceSaleDetail">
+          <div class="row grid_rows grid_child_rows mob-scroll-grid collapse show" id="collapseExample{{i}}">
+            <div class="col">
+              <h5></h5>
+            </div>
+            <div class="col">
+              <h5>{{saleDetail.CreationDate | customdate: dateFormat}}</h5>
+            </div>
+            <div class="col">
+              <h5>{{saleDetail.ReferenceNumber}}</h5>
+            </div>
+            <div class="col">
+              <h5></h5>
+            </div>
+            <div class="col">
+              <h5>
+                {{saleDetail.TotalPaid | currency: currencyFormat}}
+              </h5>
+            </div>
+            <div class="col">
+              <h5>{{saleDetail.Adjustment | currency: currencyFormat}}</h5>
+            </div>
+            <div class="col">
+              <h5></h5>
+            </div>
+            <div class="col">
+              <h5>
+                {{saleDetail.StatusTypeName }}
+              </h5>
+            </div>
+            <div class="col">
+              <h5></h5>
+            </div>
+            <div class="col">
+              <h5>{{saleDetail.PaymentMethod }} </h5>
+
+            </div>
+            <div class="col">
+              <h5></h5>
+            </div>
+            <div class="col text-center">
+                <span class="blue" *ngIf="saleDetail.StatusTypeID == enumSalePaymentStatusType.PMTRefund">
+                    <a href="javascript:void(0)" matTooltip="View" matTooltipClass="custom-tooltip" matTooltipPosition="above"
+                      (click)="onViewSaleDetail(saleDetail, enuSaleDetailType.RefundDetail)"><i class="fal fa-book-open"></i>
+                    </a>
+                </span>
+
+            </div>
+
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <div *ngIf="!isDataExists">
+      <div class="row grid_rows">
+        <div class="col-md-12 col-sm-12 text-center">
+          <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>
+
+<!-- New Invoices List End -->

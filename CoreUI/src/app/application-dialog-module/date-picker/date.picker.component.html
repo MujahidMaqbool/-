@@ -1,0 +1,12 @@
+<div [ngClass]="{
+            'has-danger': dateElement.invalid
+        }">
+    <input matInput class="form-control date-picker " [ngClass]="{'pos_search': isPOSSearch, 'cancel_membershipnow': isCancelMembershipNow}"
+        [matDatepicker]="picker" [matDatepickerFilter]="disabledDatesFilter" placeholder="Select a Date" (click)="onOpenCalendar(picker)" name="{{name}}" tabindex="{{tabindex}}"
+        [required]="required" [min]="minDate" [max]="maxDate" [(ngModel)]="date" [disabled]="disabled" (ngModelChange)="onCalendarDateChange()"
+        #datePickerElement #dateElement="ngModel"
+          readonly>
+    <span *ngIf="showClear && date" (click)="onClearDate()" class="clear_dob"></span>
+    <mat-datepicker #picker="matDatepicker" (closed)="onCloseCalendar($event)"></mat-datepicker>
+    <mat-datepicker-toggle class="date-picker-toggle" [ngClass]="{'nolabel_calander': isPOSSearch}" matSuffix [for]="picker"></mat-datepicker-toggle>
+</div>

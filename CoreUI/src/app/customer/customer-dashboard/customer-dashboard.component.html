@@ -1,0 +1,1173 @@
+<div class="row" *ngIf="allowedPages.MemberSnapshot">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg zero_margin">
+            <div class="dashboard_header">
+                <h3>Members Snapshot</h3>
+            </div>
+            <div class="small_space"></div>
+            <div class="row" *ngIf="isMemberSnapshotExists">
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item blue_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-users"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.TotalActiveMember}} </h2>
+                            <h6>Total Active Members</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-user-check"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.MoreThanFiftyTimes}}</h2>
+                            <h6>Members attended more than fifty times</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-user-plus"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.IncreasingFrequency}} </h2>
+                            <h6>Members increasing attendance frequency</h6>
+                            <div class="snapshot-info"><span
+                                    matTooltip="Compared to the previous 30 days, this is a list of members who have started using the branch more."
+                                    class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-file-signature"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.LastSevenDaysAttended}} </h2>
+                            <h6>Members who have attended over the last seven days</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item blue_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-user-clock"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.TotalMemberships}} </h2>
+                            <h6>Membership started in the last seven days</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item red_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.ExpiredContractPeriod}} </h2>
+                            <h6>Members on red alert</h6>
+                            <div class="snapshot-info">
+                                <span
+                                    matTooltip="There has been a significant decrease in the member's attendance to your branch over the last 2 months"
+                                    class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item blue_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-bed"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.SleepingMembers}} </h2>
+                            <h6>Sleeping Members</h6>
+                            <div class="snapshot-info">
+                                <span matTooltip="These members have not attended your branch for more than three months but they have an active
+                                membership." class="info_tip" matTooltipPosition="above"
+                                    matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item green_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-recycle"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.MembershipRetention}}</h2>
+                            <h6>Members on fourteen day retention alert</h6>
+                            <div class="snapshot-info">
+                                <span matTooltip="The following section shows the number of members which have a membership that is going to expire within
+                                the past 14 days." class="info_tip" matTooltipPosition="above"
+                                    matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item red_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fal fa-credit-card"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.MissedPayment}}</h2>
+                            <h6>Members who have missed a payment within the last 90 days</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5ths col-xs-6 ">
+                    <div class="snapshot_item red_border">
+                        <div class="snapshot_bar_icon center_flex_alignment">
+                            <i class="fab fa-cc-mastercard"></i>
+                        </div>
+                        <div class="text-center snapshot_data_bar center_col_flex_alignment">
+                            <h2> {{memberSnapshot.PrePayMembers}} </h2>
+                            <h6>Pre-pay membership expiring in 30 days</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg ">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Highlights
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.TopServices)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3" *ngIf="allowedPages.MembershipStatusDashboard">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Membership Plan</h5>
+                            </div>
+                        </div>
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topMembershipObj of iTopMembershipPlans">
+                                <h5>{{topMembershipObj.ItemName}}</h5>
+                                <h6>{{topMembershipObj.TotalCount }}</h6>
+                            </div>
+                            <div *ngIf="!iTopMembershipPlansExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="allowedPages.ClassesDashboard">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Classes</h5>
+                            </div>
+                        </div>
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topClassesObj of iTopClasses">
+                                <h5>{{topClassesObj.ItemName}}
+                                </h5>
+                                <h6>{{topClassesObj.TotalCount}}</h6>
+                            </div>
+
+                            <div *ngIf="!isTopClassDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="allowedPages.ServiceDashboard">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Services</h5>
+                            </div>
+                        </div>
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topServiceObj of iTopServices">
+                                <h5>{{topServiceObj.ItemName}}
+                                </h5>
+                                <h6>{{topServiceObj.TotalCount}}</h6>
+                            </div>
+
+                            <div *ngIf="!isTopServicesDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Products</h5>
+                            </div>
+                        </div>
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topProductObj of iTopProducts">
+                                <h5>{{topProductObj.ItemName}}
+                                </h5>
+                                <h6>{{topProductObj.TotalCount}}</h6>
+                            </div>
+
+                            <div *ngIf="!isTopProductsDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="allowedPages.ClassesDashboard">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Employees For Classes</h5>
+                            </div>
+                        </div>
+
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topEmployeeClassObj of iTopEmployeeClasses">
+                                <h5>{{topEmployeeClassObj.PersonName}}</h5>
+                                <h6>{{topEmployeeClassObj.TotalCount}}</h6>
+                            </div>
+
+                            <div *ngIf="!isTopEmployeeClassDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="allowedPages.ServiceDashboard">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Employees For Services</h5>
+                            </div>
+                        </div>
+
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topEmployeeServiceObj of iTopEmployeeServices">
+                                <h5>{{topEmployeeServiceObj.PersonName}}</h5>
+                                <h6>{{topEmployeeServiceObj.TotalCount }}</h6>
+                            </div>
+
+                            <div *ngIf="!isTopEmployeeServicesDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Revenue Generation</h5>
+                            </div>
+                        </div>
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topRevenueObj of iTopRevenueGeneration">
+                                <h5>{{topRevenueObj.ItemType}}</h5>
+                                <h6>{{topRevenueObj.TotalSale | currency: currencyFormat}}</h6>
+                            </div>
+                            <div *ngIf="!isTopRevenueExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Sales By Payment Method</h5>
+                            </div>
+                        </div>
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let salesbyChannelObj of iSalesbyChannel">
+                                <h5>{{salesbyChannelObj.SaleTypeName}}</h5>
+                                <h6>{{salesbyChannelObj.NetSale | currency: currencyFormat}}</h6>
+                            </div>
+                            <div *ngIf="!isTopSalesDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row" *ngIf="allowedPages.clubVisits">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-6 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Visits in Club
+                        <span
+                            matTooltip="Member visits are recorded by marking attendance from the member attendance check in."
+                            class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+
+                    <dateto-datefrom  (sendDateTo)="reciviedDateToForVisitInClub($event)"
+                        #vcfromToDateComoRef>
+                    </dateto-datefrom>
+
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3">
+                    <div class="select_label" *ngIf="showCustomerTypeStatus">
+                        <select class="form-control" name="ItemTypeID"
+                            [(ngModel)]="memberDashboardSearchParam.ClubVisitsCustomerTypeID"
+                            #ClubVisitsCustomerTypeID="ngModel" (change)="getMemberClubVisits()">
+                            <option *ngFor="let itemType of CustomerTypes" [ngValue]="itemType.CustomerTypeID"
+                                style="font-size: 16px;">
+                                {{itemType.CustomerTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <dx-chart id="chart" [dataSource]="memberClubVisits" *ngIf="ismembersClubVisitsExists" [valueAxis]="[
+                    {
+                        name: 'TotalClient',
+                        position: 'left',
+                        showZero: true,
+                        min:0,
+                        tickInterval: 1,
+                        valueMarginsEnabled: false
+                    }]">
+                        <dxi-series *ngFor="let visit of clubVisits" [valueField]="visit.value" [name]="visit.name"
+                            color="#E97C82">
+                        </dxi-series>
+                        <dxo-common-series-settings argumentField="Time" value="TotalClient" type="spline">
+                            <dxo-point hoverMode="allArgumentPoints"></dxo-point>
+                        </dxo-common-series-settings>
+                        <dxo-argument-axis [axisDivisionFactor]="60" [valueMarginsEnabled]="false" [allowDecimals]="false"
+                        discreteAxisDivisionMode="crossLabels">
+                        <dxo-grid [visible]="true"></dxo-grid>
+                      </dxo-argument-axis>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="bottom">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="VisitInClubcustomizeTooltip">
+                        </dxo-tooltip>
+                    </dx-chart>
+
+
+                    <div *ngIf="!ismembersClubVisitsExists">
+                        <div class="row services">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-6 col-md-3 col-sm-3">
+                    <h5>
+                        Net Sales
+                        <span matTooltip="Information related to sales revenue divided between branch and your online platforms"
+            class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+              class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+
+                <div class="col-xl-4  col-md-6 col-sm-6">
+
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.MembersActivities)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-3">
+                    <div class="select_label" *ngIf="showCustomerTypeStatus">
+                        <select class="form-control" name="saleRevenueCustomerTypeID"
+                            [(ngModel)]="memberDashboardSearchParam.saleRevenueCustomerTypeID"
+                            #saleRevenueCustomerTypeID="ngModel" (change)="getMemberSale()">
+                            <option *ngFor="let itemType of CustomerTypes" [ngValue]="itemType.CustomerTypeID"
+                                style="font-size: 16px;">
+                                {{itemType.CustomerTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row small_space">
+                <div class="col">
+                    <div class="boder_box">
+                        <h4>
+                            Total Sales
+                            <span class="float-right"> {{totalSaleCount.TotalSale | currency:currencyFormat}}</span>
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="MemberTotalRevenue"
+                            *ngIf="isTotalRevenueExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeMemberhipBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+                        <div>
+                            <div *ngIf="!isTotalRevenueExists">
+                                <div class="row services">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col" *ngIf="allowedPages.MembershipStatusDashboard">
+                    <div class="boder_box">
+                        <h4>
+                            Memberships
+                            <span class="float-right">
+                                {{totalSaleCount.TotalMembershipSale | currency:currencyFormat}}</span>
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel"
+                            [dataSource]="memberMemberShipBooking" *ngIf="ismemberShipBookingExists"
+                            [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeMemberhipBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+                        <div>
+                            <div *ngIf="!ismemberShipBookingExists">
+                                <div class="row services">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col" *ngIf="allowedPages.ClassesDashboard">
+                    <div class="boder_box">
+                        <h4>
+                            Classes
+                            <span class="float-right">{{totalSaleCount.TotalClassSale | currency:currencyFormat}}</span>
+                        </h4>
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberBooking"
+                            *ngIf="ismemberBookingExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeClassesBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+                        <div>
+                            <div *ngIf="!ismemberBookingExists">
+                                <div class="row services">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col" *ngIf="allowedPages.ServiceDashboard">
+                    <div class="boder_box">
+                        <h4>
+                            Services
+                            <span
+                                class="float-right">{{totalSaleCount.TotalServiceSale | currency:currencyFormat}}</span>
+                        </h4>
+
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberServices"
+                            *ngIf="ismemberServicesExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeServicesLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeServicesBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+
+                        <div *ngIf="!ismemberServicesExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+                <div class="col" *ngIf="allowedPages.ProductDashboard">
+                    <div class="boder_box">
+                        <h4>
+                            Products
+                            <span
+                                class="float-right">{{totalSaleCount.TotalProductSale | currency:currencyFormat}}</span>
+                        </h4>
+
+                        <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberProducts"
+                            *ngIf="ismemberProductsExists" [customizePoint]="memberBookingcustomizePoint">
+                            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+                            <dxi-series argumentField="SaleType" valueField="TotalSale">
+                                <dxo-small-values-grouping mode="topN"></dxo-small-values-grouping>
+                                <dxo-label [visible]="true" format="#,##0.00" [customizeText]="customizeBookingLabel">
+                                    <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                                </dxo-label>
+                            </dxi-series>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeProductBookingTooltip">
+                            </dxo-tooltip>
+                        </dx-pie-chart>
+
+                        <div *ngIf="!ismemberProductsExists">
+                            <div class="row services">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Net Sales Summary
+                        <span matTooltip="Select dates to view the summary of the net sales of the branch divided between item types."
+            class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+              class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+
+                <div class="col-lg-4 col-md-7 col-sm-7">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.SalesBreakdown)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <div class="select_label" *ngIf="showCustomerTypeStatus">
+                        <select class="form-control" name="SaleBreakDownCustomerTypeID"
+                            [(ngModel)]="memberDashboardSearchParam.SaleBreakDownCustomerTypeID"
+                            #SaleBreakDownCustomerTypeID="ngModel" (change)="onSalesBraekDownDateChange()">
+                            <option *ngFor="let itemType of CustomerTypes" [ngValue]="itemType.CustomerTypeID"
+                                style="font-size: 16px;">
+                                {{itemType.CustomerTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12" *ngIf="isSalesBreakDownDataExists">
+                    <dx-chart id="chart" [dataSource]="iSalesBreakDownServices" palette="soft">
+                        <dxi-series valueField="Membership" name="Membership" color="#FEBF2C"></dxi-series>
+                        <dxi-series valueField="Class" name="Classes" color="#CBC87B"></dxi-series>
+                        <dxi-series valueField="Product" name="Products" color="#9AB57E"></dxi-series>
+                        <dxi-series valueField="Service" name="Services" color="#E55253"></dxi-series>
+                        <dxo-common-series-settings argumentField="Month" type="bar" [ignoreEmptyPoints]="true">
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="BreakDowncustomizeTooltip">
+                        </dxo-tooltip>
+                        <!-- <dxo-export [enabled]="true"></dxo-export> -->
+                    </dx-chart>
+                </div>
+            </div>
+            <div *ngIf="!isSalesBreakDownDataExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Reward Program Summary -->
+
+<div class="row" *ngIf="allowedPages.RewardProgramSummary">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-9 col-md-8 col-sm-7">
+                    <h5>Reward Program Summary</h5>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-5">
+                    <div class="select_label">
+                        <select name="RewardProgramID" [(ngModel)]="selectedRewardProgramID"
+                            (ngModelChange)="getRewardProgramSummary()">
+                            <option [ngValue]="null">All Reward Programs</option>
+                            <option *ngFor="let branchRewardProgram of branchRewardProgramList"
+                                [ngValue]="branchRewardProgram.RewardProgramID">{{branchRewardProgram.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row small_space">
+                <div class="col-lg-4 col-sm-12 mb-2 mb-lg-0">
+                    <div class="rp-dashboard light_gren">
+                        <div><i class="fal fa-users"></i></div>
+                        <div class="pr-2">
+                            <p>Customers Enrolled</p>
+                            <h3>{{rewardProgramSummaryViewModel.CustomersEnrolled}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12 mb-2 mb-lg-0">
+                    <div class="rp-dashboard light_blu">
+                        <div><i class="fal fa-trophy-alt"></i></div>
+                        <div class="pr-2">
+                            <p>Points Balance</p>
+                            <h3>{{rewardProgramSummaryViewModel.PointBalance }}</h3>
+                        </div>
+                        <div class="rp-currency-value">
+                            <p>Currency Value</p>
+                            <h3>{{rewardProgramSummaryViewModel.CurrencyValuePB | currency: currencySymbol }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="rp-dashboard light_orange">
+                        <div><i class="fal fa-hands-usd"></i></div>
+                        <div class="pr-2">
+                            <p>Points Redeemed in Last 30 Days</p>
+                            <h3>{{rewardProgramSummaryViewModel.PointRedeemIn30Days }}</h3>
+                        </div>
+                        <div class="rp-currency-value">
+                            <p>Currency Value</p>
+                            <h3>{{rewardProgramSummaryViewModel.CurrencyValuePR | currency: currencySymbol }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row small_space"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-12 parallel_grid padding_right mob-pr-15">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-3">
+                    <h5>Birthdays Coming Up
+                    </h5>
+                </div>
+
+                <div class="col-lg-7 col-md-7 col-sm-7">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.CustomerBirthday)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <div class="select_label" *ngIf="showCustomerTypeStatus">
+                        <select class="form-control" name="ItemTypeID" [(ngModel)]="memberDashboardSearchParam.isClient"
+                            #isClient="ngModel" (change)="getCustomerBirthdays()">
+                            <option *ngFor="let itemType of customerTypeBirthdayStatus" [ngValue]="itemType.value"
+                                style="font-size: 16px;">
+                                {{itemType.text}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="dash_cstm_height email_editor cstm_scroll_bg" *ngIf="isCustomerBirthdaysExist">
+                <div class="mob-scroll-grid">
+                    <div class="dash_gird_header">
+                        <div class="row">
+                            <div class="col">
+                                <h4>Customer Name</h4>
+                            </div>
+                            <!-- <div class="col">
+                                <h4></h4>
+                            </div> -->
+                            <div class="col">
+                                <h4>Created Date</h4>
+                            </div>
+                            <div class="col">
+                                <h4>Birthday</h4>
+                            </div>
+                            <div class="col">
+                                <h4>Countdown</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dash_gird_row" *ngFor="let customerBirthdayObj of customerBirthdays">
+                        <div class="row">
+                            <div class="col column_flex_alignment">
+                                <img src="{{ customerBirthdayObj.ImagePath}}" class="rounded-circle">
+                                <h4>{{customerBirthdayObj.CustomerName}}</h4>
+                                <div class="badgae-tag">{{customerBirthdayObj.CustomerType}}</div>
+                            </div>
+                            <!-- <div class="col text-center">
+                                <div class="badgae-tag">{{customerBirthdayObj.CustomerType}}</div>
+                            </div> -->
+                            <div class="col">
+                                <h4>{{customerBirthdayObj.CreatedOn | customdate : 'MMM d'}} </h4>
+                            </div>
+                            <div class="col">
+                                <h4>{{customerBirthdayObj.BirthDate | customdate : 'MMM d'}}</h4>
+                            </div>
+                            <div class="col">
+                                <h4>{{customerBirthdayObj.CountDown}}</h4>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dash_cstm_height cstm_scroll_bg" *ngIf="!isCustomerBirthdaysExist">
+                <div class="row services">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6 col-md-12 parallel_grid padding_right mob-pr-15" *ngIf="allowedPages.MembershipByExpiryDate">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-12">
+                    <h5>
+                        Memberships By Expiry Date
+                        <span matTooltip="Information related to members and the remaining length of their contracts"
+                            class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+            </div>
+            <dx-chart id="chart" [dataSource]="membershipsExpiry" [rotated]="true">
+                <dxi-series type="bar" argumentField="DurationDescription" valueField="Duration" color="#BFE1FF">
+                    <dxo-label [visible]="true" backgroundColor="#BCD556"></dxo-label>
+                </dxi-series>
+                <dxo-common-series-settings argumentField="DurationDescription" type="stackedBar" color="#BFE1FF">
+                </dxo-common-series-settings>
+                <dxo-legend verticalAlignment="bottom" [visible]="false" horizontalAlignment="center"
+                    itemTextPosition="top">
+                </dxo-legend>
+                <dxo-tooltip [enabled]="true" [customizeTooltip]="membershipExpiryCustomizeTooltip" location="edge">
+                </dxo-tooltip>
+            </dx-chart>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-12 parallel_grid padding_right mob-parallel-off"
+        *ngIf="allowedPages.MembershipStatusDashboard">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-4 col-md-4 col-sm-3">
+                    <h5>
+                        Membership by Status
+                        <span matTooltip="Information related to current status of memberships that were created between the filtered date range."
+            class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+              class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-9">
+
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.MembersbyStatus)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+
+                    <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="memberByStatus"
+                        *ngIf="isMemberByStatusExists" [customizePoint]="memberByStatuscustomizePoint">
+                        <dxi-series argumentField="MembershipStatusTypeName" valueField="Total">
+                            <dxo-label [visible]="true">
+                                <dxo-connector [visible]="true"></dxo-connector>
+                            </dxo-label>
+                        </dxi-series>
+                        <dxo-legend horizontalAlignment="left" verticalAlignment="top"></dxo-legend>
+                        <dxo-tooltip [enabled]="true">
+                        </dxo-tooltip>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="MembershipbyStatuscustomizeTooltip">
+                        </dxo-tooltip>
+                    </dx-pie-chart>
+
+                    <div *ngIf="!isMemberByStatusExists">
+                        <div class="row services">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 parallel_grid mob-parallel-off">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <h5>
+                        Customer Mobile Application
+                    </h5>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+
+                    <dx-pie-chart id="pie" type="doughnut" palette="Soft Pastel" [dataSource]="customerApplication"
+                        *ngIf="isCustomerApllicationsExist" [customizePoint]="customerApplicationcustomizePoint">
+                        <dxi-series argumentField="AppTypeName" valueField="Total">
+                            <dxo-label [visible]="true">
+                                <dxo-connector [visible]="true"></dxo-connector>
+                            </dxo-label>
+                        </dxi-series>
+                        <dxo-legend horizontalAlignment="left" verticalAlignment="top"></dxo-legend>
+                        <dxo-tooltip [enabled]="true" >
+                        </dxo-tooltip>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="CustomerMobileApplicationcustomizeTooltip">
+                        </dxo-tooltip>
+                    </dx-pie-chart>
+
+                    <div *ngIf="!isCustomerApllicationsExist">
+                        <div class="row services">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row" *ngIf="allowedPages.ServiceBookedAndAttendance">
+    <div class="col-md-12 col-sm-12">
+
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-6 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Services Booked Vs Service Completed
+                    </h5>
+                </div>
+
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.ServicesBookedandCompleted)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <div class="select_label" *ngIf="showCustomerTypeStatus">
+                        <select class="form-control" name="ItemTypeID"
+                            [(ngModel)]="memberDashboardSearchParam.ServiceBookedCustomerTypeID"
+                            #ServiceBookedCustomerTypeID="ngModel" (change)="getMemberServicesandAttendance()">
+                            <option *ngFor="let itemType of CustomerTypes" [ngValue]="itemType.CustomerTypeID"
+                                style="font-size: 16px;">
+                                {{itemType.CustomerTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row small_space">
+                <div class="col-md-12 col-sm-12" *ngIf="isMemberServiceAndAttendanceExists">
+
+                    <dx-chart id="chart" [dataSource]="memberServiceAndAttendance" palette="Harmony Light" [valueAxis]="[{
+                name: 'TotalAttendance',
+                position: 'left',
+                min:0,
+                tickInterval: 2
+            }, {
+                name: 'TotalSaleService',
+                position: 'right',
+                showZero: true,
+                min:0,
+                tickInterval: 2,
+                valueMarginsEnabled: false
+            }]">
+                        <dxo-argument-axis>
+                            <dxo-label overlappingBehavior="stagger"></dxo-label>
+                        </dxo-argument-axis>
+                        <dxo-tooltip [enabled]="true" location="edge" argumentField="Time"
+                            [customizeTooltip]="bookedVsCompletedTooltip">
+                        </dxo-tooltip>
+                        <dxo-common-series-settings argumentField="Time">
+                        </dxo-common-series-settings>
+                        <dxi-series type="bar" valueField="TotalSaleService" name="Booked" color="#BCD556">
+                        </dxi-series>
+                        <dxi-series type="spline" valueField="TotalAttendance" name="Completed" color="#E97C82">
+                        </dxi-series>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                    </dx-chart>
+
+
+                </div>
+            </div>
+
+            <div *ngIf="!isMemberServiceAndAttendanceExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row" *ngIf="allowedPages.MembershipPayments">
+    <div class="col-md-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-6 col-lg-4 col-md-3 col-sm-3">
+                    <h5>
+                        Membership Payments
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.Payment)" #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
+                    <div class="select_label">
+                        <select name="paymentStatus" [(ngModel)]="memberDashboardSearchParam.paymentStatusTypeID"
+                            (change)="onMemberPaymentDateChange()">
+                            <option *ngFor="let payment of PaymentStatusType" [value]="payment.value">{{payment.text}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div id="chart-demo">
+                        <dx-chart palette="Harmony Light" [dataSource]="memberPayment">
+
+                            <dxi-series valueField="Paid" argumentField="MonthNames" name="Paid" color="#BCD556">
+                            </dxi-series>
+                            <dxi-series valueField="Failed" argumentField="MonthNames" name="Failed" color="#FEBF05">
+                            </dxi-series>
+                            <dxi-series valueField="PendingBankSubmission" argumentField="MonthNames"
+                                name="Pending Bank Submission" color="#E97C82">
+                            </dxi-series>
+                            <!-- <dxi-series valueField="y65"  argumentField="country" name="Overdue"></dxi-series> -->
+                            <dxo-common-series-settings [type]="types[0]">
+                                <!-- <dxo-label [visible]="true" [format]="{type: 'decimal', precision: '0'}"></dxo-label>   -->
+                            </dxo-common-series-settings>
+                            <dxo-margin [bottom]="20"></dxo-margin>
+                            <dxo-argument-axis [valueMarginsEnabled]="false" type="discrete"></dxo-argument-axis>
+                            <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                            </dxo-legend>
+                            <dxo-tooltip [enabled]="true" [customizeTooltip]="memberPaymentcustomizeTooltip">
+                            </dxo-tooltip>
+
+                        </dx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="allowedPages.ServiceDashboard">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-6 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        New vs Returning Client
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.NewvsReturningClient)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3">
+                    <div class="select_label">
+                        <select name="paymentStatus" [(ngModel)]="memberDashboardSearchParam.AppSourceTypeID"
+                            (change)="getNewvsReturningClient()">
+                            <option *ngFor="let payment of newVsReturningClientType" [value]="payment.value">
+                                {{payment.text}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row small_space" *ngIf="isNewvsReturningExists">
+                <div class="col-md-3 col-sm-3 no_padding" style="border-right: 1px solid #E5E5E5;">
+                    <div class="most_lead">
+                        <h6>In House New <span class="light_green_bg  color_size float-right"></span></h6>
+                    </div>
+                    <div class="most_lead">
+                        <h6>In House Returning <span class="bg_sky_light color_size float-right"></span></h6>
+                    </div>
+                    <div class="most_lead">
+                        <h6>OnLine New <span class="bg_pink color_size float-right"></span></h6>
+                    </div>
+                    <div class="most_lead">
+                        <h6>OnLine Returning <span class="bg_yellow color_size float-right"></span></h6>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    <dx-chart id="chart" [dataSource]="iNewvsReturningClient" [valueAxis]="[
+                    {
+                        tickInterval: 1
+                    }]">
+                        <dxi-series valueField="InHouseNew" name="In House New" color="#BCD556"></dxi-series>
+                        <dxi-series valueField="InHouseReturning" name="In House Returning" color="#BFE1FF">
+                        </dxi-series>
+                        <dxi-series valueField="OnlineNew" name="Online New" color="#E97C82"></dxi-series>
+                        <dxi-series valueField="OnlineReturning" name="Online Returning" color="#FEBF05"></dxi-series>
+                        <dxo-common-series-settings argumentField="Date" format="dateFormatforReturingClient"
+                            type="stackedBar">
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" [visible]="false"
+                            itemTextPosition="top">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true">
+                        </dxo-tooltip>
+                    </dx-chart>
+                </div>
+            </div>
+
+            <div *ngIf="!isNewvsReturningExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="scheduler_space"></div>

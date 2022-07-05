@@ -1,0 +1,75 @@
+﻿<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-content medium_popup">
+        <div class="popup_header">
+            <h4>Mark as Done</h4>
+            <!-- <div class="col-6 col-sm-6">
+                <button type="button" class="close" mat-button (click)="closePopup()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> -->
+        </div>
+        <div class="popup_content">
+            <div class="popup_white_bg info_bar_bg">
+                <staff-basic-info [personTypeInfo]="personInfo" *ngIf="shouldGetPersonInfo"></staff-basic-info>
+            </div>
+            <div class="popup_white_bg">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="field_label">
+                            <h5>Title</h5>
+                        </div>
+                        <input type="text" class="form-control bg_transparent" name="taskTitle" [ngModel]="taskModel.task.Title"
+                            [disabled]="true" />
+
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="field_label">
+                            <h5>Date</h5>
+                        </div>
+                        <date-picker [showClear]="false" [value]="followUpDate" (onValueChange)="onDateChange(followUpDate)"
+                        [disabled]="true"  [min]="taskMinDate" [max]="taskMaxDate" [name]="'FollowUpDate'"></date-picker>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="field_label">
+                            <h5>Priority</h5>
+                        </div>
+                        <input type="text" class="form-control bg_transparent" name="taskPriorityTypeName" [ngModel]="taskModel.task.PriorityTypeName "
+                            [disabled]="true" />
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="field_label">
+                            <h5>Start Time</h5>
+                        </div>
+                        <input type="text" class="form-control bg_transparent" name="taskPriorityTypeName" [ngModel]="taskModel.task.FollowUpStartTime | branchTimeFormat"
+                            [disabled]="true" />
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="field_label">
+                            <h5>End Time</h5>
+                        </div>
+                        <input type="text" class="form-control bg_transparent
+                        " name="taskPriorityTypeName"
+                            [ngModel]="taskModel.task.FollowUpEndTime | branchTimeFormat" [disabled]="true" />
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="field_label">
+                            <h5>Description</h5>
+                        </div>
+                        <textarea class="form-control form-control-description bg_transparent
+                        "
+                            rows="6" [(ngModel)]="staffTaskMarkAsDoneModel.CompletionNote" name="Description"
+                            #Description="ngModel" maxlength="500" [disabled]="true"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row popup_footer">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right">
+                    <button (click)="closePopup()">Cancel</button>
+                    <button class="save primary_blue_btn" (click)="saveStatus()">Mark as Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

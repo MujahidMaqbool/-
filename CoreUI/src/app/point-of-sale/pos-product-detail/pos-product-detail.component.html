@@ -1,0 +1,76 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>{{product?.ProductName}}</h4>
+            </div>
+            <div class="popup_content no_padding">
+                <div class="row service_detail">
+                    <div class="col-md-6 parallel_grid pr-md-0">
+                        <div class="product-detail-box pos_item waiting_icon zero_border">
+                            <div class="service_cart_info">
+                                <img src="{{product?.ProductImages && product?.ProductImages.length > 0 ? product.ProductImages[0].ServerImageAddress + product.ProductImages[0].ImagePath : productPlaceHolderImage}}" class="img-responsive img-height-full" (error)="onErrorImage()" alt="logo">
+                                <i *ngIf="!saleProductVariantAvailability.IsConsumed && saleProductVariantAvailability.IsMembershipBenefit && !saleProductVariantAvailability.IsBenefitsSuspended && saleProductVariantAvailability.RemainingSession != 0"
+                                        class="fal fa-crown"></i>
+                                <!-- <i class="fal fa-crown"></i>
+                                <div class="off_dis">{{product.DiscountPercentage}} Off</div>
+                                 -->
+                                 <div *ngIf="!saleProductVariantAvailability.IsConsumed && saleProductVariantAvailability.IsMembershipBenefit && !saleProductVariantAvailability.IsFree && !saleProductVariantAvailability.IsBenefitsSuspended && saleProductVariantAvailability.RemainingSession != 0 &&  saleProductVariantAvailability.DiscountPercentage < 100"
+                                  class="off_dis">{{saleProductVariantAvailability.DiscountPercentage}}% off</div>
+                                <div *ngIf="(!saleProductVariantAvailability.IsConsumed && saleProductVariantAvailability.IsMembershipBenefit) && (saleProductVariantAvailability.IsFree || saleProductVariantAvailability.DiscountPercentage == 100 && !saleProductVariantAvailability.IsBenefitsSuspended && saleProductVariantAvailability.RemainingSession != 0)"
+                                    class="off_dis">Free</div>
+                            </div>
+                            <div class="img_blow_cont inneer-scroll">
+                              <p>{{product?.ProductDescription}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 parallel_grid">
+                        <div class="product-detail-box">
+                          <form #productForm="ngForm" >
+                            <div class="product-details-variants" [ngClass]="{'stock-avail': isCheckAvaliblity,
+                            'inneer-scroll': product.ProductAttributes.length > 4}">
+                              <ng-container *ngFor="let productAttribute of product.ProductAttributes; let i = index">
+                                  <h5 class="field_label">{{productAttribute?.AttributeName}}</h5>
+                                  <div class=" select_label" id="id{{i}}">
+                                      <select  id="selectid{{i}}" name="Attributename{{i}}" (change)="onSelectAttributeValue($event.target.value,i)"  >
+                                          <option [value] = 0 >Select {{productAttribute?.AttributeName}}</option>
+                                          <option *ngFor="let attributeValue of productAttribute.ProductAttributeValues; let j =index" [value]="attributeValue.AttributeValueID">{{attributeValue?.AttributeValue}}</option>
+                                      </select>
+                                  </div>
+                              </ng-container>
+                            </div>
+                          </form>
+
+                            <!-- isOutOfStock -->
+                            <ng-container *ngIf="isCheckAvaliblity">
+                              <div class="wait_list_btn price-details">
+                                <p class="text-right" *ngIf="saleProductVariantAvailability.HasTrackInventory"
+                                 [ngClass]=" saleProductVariantAvailability.IsStockBelowThreshold || saleProductVariantAvailability.ReorderThreshold >= saleProductVariantAvailability?.CurrentStock ? 'red-color': 'light-blue-color'">{{saleProductVariantAvailability.HasTrackInventory ? saleProductVariantAvailability.CurrentStock +' In Stock': ''}} </p>
+                                <span class="payment_btn total_bill">Price
+                                  <span class="float-right semi_bold" *ngIf="isBenefit">
+                                    <span class="remove_price font-size-small dark-color">{{saleProductVariantAvailability.Price | currency: currencySymbol}}</span> &nbsp;
+                                    {{itemTotalPrice | currency: currencySymbol}}
+                                  </span>
+                                  <span class="float-right semi_bold" *ngIf="!isBenefit">
+                                    {{saleProductVariantAvailability.Price | currency: currencySymbol}}
+                                  </span>
+                                </span>
+                              </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="row popup_footer pt-0">
+            <div class="offset-md-6 col-md-6">
+                <div class="row cancel_btn">
+                    <button class="col ml-0" type="button" mat-button (click)="onClose()">Close</button>
+                    <button class="col save primary_blue_btn" [disabled]="sortedAttributeValues.length === 0" (click)="isCheckAvaliblity === false ? onCheckProductVariantAvalibility() : onAddToCartProduct()">{{isCheckAvaliblity === false ?  'Check Availability' : 'Add' }}</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

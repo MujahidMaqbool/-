@@ -1,0 +1,21 @@
+﻿<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_large_popup">
+            <div class="popup_header">
+                <h4>Add Lead</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg ">
+                <save-lead #addLeadRef (closeDialog)="onCloseDialog($event)" [popupMode]="true"></save-lead>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog(true)">Close</button>
+                        <button type="submit" class="save primary_blue_btn"
+                            (click)="onSaveLead()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

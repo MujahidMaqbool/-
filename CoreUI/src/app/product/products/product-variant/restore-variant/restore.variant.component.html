@@ -1,0 +1,57 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>Restore Variant</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+
+                <div class="popup_white_bg  info-content">
+                    <div class="row ">
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3>Variant</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="of-height-250  cstm_scroll_bg">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="checkbox checkbox-success d-flex"><input id="checkboxName"
+                                        [(ngModel)]="selectAll" name="checkboxName" type="checkbox"
+                                        (click)="selectAllVaraints($event)">
+                                    <label for="checkboxName" class="font-medium">All</label>
+                                </div>
+
+                                <div class="checkbox checkbox-success d-flex pt-2"
+                                    *ngFor="let variant of productVairantList.VariantInfo;let i = index">
+                                    <input id="{{'checkbox'+i}}" name="{{'checkbox'+i}}" type="checkbox"
+                                        [(ngModel)]="variant.isSelected"
+                                        (click)="onSingleSelect($event,variant.ProductVariantID,i)">
+                                    <label for="{{'checkbox'+i}}" class="font-medium">
+                                        {{productVairantList.ProductName}}
+                                        <span class="variant-des">{{variant.ProductVariantName}}</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pb-2">
+                            <div class="border-space">
+                            </div>
+                            <p class="pb-0 font-medium">{{productVariantBranchIDList.length}}
+                                {{productVariantBranchIDList.length > 1? 'Records Selected' : 'Record Selected'}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Cancel</button>
+                        <button type="button" class="save primary_blue_btn" [disabled]="productVariantBranchIDList.length == 0"
+                            (click)="restoreArchivedVariants()">Restore</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

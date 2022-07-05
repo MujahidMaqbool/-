@@ -1,0 +1,161 @@
+<div class="row" *ngIf="allowedPages.Save_Brand">
+  <div class="col-md-12">
+      <div class="company_btn float-right">
+          <button tabindex="0" (click)="onSaveBrand(null)">Add Brand</button>
+      </div>
+  </div>
+</div>
+<div class="white_bg">
+  <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion" data-target="#product_search">
+          <div class="col-md-12">
+              <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+          </div>
+      </div>
+      <div id="product_search" class="panel-collapse collapse">
+          <div class="panel-body">
+              <div class="row align-items-end">
+                  <div class="col-md-12">
+                      <div class="filter_seprator"></div>
+                  </div>
+
+                  <div class="col-md-3 col-sm-6">
+                      <h5 class="field_label">Product Brand</h5>
+                      <input type="text" class="form-control" name="productBrand" id="productBrand" maxlength="50" [(ngModel)]="brandSearchParameter.BrandName">
+                  </div>
+
+                  <div class="col-md-3 col-sm-6">
+                      <h5 class="field_label">Type</h5>
+                      <div class="select_label">
+                        <select class="form-control" name="brandType" id="brandType" [(ngModel)]="brandSearchParameter.BrandTypeID" [disabled]="!isMultiBranch">
+                          <option [ngValue]= null>
+                            All
+                          </option>
+                          <option *ngFor="let typeObj of typeList" [ngValue]="typeObj.TypeID">
+                            {{typeObj.TypeName}}
+                          </option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                      <h5 class="field_label">Category</h5>
+                      <div class="select_label">
+                            <select class="form-control" name="brandCategory" id="brandCategory" [(ngModel)]="brandSearchParameter.BrandCategoryID">
+                              <option [ngValue]= null>
+                                All
+                              </option>
+                              <option *ngFor="let category of productCategoryList" [ngValue]="category.ProductCategoryID">
+                                {{category.CategoryTypeName}}
+                              </option>
+                            </select>
+                      </div>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                      <h5 class="field_label">Status</h5>
+                      <div class="select_label">
+                            <select class="form-control" name="brandStatus" id="brandStatus" [(ngModel)]="brandSearchParameter.BrandStatusID">
+                              <option [ngValue]= null>
+                                All
+                              </option>
+                              <option *ngFor="let status of statusList" [ngValue]="status.StatusID">
+                                {{status.StatusName}}
+                              </option>
+                            </select>
+                      </div>
+                  </div>
+                  <div class="offset-lg-9 offset-md-6 col-lg-3 col-md-6 space no_padding">
+                      <div class="row">
+                          <div class="col-md-6 col-sm-6">
+                              <button class="reset_btn" type="button" (click)="resetSearchFilter()" id="resetbutton" name="resetbutton">
+                                  Reset</button>
+                          </div>
+                          <div class="col-md-6 col-sm-6 full_width_btn">
+                              <button class="search" type="button" (click)="searchBrandList()" id="searchButton" name="searchButton">
+                                  Search</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="grids_white_bg">
+  <div class="overflow-auto">
+  <div class="row grid_header responsive_grid_header">
+      <div class="col">
+          <h5>
+              <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                Product Brand
+                  <i class="fas fa-sort-alt" aria-hidden="true"></i>
+              </a>
+          </h5>
+      </div>
+      <div class="col">
+        <h5>
+          <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+            Type
+              <i class="fas fa-sort-alt" aria-hidden="true"></i>
+          </a>
+        </h5>
+      </div>
+      <div class="col">
+          <h5>Category</h5>
+      </div>
+      <div class="col text-center">
+          <h5>Status</h5>
+      </div>
+      <div class="col text-center">
+          <h5>Actions</h5>
+      </div>
+  </div>
+  <div id="grid" *ngIf="isDataExists">
+
+
+      <div class="row grid_rows responsive_grid_rows" *ngFor="let brand Of brandList;  let i = index">
+          <div class="col">
+            <h5>{{brand.BrandName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{brand.BrandTypeName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{brand.ProductCategoryCount > 1? brand.ProductCategoryCount + " " + "Categories" : brand.ProductCategoryCount + " " + "Category" }} </h5>
+          </div>
+          <div class="col text-center">
+            <h5>{{brand.IsActive ? 'Active' : 'Inactive'}}</h5>
+          </div>
+          <div class="col text-center">
+              <h5>
+                  <span class="blue" *ngIf="allowedPages.View_Brand">
+                      <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewBrandDetail(brand.BrandID)"
+                          href="javascript:void(0)">
+                          <i class="fal fa-book-open"></i>
+                      </a>
+                  </span>
+                  <span class="blue" *ngIf="allowedPages.Save_Brand && brand.HasBranchPermission">
+                      <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="onSaveBrand(brand.BrandID)"
+                      href="javascript:void(0)">
+                          <i class="fal fa-edit"></i>
+                      </a>
+                  </span>
+                  <span class="red_del" *ngIf="brand.HasBranchPermission && allowedPages.Delete_Brand">
+                      <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="onDeleteBrand(brand.BrandID)"
+                          href="javascript:void(0)">
+                          <i class="fal fa-trash-alt"></i>
+                      </a>
+                  </span>
+              </h5>
+          </div>
+      </div>
+  </div>
+  <div *ngIf="!isDataExists">
+      <div class="row grid_rows ">
+          <div class="col-md-12 col-sm-12 text-center">
+              <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+          </div>
+      </div>
+  </div>
+</div>
+<app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

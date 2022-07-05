@@ -1,0 +1,99 @@
+<div aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-lg">
+    <div class="medium_popup">
+      <div class="popup_header">
+        <h4>SMS</h4>
+      </div>
+      <form #smsForm="ngForm" novalidate>
+        <div class="popup_content cstm_scroll_bg">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 no_padding">
+              <div class="alert alert-danger" *ngIf="smsForm.invalid && isInvalidData">
+                {{messages.Validation.Info_Required}}
+              </div>
+            </div>
+            <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+              <div *ngTemplateOutlet="personinfo"></div>
+            </div>
+          </div>
+          <div class="row popup_white_bg">
+            <div class="col-md-12">
+              <h5 class="form_label">Title</h5>
+              <div [ngClass]="{
+                  'has-danger': smsTitle.invalid && (smsTitle.dirty || smsTitle.touched || isInvalidData),
+                  'has-success': smsTitle.valid && (smsTitle.dirty || smsTitle.touched)
+                  }">
+                <input class="form-control" type="text" name="txtSmsTitle" [(ngModel)]="smsModel.Title"
+                  #smsTitle="ngModel" maxlength="50" required />
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="smsModel.CustomerTypeID != 4">
+              <div class="field_label">
+                <h5>Contact Reason {{smsModel.CustomerTypeID}}</h5>
+              </div>
+              <div class="select_label">
+                <select class="form-control" name="smsContactReason" [(ngModel)]="smsModel.ContactReasonTypeID"
+                  #smsContactReasonTypeID="ngModel" required>
+                  <option *ngFor="let contactReasonType of contactReasonTypeList"
+                    [ngValue]="contactReasonType.ContactReasonTypeID">
+                    {{contactReasonType.ContactReasonTypeName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div [ngClass]='smsModel.CustomerTypeID != 4 ? "col-md-6 col-sm-6": "col-md-12 col-sm-12"'>
+              <div class="field_label">
+                <h5>SMS Template</h5>
+              </div>
+              <div class="select_label">
+                <select class="form-control" name="txtTemplateTextID" [(ngModel)]="selectedTemplate"
+                  (ngModelChange)="onTemplateChange(selectedTemplate)" #templateTextID="ngModel">
+                  <option *ngFor="let template of templateTextList" [ngValue]="template">
+                    {{template.TemplateTextTitle}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-6">
+              <h5 class="field_label">Text <span>(Remaining Characters: {{ 160 -
+                                  smsModel?.Description?.length }})</span></h5>
+              <div [ngClass]="{
+                                     'has-danger': smsDescription.invalid && (smsDescription.dirty || smsDescription.touched || isInvalidData),
+                                     'has-success': smsDescription.valid && (smsDescription.dirty || smsDescription.touched)
+                                   }">
+                <textarea class="form-control form-control-description" rows="9" name="smsDescription"
+                  #smsDescription="ngModel" [(ngModel)]="smsModel.Description" maxlength="160" required>
+                              </textarea>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-6">
+             <p class="alert alert-warning sms-warning" *ngIf="!personInfo.Mobile" ><i class="fal fa-exclamation-circle"></i> Please add mobile number in {{msgType}} profile to send SMS</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row popup_footer">
+            <div class="col-md-12">
+              <div class="cancel_btn float-right">
+                <button type="button" (click)="onCloseDialog()">Cancel</button>
+                <button *ngIf="personInfo.Mobile" class="save primary_blue_btn" (click)="saveSMS()">Send</button>
+              </div>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Person Info Template -->
+<ng-template #personinfo>
+    <div class="view_main_bar sl-limit-content">
+        <div class="column_flex_alignment">
+            <div><i class="fal fa-user"></i></div>
+            <h2 class="view_main_bar_item">{{personInfo.Name}}</h2>
+        </div>
+        <div><span class="enq_status">{{personInfo.CustomerTypeName}}</span></div>
+        <div *ngIf='personInfo.Mobile' class="view_main_bar_item"><i class="fal fa-mobile-alt"></i> {{personInfo.Mobile}}</div>
+        <div class="view_main_bar_item"><i class="fal fa-envelope"></i> {{personInfo.Email}}</div>
+    </div>
+</ng-template>

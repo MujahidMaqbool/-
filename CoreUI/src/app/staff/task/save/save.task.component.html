@@ -1,0 +1,142 @@
+<div aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Task</h4>
+            </div>
+            <div class="activity_tabs_popup">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="alert alert-danger" *ngIf="isInvalidData">
+                            {{messages.Validation.Info_Required}}
+                        </div>
+                        <div class="alert alert-danger" *ngIf="isInvalidEndTime">
+                            {{messages.Validation.Endtime_Should_Greater_Than_Start_Time}}
+                        </div>
+                        <div class="alert alert-danger" *ngIf="isInvalidFollowUpDate">
+                            {{messages.Validation.FollowupDate_Cannot_Be_Past}}
+                        </div>
+                    </div>
+                </div>
+                <form #taskForm="ngForm" novalidate>
+                    <div class="row popup_content">
+                        <div class="col-lg-4 col-md-5 col-sm-6 padding_left parallel_grid">
+                            <div class="sch_white_bg mob-sm-sche">
+                                <div class="sch_white_bg smallScheduler">
+                                    <one-day-scheduler [dayViewFormat]="dayViewFormat"
+                                        [schedulerTimeFormat]="schedulerTimeFormat"
+                                        [staffID]="taskModel.AssignedToStaffID" [startDate]="taskModel.FollowUpDate"
+                                        (onStartDateChange)="onTaskDateChange($event)"></one-day-scheduler>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-6 parallel_grid sch_white_bg">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="view_main_bar border_bottom">
+                                        <div class="activity_person_info">
+                                            <i class="fal fa-user"></i><span>{{personInfo.Name}}</span>
+                                        </div>
+                                        <div class="activity_person_info">
+                                            <i class="fal fa-mobile"></i><span>{{personInfo.Mobile}}</span>
+                                        </div>
+                                        <div class="activity_person_info">
+                                            <i class="fal fa-envelope"></i><span>{{personInfo.Email}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="field_label">
+                                        <h5>Title</h5>
+                                    </div>
+                                    <div [ngClass]="{
+                                           'has-danger': taskTitle.invalid && (taskTitle.dirty || taskTitle.touched || isInvalidData),
+                                           'has-sucess': taskTitle.valid && (taskTitle.dirty || taskTitle.touched)
+                                        }">
+                                        <input type="text" class="form-control" name="taskTitle"
+                                            [(ngModel)]="taskModel.Title" #taskTitle="ngModel" maxlength="50"
+                                            required />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field_label">
+                                        <h5>Start Time</h5>
+                                    </div>
+                                    <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat"
+                                        [interval]="15" (onValueChanged)="onTaskStartTimeChanged($event)"
+                                        [(value)]="schedulerStartTime" [useMaskBehavior]="true"></dx-date-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field_label">
+                                        <h5>End Time</h5>
+                                    </div>
+                                    <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat"
+                                        [interval]="15" (onValueChanged)="onTaskEndTimeChanged($event)"
+                                        [(value)]="schedulerEndTime" [useMaskBehavior]="true"></dx-date-box>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="field_label">
+                                        <h5>Priority</h5>
+                                    </div>
+                                    <div [ngClass]="{
+                                            'has-danger': priortyTypeID.invalid && (priortyTypeID.dirty || priortyTypeID.touched || isInvalidData),
+                                            'has-success': priortyTypeID.valid && (priortyTypeID.dirty || priortyTypeID.touched)
+                                        }">
+                                        <div class="select_label">
+                                            <select class="form-control" name="priortyTypeID"
+                                                [(ngModel)]="taskModel.PriorityTypeID" #priortyTypeID="ngModel"
+                                                required>
+                                                <option *ngFor="let priorityType of priorityTypeList"
+                                                    [ngValue]="priorityType.PriorityTypeID">
+                                                    {{priorityType.PriorityTypeName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6" *ngIf="staffList">
+                                    <div class="field_label">
+                                        <h5>Assign to</h5>
+                                    </div>
+                                    <div [ngClass]="{
+                                           'has-danger': assignedToStaffID.invalid && (assignedToStaffID.dirty || assignedToStaffID.touched || isInvalidData),
+                                           'has-success': assignedToStaffID.valid && (assignedToStaffID.dirty || assignedToStaffID.touched)
+                                        }">
+                                        <div class="select_label">
+                                            <select class="form-control" name="assignedTo"
+                                                [(ngModel)]="taskModel.AssignedToStaffID" #assignedToStaffID="ngModel"
+                                                required>
+                                                <option *ngFor="let staff of staffList" [ngValue]="staff.StaffID">
+                                                    {{staff.StaffFullName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="field_label">
+                                        <h5>Description <span>(Remaining Characters: {{250 -
+                                                taskModel.Description?.length}})
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <textarea rows="6" name="taskDescription" [(ngModel)]="taskModel.Description"
+                                        maxlength="250"> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="popup_footer col-sm-12 col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button mat-button (click)="onClosePopup()">Cancel</button>
+                        <button class="save primary_blue_btn" (click)="saveTask()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

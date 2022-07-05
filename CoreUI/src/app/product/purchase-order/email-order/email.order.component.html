@@ -1,0 +1,58 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_medium_popup">
+            <form #EmailOrder="ngForm" novalidate>
+                <div class="popup_header">
+                    <h4>Email Order</h4>
+                </div>
+                <div class="popup_content cstm_scroll_bg" [class.invalid-inputs]="submitted">
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 mb-2" [ngClass]="{'has-danger': (email.dirty || email.touched || submitted) && (email.invalid || email.errors?.required) }">
+                                <h5 class="field_label">Supplier Email</h5>
+                                <input type="email" class="form-control" #email="ngModel" [(ngModel)]="supplierEmailAddresses" pattern="(([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)(\s*;\s*|\s*$))*" name="supplierEmail" autofocus required />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <h5 class="field_label">Display Name <span class="info-tooltip"
+                                    matTooltip="A customized name that appears as a sender’s name in the recipient’s inbox."
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span> <span
+                                    class="info-text">&nbsp;(Optional)</span></h5>
+                                <input type="text" class="form-control" [(ngModel)]="supplierEmailModel.DisplayName" name="displayName" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12" [ngClass]="{'has-danger': (subject.dirty || subject.touched || submitted) && (subject.invalid || subject.errors?.required) }">
+                                <h5 class="field_label">Subject</h5>
+                                <input type="text" class="form-control" #subject="ngModel" [(ngModel)]="supplierEmailModel.Subject" name="subject" required />
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 readonly_content pb-2">
+                                <h6>*The PDF copy of this order will be sent with this email.</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg mb-0">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 email_editor_items mb-2">
+                                <h5 class="field_label">Text 
+                                    <span>(Remaining Characters: {{emailBodyMaxLength - emailBodyWithoutHTML?.length}})</span>
+                                </h5>
+                                <div [ngClass]="{'has-danger': isInvalidEmailBody || (emailBodyWithoutHTML?.length > emailBodyMaxLength),
+                                    'has-success': !isInvalidEmailBody && (emailBodyWithoutHTML?.length <= emailBodyMaxLength) }"> 
+                                    <email-editor [value]="supplierEmailModel?.Text" (onEmailBodyChange)="onDescriptionUpdated($event)">
+                                    </email-editor>
+                                    <input type="text" name="emailBody" #emailBody="ngModel" [(ngModel)]="supplierEmailModel.Text" style="display: none" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12">
+                        <div class="cancel_btn float-right">
+                            <button type="button" (click)="onCloseDialog()">Cancel</button>
+                            <button type="submit" class="primary_blue_btn" [disabled]="disableSaveBtn" (click)="sendEmail()">Send Email</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

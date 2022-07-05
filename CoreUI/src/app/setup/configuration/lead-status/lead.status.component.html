@@ -1,0 +1,209 @@
+<div class="page_content">
+  <form #leadStatusForm="ngForm" (ngSubmit)="saveLeadStatus(leadStatusForm.valid)" novalidate>
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <div class="company_btn float-right">
+          <button class="save" [disabled]="(leadStatusForm.pristine)" tabindex=" 6">
+             Save
+          </button>
+        </div>
+      </div>
+    </div> -->
+    <div class="white_bg waitlist_items">
+      <div class="row center_flex_alignment">
+        <div class="col-md-6 col-sm-6">
+          <h1>Lead Status</h1>
+          <p>Label the five stages of business flow that define your lead’s status.</p>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="printer_btn padding_left text-right">
+            <button class="simple_border_btn mb-0" type="button" (click)="onReset()" tabindex="4">Set to
+              Default</button>
+            <button class="save secondry_btn mb-0" tabindex="6"> Save </button>
+            <!-- <button class="save secondry_btn" [disabled]="(leadStatusForm.pristine && !isReset)" tabindex="6"> Save </button> -->
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mr-3"></div>
+        <div class="media-body">
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-md-0">Stage 1</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <input class="form-control mb-0" type="text" name="Stage1"
+                [(ngModel)]="leadStatusTypeList[0].LeadStatusTypeFriendlyName" #Stage1="ngModel" tabindex="1" />
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-md-0">Stage 2</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <input class="form-control mb-0" type="text" name="Stage2"
+                [(ngModel)]="leadStatusTypeList[1].LeadStatusTypeFriendlyName" #Stage2="ngModel" tabindex="2" />
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-md-0">Stage 3</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <input class="form-control mb-0" type="text" name="Stage3"
+                [(ngModel)]="leadStatusTypeList[2].LeadStatusTypeFriendlyName" #Stage3="ngModel" tabindex="3" />
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-md-0">Stage 4</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <input class="form-control mb-0" type="text" name="Stage4"
+                [(ngModel)]="leadStatusTypeList[3].LeadStatusTypeFriendlyName" #Stage4="ngModel" tabindex="4" />
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-md-0">Stage 5</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <input class="form-control mb-0" type="text" name="Stage5"
+                [(ngModel)]="leadStatusTypeList[4].LeadStatusTypeFriendlyName" #Stage5="ngModel" tabindex="5" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="white_bg waitlist_items">
+    <div class="row center_flex_alignment">
+      <div class="col-md-6 col-sm-6 ">
+        <h1>Lead Enquiry</h1>
+        <p>Configure a default membership and staff for the new leads being generated from core, widget, apps or other
+          websites.</p>
+      </div>
+      <div class="col-md-6 col-sm-6 ">
+        <div class="printer_btn padding_left text-right"><button (click)="saveLeadSettings()" tabindex="9" class="save secondry_btn mb-0"> Save </button>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form_border my-10"></div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="mr-3"></div>
+      <div class="media-body">
+        <div class="row waitlist_subtitle align-items-center">
+          <div class="col-md-9">
+            <h3>Default Staff (Assign to)</h3>
+            <p>Select a default staff that would be assigned to all new leads generated from core, widget, app and from
+              the default mailbox. You can also select ‘Not Specified’ if you would like to assign a staff after the
+              lead has come in.</p>
+          </div>
+          <div class="col-md-3 padding_right mob-pa">
+            <div class="select_label">
+              <select name="StaffName" class="mb-0" [(ngModel)]="saveLeadSetting.StaffId" tabindex="8">
+                <option [ngValue]="null">Not Specified</option>
+                <option *ngFor="let staff of assignedToStaffList" [ngValue]="staff.StaffID">{{staff.StaffFullName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12 pr-0 mob-pa">
+            <div class="form_border my-10"></div>
+          </div>
+        </div>
+        <div class="row waitlist_subtitle align-items-center">
+          <div class="col-md-9">
+            <h3>Default MailBox</h3>
+            <p>This email address can be linked to your website and other online forms for lead submission. For more
+              information on how to configure this, please refer to our support platform.</p>
+          </div>
+          <div class="col-md-3 padding_right mob-pa">
+            <input type="text" class="form-control mb-0" [(ngModel)]="saveLeadSetting.BranchDefaultEmail"
+              name="branchDefaultEmail" disabled>
+          </div>
+          <div class="col-md-12 pr-0 mob-pa">
+            <div class="form_border my-10"></div>
+          </div>
+        </div>
+        <div class="row waitlist_subtitle align-items-center">
+          <div class="col-md-9">
+            <h3>Default Membership</h3>
+            <p>Select a default membership that would be assigned to all new leads generated from the default mailbox,
+              i.e. if you add the default mailbox to your website, all new leads generated from the website will have
+              this default membership assigned to them.</p>
+          </div>
+          <div class="col-md-3 padding_right mob-pa">
+            <div class="select_label">
+              <select name="MembserhipName" class="mb-0" [(ngModel)]="saveLeadSetting.MembershipId" tabindex="7">
+                <option value='0'>Select Membership</option>
+                <option *ngFor="let membership of leadMembershipsList" [ngValue]="membership.MembershipID">
+                  {{membership.MembershipName}}</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <h5 class="field_label">Default Membership</h5>
+          <div class="select_label">
+            <select name="MembserhipName" [(ngModel)]="saveLeadSetting.MembershipId" tabindex="7">
+              <option value='0'> -- Select Membership -- </option>
+              <option *ngFor="let membership of leadMembershipsList" [ngValue]="membership.MembershipID">
+                {{membership.MembershipName}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <h5 class="field_label">Default Staff <span>(assign to)</span></h5>
+          <div class="select_label">
+            <select name="StaffName" [(ngModel)]="saveLeadSetting.StaffId" tabindex="8">
+              <option [ngValue]="null"> -- Not Specified -- </option>
+              <option *ngFor="let staff of assignedToStaffList" [ngValue]="staff.StaffID">{{staff.StaffFullName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <h5 class="field_label">Default MailBox <span class="info_tip"
+              matTooltip="Email address to link to your website or other online forms for lead submission"
+              matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span></h5>
+          <div>
+            <input type="text" class="form-control" [(ngModel)]="saveLeadSetting.BranchDefaultEmail"
+              name="branchDefaultEmail" disabled>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+  </div>

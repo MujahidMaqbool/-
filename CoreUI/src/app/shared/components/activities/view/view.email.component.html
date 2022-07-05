@@ -1,0 +1,36 @@
+﻿<!--View Staff Pop Up start-->
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content popup_email">
+            <div class="popup_header email_head">
+                <!-- <h4>View Email</h4> -->
+                <p>From: <b>{{model.personName}}</b> &lt;test@mail.com&gt; <span class="float-right"><i class="fa fa-clock-o"
+                            aria-hidden="true"></i> {{model.createdOn | customdate: dateTimeFormat}}</span></p>
+            </div>
+            <div class="popup_content">
+                <div class="sch_white_bg">
+                    <div class="row email_body">
+                        <div class="col-md-12 col-sm-12">
+                            <h6>To: <b>Test Name</b> &lt;test@mail.com&gt;</h6>
+                        </div>
+                        <div class="email_body_content">
+                            <div class="col-md-12 col-sm-12">
+                                <h4>{{emailModel.EmailSubject}}</h4>
+                            </div>
+                            <div class="col-md-12 col-sm-12 email_body_text">
+                                <p  style="white-space: pre-wrap;" [innerHTML]="emailModel.EmailBody"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12 col-sm-12 no_padding">
+                        <div class="cancel_btn float-right">
+                            <button type="button" (click)="onCloseDialog()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--View Email Pop Up End-->

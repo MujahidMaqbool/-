@@ -1,0 +1,50 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content reward_temp_popup">
+            <div class="reward_popup_header">
+                <h4>{{data.rewardProgramName ? data.rewardProgramName : '[Reward Program Name]'}}</h4>
+            </div>
+
+            <div class="popup_content reward_temp_body cstm_scroll_bg" *ngIf="showWidget">
+                <img src="assets/images/reward_banner.jpg" alt="temp-banner" />
+               
+                <div class="temp_body_text" *ngIf="data.description ">
+                    <div [innerHTML]="data.description | safeHtml"></div>
+                </div>
+                <div class="temp_body_text" *ngIf="!data.description ">
+                    <div [innerHTML]="defaultDescription | safeHtml"></div>
+                </div>
+               
+            </div>
+
+            <div class="popup_content reward_temp_body  cstm_scroll_bg" *ngIf="showApp">
+                <div class="mob_view_temp">
+                    <div class="mob_white_bg">
+                        <img src="assets/images/mob_reward_banner.jpg" alt="temp-banner" />
+                        <div class="temp_body_text" *ngIf="data.description">
+                            <div [innerHTML]="data.description | safeHtml"></div>
+                        </div>
+                        <div class="temp_body_text" *ngIf="!data.description">
+                            <div [innerHTML]="defaultDescription | safeHtml"></div>
+                        </div>
+                    </div>
+                    <div class="mob_thum"></div>
+                </div>
+            </div>
+
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn">
+                        <button type="button" class="float-left" (click)="closeDialog()">Close</button>
+
+                        <button class="float-right wid" [ngClass]="appactive ? 'active' : ''" (click)="onClickApp()"><i
+                                class="fal fa-mobile-android"></i> &nbsp;
+                            App</button>
+                        <button class="float-right appp" [ngClass]="widgetactive ? 'active' : ''" type="button"
+                            (click)="onClickWidget()"><i class="fal fa-tv"></i> &nbsp; Widget</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>Add Gateway</h4>
+            </div>
+            <div class="popup_content">
+                <div class="popup_white_bg  gateway_pop">
+                    <div class="row">
+                        <div class="col-md-12" *ngIf="hasBranchGateways === false">
+                            <div class="alert alert-danger">
+                                {{messages.Error.No_Branch_Gateways}}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col no_padding" *ngIf="showDirectDebit"
+                                    (click)="onSaleTypeChange(saleType.DirectDebit, paymentGateway.GoCardless)">
+                                    <div class="gateway_tabs go_card" [ngClass]="{
+                                    'active': selectedGateway.SaleTypeID === saleType.DirectDebit
+                                }">
+                                        <h5>Direct Debit</h5>
+                                    </div>
+                                </div>
+                                <div class="col no_padding" *ngIf="showCard"
+                                    (click)="onSaleTypeChange(saleType.Card, paymentGateway.Stripe_Card)">
+                                    <div class="gateway_tabs" [ngClass]="{
+                                    'active': selectedGateway.SaleTypeID === saleType.Card
+                                }">
+                                        <h5>Card</h5>
+                                    </div>
+                                </div>
+                                <!-- <div class="col no_padding" *ngIf="showStripeDD"
+                                    (click)="onSaleTypeChange(saleType.DirectDebit, paymentGateway.Stripe_DD)">
+                                    <div class="gateway_tabs" [ngClass]="{
+                                    'active': selectedGateway.SaleTypeID === saleType.DirectDebit
+                                }">
+                                        <i class="fal fa-credit-card-blank"></i>
+                                        <h5>Stripe ACH</h5>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 no_padding" *ngIf="selectedGateway.SaleTypeID === saleType.Card">
+                        <mat-tab-group (selectedTabChange)="onCardTabChanged($event)">
+                            <span *ngFor="let gateway of branchGatewayList; let i = index">
+                                <mat-tab label="{{gateway.PaymentGatewayID == paymentGateway.Stripe_Card ? 'Stripe' : gateway.PaymentGatewayName}}" *ngIf="gateway.PaymentGatewayID == paymentGateway.Stripe_Card || gateway.PaymentGatewayID == paymentGateway.PayTabs" >
+                                    <div class="col-md-12 col-sm-12 no_padding" *ngIf="gateway.PaymentGatewayID == paymentGateway.Stripe_Card">
+                                        <add-stripe-customer #addStripeCustomerRef [showSaveCard]="false" [pageID]=enuPage.AddGateWay>
+                                        </add-stripe-customer>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12" *ngIf="gateway.PaymentGatewayID == paymentGateway.PayTabs">
+                                        <pay-tabs-customer #paytabsRef [showSaveCard]="false" [customerID]="customerId"
+                                            [showCardNumber]="false" [pageID]=enuPage.AddGateWay>
+                                        </pay-tabs-customer>
+                                    </div>
+                                </mat-tab>
+                            </span>
+                        </mat-tab-group>
+                    </div>
+                    <div class="row" *ngIf="showGoCardless">
+                        <!-- <div class="col-md-12">
+                            <div class="pay_label">
+                                <label class="active">GoCardless</label>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12 small_space">
+                            <add-gocardless-customer #addGoCardlessCustomerRef [pageID]=enuPage.AddGateWay></add-gocardless-customer>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="showStripeACH">
+                        <!-- <div class="col-md-12">
+                            <div class="pay_label">
+                                <label class="active">Stripe ACH</label>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12 padding_left small_space">
+                            <stripe-ach #addStripeACHRef></stripe-ach>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                        <button type="button" class="save primary_blue_btn" (click)="onSave()"
+                            [disabled]="(!showDirectDebit && !showCard && !showStripeACH) || saveInProgress">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

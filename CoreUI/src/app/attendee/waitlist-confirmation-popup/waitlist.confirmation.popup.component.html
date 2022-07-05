@@ -1,0 +1,29 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Add Attendee</h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="space-15"></div>
+            <div class="delete_warning">
+                <div>
+                    <i class="fal fa-exclamation-triangle"></i>
+                </div>
+                <div>
+                    <p>The class is full. How would you like to add the attendee?</p>
+                </div>
+            </div>
+            <div class="space-15"></div>
+        </div>
+        <div class="row popup_footer top_zp">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancle_attendee cancel_btn">
+                    <button type="button" (click)="onClose()">Cancel</button>
+                    <button type="button" (click)="onChangeWaitList(false)">Add to Class</button>
+                    <button type="button" (click)="onChangeWaitList(true)" class="primary_blue_btn">Add to
+                        Waitlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

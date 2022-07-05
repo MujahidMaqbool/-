@@ -1,0 +1,977 @@
+<div class="white_bg waitlist_items">
+  <div class="row center_flex_alignment">
+    <div class="col-md-6 col-sm-6">
+      <h1>Online Resources</h1>
+      <p>With Wellyx, you can manage what your customers can view and purchase from the widget & customer app.</p>
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <div class="printer_btn padding_left text-right">
+        <button (click)="saveWidgetSettings()" class="save secondry_btn mb-0"> Save </button>
+      </div>
+    </div>
+    <div class="col-md-12"><div class="form_border my-10"></div></div>
+  </div>
+
+  <div class="row waitlist_subtitle align-items-center">
+    <div class="col-md-10 col-sm-6">
+      <h1>Landing Page - Widget & Customer App</h1>
+      <p>With Wellyx, you can select a landing page, helping you direct your customers to a desired destination on the
+        widget & customer app.</p>
+    </div>
+    <div class="col-md-2 col-sm-6">
+      <div class="select_label">
+        <select class="mb-0" [(ngModel)]="permissions.defaultLandingPage" name="defaultLandingPage" (change)="onSelectLandingPage()">
+          <option *ngFor="let landingpage of landingPageList" [value]="landingpage.value">{{landingpage.text}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-12"><div class="form_border my-10"></div></div>
+  </div>
+
+  <div class="row landing_disable">
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="permission_box">
+        <div class="center_flex_alignment">
+          <div>
+            <i class="fal fa-home"></i>
+          </div>
+          <div>
+            <h5>Home</h5>
+            <p>Toggle on to display the home tab on your widget & app. Toggling off will result in customers being
+              unable to view your featured items.</p>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Home"
+            #ShowHomeOnline="ngModel" name="{{'chk_boxHome' +  branch.BranchID}}"
+            [(ngModel)]="permissions.ShowHomeOnline" [(checked)]="permissions.ShowHomeOnline">
+
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
+      <div class="permission_box" >
+        <div class="center_flex_alignment">
+          <div>
+            <i class="fal fa-address-card"></i>
+          </div>
+          <div>
+            <h5>Memberships</h5>
+            <p>Toggle on to display the memberships tab on the widget & app. Toggling off will result in customers being
+              unable to purchase membership.</p>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Memberships"
+            #ShowMembershipOnline="ngModel" name="{{'chk_boxMembership' +  branch.BranchID}}"
+            [(ngModel)]="permissions.ShowMembershipOnline" [(checked)]="permissions.ShowMembershipOnline">
+
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
+      <div class="permission_box" >
+        <div class="center_flex_alignment">
+          <div>
+            <i class="fal fa-address-card"></i>
+          </div>
+          <div>
+            <h5>Memberships For Members</h5>
+            <p>Toggle on to display the memberships tab for members on your widget and app. Toggling off will result in
+              members being unable to purchase additional memberships.</p>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle class="wellyx-checked" [disabled]="false"
+            name="{{'chk_boxMembershipForMembers' + branch.BranchID}}"
+            [(ngModel)]="permissions.ShowMembershipForMembersOnline"
+            [(checked)]="permissions.ShowMembershipForMembersOnline" #ShowMembershipForMembersOnline="ngModel">
+
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
+      <div class="permission_box" >
+        <div class="center_flex_alignment">
+          <div>
+            <i class="fal fa-users-class"></i>
+          </div>
+          <div>
+            <h5>Classes</h5>
+            <p>Toggle on to display the classes tab on your widget & app. Toggling off will result in customers being
+              unable to book/purchase classes.</p>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Classes"
+            name="{{'chk_boxClass' + branch.BranchID}}" [(ngModel)]="permissions.ShowClassOnline"
+            [(checked)]="permissions.ShowClassOnline" #ShowClassOnline="ngModel">
+
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isServiceAllowed">
+      <div class="permission_box">
+        <div class="center_flex_alignment">
+          <div>
+            <i class="fal fa-spa"></i>
+          </div>
+          <div>
+            <h5>Services</h5>
+            <p>Toggle on to display the services tab on your widget & app. Toggling off will result in customers being
+              unable to book/purchase services.</p>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Services"
+            name="{{'chk_boxService' + branch.BranchID}}" [(ngModel)]="permissions.ShowServiceOnline"
+            [(checked)]="permissions.ShowServiceOnline" #ShowServiceOnline="ngModel">
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isProductAllowed">
+      <div class="permission_box" >
+        <div class="center_flex_alignment">
+          <div>
+            <i class="fal fa-archive"></i>
+          </div>
+          <div>
+            <h5>Products</h5>
+            <p>Toggle on to display the products tab on your widget & app. Toggling off will result in customers being
+              unable to purchase products.</p>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Products"
+            name="{{'chk_boxProduct' + branch.BranchID}}" [(ngModel)]="permissions.ShowProductOnline"
+            [(checked)]="permissions.ShowProductOnline" #ShowProductOnline="ngModel">
+
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="white_bg waitlist_items">
+  <div class="row center_flex_alignment">
+    <div class="col-md-10 col-sm-12">
+      <h1>Widget URLs</h1>
+      <p>The widget is your businesses online platform, where your customers can browse, book and buy. Copy, attach and
+        share these URLs to grow your business.</p>
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <div class="printer_btn padding_left text-right"> <button (click)="saveSocialMedia()" class="save secondry_btn mb-0"> Save
+        </button>
+      </div>
+    </div>
+    <div class="col-md-12"><div class="form_border mt-10 mb-0"></div></div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="field_label widget_label">
+        <h5>Home URL</h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.HomeUrl}}" name="HomeUrl" #HomeUrlCtrl readonly />
+        </div>
+        <div>
+          <button type="button" (click)="copyUrl(widgetUrl.HomeUrl, '')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link"></i>
+          </button>
+        </div>
+        <div><a href="{{widgetUrl.HomeUrl}}" target="_blank">Open URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
+      <div class="field_label widget_label" >
+        <h5> Memberships URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.MembershipUrl}}" name="MembershipUrl"
+            #MembershipUrlCtrl readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.MembershipUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="{{widgetUrl.MembershipUrl}}" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
+      <div class="field_label widget_label">
+        <h5>Classes URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.ClassUrl}}" name="ClassUrl" #ClassUrlCtrl
+            readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.ClassUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link"></i>
+          </button></div>
+        <div><a href="{{widgetUrl.ClassUrl}}" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isServiceAllowed">
+      <div class="field_label widget_label">
+        <h5>Services URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isServiceAllowed">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.ServiceUrl}}" #ServiceUrlCtrl name="ServiceUrl"
+            readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.ServiceUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="{{widgetUrl.ServiceUrl}}" target="_blank" *ngIf="isServiceAllowed">Open URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isProductAllowed">
+      <div class="field_label widget_label">
+        <h5>Products URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isProductAllowed">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.ProductUrl}}" name="ProductUrl" #ProductUrlCtrl
+            readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.ProductUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="{{widgetUrl.ProductUrl}}" target="_blank" *ngIf="isProductAllowed">Open URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="field_label widget_label">
+        <h5>QR Code URL</h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.QRCodeUrl}}" #QRCodeUrlCtrl name="QRCodeUrl"
+            readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.QRCodeUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="{{widgetUrl.QRCodeUrl}}" target="_blank">Open URL</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row center_flex_alignment space">
+    <div class="col-md-12 col-sm-12">
+      <h1>Banners</h1>
+      <p>We have uploaded default banners for all your widget pages. You can customize the look and upload banners of
+        your own choice. <span class="optional">(Size: W1920 x H460)</span></p>
+    </div>
+    <div class="col-md-12"><div class="form_border mt-10 mb-0"></div></div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="field_label widget_label">
+        <h5>Home Banner</h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="HomeBanner" #HomeBanner="ngModel"
+            [(ngModel)]="bannerModel.HomeBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.HomeBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Home)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Home, bannerModel.HomeBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
+      <div class="field_label widget_label">
+        <h5> Memberships </h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="MembershipBanner" #MembershipBanner="ngModel"
+            [(ngModel)]="bannerModel.MembershipBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.MembershipBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Membership)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Membership, bannerModel.MembershipBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
+      <div class="field_label widget_label">
+        <h5>Classes </h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="ClassBanner" #ClassBanner="ngModel"
+            [(ngModel)]="bannerModel.ClassBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.ClassBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Class)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Class , bannerModel.ClassBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isServiceAllowed">
+      <div class="field_label widget_label">
+        <h5>Services </h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="ServiceBanner" #ServiceBanner="ngModel"
+            [(ngModel)]="bannerModel.ServiceBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.ServiceBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Service)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip" *ngIf="isServiceAllowed">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Service, bannerModel.ServiceBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+            *ngIf="isServiceAllowed">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isProductAllowed">
+      <div class="field_label widget_label">
+        <h5>Products </h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isProductAllowed">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="ProductBanner" #ProductBanner="ngModel"
+            [(ngModel)]="bannerModel.ProductBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.ProductBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Product)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Product, bannerModel.ProductBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="field_label widget_label">
+        <h5>Checkout </h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="CheckoutBanner" #CheckoutBanner="ngModel"
+            [(ngModel)]="bannerModel.CheckoutBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.CheckoutBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Checkout)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Checkout, bannerModel.CheckoutBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row center_flex_alignment space">
+    <div class="col-md-12 col-sm-12">
+      <h1>Social Media</h1>
+      <p>Display & advertise your social media accounts from the widget & app. Social media icons will not be displayed
+        if the URL is not provided.</p>
+    </div>
+    <div class="col-md-12"><div class="form_border mt-10 mb-0"></div></div>
+  </div>
+  <div class="row space-15">
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="social_icons">
+        <i class="fab fa-facebook-square fa-pull-left facebook_color"></i>
+        <p>facebook.com/</p>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="FacebookUrl" #FacebookCtrl
+            [(ngModel)]="socialMediaModel.FacebookUrl" />
+        </div>
+        <div><button type="button" (click)="copyUrl(socialMediaLinks.Facebook, socialMediaModel.FacebookUrl)"
+            matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a *ngIf="FacebookCtrl.value" href="{{socialMediaLinks.Facebook + socialMediaModel.FacebookUrl}}"
+            target="_blank">Open
+            URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="social_icons">
+        <i class="fab fa-twitter-square twiter_color fa-pull-left"></i>
+        <p>twitter.com/</p>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="TwitterUrl" #TwitterCtrl
+            [(ngModel)]="socialMediaModel.TwitterUrl" />
+        </div>
+        <div><button type="button" (click)="copyUrl(socialMediaLinks.Twitter, socialMediaModel.TwitterUrl)"
+            matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a *ngIf="TwitterCtrl.value" href="{{socialMediaLinks.Twitter + socialMediaModel.TwitterUrl}}"
+            target="_blank">Open
+            URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="social_icons">
+        <i class="fab fa-instagram fa-pull-left instragram_color"></i>
+        <p>instagram.com/</p>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="InstagramUrl" #InstagramCtrl
+            [(ngModel)]="socialMediaModel.InstagramUrl" />
+        </div>
+        <div><button type="button" (click)="copyUrl(socialMediaLinks.Instagram, socialMediaModel.InstagramUrl)"
+            matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a *ngIf="InstagramCtrl.value" href="{{socialMediaLinks.Instagram + socialMediaModel.InstagramUrl}}"
+            target="_blank">Open
+            URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="social_icons">
+        <i class="fab fa-youtube fa-pull-left youtube_color"></i>
+        <p>youtube.com/</p>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="YoutubeUrl" #YoutubeCtrl
+            [(ngModel)]="socialMediaModel.YoutubeUrl" />
+        </div>
+        <div><button type="button" (click)="copyUrl(socialMediaLinks.Youtube, socialMediaModel.YoutubeUrl)"
+            matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a *ngIf="YoutubeCtrl.value" href="{{socialMediaLinks.Youtube + socialMediaModel.YoutubeUrl}}"
+            target="_blank">Open
+            URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="social_icons">
+        <i class="fab fa-linkedin fa-pull-left linkedin_color"></i>
+        <p>linkedin.com/</p>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="LinkedInUrl" #LinkedInCtrl
+            [(ngModel)]="socialMediaModel.LinkedInUrl" />
+        </div>
+        <div><button type="button" (click)="copyUrl(socialMediaLinks.LinkedIn, socialMediaModel.LinkedInUrl)"
+            matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a *ngIf="LinkedInCtrl.value" href="{{socialMediaLinks.LinkedIn + socialMediaModel.LinkedInUrl}}"
+            target="_blank">Open
+            URL</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--<div class="row">
+  <div class="col-md-4 parallel_grid">
+    <div class="widget_section">
+      <div class="section_title">
+        <div class="col-md-12 no_padding">
+          <h4>Widget URL</h4>
+        </div>
+      </div>
+
+      <div class="field_label widget_label">
+        <h5>Home URL</h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.HomeUrl}}" name="HomeUrl" #HomeUrlCtrl readonly />
+        </div>
+        <div>
+          <button type="button" (click)="copyUrl(widgetUrl.HomeUrl, '')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link"></i>
+          </button>
+        </div>
+        <div><a href="{{widgetUrl.HomeUrl}}" target="_blank">Open URL</a></div>
+      </div>
+
+      <div class="field_label widget_label" *ngIf="isGymPackage">
+        <h5>Class URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.ClassUrl}}" name="ClassUrl" #ClassUrlCtrl
+            readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.ClassUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link"></i>
+          </button></div>
+        <div><a href="{{widgetUrl.ClassUrl}}" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
+      </div>
+
+      <div class="field_label widget_label" *ngIf="isGymPackage">
+        <h5> Membership URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.MembershipUrl}}" name="MembershipUrl"
+            #MembershipUrlCtrl readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.MembershipUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="{{widgetUrl.MembershipUrl}}" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
+      </div>
+
+      <div class="field_label widget_label" *ngIf="isProductAllowed">
+        <h5>Product URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isProductAllowed">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.ProductUrl}}" name="ProductUrl" #ProductUrlCtrl
+            readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.ProductUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="{{widgetUrl.ProductUrl}}" target="_blank" *ngIf="isProductAllowed">Open URL</a></div>
+      </div>
+
+      <div class="field_label widget_label" *ngIf="isServiceAllowed">
+        <h5>Service URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isServiceAllowed">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.ServiceUrl}}" #ServiceUrlCtrl name="ServiceUrl"
+            readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.ServiceUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="{{widgetUrl.ServiceUrl}}" target="_blank" *ngIf="isServiceAllowed">Open URL</a></div>
+      </div>
+
+      <div class="field_label widget_label">
+        <h5>QR Code URL</h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="{{widgetUrl.QRCodeUrl}}" #QRCodeUrlCtrl name="QRCodeUrl"
+            readonly />
+        </div>
+        <div><button type="button" (click)="copyUrl(widgetUrl.QRCodeUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="{{widgetUrl.QRCodeUrl}}" target="_blank">Open URL</a></div>
+      </div>
+
+    </div>
+  </div>
+   <div class="col-md-4 parallel_grid">
+    <div class="widget_section">
+      <div class="section_title ">
+        <div class="col-md-12 no_padding">
+          <h4>Banners</h4>
+        </div>
+      </div>
+      <div class="field_label widget_label">
+        <h5>Home Banner (Size: W1920 x H460)</h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="HomeBanner" #HomeBanner="ngModel"
+            [(ngModel)]="bannerModel.HomeBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.HomeBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Home)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Home, bannerModel.HomeBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+
+      <div class="field_label widget_label" *ngIf="isGymPackage">
+        <h5>Classes (Size: W1920 x H460)</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="ClassBanner" #ClassBanner="ngModel"
+            [(ngModel)]="bannerModel.ClassBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.ClassBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Class)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Class , bannerModel.ClassBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+
+      <div class="field_label widget_label" *ngIf="isGymPackage">
+        <h5> Memberships (Size: W1920 x H460)</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="MembershipBanner" #MembershipBanner="ngModel"
+            [(ngModel)]="bannerModel.MembershipBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.MembershipBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Membership)" matTooltip="Remove banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Membership, bannerModel.MembershipBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+
+      <div class="field_label widget_label" *ngIf="isProductAllowed">
+        <h5>Products (Size: W1920 x H460)</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isProductAllowed">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="ProductBanner" #ProductBanner="ngModel"
+            [(ngModel)]="bannerModel.ProductBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.ProductBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Product)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Product, bannerModel.ProductBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+
+      <div class="field_label widget_label" *ngIf="isServiceAllowed">
+        <h5>Services (Size: W1920 x H460)</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isServiceAllowed">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="ServiceBanner" #ServiceBanner="ngModel"
+            [(ngModel)]="bannerModel.ServiceBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.ServiceBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Service)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip" *ngIf="isServiceAllowed">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Service, bannerModel.ServiceBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+            *ngIf="isServiceAllowed">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+
+      <div class="field_label widget_label">
+        <h5>Checkout (Size: W1920 x H460)</h5>
+      </div>
+      <div class="row url_btn text-right">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="CheckoutBanner" #CheckoutBanner="ngModel"
+            [(ngModel)]="bannerModel.CheckoutBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.CheckoutBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Checkout)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Checkout, bannerModel.CheckoutBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+   <div class="col-md-4 parallel_grid">
+    <div class="widget_section ">
+      <div class="row section_title ">
+        <div class="col-md-6 no_padding">
+          <h4>Social Media</h4>
+        </div>
+        <div class="col-md-6 no_padding">
+          <div class="widget_save_btn">
+            <button (click)="saveSocialMedia()"> Save
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 no_padding widget_space">
+
+          <div class="social_icons">
+            <i class="fab fa-facebook-square fa-pull-left facebook_color"></i>
+            <p>facebook.com/</p>
+          </div>
+          <div class="row url_btn text-right">
+            <div class="col no_padding">
+              <input class="form-control" type="text" name="FacebookUrl" #FacebookCtrl
+                [(ngModel)]="socialMediaModel.FacebookUrl" />
+            </div>
+            <div><button type="button" (click)="copyUrl(socialMediaLinks.Facebook, socialMediaModel.FacebookUrl)"
+                matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                <i class="fal fa-link">
+                </i>
+              </button></div>
+            <div><a *ngIf="FacebookCtrl.value" href="{{socialMediaLinks.Facebook + socialMediaModel.FacebookUrl}}"
+                target="_blank">Open
+                URL</a></div>
+          </div>
+
+        </div>
+        <div class="col-sm-12 col-md-12 no_padding widget_space">
+          <div class="social_icons">
+            <i class="fab fa-twitter-square twiter_color fa-pull-left"></i>
+            <p>twitter.com/</p>
+          </div>
+          <div class="row url_btn text-right">
+            <div class="col no_padding">
+              <input class="form-control" type="text" name="TwitterUrl" #TwitterCtrl
+                [(ngModel)]="socialMediaModel.TwitterUrl" />
+            </div>
+            <div><button type="button" (click)="copyUrl(socialMediaLinks.Twitter, socialMediaModel.TwitterUrl)"
+                matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                <i class="fal fa-link">
+                </i>
+              </button></div>
+            <div><a *ngIf="TwitterCtrl.value" href="{{socialMediaLinks.Twitter + socialMediaModel.TwitterUrl}}"
+                target="_blank">Open
+                URL</a></div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 no_padding widget_space">
+          <div class="social_icons">
+            <i class="fab fa-instagram fa-pull-left instragram_color"></i>
+            <p>instagram.com/</p>
+          </div>
+          <div class="row url_btn text-right">
+            <div class="col no_padding">
+              <input class="form-control" type="text" name="InstagramUrl" #InstagramCtrl
+                [(ngModel)]="socialMediaModel.InstagramUrl" />
+            </div>
+            <div><button type="button" (click)="copyUrl(socialMediaLinks.Instagram, socialMediaModel.InstagramUrl)"
+                matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                <i class="fal fa-link">
+                </i>
+              </button></div>
+            <div><a *ngIf="InstagramCtrl.value" href="{{socialMediaLinks.Instagram + socialMediaModel.InstagramUrl}}"
+                target="_blank">Open
+                URL</a></div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 no_padding widget_space">
+          <div class="social_icons">
+            <i class="fab fa-youtube-square fa-pull-left youtube_color"></i>
+            <p>youtube.com/</p>
+          </div>
+          <div class="row url_btn text-right">
+            <div class="col no_padding">
+              <input class="form-control" type="text" name="YoutubeUrl" #YoutubeCtrl
+                [(ngModel)]="socialMediaModel.YoutubeUrl" />
+            </div>
+            <div><button type="button" (click)="copyUrl(socialMediaLinks.Youtube, socialMediaModel.YoutubeUrl)"
+                matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                <i class="fal fa-link">
+                </i>
+              </button></div>
+            <div><a *ngIf="YoutubeCtrl.value" href="{{socialMediaLinks.Youtube + socialMediaModel.YoutubeUrl}}"
+                target="_blank">Open
+                URL</a></div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 no_padding widget_space">
+          <div class="social_icons">
+            <i class="fab fa-linkedin fa-pull-left linkedin_color"></i>
+            <p>linkedin.com/</p>
+          </div>
+          <div class="row url_btn text-right">
+            <div class="col no_padding">
+              <input class="form-control" type="text" name="LinkedInUrl" #LinkedInCtrl
+                [(ngModel)]="socialMediaModel.LinkedInUrl" />
+            </div>
+            <div><button type="button" (click)="copyUrl(socialMediaLinks.LinkedIn, socialMediaModel.LinkedInUrl)"
+                matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                <i class="fal fa-link">
+                </i>
+              </button></div>
+            <div><a *ngIf="LinkedInCtrl.value" href="{{socialMediaLinks.LinkedIn + socialMediaModel.LinkedInUrl}}"
+                target="_blank">Open
+                URL</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div> -->
+<!-- <div class="white_bg top_zero">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row section_title">
+        <div class="col-md-6 padding_left">
+          <h4>Online Resources</h4>
+        </div>
+        <div class="col-md-6  padding_right">
+          <div class="widget_save_btn">
+            <button (click)="saveWidgetSettings()"> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col" *ngIf="isGymPackage">
+      <div class="checkbox checkbox-success roles-inline">
+        <input type="checkbox" name="{{'chk_boxClass' + branch.BranchID}}" id="{{'chk_boxClass' + branch.BranchID}}"
+          [(ngModel)]="permissions.ShowClassOnline" [(checked)]="permissions.ShowClassOnline" />
+        <label for="{{'chk_boxClass' + branch.BranchID}}">
+          Classes</label>
+      </div>
+    </div>
+    <div class="col" *ngIf="isGymPackage">
+      <div class="checkbox checkbox-success roles-inline">
+        <input type="checkbox" name="{{'chk_boxMembership' +  branch.BranchID}}"
+          id="{{'chk_boxMembership' + branch.BranchID}}" [(ngModel)]="permissions.ShowMembershipOnline"
+          [(checked)]="permissions.ShowMembershipOnline" />
+        <label for="{{'chk_boxMembership'  + branch.BranchID}}">
+          Membership</label>
+      </div>
+    </div>
+    <div class="col" *ngIf="isGymPackage">
+      <div class="checkbox checkbox-success roles-inline">
+        <input type="checkbox" name="{{'chk_boxMembershipForMembers' + branch.BranchID}}"
+          id="{{'chk_boxMembershipForMembers' + branch.BranchID}}"
+          [(ngModel)]="permissions.ShowMembershipForMembersOnline"
+          [(checked)]="permissions.ShowMembershipForMembersOnline" />
+        <label for="{{'chk_boxMembershipForMembers' +  branch.BranchID}}">
+          Membership For Members</label>
+      </div>
+    </div>
+    <div class="col" *ngIf="isProductAllowed">
+      <div class="checkbox checkbox-success roles-inline">
+        <input type="checkbox" name="{{'chk_boxProduct' + branch.BranchID}}" id="{{'chk_boxProduct' + branch.BranchID}}"
+          [(ngModel)]="permissions.ShowProductOnline" [(checked)]="permissions.ShowProductOnline" />
+        <label for="{{'chk_boxProduct' +  branch.BranchID}}">
+          Products
+        </label>
+      </div>
+    </div>
+    <div class="col" *ngIf="isServiceAllowed">
+      <div class="checkbox checkbox-success roles-inline">
+        <input type="checkbox" name="{{'chk_boxService' + branch.BranchID}}" id="{{'chk_boxService' + branch.BranchID}}"
+          [(ngModel)]="permissions.ShowServiceOnline" [(checked)]="permissions.ShowServiceOnline" />
+        <label for="{{'chk_boxService' + branch.BranchID}}">
+          Services
+        </label>
+      </div>
+    </div>
+  </div>
+</div> -->

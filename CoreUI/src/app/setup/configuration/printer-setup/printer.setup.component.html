@@ -1,0 +1,306 @@
+<!-- Invoice Setup -->
+
+<div class="page_content">
+    <form #printerSetupForm="ngForm" (ngSubmit)="savePrinterSetup(printerSetupForm.valid)" novalidate>
+        <div class="row" *ngIf="printerSetupForm.invalid && printerSetupForm.submitted">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <div *ngIf="PrinterIPAddress?.errors?.required || TaxName?.errors?.required || FooterNotes?.errors?.required">
+                        {{messages.Validation.Info_Required}}
+                    </div>
+                    <div *ngIf="ReceiptEmail?.errors?.pattern">
+                        {{messages.Validation.Email_Invalid}}
+                    </div>
+                    <div *ngIf="ReceiptPhone?.errors?.pattern ">
+                        {{messages.Validation.Phone_Invalid}}
+                    </div>
+                    <div *ngIf="PrinterIPAddress?.errors?.pattern">
+                        {{messages.Validation.PrinterPattern_Invalid}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="white_bg">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section_title">
+                        <h4 class="floating">Printer Setup</h4>
+                        <div class="printer_btn padding_left text-right">
+                            <button mat-button class="simple_border_btn" type="button" (click)="onReset()">Reset</button>
+                            <button class="simple_border_btn" type="button" (click)="onTestPrint()">Test Print</button>
+                            <button class="save secondry_btn" tabindex="7" [disabled]="(printerSetupForm.pristine)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div [ngClass]="{
+                  'has-danger': PrinterIPAddress.invalid && (PrinterIPAddress.dirty || PrinterIPAddress.touched || printerSetupForm.submitted),
+                  'has-success': PrinterIPAddress.valid && (PrinterIPAddress.dirty || PrinterIPAddress.touched )
+                      }">
+                        <div class="field_label">
+                            <h5>Printer IP <span>Example (192.168.1.200)</span></h5>
+                        </div>
+                        <input type="text" name="PrinterIPAddress" [(ngModel)]="printerSetupModel.PrinterIPAddress" class="form-control" tabindex="1" #PrinterIPAddress="ngModel" placeholder="eg: 192.168.1.200" maxlength="15" required pattern="\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="small_space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section_title">
+                        <h4>Invoice Setup</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section_content">
+                <div class="row">
+                    <div class="col-md-9 no_padding">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6">
+                                <div [ngClass]="{
+                  'has-danger': TaxName.invalid && (TaxName.dirty || TaxName.touched || printerSetupForm.submitted),
+                  'has-success': TaxName.valid && (TaxName.dirty || TaxName.touched )
+                      }">
+                                    <div class="field_label">
+                                        <h5>Tax Name <span>(Maximum Characters: {{20 - printerSetupModel?.TaxName?.length}})</span></h5>
+                                    </div>
+                                    <input type="text" name="TaxName" placeholder="eg: VAT, GST" [(ngModel)]="printerSetupModel.TaxName" class="form-control" #TaxName="ngModel" tabindex="2" maxlength="20" required />
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Tax Number <span>(Maximum Characters: {{20 - printerSetupModel?.NTN?.length}})</span></h5>
+                                </div>
+                                <input type="text" placeholder="eg: 8577747476888" name="nTN" [(ngModel)]="printerSetupModel.NTN" class="form-control" #NTN="ngModel" tabindex="2" maxlength="20" />
+                            </div>
+                            <div class="col-md-4 col-sm-6"></div>
+
+                            <div class="col-md-4 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Email <span>(Maximum Characters: {{50 - printerSetupModel?.ReceiptEmail?.length}})</span></h5>
+                                </div>
+                                <input type="text" name="ReceiptEmail" placeholder="eg: mark@mail.com" [(ngModel)]="printerSetupModel.ReceiptEmail" class="form-control" tabindex="3" #ReceiptEmail="ngModel" pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                                    maxlength="50" />
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Phone <span>(Maximum Characters: {{15 - printerSetupModel?.ReceiptPhone?.length}})</span></h5>
+                                </div>
+                                <input type="text" name="ReceiptPhone" placeholder="+91 12345678" [(ngModel)]="printerSetupModel.ReceiptPhone" class="form-control" tabindex="6" #ReceiptPhone="ngModel" maxlength="15" pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$">
+                            </div>
+                            <div class="col-md-4 col-sm-6"></div>
+
+                            <div class="col-md-4 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Website <span>(Maximum Characters: {{50 - printerSetupModel?.WebSite?.length}})</span></h5>
+                                </div>
+                                <input type="text" name="Website" placeholder="eg: www.abc.com" [(ngModel)]="printerSetupModel.WebSite" class="form-control" tabindex="5" #Website="ngModel" maxlength="50" />
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <div class="field_label">
+                                    <h5>Address <span>(Maximum Characters: {{100 - printerSetupModel?.ReceiptAddress?.length}})</span></h5>
+                                </div>
+                                <input type="text" placeholder="eg: 38 Greek Road, London, SE1 7AB" name="ReceiptAddress" [(ngModel)]="printerSetupModel.ReceiptAddress" class="form-control" tabindex="4" #ReceiptAddress="ngModel" maxlength="100" />
+                            </div>
+                            <div class="col-md-12">
+                                <div class="field_label">
+                                    <h5>Footer Notes <span>(Maximum Characters: {{250 - printerSetupModel?.FooterNotes?.length}})</span></h5>
+                                </div>
+                                <div [ngClass]="{
+                  'has-danger': FooterNotes.invalid && (FooterNotes.dirty || FooterNotes.touched || printerSetupForm.submitted),
+                  'has-success': FooterNotes.valid && (FooterNotes.dirty || FooterNotes.touched )
+                      }">
+                                    <textarea rows="3" class="form-control" name="footerNotes" [(ngModel)]="printerSetupModel.FooterNotes" #FooterNotes="ngModel" placeholder="eg: Terms of Payment or Refund" maxlength="250" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="staff_img">
+                            <div *ngIf="!isImageExists" class="upload_image_box square_img" (click)="showImageCropperDialog()">
+                                <i class="fal fa-cloud-upload"></i>
+                                <br/>
+                                <button type="button" class="save">Upload Logo</button>
+                                <br/>
+                                <span class="optional">Maximum Dimension (361px Width x 55px Height)</span>
+                            </div>
+                            <div *ngIf="isImageExists && (imagePath && imagePath != '')">
+                                <img class="img-responsive center-block" src="{{imagePath}}" alt="no image" />
+                                <div class="changeimg_btn square_img_action">
+                                    <button type="button" (click)="showImageCropperDialog()"><i
+                                            class="fal fa-pen"></i></button>
+                                    <button type="button" (click)="onDeleteImage()" class="delete_img"><i
+                                            class="fal fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="white_bg">
+    <form #discountForm="ngForm" (ngSubmit)="saveDiscount(discountForm.valid)" novalidate>
+        <div class="row">
+            <div class="col-md-12 field_label">
+                <div class="section_title">
+                    <h5 class="floating">Discount Pin <span> (4-10 digits allowed)</span></h5>
+                    <div class="printer_btn padding_left text-right">
+                        <button class="save secondry_btn" tabindex="9" type="submit" [disabled]="(discountForm.pristine)">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3" [ngClass]="{
+            'has-danger': DiscountPwd.invalid && (DiscountPwd.dirty || DiscountPwd.touched || discountForm.submitted),
+            'has-success': DiscountPwd.valid && (DiscountPwd.dirty || DiscountPwd.touched )
+          }">
+                <div class="field_label top_zero">
+                    <h5>Password</h5>
+                </div>
+                <input type="password" name="discountPassword" [(ngModel)]="discountPassword" #DiscountPwd="ngModel" class="form-control" (keydown)="preventCharacters($event)" minlength="4" maxlength="10" tabindex="8" pattern="[0-9]{0,10}" placeholder="Please enter a PIN"
+                    required />
+            </div>
+            <div class="col-md-12">
+                <span class="text-danger" *ngIf="discountForm.invalid && discountForm.submitted && DiscountPwd?.errors?.required">{{messages.Validation.Info_Required}}</span>
+                <span class="text-danger" *ngIf="DiscountPwd?.errors?.pattern">{{messages.Validation.InValid_Discount}}</span>
+                <span class="text-danger" *ngIf="discountForm.submitted && DiscountPwd?.errors?.minlength">{{messages.Validation.Discount_Length}}</span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row" style="display: none;">
+    <div class="col-md-4 parallel_grid">
+        <div class="white_bg zero_margin">
+            <div class="col-md-12 field_label">
+                <div class="section_title">
+                    <h5>Connect to a reader </h5>
+                </div>
+            </div>
+            <div class="payment_types">
+                <div>
+                    <img src="assets/images/stripe-logo.png" width="70px" class="floating">
+                    <p>Register a new reader, then discover reader on your account. You can also use the reader simulator provided by the SDK if you don't have hardware.</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+            <div class="small_space"></div>
+            <div class="row payment_types">
+                <div class="col-md-4 padding_left">
+                    <button class="full_width zero_margin"> Discover</button>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 padding_right">
+                    <button class="full_width zero_margin"> Register Reader </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 parallel_grid">
+        <div class="white_bg zero_margin">
+            <div class="col-md-12 field_label">
+                <div class="section_title">
+                    <h5>Connect to a reader </h5>
+                </div>
+            </div>
+            <div class="payment_types">
+                <div>
+                    <img src="assets/images/stripe-logo.png" width="70px" class="floating">
+                </div>
+                <div>
+                    <h4>Stripe</h4>
+                </div>
+
+                <div>
+                    <button class="verified zero_margin"><i class="fal fa-check-circle"></i> Connect</button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+            <div class="payment_types">
+                <div>
+                    <img src="assets/images/reader-img.png" width="70px" class="floating">
+                </div>
+                <div>
+                    <h4>Reader</h4>
+                </div>
+
+                <div>
+                    <button> Offline</button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+            <div class="small_space"></div>
+            <div class="row payment_types">
+                <div class="col-md-4 padding_left"> <button class="full_width zero_margin">
+                        Discover</button></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 padding_right"> <button class="full_width zero_margin"> Register Reader </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 parallel_grid">
+        <div class="row white_bg zero_margin">
+            <div class="col-md-12 field_label">
+                <div class="section_title">
+                    <h5>Register New reader </h5>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <p style="font-size: 12px;
+        color: #202D39;">Enter the key sequence on the reader to display its unique registration code.</p>
+            </div>
+            <div class="col-md-6">
+                <h5 class="field_label">
+                    Registration Code
+                </h5>
+                <input type="text">
+            </div>
+            <div class="col-md-6">
+                <h5 class="field_label">
+                    Reader Label
+                </h5>
+                <input type="text">
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+            <div class="small_space"></div>
+            <div class="row payment_types">
+                <div class="col-md-4 padding_left">
+                    <button class="full_width zero_margin"> Cancel</button>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 padding_right"> <button class="zero_margin secondry_btn full_width"> Register
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="scheduler_space"></div>
+<div style=" display:none">
+    <canvas id="canvas" width="500" height="70"></canvas>
+    <img id="logo" src="{{imagePath}}">
+</div>

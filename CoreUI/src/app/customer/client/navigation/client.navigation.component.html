@@ -1,0 +1,74 @@
+﻿<div class="row">
+  <div class="col-md-12 top_nav">
+    <ul>
+      <li class="back_to_menu">
+        <a class="nav-link" role="navigation" [routerLink]="['/customer']">
+          <i class="fal fa-arrow-left"></i> Customer Search
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.Save">
+        <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+          [routerLink]="['/customer/client/details', clientID]" role="tab">
+          {{clientID > 0 ? 'Client Detail' : 'Add Client'}}
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.Activity">
+        <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['activities']" role="tab">
+          Activities
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.InvoiceHistory">
+        <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['invoice-history']" role="tab">
+          Invoices
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.BookingHistory">
+        <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['bookings']" role="tab">
+          Bookings
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.Gateways && clientID > 0">
+        <a [routerLinkActive]="['active']" [routerLink]="['gateways']" role="tab">
+          Gateway Accounts
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.viewForm && !personInfos.IsWalkedIn">
+        <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['search-forms']" role="tab">
+          Forms <span [ngClass]="countCustomerForm.FormsCount == 0 ? '' : !countCustomerForm.IsMandatory?
+                'form-unsubmitted':'form-madatory' " class="form-badage">
+            {{countCustomerForm.FormsCount == 0? '' : countCustomerForm.FormsCount}}</span>
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.ViewRewardProgram && clientID > 0 && !personInfos.IsWalkedIn">
+        <a [routerLinkActive]="['active']" [routerLink]="['reward-programs']" role="tab">
+          Reward Programs
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.NextOfKin && clientID > 0 && !personInfos.IsWalkedIn">
+        <a [routerLinkActive]="['active']" [routerLink]="['next-of-kin']" role="tab">
+          Next of Kin
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.ReferredBy && clientID > 0 && !personInfos.IsWalkedIn">
+        <a [routerLinkActive]="['active']" [routerLink]="['referral-detail']" role="tab">
+          Referrals
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.Documents && clientID > 0 && !personInfos.IsWalkedIn">
+        <a [routerLinkActive]="['active']" [routerLink]="['documents']" role="tab">
+          Documents
+        </a>
+      </li>
+      <li *ngIf="allowedClientPages.viewWaitList && clientID > 0 && !personInfos.IsWalkedIn">
+        <a [routerLinkActive]="['active']" [routerLink]="['waitlist']" role="tab">
+          Waitlist
+        </a>
+      </li>
+
+    </ul>
+    <div class="clear-fix"></div>
+  </div>
+  <div class="col-md-12 no_padding">
+    <router-outlet></router-outlet>
+  </div>
+</div>

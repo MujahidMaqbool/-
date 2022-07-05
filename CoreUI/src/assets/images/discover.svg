@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="25" viewBox="0 0 35 25">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10" data-name="Rectangle 10" width="35" height="25" rx="4" transform="translate(3924 2311)" fill="#fff"/>
+    </clipPath>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.499" fx="0.6353516578674316" fy="0.36411818861961365" r="0.5" gradientTransform="matrix(1, 0, 0, -1, 0, 1.018)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff8330"/>
+      <stop offset="1" stop-color="#fff"/>
+    </radialGradient>
+  </defs>
+  <g id="Mask_Group_3" data-name="Mask Group 3" transform="translate(-3924 -2311)" clip-path="url(#clip-path)">
+    <g id="Group_11" data-name="Group 11" transform="translate(3924 2311)">
+      <g id="Group_2" data-name="Group 2" transform="translate(0 0)">
+        <rect id="Rectangle_5" data-name="Rectangle 5" width="35" height="25" fill="#ff8a0e"/>
+        <g id="DiscoverCard1" transform="translate(4.307 9.926)">
+          <g id="layer1" transform="translate(12.571 1.387)">
+            <path id="path3194" d="M415.115,51.208a1.908,1.908,0,1,1-1.908-1.908A1.908,1.908,0,0,1,415.115,51.208Z" transform="translate(-411.3 -49.3)" fill="url(#radial-gradient)"/>
+          </g>
+          <g id="text2903" transform="translate(0 -0.426)">
+            <text id="Disc" transform="translate(0 5)" fill="#fff" font-size="5" font-family="Verdana-Bold, Verdana" font-weight="700"><tspan x="0" y="0">Disc</tspan></text>
+          </g>
+          <g id="text2911" transform="translate(16.958 -0.426)">
+            <text id="ver" transform="translate(0 5)" fill="#fff" font-size="5" font-family="Verdana-Bold, Verdana" font-weight="700"><tspan x="0" y="0">ver</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

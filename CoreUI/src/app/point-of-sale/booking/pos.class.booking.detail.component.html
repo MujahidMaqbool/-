@@ -1,0 +1,170 @@
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#pos-classess">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Classes </h3>
+            </div>
+        </div>
+        <div id="pos-classess" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-md-6 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #classesDateSearch>
+                        </dateto-datefrom>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <button class="reset_btn" type="button" (click)="onLoadDefaultData()">
+                            Reset</button>
+                    </div>
+                    <div class="col-md-3 col-sm-6 full_width_btn">
+                        <button class="search" type="button" (click)="onSearchBookedClasses()">
+                            Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>Name
+                    <a  class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                        <i class="fas fa-sort-alt"></i>
+                    </a>
+                </h5>
+            </div>
+            <div class="col">
+                <h5>Scheduled On
+                    <a  class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
+                        <i class="fas fa-sort-alt"></i>
+                    </a>
+                </h5>
+            </div>
+            <div class="col">
+                <h5>Instructor</h5>
+            </div>
+            <div class="col">
+                <h5>Price</h5>
+            </div>
+            <div class="col">
+                <h5>Minimum Attendees</h5>
+            </div>
+            <div class="col">
+                <h5>Maximum Attendees</h5>
+            </div>
+            <div class="col">
+                <h5>Enrolled</h5>
+            </div>
+            <div class="col">
+                <h5>Free Slots</h5>
+            </div>
+            <div class="col">
+                <h5>Present</h5>
+            </div>
+            <div class="col">
+                <h5>No Show</h5>
+            </div>
+            <div class="col">
+                <h5>Waitlist Capacity</h5>
+            </div>
+            <div class="col">
+                <h5>Waitlist</h5>
+            </div>
+            <div class="col">
+                <h5>Cancelled</h5>
+            </div>
+            <div class="col">
+                <h5>Status</h5>
+            </div>
+            <!-- <div class="col text-center">
+            <h5>Manage</h5>
+        </div> -->
+        </div>
+        <div id="grid" *ngIf="isGridDataExist">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let bookedClassObj of bookedClasses">
+                <div class="col">
+                    <h5>{{bookedClassObj.ClassName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.OccurrenceDate | customdate: dateFormat }}
+                        <span class="booking_time">{{bookedClassObj.ClassTime}}</span>
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.AssignedToStaffName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.PricePerSession | currency: currencyFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.AttendeeMin}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.AttendeeMax}}</h5>
+                </div>
+                <div class="col lead_member ">
+                    <h5>{{bookedClassObj.TotalBooked}}
+                        <!-- <span class="primary_badge" *ngIf="!bookedClassObj.MinAttendeMeet">
+                            Min attendee not Met
+                        </span> -->
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.FreeSlots}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.Present}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.NoShowCount}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.WaitListCapacity}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.WaitList}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.CancellationCount}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{bookedClassObj.StatusName }}</h5>
+                </div>
+                
+                <!-- Wednesday Dec 11,2019 1700 hrs.
+                As per discussion with iftikhar and tahir Manage attendee action button should be hidden 
+                as we have separate roles for that -->
+
+                <!-- <div class="col text-center">
+                <span class="blue">
+                    <a matTooltip="Manage Attendee" matTooltipPosition="above" matTooltipClass="custom-tooltip" href="javascript:void(0)"
+                        (click)="onManageAttendeeClick(bookedClassObj.ClassID, bookedClassObj.OccurrenceDate)"><i class="fal fa-user-edit"></i></a>
+                </span>
+            </div> -->
+
+            </div>
+        </div>
+        <div *ngIf="!isGridDataExist">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    <!-- <div class="pagination">
+        <div class="col-md-12 no_padding">
+            <mat-paginator #paginator [length]="[totalRecords]" [pageSize]="defaultPageSize"
+                [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" (page)="changePageSize($event)">
+            </mat-paginator>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+</div>

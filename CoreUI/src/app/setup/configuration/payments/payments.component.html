@@ -1,0 +1,762 @@
+<div class="row">
+  <div class="col-md-12" *ngIf="showError">
+    <div class="alert alert-danger">
+     {{isRequiredMessage? messages.Error.FillRequiredInfo : messages.Error.Please_Set_The_Minimum_PercentageBetween}}
+    </div>
+  </div>
+</div>
+
+<div class="white_bg">
+  <div class="payment_types">
+    <div class="center_flex_alignment">
+      <div><img src="assets/images/stripe-logo.png"></div>
+      <div>
+        <h4>Stripe</h4>
+        <p>In-person and online payment processing method for cards across the Americas, Europe, Middle East and Asia.
+        </p>
+      </div>
+    </div>
+
+    <div class="payment_types_btn" *ngIf="isStripeIntegrated === true">
+      <button class="verified mb-0"><i class="fal fa-check-circle"></i> Verified</button>
+      <button (click)="onDisconnect(enu_PaymentGateway.Stripe_Card)" class="mb-0"> Disconnect </button>
+    </div>
+    <div class="payment_types_btn" *ngIf="isStripeIntegrated === false">
+      <button class="un_verified mb-0"><i class="fal fa-times-circle"></i> Unverified</button>
+      <button *ngIf="isStripeIntegrated === false" class="mb-0"
+        (click)="onRedirectToGateway(strip_connect_url, enu_PaymentGateway.Stripe_Card)">
+        Connect </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="hasFacilityInPackage">
+  <div class="white_bg">
+    <div class="payment_types">
+      <div class="center_flex_alignment">
+        <div><img src="assets/images/go-cardless-logo.png"></div>
+        <div>
+          <h4>GoCardless</h4>
+          <p>In-person and online Direct Debit payment processing across the Americas and Europe.</p>
+        </div>
+      </div>
+
+      <div class="payment_types_btn" *ngIf="isGoCardlessIntegrated === true">
+        <button class="verified mb-0"><i class="fal fa-check-circle"></i> Verified</button>
+        <button (click)="onDisconnect(enu_PaymentGateway.GoCardless)" class="mb-0">Disconnect</button>
+
+      </div>
+      <div class="payment_types_btn" *ngIf="isGoCardlessIntegrated === false">
+        <button class="un_verified mb-0"><i class="fal fa-times-circle"></i> Unverified</button>
+        <button class="mb-0" (click)="onRedirectToGateway(gocardless_connect_url, enu_PaymentGateway.GoCardless)">
+          Connect </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="white_bg">
+  <div class="payment_types">
+    <div class="center_flex_alignment">
+      <div><img src="assets/images/paytabs-logo.png"></div>
+      <div>
+        <h4>PayTabs</h4>
+        <p>In-person and online payment processing method for cards across the Middle East.</p>
+      </div>
+    </div>
+
+    <div class="payment_types_btn" *ngIf="IsPayTabsIntegrated === true">
+      <button class="verified mb-0"><i class="fal fa-check-circle"></i> Verified</button>
+      <button (click)="onDisconnect(enu_PaymentGateway.PayTabs)" class="mb-0"> Disconnect </button>
+    </div>
+    <div class="payment_types_btn" *ngIf="IsPayTabsIntegrated === false">
+      <button class="un_verified mb-0"><i class="fal fa-times-circle"></i> Unverified</button>
+      <button *ngIf="IsPayTabsIntegrated === false" class="mb-0"
+        (click)="onRedirectToGateway(paytabs_connect_url, enu_PaymentGateway.PayTabs)">
+        Connect </button>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="col-md-4">
+      <div class="white_bg zero_margin">
+        <div class="payment_types">
+          <div>
+            <img src="assets/images/payesafe-logo.png" class="floating">
+            <h4>PaySafe</h4>
+            <p>Online payment processing for internet businesses</p>
+          </div>
+
+          <div>
+            <button class="verified"><i class="fal fa-check-circle"></i> Verified</button>
+            <button> Connect </button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+<!-- <div class="col-md-12" *ngIf="hasError">
+      <div class="text-danger">{{errorMessage}}</div>
+    </div> -->
+
+
+<!-- January 07,2020
+  Temporary Commented as per discussion with Iftikhar  -->
+<!--
+<div class="row" *ngIf="(isStripeIntegrated || IsPayTabsIntegrated || isGoCardlessIntegrated) && hasFacilityInPackage">
+  <div class="col-md-12 no_padding">
+    <div class="white_bg top_zero">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <span class="membership_processing_days alert-warning float-right full_width"
+            *ngIf="isStripeIntegrated === false && isGoCardlessIntegrated === false && IsPayTabsIntegrated === false">
+            <i class="fal fa-info-circle"></i>
+            {{messages.Generic_Messages.Branch_Pyament_Gateway_Not_Exist}}
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-6"></div>
+        <div class="col-xl-4 col-lg-6 col-md-8" *ngIf="isBranchGatewayExist">
+          <div class="field_label">
+            <h5>Online Membership Payment Method </h5>
+          </div>
+          <div class="select_label">
+            <select class="form-control" name="paymentGatewayID" [(ngModel)]="paymentGatewayID">
+              <option value="0"> -- Select Payment Gateway --</option>
+              <option *ngFor="let gatway of branchPaymentGatway" [ngValue]="gatway.PaymentGatewayID">
+                {{gatway.PaymentGatewayName}} </option>
+              <option> GoCardless </option>
+            </select>
+          </div>
+          <div class="field_label">
+            <h5><span>*Card & Direct Debit Connected Gateways</span></h5>
+          </div>
+        </div>
+        <div class="col-md-4">
+            <div class="field_label">
+              <h5>POS Payment Method (core/widget) </h5>
+            </div>
+            <div class="select_label">
+              <select class="form-control">
+                <option> Strip </option>
+                <option> GoCardless </option>
+              </select>
+            </div>
+            <div class="field_label">
+              <h5><span>*Card Connected Gateways</span></h5>
+            </div>
+          </div>
+        <div class="col-md-2"></div>
+        <div class="col-xl-2 col-lg-3 col-md-4" style="margin-top:21px;" *ngIf="isBranchGatewayExist">
+          <div class="full_width_btn "><button class="search" type="button"
+              (click)="saveWidgetPaymentGatwayIntergration()"> Save</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="row" *ngIf="isStripeIntegrated || IsPayTabsIntegrated">
+  <div class="col-md-12 no_padding">
+    <div class="white_bg top_zero">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <span class="membership_processing_days alert-warning float-right full_width"
+            *ngIf="isStripeIntegrated === false && IsPayTabsIntegrated === false">
+            <i class="fal fa-info-circle"></i>
+            {{messages.Generic_Messages.Branch_Pyament_CheckOut_Gateway_Not_Exist}}
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-6"></div>
+        <div class="col-xl-4 col-lg-6 col-md-8" *ngIf="isBranchGatewayExist">
+          <div class="field_label">
+            <h5>Online Checkout Payment Method </h5>
+          </div>
+          <div class="select_label">
+
+            <mat-select class="form-control multi_select_tax" name="checkoutGateways" multiple
+              [(ngModel)]="selectedpaymentGatewayIdForCheckout">
+              <mat-option *ngFor="let gatway of branchPaymentGatwayForCheckout" [value]="gatway.PaymentGatewayID">
+                {{gatway.PaymentGatewayName}}</mat-option>
+            </mat-select>
+          </div>
+          <div class="field_label">
+            <h5><span>*Card & Direct Debit Connected Gateways</span></h5>
+          </div>
+        </div>
+
+        <div class="col-xl-2 col-lg-3 col-md-4" style="margin-top:21px;" *ngIf="isBranchGatewayExist">
+          <div class="full_width_btn "><button class="search" type="button" (click)="saveCheckoutGateways()">
+              Save</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="white_bg waitlist_items"
+  *ngIf="isStripeIntegrated && isAllowStripeTerminalCountryBase && (hasUserPermissionAllow || isSuperAdminLoggedIn)">
+  <div class="row center_flex_alignment">
+    <div class="col-md-9 col-sm-9">
+      <h1>Stripe Terminal</h1>
+      <p>Add in-person hardware payments to your business and unify your payouts across channels.</p>
+    </div>
+    <div class="col-md-3 col-sm-3">
+      <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" id="AllowStripeTerminal"
+        name="AllowStripeTerminal" [(ngModel)]="isAllowStripeTerminal" [(checked)]="isAllowStripeTerminal"
+        [disabled]="!isSuperAdminLoggedIn" (ngModelChange)="onTerminalPermissionChange()">
+      </mat-slide-toggle>
+    </div>
+    <div class="col-md-12"><div class="form_border my-10"></div></div>
+  </div>
+
+  <div class="row top_zero" *ngIf="isAllowStripeTerminal && isStripeIntegrated && isAllowStripeTerminalCountryBase && (hasUserPermissionAllow || isSuperAdminLoggedIn)">
+      <div class="mr-3"></div>
+      <div class="media-body mr-0">
+
+    <form #stripeReaderForm="ngForm" (ngSubmit)="saveStripeReaderIntergration(stripeReaderForm.valid)" novalidate>
+      <div class="row align-items-center">
+        <div class="col-md-12">
+          <div class="waitlist_subtitle">
+            <h3>Register New reader </h3>
+            <p>Discover and register a new reader by providing the registration code.</p>
+          </div>
+        </div>
+        <div class="col-md-12"><div class="form_border my-10"></div></div>
+        <div class="col-md-3">
+          <h5 class="field_label">
+            Registration Code
+          </h5>
+          <div [ngClass]="{
+            'has-danger': RegistrationCode.invalid && (RegistrationCode.dirty || RegistrationCode.touched || stripeReaderForm.submitted),
+            'has-success': RegistrationCode.valid  && (RegistrationCode.dirty || RegistrationCode.touched )}">
+
+            <input type="text" required class="form-control" placeholder="Registration Code" name="RegistrationCode"
+              [(ngModel)]="stripeTerminal.RegistrationCode" #RegistrationCode="ngModel" maxlength="50" />
+          </div>
+
+        </div>
+        <div class="col-md-3">
+          <h5 class="field_label">
+            Reader Label
+          </h5>
+          <div [ngClass]="{
+              'has-danger': FriendlyName.invalid && (FriendlyName.dirty || FriendlyName.touched || stripeReaderForm.submitted),
+              'has-success': FriendlyName.valid  && (FriendlyName.dirty || FriendlyName.touched )}">
+            <input type="text" required class="form-control" placeholder="Reader Label" name="FriendlyName"
+              [(ngModel)]="stripeTerminal.Label" #FriendlyName="ngModel" maxlength="50" />
+          </div>
+        </div>
+
+        <div class="offset-md-3 col-md-3 terminal_btn text-right">
+          <button type="button" (click)="resetStripeTerminalForm()"> Reset</button>
+          <button type="submit"> Register </button>
+        </div>
+        <div class="col-md-12"><div class="form_border my-10"></div></div>
+      </div>
+    </form>
+    <div>
+      <!---*ngIf="isAllowStripeTerminal"-->
+      <stripe-reader #stripeReaderComp></stripe-reader>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- <div class="row">
+  <div class="col-md-12 parallel_grid"
+    *ngIf="isStripeIntegrated && isAllowStripeTerminalUSA && (hasUserPermissionAllow || isSuperAdminLoggedIn)">
+    <div class="white_bg zero_margin row">
+      <div class="col-md-12">
+        <span class="checkbox checkbox-primary">
+          <input class="example-margin" id="AllowStripeTerminal" type="checkbox" name="AllowStripeTerminal"
+            [(ngModel)]="isAllowStripeTerminal" [(checked)]="isAllowStripeTerminal" [disabled]="!isSuperAdminLoggedIn"
+            (ngModelChange)="onTerminalPermissionChange()">
+          <label for="AllowStripeTerminal">
+            Allow Stripe Terminal
+          </label>
+        </span>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="row stripe_item_box"
+  *ngIf="isAllowStripeTerminal && isStripeIntegrated && isAllowStripeTerminalUSA && (hasUserPermissionAllow || isSuperAdminLoggedIn)"> -->
+
+<!-- <div class="col-md-4">
+      <div class="white_bg zero_margin">
+        <div class="col-md-12 field_label">
+          <div class="section_title">
+            <h5>Connect to a reader </h5>
+          </div>
+        </div>
+        <div class="payment_types">
+          <div>
+            <img src="assets/images/stripe-logo.png" width="70px" class="floating">
+            <p>Register a new reader, then discover reader on your account. You can also use the reader simulator
+              provided
+              by the SDK if you don't have hardware.</p>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <hr>
+        </div>
+        <div class="small_space"></div>
+        <div class="row payment_types">
+          <div class="col-md-4 padding_left">
+            <button class="full_width zero_margin" type="button"> Discover</button>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 padding_right">
+            <button class="full_width zero_margin"> Register Reader </button>
+          </div>
+
+
+        </div>
+      </div>
+    </div> -->
+
+<!-- <div class="col-md-12">
+    <form #stripeReaderForm="ngForm" (ngSubmit)="saveStripeReaderIntergration(stripeReaderForm.valid)" novalidate>
+      <div class="row white_bg zero_margin">
+        <div class="col-md-12 field_label">
+          <div class="section_title">
+            <h5>Register New reader </h5>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <p style="font-size: 12px;
+          color: #202D39;">Enter the key sequence on the reader to display its unique registration code.</p>
+        </div>
+        <div class="col-md-6">
+          <h5 class="field_label">
+            Registration Code
+          </h5>
+          <div [ngClass]="{
+            'has-danger': RegistrationCode.invalid && (RegistrationCode.dirty || RegistrationCode.touched || stripeReaderForm.submitted),
+            'has-success': RegistrationCode.valid  && (RegistrationCode.dirty || RegistrationCode.touched )}">
+
+            <input type="text" required class="form-control" placeholder="Registration Code" name="RegistrationCode"
+              [(ngModel)]="stripeTerminal.RegistrationCode" #RegistrationCode="ngModel" maxlength="50" />
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <h5 class="field_label">
+            Reader Label
+          </h5>
+          <div [ngClass]="{
+              'has-danger': FriendlyName.invalid && (FriendlyName.dirty || FriendlyName.touched || stripeReaderForm.submitted),
+              'has-success': FriendlyName.valid  && (FriendlyName.dirty || FriendlyName.touched )}">
+            <input type="text" required class="form-control" placeholder="Registration Label" name="FriendlyName"
+              [(ngModel)]="stripeTerminal.Label" #FriendlyName="ngModel" maxlength="50" />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <hr>
+        </div>
+        <div class="small_space"></div>
+        <div class="row payment_types">
+          <div class="col-md-4 padding_left">
+            <button class="full_width zero_margin" type="button" (click)="resetStripeTerminalForm()"> Reset</button>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 padding_right"> <button type="submit" class="zero_margin secondry_btn full_width">
+              Register </button>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div> -->
+
+<!-- <div class="col-md-12">
+    -*ngIf="isAllowStripeTerminal"
+    <stripe-reader #stripeReaderComp></stripe-reader>
+  </div> -->
+
+<!-- </div> -->
+
+<div class="white_bg waitlist_items top_zero">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1>Online Payment Configurations</h1>
+      <p>Configure how you wish to process payments in the widget & app.
+      </p>
+    </div>
+    <div class="col-md-12"><div class="form_border my-10"></div></div>
+  </div>
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <div class="row waitlist_subtitle align-items-centert"
+        *ngIf="(isStripeIntegrated || IsPayTabsIntegrated || isGoCardlessIntegrated) && hasFacilityInPackage">
+        <div class="col-md-9">
+          <span class="membership_processing_days alert-warning float-right full_width"
+            *ngIf="isStripeIntegrated === false && isGoCardlessIntegrated === false && IsPayTabsIntegrated === false">
+            <i class="fal fa-info-circle"></i>
+            {{messages.Generic_Messages.Branch_Pyament_Gateway_Not_Exist}}
+          </span>
+          <h3>Checkout Payment Method</h3>
+          <p>Select a payment method when customers purchase classes, services or products from your widget & apps.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa" *ngIf="isBranchGatewayExist">
+          <div class="select_label">
+
+
+            <mat-select class="form-control multi_select_tax" placeholder="Select Gateway" name="ClassTax"
+              [(ngModel)]="selectedpaymentGatewayIdForCheckout" tabindex="10" multiple>
+
+              <mat-select-trigger
+                *ngIf="selectedpaymentGatewayIdForCheckout && selectedpaymentGatewayIdForCheckout.length > 0">
+                {{selectedpaymentGatewayIdForCheckout && selectedpaymentGatewayIdForCheckout.length > 0 && selectedpaymentGatewayIdForCheckout[0].PaymentGatewayName ?
+                          selectedpaymentGatewayIdForCheckout[0].PaymentGatewayName :
+                          selectedpaymentGatewayIdForCheckout && selectedpaymentGatewayIdForCheckout.length >= 2 && selectedpaymentGatewayIdForCheckout[0].PaymentGatewayName == undefined ?
+                          selectedpaymentGatewayIdForCheckout[1].PaymentGatewayName : ''}}
+                <span *ngIf="selectedpaymentGatewayIdForCheckout && selectedpaymentGatewayIdForCheckout.length >= 2"
+                  class="example-additional-selection">
+                  (+{{selectedpaymentGatewayIdForCheckout[0].PaymentGatewayName == undefined ? selectedpaymentGatewayIdForCheckout.length - 2 :
+                            selectedpaymentGatewayIdForCheckout.length - 1 }}
+                  {{selectedpaymentGatewayIdForCheckout[0].PaymentGatewayName == undefined && selectedpaymentGatewayIdForCheckout.length === 3 ? 'other' :
+                          selectedpaymentGatewayIdForCheckout.length === 2 ? 'other' : 'others'}})
+                </span>
+              </mat-select-trigger>
+              <span *ngIf="branchPaymentGatwayForCheckout && branchPaymentGatwayForCheckout.length > 1">
+                <mat-option #allSelectedPaymentMethod (click)="onSelectAllPyamentMethod()" [value]="0">All</mat-option>
+              </span>
+              <mat-option *ngFor="let gatway of branchPaymentGatwayForCheckout" [value]="gatway"
+                (click)="tosslePerOneTax(gatway)">
+                {{gatway.PaymentGatewayName}} </mat-option>
+            </mat-select>
+
+
+
+
+            <!-- <mat-select class="form-control multi_select_tax" (change)="onSelectAllPyamentMethod()" name="checkoutGateways" multiple
+              [(ngModel)]="selectedpaymentGatewayIdForCheckout">
+              <mat-option [value]="null" >All</mat-option>
+              <mat-option *ngFor="let gatway of branchPaymentGatwayForCheckout" [value]="gatway.PaymentGatewayID">
+                {{gatway.PaymentGatewayName}}</mat-option>
+            </mat-select> -->
+          </div>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-centert"
+        *ngIf="isStripeIntegrated || IsPayTabsIntegrated || isGoCardlessIntegrated">
+        <div class="col-md-9">
+          <span class="membership_processing_days alert-warning float-right full_width"
+            *ngIf="isStripeIntegrated === false && IsPayTabsIntegrated === false && isGoCardlessIntegrated === false">
+            <i class="fal fa-info-circle"></i>
+            {{messages.Generic_Messages.Branch_Pyament_CheckOut_Gateway_Not_Exist}}
+          </span>
+          <h3>Membership Payment Method</h3>
+          <p>Select a payment method when customers purchase memberships from your widget & apps.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa" *ngIf="isBranchGatewayExist">
+          <div class="select_label">
+            <select class="form-control mb-0" name="paymentGatewayID" [(ngModel)]="paymentGatewayID">
+              <option value="0"> -- Select Payment Gateway --</option>
+              <option *ngFor="let gatway of branchPaymentGatway" [ngValue]="gatway.PaymentGatewayID">
+                {{gatway.PaymentGatewayName}} </option>
+              <!-- <option> GoCardless </option> -->
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Member - Payment Method Information</h3>
+          <p>Toggle on if a member is not required to provide card information when the ‘Due Today’ amount is zero
+            during checkout.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.DontRequireMemberPaymentMethodwhenTotalZero" tabindex="1"
+            class="wellyx-checked float-right" name="BookingClasses">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Client/Lead- Payment Method Information</h3>
+          <p>Toggle on if a client/lead is not required to provide card information when the ‘Due Today’ amount is zero
+            in during checkout.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.DontRequireClientPaymentMethodwhenTotalZero" tabindex="1"
+            class="wellyx-checked float-right" name="BookingClasses">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Membership - Payment Method Information</h3>
+          <p>Toggle on if a customer is not required to provide a payment method when the membership is free.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.DontRequireMembershipPaymentMethodWhenTotalZero"
+            class="wellyx-checked float-right" name="BookingClasses">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Home Address</h3>
+          <p>Toggle on if a customer is not required to provide a home address when purchasing a membership or from
+            checkout from the widget & app.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.IsHomeAddressNotRequired" tabindex="1"
+            class="wellyx-checked float-right" name="BookingClasses">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Guest Checkout</h3>
+          <p>Toggle on to enable guest checkout and allow customers to checkout without providing an email address.
+            Please note that guests will be created as clients in Wellyx with a system generated email address.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.IsGuestCheckoutEnabled" class="wellyx-checked float-right"
+            name="GuestCheckout">
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+</div>
+
+<div class="white_bg waitlist_items">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1>Partial Payments</h1>
+      <p>Allow customers to pay no sums or a partial amount of the total due during checkout. You can process these
+        invoices later from core to collect the remaining balance. This option is not available for membership payments.
+      </p>
+    </div>
+    <div class="col-md-12"><div class="form_border my-10"></div></div>
+  </div>
+
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <!-- partial payment core comment after discussed by omer shb  -->
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Partial Payments - Core</h3>
+          <p>Enable partial payments from core. This will enable partial payment for all customers in core.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.AllowPartPaymentOnCore" tabindex="1"
+            class="wellyx-checked float-right" name="AllowPartPaymentOnCore">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Partial Payments</h3>
+          <p>Enable partial payments from the widget & apps. This will enable partial payment for all customers in
+            widget & apps.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.AllowPartPaymentOnWidget"
+            (change)="onPartialPaymentToggleChange()" tabindex="1" class="wellyx-checked float-right"
+            name="AllowPartPaymentOnWidget">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row">
+        <div class="mr-3"></div>
+        <div class="media-body mr-0">
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Friendly Name </h3>
+          <p>The display name on your widget & apps for processing partial payments. <span class="optional">(Maximum
+              character limit is 30)</span></p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <input type="text" class="mb-0" (keypress)="onKeyPress()" required [disabled]="!paymentSettings.AllowPartPaymentOnWidget"
+            maxlength="30" [(ngModel)]="paymentSettings.WidgetPartPaymentFriendlyName"
+            name="widgetPartPaymentFriendlyName">
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Marketing Label</h3>
+          <p>Let your customers know about your partial payment options by displaying these labels below individual
+            items on the widget & apps. <span class="optional">(Maximum character limit is 40)</span></p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <input type="text" class="mb-0" [disabled]="!paymentSettings.AllowPartPaymentOnWidget" maxlength="40"
+            [(ngModel)]="paymentSettings.PartialPaymentLable" name="partialPaymentLable">
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Limit for Members</h3>
+          <p>Set the minimum percentage (between 0% to 100%) of the total invoice to be paid; 100% means full payment is
+            required.</p>
+        </div>
+        <div class="col-md-3 padding_right label_with_input mob-pa">
+          <div style="display: flex;" [ngClass]="{'has-danger': isValid}" [ngClass]="{
+            'has-danger': widgetPartPaymentForMember.invalid
+                          && (widgetPartPaymentForMember.dirty || widgetPartPaymentForMember.touched)
+                          || ((!widgetPartPaymentForMember.value) || widgetPartPaymentForMember.value == null || widgetPartPaymentForMember.value > 100)
+                          && (widgetPartPaymentForMember.dirty || widgetPartPaymentForMember.touched) && showError && paymentSettings.WidgetPartPaymentForMember,
+            'has-success': (widgetPartPaymentForMember.value)
+                           && widgetPartPaymentForMember.valid && (widgetPartPaymentForMember.dirty || widgetPartPaymentForMember.touched)
+            }"><input type="text" [disabled]="!paymentSettings.AllowPartPaymentOnWidget" required
+              (keypress)="onKeyPress()" (keydown)="preventCharactersForClassBooking($event)"
+              #widgetPartPaymentForMember="ngModel" (ngModelChange)="onPercentageChangeOnlyNumbers($event)"
+              [(ngModel)]="paymentSettings.WidgetPartPaymentForMember" name="widgetPartPaymentForMember"
+              class="form-control mb-0" max="100" maxlength="5"><span class="dollar_prefix">%</span>
+          </div>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Limit for Clients/Leads</h3>
+          <p>Set the minimum percentage (between 0% to 100%) of the total invoice to be paid; 100% means full payment is
+            required.</p>
+        </div>
+        <div class="col-md-3 padding_right label_with_input mob-pa">
+          <div style="display: flex;" [ngClass]="{
+            'has-danger': widgetPartPaymentForNonMember.invalid
+                          && (widgetPartPaymentForNonMember.dirty || widgetPartPaymentForNonMember.touched)
+                          || ((!widgetPartPaymentForNonMember.value) || widgetPartPaymentForNonMember.value == null || widgetPartPaymentForNonMember.value > 100)
+                          && (widgetPartPaymentForNonMember.dirty || widgetPartPaymentForNonMember.touched) && showError && paymentSettings.WidgetPartPaymentForNonMember,
+            'has-success': (widgetPartPaymentForNonMember.value)
+                           && widgetPartPaymentForNonMember.valid && (widgetPartPaymentForNonMember.dirty || widgetPartPaymentForNonMember.touched)
+            }"><input type="text" required (keypress)="onKeyPress()"
+              [disabled]="!paymentSettings.AllowPartPaymentOnWidget"
+              (keydown)="preventCharactersForClassBooking($event)" #widgetPartPaymentForNonMember="ngModel"
+              (ngModelChange)="onPercentageChangeOnlyNumbers($event)"
+              [(ngModel)]="paymentSettings.WidgetPartPaymentForNonMember" name="widgetPartPaymentForNonMember"
+              maxlength="5" max="100" class="form-control mb-0"><span class="dollar_prefix">%</span></div>
+        </div>
+      </div>
+      </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="white_bg waitlist_items" *ngIf="hasSplitPaymentPackage && hasAllowedSplitPayment">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1>Split Payment</h1>
+      <p>Enable customers to use multiple payment methods.
+      </p>
+    </div>
+    <div class="col-md-12">
+      <div class="form_border my-10"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Split Payment - Core</h3>
+          <p>Enable customers to use multiple payment methods in core & staff app.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.IsSplitPaymentsEnabledOnCore" tabindex="1"
+            class="wellyx-checked float-right" name="isSplitPaymentsEnabledOnCore">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Split Payment - Widget & Apps</h3>
+          <p>Enable customers to use multiple payment methods in the widget & customer app.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.IsSplitPaymentsEnabledOnWidgetAndApps" tabindex="1"
+            class="wellyx-checked float-right" name="isSplitPaymentsEnabledOnWidgetAndApps">
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="white_bg waitlist_items" *ngIf="hasRewardProgramPackage">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1>Reward Program</h1>
+      <p>Enable customers to use reward points as a payment method.
+      </p>
+    </div>
+    <div class="col-md-12">
+      <div class="form_border my-10"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Reward Program - Core</h3>
+          <p>Enable reward program as a payment method in core & staff app.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.RewardProgramPaymentOnCore" tabindex="1"
+            class="wellyx-checked float-right" name="rewardProgramPaymentOnCore">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa"><div class="form_border my-10"></div></div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Reward Program - Widget & Apps</h3>
+          <p>Enable reward program as a payment method in the widget & app.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle [(ngModel)]="paymentSettings.RewardProgramPaymentOnWidgetAndApp" tabindex="1"
+            class="wellyx-checked float-right" name="rewardProgramPaymentOnWidgetAndApp">
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="sm-full-canvas">
+  <canvas id="canvas" width="500" height="70"></canvas>
+  <img id="logo" src="{{imagePath}}">
+</div> -->

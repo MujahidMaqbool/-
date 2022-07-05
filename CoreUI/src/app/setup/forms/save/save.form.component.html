@@ -1,0 +1,668 @@
+<div class="col-md-12">
+    <div class="company_btn float-right mob-non-float xs-btn-width">
+        <button class="simple_btn" role="navigation" type="button" tabindex="0" [routerLink]="['/setup/form']">
+            Back to Search </button>
+        <button type="button" (click)="onNext()" *ngIf="isShowNext"> Next </button>
+        <button type="button" (click)="onPreview()" *ngIf="isShowPreview"> Preview </button>
+        <button type="button" (click)="onPrevious()" *ngIf="isShowPrevious"> Previous </button>
+        <button type="button" (click)="onSave()" *ngIf="isShowSave"> Save </button>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-danger" *ngIf="addMembershipsError ||
+                                             customerSignupError ||
+                                             customerError ||
+                                             showFormDetailsValidation ||
+                                             addItemValidation ||
+                                             showMandatoryFormError">
+            <div *ngIf="showFormDetailsValidation">
+                {{messages.Validation.Info_Required}}
+            </div>
+            <div *ngIf="addMembershipsError">
+                {{messages.Validation.Please_Add_At_Least_one_Membership_To_Proceed}}
+            </div>
+            <div *ngIf="customerSignupError || customerError">
+                {{messages.Validation.Please_Select_At_Least_One_Form_Configuration_To_Proceed}}
+            </div>
+            <div *ngIf="showMandatoryFormError">
+                {{messages.Validation.Please_Select_At_Least_One_Required_Field_In_The_Form_To_Proceed}}
+            </div>
+            <div *ngIf="addItemValidation">
+                {{addItemValidationMessage}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="showStepNum == 1">
+    <div class="row">
+        <div class="col-md-4 parallel_grid no_padding">
+            <div class="white_bg form_whitebg mb-0">
+                <div class="row form_tab">
+                    <div class="col col-1 pr-5"><label class="radio_container"><input id="formType" name="formType"
+                                type="radio" [value]="enuFormTypes.Signup" [(ngModel)]="saveCustomForm.FormTypeID"
+                                ng-reflect-name="add" ng-reflect-value="false" ng-reflect-model="false"
+                                (ngModelChange)="onFormTypeChange()" class="ng-untouched ng-valid ng-dirty"><span
+                                class="checkmark"></span></label></div>
+                    <div class="col">
+                        <h5>Require Form upon Customer Signup</h5>
+                        <p>New customers can signup with your business in different ways; configure how different types of customers should be prompted to fill out this form</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 parallel_grid no_padding">
+            <div class="white_bg form_whitebg mb-0">
+                <div class="row form_tab">
+                    <div class="col col-1 pr-5"><label class="radio_container"><input id="formType" name="formType"
+                                type="radio" [value]="enuFormTypes.CustomerPurchase"
+                                [(ngModel)]="saveCustomForm.FormTypeID" ng-reflect-name="add" ng-reflect-value="false"
+                                ng-reflect-model="false" (ngModelChange)="onFormTypeChange()"
+                                class="ng-untouched ng-valid ng-dirty"><span class="checkmark"></span></label></div>
+                    <div class="col">
+                        <h5>Require Form upon Customer Purchases</h5>
+                        <p>
+                            All customers who make any booking or purchase will be required to complete this form
+                            <!-- All customers who book/purchase a class/service/product will be required to complete this form -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 parallel_grid no_padding">
+            <div class="white_bg form_whitebg">
+                <div class="row form_tab">
+                    <div class="col col-1 pr-5"><label class="radio_container"><input id="formType" name="formType"
+                                type="radio" [value]="enuFormTypes.RequestForm" [(ngModel)]="saveCustomForm.FormTypeID"
+                                (ngModelChange)="onFormTypeChange()"><span class="checkmark"></span></label></div>
+                    <div class="col">
+                        <h5>Require Form upon Request </h5>
+                        <p>
+                            Manage the forms addition and submission manually from Forms tab in customers/staff profiles. These forms do not offer any automatic configurations.
+                            <!-- All existing customers will be required to complete this form on their next purchase, and not only new customers. The existing customers group includes all existing clients, leads and members. -->
+                            <!-- Send and receive these forms through automated or manually sent emails and SMS. These forms do not offer any automatic configurations. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg top_zero">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="form_label">Form Name</h5>
+                <div [ngClass]="{
+                    'has-danger': FormName.invalid && (FormName.dirty || FormName.touched || showFormDetailsValidation),
+                    'has-success': FormName.valid && (FormName.dirty || FormName.touched )
+                }">
+                    <input class="form-control" type="text" #FormName="ngModel" name="FormName" required [(ngModel)]="saveCustomForm.FormName" (blur)="onFormNameTrim()" minlength="1" maxlength="50">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h5 class="form_label">Description</h5>
+                <input class="form-control" type="text" name="Description" required [(ngModel)]="saveCustomForm.Description" (blur)="onDescriptionTrim()" minlength="1" maxlength="350">
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg top_zero form_tab">
+        <div class="row center_flex_alignment">
+            <div class="col-md-9 col-sm-9">
+                <h5>Active</h5>
+                <p>Toggle on to allow customers and staff to complete this form</p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="Active" [(checked)]="saveCustomForm.IsActive" [(ngModel)]="saveCustomForm.IsActive" (ngModelChange)="onChangeIsActive()">
+                </mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg top_zero form_tab" *ngIf="saveCustomForm.FormTypeID !== enuFormTypes.RequestForm">
+        <div class="row center_flex_alignment">
+            <div class="col-md-9 col-sm-9">
+                <h5>Mandatory Online</h5>
+                <p>Making a form mandatory requires the customer to complete this form before they can checkout</p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="MandatoryOnline" [disabled]="!saveCustomForm.IsActive" [(checked)]="saveCustomForm.IsMandatory" [(ngModel)]="saveCustomForm.IsMandatory">
+                </mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg top_zero form_tab" *ngIf="saveCustomForm.FormTypeID == enuFormTypes.Signup">
+        <div class="row center_flex_alignment">
+            <div class="col-md-9 col-sm-9">
+                <h5>Require Form from New Clients</h5>
+                <p>All new customers will be required to complete this form before checkout</p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="NewClients" [(checked)]="saveCustomForm.IsClient" [(ngModel)]="saveCustomForm.IsClient" (ngModelChange)="onCustomerSignUpSettingChange()">
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form_border"></div>
+            </div>
+        </div>
+        <div class="row center_flex_alignment">
+            <div class="col-md-9 col-sm-9">
+                <h5>Require Form from Existing Customers</h5>
+                <p>
+                    All existing customers will be required to complete this form on their next purchase, and not only new customers. The existing customers group includes all existing clients<span *ngIf="hasFacilityInPackage">, leads and members</span>.
+                    <!-- Manage the forms addition and submission manually from Forms tab in customers/staff profiles. These forms do not offer any automatic configurations. -->
+                    <!-- Enforcing this check will require existing customers to complete this form on their next purchase,
+                    and
+                    not only new customers. The existing customers group include all existing clients, leads and
+                    members. -->
+                </p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="ExistingCustomers" [(checked)]="saveCustomForm.IsExistingCustomer" [(ngModel)]="saveCustomForm.IsExistingCustomer" (ngModelChange)="onCustomerSignUpSettingChange()">
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <div class="row" *ngIf="hasFacilityInPackage">
+            <div class="col-md-12">
+                <div class="form_border"></div>
+            </div>
+        </div>
+        <div class="row center_flex_alignment" *ngIf="hasFacilityInPackage">
+            <div class="col-md-9 col-sm-9">
+                <h5>Require Form from All Leads</h5>
+                <p>All new leads will be required to complete this form before they can submit an enquiry</p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="AllLeads" [(checked)]="saveCustomForm.IsLead" [(ngModel)]="saveCustomForm.IsLead" (ngModelChange)="onCustomerSignUpSettingChange()">
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <div class="row" *ngIf="hasFacilityInPackage">
+            <div class="col-md-12">
+                <div class="form_border"></div>
+            </div>
+        </div>
+        <div class="row center_flex_alignment" *ngIf="hasFacilityInPackage">
+            <div class="col-md-9 col-sm-9">
+                <h5>Require Form when Purchasing Memberships</h5>
+                <p>All new and existing members will be required to fill this form when they purchase a new membership
+                </p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="PurchasingMemberships" [(checked)]="saveCustomForm.IsMember" [(ngModel)]="saveCustomForm.IsMember" (ngModelChange)="onIsMemberChange()">
+                </mat-slide-toggle>
+            </div>
+            <div class="col-md-12 membership_form_list" *ngIf="saveCustomForm.IsMember">
+                <h6>Memberships Requiring Form Submission:&nbsp;<span>
+                        {{selectedMembershipsList && selectedMembershipsList.length > 0 ? selectedMembershipsList.length
+                        : 0 }}
+                        {{selectedMembershipsList && selectedMembershipsList.length > 1 ? 'Memberships' :
+                        'Membership'}}</span>
+                </h6>
+                <a class="float-right" (click)="onAddMembershipPopup()">
+                    <i class="fal fa-plus-circle"></i> Add Membership
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg top_zero form_tab" *ngIf="saveCustomForm.FormTypeID == enuFormTypes.RequestForm">
+        <div class="row center_flex_alignment">
+            <div class="col-md-9 col-sm-9">
+                <h5>Show Customers</h5>
+                <p>Toggle on to allow customers to view not submitted forms in their profile</p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="isVisibleToCustomer" [disabled]="!saveCustomForm.IsActive" [(checked)]="saveCustomForm.IsVisibleToCustomer" [(ngModel)]="saveCustomForm.IsVisibleToCustomer">
+                </mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="saveCustomForm.FormTypeID == enuFormTypes.CustomerPurchase">
+        <div class="white_bg top_zero form_tab" *ngIf="hasFacilityInPackage">
+            <div class="row center_flex_alignment">
+                <div class="col-md-9 col-sm-9">
+                    <h5>Require Form when Booking Classes</h5>
+                    <p>All customers who book/purchase a class will be required to complete this form</p>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="BookingClasses" [(checked)]="saveCustomForm.OnBookingClass" [(ngModel)]="saveCustomForm.OnBookingClass" (ngModelChange)="onBookingClassesChange()">
+                    </mat-slide-toggle>
+                </div>
+                <div class="col-md-12 no_padding" *ngIf="saveCustomForm.OnBookingClass">
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                    <div class="col-md-12 membership_form_list">
+                        <h6>Classes Requiring Form Submission:&nbsp;<span>
+                                {{selectedClassesList && selectedClassesList.length > 0 ? selectedClassesList.length :
+                                0}}
+                                {{selectedClassesList && selectedClassesList.length > 1 ? 'Classes' : 'Class'}}</span>
+                        </h6>
+                        <a class="float-right" (click)="onAddItemsPopup(enuItemType.Class)">
+                            <i class="fal fa-plus-circle"></i> Add Classes
+                        </a>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                    <div class="col-md-12 membership_form_list">
+                        <div class="row  center_flex_alignment full_width">
+                            <div class="col-md-9 no_padding">
+                                <h6>Always Require this Form</h6>
+                                <p>Enforcing this check will require customers to complete this form every time the selected classes are booked/purchased, and not just the first time</p>
+                            </div>
+                            <div class="col-md-3 padding_right">
+                                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="OnEveryClass" [(checked)]="saveCustomForm.OnEveryClass" [(ngModel)]="saveCustomForm.OnEveryClass">
+                                </mat-slide-toggle>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="white_bg top_zero form_tab">
+            <div class="row center_flex_alignment">
+                <div class="col-md-9">
+                    <h5>Require Form when Booking Services</h5>
+                    <p>All customers who book/purchase a service will be required to complete this form</p>
+                </div>
+                <div class="col-md-3">
+                    <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="BookingServices" [(checked)]="saveCustomForm.OnBookingService" [(ngModel)]="saveCustomForm.OnBookingService" (ngModelChange)="onBookingServiceChange()">
+                    </mat-slide-toggle>
+                </div>
+                <div class="col-md-12 no_padding" *ngIf="saveCustomForm.OnBookingService">
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                    <div class="col-md-12 membership_form_list">
+                        <h6>Services Requiring Form Submission:&nbsp;<span>
+                                {{selectedServicesList && selectedServicesList.length > 0 ? selectedServicesList.length
+                                : 0}}
+                                {{selectedServicesList && selectedServicesList.length > 1 ? 'Services' :
+                                'Service'}}</span>
+                        </h6>
+                        <a class="float-right" (click)="onAddItemsPopup(enuItemType.Service)">
+                            <i class="fal fa-plus-circle"></i> Add Services
+                        </a>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                    <div class="col-md-12 membership_form_list">
+                        <div class="row  center_flex_alignment full_width">
+                            <div class="col-md-9 no_padding">
+                                <h6>Always Require this Form</h6>
+                                <p>Enforcing this check will require customers to complete this form every time the selected services are booked/purchased, and not just the first time</p>
+                            </div>
+                            <div class="col-md-3 padding_right">
+                                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="OnEveryService" [(checked)]="saveCustomForm.OnEveryService" [(ngModel)]="saveCustomForm.OnEveryService">
+                                </mat-slide-toggle>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="white_bg top_zero form_tab">
+            <div class="row center_flex_alignment">
+                <div class="col-md-9">
+                    <h5>Require Form when Purchasing Products</h5>
+                    <p>All customers who purchase a product will be required to complete this form</p>
+                </div>
+                <div class="col-md-3">
+                    <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="PurchasingProducts" [(checked)]="saveCustomForm.OnBookingProducts" [(ngModel)]="saveCustomForm.OnBookingProducts" (ngModelChange)="onBookingProductChange()">
+                    </mat-slide-toggle>
+                </div>
+                <div class="col-md-12 no_padding" *ngIf="saveCustomForm.OnBookingProducts">
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                    <div class="col-md-12 membership_form_list">
+                        <h6>Products Requiring Form Submission:&nbsp;
+                            <span>{{selectedProductsList && selectedProductsList.length > 0 ?
+                                selectedProductsList.length : 0}}
+                                {{selectedProductsList && selectedProductsList.length > 1 ? 'Products' :
+                                'Product'}}</span>
+                        </h6>
+                        <a class="float-right" (click)="onAddItemsPopup(enuItemType.Product)">
+                            <i class="fal fa-plus-circle"></i> Add Products
+                        </a>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_border"></div>
+                    </div>
+                    <div class="col-md-12 membership_form_list">
+                        <div class="row  center_flex_alignment full_width">
+                            <div class="col-md-9 no_padding">
+                                <h6>Always Require this Form</h6>
+                                <p>Enforcing this check will require customers to complete this form every time the selected product is purchased, and not just the first time</p>
+                            </div>
+                            <div class="col-md-3 padding_right">
+                                <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="OnEveryProduct" [(checked)]="saveCustomForm.OnEveryProduct" [(ngModel)]="saveCustomForm.OnEveryProduct">
+                                </mat-slide-toggle>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
+
+<ng-container *ngIf="showStepNum == 2">
+
+    <div *ngIf="model">
+        <div class="row form_space">
+            <div class="col-md-3">
+                <div class="form_whitebg">
+                    <div class="cstm_scroll_bg form_left_bar">
+                        <div class="row form_color">
+                            <div class="col-lg-6 col-sm-12">
+                                <h5 class="form_label">Background Color</h5>
+                                <dx-color-box [(value)]="model.theme.bgColor" (onValueChanged)="setSaveButtonStatus()">
+                                </dx-color-box>
+
+                                <!-- <input class="colorpick col" type="color" name="bgColor" [(ngModel)]="model.theme.bgColor"> -->
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+                                <h5 class="form_label">Text Color</h5>
+                                <dx-color-box [(value)]="model.theme.textColor" (onValueChanged)="setSaveButtonStatus()"></dx-color-box>
+                                <!-- <input class="colorpick col" type="color" name="textColor"
+                                [(ngModel)]="model.theme.textColor"> -->
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 small_space">
+                            <h5 class="form_label">Select Fields</h5>
+                            <!--a draggable element-->
+                            <div class="form_fields row" *ngFor="let item of fieldModels">
+                                <div class="field_item pointer shadow-bg" [dndDraggable]="item" [dndEffectAllowed]=" isESignatureAdded && item.type == 'eSignature' ? 'none' : 'copy'" (dndEnd)="onDragEnd($event, item)">
+                                    <div class="col-md-8 column_flex_alignment">
+                                        <i class="fa fa-plus-circle"></i>
+                                        <h5>{{item.label}}</h5>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <i class="fal fa-bars"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 padding_left mob-pl-15">
+                <!--a dropzone-->
+                <!--to allow dropping content that is not [dndDraggable] set dndAllowExternal to true-->
+                <section dndDropzone (dndDragover)="onDragover($event)" (dndDrop)="onDrop($event,model.attributes)" class="dndDropArea" [ngClass]="{'empty':model.attributes.length == 0,
+                                    'form_right_bar':model,
+                                    'form_whitebg':model,
+                                    'cstm_scroll_bg':model
+                                }" [style.backgroundColor]="model.theme.bgColor" [style.color]="model.theme.textColor">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" *ngIf="showFormError">
+                                <div *ngIf="showFormError">
+                                    {{messages.Validation.Please_Select_At_Least_One_Field_In_The_Form_To_Proceed}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field" *ngFor="let item of model.attributes;let i= index;" (dndStart)="onDragStart($event)" (dndCanceled)="onDragCanceled($event)" (dndMoved)="onDragged(item, model.attributes, 'move')" [dndEffectAllowed]="'all'" [dndDraggable]="item">
+                        <div class="row form-group cust_form extra_small_space">
+                            <div class="col-md-10">
+                                <!-- <i [ngClass]="item.icon" class="fa pull-left"></i>
+                  <h5>{{item.label}}
+                  <span *ngIf="item.required" class="red">*</span></h5> -->
+                                <div *ngIf="item.type=='text'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <input type="text" class="form-control" id="{{item.name}}" readonly placeholder="{{item.placeholder}}">
+                                </div>
+                                <div *ngIf="item.type=='email'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <input type="email" class="form-control" id="{{item.name}}" readonly placeholder="{{item.placeholder}}">
+                                </div>
+                                <div *ngIf="item.type=='phone'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <input type="text" class="form-control" id="{{item.name}}" readonly placeholder="{{item.placeholder}}">
+                                </div>
+                                <div *ngIf="item.type=='number'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <input type="number" class="form-control" id="{{item.name}}" min="{{item.min}}" readonly max="{{item.max}}" placeholder="{{item.placeholder}}">
+                                </div>
+                                <div *ngIf="item.type=='date'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <input type="text" class="form-control" id="{{item.name}}" readonly placeholder="{{item.placeholder}}">
+                                </div>
+                                <div *ngIf="item.type=='datetime-local'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <input type="text" matInput class="form-control" id="{{item.name}}" readonly placeholder="{{item.placeholder}}">
+                                </div>
+                                <div *ngIf="item.type=='textarea'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <textarea rows="4" class="form-control" id="{{item.name}}" readonly [(ngModel)]="item.value" placeholder="{{item.placeholder}}" maxlength="350">
+                                    </textarea>
+                                </div>
+                                <div *ngIf="item.type=='textarea-readonly'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <textarea rows="{{item.rows}}" class="form-control" id="{{item.name}}" readonly [(ngModel)]="item.value" placeholder="{{item.placeholder}}">
+                                    </textarea>
+                                </div>
+                                <div *ngIf="item.type=='paragraph'">
+                                    <p class="form-text">{{item.value}}</p>
+                                </div>
+                                <div class="signature-pad" *ngIf="item.type=='eSignature'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <textarea rows="8" class="form-control" readonly></textarea>
+                                    <button type="button">Clear</button>
+                                </div>
+                                <div *ngIf="item.type=='autocomplete'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <div class="select_label">
+                                        <select class="form-control" id="{{item.name}}">
+                                            <option *ngFor="let v of item.values" [value]="v.value">{{v.label}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div *ngIf="item.type=='checkbox'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <div class="form_label_border"></div>
+                                    <div class="checkbox checkbox-success tax_checkbox left-15" *ngFor="let v of item.values">
+                                        <input type="checkbox" [value]="v.value" name="{{item.name}}" id="{{item.name}}" (click)="toggleValue(v)">
+                                        <label>
+                                            {{v.label}}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div *ngIf="item.type=='radio'">
+                                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                                    <div class="form_label_border"></div>
+                                    <div *ngFor="let v of item.values" class="inline-form-group">
+                                        <input type="radio" [value]="v.value" name="{{item.name}}" id="{{item.name}}">
+                                        <!-- <label for="{{item.name}}"> -->
+                                        <label>
+                                            <span></span>
+                                            {{v.label}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 forms_actions text-center">
+                                <i *ngIf="item.toggle" (click)="item.toggle=false" class="fa fa-chevron-up pull-right"></i>
+                                <i *ngIf="!item.toggle" (click)="item.toggle=true; gotoTop(i);" class="fa fa-chevron-down pull-right"></i>
+                                <i (click)="removeField(i)" class="fal fa-trash-alt pull-right"></i>
+                                <i class="fa fa-ellipsis-v dndHandle" dndHandle></i>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div *ngIf="item.toggle" class="toggle-Wrapper row column_flex_alignment form_edit_row">
+                                    <div class="col" *ngIf="item.type !== 'paragraph'">
+                                        <div class="form-group">
+                                            <label class="top_zero">Label</label>
+                                            <input class="form-control" type="text" [(ngModel)]="item.label" maxlength="550" />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group" *ngIf="item.type == 'text' || item.type == 'textarea' || item.type == 'email' || item.type == 'phone'
+                                            || item.type == 'number'">
+                                            <label class="top_zero">Placeholder</label>
+                                            <input class="form-control" type="text" [(ngModel)]="item.placeholder" maxlength="50" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" *ngIf="item.type == 'textarea-readonly' || item.type == 'paragraph'">
+                                        <div class="form-group" id="{{i}}">
+                                            <label class="top_zero">{{item.type == 'textarea-readonly' ? 'Display
+                                                Text'
+                                                : 'Paragraph'}}</label>
+                                            <textarea rows="{{item.rows}}" class="form-control" type="text" [(ngModel)]="item.value" (ngModelChange)="onDisplayTextChange(i, item.type)"></textarea>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- <div class="form-group">
+                            <label>Name</label>
+                            <input class="form-control" type="text" [(ngModel)]="item.name" />
+                        </div> -->
+
+                                    <!-- <div class="form-group">
+                          <label>Regex</label>
+                          <input class="form-control" type="text" [(ngModel)]="item.regex" />
+                        </div> -->
+                                    <!-- phone and email -->
+
+                                    <div class="col" *ngIf="item.type=='email' || item.type=='phone' || item.type=='number'">
+                                        <div class="form-group">
+                                            <label class="top_zero">Error text</label>
+                                            <input class="form-control" type="text" [(ngModel)]="item.errorText" maxlength="50" />
+                                        </div>
+                                    </div>
+
+
+                                    <!-- number -->
+                                    <div class="col-md-3 no_padding" *ngIf="item.type=='number'">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="top_zero">Minimum</label>
+                                                    <input class="form-control" type="number" [(ngModel)]="item.min" (keydown)="preventCharactersForClassBooking($event)" maxlength="50" />
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="top_zero">Maximum</label>
+                                                    <input class="form-control" type="number" [(ngModel)]="item.max" (keydown)="preventCharactersForClassBooking($event)" maxlength="50" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group" *ngIf="item.type == 'text' || item.type == 'textarea' || item.type == 'email' || item.type == 'phone'
+                                        || item.type == 'number'|| item.type == 'date' || item.type == 'datetime-local' || item.type == 'checkbox'
+                                        || item.type == 'radio' || item.type == 'autocomplete' || item.type == 'eSignature'">
+                                            <label class="zero_margin">Required</label>
+                                            <mat-slide-toggle name="Required" [(checked)]="item.required" [(ngModel)]="item.required" (change)="onChangeRequired()">
+                                            </mat-slide-toggle>
+                                            <!-- <span class="pull-right ucfirst">{{item.type}}</span> -->
+                                        </div>
+                                    </div>
+
+                                    <!-- radio || checkbox || autocomplete -->
+
+                                    <div class="col-md-12 no_padding">
+                                        <div *ngIf="item.type=='radio'|| item.type=='checkbox' || item.type=='autocomplete'">
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <div class="form-group">
+                                                        <label>Option Label</label>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col">
+                                                <div class="form-group">
+                                                    <label>Value</label>
+                                                </div>
+                                            </div> -->
+                                                <div class="col-md-1">
+                                                    <div class="form-group">
+                                                        <label>Action</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngFor="let i of item.values; let valueIndex=index;" class="row">
+                                                <div class="col-md-11">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" [(ngModel)]="i.label" maxlength="550" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="form-group">
+                                                        <label (click)="item.values.splice(valueIndex,1); onDeleteSelectionBox(item.values)"><i
+                                                                class="far fa-trash-alt"></i></label>
+                                                    </div>
+                                                </div>
+                                                <ng-container *ngIf="valueIndex == item.values.length -1">
+                                                    <div class="col-md-11">
+                                                        <div class="form-group">
+                                                            <input class="form-control" type="text" [(ngModel)]="i.newValue" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div class="form-group">
+                                                            <label (click)="addValue(item.values, i.newValue)"><i
+                                                                    class="fal fa-plus-circle"></i></label>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                            <ng-container *ngIf="!item.values || item.values.length == 0">
+                                                <div class="row">
+                                                    <div class="col-md-11">
+                                                        <div class="form-group">
+                                                            <input class="form-control" type="text" [(ngModel)]="value.label" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div class="form-group">
+                                                            <label (click)="addFirstValue(item.values)"><i
+                                                                    class="fal fa-plus-circle"></i></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--optional placeholder element for dropzone-->
+                    <!--will be removed from DOM on init-->
+                    <div class="dndPlaceholder" dndPlaceholderRef>
+                    </div>
+                    <div class="small_space"></div>
+
+
+                </section>
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,11 @@
+<div class="pagination">
+    <div class="col-md-12 no_padding" [ngClass]="{'d-flex align-items-center justify-content-between': isShowSelectedRecord}">
+        <h5 class="field_label m-0" *ngIf="isShowSelectedRecord">
+            {{selectedRecordCount}} {{selectedRecordCount == 0 || selectedRecordCount == 1 ? 'Record' : 'Records'}} Selected
+        </h5>
+        <mat-paginator #paginator [length]="[totalRecords]" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            [showFirstLastButtons]="true" (page)="changePageSize($event)">
+        </mat-paginator>
+    </div>
+    <div class="clearfix"></div>
+</div>

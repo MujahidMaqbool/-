@@ -1,0 +1,46 @@
+export class SaleProductVariantAvailability {
+    public BranchID: number;
+    public ProductVariantBranchID: number;
+    public ProductID: number;
+    public ProductVariantID: number;
+    public ItemVariantName: string;
+    public Price: number;
+    public TotalPrice: number= 0;
+    public TotalTaxPercentage: number;
+    public CurrentStock: number= 0;
+    public IsStockBelowThreshold: boolean;
+    public InventoryDisplayStock: boolean;
+    public InventoryOverselling: boolean;
+    public AmountSpent: number;
+    public AppSourceTypeID: number;
+    public AppliedTaxNames: String;
+    public BrandID: number;
+    public BrandName: string;
+    public Code: number;
+    public CustomerEarnedPoints: number;
+    public CustomerMembershipID: number;
+    public Description: string;
+    public DiscountPercentage: number;
+    public DiscountPrice: number;
+    public GlobalRemainingSession: number;
+    public HasForm: boolean;
+    public ImagePath: string;
+    public IsBenefitsSuspended: boolean;
+    public IsConsumed: boolean;
+    public IsFree: boolean;
+    public IsHidePriceOnline: boolean;
+    public IsMembershipBenefit: boolean;
+    public IsPurchaseRestricted: boolean;
+    public IsStandard: boolean;
+    public MemberBaseEarnPoints: number;
+    public Name: string;
+    public ProductCategoryID: number;
+    public ProductCategoryName: string;
+    public ProductClassificationID: number;
+    public ProductClassificationName: string;
+    public RemainingSession: number;
+    public RestrictedCustomerTypeNames: string;
+    public RewardPoints: number;
+    public TotalSessions: number;
+
+  }

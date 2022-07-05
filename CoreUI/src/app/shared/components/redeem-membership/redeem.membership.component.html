@@ -1,0 +1,56 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Redeem Membership Benefits</h4>
+        </div>
+
+        <div class="popup_content cstm_scroll_bg">
+            <div class="popup_white_bg">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="field_label top_zero">Membership</h5>
+                        <div class="select_label">
+                            <select name="MembershipId" [(ngModel)]="membershipId" #MembershipId="ngModel" (ngModelChange)="onChangeMembership()">
+                                <option *ngFor="let membership of customerMemberhsip"
+                                    [ngValue]="membership.CustomerMembershipID">
+                                    {{membership.MembershipName }}
+                                </option>
+                                <option [ngValue] = null >Apply no membership</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="tax-amount-row">
+                            <div class="d-flex justify-content-between w-100">
+                                <div>Retail Price</div>
+                                <div *ngIf="selectedClassHasBenefits">
+                                    <span class="remove_price pr-2">{{data.classInfo.PricePerSession | currency: currencyFormat}}</span>
+                                    <span class="font-bold">{{itemTotalPrice | currency: currencyFormat}}</span>
+
+                                </div>
+
+                                <div *ngIf="!selectedClassHasBenefits">
+                                    <span >{{data.classInfo.PricePerSession | currency: currencyFormat}}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row popup_footer">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right">
+                    <button class="left_margin_zero" type="button" (click)="onClose()">Close</button>
+                    <button class="primary_blue_btn" type="button" (click)="onSave()">Next</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

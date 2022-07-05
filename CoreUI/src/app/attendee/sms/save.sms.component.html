@@ -1,0 +1,64 @@
+<form #smsForm="ngForm" novalidate>
+    <div class="popup_content">
+        <div class="row sch_white_bg">
+            <div class="col-md-12 col-sm-12 no_padding">
+                <div class="alert alert-danger" *ngIf="smsForm.invalid && isInvalidData">
+                    {{messages.Validation.Info_Required}}
+                </div>
+            </div>
+            <div *ngIf="personInfo" class="col-md-12 col-sm-12 no_padding">
+                <div *ngTemplateOutlet="personinfo"></div>
+            </div>
+
+
+            <div class="col-md-12">
+                <h5 class="form_label">Title</h5>
+                <div [ngClass]="{
+                               'has-danger': smsTitle.invalid && (smsTitle.dirty || smsTitle.touched || isInvalidData),
+                               'has-success': smsTitle.valid && (smsTitle.dirty || smsTitle.touched)
+                            }">
+                    <input class="form-control" type="text" name="txtSmsTitle" [(ngModel)]="smsModel.Title" #smsTitle="ngModel"
+                        maxlength="50" required />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="field_label">
+                    <h5>Contact Reason</h5>
+                </div>
+                <div class="select_label">
+                    <select class="form-control" name="smsContactReason" [(ngModel)]="smsModel.ContactReasonTypeID"
+                        #smsContactReasonTypeID="ngModel" required>
+                        <option *ngFor="let contactReasonType of contactReasonTypeList" [ngValue]="contactReasonType.ContactReasonTypeID">
+                            {{contactReasonType.ContactReasonTypeName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="field_label">
+                    <h5>SMS Template</h5>
+                </div>
+                <div class="select_label">
+                    <select class="form-control" name="txtTemplateTextID" [(ngModel)]="selectedTemplate"
+                        (ngModelChange)="onTemplateChange(selectedTemplate)" #templateTextID="ngModel">
+                        <option *ngFor="let template of templateTextList" [ngValue]="template">
+                            {{template.TemplateTextTitle}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h5 class="field_label">Text <span>(Remaining Characters: {{ 160 -
+                        smsModel?.Description?.length }})</span></h5>
+                <div [ngClass]="{
+                           'has-danger': smsDescription.invalid && (smsDescription.dirty || smsDescription.touched || isInvalidData),
+                           'has-success': smsDescription.valid && (smsDescription.dirty || smsDescription.touched)
+                         }">
+                    <textarea class="form-control form-control-description" rows="9" name="txtSmsDescription"
+                        #smsDescription="ngModel" [(ngModel)]="smsModel.Description" maxlength="160" required>
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

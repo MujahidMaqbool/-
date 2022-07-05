@@ -1,0 +1,175 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_large_popup">
+            <div class="popup_header">
+                <h4>Receive Purchase Order</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-1">
+                            <h5 class="field_label">Delivery Date</h5>
+                            <input type="text" name="receiveOrderDate" class="form-control date-picker cst-bg-color"
+                                [(ngModel)]="receiveDate" #receiveOrderDate="ngModel" matInput [matDatepicker]="dateto"
+                                placeholder="Please Select Date" readonly (click)="onOpenCalendar(dateto)"
+                                (ngModelChange)="onReceiveDateChange($event)" [min]="minDate" />
+                            <mat-datepicker #dateto></mat-datepicker>
+                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto">
+                            </mat-datepicker-toggle>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="overflow-auto">
+                                <div class="responsive_grid_rows cstm_scroll_bg">
+                                    <div class="row align-items-center grid_header">
+                                        <div class="col">
+                                            <h5>Product</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Barcode</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>SKU</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Supplier Code</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Ordered Quantity</h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderStatusID === enumPOStatus.PartiallyReceived">
+                                            <h5>Previously Received</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Received Today</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Supplier Price</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Ordered Total</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Today Total</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center grid_rows"
+                                        *ngFor="let purchaseOrder of receivePurchaseOrders; let i=index">
+                                        <div class="col">
+                                            <h5>{{purchaseOrder.ProductClassificationID == enumProductClassification.Variant ? purchaseOrder?.ProductName + ' - ' + purchaseOrder?.ProductVariantName : purchaseOrder?.ProductName }}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder?.Barcode}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder?.SKU}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder?.SupplierCode}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder?.OrderedQuantity}}</h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderStatusID === enumPOStatus.PartiallyReceived">
+                                            <h5>{{purchaseOrder?.PreviouslyReceiveQuantity}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <div [ngClass]="{
+                                                'has-danger': purchaseOrder.ReceivedToday === 0 || isReceiveOrderQuantityZero}">
+                                                <h5>
+                                                    <input type="number" min="1" name="Received_Qty{{i}}"
+                                                        (keydown)="preventCharactersForNumber($event)"
+                                                        [(ngModel)]="purchaseOrder.ReceivedToday"
+                                                        (keyup)="validateQuantity($event, i)"
+                                                        class="form-control mb-0 text-center" [disabled]="purchaseOrder.IsArchived || purchaseOrder.SupplierIsArchived" />
+                                                </h5>
+                                            </div>
+
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder?.SuplierPrice}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder?.OrderedTotal}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder?.TodayTotal}}</h5>
+                                        </div>
+
+                                    </div>
+                                    <div class="row align-items-center grid_header row-highlight"
+                                        *ngIf="receivePurchaseOrders && receivePurchaseOrders.length > 0">
+                                        <div class="col">
+                                            <h5 class="font-weight-bold">Total</h5>
+                                        </div>
+                                        <div class="col">
+
+                                        </div>
+                                        <div class="col">
+
+                                        </div>
+                                        <div class="col">
+
+                                        </div>
+                                        <div class="col ">
+                                            <h5 class="font-weight-bold">{{totalOrderedQuantity}}</h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderStatusID === enumPOStatus.PartiallyReceived">
+                                            <h5 class="font-weight-bold">{{totalPreviouslyReceivedQuantity}}</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5 class="font-weight-bold">{{totalReceivedTody}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="font-weight-bold">{{totalOrdered | currency: currencyFormat}}
+                                            </h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="font-weight-bold">{{todayTotal | currency: currencyFormat}}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row grid_rows no_border"
+                        *ngIf="receivePurchaseOrders && receivePurchaseOrders.length === 0">
+                        <div class="col-md-12 text-center">
+                            <div class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg mb-0">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 pb-2">
+                            <h5 class="field_label">Notes <span>(Remaining
+                                    Characters: {{ 250 -
+                                    saveGRNViewModel?.notes?.length }})</span>
+                            </h5>
+                            <textarea rows="5" [(ngModel)]="saveGRNViewModel.notes" maxlength="250"
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Cancel</button>
+                        <button type="button" class="primary_blue_btn" [disabled]="receivePurchaseOrders.length === 0"
+                            (click)="onSaveReceiveOrder()">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,352 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <!-- <button *ngIf="allowedPages.Search_Member" class="simple_btn" type="button" role="navigation" [routerLink]="['/member']">
+                    Back to Search</button> -->
+            <button type="button" *ngIf="allowedPages.Payment_Freeze" (click)="onSuspendMembership()"
+                class="simple_btn">
+                Freeze/Unfreeze
+            </button>
+            <button type="button" *ngIf="allowedPages.Payment_Save" (click)="onAddMembershipTransaction()">
+                Add Transaction
+            </button>
+
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg info_bar_bg">
+    <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#membership_payment">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+            </div>
+        </div>
+        <div id="membership_payment" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="field_label">
+                            <h5>Membership(s)</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="memberShipId"
+                                [(ngModel)]="membershipSearchModel.CustomerMembershipID"
+                                (ngModelChange)="onMembershipChange(membershipSearchModel.CustomerMembershipID)">
+                                <option [ngValue]="undefined">Select Membership</option>
+                                <option *ngFor="let member of membershipList" [ngValue]="member.CustomerMembershipID">
+                                    {{member.MembershipName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="field_label">
+                            <h5>Payment Method</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="paymentGatewayId"
+                                [(ngModel)]="membershipSearchModel.PaymentGatewayID">
+                                <option [ngValue]="undefined">Select Payment Method</option>
+                                <option *ngFor="let paymentGateway of paymentGatewayList"
+                                    [ngValue]="paymentGateway.PaymentGatewayID">
+                                    {{paymentGateway.PaymentGatewayName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Due Date From</h5>
+                        </div>
+                     <input type="text" name="DateFrom" class="form-control bg_transparent " [(ngModel)]="dateFrom"
+                            (ngModelChange)="onFromDateChange(dateFrom)" #DateFrom="ngModel" matInput [matDatepicker]="datefrom"
+                            placeholder="DD/MM/YYYY" readonly />
+                        <mat-datepicker #datefrom></mat-datepicker>
+                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom">
+                        </mat-datepicker-toggle>
+                        <date-picker [value]="membershipSearchModel.DateFrom" (onDateChange)="onFromDateChange($event)">
+                        </date-picker>
+                    </div> -->
+                    <!-- <div class="col-md-3">
+                        <div class="field_label">
+                            <h5>Due Date To</h5>
+                        </div>
+                        <input type="text" name="DateTo" class="form-control bg_transparent " [(ngModel)]="dateTo"
+                            (ngModelChange)="onToDateChange(dateTo)" #DateTo="ngModel" matInput [matDatepicker]="dateto"
+                            placeholder="DD/MM/YYYY" readonly />
+                        <mat-datepicker #dateto></mat-datepicker>
+                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto">
+                        </mat-datepicker-toggle>
+                        <date-picker [value]="membershipSearchModel.DateTo" (onDateChange)="onToDateChange($event)">
+                        </date-picker>
+                    </div> -->
+                    <div class="col-md-6 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #membershipPaymentDate>
+                        </dateto-datefrom>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                      <div class="field_label">
+                          <h5>Payment Status</h5>
+                      </div>
+                      <div class="select_label">
+                          <select class="form-control" name="paymentStatusTypeId"
+                              [(ngModel)]="membershipSearchModel.PaymentStatusTypeID">
+                              <option [ngValue]="undefined">Select Status</option>
+                              <option *ngFor="let paymentStatus of paymentStatusList"
+                                  [ngValue]="paymentStatus.PaymentStatusTypeID">
+                                  {{paymentStatus.PaymentStatusTypeName}}
+                              </option>
+                          </select>
+                      </div>
+                  </div>
+
+                    <div class="offset-lg-6 offset-md-3 col-sm-6 col-lg-3 col-md-6 no_padding mt-2">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button class="reset_btn" type="button" (click)="resetMembershipPaymentSearchFilters()">
+                                    Reset</button>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="full_width_btn ">
+                                    <button type="button" (click)="memberPaymentSearch()" class="search">
+                                        Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <!-- <div id="services"> -->
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+
+            <div class="col">
+                <h5>Memberships</h5>
+            </div>
+            <div class="col">
+                <h5>Membership Status</h5>
+            </div>
+            <div class="col">
+              <h5>Installment</h5>
+          </div>
+          <div class="col">
+            <h5>Invoice No.</h5>
+          </div>
+            <div class="col">
+                <h5>Created Date</h5>
+            </div>
+            <div class="col">
+                <h5>Due Date</h5>
+            </div>
+            <div class="col">
+                <h5>Paid Date</h5>
+            </div>
+            <div class="col">
+                <h5>Total Due</h5>
+            </div>
+            <div class="col">
+                <h5>Payment Name</h5>
+            </div>
+            <div class="col">
+                <h5>Payment Type</h5>
+            </div>
+            <div class="col">
+                <h5>Payment Method</h5>
+            </div>
+            <div class="col">
+                <h5>Payment Status</h5>
+            </div>
+            <div class="col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div *ngIf="isDataExists">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let  memberPaymentsobj of memberMembershipPayments">
+                <div class="col lead_member">
+                    <h5>{{memberPaymentsobj.MembershipName}}</h5>
+                </div>
+                <div class="col">
+                    <h5> {{memberPaymentsobj.MembershipStatusTypeName}}</h5>
+                </div>
+                <div class="col">
+                  <h5> {{memberPaymentsobj.Installment}}</h5>
+              </div>
+              <div class="col">
+                <h5> {{memberPaymentsobj.SaleNo}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberPaymentsobj.CreatedOn | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberPaymentsobj.CollectionDate | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberPaymentsobj.CollectedDate | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberPaymentsobj.TotalAmount | currency: currencyFormat}}
+                        <span *ngIf="memberPaymentsobj.Notes !== ''" matTooltip="{{memberPaymentsobj.Notes}}"
+                            class="info_tip" matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberPaymentsobj.MembershipPaymentName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{ memberPaymentsobj.MembershipPaymentTypeID === membershipPaymentType.Single ? 'Ad-hoc' :
+                    memberPaymentsobj.MembershipPaymentTypeID === membershipPaymentType.Recurring ? 'Recurring' : '' }}
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>{{memberPaymentsobj.SaleTypeName}}</h5>
+                </div>
+                <div class="col payment_status">
+                    <h5 [ngClass]="{
+                    'unpaid': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Unpaid,
+                    'cancelled': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Cancelled,
+                    'failed': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Failed,
+                    'freeze': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Freeze,
+                    'pending': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.PendingBankSubmission ||
+                                memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.PendingGatewaySubmission,
+                    'submitted': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Submitted,
+                    'confirmed': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Confirmed,
+                    'p_paid': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.PaidOut,
+                    'pending_autor': memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.PendingAuthorization
+                }">
+                        {{memberPaymentsobj.PaymentStatusTypeName}}
+
+                        <span *ngIf="memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Failed"
+                            class="info_tip" matTooltip="{{memberPaymentsobj.StatusMessage}}" matTooltipPosition="above"
+                            matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+                <div class="col text-center">
+                    <h5>
+                        <span class="blue">
+                        <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            href="javascript:void(0)" role="button"
+                            *ngIf="allowedPages.Payment_Save && (memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Unpaid || memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Failed)"
+                            (click)="onEditTransaction(memberPaymentsobj)">
+                            <i class="fal fa-edit"></i>
+                        </a>
+                        </span>
+                        <!-- January 07,2020 at 1300 hrs
+                        As per discussion with Iftikhar "In case of failed payment (for Cash) PROCESS payment icon will be
+                        appeared" -->
+                        <span class="blue">
+                        <a matTooltip="Process" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            href="javascript:void(0)" role="button"
+                            *ngIf="allowedPages.Payment_Save &&
+                                    (memberPaymentsobj.SaleTypeID === saleType.Cash && memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Failed) ||
+                                    (memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Unpaid && memberPaymentsobj.SaleTypeID !== saleType.DirectDebit)"
+                            (click)="onPayTransaction(memberPaymentsobj)">
+                            <i class="fal fa-hand-holding-usd"></i>
+                        </a>
+                        </span>
+                        <!-- January 07,2020 at 1300 hrs
+                        As per discussion with Iftikhar "In case of failed payment (for Stripe & GoCardless) Retry payment icon
+                        will be appeared" -->
+                        <span class="blue">
+                        <a [ngClass]="{'app_disabled': memberPaymentsobj.hasOwnProperty('TemporaryDisable') ? memberPaymentsobj.TemporaryDisable:false}"
+                            matTooltip="Retry" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            href="javascript:void(0)" role="button"
+                            *ngIf="allowedPages.Payment_Save &&
+                                            memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Failed && memberPaymentsobj.CanDoRetry && memberPaymentsobj.PaymentGatewayID !== paymentGateWayType.Cash "
+                            (click)="onRetryPayment(memberPaymentsobj.PaymentGatewayID, memberPaymentsobj.CustomerMembershipPaymentID)">
+                            <i class="fab fa-rev"></i>
+                        </a>
+                        </span>
+                        <!-- (memberPaymentsobj.MembershipPaymentTypeID === membershipPaymentType.Single && memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Unpaid) || -->
+                        <span class="blue"
+                            *ngIf="(allowedPages.Payment_Save &&
+                                (memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.PaidOut || memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Refunded))"
+                            (click)="onViewSale(memberPaymentsobj.SaleNo)">
+                            <a matTooltip="View Invoice" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)">
+                                <i class="fal fa-file-invoice"></i>
+                            </a>
+                        </span>
+                        <span class="red_del"
+                        *ngIf="(allowedPages.Payment_Save &&
+                                             (memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Failed || memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Unpaid))"
+                        (click)="onDeleteTransaction(memberPaymentsobj.CustomerMembershipID, memberPaymentsobj.CustomerMembershipPaymentID)">
+                        <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            href="javascript:void(0)">
+                            <i class="fal fa-trash-alt"></i>
+                        </a>
+                    </span>
+                        <span class="red_del" *ngIf="allowedPages.Payment_Save &&
+                    memberPaymentsobj.MembershipPaymentTypeID === membershipPaymentType.Single &&
+                    !memberPaymentsobj.IsManualTransaction &&
+                    memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.Unpaid">
+                            <a matTooltip="Cancel payment" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onCancelTransaction(memberPaymentsobj.CustomerMembershipID, memberPaymentsobj.CustomerMembershipPaymentID)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-times-circle"></i>
+                            </a>
+                        </span>
+
+
+                        <span class="blue" *ngIf="allowedPages.Payment_Save &&
+                    memberPaymentsobj.PaymentStatusTypeID === paymentStatusType.PendingAuthorization">
+                            <a matTooltip="Pending Authorization" matTooltipPosition="above"
+                                matTooltipClass="custom-tooltip"
+                                (click)="onAuthorization(memberPaymentsobj.CustomerMembershipPaymentID)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-badge-check"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="(memberPaymentsobj.PaymentStatusTypeID !== paymentStatusType.Cancelled && memberPaymentsobj.PaymentStatusTypeID !== paymentStatusType.Freeze) && memberPaymentsobj.HasActivityLog">
+                          <a matTooltip="Activity Log" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                          href="javascript:void(0)" role="button"
+                          (click)="openDialogForActivityLog(memberPaymentsobj.CustomerMembershipPaymentID)">
+                          <i class="fal fa-search-plus"></i>
+                      </a>
+                        </span>
+                        <!--
+                        <a role="button"><i class="fal fa-times-circle"></i></a>
+                     <a role="button"><i class="fal fa-undo"></i></a> -->
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row services">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found"> No Records Found
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <ng-container>
+    <add-stripe-customer #stripeRef></add-stripe-customer>
+</ng-container> -->
+
+
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    <!-- <div class="pagination">
+        <div class="col-md-12 no_padding">
+            <mat-paginator #paginator [length]="totalRecords" [pageIndex]="pageIndex" [pageSizeOptions]="pageSizeOptions"
+          (page)="onPageChange($event)" [showFirstLastButtons]="true">
+        </mat-paginator>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+    <!-- </div> -->
+</div>

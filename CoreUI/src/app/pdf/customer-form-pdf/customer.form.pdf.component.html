@@ -1,0 +1,186 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="no-printme float-right">
+      <button  type="button" (click)='downloadAsPDF()' class="fal fa-print"> PDF</button>
+  </div>
+  </div>
+</div>
+<div  *ngIf="isShowFormData" >
+  <div class="popup_content_tr" >
+      <div class="popup_content" style="max-height: 100% !important;">
+      <div class="view_bg form_info_bar mb-0">
+        <div class="row row-align-center">
+          <div class="col-md-12 padding_left pdf-mand-label">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 style="color: black;">{{companyDetails.CompanyName}}</h3>
+              </div>
+              <div class="col-md-12">
+                <div class="view_main_bar">
+                  <div class="view_main_bar_item ml-0"><i class="fal fa-building"></i>
+                    {{branchInfo.BranchName}}
+                  </div>
+                  <div class="view_main_bar_item"><i class="fal fa-mobile-android-alt"></i>
+                    {{branchInfo.Phone1}}
+                  </div>
+                  <div class="view_main_bar_item"><i class="fal fa-envelope"></i>
+                    {{branchInfo.Email}}
+                  </div>
+                  <div class="view_main_bar_item"><i class="far fa-map-marker-alt"></i>
+                    {{branchInfo.Address1}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-type" *ngIf="customeFormViewModel.IsMandatory">Mandatory</div>
+          </div>
+        </div>
+      </div>
+      <div class="row view_bg mb-0">
+        <div class="col-sm-12">
+          <div class="row" >
+              <div class="col-md-12">
+                <div class="short-desc">
+                  <div>
+                    <h3>{{customeFormViewModel.FormName}}</h3>
+                    <p>{{customeFormViewModel.Description}}</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="view_bg mb-0" [style.backgroundColor]="customeFormViewModel.JsonText.theme?.bgColor"
+        [style.color]="customeFormViewModel.JsonText.theme?.textColor">
+        <div class="custom-form-data">
+          <div class="field" *ngFor="let item of customeFormViewModel.JsonText.attributes;let i= index;">
+            <div class="row form-group cust_form column_flex_alignment">
+              <div class="col-md-12 ">
+                <div class="row "
+                  *ngIf="item.type=='email' || item.type=='phone' || item.type=='number'">
+                  <div class="col-sm-12 ">
+                    <label>{{item.label}}</label> <label class="text-danger" *ngIf="item.required" >&nbsp;*</label>
+                    <div>
+                      <p [ngStyle]="{'height':item.value == null || item.value == '' ?  '40px' : 'auto' }" class="form_text_border">{{item.value}}</p>
+                    </div>
+                  </div>
+                </div>
+                      <div class="row" *ngIf="item.type=='date'">
+                        <div class="col-sm-12">
+                          <label>{{item.label}}</label> 
+                        </div>
+                        <div class="form-date-picker col-4">
+                          <input class="form-control" matInput [matDatepicker]="picker" id="{{item.name}}"
+                            readonly [(ngModel)]="item.value" >
+                        </div>
+                      </div>
+                <div class="row" *ngIf="item.type=='datetime-local'">
+                  <div class="col-sm-12">
+                    <label>{{item.label}}</label> 
+                  </div>
+                 <div class="col-4  app_disabled bg_transparent">
+                  <dx-date-box id="{{item.name}}" [displayFormat]="dateFormat" [placeholder]="item.placeholder"
+                   [(value)]="item.value"
+                 type="datetime" >
+                 </dx-date-box>
+                 </div>
+                </div>
+                <div class="row " *ngIf="item.type=='text'">
+                  <div class="col-sm-12" >
+                    <label  >{{item.label}}</label> <label class="text-danger" *ngIf="item.required" >&nbsp;*</label>
+                      <p [ngStyle]="{'height':item.value == null || item.value == '' ?  '60px' : 'auto' }"  class="form_text_border">{{item.value}}</p>
+                  </div>
+                </div>
+                <div class="row " *ngIf="item.type=='textarea'">
+                  <div class="col-sm-12" >
+                    <label >{{item.label}}</label> <label class="text-danger" *ngIf=" item.required" >&nbsp;*</label>
+                    <p [ngStyle]="{'height':item.value == null || item.value == '' ?  '80px' : 'auto' }" class="form_text_border">{{item.value}}</p>
+                  </div>
+                </div>
+                <div class="row " *ngIf="item.type=='paragraph'">
+                  <div class="col-sm-12" >
+                    <p style="color: inherit;">{{item.value}}</p>
+                  </div>
+                </div>
+               
+                <div class="signature-pad row " id="ScrollBar" *ngIf="item.type=='eSignature'">
+                  <div class="col-sm-12">
+                    <label class="full_width">{{item.label}} <span class="text-danger" *ngIf="item.required"
+                      >&nbsp;*</span></label>
+                  <img class="sign_view " src="{{item.value}}" alt="item.label" *ngIf="item.value">
+                  <textarea autosize  *ngIf="!item.value" readonly></textarea>
+                  </div>
+                  </div>
+                <div class="row" *ngIf="item.type=='autocomplete'"> 
+                  <div class="col-sm-4">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div class="select_label" *ngIf="item.value">
+                      <select [(ngModel)]="item.value" class="form-control" [attr.disabled]="!editable">
+                        <option *ngFor="let v of item.values" [value]="v.value" >
+                          {{v.label}}</option>
+                      </select>
+                    </div>
+                    <div  *ngIf="!item.value">
+                        <input type="text" class="form-control" value="" readonly>
+                    </div>
+                  </div>
+                </div>
+                <div class="row " *ngIf="item.type=='checkbox'">
+                  <div class="col-sm-12 ">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div class="form_label_border"></div>
+                    <div class="checkbox checkbox-success tax_checkbox left-15 form_check_box"
+                      *ngFor="let v of item.values; let c = index" >
+                      <div [ngClass]="{ 'has-danger': item.error }">
+                        <input type="checkbox" class="form-control" [value]="v.value" [(ngModel)]="v.selected"
+                          name="{{ 'checkbox' + c + i }}" id="{{ 'checkbox' + c + i }}" >
+                        <label for="{{ 'checkbox' + c + i }}">
+                          {{v.label}}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="item.type=='radio'">
+                  <div class="col-sm-12">
+                    <label>{{item.label}}</label> <label *ngIf="item.required"
+                    class="text-danger">&nbsp;*</label>
+                <div class="form_label_border"></div>
+                <div *ngFor="let v of item.values; let r = index" class="inline-form-group">
+                  <div [ngClass]="{ 'has-danger': item.error }">
+                    <input type="radio" disabled class="form-control" [value]="v.value" [(ngModel)]="item.value"
+                      name="{{item.name}}" id="{{ 'radio' + r + i }}">
+                    <label for="{{ 'radio' + r + i }}">
+                      <span></span>
+                      {{v.label}}
+                    </label>
+                  </div>
+                </div>
+                  </div>
+              </div>
+
+                 <!-- diplay text -->
+                 <div class="row" *ngIf="item.type=='textarea-readonly'" >
+                  <div class="col-md-12">
+                    <div>
+                      <label>{{item.label}}</label>
+                    </div>
+                    <div style="white-space: pre-wrap;">
+                      <p class="form_text_border" [ngStyle]="{'height':item.value == '' || item.value == null ?  '60px' : 'auto' }">{{item.value}}</p>
+                    </div>
+                  </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="small_space"></div>
+        </div>
+      </div>
+      <div class="pdf_footer">
+        <p>Powered by <span>Wellyx</span></p>
+      </div>
+    </div>
+</div>
+
+

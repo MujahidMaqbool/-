@@ -1,0 +1,77 @@
+﻿<div class="page_content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="company_btn float-right">
+                <button type="button" *ngIf="showSkipAndContinue" class="simple_btn light_blu" (click)="onSkipForm()">
+                    {{ showNextAndContinue ? 'Next & Continue' : 'Skip & Continue' }} <i
+                        class="fas fa-step-forward"></i>
+                </button>
+                <button type="button" *ngIf="showSkipRewardProgramAndContinue" class="simple_btn light_blu"
+                    (click)="onSkipRewardProgram()">
+                    {{'Skip & Continue' }} <i class="fas fa-step-forward"></i>
+                </button>
+                <span *ngIf="showSkipAndContinue" class="verticle-bar"></span>
+                <button type="button" class="simple_btn" (click)="onReset()">
+                    Reset </button>
+                <button class="save simple_btn" (click)="onPrevious()" [disabled]="!showPrevious">Previous</button>
+                <button class="save" (click)="onContinue()" [disabled]="isRequiredCustomerAddress" *ngIf="showContinue"
+                    tabindex="36">{{showContinue && !showSkipAndContinue ? 'Continue' : 'Submit & Continue'}}</button>
+                <button class="save primary_blue_btn" (click)="onJoinRewardProgram()"
+                    *ngIf="!showContinue && showJoinRewardProgramAndContinue"
+                    tabindex="9">{{'Join & Continue'}}</button>
+                <button class="save primary_blue_btn" (click)="onSave()" *ngIf="showSave && !showSkipAndContinue"
+                    [disabled]="saveInProgress">
+                    Save
+                </button>
+                <button class="save primary_blue_btn" (click)="onSave()" *ngIf="showPay && !showSkipAndContinue"
+                    [disabled]="saveInProgress">
+                    Save & Pay
+                </button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <mat-horizontal-stepper #stepper>
+        <mat-step>
+            <ng-template matStepLabel>Membership Details</ng-template>
+            <save-member-details [showValidation]="showMemberDetailsValidation"
+                [isCustomerAddressRequired]="showCustomerAddressRequiredValidation" #saveMemberDetails>
+            </save-member-details>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Select Membership</ng-template>
+            <save-member-memberhsip  (isRequiredAddress)="RequiredCustomerAddress($event)"
+                [CustomerAddress]="saveMemberDetails.memberModel.CustomerAddress"
+                [showValidation]="showMemberMembershipValidation" #saveMemberMembershipRef></save-member-memberhsip>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Payment Plan</ng-template>
+            <save-member-payment #saveMemberPaymentRef [getMembershipPlanModel]="getMembershipPlanModel"
+                [getPaymentSummary]="(activeTabIndex === 2)"></save-member-payment>
+        </mat-step>
+        <ng-container *ngIf="customFormView">
+            <mat-step *ngFor="let form of customFormView ; index as i">
+                <ng-template matStepLabel>{{form.FormName}}</ng-template>
+                <membership-form #formComponents [customeFormViewModel]="form"
+                    (onSubmitForms)=onSubmitFormsHandler($event)></membership-form>
+            </mat-step>
+        </ng-container>
+        <ng-container *ngIf="isRewardProgramExistsForJoin">
+            <mat-step>
+                <ng-template matStepLabel #rewardProgram>Reward Program</ng-template>
+                <reward-point-template [isCustomerProfile]="true" [optinRewardProgram]="saveMemberMembershipRef.BranchDefaultRewardProgramVM"></reward-point-template>
+            </mat-step>
+        </ng-container>
+        <mat-step>
+            <ng-template matStepLabel >Payment Method</ng-template>
+            <div class="row" *ngIf="showMembershipPayment && !showSkipAndContinue">
+                <div class="col-md-12">
+                    <pos-membership-payment #posPaymentRef 
+                        (saleTypeChange)="onSaleTypeChange($event)" [isByMemberShip]="true"></pos-membership-payment>
+                </div>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+
+</div>

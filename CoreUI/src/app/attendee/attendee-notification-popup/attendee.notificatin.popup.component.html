@@ -1,0 +1,38 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <div>
+                    <h4>{{componentTitleName}}</h4>
+                </div>
+            </div>
+            <div>
+                <save-sms #saveSmsRef [smsModel]="smsModel" [urls]="urls" *ngIf="isSaveSMS"></save-sms>
+
+                <!-- for group sms -->
+                <save-sms #saveSmsRef [smsModel]="groupSMSModel" [urls]="urls" *ngIf="isSaveGroupSMS"></save-sms>
+
+                <save-email #saveEmailRef [emailModel]="emailModel" [urls]="urls" *ngIf="isSaveEmail"></save-email>
+
+                 <!-- for group Email -->
+                <save-email #saveEmailRef [emailModel]="groupEmailModel" [urls]="urls" *ngIf="isSaveGroupEmail"></save-email>
+
+                <save-app-notification #saveAppNotificationRef [appNotificationModel]="appNotificationModel" [urls]="urls"
+                    *ngIf="isSaveAppNotification"></save-app-notification>
+
+                 <!-- for group notification -->
+                <save-app-notification #saveAppNotificationRef [appNotificationModel]="groupPushNotificationModel" [urls]="urls"
+                    *ngIf="isSaveGroupAppNotification"></save-app-notification>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onClosePopup()">Close</button>
+                        <button type="button" class="save primary_blue_btn" (click)="onSave()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,190 @@
+<div *ngFor="let address of customerAddressList; let i = index">
+  <div class="white_bg pos_wbg">
+    <div id="search_accordion">
+      <div [ngClass]="address.AddressTypeID === 1 ? '' : 'panel-heading collapsed row'"
+        [attr.data-toggle]="address.AddressTypeID === 1 ? '' : 'collapse'" data-parent="#search_accordion"
+        [attr.data-target]="'#address-'+address.AddressTypeID">
+        <div class="col-md-12">
+          <h4 [ngClass]="address.AddressTypeID === 1 ? 'panel-title': 'panel-title accordion-toggle'">
+            {{address.AddressTypeID === 1 ? 'Home Address'
+            : address.AddressTypeID === 2 ?
+             'Billing Address' : 'Shipping Address'}} <span *ngIf="address.AddressTypeID === 1" class="info_tip"
+              matTooltip="The home address is used as your billing and shipping address. If you wish to add a unique billing/shipping address, please add them separately."
+              matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+            <span *ngIf="!isHomeAddressRequired" class="optional">(optional)</span>
+          </h4>
+        </div>
+      </div>
+      <div [id]="'address-' + address.AddressTypeID"
+        [ngClass]="address.AddressTypeID === 1 ? '': 'panel-collapse collapse'">
+        <div class="panel-body">
+          <div class="row flex-end">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="address.AddressTypeID == 2">
+              <div class="checkbox checkbox-success">
+                <span class="checkbox checkbox-primary zero_margin">
+                  <input class="example-margin" id="sameAsBilling" type="checkbox" name="sameAsBilling"
+                    [(ngModel)]="isSameBillingAddress" [(checked)]="isSameBillingAddress"
+                    (ngModelChange)="sameAsAddressHandler(address)">
+                  <label class="semi_bold_font" for="sameAsBilling">
+                    Same as Home Address
+                  </label>
+                </span>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="address.AddressTypeID == 3">
+              <div class="checkbox checkbox-success">
+                <span class="checkbox checkbox-primary zero_margin">
+                  <input class="example-margin" id="sameAsShipping" type="checkbox" name="sameAsShipping"
+                    [(ngModel)]="isSameShippingAddress" [(checked)]="isSameShippingAddress"
+                    (ngModelChange)="sameAsAddressHandler(address)">
+                  <label class="semi_bold_font" for="sameAsShipping">
+                    Same as Home Address
+                  </label>
+                </span>
+
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="field_label">
+                <h5>Country </h5>
+              </div>
+              <div [class.has-danger]="countryName.invalid">
+                <div class="select_label">
+                  <select class="form-control" [name]="'countryName'+address.AddressTypeID" #countryName="ngModel"
+                    [required]="getValidationIndicator(address)" [(ngModel)]="address.CountryID"
+                    (ngModelChange)="onAddressChange(address, true)" [tabindex]="tabIndex + i">
+                    <option [ngValue]="null" selected> Select Country </option>
+                    <option *ngFor="let country of countryList" [ngValue]="country.CountryID">
+                      {{country.CountryName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="!address.isShowCountyCode">
+              <div class="field_label">
+                <h5>State / County</h5>
+              </div>
+              <div>
+                <input class="form-control" type="text" [name]="'StateCountyName'+address.AddressTypeID" maxlength="50" (ngModelChange)="onKeypressStatCountry(address,$event, 0)"
+                  #StateCountyName="ngModel" [(ngModel)]="address.StateCountyName"
+                   [tabindex]="tabIndex + i" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="address.isShowCountyCode && address.AddressTypeID == 1">
+              <div class="field_label">
+                <h5>State / County</h5>
+              </div>
+              <div  [ngClass]="{
+                'has-danger': !address.isRequiredCOuntyCode && address.isRequiredCOuntyCode != undefined, 
+                'has-success cst-grey-border': address.isRequiredCOuntyCode
+              }">
+                <input type="text" class="form-control" placeholder="Enter state name" [name]="'StateCountyName'+address.AddressTypeID"
+                (ngModelChange)="onKeypressStatCountry(address,$event, 1)" maxlength="50" matInput [formControl]="searchState"
+                  [(ngModel)]="address.StateCountyName" autocomplete="off" [matAutocomplete]="auto" autocomplete="doNotAutoComplete1"
+                   [tabindex]="tabIndex + i"  required />
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                  (optionSelected)='getSelectedState($event.option.value, address)'>
+                  <mat-option *ngFor="let state of stateListCopy " [value]="state.StateCountyName">
+                    {{state.StateCountyName}} - {{state.StateCountyCode}}</mat-option>
+                </mat-autocomplete>
+              </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="address.isShowCountyCode && address.AddressTypeID == 2">
+              <div class="field_label">
+                <h5>State / County</h5>
+              </div>
+              <div  [ngClass]="{
+                'has-danger': !address.isRequiredCOuntyCode && address.isRequiredCOuntyCode != undefined,
+                'has-success cst-grey-border': address.isRequiredCOuntyCode
+              }">
+                <input type="text" class="form-control" placeholder="Enter state name" [name]="'StateCountyName'+address.AddressTypeID"
+                (ngModelChange)="onKeypressStatCountry(address,$event, 2)" maxlength="50" matInput [formControl]="searchState2"
+                  [(ngModel)]="address.StateCountyName" autocomplete="off" [matAutocomplete]="auto2" autocomplete="doNotAutoComplete2"
+                  [tabindex]="tabIndex + i" required />
+                <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+                  (optionSelected)='getSelectedState($event.option.value, address)'>
+                  <mat-option *ngFor="let state of stateListCopy " [value]="state.StateCountyName">
+                    {{state.StateCountyName}} - {{state.StateCountyCode}}</mat-option>
+                </mat-autocomplete>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="address.isShowCountyCode && address.AddressTypeID == 3">
+              <div class="field_label">
+                <h5>State / County</h5>
+              </div>
+              <div  [ngClass]="{
+                'has-danger': !address.isRequiredCOuntyCode && address.isRequiredCOuntyCode != undefined,
+                'has-success cst-grey-border': address.isRequiredCOuntyCode
+              }">
+                <input type="text" class="form-control" placeholder="Enter state name" [name]="'StateCountyName'+address.AddressTypeID"
+                (ngModelChange)="onKeypressStatCountry(address,$event, 3)" maxlength="50" matInput [formControl]="searchState3"
+                  [(ngModel)]="address.StateCountyName" autocomplete="off" [matAutocomplete]="auto3" autocomplete="doNotAutoComplete3"
+                   [tabindex]="tabIndex + i" required />
+                <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete"
+                  (optionSelected)='getSelectedState($event.option.value, address)'>
+                  <mat-option *ngFor="let state of stateListCopy " [value]="state.StateCountyName">
+                    {{state.StateCountyName}} - {{state.StateCountyCode}}</mat-option>
+                </mat-autocomplete>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="field_label">
+                <h5>Address Line 1 </h5>
+              </div>
+              <div [class.has-danger]="address1.invalid">
+                <input class="form-control" #address1="ngModel" type="text" [name]="'address1'+address.AddressTypeID"
+                  maxlength="250" [(ngModel)]="address.Address1" (ngModelChange)="onAddressChange(address)"
+                  [tabindex]="tabIndex + i" />
+              </div>
+
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="field_label">
+                <h5>Address Line 2 </h5>
+              </div>
+              <input type="text" [name]="'address2'+address.AddressTypeID" maxlength="250"
+                [(ngModel)]="address.Address2" (ngModelChange)="onAddressChange(address)" [tabindex]="tabIndex + i" />
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <h5 class="field_label">City </h5>
+              <div [class.has-danger]="cityName.invalid">
+                <input class="form-control" #cityName="ngModel" type="text" [name]="'cityName'+address.AddressTypeID"
+                  class="form-control" maxlength="50" [(ngModel)]="address.CityName"
+                  (ngModelChange)="onAddressChange(address)" [tabindex]="tabIndex + i">
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" [class.has-danger]="postCode.invalid">
+              <h5 class="field_label">Postal Code / Zip Code </h5>
+              <input type="text" [name]="'postCode'+address.AddressTypeID" [(ngModel)]="address.PostalCode"
+                class="form-control" maxlength="10" #postCode="ngModel" (ngModelChange)="onAddressChange(address)"
+                [tabindex]="tabIndex + i">
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="address.AddressTypeID != 1">
+              <h5 class="field_label">Mobile <span>(optional)</span></h5>
+              <div>
+                <div [ngClass]="{
+                          'has-danger': phone.invalid,
+                          'has-success': phone.valid && phone.value
+                      }">
+                  <international-phone-number [name]="'phone'+address.AddressTypeID"
+                    (ngModelChange)="onAddressChange(address)" [(ngModel)]="address.Mobile" #phone="ngModel"
+                    [defaultCountry]="address.Mobile ? '' : defaultCountry" [attr.tabindex]="tabIndex + i">
+                  </international-phone-number>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

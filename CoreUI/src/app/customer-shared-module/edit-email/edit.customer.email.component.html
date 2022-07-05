@@ -1,0 +1,46 @@
+<div aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Edit Email</h4>
+        </div>
+        <div class="popup_content">
+            <form #customerEditEmailForm="ngForm" (ngSubmit)="onSaveCustomer(customerEditEmailForm.valid)" novalidate>
+                <div class="alert alert-danger" *ngIf="showValidation && customerEditEmailForm.invalid">
+                    <div *ngIf="NewEmail?.errors?.pattern">
+                        {{messages.Validation.Email_Invalid}}
+                    </div>
+                </div>
+                <div class="space-10"></div>
+                <div class="row popup_white_bg top_zero">
+                    <div class="col-md-12 col-sm-12" *ngIf="editCustomerEmailModel.OldEmail == editCustomerEmailModel.NewEmail">
+                        <div class="alert alert-danger top_zero">
+                            <div>
+                                {{messages.Error.OldAndNew_Email}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h5 class="field_label top_zero">Old Email</h5>
+                        <input type="text" name="OldEmail" [ngModel]="editCustomerEmailModel.OldEmail" #OldEmail="ngModel" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-12 pt-2">
+                        <h5 class="field_label">New Email</h5>
+                        <div [ngClass]="{
+                            'has-danger': Email.invalid && (Email.dirty || Email.touched || customerEditEmailForm.submitted),
+                            'has-success': Email.valid && (Email.dirty || Email.touched ) }">
+                            <input type="text" name="Email" [(ngModel)]="editCustomerEmailModel.NewEmail" #Email="ngModel" class="form-control" pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                                maxlength="50" (blur)="trimEmail()" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="space-10"></div>
+                <div class="row cancel_btn float-right">
+                    <div class="col-md-12 col-sm-12 no_padding">
+                        <button class="left_margin_zero" type="button" (click)="onClose()">Cancel</button>
+                        <button class="primary_blue_btn" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,968 @@
+<div class="row white_bg zero_top">
+    <div class="col-md-12">
+        <div id="accordion" style="margin: 0;">
+
+            <div class="card no_padding" *ngIf="allowedPages.MailingLsit">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" (click)="resetDateToFrom()" aria-expanded="true" aria-controls="collapseOne">
+                            Mailing List
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p>This report is useful to generate a list of your staff and customers and their respective address information as well as permissions enabled/disabled within their profile.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Person Type</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="PersonID" [(ngModel)]="commonReportSearchParam.PersonID" (ngModelChange)="onPersonTypeChange()" #PersonID="ngModel">
+                                            <option *ngFor="let personObj of personTypeList"
+                                                [ngValue]="personObj.PersonID">
+                                                {{personObj.PersonName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Customer Type</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="CustomerTypeID" [(ngModel)]="commonReportSearchParam.CustomerTypeID" (ngModelChange)="onCustomerTypeChange()" #CustomerTypeID="ngModel" [disabled]="isStaff">
+                                            <option *ngFor="let customerTypeObj of customerTypeList"
+                                                [ngValue]="customerTypeObj.CustomerTypeID">
+                                                {{customerTypeObj.CustomerTypeName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 input_heading no_padding">
+                                    <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" #mailingListToDateFromCompoObj>
+                                    </dateto-datefrom>
+                                </div>
+
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="exportAllMailingListReport(fileType.PDF)">
+                                    <i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                </button>
+
+                                <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllMailingListReport(fileType.Excel)"><i
+                                        class="fal fa-file-excel"></i>
+                                </button>
+
+                                <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewAllMailingListReport(fileType.PDF)">
+                                    <i class="fal fa-book-open"></i></button>
+                                <button type="button" matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="resetDateToFrom()"><i class="fal fa-undo"
+                                        aria-hidden="true"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card no_padding" *ngIf="allowedPages.FirstVisit">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" (click)="resetDefaultList()" aria-expanded="false" aria-controls="collapseTwo">
+                            First Visit
+                        </button>
+                    </h5>
+                </div>
+                <form #staffTimeClockForm="ngForm" (ngSubmit)="exportFirstVisitReport(fileType.PDF)" novalidate>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to see when your customers visited your business for the very first time. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+
+
+                                <div class="row">
+
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Customer Type</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="CustomerTypeID" [(ngModel)]="commonReportSearchParam.CustomerTypeID" #CustomerTypeID="ngModel">
+                                                <option *ngFor="let customerTypeObj of customerTypeList"
+                                                    [ngValue]="customerTypeObj.CustomerTypeID">
+                                                    {{customerTypeObj.CustomerTypeName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" #firstToDateFromCompoObj></dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportFirstVisitReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewFirstVisitReport(fileType.PDF)">
+                                        <i class="fal fa-book-open"></i></button>
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetDateToFrom()"><i
+                                            class="fal fa-undo" aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card no_padding" *ngIf="allowedPages.StaffActivities">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" (click)="resetDefaultList()" aria-expanded="false" aria-controls="collapseThree">
+                            Staff Activities
+                        </button>
+                    </h5>
+                </div>
+                <form #staffTimeClockForm="ngForm" (ngSubmit)="exportFirstVisitReport(fileType.PDF)" novalidate>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful when you want to see your staff activities. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+
+
+                                <div class="row">
+
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <h5 class="field_label">Search By Staff</h5>
+
+                                        <input type="text" placeholder="Staff Name" matInput [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto" maxlength="30" [(ngModel)]="clearstaffInput" (ngModelChange)="onStaffNameChange(clearstaffInput)">
+                                        <span *ngIf="clearstaffInput != ''" (click)="onClearStaff()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName" (optionSelected)='getSelectedStaff($event.option.value)'>
+                                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                <span class="client_name">{{ person.FirstName + ' ' +
+                                                    person.LastName}}</span>
+                                                <small>{{person.CustomerTypeName}}</small>
+                                                <br>
+                                                <span class="client_info">{{ person.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ person.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+
+                                    <!-- <div class="col-md-3 col-sm-3">
+                                        <h5 class="field_label">Customer</h5>
+                                        <input type="text" placeholder="Search Customer" matInput
+                                            [formControl]="searchCustomer" class="form-control"
+                                            [matAutocomplete]="ByServiceCustomerName" maxlength="30"
+                                            [(ngModel)]="clearCustomerInput"
+                                            (ngModelChange)="onClientNameChange(clearCustomerInput)">
+                                        <span (click)="onClearCustomer()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #ByServiceCustomerName="matAutocomplete"
+                                            [displayWith]="displayCustomerName"
+                                            (optionSelected)='getSelectedCustomer($event.option.value)'>
+                                            <mat-option *ngFor="let customer of allCustomer" [value]="customer">
+                                                <span class="client_name">{{ customer.FirstName + ' ' +
+                                                    customer.LastName}}</span>
+                                                <small
+                                                    class="client_type float-right">{{customer.CustomerTypeName}}</small>
+                                                <br>
+                                                <span class="client_info">{{ customer.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ customer.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div> -->
+                                    <div class="col-md-3 col-sm-6">
+                                        <h5 class="field_label">Activities</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="ActivityTypeID" [(ngModel)]="commonReportSearchParam.ActivityTypeID" #ActivityTypeID="ngModel">
+                                                <option value="0">All</option>
+                                                <option *ngFor="let activity of ActivitiesTypeList"
+                                                    [ngValue]="activity.ActivityTypeID" style="font-size: 16px;">
+                                                    {{activity.ActivityTypeName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3 col-sm-3">
+                                        <label class="dash_label">From</label>
+                                        <input type="text" name="DateFrom"
+                                            class="form-control date-picker bg_transparent float-right"
+                                            [(ngModel)]="dateFrom"
+                                            #DateFrom="ngModel" matInput [matDatepicker]="datefrom"
+                                            placeholder="DD/MM/YYYY" readonly (click)="onOpenCalendar(datefrom)" />
+                                        <mat-datepicker #datefrom></mat-datepicker>
+                                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom">
+                                        </mat-datepicker-toggle>
+                                    </div> -->
+                                    <!-- <div class="col-md-3 col-sm-3">
+                                        <label class="dash_label">To</label>
+                                        <input type="text" name="DateTo"
+                                            class="form-control date-picker bg_transparent float-right"
+                                            [(ngModel)]="dateTo"
+                                            #DateTo="ngModel" matInput [matDatepicker]="dateto" placeholder="DD/MM/YYYY"
+                                            (click)="onOpenCalendar(dateto)" readonly />
+                                        <mat-datepicker #dateto></mat-datepicker>
+                                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto">
+                                        </mat-datepicker-toggle>
+                                    </div> -->
+                                    <div class="col-md-6 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" [isFromMaxDate]="false" #TodayAcTivityoDateFromCompoObj></dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportTodayActivitiesReport(fileType.PDF)"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportTodayActivitiesReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewTodayActivitiesReport(fileType.PDF)">
+                                        <i class="fal fa-book-open"></i></button>
+
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetDateToFrom()"><i
+                                            class="fal fa-undo" aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card no_padding" *ngIf="isClassActive && allowedPages.ClassAttendees">
+                <div class="card-header" id="headingTwo" (click)="resetDateToFrom()">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" (click)="resetDefaultList()" aria-expanded="false" aria-controls="collapseFour">
+                            Class Attendance
+                        </button>
+                    </h5>
+                </div>
+                <form #staffTimeClockForm="ngForm" (ngSubmit)="exportFirstVisitReport(fileType.PDF)" novalidate>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to see the attendance record of all the classes held
+                                            within a time range.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+
+
+
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        <h5 class="field_label">Select Class</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" [disabled]="!isClassesExists" name="classId" [(ngModel)]="ClassAttendance.ClassID">
+                                                <option [ngValue]="0">All</option>
+                                                <option *ngFor="let callObj of attendeeClass" [value]="callObj.ClassID">
+                                                    {{callObj.Name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 input_heading no_padding">
+                                        <!-- <div class="field_label top_zero">
+                                                <h5>Date</h5>
+                                            </div> -->
+                                        <!-- <input name="DateFrom" [(ngModel)]="classInfo.ClassDate" [min]="minDate"
+                                                (ngModelChange)="onDateChange($event)" class="form-control date-picker d_picker_bg"
+                                                #DateFrom="ngModel" matInput [matDatepicker]="datefrom" readonly />
+                                            <mat-datepicker #datefrom></mat-datepicker>
+                                            <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom">
+                                            </mat-datepicker-toggle> -->
+                                        <!-- <date-picker [value]="ClassAttendance.ClassDate" [showClear]="false"
+                                                (onDateChange)="onDateChange($event)"></date-picker> -->
+                                        <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" #classAttendance [toMaxDate]="toMaxDate">
+                                        </dateto-datefrom>
+                                    </div>
+
+                                </div>
+
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportClassAttendanceReport(fileType.PDF)"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportClassAttendanceReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewClassAttendanceReport(fileType.PDF)">
+                                        <i class="fal fa-book-open"></i></button>
+
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetDateToFrom()"><i
+                                            class="fal fa-undo" aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Service Bookings Report -->
+           <div class="card no_padding" *ngIf="allowedPages.ServiceBookingReport">
+              <div class="card-header" id="headingServiceBooking">
+                  <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseServiceBooking" (click)="resetDefaultList()" aria-expanded="false" aria-controls="collapseServiceBooking">
+                        Service Bookings
+                      </button>
+                  </h5>
+              </div>
+              <form #customerCheckInForm="ngForm" (ngSubmit)="exportServiceBookingReport(fileType.PDF)" novalidate>
+                  <div id="collapseServiceBooking" class="collapse" aria-labelledby="headingServiceBooking" data-parent="#accordion">
+                      <div class="card-body">
+                          <div class="report_section">
+                              <div class="row">
+                                  <div class="col-md-12 col-sm-12">
+                                      <p>This report is useful to run when you want to view all the past and future service bookings. This report can be customized for a specific date range, customer type, booking status and other filters.
+                                      </p>
+                                  </div>
+                              </div>
+                              <div class="small_space"></div>
+
+                              <div class="row">
+                                  <div class="col-lg-3 col-md-4 col-sm-6">
+                                      <h5 class="field_label">Customer</h5>
+                                      <div>
+                                          <input type="text" placeholder="Search Customer" tabindex="6" matInput class="form-control" [formControl]="searchCustomerCheckIn" [matAutocomplete]="SingleCustomerSearch" [(ngModel)]="clearServiceBooking" (ngModelChange)="onNameChange(clearServiceBooking)" maxlength="30">
+                                          <span *ngIf="clearServiceBooking != ''" (click)="resetServiceBooking()" class="clear_dob right_cross_btn"></span>
+                                          <mat-autocomplete #SingleCustomerSearch="matAutocomplete" [displayWith]="displayCustomerName" (optionSelected)='getSelectedCustomerID($event.option.value)'>
+                                              <mat-option *ngFor="let person of allCustomer" [value]="person">
+                                                  <span class="client_name">{{ person.FirstName }}
+                                                      {{ person.LastName }}</span>
+                                                  <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                  <br>
+                                                  <span class="client_info">{{ person.Mobile }}</span>
+                                                  <br>
+                                                  <span class="client_info">{{ person.Email }}</span>
+                                              </mat-option>
+                                          </mat-autocomplete>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-3 col-md-4 col-sm-6">
+                                      <h5 class="field_label">Customer Type</h5>
+                                      <div class="select_label">
+                                          <select class="form-control" name="CustomerTypeID" (ngModelChange)="resetServiceBooking(); customerTypeChange($event);" [(ngModel)]="commonReportSearchParam.CustomerTypeID" #CustomerTypeID="ngModel">
+                                              <option *ngFor="let customerTypeObj of customerTypeList"
+                                                  [ngValue]="customerTypeObj.CustomerTypeID">
+                                                  {{customerTypeObj.CustomerTypeName }}
+                                              </option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-3 col-md-4 col-sm-6">
+                                      <h5 class="field_label">Service</h5>
+                                      <div class="select_label">
+                                          <select class="form-control" name="ServiceID"
+                                              [(ngModel)]="commonReportSearchParam.ServiceID">
+                                              <option [value]="0">All</option>
+                                              <option *ngFor="let serviceObj of serviceList"
+                                                  [ngValue]="serviceObj.ServiceID">
+                                                  {{serviceObj.ServiceName}}
+                                              </option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-3 col-md-4 col-sm-6">
+                                      <h5 class="field_label">Booking Status</h5>
+                                      <div class="select_label">
+                                          <select class="form-control" name="bookingStatusName" (ngModelChange)="resetCustomerDeatil();"
+                                          [(ngModel)]="commonReportSearchParam.BookingStatusTypeID">
+                                            <option [ngValue]="0">All</option>
+                                            <option *ngFor="let bookingStatus of bookingStatusList" [ngValue]="bookingStatus.value">
+                                                {{bookingStatus.text}}
+                                            </option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-3 col-md-4 col-sm-6">
+                                      <h5 class="field_label">Assigned to Staff</h5>
+                                      <input type="text" placeholder="Search Staff" matInput [formControl]="searchPerson" class="form-control" [matAutocomplete]="assignToStaff" maxlength="30" [(ngModel)]="clearAssignStaffInput" (ngModelChange)="onStaffNameChange(clearAssignStaffInput)">
+                                      <span *ngIf="clearAssignStaffInput != ''" (click)="onClearStaff()" class="clear_dob right_cross_btn"></span>
+                                      <mat-autocomplete #assignToStaff="matAutocomplete" [displayWith]="displayClientName" (optionSelected)='getSelectedStaff($event.option.value)'>
+                                          <mat-option *ngFor="let person of allPerson" [value]="person">
+                                              <span class="client_name">{{ person.FirstName + ' ' +
+                                                  person.LastName}}</span>
+                                              <small>{{person.CustomerTypeName}}</small>
+                                              <br>
+                                              <span class="client_info">{{ person.Mobile }}</span>
+                                              <br>
+                                              <span class="client_info">{{ person.Email }}</span>
+                                          </mat-option>
+                                      </mat-autocomplete>
+                                  </div>
+                                  <div class="col-md-6 col-sm-12 input_heading no_padding">
+                                      <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" [isFromMaxDate]="false" [dateToLabelName]="ServiceScheduledDateToLabelName" [dateFromLabelName]="ServiceScheduledDateFromLabelName" #serviceBookingDate>
+                                      </dateto-datefrom>
+                                  </div>
+                              </div>
+
+                              <div class="report_button text-right">
+                                  <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportServiceBookingReport(fileType.PDF)"><i class="fal fa-file-pdf"
+                                          aria-hidden="true"></i>
+                                  </button>
+                                  <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportServiceBookingReport(fileType.Excel)"><i
+                                          class="fal fa-file-excel"></i>
+                                  </button>
+
+                                  <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewServiceBookingReport(fileType.PDF)">
+                                      <i class="fal fa-book-open"></i></button>
+
+                                  <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetDefaultList()"><i
+                                          class="fal fa-undo" aria-hidden="true"></i> </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+
+            <!-- Customer Check-in Report -->
+            <div class="card no_padding" *ngIf="allowedPages.CustomerCheckInReport">
+                <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" (click)="resetDefaultList()" aria-expanded="false" aria-controls="collapseFive">
+                            Customer Check-In
+                        </button>
+                    </h5>
+                </div>
+                <form #customerCheckInForm="ngForm" (ngSubmit)="exportCustomerClockInReport(fileType.PDF)" novalidate>
+                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to see the regularity of your customers, how many times they have visited your facility with respect to the number of visits, date duration and various other filters.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Customer Type</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="CustomerTypeID" (ngModelChange)="resetCustomerDeatil(); customerTypeChange($event);" [(ngModel)]="commonReportSearchParam.CustomerTypeID" #CustomerTypeID="ngModel">
+                                                <option *ngFor="let customerTypeObj of customerTypeList"
+                                                    [ngValue]="customerTypeObj.CustomerTypeID">
+                                                    {{customerTypeObj.CustomerTypeName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label"> Customer Name</h5>
+                                        <div>
+                                            <input type="text" placeholder="Customer Name" tabindex="6" matInput class="form-control" [formControl]="searchCustomerCheckIn" [matAutocomplete]="SingleCustomer" [(ngModel)]="clearCustomerInput" (ngModelChange)="onNameChange(clearCustomerInput)" maxlength="30">
+                                            <span *ngIf="clearCustomerInput != ''" (click)="resetCustomerDeatil()" class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #SingleCustomer="matAutocomplete" [displayWith]="displayCustomerName" (optionSelected)='getSelectedCustomerID($event.option.value)'>
+                                                <mat-option *ngFor="let person of allCustomer" [value]="person">
+                                                    <span class="client_name">{{ person.FirstName }}
+                                                        {{ person.LastName }}</span>
+                                                    <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" #customerCheckIn [toMaxDate]="toMaxDate">
+                                        </dateto-datefrom>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Activity Type</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" tabindex="5" name="ActivityTypeID" [(ngModel)]="commonReportSearchParam.ActivityTypeID">
+                                                <option *ngFor="let sourceTypeObj of customerActivityList"
+                                                    [ngValue]="sourceTypeObj.value" style="font-size: 16px;">
+                                                    {{sourceTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Minimum Visits</h5>
+                                        <input name="numberOfVisitFrom" (keydown)="preventCharactersForClassBooking($event)" pattern="[0-9]+(\.[0-9]+)?" type="number" min="0" tabindex="6" max="10000" matInput class="form-control" [(ngModel)]="commonReportSearchParam.NumberOfVisitFrom">
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Maximum Visits</h5>
+                                        <input name="NumberOfVisitTo" (keydown)="preventCharactersForClassBooking($event)" pattern="[0-9]+(\.[0-9]+)?" type="number" min="0" tabindex="7" max="10000" matInput class="form-control" [(ngModel)]="commonReportSearchParam.NumberOfVisitTo">
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Membership Status</h5>
+                                        <div class="select_label">
+                                            <select [disabled]="disableMembershipStatusType" class="form-control" tabindex="8" name="MembershipStatusTypeID" [(ngModel)]="commonReportSearchParam.MembershipStatusTypeID">
+                                                <option *ngFor="let statusTypeObj of membershipStatusList"
+                                                    [ngValue]="statusTypeObj.value" style="font-size: 16px;">
+                                                    {{statusTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportCustomerClockInReport(fileType.PDF)"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportCustomerClockInReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewCustomerClockInReport(fileType.PDF)">
+                                        <i class="fal fa-book-open"></i></button>
+
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetDefaultList()"><i
+                                            class="fal fa-undo" aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card no_padding" *ngIf="allowedPages.CustomerZeroVisits">
+                <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" (click)="resetDefaultList()" aria-expanded="false" aria-controls="collapseSix">
+                            Zero Visits
+                        </button>
+                    </h5>
+                </div>
+                <form #customerZeroVisitsForm="ngForm" (ngSubmit)="exportCustomerZeroVisitsReport(fileType.PDF)" novalidate>
+                    <div id="collapseSix" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to check customers that have not visited your facility in a certain amount of time with respect to date and various other filters.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Customer Type</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="CustomerTypeID" (ngModelChange)="resetCustomerDeatil(); customerTypeChange($event);" [(ngModel)]="commonReportSearchParam.CustomerTypeID" #CustomerTypeID="ngModel">
+                                                <option *ngFor="let customerTypeObj of customerTypeList"
+                                                    [ngValue]="customerTypeObj.CustomerTypeID">
+                                                    {{customerTypeObj.CustomerTypeName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label"> Customer Name</h5>
+                                        <div>
+                                            <input type="text" placeholder="Customer Name" tabindex="6" matInput class="form-control" [formControl]="searchCustomerZeroVisit" [matAutocomplete]="SingleCustomer1" [(ngModel)]="clearCustomerInput" (ngModelChange)="onNameChange(clearCustomerInput)" maxlength="30">
+                                            <span *ngIf="clearCustomerInput != ''" (click)="resetCustomerDeatil()" class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #SingleCustomer1="matAutocomplete" [displayWith]="displayCustomerName" (optionSelected)='getSelectedCustomerID($event.option.value)'>
+                                                <mat-option *ngFor="let person of allCustomer" [value]="person">
+                                                    <span class="client_name">{{ person.FirstName }}
+                                                        {{ person.LastName }}</span>
+                                                    <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" #customerZeroVisits>
+                                        </dateto-datefrom>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Activity Type</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" tabindex="5" name="ActivityTypeID" [(ngModel)]="commonReportSearchParam.ActivityTypeID">
+                                                <option *ngFor="let sourceTypeObj of customerActivityList"
+                                                    [ngValue]="sourceTypeObj.value" style="font-size: 16px;">
+                                                    {{sourceTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Membership Status</h5>
+                                        <div class="select_label">
+                                            <select [disabled]="disableMembershipStatusType" class="form-control" tabindex="8" name="MembershipStatusTypeID" [(ngModel)]="commonReportSearchParam.MembershipStatusTypeID">
+                                                <option *ngFor="let statusTypeObj of membershipStatusList"
+                                                    [ngValue]="statusTypeObj.value" style="font-size: 16px;">
+                                                    {{statusTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row report_button">
+                                    <div class="col-md-12">
+                                        <h5 class="Res_label mb-0">Results</h5>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">From</h5>
+                                        <div [ngClass]="{
+                                            'has-danger': !commonReportSearchParam.CustomerNumberFrom || (commonReportSearchParam.CustomerNumberTo > 0 && commonReportSearchParam.CustomerNumberFrom > 0 && (commonReportSearchParam.CustomerNumberFrom > commonReportSearchParam.CustomerNumberTo))
+                                        }">
+                                            <input type="text" min="1" class="form-control" name="customerNumberFrom" [(ngModel)]="commonReportSearchParam.CustomerNumberFrom" numberControl [tabindex]="6" maxlength="9" (ngModelChange)="onMLimitChangeOnlyNumbers($event, 'ResultFrom')" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">To</h5>
+                                        <div [ngClass]="{
+                                            'has-danger': !commonReportSearchParam.CustomerNumberTo || (commonReportSearchParam.CustomerNumberTo > 0 && commonReportSearchParam.CustomerNumberFrom > 0 && (commonReportSearchParam.CustomerNumberFrom > commonReportSearchParam.CustomerNumberTo))
+                                        }">
+                                            <input type="text" min="1" class="form-control" name="customerNumberTo" [(ngModel)]="commonReportSearchParam.CustomerNumberTo" numberControl [tabindex]="6" maxlength="9" (ngModelChange)="onMLimitChangeOnlyNumbers($event, 'ResultTo')" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-4 col-sm-6 text-right">
+                                        <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportCustomerZeroVisitsReport(fileType.PDF)"><i
+                                                class="fal fa-file-pdf" aria-hidden="true"></i>
+                                        </button>
+                                        <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportCustomerZeroVisitsReport(fileType.Excel)"><i
+                                                class="fal fa-file-excel"></i>
+                                        </button>
+
+                                        <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewCustomerZeroVisitsReport(fileType.PDF)">
+                                            <i class="fal fa-book-open"></i></button>
+
+                                        <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetDefaultList()"><i class="fal fa-undo" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+<!-- reward program  -->
+            <div class="card no_padding" *ngIf="allowedPages.RewardProgramSummary">
+                <div class="card-header" id="headingSeven">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven"  (click)="resetRewardProgramSearchParams()" aria-expanded="false" aria-controls="collapseSeven">
+                            Reward Program Summary
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p> This report is useful to run when you want to see the points details of a specific reward program using various filters.</p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Customer Type</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="CustomerTypeID" [(ngModel)]="rewardProgramSearchParam.CustomerTypeID"  #CustomerTypeID="ngModel">
+                                            <option *ngFor="let customerTypeObj of customerTypeList"
+                                                [ngValue]="customerTypeObj.CustomerTypeID">
+                                                {{customerTypeObj.CustomerTypeName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <h5 class="field_label"> Customer Name</h5>
+                                    <div>
+                                        <input type="text" placeholder="Customer Name" matInput class="form-control" [formControl]="searchCustomerRewardProgram" [matAutocomplete]="RewardCustomer" [(ngModel)]="clearCustomerInputRewardProgram" (ngModelChange)="onNameChangeRewardProgram(clearCustomerInput)" maxlength="30">
+                                        <span *ngIf="clearCustomerInputRewardProgram != ''" (click)="resetCustomerDetailRewardProgram()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #RewardCustomer="matAutocomplete" [displayWith]="displayCustomerName" (optionSelected)='getSelectedCustomerIDForRewardProgram($event.option.value)'>
+                                            <mat-option *ngFor="let data of allCustomerRewardProgram" [value]="data">
+                                                <span class="client_name">{{ data.FirstName }}
+                                                    {{ data.LastName }}</span>
+                                                <small class="client_type float-right">{{data.CustomerTypeName}}</small>
+                                                <br>
+                                                <span class="client_info">{{ data.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ data.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Customer Status</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="RewardProgramCustomerStatus" [(ngModel)]="rewardProgramSearchParam.CustomerStatusID" #RewardProgramCustomerStatus="ngModel" >
+                                            <option *ngFor="let customerStatusObj of customerStatusList"
+                                                [ngValue]="customerStatusObj.StatusID">
+                                                {{customerStatusObj.StatusName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Reward Program</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="RewardProgram" [(ngModel)]="rewardProgramSearchParam.RewardProgramID" #RewardProgram="ngModel" (ngModelChange)="onChangeRewardProgram()">
+                                            <option [ngValue]="0">
+                                                All
+                                            </option>
+                                            <option *ngFor="let rewardProgramObj of rewardProgramList"
+                                                [ngValue]="rewardProgramObj.RewardProgramID">
+                                                {{rewardProgramObj.Name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" >
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Enrollment Status</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="RewardProgramCustomerEnrollment" [(ngModel)]="rewardProgramSearchParam.EnrollmentStatusID" #RewardProgramCustomerEnrollment="ngModel" >
+                                            <option *ngFor="let customerEnrollment of customerEnrollmentList"
+                                                [ngValue]="customerEnrollment.value">
+                                                {{customerEnrollment.text }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-12 input_heading no_padding">
+                                    <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" #rewardProgramToFromDate>
+                                    </dateto-datefrom>
+                                </div>
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="exportRewardProgramSummaryReport(fileType.PDF)">
+                                    <i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                </button>
+
+                                <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportRewardProgramSummaryReport(fileType.Excel)"><i
+                                        class="fal fa-file-excel"></i>
+                                </button>
+
+                                <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewRewardProgramSummaryReport(fileType.PDF)">
+                                    <i class="fal fa-book-open"></i></button>
+                                <button type="button" matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="resetRewardProgramSearchParams()"><i class="fal fa-undo"
+                                        aria-hidden="true"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end region Reward Program -->
+
+            <!-- Inventory change log start -->
+
+            <div class="card no_padding" *ngIf="allowedPages.InventoryChangeLog">
+                <div class="card-header" id="headingEight">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEigth" (click)="resetInventoryChangeLogSearchParams()" aria-expanded="false" aria-controls="collapseEigth">
+                            Inventory Change Log
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseEigth" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p> This report is useful to run when you want to view inventory log against products. This report can be customized for a specific date range, product category or product name.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="field_label">Product</h5>
+                                    <div>
+                                        <input type="text" placeholder="Search" matInput class="form-control" [formControl]="searchProduct" [matAutocomplete]="Inventory" [(ngModel)]="clearProductInput" (ngModelChange)="onNameChangeproduct(clearProductInput)" maxlength="30">
+                                        <span *ngIf="clearProductInput != ''" (click)="resetProductDetail()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #Inventory="matAutocomplete" [displayWith]="displayProductName" (optionSelected)='getSelectedProduct($event.option.value)'>
+                                            <mat-option *ngFor="let data of allProducts" [value]="data">
+                                                <span class="client_name">{{ data.ProductName }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="field_label">Category</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="iclProductCategoryID" [disabled]="inventoryChangeLogSearchParam?.ProductID > 0" [(ngModel)]="inventoryChangeLogSearchParam.ProductCategoryID" #iclProductCategoryID="ngModel">
+                                            <option [ngValue]="null">
+                                               All
+                                            </option>
+                                            <option *ngFor="let productCategory of productCategoryList"
+                                                [ngValue]="productCategory.ProductCategoryID">
+                                                {{productCategory.ProductCategoryName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <h5 class="field_label">Brand</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="iclBrandID" [disabled]="inventoryChangeLogSearchParam?.ProductID > 0" [(ngModel)]="inventoryChangeLogSearchParam.BrandID" #iclBrandID="ngModel" [disabled]="isStaff">
+                                            <option [ngValue]="null">
+                                                All
+                                             </option>
+                                            <option *ngFor="let productBrand of productBrandList"
+                                                [ngValue]="productBrand.BrandID">
+                                                {{productBrand.BrandName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col col-5 input_heading no_padding">
+                                    <dateto-datefrom (sendDateTo)="reciviedDateToFrom($event)" #inVentoryChangeLogToDateFromCompoObj>
+                                    </dateto-datefrom>
+                                </div>
+
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="exportAllInventoryChangeLogListReport(fileType.PDF)">
+                                    <i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                </button>
+
+                                <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllInventoryChangeLogListReport(fileType.Excel)"><i
+                                        class="fal fa-file-excel"></i>
+                                </button>
+
+                                <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewAllInventoryChangeLogListReport(fileType.PDF)">
+                                    <i class="fal fa-book-open"></i></button>
+                                <button type="button" matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="resetInventoryChangeLogSearchParams()"><i class="fal fa-undo"
+                                        aria-hidden="true"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Inventory change log end -->
+
+
+            <!-- Current Stock start -->
+
+            <div class="card no_padding" *ngIf="allowedPages.CurrentStock">
+                <div class="card-header" id="headingNine">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine" (click)="resetCurrentStockSearchParams()" aria-expanded="false" aria-controls="collapseNine">
+                            Current Stock
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p> This report is useful to run when you want to view current stock. This report can be customized for a specific date range, or brand.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Product</h5>
+                                    <div class="field_label">
+                                        <div>
+                                            <input type="text" placeholder="Search" matInput class="form-control" [formControl]="searchProductCurrentStock" [matAutocomplete]="InventoryCurrentStock" [(ngModel)]="clearProductCurrentStockInput" (ngModelChange)="onNameChangeproduct(clearProductCurrentStockInput)" maxlength="30">
+                                            <span *ngIf="clearProductCurrentStockInput != ''" (click)="resetSelectedProductCurrentStock()" class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #InventoryCurrentStock="matAutocomplete" [displayWith]="displayProductNameForCurrentStock" (optionSelected)='getSelectedProductCurrentStock($event.option.value)'>
+                                                <mat-option *ngFor="let data of allProducts" [value]="data">
+                                                    <span class="client_name">{{ data.ProductName }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Category</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="iclProductCategoryID" [disabled]="inventoryChangeLogSearchParam?.ProductID > 0" [(ngModel)]="inventoryChangeLogSearchParam.ProductCategoryID" #iclProductCategoryID="ngModel">
+                                            <option [ngValue]="null">
+                                               All
+                                            </option>
+                                            <option *ngFor="let productCategory of productCategoryList"
+                                                [ngValue]="productCategory.ProductCategoryID">
+                                                {{productCategory.ProductCategoryName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label">Brand</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="iclBrandID" [disabled]="inventoryChangeLogSearchParam?.ProductID > 0" [(ngModel)]="inventoryChangeLogSearchParam.BrandID" #iclBrandID="ngModel" [disabled]="isStaff">
+                                            <option [ngValue]="null">
+                                                All
+                                             </option>
+                                            <option *ngFor="let productBrand of productBrandList"
+                                                [ngValue]="productBrand.BrandID">
+                                                {{productBrand.BrandName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="exportAllCurrentStockListReport(fileType.PDF)">
+                                    <i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                </button>
+
+                                <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllCurrentStockListReport(fileType.Excel)"><i
+                                        class="fal fa-file-excel"></i>
+                                </button>
+
+                                <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewAllCurrentStockListReport(fileType.PDF)">
+                                    <i class="fal fa-book-open"></i></button>
+                                <button type="button" matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="resetCurrentStockSearchParams()"><i class="fal fa-undo"
+                                        aria-hidden="true"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Current Stock end -->
+        </div>
+    </div>
+</div>

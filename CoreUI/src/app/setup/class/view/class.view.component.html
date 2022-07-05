@@ -1,0 +1,145 @@
+<div class="" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <div>
+                    <h4>View Class</h4>
+                </div>
+
+            </div>
+            <div class="popup_content cstm_scroll_bg section_container readonly_content">
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>Class Info</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Class Name</h6>
+                            <p>{{parentClassObj.ParentClassName ? parentClassObj.ParentClassName : 'NA'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Class Category</h6>
+                            <p>{{parentClassObj.ClassCategoryName? parentClassObj.ClassCategoryName : 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Class Level</h6>
+                            <p>{{parentClassObj.LevelName? parentClassObj.LevelName : 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Class Duration</h6>
+                            <p>{{parentClassObj.ClassDurationInMinutes? parentClassObj.ClassDurationInMinutes: 'N/A'}} <span
+                                    *ngIf="parentClassObj.ClassDurationInMinutes">Minutes</span></p>
+                        </div>
+                    <!-- </div>
+                    <div class="row"> -->
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Booking Starts before</h6>
+                            <p>{{parentClassObj.StartBefore ? parentClassObj.StartBefore : 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Booking Closes before</h6>
+                            <p>{{parentClassObj.CloseBefore ? parentClassObj.CloseBefore : 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Cancellation Ends before</h6>
+                            <p>{{parentClassObj.CancelBefore ? parentClassObj.CancelBefore : 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Status</h6>
+                            <p>{{parentClassObj.IsActive === true? 'Active': 'InActive'}}</p>
+                        </div>
+                        <div class="col-md-12 col-sm-12" *ngIf="isPurchaseRestrictionAllowed">
+                            <h6>Purchase Restriction</h6>
+                            <p>{{parentClassObj.RestrictedCustomerTypeNames ? parentClassObj.RestrictedCustomerTypeNames + " cannot purchase this item." : 'N/A'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>Class Description</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <p>
+                                {{parentClassObj.Description ? parentClassObj.Description : "N/A"}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>How to prepare</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <p>{{parentClassObj.HowToPrepare ? parentClassObj.HowToPrepare : "N/A"}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>Membership(s) List</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row overflow-auto">
+                        <div class="col-md-12 verticle-scroll-lg">
+                            <div class="row grid_header view_membership_detail membership_bg">
+                                <div class="col">
+                                    <h5>Membership Name</h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5>Active Members</h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5>Status</h5>
+                                </div>
+                            </div>
+
+                            <div id="grid">
+                                <div class="row grid_rows view_membership_content" *ngFor="let membership of classMembership">
+                                    <div class="col">
+                                        <h5>{{membership.MembershipName}}</h5>
+                                    </div>
+                                    <div class="col text-center">
+                                        <h5>{{membership.Count}}</h5>
+                                    </div>
+                                    <div class="col text-center">
+                                        <h5>{{membership.Status}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="!isDataExists">
+                              <div class="row grid_rows">
+                                  <div class="col-md-12 col-sm-12 text-center">
+                                      <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right scroll_close">
+                        <button type="button" (click)="onClosePopup()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--View Client Pop Up End-->

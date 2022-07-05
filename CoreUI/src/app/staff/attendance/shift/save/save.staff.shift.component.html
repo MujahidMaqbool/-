@@ -1,0 +1,161 @@
+<div class="add_new_lead" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content">
+            <div class="popup_header">
+                <h4>Shift</h4>
+            </div>
+            <form #schedulerShiftFormData="ngForm" (ngSubmit)="saveStaffShift(schedulerShiftFormData.valid)" novalidate>
+                <div class="popup_content cstm_scroll_bg" id="staffShiftFormDiv">
+                    <div id="shifttemplate">
+                        <div class="popup_white_bg">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="alert alert-danger" *ngIf="isShowError">{{dateTimeCompareError}}</div>
+                                    <div class="alert alert-danger" *ngIf="UnpaidBreak?.errors?.pattern">
+                                        {{messages.Validation.Unpaid_Break}}
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="UnpaidBreak?.errors?.required">
+                                        {{messages.Validation.Info_Required}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <h5 class="field_label sch_lab">Staff Name</h5>
+                                    <div class="select_label">
+                                        <select [(ngModel)]="staffShiftModel.StaffID" name="StaffID" #StaffID="ngModel"
+                                            (change)="filterShiftTemplate(staffShiftModel.StaffID)" required>
+                                            <option *ngFor="let staff of staffList" [ngValue]="staff.StaffID">
+                                                {{staff.StaffFullName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6" *ngIf="isShowTemplate">
+                                    <h5 class="field_label sch_lab">Choose Shift Template</h5>
+                                    <div class="select_label">
+                                        <select class="form-control" name="selectedShiftTempalteID"
+                                            (change)="splitShiftTemplateTime($event.target.value)">
+                                            <option [value]="0">No Template</option>
+                                            <option *ngFor="let template of filterShiftTemplateList"
+                                                [value]="template.ShiftTemplateID">
+                                                {{template.startTime }} - {{ template.endTime }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row flex-end">
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label sch_lab">
+                                        <h5>Unpaid Break <span>(In Minutes)</span></h5>
+                                    </h5>
+                                    <div [ngClass]="{
+                                                        'has-danger': (( UnpaidBreak.invalid) && (schedulerShiftFormData.dirty || schedulerShiftFormData.touched ||schedulerShiftFormData.submitted))
+                                                    }">
+                                        <input class="form-control" type="text" name="UnpaidBreak"
+                                            [(ngModel)]="staffShiftModel.UnpaidBreak" #UnpaidBreak="ngModel"
+                                            pattern="[0-9]{1,4}" maxlength="4" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label sch_lab">Start Date</h5>
+                                    <date-picker [value]="staffShiftModel.StartDate | customdate: dateFormat"
+                                        [required]="true" [showClear]="false"
+                                        (onDateChange)="onStartDate_valueChanged($event)">
+                                    </date-picker>
+                                    <!-- <dx-date-box type="date" class="full_width" name="ShiftStartDate" [(value)]="staffShiftModel.StartDate"
+                                        (onValueChanged)="onStartDate_valueChanged($event)">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required" message="{{messages.Validation.StartDate_Required}}">
+                                            </dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box> -->
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label sch_lab">Start Time</h5>
+                                    <dx-date-box type="time" [displayFormat]="schedulerTimeFormat" class="full_width"
+                                        [interval]="15" name="ShiftStartTime" [(value)]="staffShiftModel.StartTime"
+                                        [showClearButton]="true" (onValueChanged)="onStartTimeChange($event)"
+                                        [useMaskBehavior]="true">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"
+                                                message="{{messages.Validation.StartTime_Required}}">
+                                            </dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <h5 class="field_label sch_lab">End Time</h5>
+                                    <dx-date-box type="time" [displayFormat]="schedulerTimeFormat" class="full_width"
+                                        [interval]="15" name="ShiftEndTime" [(value)]="staffShiftModel.EndTime"
+                                        [showClearButton]="true" [useMaskBehavior]="true"
+                                        (onValueChanged)="onEndTimeChange($event)">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"
+                                                message="{{messages.Validation.EndTime_Required}}">
+                                            </dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 class="field_label sch_lab">
+                                        Notes
+                                        <span>(Remaining Characters:
+                                            {{ 250 - staffShiftModel?.Description?.length }})</span>
+                                    </h5>
+                                    <div>
+                                        <!-- [ngClass]="{'has-danger': (Description.invalid || !Description.value || Description.value == '') && (schedulerShiftFormData.dirty || schedulerShiftFormData.touched || schedulerShiftFormData.submitted)}"> -->
+                                        <textarea class="form-control form-control-description" rows="4"
+                                            [(ngModel)]="staffShiftModel.Description" name="Description"
+                                            #Description="ngModel" maxlength="250"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="field_label sch_lab">Repeat</h5>
+                                    <dx-switch (onValueChanged)="repeatSwitch_valueChanged($event)"
+                                        [value]="showRepeatControl">
+                                    </dx-switch>
+                                    <dx-form #devexpForm [formData]="staffRecurrenceRule" id="RRuleStaffShifts"
+                                        [hidden]="!showRepeatControl">
+                                        <dxi-item dataField="repeat" cssClass="recurrence-section"
+                                            editorType="dxRecurrenceEditor"
+                                            [editorOptions]="{ value: staffRecurrenceRule.repeat , onValueChanged: onRecurrenceValueChanged }"
+                                            [label]="{text : 'Recurrence Rule'}"></dxi-item>
+                                    </dx-form>
+                                </div>
+                                <div class="col-md-6" *ngIf="recurrenceExceptionList.length > 0">
+                                    <h5 class="field_label">Exceptions</h5>
+                                    <div>
+                                        <span *ngFor="let exceptDates of recurrenceExceptionList; let arrayIndex=index"
+                                            class="excpt_dates">{{exceptDates}} </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 space" *ngIf="isShowTemplate">
+                                    <div class="checkbox checkbox-success">
+                                        <input id="sch_template" name="SaveAsShiftTemplate" tabindex="19"
+                                            type="checkbox" [(ngModel)]="staffShiftModel.SaveAsShiftTemplate"
+                                            #SaveAsShiftTemplate="ngModel"
+                                            [(checked)]="staffShiftModel.SaveAsShiftTemplate">
+                                        <label for="sch_template"> Save as template </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12">
+                        <div class="cancel_btn float-right">
+                            <button type="button" (click)="onCloseSchedulerStaffShiftPopup()">Cancel</button>
+                            <button type="submit" class="save primary_blue_btn">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

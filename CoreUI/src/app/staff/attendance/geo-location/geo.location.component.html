@@ -1,0 +1,66 @@
+<!--View Staff Pop Up start-->
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>Geolocation</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="section_content readonly_content">
+                    <div class="view_bg">
+                        <div class="media">
+                            <div class="mr-3">
+                                <div *ngIf="StaffLocation.CheckInAttendanceSourceTypeID == checkIn_Out.Terminal" class="activity_icons appointment small_space"><i class="fal fa-mobile-alt"></i></div>
+                                <div *ngIf="StaffLocation.CheckInAttendanceSourceTypeID == checkIn_Out.Computer" class="activity_icons appointment small_space"><i class="fal fa-desktop-alt"></i></div>
+                            </div>
+                            <div class="media-body activity_note location_clockin">
+                                <h5>Clocked in from {{StaffLocation.CheckInAttendanceSourceTypeID == checkIn_Out.Terminal ? 'Staff App' : 'Core' }} </h5>
+                                <h4>{{StaffLocation.ClockIn | branchTimeFormat}}</h4>
+                                <p *ngIf="StaffLocation.CheckInAttendanceSourceTypeID == checkIn_Out.Terminal " >{{StaffLocation.ClockInAddress}}</p>
+                                <ng-container *ngIf="StaffLocation.CheckInAttendanceSourceTypeID == checkIn_Out.Terminal " >
+                                    <google-map height="150px" width="100%" [zoom]="zoom" [center]="centerClockIn">
+                                        <map-marker
+                                         *ngFor="let marker of markerclockIn"
+                                          [position]="marker.position">
+                                       </map-marker>
+                                     </google-map>
+                                </ng-container>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg bottom_zero" *ngIf="StaffLocation.CheckOutAttendanceSourceTypeID">
+                        <div class="media">
+                            <div class="mr-3">
+                                <div *ngIf="StaffLocation.CheckOutAttendanceSourceTypeID == checkIn_Out.Terminal" class="activity_icons call small_space"><i class="fal fa-mobile-alt"></i></div>
+                                <div *ngIf="StaffLocation.CheckOutAttendanceSourceTypeID == checkIn_Out.Computer" class="activity_icons call small_space"><i class="fal fa-desktop-alt"></i></div>
+                            </div>
+                            <div class="media-body activity_note location_clockout">
+                                <h5>Clockout from {{StaffLocation.CheckOutAttendanceSourceTypeID == checkIn_Out.Terminal ? 'Staff App' : 'Core' }}</h5>
+                                <h4>{{StaffLocation.ClockOut | branchTimeFormat}}</h4>
+                                <p *ngIf="StaffLocation.CheckOutAttendanceSourceTypeID == checkIn_Out.Terminal" >{{StaffLocation.ClockOutAddress}}</p>
+                                <ng-container *ngIf="StaffLocation.CheckOutAttendanceSourceTypeID == checkIn_Out.Terminal" >
+                                    <google-map height="150px" width="100%" [zoom]="zoom" [center]="centerClockOut">
+                                        <map-marker
+                                         *ngFor="let marker of markerClockOut"
+                                          [position]="marker.position">
+                                       </map-marker>
+                                     </google-map>
+                                </ng-container>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row popup_footer pt-0">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onClose()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--View Staff Pop Up End-->

@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-md-12" *ngIf="(activeTab == configurationsTypes.WaitingList && allowedPages.SaveWaitList) || (activeTab == configurationsTypes.CancellationPolicy && allowedPages.SaveCancellationPolicy) || (activeTab == configurationsTypes.Advanced && allowedPages.SaveAdvanceSetting) || activeTab == configurationsTypes.Basic || activeTab == configurationsTypes.Payments || activeTab == configurationsTypes.ActivitiesColor">
+        <div class="company_btn float-right"><button *ngIf="isExternalSave && isResetButtonShow" type="button"
+                (click)="onReset()" class="simple_btn ng-star-inserted" tabindex="0">
+                Reset </button>
+            <button type="button" *ngIf="isExternalSave" class="save ng-star-inserted" (click)="onSave()" tabindex="0">
+                Save </button>
+        </div>
+    </div>
+</div>
+<div class="config_bg">
+    <mat-tab-group (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
+        <mat-tab label="{{configurationsTypes.Basic}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.Basic}}
+            </ng-template>
+            <div *ngTemplateOutlet="Basic"></div>
+        </mat-tab>
+        <mat-tab *ngIf="allowedPages.AdvanceSetting" label="{{configurationsTypes.Advanced}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.Advanced}}
+            </ng-template>
+            <div *ngTemplateOutlet="Advanced"></div>
+        </mat-tab>
+        <mat-tab *ngIf="allowedPages.CancellationPolicy" label="{{configurationsTypes.CancellationPolicy}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.CancellationPolicy}}
+            </ng-template>
+            <div *ngTemplateOutlet="CancellationPolicy"></div>
+        </mat-tab>
+        <mat-tab *ngIf="allowedPages.WaitingList" label="{{configurationsTypes.WaitingList}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.WaitingList}}
+            </ng-template>
+            <div *ngTemplateOutlet="WaitingList"></div>
+        </mat-tab>
+        <mat-tab *ngIf="allowedPages.GatewayIntegration" label="{{configurationsTypes.Payments}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.Payments}}
+            </ng-template>
+            <div *ngTemplateOutlet="Payments"></div>
+        </mat-tab>
+        <mat-tab *ngIf="allowedPages.PrinterConfig" label="{{configurationsTypes.POS}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.POS}}
+            </ng-template>
+            <div *ngTemplateOutlet="printerSetup"></div>
+        </mat-tab>
+        <mat-tab *ngIf="allowedPages.LeadStatus" label="{{configurationsTypes.Lead}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.Lead}}
+            </ng-template>
+            <div *ngTemplateOutlet="LeadStatus"></div>
+        </mat-tab>
+        <mat-tab *ngIf="allowedPages.Widget" label="{{configurationsTypes.Widget}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.Widget}}
+            </ng-template>
+            <div *ngTemplateOutlet="Widget"></div>
+        </mat-tab>
+        <mat-tab *ngIf="allowedPages.ActivitiesColor" label="{{configurationsTypes.ActivitiesColor}}">
+            <ng-template mat-tab-label>
+                {{configurationsTypes.ActivitiesColor}}
+            </ng-template>
+            <div *ngTemplateOutlet="ActivityColor"></div>
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
+
+
+<ng-template #Basic>
+    <ng-container *ngIf="activeTab == configurationsTypes.Basic">
+        <app-basic #basicComp></app-basic>
+    </ng-container>
+</ng-template>
+
+<ng-template #Advanced>
+    <ng-container *ngIf="activeTab == configurationsTypes.Advanced">
+        <app-advanced #advancedComponent></app-advanced>
+    </ng-container>
+</ng-template>
+
+<ng-template #WaitingList>
+    <ng-container *ngIf="activeTab == configurationsTypes.WaitingList">
+        <app-waiting-list #waitlistComp></app-waiting-list>
+    </ng-container>
+</ng-template>
+
+<ng-template #CancellationPolicy>
+    <ng-container *ngIf="activeTab == configurationsTypes.CancellationPolicy">
+        <app-cancelllation-policy #cancellationPolicyComp></app-cancelllation-policy>
+    </ng-container>
+</ng-template>
+
+<ng-template #Payments>
+    <ng-container *ngIf="activeTab == configurationsTypes.Payments">
+        <app-payments #paymentsComp></app-payments>
+    </ng-container>
+</ng-template>
+
+<ng-template #printerSetup>
+    <ng-container *ngIf="activeTab == configurationsTypes.POS">
+        <printer-setup-details #printerSetupComp></printer-setup-details>
+    </ng-container>
+</ng-template>
+
+<ng-template #LeadStatus>
+    <ng-container *ngIf="activeTab == configurationsTypes.Lead">
+        <lead-status #leadStatusComp></lead-status>
+    </ng-container>
+</ng-template>
+
+<ng-template #Widget>
+    <ng-container *ngIf="activeTab == configurationsTypes.Widget">
+        <app-widget #widgetComp></app-widget>
+    </ng-container>
+
+</ng-template>
+
+<ng-template #ActivityColor>
+    <ng-container *ngIf="activeTab == configurationsTypes.ActivitiesColor">
+        <activities-color #activityComp></activities-color>
+    </ng-container>
+</ng-template>

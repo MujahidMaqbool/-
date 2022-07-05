@@ -1,0 +1,421 @@
+<div class="white_bg row zero_top">
+    <div class="col-md-12">
+        <div id="accordion" style="margin: 0;">
+
+            <!-- All Staff Report -->
+            <div class="card no_padding" *ngIf="allowedPages.AllStaffReport">
+                <div class="card-header" id="headingOne" (click)="resetAllStaffFilters()">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                            aria-controls="collapseOne">
+                            All Staff
+                        </button>
+                    </h5>
+                </div>
+                <form #staffPositionsForm="ngForm" (ngSubmit)="exportAllStaffReport(fileType.PDF)" novalidate>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p>This report is useful to run when you want to see staff details based on
+                                            position and status.</p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Staff Positions</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="PositionID" [(ngModel)]="staffReportSearchParameter.StaffPositionID"
+                                                required>
+                                                <option *ngFor="let posObj of staffPositionList" [ngValue]="posObj.StaffPositionID">
+                                                    {{posObj.StaffPositionName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Allow Login</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="IsActive" [(ngModel)]="staffReportSearchParameter.IsActive">
+                                                <option *ngFor="let statusObj of statusList" [ngValue]="statusObj.StatusID">
+                                                    {{statusObj.StatusName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="submit"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    </button>
+
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="exportAllStaffReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="viewAllStaffReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="resetAllStaffFilters()"><i class="fal fa-undo"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Staff Detail Report -->
+            <div class="card no_padding" *ngIf="allowedPages.StaffDetailReport">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="true" aria-controls="collapseTwo">
+                            Staff Details
+                        </button>
+                    </h5>
+                </div>
+                <form #staffDetailsForm="ngForm" (ngSubmit)="exportStaffDetailReport()" novalidate>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p>This report is useful to run when you want to see all the information you
+                                            hold on an individual staff.</p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Search By Staff</h5>
+                                        <input type="text" placeholder="Staff Name" [value]="personName" matInput
+                                            [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                            maxlength="30" [(ngModel)]="clearStaffDetailInput" (ngModelChange)="onNameChange(clearStaffDetailInput)">
+                                            <span *ngIf="clearStaffDetailInput != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                            (optionSelected)='getSelectedStaff($event.option.value)'>
+                                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                <span class="client_name">{{ person.FirstName + ' ' +
+                                                    person.LastName}}</span>
+                                                <!-- <small class="client_type float-right">{{person.CustomerTypeName}}</small> -->
+                                                <br>
+                                                <span class="client_info">{{ person.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ person.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="submit"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    </button>
+                                    <!-- <button class="excle_btn"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel</button> -->
+                                    <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="viewStaffDetailReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Staff Activities Report -->
+            <div class="card no_padding" *ngIf="allowedPages.StaffActivitiesReport">
+                <div class="card-header" id="headingFour">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" (click)="resetStaffActivitiesFilters()"
+                            aria-expanded="false" aria-controls="collapseFour">
+                            Staff Activities
+                        </button>
+                    </h5>
+                </div>
+                <form #staffActvityForm="ngForm" (ngSubmit)="exportAllStaffctivitiesReport(fileType.PDF)" novalidate>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to view all staff activities over a period of time.
+                                             </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row mob-col-full">
+                                    <div class="col">
+                                        <h5 class="field_label">Search By Staff</h5>
+
+                                        <input type="text" placeholder="Staff Name" [value]="personName" matInput
+                                            [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                            maxlength="30" [(ngModel)]="clearStaffActivtiesInput" (ngModelChange)="onNameChange(clearStaffActivtiesInput)">
+                                            <span *ngIf="clearStaffActivtiesInput != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                            (optionSelected)='getSelectedStaff($event.option.value)'>
+                                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                <span class="client_name">{{ person.FirstName + ' ' +
+                                                    person.LastName}}</span>
+                                                <!-- <small class="client_type float-right">{{person.CustomerTypeName}}</small> -->
+                                                <br>
+                                                <span class="client_info">{{ person.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ person.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="field_label">Activities</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="ActivityTypeID" [(ngModel)]="staffReportSearchParameter.ActivityTypeID"
+                                                #ActivityTypeID="ngModel">
+                                                <option *ngFor="let sourceTypeObj of activityList" [ngValue]="sourceTypeObj.value"
+                                                    style="font-size: 16px;">
+                                                    {{sourceTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col col-md-6 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [isFromMaxDate]="false"
+                                            #staffActivtiesToFromDateComoRef></dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="submit"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="exportAllStaffctivitiesReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="viewExportAllStaffActivitiesReport(fileType.PDF)"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="resetStaffActivitiesFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Staff Clock Time Report -->
+            <div class="card no_padding" *ngIf="allowedPages.StaffClockTimeReport">
+                <div class="card-header" id="headingFive" (click)="resetStaffClockTimeFilters()">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" (click)="resetStaffClockTimeFilters()"
+                            aria-expanded="false" aria-controls="collapseFive">
+                            Staff Shifts & Clock In / Out Time
+                        </button>
+                    </h5>
+                </div>
+                <form #staffTimeClockForm="ngForm" (ngSubmit)="exportAllStaffTimeSheetReport(fileType.PDF)" novalidate>
+                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to see the scheduled shifts and attendance record
+                                            you hold on staff. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Staff Position</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="PositionID" [(ngModel)]="staffReportSearchParameter.StaffPositionID"
+                                                required>
+                                                <option *ngFor="let posObj of staffPositionList" [ngValue]="posObj.StaffPositionID">
+                                                    {{posObj.StaffPositionName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [isFromMaxDate]="false"
+                                            #staffClockTimeToFromDateComoRef></dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="submit"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="exportAllStaffTimeSheetReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="viewAllStaffTimeSheetReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="resetStaffClockTimeFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Schedule Glance Report -->
+            <div class="card no_padding" *ngIf="allowedPages.ScheduleGlanceReport">
+                <div class="card-header" id="headingSix">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" (click)="resetScheduleatGlanceFilters()"
+                            aria-expanded="false" aria-controls="collapseSix">
+                            Schedule At Glance
+                        </button>
+                    </h5>
+                </div>
+                <form #scheduleAtGlanceForm="ngForm" (ngSubmit)="exportScheduleatGlanceReport(fileType.PDF)" novalidate>
+                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p>This report is useful to run when you want to see staff booked activities and their related costing and pricing.</p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Search By Staff</h5>
+                                        <input type="text" placeholder="Staff Name" [value]="personName" matInput
+                                            [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                            [(ngModel)]="clearScheduleAtGlanceInput" (ngModelChange)="onNameChange(clearScheduleAtGlanceInput)"
+                                            maxlength="30">
+                                            <span *ngIf="clearScheduleAtGlanceInput != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                            (optionSelected)='getSelectedStaff($event.option.value)'>
+                                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                <span class="client_name">{{ person.FirstName + ' ' +
+                                                    person.LastName}}</span>
+                                                <!-- <small class="client_type float-right">{{person.CustomerTypeName}}</small> -->
+                                                <br>
+                                                <span class="client_info">{{ person.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ person.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                    <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [isFromMaxDate]="false"
+                                            #staffScheduleAtGlanceToFromDateComoRef></dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="submit"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="exportScheduleatGlanceReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                    </button>
+                                    <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="viewScheduleatGlanceReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="resetScheduleatGlanceFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Staff Task Report -->
+            <div class="card no_padding" *ngIf="allowedPages.StaffTaskReport">
+                <div class="card-header" id="headingSeven">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" (click)="resetAllStaffTaskFilters()"
+                            aria-expanded="false" aria-controls="collapseSeven">
+                            Staff Task
+                        </button>
+                    </h5>
+                </div>
+                <form #scheduleAtGlanceForm="ngForm" (ngSubmit)="exportStaffTaskReport(fileType.PDF)" novalidate>
+                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run as it shows every task scheduled at your business during a specific date range. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row mob-col-full">
+
+                                    <div class="col">
+                                        <h5 class="field_label">Search By Staff</h5>
+                                        <div>
+                                            <input type="text" placeholder="Staff Name" [value]="personName" matInput
+                                                [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto"
+                                                maxlength="30" [(ngModel)]="clearStaffTaskInput" (ngModelChange)="onNameChange(clearStaffTaskInput)">
+                                                <span *ngIf="clearStaffTaskInput != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                                (optionSelected)='getSelectedStaff($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FirstName + ' ' +
+                                                        person.LastName}}</span>
+                                                    <!-- <small class="client_type float-right">{{person.CustomerTypeName}}</small> -->
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="field_label">Staff Positions</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="PositionID" [(ngModel)]="staffReportSearchParameter.StaffPositionID"
+                                                required>
+                                                <option *ngFor="let posObj of staffPositionList" [ngValue]="posObj.StaffPositionID">
+                                                    {{posObj.StaffPositionName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col col-md-6 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [isFromMaxDate]="false"
+                                            #staffReportToFromDateComoRef></dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="submit"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="exportStaffTaskReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="viewStaffTaskReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        type="button" (click)="resetAllStaffTaskFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

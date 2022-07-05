@@ -1,0 +1,1156 @@
+<div class="row">
+    <div class="col-md-12" *ngIf="showPercentageValidationForClass || showPercentageValidationForService">
+        <div class="alert alert-danger">
+            <div *ngIf="showPercentageValidationForClass || showPercentageValidationForService">
+                {{messages.Error.Please_Set_The_Minimum_PercentageBetween}}
+            </div>
+            <!-- <div *ngIf="showValidation">
+                {{messages.Error.PleaseSelectAtleastOneConfiguration}}
+            </div> -->
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div *ngIf="ShowError">
+            <div class="alert alert-danger">
+                {{messages.Error.ValueMustBeGreatThenZero}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="white_bg waitlist_items" *ngIf="hasClassWaitList"
+    [ngClass]="{'top_zero' : showPercentageValidationForClass || showValidation || showPercentageValidationForService}">
+    <div class="row center_flex_alignment">
+
+        <div class="col-md-9 col-sm-9">
+            <h1>Class Waitlist</h1>
+            <p>Toggle on to enable class waitlist. Manage your class waitlist in core, widget and the apps, either
+                manually or automatically with Wellyx. Toggle off will disable class waitlist from all platforms.</p>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" name="BookingClasses" id="IsClassWaitList"
+                [(checked)]="waitListConfiguration.classWaitList.IsClassWaitList"
+                [(ngModel)]="waitListConfiguration.classWaitList.IsClassWaitList"
+                (ngModelChange)="onChangeClassWaitList()">
+            </mat-slide-toggle>
+        </div>
+        <div class="col-md-12" *ngIf="waitListConfiguration.classWaitList.IsClassWaitList">
+            <div class="form_border"></div>
+        </div>
+    </div>
+    <div *ngIf="waitListConfiguration.classWaitList.IsClassWaitList">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Waitlist Configuration Options</h2>
+            </div>
+            <div class="mr-3"></div>
+            <div class="media-body">
+                <div class="waitlist_checkbox" *ngIf="hasClassManageManually">
+                    <div class="mob-pa">
+                        <input type="radio" [value]="waitListConfiguration.classWaitList.IsClassWaitListManually"
+                            name="ClassParentRadio" id="IsClassWaitListManually"
+                            (click)="onChangeValueRadio(enumWaitList.ManageManually, enumWaitList.Class)"
+                            [checked]="waitListConfiguration.classWaitList.IsClassWaitListManually" />
+                        <label for="IsClassWaitListManually"><span></span>Manage Manually</label>
+                        <p>Manually manage your waitlist of class attendees. This configuration does not support any
+                            automatic
+                            enrollments.</p>
+                    </div>
+                </div>
+                <div class="form_border zero_margin"></div>
+                <ng-container *ngIf="hasClassTopPrice">
+                    <div class="waitlist_checkbox">
+                        <div class="mob-pa">
+                            <input type="radio" [value]="waitListConfiguration.classWaitList.IsClassWaitListTopPrice"
+                                name="ClassParentRadio" id="IsClassWaitListTopPrice"
+                                (click)="onChangeValueRadio(enumWaitList.TopPrice, enumWaitList.Class)"
+                                [checked]="waitListConfiguration.classWaitList.IsClassWaitListTopPrice" />
+                            <label for="IsClassWaitListTopPrice"><span></span>Top Price</label>
+                            <p>Prioritize customers in order of highest to lowest price payer.</p>
+                        </div>
+                    </div>
+                    <div class="form_border zero_margin"></div>
+                    <div class="waitlist_checkbox wait_left_margin row">
+                        <div class="col-md-6 no_padding">
+                            <div class="mob-pa">
+                                <input name="TopPriceChild" id="IsClassWaitListTopPriceBookAuto" type="radio"
+                                    [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListTopPrice"
+                                    [value]="waitListConfiguration.classWaitList.IsClassWaitListTopPriceBookAuto"
+                                    (click)="onChangeTopPriceBookAutomaticallyRadio(enumWaitList.Class)"
+                                    [checked]="waitListConfiguration.classWaitList.IsClassWaitListTopPriceBookAuto" />
+                                <label for="IsClassWaitListTopPriceBookAuto"><span></span>Book Automatically</label>
+                                <p>Highest price payer customer on the waitlist will be booked automatically into the
+                                    class
+                                    as
+                                    space
+                                    becomes available. Set the minimum percentage (between 0% to 100%) of the total
+                                    invoice
+                                    to
+                                    be
+                                    paid; 100% means full payment and 0% mean no payment is required to book the class.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input r_f_column">
+                            <div>
+                                <div class="cst-disable-checkbox d-flex "><span class="invoice_prefix input_prefix">For
+                                        Client/Lead</span>
+                                    <div [ngClass]="{
+                                    'has-danger': ClassWaitListTopPriceCloseBookBeforeClientLead.invalid
+                                                  && (ClassWaitListTopPriceCloseBookBeforeClientLead.dirty || ClassWaitListTopPriceCloseBookBeforeClientLead.touched)
+                                                  || ((!ClassWaitListTopPriceCloseBookBeforeClientLead.value) || ClassWaitListTopPriceCloseBookBeforeClientLead.value == null || ClassWaitListTopPriceCloseBookBeforeClientLead.value > 100)
+                                                  && (ClassWaitListTopPriceCloseBookBeforeClientLead.dirty || ClassWaitListTopPriceCloseBookBeforeClientLead.touched) && showPercentageValidationForClass && waitListConfiguration.classWaitList.ClassWaitListTopPriceCloseBookBeforeClientLead,
+                                    'has-success': (ClassWaitListTopPriceCloseBookBeforeClientLead.value)
+                                                   && ClassWaitListTopPriceCloseBookBeforeClientLead.valid && (ClassWaitListTopPriceCloseBookBeforeClientLead.dirty || ClassWaitListTopPriceCloseBookBeforeClientLead.touched)
+                                    }">
+                                        <input type="text" class="form-control text-center" min="0" max="100"
+                                            maxlength="5" required numberControl
+                                            #ClassWaitListTopPriceCloseBookBeforeClientLead="ngModel"
+                                            [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListTopPriceBookAuto"
+                                            [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListTopPriceCloseBookBeforeClientLead"
+                                            (ngModelChange)="onPercentageChangeOnlyNumbers($event, enumWaitList.Class)">
+                                    </div>
+                                    <span class="dollar_prefix percent_prefix">%</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="cst-disable-checkbox d-flex"><span class="invoice_prefix input_prefix">For
+                                        Member</span>
+                                    <div [ngClass]="{
+                                'has-danger': ClassWaitListTopPriceCloseBookBeforeMember.invalid
+                                              && (ClassWaitListTopPriceCloseBookBeforeMember.dirty || ClassWaitListTopPriceCloseBookBeforeMember.touched)
+                                              || ((!ClassWaitListTopPriceCloseBookBeforeMember.value) || ClassWaitListTopPriceCloseBookBeforeMember.value == null || ClassWaitListTopPriceCloseBookBeforeMember.value > 100)
+                                              && (ClassWaitListTopPriceCloseBookBeforeMember.dirty || ClassWaitListTopPriceCloseBookBeforeMember.touched) && showPercentageValidationForClass && waitListConfiguration.classWaitList.ClassWaitListTopPriceCloseBookBeforeMember,
+                                'has-success': (ClassWaitListTopPriceCloseBookBeforeMember.value)
+                                               && ClassWaitListTopPriceCloseBookBeforeMember.valid && (ClassWaitListTopPriceCloseBookBeforeMember.dirty || ClassWaitListTopPriceCloseBookBeforeMember.touched)
+                                }">
+                                        <input type="text" class="form-control text-center" min="0" max="100"
+                                            maxlength="5" required numberControl
+                                            #ClassWaitListTopPriceCloseBookBeforeMember="ngModel"
+                                            [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListTopPriceBookAuto"
+                                            [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListTopPriceCloseBookBeforeMember"
+                                            (ngModelChange)="onPercentageChangeOnlyNumbers($event, enumWaitList.Class)">
+                                    </div>
+                                    <span class="dollar_prefix percent_prefix">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="waitlist_checkbox waitlist_subtitle wait_2left_margin row">
+                        <div class="col-md-6">
+                            <h3>Time before Class</h3>
+                            <p>This allows you to set a time period prior to the class, the system will not move
+                                customers
+                                from
+                                the waitlist into the class. E.g. selecting 1 hour would result in no one being moved
+                                automatically into the class from the waitlist within 1 hour of the class starting.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa">
+                            <div [ngClass]="{
+                            'has-danger': classWaitListTopPriceBookTimeInterval.invalid
+                                          && (classWaitListTopPriceBookTimeInterval.dirty || classWaitListTopPriceBookTimeInterval.touched)
+                                          || ((!classWaitListTopPriceBookTimeInterval.value) || classWaitListTopPriceBookTimeInterval.value == null)
+                                          && ShowError && waitListConfiguration.classWaitList.ClassWaitListTopPriceBookTimeInterval,
+                            'has-success': (classWaitListTopPriceBookTimeInterval.value)
+                                           && classWaitListTopPriceBookTimeInterval.valid && (classWaitListTopPriceBookTimeInterval.dirty || classWaitListTopPriceBookTimeInterval.touched)
+                            }">
+                                <input type="text" maxlength="4"
+                                    [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListTopPriceBookAuto"
+                                    [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListTopPriceBookTimeInterval"
+                                    (keydown)="AllowNumberNumberWithDecimal($event)" name="CheckInStartBefore"
+                                    #classWaitListTopPriceBookTimeInterval="ngModel" min="1"
+                                    (ngModelChange)="onchangeDurationTime($event,enumWaitList.Class)"
+                                    class="form-control text-center" required numberControl>
+                            </div>
+
+                            <div class="select_label cst-disable-checkbox">
+                                <select class="form-control" id="ClassWaitListTopPriceBookTimeInterval"
+                                    name="ClassWaitListTopPriceBookTimeInterval"
+                                    [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListTopPriceBookTimeIntervalDurationTypeId"
+                                    [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListTopPriceBookAuto">
+                                    <option *ngFor="let timeDurationType of timeDurationTypeList"
+                                        [ngValue]="timeDurationType.DurationTypeID">
+                                        {{timeDurationType.DurationTypeName}}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="waitlist_checkbox wait_left_margin row">
+                        <div class="col-md-6 no_padding mob-pa">
+                            <input name="TopPriceChild" id="IsClassWaitListTopPriceAlertOnly" type="radio"
+                                [value]="waitListConfiguration.classWaitList.IsClassWaitListTopPriceAlertOnly"
+                                [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListTopPrice"
+                                (click)="onChangeTopPriceAlertOnlyRadio(enumWaitList.Class)" min="1"
+                                [checked]="waitListConfiguration.classWaitList.IsClassWaitListTopPriceAlertOnly" />
+                            <label for="IsClassWaitListTopPriceAlertOnly"><span></span>Alert Only</label>
+                            <p>Highest price payer are sorted and sent alerts sequentially. The next customer on the
+                                waitlist is
+                                sent an alert when the time to respond elapses for the previous customer.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa r_f_column">
+                            <div [ngClass]="{
+                            'has-danger': classWaitListTopPriceAlertOnlyTimetoRespond.invalid
+                                          && (classWaitListTopPriceAlertOnlyTimetoRespond.dirty || classWaitListTopPriceAlertOnlyTimetoRespond.touched)
+                                          || ((!classWaitListTopPriceAlertOnlyTimetoRespond.value) || classWaitListTopPriceAlertOnlyTimetoRespond.value == null)
+                                          && ShowError && waitListConfiguration.classWaitList.ClassWaitListTopPriceAlertOnlyTimetoRespond,
+                            'has-success': (classWaitListTopPriceAlertOnlyTimetoRespond.value)
+                                           && classWaitListTopPriceAlertOnlyTimetoRespond.valid && (classWaitListTopPriceAlertOnlyTimetoRespond.dirty || classWaitListTopPriceAlertOnlyTimetoRespond.touched)
+                            }">
+                                <input type="text" maxlength="4"
+                                    [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListTopPriceAlertOnly"
+                                    [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListTopPriceAlertOnlyTimetoRespond"
+                                    (keydown)="AllowNumberNumberWithDecimal($event)" name="CheckInStartBefore"
+                                    #classWaitListTopPriceAlertOnlyTimetoRespond="ngModel" min="1"
+                                    (ngModelChange)="onchangeDurationTime($event,enumWaitList.Class)"
+                                    class="form-control text-center" required numberControl>
+                            </div>
+                            <div class="select_label cst-disable-checkbox">
+                                <div style="display: flex;"><span class="invoice_prefix input_prefix">Time to
+                                        respond</span>
+                                    <select
+                                        [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListTopPriceAlertOnly"
+                                        class="form-control" id="ClassWaitListTopPriceAlertOnlyTimetoRespond"
+                                        name="ClassWaitListTopPriceAlertOnlyTimetoRespond"
+                                        [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListTopPriceAlertOnlyTimetoRespondDurationTypeId">
+                                        <option *ngFor="let timeDurationType of timeDurationTypeList"
+                                            [ngValue]="timeDurationType.DurationTypeID">
+                                            {{timeDurationType.DurationTypeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="form_border zero_margin"></div>
+                <ng-container *ngIf="hasClassManageSequentially">
+                    <div class="waitlist_checkbox">
+                        <div class="mob-pa">
+                            <input type="radio"
+                                [value]="waitListConfiguration.classWaitList.IsClassWaitListSequentially"
+                                name="ClassParentRadio" id="IsClassWaitListSequentially3"
+                                (click)="onChangeValueRadio(enumWaitList.ManageSequentially, enumWaitList.Class)"
+                                [checked]="waitListConfiguration.classWaitList.IsClassWaitListSequentially" />
+                            <label for="IsClassWaitListSequentially3"><span></span>Manage Sequentially</label>
+                            <p>Add customer in waitlist on a first come first serve basis.</p>
+                        </div>
+                    </div>
+                    <div class="form_border zero_margin"></div>
+                    <div class="waitlist_checkbox wait_left_margin row">
+                        <div class="col-md-6 no_padding mob-pa">
+                            <input name="ManageSequentiallyChild" id="IsClassWaitListSequentiallyBookAuto" type="radio"
+                                [value]="waitListConfiguration.classWaitList.IsClassWaitListSequentiallyBookAuto"
+                                [checked]="waitListConfiguration.classWaitList.IsClassWaitListSequentiallyBookAuto"
+                                [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListSequentially"
+                                (click)="onChangeManageSequentiallyBookAutomaticallyRadio(enumWaitList.Class)" />
+                            <label for="IsClassWaitListSequentiallyBookAuto"><span></span>Book Automatically</label>
+                            <p>Customers are sorted sequentially and booked automatically into the class as space
+                                becomes
+                                available. Set the minimum percentage (between 0% to 100%) of the total invoice to be
+                                paid;
+                                100%
+                                means full payment and 0% mean no payment is required to book the class.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa r_f_column">
+                            <div>
+                                <div class="cst-disable-checkbox d-flex"><span class="invoice_prefix input_prefix">For
+                                        Client/Lead</span>
+                                    <div [ngClass]="{
+                                    'has-danger': ClassWaitListSequentiallyBookAutoBeforeClientLead.invalid
+                                                  && (ClassWaitListSequentiallyBookAutoBeforeClientLead.dirty || ClassWaitListSequentiallyBookAutoBeforeClientLead.touched)
+                                                  || ((!ClassWaitListSequentiallyBookAutoBeforeClientLead.value)  || ClassWaitListSequentiallyBookAutoBeforeClientLead.value == null || ClassWaitListSequentiallyBookAutoBeforeClientLead.value > 100)
+                                                  && (ClassWaitListSequentiallyBookAutoBeforeClientLead.dirty || ClassWaitListSequentiallyBookAutoBeforeClientLead.touched) && showPercentageValidationForClass && waitListConfiguration.classWaitList.ClassWaitListSequentiallyBookAutoBeforeClientLead,
+                                    'has-success': (ClassWaitListSequentiallyBookAutoBeforeClientLead.value)
+                                                   && ClassWaitListSequentiallyBookAutoBeforeClientLead.valid && (ClassWaitListSequentiallyBookAutoBeforeClientLead.dirty || ClassWaitListSequentiallyBookAutoBeforeClientLead.touched)
+                                    }">
+                                        <input type="text" class="form-control text-center" min="0" max="100"
+                                            maxlength="5" required numberControl
+                                            #ClassWaitListSequentiallyBookAutoBeforeClientLead="ngModel"
+                                            [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListSequentiallyBookAuto"
+                                            [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListSequentiallyBookAutoBeforeClientLead"
+                                            (ngModelChange)="onPercentageChangeOnlyNumbers($event, enumWaitList.Class)">
+                                    </div>
+                                    <span class="dollar_prefix percent_prefix">%</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="cst-disable-checkbox d-flex"><span class="invoice_prefix input_prefix">For
+                                        Member</span>
+                                    <div [ngClass]="{
+                                'has-danger': ClassWaitListSequentiallyBookAutoBeforeMember.invalid
+                                              && (ClassWaitListSequentiallyBookAutoBeforeMember.dirty || ClassWaitListSequentiallyBookAutoBeforeMember.touched)
+                                              || ((!ClassWaitListSequentiallyBookAutoBeforeMember.value) || ClassWaitListSequentiallyBookAutoBeforeMember.value == null || ClassWaitListSequentiallyBookAutoBeforeMember.value > 100)
+                                              && (ClassWaitListSequentiallyBookAutoBeforeMember.dirty || ClassWaitListSequentiallyBookAutoBeforeMember.touched) && showPercentageValidationForClass && waitListConfiguration.classWaitList.ClassWaitListSequentiallyBookAutoBeforeMember,
+                                'has-success': (ClassWaitListSequentiallyBookAutoBeforeMember.value)
+                                               && ClassWaitListSequentiallyBookAutoBeforeMember.valid && (ClassWaitListSequentiallyBookAutoBeforeMember.dirty || ClassWaitListSequentiallyBookAutoBeforeMember.touched)
+                                }">
+                                        <input type="text" class="form-control text-center" min="0" max="100"
+                                            maxlength="5" required numberControl
+                                            #ClassWaitListSequentiallyBookAutoBeforeMember="ngModel"
+                                            [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListSequentiallyBookAuto"
+                                            [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListSequentiallyBookAutoBeforeMember"
+                                            (ngModelChange)="onPercentageChangeOnlyNumbers($event, enumWaitList.Class)">
+                                    </div>
+                                    <span class="dollar_prefix percent_prefix">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="waitlist_checkbox waitlist_subtitle wait_2left_margin row">
+                        <div class="col-md-6">
+                            <h3>Time before Class</h3>
+                            <p>This allows you to set a time period prior to the class, the system will not move
+                                customers
+                                from
+                                the waitlist into the class. E.g. selecting 1 hour would result in no one being moved
+                                automatically into the class from the waitlist within 1 hour of the class starting.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa">
+                            <div [ngClass]="{
+                            'has-danger': classWaitListSequentiallyBookTimeInterval.invalid
+                                          && (classWaitListSequentiallyBookTimeInterval.dirty || classWaitListSequentiallyBookTimeInterval.touched)
+                                          || ((!classWaitListSequentiallyBookTimeInterval.value) || classWaitListSequentiallyBookTimeInterval.value == null)
+                                          && ShowError && waitListConfiguration.classWaitList.ClassWaitListSequentiallyBookTimeInterval,
+                            'has-success': (classWaitListSequentiallyBookTimeInterval.value)
+                                           && classWaitListSequentiallyBookTimeInterval.valid && (classWaitListSequentiallyBookTimeInterval.dirty || classWaitListSequentiallyBookTimeInterval.touched)
+                            }">
+                                <input type="text" maxlength="4"
+                                    [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListSequentiallyBookAuto"
+                                    [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListSequentiallyBookTimeInterval"
+                                    (keydown)="AllowNumberNumberWithDecimal($event)"
+                                    name="ClassWaitListSequentiallyBookTimeInterval" min="1"
+                                    #classWaitListSequentiallyBookTimeInterval="ngModel"
+                                    (ngModelChange)="onchangeDurationTime($event,enumWaitList.Class)"
+                                    class="form-control text-center" required numberControl>
+                            </div>
+                            <div class="select_label cst-disable-checkbox">
+                                <select class="form-control" id="ClassWaitListSequentiallyBookTimeInterval"
+                                    name="ClassWaitListSequentiallyBookTimeInterval"
+                                    [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListSequentiallyBookTimeIntervalDurationTypeId"
+                                    [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListSequentiallyBookAuto">
+                                    <option *ngFor="let timeDurationType of timeDurationTypeList"
+                                        [ngValue]="timeDurationType.DurationTypeID">
+                                        {{timeDurationType.DurationTypeName}}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="waitlist_checkbox wait_left_margin row">
+                        <div class="col-md-6 no_padding">
+                            <div class="mob-pa">
+                                <input name="ManageSequentiallyChild" id="IsClassWaitListSequentiallyAlertOnly"
+                                    type="radio"
+                                    [value]="waitListConfiguration.classWaitList.IsClassWaitListSequentiallyAlertOnly"
+                                    [checked]="waitListConfiguration.classWaitList.IsClassWaitListSequentiallyAlertOnly"
+                                    [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListSequentially"
+                                    (click)="onChangeManageSequentiallyAlertOnlyRadio(enumWaitList.Class)" />
+                                <label for="IsClassWaitListSequentiallyAlertOnly"><span></span>Alert Only</label>
+                                <p>Customers are sorted and sent alerts sequentially. The next customer on the waitlist
+                                    is
+                                    sent
+                                    an
+                                    alert when the time to respond elapses for the previous customer.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa r_f_column">
+                            <div [ngClass]="{
+                            'has-danger': classWaitListSequentiallyAlertOnlyTimetoRespond.invalid
+                                          && (classWaitListSequentiallyAlertOnlyTimetoRespond.dirty || classWaitListSequentiallyAlertOnlyTimetoRespond.touched)
+                                          || ((!classWaitListSequentiallyAlertOnlyTimetoRespond.value) || classWaitListSequentiallyAlertOnlyTimetoRespond.value == null)
+                                          && ShowError && waitListConfiguration.classWaitList.ClassWaitListSequentiallyAlertOnlyTimetoRespond,
+                            'has-success': (classWaitListSequentiallyAlertOnlyTimetoRespond.value)
+                                           && classWaitListSequentiallyAlertOnlyTimetoRespond.valid && (classWaitListSequentiallyAlertOnlyTimetoRespond.dirty || classWaitListSequentiallyAlertOnlyTimetoRespond.touched)
+                            }">
+                                <input type="text" maxlength="4"
+                                    [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListSequentiallyAlertOnly"
+                                    [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListSequentiallyAlertOnlyTimetoRespond"
+                                    (keydown)="AllowNumberNumberWithDecimal($event)" min="1"
+                                    name="ClassWaitListSequentiallyBookTimeInterval"
+                                    #classWaitListSequentiallyAlertOnlyTimetoRespond="ngModel"
+                                    (ngModelChange)="onchangeDurationTime($event,enumWaitList.Class)"
+                                    class="form-control text-center" required numberControl>
+                            </div>
+                            <div class="select_label cst-disable-checkbox">
+                                <div style="display: flex;"><span class="invoice_prefix input_prefix">Time to
+                                        respond</span>
+                                    <select class="form-control" id="ClassWaitListSequentiallyAlertOnlyTimetoRespond"
+                                        name="ClassWaitListSequentiallyAlertOnlyTimetoRespond"
+                                        [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListSequentiallyAlertOnlyTimetoRespondDurationTypeId"
+                                        [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListSequentiallyAlertOnly">
+                                        <option *ngFor="let timeDurationType of timeDurationTypeList"
+                                            [ngValue]="timeDurationType.DurationTypeID">
+                                            {{timeDurationType.DurationTypeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="form_border zero_margin"></div>
+                <div class="waitlist_checkbox" *ngIf="hasClassAlertAll">
+                    <div class="mob-pa">
+                        <input type="radio" [value]="waitListConfiguration.classWaitList.IsClassWaitListAlertAll"
+                            name="ClassParentRadio" id="IsClassWaitListAlertAll4"
+                            (click)="onChangeValueRadio(enumWaitList.AlertAll, enumWaitList.Class)"
+                            [checked]="waitListConfiguration.classWaitList.IsClassWaitListAlertAll" />
+                        <label for="IsClassWaitListAlertAll4"><span></span>Alert All</label>
+                        <p>Sends an automatic alert to all waitlist customers as soon as space becomes available.</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form_border zero_margin"></div>
+            </div>
+        </div>
+        <div class="row waitlist_checkbox waitlist_subtitle center_flex_alignment">
+            <div class="col-md-9 col-sm-9">
+                <h3>Enable Waitlists Online</h3>
+                <p>Allow customers to add themselves in the class waitlists on the widget & customer app.</p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="2" id="IsClassWaitListOnline" class="wellyx-checked float-right"
+                    name="BookingClasses" [(ngModel)]="waitListConfiguration.classWaitList.IsClassWaitListOnline"
+                    (ngModelChange)="onEnableWaitListOnlineChange(enumWaitList.Class)">
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form_border zero_margin"></div>
+            </div>
+            <div class="mr-3"></div>
+            <div class="media-body">
+                <div class="waitlist_checkbox waitlist_subtitle center_flex_alignment row">
+                    <div class="col-md-9 pl-0 mob-pa">
+                        <h3>Require Payment Method Online</h3>
+                        <p>Toggle on to require card details from customers to enroll in the waitlist. Toggle off would
+                            result in the system still requesting payment information from the customer, but it would
+                            not be
+                            mandatory. We highly recommend you enable this toggle in combination with ‘Book
+                            Automatically’
+                            to ensure that Wellyx always has the necessary card details to book a customer as space
+                            becomes
+                            available.</p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 pr-0 mob-pa">
+                        <mat-slide-toggle tabindex="3" id="IsClassWaitListRequirePaymentMethodOnline"
+                            [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListOnline"
+                            class="wellyx-checked float-right" name="BookingClasses"
+                            [(ngModel)]="waitListConfiguration.classWaitList.IsClassWaitListRequirePaymentMethodOnline"
+                            (ngModelChange)="onEnablelassWaitListRequirePaymentMethodOnline(enumWaitList.Class)">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="form_border zero_margin"></div>
+                <div class="waitlist_checkbox waitlist_subtitle cst-disable-checkbox">
+                    <div class="mob-pa">
+                        <h3>Payment Display Text <span class="optional">(Remaining Characters:
+                                {{ 200 - waitListConfiguration.classWaitList.ClassWaitListPaymentDisplayText?.length}})</span>
+                        </h3>
+                        <p>Text that will be displayed at checkout to provide customers with more information in regards
+                            to
+                            why a payment method is being requested for waitlist bookings.</p>
+                        <div class="space-15"></div>
+                        <textarea rows="4"
+                            [disabled]="!waitListConfiguration.classWaitList.IsClassWaitListRequirePaymentMethodOnline"
+                            [(ngModel)]="waitListConfiguration.classWaitList.ClassWaitListPaymentDisplayText"
+                            maxlength="200" (blur)="onBlurPaymentDisplayTextFunction(enumWaitList.Class)"
+                            placeholder="Your card information is required to confirm your space in the waitlist. Payment would only be deducted when your booking is confirmed."></textarea>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form_border zero_margin"></div>
+            </div>
+        </div>
+        <div class="row waitlist_checkbox waitlist_subtitle center_flex_alignment">
+            <div class="col-md-10 col-sm-10">
+                <h3>Notifications</h3>
+                <p>Select how you would like to notify a waitlist customers when space becomes available in a class.</p>
+            </div>
+            <div class="col-md-2 col-sm-2 label_with_input mob-pa">
+                <div class="select_label w-100">
+                    <mat-select class="form-control" name="ClassNotifications" panelClass="matDropDown"
+                        placeholder="Select Notification(s)" [(ngModel)]="selectedClassCommunicationTypeList"
+                        tabindex="4" multiple>
+                        <mat-select-trigger
+                            *ngIf="selectedClassCommunicationTypeList && selectedClassCommunicationTypeList.length - 1 == communicationTypeList.length">
+                            All
+                        </mat-select-trigger>
+                        <mat-select-trigger
+                            *ngIf="selectedClassCommunicationTypeList && selectedClassCommunicationTypeList.length > 0 && selectedClassCommunicationTypeList.length - 1 != communicationTypeList.length">
+                            {{selectedClassCommunicationTypeList && selectedClassCommunicationTypeList.length > 0 &&
+                            selectedClassCommunicationTypeList[0].CommunicationTypeName ?
+                            selectedClassCommunicationTypeList[0].CommunicationTypeName :
+                            selectedClassCommunicationTypeList && selectedClassCommunicationTypeList.length >= 2 &&
+                            selectedClassCommunicationTypeList[0].CommunicationTypeName == undefined ?
+                            selectedClassCommunicationTypeList[1].CommunicationTypeName : ''}}
+                            <span
+                                *ngIf="selectedClassCommunicationTypeList && selectedClassCommunicationTypeList.length >= 2"
+                                class="example-additional-selection">
+                                (+{{selectedClassCommunicationTypeList[0].CommunicationTypeName == undefined ?
+                                selectedClassCommunicationTypeList.length - 2 :
+                                selectedClassCommunicationTypeList.length - 1 }}
+                                {{selectedClassCommunicationTypeList[0].CommunicationTypeName == undefined &&
+                                selectedClassCommunicationTypeList.length === 3 ? 'other' :
+                                selectedClassCommunicationTypeList.length === 2 ? 'other' : 'others'}})
+                            </span>
+                        </mat-select-trigger>
+
+                        <span *ngIf="communicationTypeList && communicationTypeList.length > 1">
+                            <mat-option #allSelectedClassNotification
+                                (click)="toggleAllNotificationSelection(enumWaitList.Class)" [value]="0">All
+                            </mat-option>
+                        </span>
+                        <mat-option *ngFor="let communicationType of communicationTypeList" [value]="communicationType"
+                            (click)="tosslePerOneNotification(enumWaitList.Class)">
+                            {{communicationType.CommunicationTypeName}}</mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="white_bg waitlist_items" *ngIf="hasServiceWaitList">
+    <div class="row center_flex_alignment">
+        <div class="col-md-9 col-sm-9">
+            <h1>Service Waitlist</h1>
+            <p>Toggle on to enable service waitlist. Manage your service waitlist in core, widget and the apps, either
+                manually or automatically with Wellyx. Toggle off will disable service waitlist from all platforms.</p>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <mat-slide-toggle tabindex="5" class="wellyx-checked float-right" name="IsServiceWaitList"
+                id="IsServiceWaitList" [(checked)]="waitListConfiguration.serviceWaitList.IsServiceWaitList"
+                [(ngModel)]="waitListConfiguration.serviceWaitList.IsServiceWaitList"
+                (ngModelChange)="onChangeServiceWaitList()">
+            </mat-slide-toggle>
+        </div>
+        <div class="col-md-12" *ngIf="waitListConfiguration.serviceWaitList.IsServiceWaitList">
+            <div class="form_border"></div>
+        </div>
+    </div>
+    <div *ngIf="waitListConfiguration.serviceWaitList.IsServiceWaitList">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Waitlist Configuration Options</h2>
+            </div>
+            <div class="mr-3"></div>
+            <div class="media-body">
+                <div class="waitlist_checkbox" *ngIf="hasServiceManageManually">
+                    <div class="mob-pa">
+                        <input id="ServiceManageManually" type="radio"
+                            [value]="waitListConfiguration.serviceWaitList.IsServiceWaitListManually"
+                            name="ServiceParentRadio" id="IsServiceWaitListManually1"
+                            (click)="onChangeValueRadio(enumWaitList.ManageManually, enumWaitList.Service)"
+                            [checked]="waitListConfiguration.serviceWaitList.IsServiceWaitListManually" />
+                        <label for="IsServiceWaitListManually1"><span></span>Manage Manually</label>
+                        <p>Manually manage your waitlist of service attendees. This configuration does not support any
+                            automatic
+                            enrollments.</p>
+                    </div>
+                </div>
+                <ng-container *ngIf="hasServiceTopPrice">
+                    <div class="form_border zero_margin"></div>
+                    <div class="waitlist_checkbox">
+                        <div class="mob-pa">
+                            <input id="ServiceTopPrice" type="radio"
+                                [value]="waitListConfiguration.serviceWaitList.IsServiceWaitListTopPrice"
+                                name="ServiceParentRadio" id="IsServiceWaitListTopPrice2"
+                                (click)="onChangeValueRadio(enumWaitList.TopPrice, enumWaitList.Service)"
+                                [checked]="waitListConfiguration.serviceWaitList.IsServiceWaitListTopPrice" />
+                            <label for="IsServiceWaitListTopPrice2"><span></span>Top Price</label>
+                            <p>Prioritize customers in order of highest to lowest price payer.</p>
+                        </div>
+                    </div>
+                    <div class="form_border zero_margin"></div>
+                    <div class="waitlist_checkbox wait_left_margin row">
+                        <div class="col-md-6 no_padding mob-pa">
+                            <input name="ServiceTopPriceChild" id="IsServiceWaitListTopPriceBookAuto" type="radio"
+                                [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListTopPrice"
+                                [value]="waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceBookAuto"
+                                (click)="onChangeTopPriceBookAutomaticallyRadio(enumWaitList.Service)"
+                                [checked]="waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceBookAuto" />
+                            <label for="IsServiceWaitListTopPriceBookAuto"><span></span>Book Automatically</label>
+                            <p>Highest price payer for services on the waitlist will be booked automatically as space
+                                becomes
+                                available. Set the minimum percentage (between 0% to 100%) of the total invoice to be
+                                paid;
+                                100%
+                                means full payment and 0% mean no payment is required to book the service.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa r_f_column">
+                            <div>
+                                <div class="cst-disable-checkbox d-flex"><span class="invoice_prefix input_prefix">For
+                                        Client/Lead</span>
+                                    <div [ngClass]="{
+                                        'has-danger': ServiceWaitListTopPriceCloseBookBeforeClientLead.invalid
+                                                      && (ServiceWaitListTopPriceCloseBookBeforeClientLead.dirty || ServiceWaitListTopPriceCloseBookBeforeClientLead.touched)
+                                                      || ((!ServiceWaitListTopPriceCloseBookBeforeClientLead.value) || ServiceWaitListTopPriceCloseBookBeforeClientLead.value == null || ServiceWaitListTopPriceCloseBookBeforeClientLead.value > 100)
+                                                      && (ServiceWaitListTopPriceCloseBookBeforeClientLead.dirty || ServiceWaitListTopPriceCloseBookBeforeClientLead.touched) && showPercentageValidationForService && waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceCloseBookBeforeClientLead,
+                                        'has-success': (ServiceWaitListTopPriceCloseBookBeforeClientLead.value)
+                                                       && ServiceWaitListTopPriceCloseBookBeforeClientLead.valid && (ServiceWaitListTopPriceCloseBookBeforeClientLead.dirty || ServiceWaitListTopPriceCloseBookBeforeClientLead.touched)
+                                        }">
+                                        <input type="text" class="form-control text-center" min="0" max="100"
+                                            maxlength="5" required numberControl
+                                            #ServiceWaitListTopPriceCloseBookBeforeClientLead="ngModel"
+                                            [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceBookAuto"
+                                            [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceCloseBookBeforeClientLead"
+                                            (ngModelChange)="onPercentageChangeOnlyNumbers($event, enumWaitList.Service)">
+                                    </div>
+                                    <span class="dollar_prefix percent_prefix">%</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="cst-disable-checkbox d-flex"><span class="invoice_prefix input_prefix">For
+                                        Member</span>
+                                    <div [ngClass]="{
+                                    'has-danger': ServiceWaitListTopPriceCloseBookBeforeMember.invalid
+                                                  && (ServiceWaitListTopPriceCloseBookBeforeMember.dirty || ServiceWaitListTopPriceCloseBookBeforeMember.touched)
+                                                  || ((!ServiceWaitListTopPriceCloseBookBeforeMember.value) || ServiceWaitListTopPriceCloseBookBeforeMember.value == null || ServiceWaitListTopPriceCloseBookBeforeMember.value > 100)
+                                                  && (ServiceWaitListTopPriceCloseBookBeforeMember.dirty || ServiceWaitListTopPriceCloseBookBeforeMember.touched) && showPercentageValidationForService && waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceCloseBookBeforeMember,
+                                    'has-success': (ServiceWaitListTopPriceCloseBookBeforeMember.value)
+                                                   && ServiceWaitListTopPriceCloseBookBeforeMember.valid && (ServiceWaitListTopPriceCloseBookBeforeMember.dirty || ServiceWaitListTopPriceCloseBookBeforeMember.touched)
+                                    }">
+                                        <input type="text" class="form-control text-center" min="0" max="100"
+                                            maxlength="5" required numberControl
+                                            #ServiceWaitListTopPriceCloseBookBeforeMember="ngModel"
+                                            [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceBookAuto"
+                                            [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceCloseBookBeforeMember"
+                                            (ngModelChange)="onPercentageChangeOnlyNumbers($event, enumWaitList.Service)">
+                                    </div>
+                                    <span class="dollar_prefix percent_prefix">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="waitlist_checkbox waitlist_subtitle wait_2left_margin row">
+                        <div class="col-md-6">
+                            <h3>Time before Service</h3>
+                            <p>This allows you to set a time period prior to the service, the system will not move
+                                customers
+                                from the waitlist into the booked service. E.g. selecting 1 hour would result in no one
+                                being
+                                moved automatically onto the scheduler as a booked service within 1 hour of the service
+                                availability.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa">
+                            <div [ngClass]="{
+                            'has-danger': serviceWaitListTopPriceBookTimeInterval.invalid
+                                          && (serviceWaitListTopPriceBookTimeInterval.dirty || serviceWaitListTopPriceBookTimeInterval.touched)
+                                          || ((!serviceWaitListTopPriceBookTimeInterval.value) || serviceWaitListTopPriceBookTimeInterval.value == null)
+                                          && ShowError && waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceBookTimeInterval,
+                            'has-success': (serviceWaitListTopPriceBookTimeInterval.value)
+                                           && serviceWaitListTopPriceBookTimeInterval.valid && (serviceWaitListTopPriceBookTimeInterval.dirty || serviceWaitListTopPriceBookTimeInterval.touched)
+                            }">
+                                <input type="text" maxlength="4"
+                                    [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceBookAuto"
+                                    [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceBookTimeInterval"
+                                    (keydown)="AllowNumberNumberWithDecimal($event)"
+                                    name="ServiceWaitListTopPriceBookTimeInterval" min="1"
+                                    #serviceWaitListTopPriceBookTimeInterval="ngModel"
+                                    (ngModelChange)="onchangeDurationTime($event,enumWaitList.Class)"
+                                    class="form-control text-center" required numberControl>
+                            </div>
+                            <div class="select_label cst-disable-checkbox">
+                                <select class="form-control" id="ServiceWaitListTopPriceBookTimeInterval"
+                                    name="ServiceWaitListTopPriceBookTimeInterval"
+                                    [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceBookTimeIntervalDurationTypeId"
+                                    [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceBookAuto">
+                                    <option *ngFor="let timeDurationType of timeDurationTypeList"
+                                        [ngValue]="timeDurationType.DurationTypeID">
+                                        {{timeDurationType.DurationTypeName}}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="waitlist_checkbox wait_left_margin row">
+                        <div class="col-md-6 no_padding mob-pa">
+                            <input name="ServiceTopPriceChild" id="IsServiceWaitListTopPriceAlertOnly" type="radio"
+                                [value]="waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceAlertOnly"
+                                [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListTopPrice"
+                                (click)="onChangeTopPriceAlertOnlyRadio(enumWaitList.Service)"
+                                [checked]="waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceAlertOnly" />
+                            <label for="IsServiceWaitListTopPriceAlertOnly"><span></span>Alert Only</label>
+                            <p>Highest price payer are sorted and sent alerts sequentially. The next customer on the
+                                waitlist is
+                                sent an alert when the time to respond elapses for the previous customer.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa r_f_column">
+                            <div [ngClass]="{
+                            'has-danger': serviceWaitListTopPriceAlertOnlyTimetoRespond.invalid
+                                          && (serviceWaitListTopPriceAlertOnlyTimetoRespond.dirty || serviceWaitListTopPriceAlertOnlyTimetoRespond.touched)
+                                          || ((!serviceWaitListTopPriceAlertOnlyTimetoRespond.value) || serviceWaitListTopPriceAlertOnlyTimetoRespond.value == null)
+                                          && ShowError && waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceAlertOnlyTimetoRespond,
+                            'has-success': (serviceWaitListTopPriceAlertOnlyTimetoRespond.value)
+                                           && serviceWaitListTopPriceAlertOnlyTimetoRespond.valid && (serviceWaitListTopPriceAlertOnlyTimetoRespond.dirty || serviceWaitListTopPriceAlertOnlyTimetoRespond.touched)
+                            }">
+                                <input type="text" maxlength="4"
+                                    [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceAlertOnly"
+                                    [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListTopPriceAlertOnlyTimetoRespond"
+                                    (keydown)="AllowNumberNumberWithDecimal($event)" min="1"
+                                    name="ServiceWaitListTopPriceAlertOnlyTimetoRespond"
+                                    #serviceWaitListTopPriceAlertOnlyTimetoRespond="ngModel"
+                                    (ngModelChange)="onchangeDurationTime($event,enumWaitList.Class)"
+                                    class="form-control text-center" required numberControl>
+                            </div>
+                            <div class="select_label cst-disable-checkbox">
+                                <div style="display: flex;"><span class="invoice_prefix input_prefix">Time to
+                                        respond</span>
+                                    <select
+                                        [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListTopPriceAlertOnly"
+                                        class="form-control" id="ServiceWaitListTopPriceAlertOnlyTimetoRespond"
+                                        name="ServiceWaitListTopPriceAlertOnlyTimetoRespond"
+                                        [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyAlertOnlyTimetoRespondDurationTypeId">
+                                        <option *ngFor="let timeDurationType of timeDurationTypeList"
+                                            [ngValue]="timeDurationType.DurationTypeID">
+                                            {{timeDurationType.DurationTypeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="hasServiceManageSequentially">
+                    <div class="form_border zero_margin"></div>
+                    <div class="waitlist_checkbox">
+                        <div class="mob-pa">
+                            <input type="radio"
+                                [value]="waitListConfiguration.serviceWaitList.IsServiceWaitListSequentially"
+                                name="ServiceParentRadio" id="IsServiceWaitListSequentially3"
+                                (click)="onChangeValueRadio(enumWaitList.ManageSequentially, enumWaitList.Service)"
+                                [checked]="waitListConfiguration.serviceWaitList.IsServiceWaitListSequentially" />
+                            <label for="IsServiceWaitListSequentially3"><span></span>Manage Sequentially</label>
+                            <p>Add customers in waitlist on first come first serve basis.</p>
+                        </div>
+                    </div>
+                    <div class="form_border zero_margin"></div>
+                    <div class="waitlist_checkbox wait_left_margin row">
+                        <div class="col-md-6 no_padding mob-pa">
+                            <input name="ServiceManageSequentiallyChild" id="IsServiceWaitListSequentiallyBookAuto"
+                                type="radio"
+                                [value]="waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyBookAuto"
+                                [checked]="waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyBookAuto"
+                                [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListSequentially"
+                                (click)="onChangeManageSequentiallyBookAutomaticallyRadio(enumWaitList.Service)" />
+                            <label for="IsServiceWaitListSequentiallyBookAuto"><span></span>Book Automatically</label>
+                            <p>Customers are sorted sequentially and booked automatically for a service as space becomes
+                                available. Set the minimum percentage (between 0% to 100%) of the total invoice to be
+                                paid;
+                                100%
+                                means full payment and 0% mean no payment is required to book the service.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa r_f_column">
+                            <div>
+                                <div class="cst-disable-checkbox d-flex"><span class="invoice_prefix input_prefix">For
+                                        Client/Lead</span>
+                                    <div [ngClass]="{
+                                        'has-danger': ServiceWaitListSequentiallyBookAutoBeforeClientLead.invalid
+                                                      && (ServiceWaitListSequentiallyBookAutoBeforeClientLead.dirty || ServiceWaitListSequentiallyBookAutoBeforeClientLead.touched)
+                                                      || ((!ServiceWaitListSequentiallyBookAutoBeforeClientLead.value) || ServiceWaitListSequentiallyBookAutoBeforeClientLead.value == null || ServiceWaitListSequentiallyBookAutoBeforeClientLead.value > 100)
+                                                      && (ServiceWaitListSequentiallyBookAutoBeforeClientLead.dirty || ServiceWaitListSequentiallyBookAutoBeforeClientLead.touched) && showPercentageValidationForService && waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyBookAutoBeforeClientLead,
+                                        'has-success': (ServiceWaitListSequentiallyBookAutoBeforeClientLead.value)
+                                                       && ServiceWaitListSequentiallyBookAutoBeforeClientLead.valid && (ServiceWaitListSequentiallyBookAutoBeforeClientLead.dirty || ServiceWaitListSequentiallyBookAutoBeforeClientLead.touched)
+                                        }">
+                                        <input type="text" class="form-control text-center" min="0" max="100"
+                                            maxlength="5" required numberControl
+                                            #ServiceWaitListSequentiallyBookAutoBeforeClientLead="ngModel"
+                                            [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyBookAuto"
+                                            [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyBookAutoBeforeClientLead"
+                                            (ngModelChange)="onPercentageChangeOnlyNumbers($event, enumWaitList.Service)">
+                                    </div>
+                                    <span class="dollar_prefix percent_prefix">%</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="cst-disable-checkbox d-flex"><span class="invoice_prefix input_prefix">For
+                                        Member</span>
+                                    <div [ngClass]="{
+                                    'has-danger': ServiceWaitListSequentiallyBookAutoBeforeMember.invalid
+                                                  && (ServiceWaitListSequentiallyBookAutoBeforeMember.dirty || ServiceWaitListSequentiallyBookAutoBeforeMember.touched)
+                                                  || ((!ServiceWaitListSequentiallyBookAutoBeforeMember.value) || ServiceWaitListSequentiallyBookAutoBeforeMember.value == null || ServiceWaitListSequentiallyBookAutoBeforeMember.value > 100)
+                                                  && (ServiceWaitListSequentiallyBookAutoBeforeMember.dirty || ServiceWaitListSequentiallyBookAutoBeforeMember.touched) && showPercentageValidationForService && waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyBookAutoBeforeMember,
+                                    'has-success': (ServiceWaitListSequentiallyBookAutoBeforeMember.value)
+                                                   && ServiceWaitListSequentiallyBookAutoBeforeMember.valid && (ServiceWaitListSequentiallyBookAutoBeforeMember.dirty || ServiceWaitListSequentiallyBookAutoBeforeMember.touched)
+                                    }">
+                                        <input type="text" class="form-control text-center" min="0" max="100"
+                                            maxlength="5" required numberControl
+                                            #ServiceWaitListSequentiallyBookAutoBeforeMember="ngModel"
+                                            [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyBookAuto"
+                                            [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyBookAutoBeforeMember"
+                                            (ngModelChange)="onPercentageChangeOnlyNumbers($event, enumWaitList.Service)">
+                                    </div>
+                                    <span class="dollar_prefix percent_prefix">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="waitlist_checkbox waitlist_subtitle wait_2left_margin row">
+                        <div class="col-md-6">
+                            <h3>Time before Service</h3>
+                            <p>This allows you to set a time period prior to the service, the system will not move
+                                customers
+                                from the waitlist into the booked service. E.g. selecting 1 hour would result in no one
+                                being
+                                moved automatically onto the scheduler as a booked service within 1 hour of the service
+                                availability.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa">
+                            <div [ngClass]="{
+                            'has-danger': serviceWaitListSequentiallyBookingTimeInterval.invalid
+                                          && (serviceWaitListSequentiallyBookingTimeInterval.dirty || serviceWaitListSequentiallyBookingTimeInterval.touched)
+                                          || ((!serviceWaitListSequentiallyBookingTimeInterval.value) || serviceWaitListSequentiallyBookingTimeInterval.value == null)
+                                          && ShowError && waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyBookingTimeInterval,
+                            'has-success': (serviceWaitListSequentiallyBookingTimeInterval.value)
+                                           && serviceWaitListSequentiallyBookingTimeInterval.valid && (serviceWaitListSequentiallyBookingTimeInterval.dirty || serviceWaitListSequentiallyBookingTimeInterval.touched)
+                            }">
+                                <input type="text" maxlength="4"
+                                    [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyBookAuto"
+                                    [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyBookingTimeInterval"
+                                    (keydown)="AllowNumberNumberWithDecimal($event)" min="1"
+                                    name="ServiceWaitListSequentiallyBookingTimeInterval"
+                                    #serviceWaitListSequentiallyBookingTimeInterval="ngModel"
+                                    (ngModelChange)="onchangeDurationTime($event,enumWaitList.Class)"
+                                    class="form-control text-center" required numberControl>
+                            </div>
+                            <div class="select_label cst-disable-checkbox">
+                                <select class="form-control"
+                                    id="serviceWaitListSequentiallyBookingTimeIntervalDurationTypeId"
+                                    name="ServiceWaitListSequentiallyBookingTimeIntervalDurationTypeId"
+                                    [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyBookingTimeIntervalDurationTypeId"
+                                    [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyBookAuto">
+                                    <option *ngFor="let timeDurationType of timeDurationTypeList"
+                                        [ngValue]="timeDurationType.DurationTypeID">
+                                        {{timeDurationType.DurationTypeName}}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="waitlist_checkbox wait_left_margin row">
+                        <div class="col-md-6 no_padding mob-pa">
+                            <input name="ServiceManageSequentiallyChild" id="IsServiceWaitListSequentiallyAlertOnly"
+                                type="radio"
+                                [value]="waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyAlertOnly"
+                                [checked]="waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyAlertOnly"
+                                [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListSequentially"
+                                (click)="onChangeManageSequentiallyAlertOnlyRadio(enumWaitList.Service)" />
+                            <label for="IsServiceWaitListSequentiallyAlertOnly"><span></span>Alert Only</label>
+                            <p>Customers are sorted and sent alerts sequentially. The next customer on the waitlist is
+                                sent
+                                an
+                                alert when the time to respond elapses for the previous customer.</p>
+                        </div>
+                        <div class="col-md-6 padding_right label_with_input mob-pa r_f_column">
+                            <div [ngClass]="{
+                            'has-danger': serviceWaitListSequentiallyAlertOnlyTimetoRespond.invalid
+                                          && (serviceWaitListSequentiallyAlertOnlyTimetoRespond.dirty || serviceWaitListSequentiallyAlertOnlyTimetoRespond.touched)
+                                          || ((!serviceWaitListSequentiallyAlertOnlyTimetoRespond.value) || serviceWaitListSequentiallyAlertOnlyTimetoRespond.value == null)
+                                          && ShowError && waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyAlertOnlyTimetoRespond,
+                            'has-success': (serviceWaitListSequentiallyAlertOnlyTimetoRespond.value)
+                                           && serviceWaitListSequentiallyAlertOnlyTimetoRespond.valid && (serviceWaitListSequentiallyAlertOnlyTimetoRespond.dirty || serviceWaitListSequentiallyAlertOnlyTimetoRespond.touched)
+                            }">
+                                <input type="text" maxlength="4"
+                                    [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyAlertOnly"
+                                    [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyAlertOnlyTimetoRespond"
+                                    (keydown)="AllowNumberNumberWithDecimal($event)" min="1"
+                                    name="ServiceWaitListSequentiallyAlertOnlyTimetoRespond"
+                                    #serviceWaitListSequentiallyAlertOnlyTimetoRespond="ngModel"
+                                    (ngModelChange)="onchangeDurationTime($event,enumWaitList.Class)"
+                                    class="form-control text-center" required numberControl>
+                            </div>
+                            <div class="select_label cst-disable-checkbox">
+                                <div style="display: flex;"><span class="invoice_prefix input_prefix">Time to
+                                        respond</span>
+                                    <select class="form-control" id="ServiceWaitListSequentiallyAlertOnlyTimetoRespond"
+                                        name="ServiceWaitListSequentiallyAlertOnlyTimetoRespond"
+                                        [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListSequentiallyAlertOnlyTimetoRespondDurationTypeId"
+                                        [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListSequentiallyAlertOnly">
+                                        <option *ngFor="let timeDurationType of timeDurationTypeList"
+                                            [ngValue]="timeDurationType.DurationTypeID">
+                                            {{timeDurationType.DurationTypeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="form_border zero_margin"></div>
+                <div class="waitlist_checkbox" *ngIf="hasServiceAlertAll">
+                    <div class="mob-pa">
+                        <input type="radio" [value]="waitListConfiguration.serviceWaitList.IsServiceWaitListAlertAll"
+                            name="ServiceParentRadio" id="IsServiceWaitListAlertAll4"
+                            (click)="onChangeValueRadio(enumWaitList.AlertAll, enumWaitList.Service)"
+                            [checked]="waitListConfiguration.serviceWaitList.IsServiceWaitListAlertAll" />
+                        <label for="IsServiceWaitListAlertAll4"><span></span>Alert All</label>
+                        <p>Sends an automatic alert to all waitlist customers as soon as space becomes available.</p>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-12">
+                <div class="form_border zero_margin"></div>
+            </div>
+        </div>
+        <div class="row waitlist_checkbox waitlist_subtitle center_flex_alignment">
+            <div class="col-md-9 col-sm-9">
+                <h3>Enable Waitlists Online</h3>
+                <p>Allow customers to add themselves into service waitlists on the widget & app.</p>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <mat-slide-toggle tabindex="6" id="IsServiceWaitListOnline" class="wellyx-checked float-right"
+                    name="IsServiceWaitListOnline"
+                    [(ngModel)]="waitListConfiguration.serviceWaitList.IsServiceWaitListOnline"
+                    (ngModelChange)="onEnableWaitListOnlineChange(enumWaitList.Service)">
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form_border zero_margin"></div>
+            </div>
+            <div class="mr-3"></div>
+            <div class="media-body">
+                <div class="waitlist_checkbox waitlist_subtitle center_flex_alignment row">
+                    <div class="col-md-9 pl-0 mob-pa">
+                        <h3>Require Payment Method Online</h3>
+                        <p>Toggle on to require card details from customers to enroll in the waitlist. Toggle off would
+                            result in the system still requesting payment information from the customer, but it would
+                            not be
+                            mandatory. We highly recommend you enable this toggle in combination with ‘Book
+                            Automatically’
+                            to ensure that Wellyx always has the necessary card details to book a customer as space
+                            becomes
+                            available.</p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 pr-0 mob-pa">
+                        <mat-slide-toggle tabindex="7" id="IsServiceWaitListRequirePaymentMethodOnline"
+                            class="wellyx-checked float-right" name="IsServiceWaitListRequirePaymentMethodOnline"
+                            [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListOnline"
+                            [(ngModel)]="waitListConfiguration.serviceWaitList.IsServiceWaitListRequirePaymentMethodOnline"
+                            (ngModelChange)="onEnablelassWaitListRequirePaymentMethodOnline(enumWaitList.Service)">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="form_border zero_margin"></div>
+                <div class="waitlist_checkbox waitlist_subtitle cst-disable-checkbox">
+                    <div class="mob-pa">
+                        <h3>Payment Display Text <span class="optional">(Remaining Characters:
+                                {{ 200 - waitListConfiguration.serviceWaitList.ServiceWaitListPaymentDisplayText?.length}})</span>
+                        </h3>
+                        <p>Text that will be displayed at checkout to provide customers with more information in regards
+                            to
+                            why
+                            a payment method is being requested for waitlist bookings.</p>
+                        <div class="space-15"></div>
+                        <textarea rows="4"
+                            [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListRequirePaymentMethodOnline"
+                            [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListPaymentDisplayText"
+                            maxlength="200" (blur)="onBlurPaymentDisplayTextFunction(enumWaitList.Service)"
+                            placeholder="Your card information is required to confirm your space in the waitlist. Payment would only be deducted when your booking is confirmed."></textarea>
+                    </div>
+                </div>
+                <div class="form_border zero_margin"></div>
+                <div class="row waitlist_checkbox waitlist_subtitle  center_flex_alignment">
+                    <div class="col-md-7 pl-0 mob-pa">
+                        <h3>Waitlist Time Brackets</h3>
+                        <p>Provide customers time brackets for waitlist. A maximum of 5 brackets can be provided per
+                            day.
+                        </p>
+                    </div>
+                    <div class="col-md-5 pr-0 mob-pa">
+                        <a class="float-right new_bracket" href="javascript:void(0)" (click)="onAddNewBracket()"><i
+                                class="fal fa-plus-circle"></i> Add
+                            New Bracket</a>
+                    </div>
+                </div>
+                <div class="form_border zero_margin"></div>
+                <div class="wait_2left_margin" id="timeBracket"
+                    *ngFor="let bracket of waitListConfiguration.branchWorkTimeBrackets; let i = index">
+                    <div class="add_braket">
+                        <div class="bracket_flex_alignment r_f_column">
+                            <div>
+                                <h4>Bracket {{i + 1}}</h4>
+                            </div>
+                            <div class="bracket_name cst-disable-checkbox">
+                                <div [ngClass]="{
+                                'has-danger': i.invalid
+                                              && (i.dirty || i.touched)
+                                              || ((!i.value) || i.value == null || i.value == '')
+                                              && (i.dirty || i.touched) && waitListConfiguration.serviceWaitList.IsServiceWaitListOnline,
+                                'has-success': (i.value)
+                                               && i.valid && (i.dirty || i.touched)
+                                }">
+                                    <input type="text" maxlength="50" class="form-control" minlength="1" #i="ngModel"
+                                        required
+                                        [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListOnline"
+                                        [(ngModel)]="bracket.BracketName" (blur)="onBlurBracketTextFunction(i)">
+                                </div>
+                                <span class="error"
+                                    *ngIf="bracket.BracketName == '' && waitListConfiguration.serviceWaitList.IsServiceWaitListOnline">*{{messages.Validation.Info_Required}}</span>
+                            </div>
+                            <div class="bracket_time cst-disable-checkbox">
+                                <dx-date-box type="time" [displayFormat]="schedulerTimeFormat"
+                                    [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListOnline"
+                                    [useMaskBehavior]="true" [interval]="15" [(value)]="bracket.StartTime"
+                                    (onValueChanged)="onBracketTimeChanged(i)">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                                    </dx-validator>
+                                </dx-date-box>
+                                <span class="error" *ngIf="bracket.IsEndTimeInvalid">
+                                    *{{messages.Validation.Endtime_Should_Greater_Than_Start_Time}}</span>
+                            </div>
+                            <div class="bracket_time cst-disable-checkbox">
+                                <div [ngClass]="{
+                                'has-danger': bracket.IsEndTimeInvalid }">
+                                    <dx-date-box type="time" [displayFormat]="schedulerTimeFormat"
+                                        [disabled]="!waitListConfiguration.serviceWaitList.IsServiceWaitListOnline"
+                                        [useMaskBehavior]="true" [interval]="15" [(value)]="bracket.EndTime"
+                                        (onValueChanged)="onBracketTimeChanged(i)">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="javascript:void(0)" (click)="onDeleteBracket(i)"><i
+                                    class="fal fa-trash-alt"></i></a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form_border zero_margin"></div>
+            </div>
+        </div>
+
+        <div class="row waitlist_checkbox waitlist_subtitle center_flex_alignment">
+            <div class="col-md-10 col-sm-10">
+                <h3>Restrict Days for Waitlist</h3>
+                <p>Waitlist will not be available on selected days from the widget & app.</p>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="select_label w-100">
+                    <mat-select class="form-control" name="ServiceSelectDays" placeholder="Select Day(s)"
+                        [(ngModel)]="selectedServiceDaysTypeList" tabindex="8" multiple>
+                        <mat-select-trigger *ngIf="selectedServiceDaysTypeList.length - 1 == daysTypeList.length">
+                            All
+                        </mat-select-trigger>
+                        <mat-select-trigger
+                            *ngIf="selectedServiceDaysTypeList && selectedServiceDaysTypeList.length > 0 && selectedServiceDaysTypeList.length - 1 != daysTypeList.length">
+                            {{selectedServiceDaysTypeList && selectedServiceDaysTypeList.length > 0 &&
+                            selectedServiceDaysTypeList[0].DayTypeName ? selectedServiceDaysTypeList[0].DayTypeName :
+                            selectedServiceDaysTypeList && selectedServiceDaysTypeList.length >= 2 &&
+                            selectedServiceDaysTypeList[0].DayTypeName == undefined ?
+                            selectedServiceDaysTypeList[1].DayTypeName : ''}}
+                            <span *ngIf="selectedServiceDaysTypeList && selectedServiceDaysTypeList.length >= 2"
+                                class="example-additional-selection">
+                                (+{{selectedServiceDaysTypeList[0].DayTypeName == undefined ?
+                                selectedServiceDaysTypeList.length - 2 : selectedServiceDaysTypeList.length - 1 }}
+                                {{selectedServiceDaysTypeList[0].DayTypeName == undefined &&
+                                selectedServiceDaysTypeList.length === 3 ? 'other' : selectedServiceDaysTypeList.length
+                                ===
+                                2 ? 'other' : 'others'}})
+                            </span>
+                        </mat-select-trigger>
+                        <span *ngIf="daysTypeList && daysTypeList.length > 1">
+                            <mat-option #allSelectedDaysForService (click)="toggleAllDaysSelection()" [value]="0">All
+                            </mat-option>
+                        </span>
+                        <mat-option *ngFor="let daysType of daysTypeList" [value]="daysType"
+                            (click)="tosslePerOneDay()"> {{daysType.DayTypeName}}</mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form_border zero_margin"></div>
+        </div>
+        <div class="row waitlist_checkbox waitlist_subtitle center_flex_alignment">
+            <div class="col-md-9 col-sm-9">
+                <h3>Maximum Customers</h3>
+                <p>Maximum customers allowed on an individual service waitlist per day from the widget & app.</p>
+            </div>
+            <div class="col-md-3 col-sm-3 label_with_input">
+                <input type="text" class="text-center" min="0" name="MaximumCustomers"
+                    [(ngModel)]="waitListConfiguration.serviceWaitList.ServiceWaitListMaxCustomer" numberControl
+                    [tabindex]="9" maxlength="3" (ngModelChange)="onServiceMaximumCustomersChangeOnlyNumbers($event)" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form_border zero_margin"></div>
+        </div>
+        <div class="row waitlist_checkbox waitlist_subtitle center_flex_alignment">
+            <div class="col-md-10 col-sm-10">
+                <h3>Notifications</h3>
+                <p>Select how you would like to notify a waitlist customers when space becomes available on the day.</p>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="select_label w-100">
+                    <mat-select class="form-control" name="ServiceNotifications" placeholder="Select Notification(s)"
+                        [(ngModel)]="selectedServiceCommunicationTypeList" tabindex="10" multiple>
+                        <mat-select-trigger
+                            *ngIf="selectedServiceCommunicationTypeList.length - 1 == communicationTypeList.length">
+                            All
+                        </mat-select-trigger>
+                        <mat-select-trigger
+                            *ngIf="selectedServiceCommunicationTypeList && selectedServiceCommunicationTypeList.length > 0 && selectedServiceCommunicationTypeList.length - 1 != communicationTypeList.length">
+                            {{selectedServiceCommunicationTypeList && selectedServiceCommunicationTypeList.length > 0 &&
+                            selectedServiceCommunicationTypeList[0].CommunicationTypeName ?
+                            selectedServiceCommunicationTypeList[0].CommunicationTypeName :
+                            selectedServiceCommunicationTypeList && selectedServiceCommunicationTypeList.length >= 2 &&
+                            selectedServiceCommunicationTypeList[0].CommunicationTypeName == undefined ?
+                            selectedServiceCommunicationTypeList[1].CommunicationTypeName : ''}}
+                            <span
+                                *ngIf="selectedServiceCommunicationTypeList && selectedServiceCommunicationTypeList.length >= 2"
+                                class="example-additional-selection">
+                                (+{{selectedServiceCommunicationTypeList[0].CommunicationTypeName == undefined ?
+                                selectedServiceCommunicationTypeList.length - 2 :
+                                selectedServiceCommunicationTypeList.length - 1 }}
+                                {{selectedServiceCommunicationTypeList[0].CommunicationTypeName == undefined &&
+                                selectedServiceCommunicationTypeList.length === 3 ? 'other' :
+                                selectedServiceCommunicationTypeList.length === 2 ? 'other' : 'others'}})
+                            </span>
+                        </mat-select-trigger>
+                        <span *ngIf="communicationTypeList && communicationTypeList.length > 1">
+                            <mat-option #allSelectedServiceNotification
+                                (click)="toggleAllNotificationSelection(enumWaitList.Service)" [value]="0">All
+                            </mat-option>
+                        </span>
+                        <mat-option *ngFor="let communicationType of communicationTypeList" [value]="communicationType"
+                            (click)="tosslePerOneNotification(enumWaitList.Service)">
+                            {{communicationType.CommunicationTypeName}}</mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>

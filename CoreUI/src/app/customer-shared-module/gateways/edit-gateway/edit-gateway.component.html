@@ -1,0 +1,83 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content small_popup">
+            <div class="popup_header">
+                <div class="col-md-6 col-sm-6 padding_left">
+                    <h4>{{pageTitle}}</h4>
+                </div>
+            </div>
+            <form #editGatewayForm="ngForm" (ngSubmit)="saveCard(editGatewayForm.valid)" novalidate>
+                <div class="popup_content">
+                    <div class="popup_white_bg">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="alert alert-danger"
+                                    *ngIf="editGatewayForm.invalid && editGatewayForm.submitted">
+                                        {{messages.Validation.Info_Required}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="field_label top_zero">
+                                    <h5>Card Number</h5>
+                                </div>
+                                <!-- <label class="form-control">************{{lastDigits}}</label> -->
+                                <input value="************{{lastDigits}}" class="form-control" disabled>
+                            </div>
+                            <div class="col-md-12 col-sm-12" [ngClass]="{
+                                    'has-danger': NameOnCard.invalid && (NameOnCard.dirty || NameOnCard.touched || editGatewayForm.submitted),
+                                    'has-success': NameOnCard.valid && (NameOnCard.dirty || NameOnCard.touched )
+                                   }">
+                                <div class="field_label">
+                                    <h5>Name on Card</h5>
+                                </div>
+                                <input type="text" name="NameOnCard" #NameOnCard="ngModel"
+                                    [(ngModel)]="GatewayCard.name" class="form-control" tabindex="2" required (blur)="OnChangeNameOnCard()" />
+                            </div>
+
+                            <div class="col-md-6 col-sm-6" [ngClass]="{
+                                'has-danger': ExpireyMonth.invalid && (ExpireyMonth.dirty || ExpireyMonth.touched || editGatewayForm.submitted),
+                                'has-success': ExpireyMonth.valid && (ExpireyMonth.dirty || ExpireyMonth.touched )
+                               }">
+                               <div class="field_label">
+                                <h5>Expiration</h5>
+                            </div>
+                               <div class="select_label">
+                                <select class="form-control" required [(ngModel)]="GatewayCard.expMonth" name="ExpireyMonth" #ExpireyMonth="ngModel">
+                                    <option [value]="month" [disabled]="month <= currentMonth && GatewayCard.expYear <= currentYear" *ngFor="let month of months">{{month}}</option>
+                                </select>
+                               </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6" [ngClass]="{
+                            'has-danger': ExpiryYear.invalid && (ExpiryYear.dirty || ExpiryYear.touched || editGatewayForm.submitted),
+                            'has-success': ExpiryYear.valid && (ExpiryYear.dirty || ExpiryYear.touched )
+                           }">
+                           <div class="field_label">
+                            <h5>&nbsp;</h5>
+                        </div>
+                           <div class="select_label">
+                            <select class="form-control" required [(ngModel)]="GatewayCard.expYear" (ngModelChange)="onChangeYear()" name="ExpiryYear" #ExpiryYear="ngModel">
+                                <option [value]="year" *ngFor="let year of years">{{year}}</option>
+                            </select>
+                           </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-4 col-sm-4"></div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="cancel_btn float-right">
+                            <button tabindex="5" type="button" mat-button (click)="onClosePopup()">Cancel</button>
+                            <button tabindex="6" class="save primary_blue_btn"
+                                [disabled]="(editGatewayForm.pristine)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

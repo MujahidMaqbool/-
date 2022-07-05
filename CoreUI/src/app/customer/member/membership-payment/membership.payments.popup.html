@@ -1,0 +1,107 @@
+﻿<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-content large_popup">
+        <div class="popup_header">
+            <h4>Membership Payments</h4>
+        </div>
+        <div class="popup_content">
+            <div class="popup_white_bg">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="small_space"></div>
+                            <div class="col-md-3 padding_left">
+                                <h5 class="field_label">
+                                    Membership :
+                                </h5>
+                                <p>{{membershipModel.MembershipName}}</p>
+                            </div>
+                            <div class="col-md-9 padding_left">
+                                <h5 class="field_label">
+                                    Duration :
+                                </h5>
+                                <p>This membership is valid from
+                                    <b>{{membershipModel.StartDate}}</b> to
+                                    <b>{{membershipModel.EndDate}}</b>.</p>
+                            </div>
+                        </div>
+                        <div class="small_space"></div>
+                        <h5 class="field_label" *ngIf="isDataExists">
+                            Payment Details
+                        </h5>
+                        <div class="small_space"></div>
+                        <div id="services">
+                            <div *ngIf="isDataExists">
+                                <div class="row grid_header responsive_grid_header">
+                                    <div class="col">
+                                        <h5>Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5>Collection Type</h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5>Collection Date</h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5>Status</h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5>Amount</h5>
+                                    </div>
+                                </div>
+                                <div id="grid" style="max-height: 500px; overflow: auto;">
+                                    <div class="row grid_rows responsive_grid_rows " *ngFor="let  memberPaymentsobj of memberMembershipPayments">
+                                        <div class="col">
+                                            <h5>{{memberPaymentsobj.MembershipName}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>
+                                                {{memberPaymentsobj.MembershipPaymentTypeID === membershipPaymentType.Single ? memberPaymentsobj.SinglePaymentCollectionTypeName
+                                                : 'Recurring'}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{memberPaymentsobj.PaymentCollectionDate | customdate}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{memberPaymentsobj.PaymentStatusTypeName }}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{memberPaymentsobj.Amount | currency: currencyFormat}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row total_amount">
+                                    <div class="col-md-10">
+                                        <h5 class="float-right">Total :</h5>
+                                    </div>
+                                    <div class="col-md-2 no_padding">
+                                        <h5>{{totalAmount | currency: currencyFormat}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="hasMemberships && !isDataExists">
+                                This membership is completely free of charge.
+                            </div>
+                            <div *ngIf="!isDataExists">
+                                <div class="row services">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found"> No Records Found
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="small_space"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row popup_footer">
+            <div class="col-md-12">
+                <div class="cancel_btn float-right">
+                    <button (click)="onCloseDialog()" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

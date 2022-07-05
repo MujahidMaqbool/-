@@ -1,0 +1,72 @@
+<div class="report_section">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <p *ngIf="customerTypeID != 4 && customerTypeID != 0"> This report is useful to run when you want to see all invoices associated with your {{customerDescriptionName}} {{customerTypeID}}.
+            </p>
+            <p *ngIf="customerTypeID == 4 || customerTypeID == 0"> This report is useful to run when you want to see all payments and refunds associated with
+                your customers.
+            </p>
+        </div>
+    </div>
+
+    <!-- <div class="col-md-6 col-sm-6">
+                <div class="report_button text-right">
+                    <button (click)="ExportAllSaleHistoryReport()"><i class="fal fa-file-pdf" aria-hidden="true"></i> Export</button>
+                    <button class="primary_blue_btn" (click)="ViewAllSaleHistoryReport()"> <i class="fa fa-eye" aria-hidden="true"></i>
+                        View</button>
+                </div>
+            </div> -->
+
+    <div class="small_space"></div>
+    <form #allSaleHistoryForm="ngForm" (ngSubmit)="exportAllSaleHistoryReport(fileType.PDF)" novalidate>
+        <div class="row">
+            <div *ngIf="customerTypeID == 4 || customerTypeID == 0" class="col-lg-3 col-md-4 col-sm-6">
+                <div class="col">
+                    <div class="field_label">
+                        <h5>Customer Type</h5>
+                    </div>
+                    <div class="select_label">
+                        <select class="form-control" name="CustomerTypeID" [(ngModel)]="reportSearchParameter.CustomerTypeID" #CustomerTypeID="ngModel">
+                            <option *ngFor="let customerTypeObj of customerTypeList" tabindex="1"
+                                [ngValue]="customerTypeObj.value" style="font-size: 16px;">
+                                {{customerTypeObj.text}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+
+                <h5 class="field_label">{{customerTitle}}</h5>
+                <input type="text" placeholder="{{customerTypePlaceHolder}}" [value]="personName" matInput [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto" maxlength="30" [(ngModel)]="clearClientHistoryInput">
+                <span *ngIf="clearClientHistoryInput != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPersonName" (optionSelected)='getSelectedPerson($event.option.value)'>
+                    <mat-option *ngFor="let person of allPerson" [value]="person">
+                        <span class="client_name">{{ person.FullName }}</span>
+                        <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                        <br>
+                        <span class="client_info">{{ person.Mobile }}</span>
+                        <br>
+                        <span class="client_info">{{ person.Email }}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+            <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #allSaleHistoryRef>
+                </dateto-datefrom>
+            </div>
+        </div>
+        <div class="report_button text-right">
+            <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="submit"><i
+                    class="fal fa-file-pdf" aria-hidden="true"></i>
+            </button>
+            <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllSaleHistoryReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+            </button>
+            <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+            <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewAllSaleHistoryReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+            </button>
+            <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetSaleHistroyFilters()"><i class="fal fa-undo" aria-hidden="true"></i>
+            </button>
+        </div>
+    </form>
+</div>

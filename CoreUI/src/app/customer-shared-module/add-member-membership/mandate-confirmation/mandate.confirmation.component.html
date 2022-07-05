@@ -1,0 +1,50 @@
+<div class="modal-lg small_popup">
+  <div class="popup_header">
+    <h4>Confirmation of Membership</h4>
+  </div>
+  <div class="popup_content">
+    <div class="row popup_white_bg">
+      <div class="col-md-12 col-sm-12 text-center">
+        <!-- <p *ngIf="showDirectDebitMandate">
+                    This is to confirm that a Direct Debit mandate has been set up. The name on the bank statement will be <b>{{gatewayName}}</b>.
+                    <br/> You will receive an email within three business days confirming that the Direct Debit mandate has
+                    been set up.
+                </p>
+                <p *ngIf="showCashMandate">
+                    This is to confirm that a cash mandate has been set up.
+                    <br/> You will receive an email within three business days confirming that the payment mandate has been
+                    set up.
+                </p>
+                <p *ngIf="showCardMandate">
+                    This is to confirm that a payment mandate has been set up. The name on the bank statement will be <b>{{gatewayName ? gatewayName : '[No Name]'}}</b>.
+                    <br/> You will receive an email within three business days confirming that the payment mandate has been
+                    set up.
+                </p> -->
+        <p *ngIf="showDirectDebitMandate">
+          This is to confirm that a Direct Debit mandate has been set up. The name on the bank statement will be
+          <b>{{gatewayName ? gatewayName : '[No Name]'}}</b>.
+          <br /> You will receive an email within three business days confirming that the Direct Debit mandate has been
+          set up.
+        </p>
+        <p *ngIf="showCashMandate">
+          This is to confirm that a cash mandate has been set up.
+          <br /> You will receive an email within three business days confirming that the payment mandate has been
+          set up.
+        </p>
+        <p *ngIf="showCardMandate">
+          This is to confirm that a payment mandate has been set up. The name on the bank statement will be
+          <b>{{gatewayName ? gatewayName : '[No Name]'}}</b>.
+          <br /> You will receive an email within three business days confirming that the payment mandate has been
+          set up.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row popup_footer">
+    <div class="col-md-12">
+      <div class="cancel_btn float-right"><button type="button" (click)="closePopup()">Close</button></div>
+    </div>
+  </div>
+
+</div>

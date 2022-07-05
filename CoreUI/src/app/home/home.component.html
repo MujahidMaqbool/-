@@ -1,0 +1,404 @@
+<!-- <app-spinner></app-spinner> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col top_bar">
+      <div class="comp_logo">
+        <!-- <img src="{{companyInfo.ImagePath}}" class="img-responsive logo_c"> -->
+        <h1>{{companyInfo.CompanyName}}</h1>
+      </div>
+      <div class="flex_bar_noti">
+        <div class="notification noti_icon">
+
+          <a *ngIf="isMultiBranchCompany" (click)="openEnterprise()"  class="enterpise_btn" ><i class="fal fa-globe" ></i><p>Enterprise</p></a>
+          <a *ngIf="isStripeTerminalAllowed" matTooltip="Connect Reader" matTooltipPosition="above"
+            matTooltipClass="custom-tooltip" tabindex="-111" (click)="openStripeReaderDialog()">
+            <i class="fab fa-stripe"></i>
+          </a>
+
+          <a *ngIf="isClassAttendanceAllowed" matTooltip="Class Attendance" matTooltipPosition="above"
+            matTooltipClass="custom-tooltip" tabindex="-112" (click)="openClassAttendanceDialog()">
+            <i class="fal fa-users-class"></i>
+          </a>
+          <a *ngIf="isMemberTerminalAllowed" matTooltip="Member Attendance" matTooltipPosition="above"
+            matTooltipClass="custom-tooltip" tabindex="-113" target="_blank" (click)="onOpenMemberAttendance()">
+            <i class="fal fa-user-clock"></i>
+          </a>
+          <a *ngIf="isAttendanceTerminalAllowed" matTooltip="Staff Attendance" matTooltipClass="custom-tooltip"
+            matTooltipPosition="above" [routerLink]="['/attendance']" target="_blank" tabindex="-114">
+            <i class="fal fa-clock" aria-hidden="true"></i>
+          </a>
+          <a *ngIf="hasNotification" role="menu" (click)="toggleNotifications(true)" matTooltip="Notifications" matTooltipClass="custom-tooltip"
+            matTooltipPosition="above" class="bell_noti"><i class="fal fa-bell"></i>
+            <span *ngIf="showNotiAnimation" class="email animated bounce">{{notificationList.length}}</span>
+          </a>
+          <div class="qucik_link_dp logout_dp notifications_dp" *ngIf="showNotifications">
+            <div class="notification_head">
+              <h3>Notifications</h3>
+              <button *ngIf="isStaffNotification" [routerLink]="['/general/notifications']" class="btn btn-simple">View
+                All</button>
+            </div>
+            <!-- <li  >
+                            <h5>{{email.notification.title}}</h5>
+                            <p>{{email.notification.body}}</p>
+                        </li> -->
+            <ul class="cstm_scroll_bg" (clickOutside)="toggleNotifications(false)">
+              <li *ngFor="let noti of notificationList" style="display: flex; justify-content: space-between;">
+
+                <a role="menu" class="noti_flex"
+                  (click)="noti.EventCategoryTypeID != enumEventCategory.Shift ? onNotificationClick(noti) : ''">
+                  <div>
+                    <i class="fal" [ngClass]="{
+                                        'fa-heartbeat': noti.EventCategoryTypeID === eNU_NotificationCategoryTrigger.Class,
+                                        'fa-calendar-check': noti.EventCategoryTypeID === eNU_NotificationCategoryTrigger.Service,
+                                        'fa-user-circle': noti.EventCategoryTypeID === eNU_NotificationCategoryTrigger.Lead,
+                                        'fa-users': noti.EventCategoryTypeID === eNU_NotificationCategoryTrigger.Membership,
+                                        'fa-user-clock': noti.EventCategoryTypeID === eNU_NotificationCategoryTrigger.Shift,
+                                        'fa-reply': noti.EventCategoryTypeID === eNU_NotificationCategoryTrigger.StaffActivity,
+                                        'fa-envelope': noti.EventCategoryTypeID === eNU_NotificationCategoryTrigger.CustomerActivity
+                                    }"></i>
+                  </div>
+                  <div>
+                    <h6>
+                      {{noti.Title}}
+                    </h6>
+                    <p>
+                      <span class="noti-email-body" *ngIf="noti.EventCategoryTypeID != enumEventCategory.Shift">
+                        {{ noti.AudienceName + " -" }}
+                        {{
+                                                    noti.EventCategoryTypeID == enumEventCategory.Class ? noti.ClassName :
+                                                    noti.EventCategoryTypeID == enumEventCategory.Service ? noti.ServiceName :
+                                                    noti.EventCategoryTypeID == enumEventCategory.StaffActivity ? noti.Title :
+                                                    noti.EventCategoryTypeID == enumEventCategory.Lead || noti.EventCategoryTypeID == enumEventCategory.Membership ? noti.MembershipName : ""
+                                                }}
+                      </span>
+                      <span class="noti-email-body" *ngIf="noti.EventCategoryTypeID == enumEventCategory.Shift">
+                        {{noti.ShiftStartDate | customdate : dateFormat}} - {{noti.ShiftStartTime | branchTimeFormat}} {{noti.ShiftEndTime | branchTimeFormat}}
+
+                      </span>
+                    </p>
+                    <p>
+                      <i class="fal fa-clock"></i> {{noti.CreateOn | customdate : dateFormat}} {{noti.CreateOnTime  | branchTimeFormat}}
+                    </p>
+                  </div>
+
+                  <!-- <div>
+                                        <i class="fal" [ngClass]="{
+                                        'fa-envelope': noti.ActivityTypeID === activityType.Email,
+                                        'fa-comment-alt-dots': noti.ActivityTypeID === activityType.SMS,
+                                        'fa-calendar-alt': noti.ActivityTypeID === activityType.Appointment,
+                                        'fa-phone fa-flip-horizontal': noti.ActivityTypeID === activityType.Call,
+                                        'fa-tasks': noti.ActivityTypeID === activityType.Task,
+                                        'fa-comment-alt-check': noti.ActivityTypeID === activityType.Note
+                                    }"></i>
+                                    </div> -->
+                  <!-- <div>
+                                        <h6>
+                                            {{noti.Title}}
+                                        </h6>
+                                        <p *ngIf="noti.ActivityTypeID != activityType.Task"
+                                            [innerHTML]="noti.Description">
+                                            <p *ngIf="noti.ActivityTypeID == activityType.Task">{{noti.Description}}</p>
+                                            <p
+                                                *ngIf="activityType.Call == noti.ActivityTypeID || activityType.Appointment == noti.ActivityTypeID">
+                                                <i class="fal fa-clock"></i>
+                                                {{noti.FollowUpDate + ' - ' + noti.FollowUpStartTime + ' - ' + noti.FollowUpEndTime}}
+                                            </p>
+                                            <p *ngIf="activityType.Task == noti.ActivityTypeID">
+                                                <i class="fal fa-clock"></i>
+                                                {{ messages.Generic_Messages.Task_Completion_Date + ' - ' + noti.FollowUpDate + ' - ' + noti.FollowUpStartTime + ' - ' + noti.FollowUpEndTime}}
+                                            </p>
+
+                                            <p *ngIf="activityType.Email == noti.ActivityTypeID">
+                                                <i class="fal fa-clock"></i> {{noti.CreatedOn}}
+                                            </p>
+                                    </div> -->
+
+
+
+                </a>
+                <div class="mark_read">
+                  <i matTooltip="Mark as Read for Me" matTooltipPosition="above"
+                    (click)="onMarkASReadForMe(noti.StaffNotificationID)" matTooltipClass="custom-tooltip"
+                    class="fal fa-check"></i>
+                  <i *ngIf="isNotificationButtonForEveryOne && noti.AllowStaffPosition"
+                    matTooltip="Mark as Read for Everyone" matTooltipPosition="above"
+                    (click)="onMarkASReadForEveryone(noti.StaffNotificationID)" matTooltipClass="custom-tooltip"
+                    class="fal fa-check-double"></i>
+                </div>
+              </li>
+              <li *ngIf="!isNotificationExists">
+                <h6 class="text-center"> No Notification Exist
+                </h6>
+              </li>
+            </ul>
+          </div>
+          <a role="menu" (click)="toggleQuickLinks(true)" matTooltip="Quick Links" matTooltipClass="custom-tooltip"
+            matTooltipPosition="above"><i class="fal fa-share-alt"></i>
+          </a>
+          <div class="qucik_link_dp" *ngIf="showQuickLinks">
+            <h3>Quick Links</h3>
+            <div class="ql_list" (clickOutside)="toggleQuickLinks(false)">
+              <a *ngIf="isAddLeadAllowed" (click)="navigatetoLead()" class="ql_border_right ql_border_bottom"><i
+                  class="fal fa-user-plus"></i>
+                <p>Add Lead</p>
+              </a>
+              <a *ngIf="isAddMemberAllowed"  (click)="navigatetoMember()"  class="ql_border_bottom"><i
+                  class="fal fa-user-friends"></i>
+                <p>Add Member</p>
+              </a>
+              <a *ngIf="isAddAttendeeAllowed" role="button" (click)="openAttendeDialog()" class="ql_border_right"><i
+                  class="fal fa-users"></i>
+                <p>Add Attendee</p>
+              </a>
+              <a *ngIf="isAddClientAllowed" (click)="navigatetoClient()" ><i class="fal fa-user-plus"></i>
+                <p>Add Client</p>
+              </a>
+            </div>
+          </div>
+
+        </div>
+        <div class="user_logout float-right">
+          <img class="rounded_image" src="{{staffImagePath}}" />
+
+          <a role="menu" (click)="toggleUserMenu(true)"> <span class="name_width">{{staffName}}</span> &nbsp;
+            <i class="fal fa-chevron-down"></i></a>
+
+          <div class="qucik_link_dp logout_dp" *ngIf="showUserMenu">
+            <h3 class="text-left">{{staffEmail}}<br><span>{{staffRole}}</span></h3>
+            <ul (clickOutside)="toggleUserMenu(false)">
+              <li (click)="onStaffProfile()">
+                <a role="button">
+                  <i class="fal fa-user"></i>
+                  Profile
+                </a>
+              </li>
+              <li (click)="onMyTasks()" *ngIf="isMyTaskAllowed">
+                <a role="button">
+                  <i class="fal fa-tasks"></i>
+                  My Tasks
+                </a>
+              </li>
+              <li (click)="onMyAttendanceTimesheet()" *ngIf="isMyAttendanceAllowed">
+                <a role="button">
+                  <i class="fal fa-user-clock"></i>
+                  My Attendance
+                </a>
+              </li>
+              <li>
+                <a role="button" href="https://support.wellyx.com/support/home" target="_blank">
+                  <i class="fal fa-tasks"></i>
+                  Help with Features
+                </a>
+              </li>
+              <li>
+                <a role="button" href="https://support.wellyx.com/support/login" target="_blank">
+                  <i class="fal fa-ticket-alt"></i>
+                  Support Ticket
+                </a>
+              </li>
+              <li (click)="onChangePassword()">
+                <a role="button">
+                  <i class="fal fa-lock"></i>
+                  Change Password
+                </a>
+              </li>
+              <li (click)="onLogout()">
+                <a role="button">
+                  <i class="fal fa-sign-out-alt"></i>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!----Responsive Menu ---->
+
+<div class="main_menu">
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" id="mob-toggle-btn">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse main_nav" id="navbarNavDropdown">
+        <div class="row row_flex_alignment" style="width: 100%;">
+          <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+            <ul class="navbar-nav">
+              <!-- <li>
+                                <a [routerLinkActive]="['active']" [routerLink]="['/home']">
+                                    <i class="fal fa-home"></i> Home
+                                </a>
+                            </li> -->
+              <li *ngIf="allowedModules.Home">
+                <a [routerLinkActive]="['active']" [routerLink]="['/general']" (click)="mobToogle()">
+                  <i class="fal fa-home"></i> Home
+                </a>
+              </li>
+              <li *ngIf="allowedModules.Scheduler">
+                <a [routerLinkActive]="['active']" [routerLink]="['/scheduler']" (click)="mobToogle()">
+                  <i class="fal fa-calendar-alt"></i> Scheduler
+                </a>
+              </li>
+              <!-- <li *ngIf="allowedModules.Client">
+                <a [routerLinkActive]="['active']" [routerLink]="['/client']" (click)="mobToogle()">
+                  <i class="fal fa-user"></i> Customer
+                </a>
+              </li> -->
+              <li *ngIf="allowedModules.Customer">
+                <a [routerLinkActive]="['active']" [routerLink]="['/customer']" (click)="mobToogle()">
+                  <i class="fal fa-user"></i> Customer
+                </a>
+              </li>
+              <li *ngIf="allowedModules.Lead">
+                <a [routerLinkActive]="['active']" [routerLink]="['/lead']" (click)="mobToogle()">
+                  <i class="fal fa-trophy"></i> Lead
+                </a>
+              </li>
+              <li *ngIf="allowedModules.Staff">
+                <a [routerLinkActive]="['active']" [routerLink]="['/staff']" (click)="mobToogle()">
+                  <i class="fal fa-user-friends"></i> Staff
+                </a>
+              </li>
+              <li *ngIf="allowedModules.PointOfSale">
+                <a [routerLinkActive]="['active']" [routerLink]="['/point-of-sale']" (click)="mobToogle()">
+                  <i class="fal fa-desktop"></i>
+                  Point Of Sale</a>
+              </li>
+              <li *ngIf="allowedModules.Automation">
+                <a [routerLinkActive]="['active']" [routerLink]="['/automation']" (click)="mobToogle()">
+                  <i class="fal fa-magic"></i>
+                  Automation</a>
+              </li>
+              <li *ngIf="allowedModules.Product">
+                <a [routerLinkActive]="['active']" [routerLink]="['/product']" (click)="mobToogle()">
+                  <i class="fal fa-box"></i>
+                  Product</a>
+              </li>
+              <li *ngIf="allowedModules.Reports">
+                <a [routerLinkActive]="['active']" [routerLink]="['/reports']" (click)="mobToogle()">
+                  <i class="far fa-file-chart-line"></i>
+                  Reports</a>
+              </li>
+              <li *ngIf="allowedModules.Setup">
+                <a [routerLinkActive]="['active']" [routerLink]="['/setup']" (click)="mobToogle()">
+                  <i class="fal fa-cog"></i> Setup</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+            <div class="main_branch ">
+              <div class="select_label branch_select" *ngIf="branchList.length > 1">
+                <select #branch [(ngModel)]="branchId" (ngModelChange)="onBranchChange(selectedState, $event,branch)" id="BranchDropDown">
+                  <option *ngFor="let branch of branchList" [ngValue]="branch.BranchID">
+                    {{branch.BranchName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="main_search float-right">
+              <input type="text" placeholder="Search" [value]="personName" [(ngModel)]="clearCustomerInput" matInput [formControl]="searchPerson"
+                [matAutocomplete]="auto" maxlength="30">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                (optionSelected)='getSelectedClient($event.option.value)'>
+                <mat-option *ngFor="let person of allPerson" [value]="person">
+                  <span class="client_name">{{ person.FirstName + ' ' + person.LastName }}</span>
+                  <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                  <br>
+                  <span class="client_info">{{ person.Mobile }}</span>
+                  <br>
+                  <span class="client_info">{{ person.Email }}</span>
+                </mat-option>
+              </mat-autocomplete>
+              <i class="fal fa-search"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<!-- Notfications Popup  -->
+
+<div class="row">
+  <div class="col-md-12 no_padding">
+    <div *ngIf="loadingRouteConfig" class="loader">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <router-outlet>
+    </router-outlet>
+    <!-- Email  -->
+    <div class="push_noti" *ngIf="showEmailPushNoti">
+      <img src="assets/images/email_receive.png">
+      <span class="float-right close_btn" (click)="onCloseNoti()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      <h6>{{newEmail?.title}} </h6>
+      <p [innerHTML]="newEmail?.body"></p>
+      <p>{{newEmail?.createdOn}}</p>
+    </div>
+    <!-- SMS  -->
+    <div class="push_noti" *ngIf="showSMSPushNoti">
+      <img src="assets/images/email_receive.png">
+      <span class="float-right close_btn" (click)="onCloseNoti()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      <h6>{{newSMS?.title}} </h6>
+      <p [innerHTML]="newSMS?.body"></p>
+    </div>
+    <!-- Task  -->
+    <div class="push_noti" *ngIf="showTaskPushNoti">
+      <img src="assets/images/email_receive.png">
+      <span class="float-right close_btn" (click)="onCloseNoti()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      <h6>{{newTask?.title}} </h6>
+      <p [innerHTML]="newTask?.body"></p>
+      <p>{{newTask?.createdOn}}</p>
+    </div>
+    <!-- Appointment  -->
+    <div class="push_noti" *ngIf="showAppointmentPushNoti">
+      <img src="assets/images/email_receive.png">
+      <span class="float-right close_btn" (click)="onCloseNoti()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      <h6>{{newAppointment?.title}} </h6>
+      <p [innerHTML]="newAppointment?.body"></p>
+      <p>{{newAppointment?.scheduledDate}}</p>
+    </div>
+    <!-- Call  -->
+    <div class="push_noti" *ngIf="showCallPushNoti">
+      <img src="assets/images/email_receive.png">
+      <span class="float-right close_btn" (click)="onCloseNoti()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      <h6>{{newCall?.title}} </h6>
+      <p [innerHTML]="newCall?.body"></p>
+      <p>{{newCall?.scheduledDate}}</p>
+    </div>
+
+    <!-- Note  -->
+    <div class="push_noti" *ngIf="showNotePushNoti">
+      <img src="assets/images/email_receive.png">
+      <span class="float-right close_btn" (click)="onCloseNoti()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      <h6>{{newNote?.title}} </h6>
+      <p [innerHTML]="newNote?.body"></p>
+      <p
+        *ngIf="activityType.Email == newNote.ActivityTypeID || activityType.Task == newNote.ActivityTypeID || activityType.Call == newNote.ActivityTypeID || activityType.Appointment == newNote.ActivityTypeID">
+        {{newNote?.createdOn}}</p>
+
+    </div>
+
+    <!-- App Notification  -->
+    <div class="push_noti" *ngIf="showAppPushNoti">
+      <img src="assets/images/email_receive.png">
+      <span class="float-right close_btn" (click)="onCloseNoti()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      <h6>{{newAppNoti?.title}} </h6>
+      <p [innerHTML]="newAppNoti?.body"></p>
+      <p>{{newAppNoti?.createdOn}}</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="container-fluid body-content" *ngIf="isShowFooter">
+  <div class="footer_space"></div>
+  <footer>
+    <p><a href="http://wellyx.com" target="_blank">Powered by Wellyx</a></p>
+  </footer>
+</div>

@@ -1,0 +1,22 @@
+
+<div class="row">
+  <div class="col-md-12 col-sm-12 space-15" *ngFor="let account of savedAccounts">
+    <input type="radio" id="{{account.CustomerPaymentGatewayID}}" name="accountId" [value]="account.CustomerPaymentGatewayID"
+      [(ngModel)]="customerPaymentGatewayId" (click)="onCardSelectionChange(account.CustomerPaymentGatewayID)" />
+    <label for="{{account.CustomerPaymentGatewayID}}"><span></span>&nbsp;{{account.Title}}</label>
+  </div>
+  <div class="col-lg-9 col-md-12 ten_space">
+    <div class="left_space">
+      <div class="checkbox checkbox-success input_hide">
+        <input id="go_card_less" type="checkbox" name="stripe_terms_agreed" [(ngModel)]="isTermsAgreed"
+          [(checked)]="isTermsAgreed">
+        <label for="go_card_less"> <span></span>Please confirm you are the account holder and you are the only
+          person required to
+          authorize debits from this account.</label>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-12 text-right ten_space">
+    <img class="img-reponsive" src="assets/images/stripe-terms-logo.png" width="100px;">
+  </div>
+</div>

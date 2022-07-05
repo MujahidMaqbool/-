@@ -1,0 +1,55 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Void</h4>
+        </div>
+        <form #saveVoidedFrom="ngForm" (ngSubmit)="onSave(saveVoidedFrom.valid)" novalidate>
+            <div class="popup_content delete_popup">
+
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="pb-2">Beware that you cannot process the sale once it is voided!</p>
+                            <hr>
+                            <h5 class="field_label pt-1">Invoice Total</h5>
+                            <input type="text" name="text" value="{{totalDueAmount | currency: currencyFormat}}" class="form-control" disabled>
+
+                            <h5 class="field_label pt-2">Void Reason</h5>
+                            <div class="select_label">
+                                <select name="ReasonID" tabindex="1" [(ngModel)]="saveVoided.ReasonID"
+                                    #ReasonID="ngModel" (ngModelChange)="onModelChange()">
+                                    <option *ngFor="let voidedReason of voidedReasonFundamental"
+                                        [ngValue]="voidedReason.ReasonID">
+                                        {{voidedReason.ReasonName}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <div [ngClass]="{
+                                    'has-danger':Note.invalid &&  (Note.touched || Note.dirty || saveVoidedFrom.submitted),
+                                    'has-success':Note.valid &&  (Note.touched || Note.dirty)
+                                    }">
+                                        <div class="ten_space">
+                                            <textarea rows="5" class="form-control" name="Note" tabindex="2"
+                                                [(ngModel)]="saveVoided.Notes" [disabled]="!isOtherReasonRequired" required
+                                                #Note="ngModel" placeholder="Type your reason here"
+                                                maxlength="150"></textarea>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="row popup_footer">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right">
+                <button type="button" (click)="onClose()">No</button>
+                <button class="primary_blue_btn" type="submit">Confirm</button>
+            </div>
+        </div>
+    </div>
+        </form>
+    </div>
+</div>

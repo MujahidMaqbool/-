@@ -1,0 +1,562 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg top_zero">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Highlights
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.TopServices)"
+                        #fromToDateHighRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Services</h5>
+                            </div>
+                        </div>
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topServiceObj of iTopServices">
+                                <h5>{{topServiceObj.ServiceName}}
+                                    <span>({{topServiceObj.TotalPrice | currency: currencyFormat}})</span></h5>
+                                <h6>{{topServiceObj.TotalSaleService}}</h6>
+                            </div>
+
+                            <div *ngIf="!isTopServicesDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Top Employees For Services</h5>
+                            </div>
+                        </div>
+
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let topEmployeeServiceObj of iTopEmployeeServices">
+                                <h5>{{topEmployeeServiceObj.PersonName}}</h5>
+                                <h6>{{topEmployeeServiceObj.TotalPrice | currency: currencyFormat}}</h6>
+                            </div>
+
+                            <div *ngIf="!isTopEmployeeServicesDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{recordsNotFound}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border">
+                        <div class="row dashboard_header dashboard_header_border">
+                            <div class="col-md-12">
+                                <h5>Payment Summery</h5>
+                            </div>
+                        </div>
+                        <div class="dash_cstm_height cstm_scroll_bg">
+                            <div class="client_service" *ngFor="let salesbyChannelObj of iSalesbyChannel">
+                                <h5>{{salesbyChannelObj.SaleTypeName}}</h5>
+                                <h6>{{salesbyChannelObj.NetSale | currency: currencyFormat}}</h6>
+                            </div>
+                            <div *ngIf="!isTopSalesDataExists">
+                                <div class="row grid_rows">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-md-4">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-6">
+                    <h5>Top Services</h5>
+                </div>
+                <div class="col-md-6">
+                    <label class="dash_label">From</label>
+                    <input name="TopServicesDate" class="form-control float-right date-picker bg_transparent"
+                        [(ngModel)]="topServicesDate" #TopServicesDate="ngModel"
+                        (ngModelChange)="onDateChange(topServicesDate,DataChangeDashboard.TopServices)" matInput
+                        [matDatepicker]="mat_TopServicesDate" (click)="onOpenCalendar(mat_TopServicesDate)" readonly />
+                    <mat-datepicker #mat_TopServicesDate></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="mat_TopServicesDate">
+                    </mat-datepicker-toggle>
+                </div>
+            </div>
+            <div class="dash_cstm_height cstm_scroll_bg">
+                <div class="client_service" *ngFor="let topServiceObj of iTopServices">
+                    <h5>{{topServiceObj.ServiceName}}
+                        <span>({{topServiceObj.TotalPrice | currency: currencyFormat}})</span></h5>
+                    <h6>{{topServiceObj.TotalSaleService}}</h6>
+                </div>
+
+                <div *ngIf="!isTopServicesDataExists">
+                    <div class="row grid_rows">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-6">
+                    <h5>Top Employees For Services</h5>
+                </div>
+                <div class="col-md-6">
+                    <label class="dash_label">From</label>
+                    <input name="TopEmployesforServicesDate" class="form-control float-right date-picker bg_transparent"
+                        [(ngModel)]="topEmployesforServicesDate" #TopEmployesforServicesDate="ngModel"
+                        (ngModelChange)="onDateChange(topEmployesforServicesDate,DataChangeDashboard.TopEmployeesforServices)"
+                        matInput [matDatepicker]="mat_TopEmployesforServicesDate"
+                        (click)="onOpenCalendar(mat_TopEmployesforServicesDate)" readonly />
+                    <mat-datepicker #mat_TopEmployesforServicesDate></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="mat_TopEmployesforServicesDate">
+                    </mat-datepicker-toggle>
+                </div>
+            </div>
+
+            <div class="dash_cstm_height cstm_scroll_bg">
+                <div class="client_service" *ngFor="let topEmployeeServiceObj of iTopEmployeeServices">
+                    <h5>{{topEmployeeServiceObj.PersonName}}</h5>
+                    <h6>{{topEmployeeServiceObj.TotalPrice | currency: currencyFormat}}</h6>
+                </div>
+
+                <div *ngIf="!isTopEmployeeServicesDataExists">
+                    <div class="row grid_rows">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{recordsNotFound}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-6">
+                    <h5>Sales By Payment Method</h5>
+                </div>
+                <div class="col-md-6">
+                    <label class="dash_label">From</label>
+                    <input name="SalesbyChannelDate" class="form-control float-right date-picker bg_transparent"
+                        [(ngModel)]="salesbyChannelDate" #SalesbyChannelDate="ngModel"
+                        (ngModelChange)="onDateChange(salesbyChannelDate,DataChangeDashboard.SalesbyPaymentMethod)"
+                        matInput [matDatepicker]="mat_SalesbyChannelDate"
+                        (click)="onOpenCalendar(mat_SalesbyChannelDate)" readonly />
+                    <mat-datepicker #mat_SalesbyChannelDate></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="mat_SalesbyChannelDate">
+                    </mat-datepicker-toggle>
+                </div>
+            </div>
+            <div class="dash_cstm_height cstm_scroll_bg">
+                <div class="client_service" *ngFor="let salesbyChannelObj of iSalesbyChannel">
+                    <h5>{{salesbyChannelObj.SaleTypeName}}</h5>
+                    <h6>{{salesbyChannelObj.NetSale | currency: currencyFormat}}</h6>
+                </div>
+                <div *ngIf="!isTopSalesDataExists">
+                    <div class="row grid_rows">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="dashboard_header">
+                <h3>
+                    Sales Summary
+                </h3>
+            </div>
+            <div class="row small_space" *ngIf="isMonthlySalesExists">
+                <div class="col-md-12 col-sm-12">
+                    <dx-chart id="chart" [dataSource]="iMonthlySales" [customizePoint]="monthlySalescustomizePoint">
+                        <dxi-series valueField="OnSite" name="On Site" color="#F6A261"></dxi-series>
+                        <dxi-series valueField="Shop" name="Shop" color="#F8CAA6"></dxi-series>
+                        <!-- <dxi-series valueField="App" name="App" color="#1db2f5"></dxi-series> -->
+                        <dxo-common-series-settings argumentField="Month" type="stackedBar">
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="top">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" location="edge" argumentField="Month"
+                            [customizeTooltip]="monthlySalecustomizeTooltip">
+                        </dxo-tooltip>
+                    </dx-chart>
+                </div>
+            </div>
+
+            <div *ngIf="!isMonthlySalesExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        Sales Breakdown
+                    </h5>
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-7">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.SalesBreakdown)"
+                        #fromToDateHighRef>
+                    </dateto-datefrom>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <div class="select_label">
+                        <select class="form-control" name="ItemTypeID"
+                            [(ngModel)]="clientDashboardSearchParam.itemTypeID" #ItemTypeID="ngModel"
+                            (change)="onSalesBraekDownDateChange()">
+                            <option *ngFor="let itemType of ItemType" [ngValue]="itemType.ItemTypeID"
+                                style="font-size: 16px;">
+                                {{itemType.ItemTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" *ngIf="isSalesBreakDownDataExists">
+                    <dx-chart id="chart" [dataSource]="iSalesBreakDownServices" palette="soft">
+                        <dxi-series valueField="Class" name="Classes"></dxi-series>
+                        <dxi-series valueField="Product" name="Products"></dxi-series>
+                        <dxi-series valueField="Service" name="Services"></dxi-series>
+                        <dxo-common-series-settings argumentField="Month" type="bar" [ignoreEmptyPoints]="true">
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true"
+                            [customizeTooltip]="BreakDowncustomizeTooltip">
+                        </dxo-tooltip>
+                        <!-- <dxo-export [enabled]="true"></dxo-export> -->
+                    </dx-chart>
+                </div>
+            </div>
+            <div *ngIf="!isSalesBreakDownDataExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-12 parallel_grid">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-4 col-md-4 col-sm-3">
+                    <h5>
+                        Client Visits<span class="info_tip"
+                            matTooltip="Client visits are clients & walk-ins whose service have been marked as completed."
+                            matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                    </h5>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.ClientVisits)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+
+            </div>
+            <div class="row small_space">
+                <div class="col-md-12 col-sm-12">
+                    <dx-chart id="chart" [dataSource]="iMonthlyVisits" *ngIf="isClientVisitsExists" [valueAxis]="[{
+                        tickInterval: 1
+                    }]">
+                        <dxi-series *ngFor="let visits of clientVisits" [valueField]="visits.value" [name]="visits.name"
+                            color="#BCD556">
+                        </dxi-series>
+                        <dxo-common-series-settings argumentField="Date" format="dateFormatforBooked" value="TotalClient" type="spline">
+                            <dxo-point hoverMode="allArgumentPoints"></dxo-point>
+                        </dxo-common-series-settings>
+                        <dxo-argument-axis [valueMarginsEnabled]="false" discreteAxisDivisionMode="crossLabels">
+                            <dxo-grid [visible]="true"></dxo-grid>
+                        </dxo-argument-axis>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" itemTextPosition="bottom">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="clientVisitsCustomizeTooltip">
+                        </dxo-tooltip>
+                    </dx-chart>
+
+                    <div *ngIf="!isClientVisitsExists">
+                        <div class="row grid_rows">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-12 padding_left mob-pl-15 parallel_grid">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-4 col-md-4 col-sm-3">
+                    <h5>
+                        Services Booked and Completed
+                    </h5>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.ServicesBookedandCompleted)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row small_space">
+                <div class="col-md-12 col-sm-12" *ngIf="isServicesandAttendanceExists">
+                    <dx-chart id="chart" [dataSource]="iServicesandAttendanceBooking" palette="Harmony Light"
+                        [valueAxis]="[{
+                            name: 'TotalAttendance',
+                            position: 'left',
+                            tickInterval: 1
+                        }, {
+                            name: 'TotalSaleService',
+                            position: 'right',
+                            showZero: true,
+                            tickInterval: 1,
+                            valueMarginsEnabled: false
+                        }]">
+                        <dxo-argument-axis>
+                            <dxo-label overlappingBehavior="stagger"></dxo-label>
+                        </dxo-argument-axis>
+                        <dxo-tooltip [enabled]="true" [shared]="true">
+                        </dxo-tooltip>
+                        <dxo-common-series-settings argumentField="Date" format="dateFormatforBooked">
+                        </dxo-common-series-settings>
+                        <dxi-series type="bar" valueField="TotalSaleService" name="Booked" color="#BCD556">
+                        </dxi-series>
+                        <dxi-series type="spline" valueField="TotalAttendance" name="Completed" color="#E97C82">
+                        </dxi-series>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                    </dx-chart>
+
+                    <!-- <dx-chart id="chart" [dataSource]="iServicesandAttendanceBooking" palette="Harmony Light" [valueAxis]="[
+                    {
+                        name: 'attendance',
+                        position: 'right',
+                        showZero: true,
+                        tickInterval: 1
+                    }, {
+                                    name: 'services',
+                                    position: 'false',
+                                    showZero: true,
+                                    tickInterval: 1
+                                }]">
+                        <dxo-argument-axis>
+                            <dxo-label overlappingBehavior="stagger"></dxo-label>
+                        </dxo-argument-axis>
+                        <dxo-tooltip [enabled]="true" [shared]="true">
+                        </dxo-tooltip>
+                        <dxo-common-series-settings argumentField="Date"> </dxo-common-series-settings>
+                        <dxi-series type="bar" valueField="TotalSaleService" axis="services" name="Booked" color="#BCD556">
+                        </dxi-series>
+                        <dxi-series type="spline" valueField="TotalAttendance" axis="attendance" name="Completed" color="#E97C82">
+                        </dxi-series>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                    </dx-chart> -->
+
+
+                </div>
+            </div>
+
+            <div *ngIf="!isServicesandAttendanceExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-8">
+                    <h5>
+                        Services Bookings and Booking Attendance
+                    </h5>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="dash_label">From</label>
+                    <input name="ServicesBookingDateFrom" class="form-control float-right" [(ngModel)]="servicesBookingDateFrom"
+                        #ServicesBookingDateFrom="ngModel" (ngModelChange)="onFromDateChange(servicesBookingDateFrom)"
+                        matInput [matDatepicker]="mat_servicesBookingDateFrom" (ngModelChange)="onBookedServicesDateChange()" />
+                    <mat-datepicker #mat_servicesBookingDateFrom></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="mat_servicesBookingDateFrom">
+                    </mat-datepicker-toggle>
+                </div>
+                <div class="col-md-2">
+                    <label class="dash_label">To</label>
+                    <input name="ServicesBookingDateTo" class="form-control float-right" [(ngModel)]="servicesBookingDateTo"
+                        (ngModelChange)="onToDateChange(servicesBookingDateTo)" #ServicesBookingDateTo="ngModel"
+                        matInput [matDatepicker]="mat_servicesBookingDateTo" (ngModelChange)="onBookedServicesDateChange()" />
+                    <mat-datepicker #mat_servicesBookingDateTo></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="mat_servicesBookingDateTo">
+                    </mat-datepicker-toggle>
+                </div>
+
+
+            </div>
+            <div class="row small_space">
+                <div class="col-md-12 col-sm-12" *ngIf="isServicesandAttendanceExists">
+                    <dx-chart id="chart" [dataSource]="servicesandAttendanceBooking" palette="Harmony Light"
+                        [valueAxis]="[{
+                                    name: 'services',
+                                    position: 'right',
+                                    showZero: true,
+                                    tickInterval: 2,
+                                    valueMarginsEnabled: false
+                                }]">
+                        <dxo-argument-axis>
+                            <dxo-label overlappingBehavior="stagger"></dxo-label>
+                        </dxo-argument-axis>
+                        <dxo-tooltip [enabled]="true" [shared]="true">
+                        </dxo-tooltip>
+                        <dxo-common-series-settings argumentField="Date"> </dxo-common-series-settings>
+                        <dxi-series type="bar" valueField="TotalSaleService" axis="services" name="Services" color="#fac29a">
+                        </dxi-series>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+                        </dxo-legend>
+                    </dx-chart>
+
+                </div>
+            </div>
+
+            <div *ngIf="!isServicesandAttendanceExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-xl-8 col-lg-6 col-md-3 col-sm-3">
+                    <h5>
+                        New vs Returning Client
+                    </h5>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-9 col-sm-9">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.NewvsReturningClient)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row small_space" *ngIf="isNewvsReturningExists">
+                <div class="col-md-3 col-sm-3 no_padding" style="border-right: 1px solid #E5E5E5;">
+                    <div class="most_lead">
+                        <h6>In House New <span class="light_green_bg  color_size float-right"></span></h6>
+                    </div>
+                    <div class="most_lead">
+                        <h6>In House Returning <span class="bg_sky_light color_size float-right"></span></h6>
+                    </div>
+                    <div class="most_lead">
+                        <h6>OnLine New <span class="bg_pink color_size float-right"></span></h6>
+                    </div>
+                    <div class="most_lead">
+                        <h6>OnLine Returning <span class="bg_yellow color_size float-right"></span></h6>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    <!-- [customizePoint]="newvsReturningCustomizePoint" -->
+                    <dx-chart id="chart" [dataSource]="iNewvsReturningClient" [valueAxis]="[
+                    {
+                        tickInterval: 1
+                    }]">
+                        <dxi-series valueField="InHouseNew" name="In House New" color="#BCD556"></dxi-series>
+                        <dxi-series valueField="InHouseReturning" name="In House Returning" color="#BFE1FF">
+                        </dxi-series>
+                        <dxi-series valueField="OnlineNew" name="Online New" color="#E97C82"></dxi-series>
+                        <dxi-series valueField="OnlineReturning" name="Online Returning" color="#FEBF05"></dxi-series>
+                        <dxo-common-series-settings argumentField="Date" format="dateFormatforReturingClient" type="stackedBar">
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center" [visible]="false"
+                            itemTextPosition="top">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="newVsReturningCustomizeTooltip">
+                        </dxo-tooltip>
+                    </dx-chart>
+                </div>
+            </div>
+
+            <div *ngIf="!isNewvsReturningExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="scheduler_space"></div>

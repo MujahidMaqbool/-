@@ -1,0 +1,47 @@
+﻿<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Tax Details</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="section_content readonly_content">
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Tax Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=" col-sm-6" [ngClass]="[taxViewDetail.AppSourceTypeID === enumAppSourceType.OnSite ? 'col-md-4' :'col-md-3']">
+                                <h6>Name</h6>
+                                <p>{{taxViewDetail.TaxName ? taxViewDetail.TaxName: 'N/A'}}</p>
+                            </div>
+                            <div class=" col-sm-6" [ngClass]="[taxViewDetail.AppSourceTypeID === enumAppSourceType.OnSite ? 'col-md-4' :'col-md-3']">
+                                <h6>Value</h6>
+                                <p>{{taxViewDetail.TaxPercentage}}{{'%'}}</p>
+                            </div>
+                            <div class="col-sm-6" [ngClass]="[taxViewDetail.AppSourceTypeID === enumAppSourceType.OnSite ? 'col-md-4' :'col-md-3']">
+                                <h6>Type</h6>
+                                <p>{{taxViewDetail.TaxTypeName ? taxViewDetail.TaxTypeName: 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="taxViewDetail.AppSourceTypeID === enumAppSourceType.EnterPrise">
+                                <h6>Branch Permissions</h6>
+                                <p>{{taxViewDetail.HasBranchPermission ? 'Yes': 'No'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row popup_footer pt-0">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

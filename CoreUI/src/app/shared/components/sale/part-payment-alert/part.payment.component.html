@@ -1,0 +1,32 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Collect Partial Payment</h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="space-15"></div>
+            <div class="delete_warning">
+                <div>
+                    <i class="fal fa-exclamation-triangle" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <h5>Partially Pay Invoice ?</h5>
+                    <p>
+                        Total amount of the invoice is {{payment.totalAmount | currency: currencyFormat}}. You are
+                        collecting {{payment.totalAmountPaid | currency: currencyFormat}}. The remaining amount of<br/>
+                        {{payment.totalBalance | currency: currencyFormat}} will be recorded as balance due against the invoice.
+                    </p>
+                </div>
+            </div>
+            <div class="space-15"></div>
+            <div class="row popup_footer pt-0">
+                <div class="col-md-12 col-sm-12 no_padding">
+                    <div class="cancel_btn float-right xs-btn">
+                        <button class="left_zero" (click)="onNo()">Cancel</button>
+                        <button class="primary_blue_btn" (click)="onYes()">Take Part Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

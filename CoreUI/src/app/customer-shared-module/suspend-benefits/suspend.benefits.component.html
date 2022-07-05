@@ -1,0 +1,84 @@
+<form #suspendBenefits="ngForm" (ngSubmit)="onSuspendBenefits()">
+    <div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-lg medium_popup">
+            <div class="popup_header">
+                <h4>Suspend / Unsuspend Benefits</h4>
+            </div>
+
+            <div class="popup_content cstm_scroll_bg">
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="staff_provide_service suspend_align top_zero">
+                                <div class="checkbox checkbox-success">
+                                    <input class="example-margin" type="checkbox" name="isCheck"
+                                        [(ngModel)]="memberBenefitsVM.isSuspendAll" (change)="onSuspendAllBenefits()"
+                                        id="suspend-door">
+                                    <label for="suspend-door">Select All</label>
+                                </div>
+                                <!-- <h3>Suspend All Benefits</h3> -->
+                                <!-- <div class="select_label">
+                                    <select class="form-control" name="benefitName"
+                                        [(ngModel)]="memberBenefitsVM.SuspendBenefitType" #benefits="ngModel"
+                                        [disabled]="!memberBenefitsVM.isSuspendAll" (change)="onChangeBenefitType()">
+                                        <option *ngFor="let benef of benefitsDetail" [value]="benef.value">
+                                            {{benef.text}}
+                                        </option>
+                                    </select>
+                                </div> -->
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="row staff_provide_service pb-3">
+                                <div class="col-md-12 suspend_align padding_right"
+                                    *ngFor="let beneDetail of memberBenefitsVM.memberBenefits">
+                                    <div class="checkbox checkbox-success">
+                                        <input class="example-margin" type="checkbox"
+                                            name="{{'Chk_benefit' + beneDetail.CustomerMembershipBenefitsID}}"
+                                            id="{{'Chk_benefit' + beneDetail.CustomerMembershipBenefitsID}}"
+                                            [(ngModel)]="beneDetail.IsBenefitsSuspended"
+                                            [(checked)]="beneDetail.IsBenefitsSuspended"
+                                            (change)="onIsCheckIndividualBenefit()" />
+                                        <label
+                                            for="{{'Chk_benefit' + beneDetail.CustomerMembershipBenefitsID}}">{{beneDetail.MembershipBenefitsTypeName}}</label>
+                                    </div>
+                                    <div class="select_label"
+                                        *ngIf="beneDetail.MembershipBenefitsTypeID != ENU_MemberShipBenefits.DoorCheckIns">
+                                        <select class="form-control"
+                                            name="{{'Chk_benefits' + beneDetail.CustomerMembershipBenefitsID}}"
+                                            [disabled]="!beneDetail.IsBenefitsSuspended"
+                                            [(ngModel)]="beneDetail.SuspendBenefitType" #benefit="ngModel">
+                                            <option *ngFor="let benef of benefitsDetail; index as i"
+                                                [value]="benef.value">
+                                                {{benef.text}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="suspend_align top_zero">
+                                <div class="checkbox checkbox-success">
+                                    <input class="example-margin" type="checkbox" name="isEnforceManualSetting"
+                                        [(ngModel)]="EnforceManualSetting" id="suspend-isEnforceManualSetting">
+                                    <label for="suspend-isEnforceManualSetting">Enforce Manual Settings <span class="info_tip"
+                                        matTooltip="Enforcing this check will never allow the system to override these settings automatically"
+                                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                            class="far fa-info-circle"></i></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right">
+                        <button class="left_margin_zero" type="button" (click)="onClose()">Close</button>
+                        <button class="primary_blue_btn" type="submit">Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

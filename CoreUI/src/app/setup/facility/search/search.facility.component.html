@@ -1,0 +1,75 @@
+﻿<div class="page_content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button *ngIf="isSaveFacilityAllowed" class="save" (click)="onAddClick()" data-toggle="modal"
+          data-target=".add_classfacility_pop">
+          Add Facility
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="grids_white_bg">
+    <div class="overflow-auto">
+      <div class="row grid_header mob-scroll-grid-lg">
+        <div class="col-md-3 col">
+          <h5>Facility Name</h5>
+        </div>
+        <div class="col-md-5 col">
+          <h5>Description</h5>
+        </div>
+        <div class="col-md-2 col text-center">
+          <h5>Status</h5>
+        </div>
+        <div class="col-md-2 col text-center">
+          <h5>Actions</h5>
+        </div>
+      </div>
+      <div id="grid" *ngIf="isDataExists">
+        <div class="row grid_rows mob-scroll-grid-lg" *ngFor="let facilityModel of facilities">
+          <div class="col-md-3 col">
+            <h5>{{facilityModel.FacilityName}}</h5>
+          </div>
+          <div class="col-md-5 col">
+            <h5>{{facilityModel.Description}}</h5>
+          </div>
+          <div class="col-md-2 col text-center">
+            <h5>{{facilityModel.IsActive ? 'Active' : 'Inactive'}}</h5>
+          </div>
+          <div class="col-md-2 col text-center">
+            <h5>
+              <span class="blue" *ngIf="isSaveFacilityAllowed">
+                <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" data-toggle="modal"
+                  data-target=".edit_classfacility_pop" href="javascript:void(0);"
+                  (click)="onEditClick(facilityModel.FacilityID)">
+                  <i class="fal fa-edit"></i>
+                </a>
+              </span>
+              <span class="red_del" *ngIf="isSaveFacilityAllowed">
+                <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                  (click)="deleteClassFacility(facilityModel.FacilityID)" href="javascript:void(0)">
+                  <i class="fal fa-trash-alt"></i>
+                </a>
+              </span>
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+          <div class="col-md-12 col-sm-12 text-center">
+            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pagination">
+      <div class="col-md-12 no_padding">
+        <mat-paginator #paginator [length]="totalRecords" [pageSizeOptions]="pageSizeOptions"
+          (page)="onPageChange($event)" [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li *ngIf="allowedPages.Dashboard">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['dashboard']" role="tab">
+                    Dashboard
+                </a>
+            </li>
+            <li *ngIf="allowedPages.View">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['search']" role="tab">
+                    Lead
+                </a>
+            </li>
+            <li *ngIf="allowedPages.BusinessFlow">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['business-flow']" role="tab">
+                    Business Flow
+                </a>
+            </li>
+
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

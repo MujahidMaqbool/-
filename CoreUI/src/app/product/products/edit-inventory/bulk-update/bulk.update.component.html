@@ -1,0 +1,88 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Edit Inventory Details</h4>
+            </div>
+            <div class="popup_content cst-scroll-bar">
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <div class="alert alert-danger" *ngIf="inValidStock && inValidReason">
+                            {{messages.Validation.Adust_stock_cannot_be_less_then_zero}}
+                        </div>
+                        <div class="alert alert-danger" *ngIf="!inValidStock && inValidReason">
+                            {{messages.Validation.please_select_reason}}
+                        </div>
+                        <div class="alert alert-danger" *ngIf="inValidStock && !inValidReason">
+                            {{messages.Validation.Adust_stock_cannot_be_less_then_zero}}
+                        </div>
+                    </div>
+                </div>
+                <div class="popup_white_bg pt-3">
+
+                    <div class="row ">
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3>Inventory Information</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row sm-col-full">
+                        <div class="col-lg-3 col-md-6" *ngIf="!inventoryObj.isBulkUpdate">
+                            <h5 class="field_label ">Current Stock</h5>
+                            <input type="text" [disabled]="true" [(ngModel)]="inventoryAdjustStock.currentStock"
+                                class="form-control">
+                        </div>
+                        <div   [ngClass]="inventoryObj.isBulkUpdate ? 'col-lg-6 col-md-6' : 'col-lg-3 col-md-6' ">
+                            <h5 class="field_label">Adjust Stock</h5>
+                            <div class="row">
+                                <div class="col p-0">
+                                    <div class="select_label"><select class="form-control"
+                                            (change)="onChangeAdjustStockValue($event)" [(ngModel)]="stockAdjustment">
+                                            <option *ngFor="let stock of StockAdjustment" [ngValue]="stock.value">
+                                                {{stock.text}}</option>
+                                        </select></div>
+                                </div>
+                                <div class="col pr-0" [ngClass]="{
+                                            'has-danger': stock.invalid && (stock.dirty || stock.touched || inValidStock) || inventoryAdjustStock.adjustStock == 0
+                                               }">
+                                    <input type="text" [(ngModel)]="inventoryAdjustStock.adjustStock" #stock="ngModel" maxlength="5" n
+                                        (ngModelChange)="onChangeStockValue($event)" required name="currentStock"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div [ngClass]="inventoryObj.isBulkUpdate ? 'col-lg-6 col-md-6' : 'col-lg-3 col-md-6' ">
+                            <h5 class="field_label">Reason</h5>
+                            <div class="select_label" [ngClass]="{
+                                'has-danger': reason.invalid && (reason.dirty || reason.touched) || inValidReason
+                                   }">
+                                <select class="form-control" [(ngModel)]="inventoryAdjustStock.adjustmentReason" #reason="ngModel" (change)="onSelectReason()"
+                                    name="currentStock">
+                                    <option [ngValue]="null" >Select Reason</option>
+                                    <option *ngFor="let reason of StockAdjustmentReasons" [ngValue]="reason.ReasonName">
+                                        {{reason.ReasonName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6" *ngIf="!inventoryObj.isBulkUpdate">
+                            <h5 class="field_label ">New Stock</h5>
+                            <input type="text" [disabled]="true" [(ngModel)]="inventoryAdjustStock.newStock"
+                                class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Cancel</button>
+                        <button type="button" class="save primary_blue_btn" [disabled]="isSavedBtn" (click)="saveBulkUpdate()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

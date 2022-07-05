@@ -1,0 +1,63 @@
+<div class="add_new_lead" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="small_popup">
+                <div class="popup_header">
+                    <h4>Reschedule Booking</h4>
+                </div>
+                <div class="popup_content cstm_scroll_bg">
+             
+                    <div class="popup_white_bg row" *ngIf="data.IsShowReturnBenefitToggle">
+                        <div class="col-md-12 center_flex_alignment">
+                            <h5 class="field_label top_zero">A membership benefit was used to make the original booking. Toggle on to return the consumed benefit</h5>
+                                <mat-slide-toggle [checked]="isBenefitConsumed" [(ngModel)]="isBenefitConsumed"  class="wellyx-checked"
+                                    name="BookingClasses">
+                                </mat-slide-toggle>
+                            </div>
+                    </div>
+                    <div class="popup_white_bg attendee_white_bg">
+                        <div class="col-md-12">
+                            <h5 class="field_label top_zero" >Reschedule Fee Difference</h5>
+                            <ng-container *ngIf="chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                                <p>Total paid for this booking is {{currencyFormat}}{{data.AmountPaid}}. The amount of {{currencyFormat}}{{amountChargeRefund}} is due
+                                    to be
+                                    refunded. Select an
+                                    option from the below dropdown on how you would like to proceed.</p>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="!chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                                    <p>Total paid for this booking is {{currencyFormat}}{{data.AmountPaid}}. The amount of {{currencyFormat}}{{amountChargeRefund}} is due
+                                        to be
+                                        charged. Select an
+                                        option from the below dropdown on how you would like to proceed.</p>
+                            </ng-container>
+                            <ng-container *ngIf="chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                                <mat-select [(value)]="rescheduleObj.RefundTypeId" class="form-control select_label mt-2" [(ngModel)]="rescheduleObj.RefundTypeId">
+                                    <mat-option *ngFor="let option of RefundOptions" [value]="option.RefundTypeId">
+                                        {{option.RefundTypeName}}</mat-option>
+                                </mat-select>
+                            </ng-container>
+                            <ng-container *ngIf="!chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                                <mat-select [(value)]="rescheduleObj.ChargeTypeId" class="form-control select_label mt-2" [(ngModel)]="rescheduleObj.ChargeTypeId">
+                                    <mat-option *ngFor="let option of ChargeOptions" [value]="option.ChargeTypeId">
+                                        {{option.ChargeTypeName}}</mat-option>
+                                </mat-select>
+                            </ng-container>
+                            <ng-container *ngIf="chargeRefundObj.IsRefund == null ">
+                                <p>No payment is due to be paid or refunded. Click confirm to reschedule</p>
+                            </ng-container>
+                        </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="cancel_btn float-right">
+                            <div class="row popup_footer cancel_btn float-right">
+                                <div class="col-md-12 col-sm-12 no_padding">
+                                    <button (click)="onCancel()">Cancel</button>
+                                    <button class="primary_blue_btn" [disabled]="disableConfirmBtn" (click)="onConfirm()">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="small_space"></div>
+                    </div>
+                </div>
+            </div>
+</div>

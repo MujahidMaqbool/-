@@ -1,0 +1,106 @@
+<form #blockTimeFormData="ngForm" (ngSubmit)="saveStaffBlockTime(blockTimeFormData.valid)" novalidate>
+  <div class="popup_content no_padding">
+    <div class="row sch_mob_reverse">
+      <div class="col-lg-3 col-md-4 padding_right sm-pr-15 parallel_grid">
+        <div class="sch_white_bg smallScheduler sch_height_nohead" *ngIf="isShowScheduler">
+          <one-day-scheduler [dayViewFormat]="dayViewFormat" [staffID]="staffBlockModel.StaffID"
+            [schedulerTimeFormat]="schedulerTimeFormat" [startDate]="currentDate" #onedaySchedulerComp>
+          </one-day-scheduler>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-8 parallel_grid" id="schedulerBlockTimeFormDiv">
+        <div class="sch_white_bg multi_section_scroll pt-2">
+          <div class="row ">
+            <div class="col-sm-12 col-md-12">
+              <div class="alert alert-danger" *ngIf="isShowError">{{dateTimeCompareError}}</div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <h5 class="field_label">Select Date</h5>
+              <date-picker [value]="currentDate" [required]="true" [showClear]="false"
+                (onDateChange)="onSelectDate_valueChanged($event)">
+              </date-picker>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <h5 class="field_label">Staff</h5>
+              <div class="select_label">
+                <select class="form-control" [(ngModel)]="staffBlockModel.StaffID" name="StaffID" #StaffID="ngModel"
+                  (ngModelChange)="onStaffChange(staffBlockModel.StaffID)">
+                  <option *ngFor="let staff of staffList" [ngValue]="staff.StaffID">
+                    {{staff.StaffFullName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <h5 class="field_label">Start Time</h5>
+              <dx-date-box class="full_width" [type]="dateTimeType" [displayFormat]="schedulerTimeFormat"
+                [interval]="15" [(value)]="staffBlockModel.StartDate" (onValueChanged)="startDateChangeEvent($event)"
+                [showClearButton]="true" [useMaskBehavior]="true">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="start time is required"></dxi-validation-rule>
+                </dx-validator>
+              </dx-date-box>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <h5 class="field_label">End Time</h5>
+              <dx-date-box class="full_width" [type]="dateTimeType" [displayFormat]="schedulerTimeFormat"
+                [interval]="15" [(value)]="staffBlockModel.EndDate" (onValueChanged)="endDateChangeEvent($event)"
+                [showClearButton]="true" [useMaskBehavior]="true">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="end time is required"></dxi-validation-rule>
+                </dx-validator>
+              </dx-date-box>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 col-lg-12 col-md-12">
+              <h5 class="field_label">Repeat</h5>
+              <dx-switch (onValueChanged)="repeatSwitch_valueChanged($event)" [value]="showRepeatControl">
+              </dx-switch>
+              <dx-form [formData]="recurrenceRuleFormData" *ngIf="showRepeatControl">
+                <dxi-item dataField="repeat" cssClass="recurrence-section" editorType="dxRecurrenceEditor"
+                  [label]="{text : 'Recurrence Rule'}"
+                  [editorOptions]="{ value: recurrenceRuleFormData.repeat, onValueChanged: onRecurrenceValueChanged  }">
+                </dxi-item>
+              </dx-form>
+            </div>
+            <div class="col-xl-6 col-lg-12 col-md-12" *ngIf="recurrenceExceptionList.length > 0">
+              <h5 class="field_label">Exceptions</h5>
+              <div>
+                <span *ngFor="let exceptDates of recurrenceExceptionList; let arrayIndex=index"
+                  class="excpt_dates">{{exceptDates}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5 class="field_label sch_lab">Note <span>(Remaining Characters: {{ 250 -
+                  staffBlockModel?.Description?.length }})</span></h5>
+              <textarea class="form-control form-control-description" rows="5" [(ngModel)]="staffBlockModel.Description"
+                name="Description" #Description="ngModel" maxlength="250"></textarea>
+            </div>
+          </div>
+          <div class="row ng-star-inserted">
+            <div class="col-md-12">
+              <div class="sch_duration_text">
+                <p>Block time makes this time slot unavailable for activities. You can also use blocks for
+                  defining lunch hours or for other business requirements. </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row popup_footer">
+    <div class="col-md-12">
+      <div class="cancel_btn float-right">
+        <button type="button" (click)="onCloseSchedulerBlockTimePopup()">Cancel</button>
+        <button type="submit" class="primary_blue_btn" [disabled]="isSaveButtonDisabled">Save</button>
+      </div>
+      <div class="small_space"></div>
+    </div>
+  </div>
+</form>

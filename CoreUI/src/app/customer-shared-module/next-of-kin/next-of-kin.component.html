@@ -1,0 +1,227 @@
+﻿<div class="page_content">
+    <form #memberNextOfKinForm="ngForm" (ngSubmit)="saveNextOfKin(memberNextOfKinForm.valid)" novalidate>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="company_btn float-right">
+                    <!-- <button type="button" class="simple_btn" role="navigation" [routerLink]="['/member']">
+                        Back to Search</button> -->
+                    <button type="button" class="simple_btn" (click)="resetForm()">
+                        Reset</button>
+                    <button class="save" tabindex="14" [disabled]="(memberNextOfKinForm.pristine)">
+                        Save</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="white_bg info_bar_bg">
+            <person-info *ngIf="shouldGetPersonInfo"></person-info>
+        </div>
+        <div class="white_bg">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger"
+                        *ngIf="memberNextOfKinForm.invalid && memberNextOfKinForm.submitted">
+                        <div *ngIf="memberNextOfKinForm.invalid && memberNextOfKinForm.submitted">
+                            {{messages.Validation.Info_Required}}
+                        </div>
+                        <div *ngIf="Email?.errors?.pattern">
+                            {{messages.Validation.Email_Invalid}}
+                        </div>
+                        <div *ngIf="Mobile?.errors?.pattern || Phone?.errors?.pattern">
+                            {{messages.Validation.Phone_Invalid}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section_title">
+                        <h4>Personal Information</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="section_content">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div [ngClass]="{
+                                 'has-danger': Email.invalid && (Email.dirty || Email.touched || memberNextOfKinForm.submitted),
+                                 'has-success': Email.valid && (Email.dirty || Email.touched )
+                                    }">
+                            <div class="field_label">
+                                <h5>Email</h5>
+                            </div>
+                            <input type="text" name="Email" [(ngModel)]="memberNextOfKin.Email" class="form-control"
+                                #Email="ngModel"
+                                pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                                maxlength="50" tabindex="1" required />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="row mob-pay-p0">
+                            <div class="col-md-5 col-sm-6 no_padding">
+                                <div class="field_label">
+                                    <h5>Title <span>(optional)</span></h5>
+                                    <div [ngClass]="{
+                                         'has-danger': Title.invalid && (Title.dirty || Title.touched || memberNextOfKinForm.submitted),
+                                         'has-success': Title.valid && (Title.dirty || Title.touched )
+                                            }">
+                                        <div class="select_label">
+                                            <select class="form-control" name="Title"
+                                                [(ngModel)]="memberNextOfKin.Title" #Title="ngModel" tabindex="2"
+                                                >
+                                                <option [ngValue]="undefined">
+                                                  Select Title
+                                                </option>
+                                                <option *ngFor="let title of titleList" [ngValue]="title">
+                                                    {{title}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-sm-6 padding_right" [ngClass]="{
+                                         'has-danger': FirstName.invalid && (FirstName.dirty || FirstName.touched || memberNextOfKinForm.submitted),
+                                         'has-success': FirstName.valid && (FirstName.dirty || FirstName.touched )
+                                            }">
+                                <div class="field_label">
+                                    <h5>First Name</h5>
+                                    <input type="text" name="FirstName" [(ngModel)]="memberNextOfKin.FirstName"
+                                        class="form-control" #FirstName="ngModel" maxlength="30" tabindex="3" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Last Name <span>(optional)</span></h5>
+                            <input type="text" name="LastName" class="form-control" maxlength="30" tabindex="4"
+                                [(ngModel)]="memberNextOfKin.LastName">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Relationship</h5>
+                        </div>
+                        <div [ngClass]="{
+                         'has-danger': memberRelationshipTypeID.invalid && (memberRelationshipTypeID.dirty || memberRelationshipTypeID.touched || memberNextOfKinForm.submitted),
+                         'has-success': memberRelationshipTypeID.valid && (memberRelationshipTypeID.dirty || memberRelationshipTypeID.touched )
+                            }">
+                            <div class="select_label">
+                                <select class="form-control" name="RelationshipTypeID"
+                                    [(ngModel)]="memberNextOfKin.RelationshipTypeID" #memberRelationshipTypeID="ngModel"
+                                    tabindex="5" required>
+                                    <option [ngValue]="null">Select Relationship</option>
+                                    <option *ngFor="let relationshipType of relationshipTypeList"
+                                        [ngValue]="relationshipType.RelationshipTypeID">
+                                        {{relationshipType.RelationshipTypeName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6" >
+                        <div [ngClass]="{
+                                'has-danger': Phone.invalid && (Phone.dirty || Phone.touched || memberNextOfKinForm.submitted),
+                                'has-success': Phone.valid && (Phone.dirty || Phone.touched )
+                                   }">
+                            <div class="field_label">
+                                <h5>Phone <span>(optional)</span></h5>
+                            </div>
+                            <international-phone-number name="Phone" [(ngModel)]="memberNextOfKin.Phone"
+                                #Phone="ngModel" tabindex="6" [defaultCountry]="memberNextOfKin.Phone ? '' :defaultCountry">
+                            </international-phone-number>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div [ngClass]="{
+                         'has-danger': Mobile.invalid && (Mobile.dirty || Mobile.touched || memberNextOfKinForm.submitted),
+                         'has-success': Mobile.valid && (Mobile.dirty || Mobile.touched )
+                            }">
+                            <div class="field_label">
+                                <h5>Mobile <span>(optional)</span></h5>
+                            </div>
+                            <international-phone-number name="Mobile" [(ngModel)]="memberNextOfKin.Mobile"
+                                #Mobile="ngModel" tabindex="7"  [defaultCountry]="memberNextOfKin.Mobile ? '' : defaultCountry">
+                            </international-phone-number>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="white_bg">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section_title">
+                        <h4>Address <span class="optional">(optional)</span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="section_content">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Country </h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" (ngModelChange)="onCountryChange($event)" name="countryName"
+                                [(ngModel)]="memberNextOfKin.CountryID" #countryName="ngModel" tabindex="8">
+                                <option [ngValue]="undefined"> Select Country </option>
+                                <option *ngFor="let country of countryList" [ngValue]="country.CountryID">
+                                    {{country.CountryName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>State / County </h5>
+                        </div>
+                        <input type="text" [(ngModel)]="memberNextOfKin.StateCountyName" name="StateCountyName"
+                            maxlength="50" tabindex="9" />
+                        <!-- <div class="select_label">
+                            <select class="form-control" name="state" [(ngModel)]="memberNextOfKin.StateCountyID"
+                                #state="ngModel" tabindex="9">
+                                <option [ngValue]="undefined"> Select State / County </option>
+                                <option *ngFor="let state of stateList" [ngValue]="state.StateCountyID">
+                                    {{state.StateCountyName}}
+                                </option>
+                            </select>
+                        </div> -->
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div [ngClass]="{
+                                 'has-danger': Address1.invalid && (Address1.dirty || Address1.touched || memberNextOfKinForm.submitted),
+                                 'has-success': Address1.valid && (Address1.dirty || Address1.touched )
+                                    }">
+                            <div class="field_label">
+                                <h5>Address Line 1</h5>
+                            </div>
+                            <input type="text" name="Address1" [(ngModel)]="memberNextOfKin.Address1"
+                                class="form-control" #Address1="ngModel" maxlength="250" tabindex="10" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Address Line 2 </h5>
+                        </div>
+                        <input type="text" name="Address2" [(ngModel)]="memberNextOfKin.Address2" class="form-control"
+                            maxlength="250" #Address2="ngModel" tabindex="11">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h5 class="field_label">City </h5>
+                        <input type="text" name="CityName" [(ngModel)]="memberNextOfKin.CityName" class="form-control"
+                            #CityName="ngModel" tabindex="12" maxlength="50">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Postal Code / Zip Code </h5>
+                        </div>
+                        <input type="text" name="PostCode" [(ngModel)]="memberNextOfKin.PostCode" class="form-control"
+                            tabindex="13" maxlength="10" #PostCode="ngModel">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

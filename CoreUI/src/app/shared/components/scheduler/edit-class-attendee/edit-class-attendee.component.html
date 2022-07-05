@@ -1,0 +1,19 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-lg small_popup">
+            <div class="popup_header">
+                <h4>Edit Class</h4>
+            </div>
+            <div class="popup_content delete_popup">
+                <div class="delete_warning space-10">
+                  <div><i class="fal fa-calendar-check"></i></div>
+                  <div><span> Do you want to edit class or manage attendees?</span></div>
+                </div>
+                <div class="space-10"></div>
+                <div class="cancle_attendee cancel_btn auto_btn">
+                    <button (click)="closePopup()">Cancel</button>
+                    <button *ngIf="receiveData.isActive && isManageAttendeAllow" (click)="onManageAttendeeClick()">Manage Attendees</button>
+                    <button class="save primary_blue_btn" (click)="onYes()">Edit Class</button>
+                </div>
+            </div>
+        </div>
+    </div>

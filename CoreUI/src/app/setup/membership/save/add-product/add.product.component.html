@@ -1,0 +1,322 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content">
+      <form #membershipItemBenefitForm="ngForm" (ngSubmit)="onSave(membershipItemBenefitForm.valid)" novalidate>
+        <div class="popup_content full_screen_pop">
+          <div class="popup_header">
+            <div>
+              <h4>{{saveMembershipItemModel.IsEdit ? 'Edit' : 'Add'}} {{itemTypeName}}</h4>
+            </div>
+          </div>
+
+          <div class="popup_content no-height">
+
+            <div class="row">
+              <div class="col-md-12 p-0">
+                <div class="alert alert-danger" *ngIf="(membershipItemBenefitForm.invalid && membershipItemBenefitForm.submitted)
+                                                    || showTotalSessionsValidation
+                                                    || showDiscountPercentageValidation
+                                                    || showItemTypeValidation
+                                                    || isSelecteRequired">
+                  <div
+                    *ngIf="membershipItemBenefitForm.invalid && !showTotalSessionsValidation && !showDiscountPercentageValidation && !showItemTypeValidation && !showItemTypeValidationForNotExist">
+                    {{messages.Validation.Info_Required}}
+                  </div>
+                  <div *ngIf="showTotalSessionsValidation">
+                    {{messages.Validation.Sessions_Length}}
+                  </div>
+                  <div *ngIf="showDiscountPercentageValidation">
+                    {{messages.Validation.Discount_Percentage_Length}}
+                  </div>
+                  <div *ngIf="showItemTypeValidation">
+                    {{itemTypeValidationMessage}}
+                  </div>
+                  <div *ngIf="showItemTypeValidationForNotExist">
+                    {{itemTypeValidationMessageForNotExist}}
+                  </div>
+                  <div *ngIf="isSelecteRequired">
+                    {{isSelecteRequiredMsg}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="view_bg">
+
+              <div class="row align-items-end mob-col-full">
+                <div class="col">
+                  <h5 class="field_label">Branch</h5>
+                  <div [ngClass]="{
+                'has-danger': (BranchID.invalid || ((!BranchID.value) || BranchID.value == 0))
+                            && (BranchID.dirty || BranchID.touched),
+                'has-success':  BranchID.valid && (BranchID.value &&
+                            BranchID.value != 0) && (BranchID.dirty || BranchID.touched)
+                }">
+                    <div class="select_label">
+                      <select class="form-control" name="BranchID" [(ngModel)]="searchProductVariantModel.BranchID"
+                        id="BranchID" [disabled]="saveMembershipItemModel.IsEdit"
+                        (ngModelChange)="onBranchSelectionChange($event)" #BranchID="ngModel" required>
+                        <option value="0" required>Select Branch</option>
+                        <option *ngFor="let branch of selectedBranchList" [ngValue]="branch.BranchID">
+                          {{branch.BranchName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <h5 class="field_label">Product Category</h5>
+                  <div>
+                    <input type="text" name="ProductCategory" class="form-control" #ProductCategory="ngModel" [disabled]="saveMembershipItemModel.IsEdit" [(ngModel)]="searchProductVariantModel.ProductCategoryName" />
+                  </div>
+                </div>
+
+                <div class="col">
+                  <h5 class="field_label">Brand</h5>
+                  <div>
+                      <input type="text" name="BrandName" class="form-control" #BrandName="ngModel" [disabled]="saveMembershipItemModel.IsEdit" [(ngModel)]="searchProductVariantModel.BrandName" />
+                  </div>
+                </div>
+                <div class="col-md-1 text-right full_width_btn pl-md-0">
+                  <button type="button" class="search" (click)="onSearchProduct()" [disabled]="saveMembershipItemModel.IsEdit" [disabled]="saveMembershipItemModel.IsEdit">Search</button>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!---*********New section with collapse**********-->
+            <div class="view_bg p-2">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="section_title">
+                    <h3 class="mb-1">{{itemTypeHeading}}
+                      <span class="info_tip"
+
+                        matTooltip="Add all, multiple or single {{itemTypeName}} from the multi-select list of {{itemTypeHeading}}.
+                     These {{itemTypeHeading}} can be availed by the members of this membership as per the usage limit and pricing you set below." matTooltipPosition="above"
+                        matTooltipClass="custom-tooltip">
+                        <i class="far fa-info-circle"></i>
+                      </span>
+
+                      <ng-container
+                        *ngIf="branchWiseProductCategory && branchWiseProductCategory.length > 0 && !saveMembershipItemModel.IsEdit">
+                        <button class="btn-sm de_seleect_btn float-right" type="button"
+                          (click)="selectOrDeselectAllProducts(false)"> Deselect All</button>
+                        <button class="btn-sm de_seleect_btn float-right" type="button"
+                          (click)="selectOrDeselectAllProducts(true)"> Select All </button>
+                      </ng-container>
+
+                    </h3>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="membership-add-product cstm_scroll_bg" [ngClass]="{'with-no-pagination': saveMembershipItemModel.IsEdit}">
+                <div class="row">
+                  <!--**********************For product****************************************-->
+                  <ng-container *ngIf="saveMembershipItemModel.ItemTypeID == enuMemberShipItemTypeName.ProductVariant">
+                    <!--**************Category loop****************************-->
+
+                    <div class="col-md-12" *ngFor="let productCategory of branchWiseProductCategory; let catIndex=index">
+
+                      <div class="staff_provide_service">
+                        <div class="checkbox checkbox-success full_width">
+                          <div class="cst-checkbox-collapse" [ngClass]="{'collapsed': catIndex != 0}" role="button"
+                            data-toggle="collapse" attr.data-target="#collapseExample{{catIndex}}" aria-expanded="false"
+                            attr.aria-label="collapseExample{{catIndex}}">
+                            <h3 class="pl-3">{{productCategory.ProductCategoryName}}</h3>
+                          </div>
+
+                          <button type="button" class="btn-sm de_seleect_btn float-right"
+                            *ngIf="!saveMembershipItemModel.IsEdit"
+                            (click)="onSelectOrDeselectProductCategory(productCategory.ProductCategoryID, false)">Deselect
+                            All </button>
+                          <button type="button" class="btn-sm de_seleect_btn float-right"
+                            *ngIf="!saveMembershipItemModel.IsEdit"
+                            (click)="onSelectOrDeselectProductCategory(productCategory.ProductCategoryID, true)">Select
+                            All
+                          </button>
+                        </div>
+                      </div>
+
+                      <!--**************Service loop****************************-->
+                      <ng-container *ngFor="let product of productCategory.VariantProductInfoList; let productIndex=index">
+                        <div class="collapse pl-3" [ngClass]="{'show': catIndex == 0}" id="collapseExample{{catIndex}}">
+
+                          <div class="w-100">
+                            <div class="checkbox checkbox-success">
+                              <input type="checkbox" [disabled]="saveMembershipItemModel.IsEdit" class="example-margin"
+                                id="{{'product_'+ product.ProductID}}" name="{{'product_'+ product.ProductID}}"
+                                [(ngModel)]="product.IsSelected" [(checked)]="product.IsSelected"
+                                (ngModelChange)="onProductChange(product.ProductID, product.IsSelected, catIndex, productIndex)" />
+                              <label for="{{'product_'+product.ProductID}}"> {{product.ProductName}}</label>
+
+                            </div>
+                          </div>
+                          <!--**************Service Packages loop*****************-->
+                            <ng-container
+                            *ngFor="let productVariant of product.VariantInfoList; let productVariantIndex=index">
+                            <div class="w-100 pl-4 ml-1 collapse show" id="collapseService{{productIndex}}" *ngIf="product.ProductClassificationID == enuProductClassification.Variant">
+                              <div class="checkbox checkbox-success">
+                                <input [disabled]="saveMembershipItemModel.IsEdit" type="checkbox" class="example-margin"
+                                  id="{{'Chk_'+productVariant.ProductVariantID}}"
+                                  name="{{'Chk_'+productVariant.ProductVariantID}}"
+                                  [(ngModel)]="productVariant.IsSelected" [(checked)]="productVariant.IsSelected"
+                                  (ngModelChange)="onProductVariantChange(productVariant.ProductVariantID, productVariant.IsSelected, catIndex, productIndex)" />
+                                <label for="{{'Chk_'+productVariant.ProductVariantID}}">{{productVariant.ProductVariantName}}</label>
+                              </div>
+                            </div>
+                          </ng-container>
+
+                        </div>
+                      </ng-container>
+
+                    </div>
+
+                  </ng-container>
+                </div>
+
+                <ng-container *ngIf="branchWiseProductCategory == null || branchWiseProductCategory.length == 0 || !branchWiseProductCategory">
+                  <div class="row grid_rows no_border">
+                    <div class="col-md-12 col-sm-12 text-center">
+                      <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+              <!-- Pagination -->
+              <div class="row" *ngIf="!saveMembershipItemModel.IsEdit">
+                <div class="col-md-12">
+                    <div class="popup-pagination">
+                        <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)" [isShowSelectedRecord]="true" [selectedRecordCount]="selectedMembershipItemsBenefits && selectedMembershipItemsBenefits.length > 0 ? selectedMembershipItemsBenefits.length : 0"></app-pagination>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <!--********New section with collapse end*******-->
+
+
+            <div class="row">
+              <div class="col-md-6 pl-md-0 p-0-sm">
+                <div class="view_bg p-3">
+                    <div class="row">
+                      <div class="col-md-12 no_padding section_title mb-0">
+                        <div class="sch_class_head no_padding section_title no_border mb-2">
+                          <h3>Set Usage Limit of the Benefits<span class="info_tip"
+                              matTooltip="How much and how often can the members avail these benefits? The usage limit you set here applies on the selection of {{itemTypeHeading}} made above. Remember that members cannot avail more than ‘Total Class Benefits limit’ you have set at the Membership Benefits screen."
+                              matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                          </h3>
+                          <mat-slide-toggle class="wellyx-checked" [(checked)]="isNoLimit" [disabled]="false"
+                            name="NoLimits" tabindex="2" (click)="noLimit_collapse_valueChanged()">
+                            {{isNoLimit ? 'No Limit': 'Restricted'}}
+                          </mat-slide-toggle>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row flex-end">
+                      <div class="col-md-6 col-sm-6 padding_left p-0-sm">
+                        <div [ngClass]="{
+                      'has-danger': TotalSessions.invalid && !isNoLimit &&
+                                    (TotalSessions.dirty || TotalSessions.touched)
+                                    || ((!TotalSessions.value) || TotalSessions.value == 0 || TotalSessions.value == null)
+                                    && (TotalSessions.dirty || TotalSessions.touched)
+                                    && showTotalSessionsValidation,
+                      'has-success': (TotalSessions.value && TotalSessions.value != 0)
+                          && TotalSessions.valid && (TotalSessions.dirty || TotalSessions.touched)
+                      }">
+                          <h5 class="field_label">Benefits</h5>
+                          <input class="form-control" min="1" maxlength="4" [(ngModel)]="totalSessions"
+                            [disabled]="isNoLimit ? true : false" required name="TotalSessions" numberControl
+                            type="text" #TotalSessions="ngModel"
+                            (ngModelChange)="onBenefitSessionDurationChangeOnlyNumbers($event)">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 padding_right p-0-sm">
+                        <div class="select_label">
+                          <select class="form-control" name="durationTypeID" [(ngModel)]="durationTypeID"
+                          [disabled]="isNoLimit ? true : false"
+                            id="durationTypeID">
+                            <option value="{{enuMemberShipBenefitDurations.Day}}" required>Per Day</option>
+                            <option value="{{enuMemberShipBenefitDurations.Week}}" required>Per Week</option>
+                            <option value="{{enuMemberShipBenefitDurations.FortnightBiweek}}" required>Per
+                              Fortnight/Bi-week</option>
+                            <option value="{{enuMemberShipBenefitDurations.FourWeek}}" required>Per Four Week</option>
+                            <option value="{{enuMemberShipBenefitDurations.Month}}" required>Per Month</option>
+                            <option value="{{enuMemberShipBenefitDurations.Quarter}}" required>Per Quarter</option>
+                            <option value="{{enuMemberShipBenefitDurations.SixMonth}}" required>Per Six Month</option>
+                            <!-- <option value="{{enuMemberShipBenefitDurations.Year}}" required>Per Year</option> -->
+                            <option value="{{enuMemberShipBenefitDurations.Membership}}" required>Per Membership
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 pr-md-0 p-0-sm">
+                  <div class="view_bg p-3">
+                    <div class="row">
+                      <div class="col-md-12 no_padding section_title mb-0">
+                        <div class="sch_class_head no_padding section_title no_border mb-2">
+                          <h3>Set Pricing of the Benefits<span class="info_tip"
+                              matTooltip="Are these benefits available for free or at a discounted price to the members? The discount percentage applies on the selling price of the {{itemTypeHeading}}."
+                              matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                          </h3>
+                          <mat-slide-toggle class="wellyx-checked" [(checked)]="isFree" [disabled]="false" name="isFree"
+                            tabindex="2" (click)="free_collapse_valueChanged()">
+                            {{isFree ? 'Free': 'Discounted'}}
+                          </mat-slide-toggle>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row flex-end">
+                      <div class="col-md-12 p-0">
+                        <div [ngClass]="{
+                      'has-danger': DiscountPercentage.invalid && !isFree
+                                    && (DiscountPercentage.dirty || DiscountPercentage.touched)
+                                    || ((!DiscountPercentage.value) || DiscountPercentage.value == 0 || DiscountPercentage.value == null || DiscountPercentage.value > 100)
+                                    && (DiscountPercentage.dirty || DiscountPercentage.touched)
+                                    && showDiscountPercentageValidation,
+                      'has-success': (DiscountPercentage.value && DiscountPercentage.value != 0)
+                                      && DiscountPercentage.valid && (DiscountPercentage.dirty || DiscountPercentage.touched)
+                      }">
+                          <h5 class="field_label">Discount(%)</h5>
+                          <div class="d-flex cst-disable-checkbox">
+                            <input class="form-control" min="0.01" max="100" maxlength="5"
+                              [(ngModel)]="discountPercentage" [disabled]="isFree ? true : false" required
+                              name="DiscountPercentage" numberControl type="text" #DiscountPercentage="ngModel"
+                              (ngModelChange)="onDiscountPercentageChangeOnlyNumbers($event)">
+                              <span class="dollar_prefix right_radius">%</span>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row popup_footer">
+            <div class="col-md-12">
+              <div class="cancel_btn float-right">
+                <button type="button" (click)="onCloseDialog()">Close</button>
+                <button class="save primary_blue_btn" [disabled]="showItemTypeValidation">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

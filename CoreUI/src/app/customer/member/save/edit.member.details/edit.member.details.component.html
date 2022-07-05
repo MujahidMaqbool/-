@@ -1,0 +1,18 @@
+﻿<div class="page_content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="company_btn float-right">
+                <!-- <button class="simple_btn" type="button" role="navigation" [routerLink]="['/member']">
+                    Back t00o Search
+                </button> -->
+                <button class="simple_btn" type="button" (click)="onReset()">
+                    Reset
+                </button>
+                <button class="save primary_blue_btn" (click)="onSave()" tabindex="35">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+    <save-member-details [isCustomerAddressRequired]="isReuiredCustomerAddress" *ngIf="memberID > 0" #saveMemberDetails></save-member-details>
+</div>

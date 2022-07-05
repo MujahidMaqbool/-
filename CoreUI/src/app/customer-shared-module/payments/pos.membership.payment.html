@@ -1,0 +1,279 @@
+<div class="row mob-pay-p0">
+    <div class="col-lg-4 col-md-5 parallel_grid padding_left">
+        <div class="pay_section" *ngIf="hasPayments">
+            <h3>Payment Date : &nbsp; <span>{{paymentSummary.PaymentDate | customdate: dateFormat}}</span></h3>
+            <h4 class="grid_bg">Item Name<span class="float-right">Total Amount</span></h4>
+            <div class="pay_scroll cstm_scroll_bg ">
+                <h6 *ngFor="let payment of paymentSummary.PaymentList">
+                    {{payment.PaymentName}} <span
+                        class="float-right">{{payment.TotalPrice | currency: currencyFormat}}</span>
+                </h6>
+            </div>
+            <div class="total-payment">
+                <hr>
+                <h3>Tax <span class="float-right">{{paymentSummary.TaxAmount | currency: currencyFormat}}</span></h3>
+                <button>Total <span
+                        class="float-right">{{paymentSummary.TotalAmount | currency: currencyFormat}}</span></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-7 parallel_grid p-0">
+        <div class="pay_section no_padding">
+            <!-- <div class="row">
+                <div class="col-md-3" *ngIf="showDirectDebit" (click)="onSaleTypeChange(saleType.DirectDebit)">
+                    <div class="pos_payment_options" [ngClass]="{
+                            'active': paymentSummary.SaleTypeID === saleType.DirectDebit
+                        }">
+                        <i class="fal fa-university"></i>
+                        <h5>Direct Debit</h5>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="showCard" (click)="onSaleTypeChange(saleType.Card)">
+                    <div class="pos_payment_options" [ngClass]="{
+                            'active': paymentSummary.SaleTypeID === saleType.Card
+                        }">
+                        <i class="fal fa-credit-card"></i>
+                        <h5>Card</h5>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="showCash" (click)="onSaleTypeChange(saleType.Cash)">
+                    <div class="pos_payment_options" [ngClass]="{
+                            'active': paymentSummary.SaleTypeID === saleType.Cash
+                        }">
+                        <i class="fal fa-money-bill"></i>
+                        <h5>Cash</h5>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="showCash" (click)="onSaleTypeChange(saleType.Other)">
+                    <div class="pos_payment_options" [ngClass]="{
+                            'active': paymentSummary.SaleTypeID === saleType.Other
+                        }">
+                        <i class="fal fa-university"></i>
+                        <h5>3rd Party</h5>
+                    </div>
+                </div>
+
+            <div class="small_space"></div>
+            <hr>
+            </div> -->
+            <div class="row" *ngIf="showDirectDebit" (click)="onSaleTypeChange(saleType.DirectDebit)">
+                <div class="col-md-12">
+                    <div class="pay_label">
+                        <label
+                            [ngClass]="{ 'active': paymentSummary.SaleTypeID === saleType.DirectDebit }">GoCardless</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showCard" (click)="onSaleTypeChange(saleType.Card)">
+                <div class="col-md-12">
+                    <div class="pay_label">
+                        <label [ngClass]="{ 'active': paymentSummary.SaleTypeID === saleType.Card }">Stripe</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showPayTabsCard" (click)="onSaleTypeChange(saleType.Card)">
+                <div class="col-md-12">
+                    <div class="pay_label">
+                        <label [ngClass]="{ 'active': paymentSummary.SaleTypeID === saleType.Card }">PayTabs</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showStripeDD" (click)="onSaleTypeChange(saleType.StripeTerminal)">
+                <div class="col-md-12">
+                    <div class="pay_label">
+                        <label [ngClass]="{ 'active': paymentSummary.SaleTypeID === saleType.StripeTerminal }">Stripe
+                            ACH</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showCash">
+                <div class="col-md-12 pay_label">
+                    <span (click)="onSaleTypeChange(saleType.Cash)">
+                        <label [ngClass]="{ 'active': paymentSummary.SaleTypeID === saleType.Cash }">Cash</label>
+                    </span>
+                    <span (click)="onSaleTypeChange(saleType.Other)" *ngIf="!isByMemberShip">
+                        <label [ngClass]="{ 'active': paymentSummary.SaleTypeID === saleType.Other }">3rd Party</label>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="summary_label"><label>Summary</label></div>
+                </div>
+            </div>
+            <div *ngIf="showDirectDebit">
+                <div class="row" *ngIf="paymentSummary.AccountDetails">
+                    <div class="col-md-4 col-sm-6">
+                        <h5 class="field_label">Account Holder Name</h5>
+                        <p>{{paymentSummary.AccountDetails.AccountHolderName}}</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6" *ngIf="paymentSummary.AccountDetails.AccountNumber">
+                        <h5 class="field_label">Account Number</h5>
+                        <p>{{paymentSummary.AccountDetails.AccountNumber}}</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6" *ngIf="paymentSummary.AccountDetails.BranchCode || paymentSummary.AccountDetails.BankCode">
+                        <h5 class="field_label">Branch/Sort Code</h5>
+                        <p>{{paymentSummary.AccountDetails.BranchCode ? paymentSummary.AccountDetails.BranchCode : paymentSummary.AccountDetails.BankCode}}</p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="showStripeDD">
+                <div class="row" *ngIf="paymentSummary.AccountDetails">
+                    <div class="col-md-4 col-sm-6">
+                        <h5 class="field_label">Account Name</h5>
+                        <p>{{paymentSummary.AccountDetails.AccountHolderName}}</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6" *ngIf="paymentSummary.AccountDetails.AccountNumber">
+                        <h5 class="field_label">Account Number</h5>
+                        <p>{{paymentSummary.AccountDetails.AccountNumber}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showCard && paymentSummary.AccountDetails">
+                <div class="col-md-12" *ngIf="paymentSummary.AccountDetails.AccountHolderName; else newCardDetails">
+                    <h5 class="field_label">Account Details</h5>
+                    <p>{{paymentSummary.AccountDetails.AccountHolderName}}</p>
+                </div>
+                <ng-template #newCardDetails>
+                    <div class="col-md-4 col-sm-6">
+                        <h5 class="field_label">Name On Card</h5>
+                        <p>{{paymentSummary.AccountDetails.NameOnCard}}</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <h5 class="field_label">Card number</h5>
+                        <p>{{paymentSummary.AccountDetails.CardNumber}}</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <h5 class="field_label">Expiry Date</h5>
+                        <p>{{paymentSummary.AccountDetails.Expiry}}</p>
+                    </div>
+                    <!-- <div class="col-md-2">
+                        <h5 class="field_label">CVC</h5>
+                        <p>{{paymentSummary.AccountDetails.CVC}}</p>
+                    </div> -->
+                </ng-template>
+            </div>
+            <div class="row" *ngIf="showPayTabsCard && paymentSummary.AccountDetails">
+                <div class="col-md-12" *ngIf="paymentSummary.AccountDetails.AccountHolderName; else newCardDetails">
+                    <h5 class="field_label">Account Details</h5>
+                    <p>{{paymentSummary.AccountDetails.AccountHolderName}}</p>
+                </div>
+                <ng-template #newCardDetails>
+                    <div class="col-md-4 col-sm-6">
+                        <h5 class="field_label">Name On Card</h5>
+                        <p>{{paymentSummary.AccountDetails.NameOnCard}}</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <h5 class="field_label">Card number</h5>
+                        <p>{{paymentSummary.AccountDetails.CardNumber}}</p>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="row ten_space">
+
+                <div class="col-md-4 col-sm-6">
+                    <h5 class="field_label">Country</h5>
+                    <p>{{billingDetail?.CountryName ? billingDetail?.CountryName : 'N/A'}}</p>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h5 class="field_label">County/State</h5>
+                    <p>{{billingDetail?.StateCountyName ? billingDetail?.StateCountyName : 'N/A'}}</p>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h5 class="field_label">City</h5>
+                    <p>{{billingDetail?.CityName ? billingDetail?.CityName : 'N/A'}}</p>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h5 class="field_label">Address 1</h5>
+                    <p>{{billingDetail?.Address1 ? billingDetail?.Address1 : 'N/A'}}</p>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h5 class="field_label">Address 2</h5>
+                    <p>{{billingDetail?.Address2 ? billingDetail?.Address2 : 'N/A'}}</p>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h5 class="field_label">Postal Code</h5>
+                    <p>{{billingDetail?.PostalCode ? billingDetail?.PostalCode : 'N/A'}}</p>
+                </div>
+                <div class="col-md-12 ten_space">
+                    <p *ngIf="paymentSummary.TotalAmount > 0">Payment on:
+                        <b>{{paymentSummary.PaymentDate | customdate: dateFormat}}</b></p>
+                    <p>First full payment: <b>{{paymentSummary.TotalAmount | currency: currencyFormat}}</b></p>
+                </div>
+                <div class="col-md-12 ten_space" *ngIf="paymentSummary.NextPaymentAmount">
+                    <p *ngIf="paymentSummary.NextPaymentInterval === membershipDurationType.Days">
+                        Subsequent installments of
+                        <b>{{paymentSummary.NextPaymentAmount | currency: currencyFormat}}</b>
+                        on a daily basis</p>
+                    <p *ngIf="paymentSummary.NextPaymentInterval === membershipDurationType.Weeks">
+                        Subsequent installments of
+                        <b>{{paymentSummary.NextPaymentAmount | currency: currencyFormat}}</b>
+                        on around <b>{{nextPaymentDay}}</b> of every <b>Week</b></p>
+                    <p *ngIf="paymentSummary.NextPaymentInterval === membershipDurationType.FortnightBiweek">
+                        Subsequent installments of
+                        <b>{{paymentSummary.NextPaymentAmount | currency: currencyFormat}}</b>
+                        on every <b>Fortnight/Bi-week</b></p>
+                    <p *ngIf="paymentSummary.NextPaymentInterval === membershipDurationType.Months">
+                        Subsequent installments of
+                        <b>{{paymentSummary.NextPaymentAmount | currency: currencyFormat}}</b>
+                        on <b>{{nextPaymentDay}}</b> of each <b>Month</b></p>
+                    <p *ngIf="paymentSummary.NextPaymentInterval === membershipDurationType.Quarter">
+                        Subsequent installments of
+                        <b>{{paymentSummary.NextPaymentAmount | currency: currencyFormat}}</b>
+                        on <b>{{nextPaymentDay}}</b> of each <b>Quarter</b></p>
+                    <p *ngIf="paymentSummary.NextPaymentInterval === membershipDurationType.SixMonth">
+                        Subsequent installments of
+                        <b>{{paymentSummary.NextPaymentAmount | currency: currencyFormat}}</b>
+                        on <b>{{nextPaymentDay}}</b> of each <b>Six Month</b></p>
+                    <p *ngIf="paymentSummary.NextPaymentProRata && paymentSummary.NextPaymentProRata > 0">
+                        Pro Rata on Next Payment <b>{{paymentSummary.NextPaymentProRata | currency: currencyFormat}}</b>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <h5 class="field_label no_padding">Payment Note <span>&nbsp;(Remaining Characters: {{ 250 -
+                        paymentSummary?.Notes?.length }})</span></h5>
+                    <textarea name="PaymentNote" rows="3" [maxlength]="250"
+                        [(ngModel)]="paymentSummary.Notes"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="payment_terms" *ngIf="showCard || showStripeDD">
+    <p>Payment Provided by Stripe. Read the updated Stripe <a href="https://stripe.com/privacy" target="_blank">Privacy
+            Notice</a>
+        to learn more about how they use personal data.</p>
+    <img class="img-reponsive" src="assets/images/stripe-terms-logo.png" width="80px;">
+</div>
+<div class="payment_terms" *ngIf="showPayTabsCard">
+    <p>Payment Provided by PayTabs. Read the updated PayTabs <a href="https://site.paytabs.com/en/privacy-policy/"
+            target="_blank">Privacy
+            Notice</a>
+        to learn more about how they use personal data.</p>
+    <img class="img-reponsive" src="assets/images/paytabs-logo.png" width="80px;">
+</div>
+
+<div class="go_cardless_terms" *ngIf="showDirectDebit">
+    <h5>The Direct Debit Guarantee <span class="float-right"><img class="img-reponsive"
+                src="assets/images/direct-debit-terms-logo.png" width="80px;"></span></h5>
+    <ul>
+        <li>The Guarantee is offered by all banks and building societies that accept instructions to pay
+            Direct Debits.</li>
+        <li>If there are any changes to the amount, date or interval of your Direct Debit, GoCardless will
+            notify you 3 working days in advance of your account being debited or as otherwise agreed.
+            If you request GoCardless to collect a payment, confirmation of the amount and date will be
+            given to you at the time of the request.</li>
+        <li>If an error is made in the payment of your Direct Debit, by GoCardless or your bank or building society,
+            you are entitled to a full and immediate refund of the amount paid from your bank or building society
+            - If you receive a refund you are not entitled to, you must pay it back when GoCardless asks you to.</li>
+        <li>You can cancel a Direct Debit at any time by simply contacting your bank or building society.
+            Written confirmation may be required. Please also notify us.</li>
+    </ul>
+    <p>Payment Provided by GoCardless. Read the updated GoCardless <a href="https://gocardless.com/privacy/"
+            target="_blank">Privacy
+            Notice</a> to learn more about how they use personal data.</p>
+
+</div>

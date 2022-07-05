@@ -1,0 +1,29 @@
+<div class="modal-lg small_popup">
+    <div class="popup_header">
+        <h4>Missing Billing Address</h4>
+    </div>
+    <div class="popup_content delete_popup">
+        <div class="small_space"></div>
+        <div class="delete_warning">
+            <div>
+                <i class="fal fa-envelope-open-dollar"></i>
+            </div>
+            <div>
+                <span>Billing address is required before you can proceed. Do you want to add billing address now?</span>
+                <!-- <span>Billing Address is required before you can add this card.
+                    Do you want to add Billing Address now?</span> -->
+            </div>
+            <!-- <div >
+                <span>Billing Address is required before Processing Membership.
+                    Do you want to add Billing Address now?</span>
+            </div> -->
+        </div>
+        <div class="small_space"></div>
+        <div class="row cancel_btn float-right">
+            <div class="col-md-12 no_padding">
+                <button (click)="onNo(true)">No</button>
+                <button class="primary_blue_btn" (click)="onRedirectToBillingAddress()">Yes, Add Billing Address</button>
+            </div>
+        </div>
+    </div>
+</div>

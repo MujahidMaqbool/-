@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li class="back_to_menu">
+                <a class="nav-link" role="navigation" [routerLink]="['/automation/search']">
+                    <i class="fal fa-arrow-left"></i> Automation Search
+                </a>
+            </li>
+            <li >
+                <a class="nav-link active" [routerLinkActive]="['active']" 
+                [routerLink]="['automation/details', automationID ]" [routerLinkActiveOptions]="{exact:true}" role="tab">
+                {{automationID > 0 ? 'Details' : 'Add Automation'}}  
+                </a>
+            </li>
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

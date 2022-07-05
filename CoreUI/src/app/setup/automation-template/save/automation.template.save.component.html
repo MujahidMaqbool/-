@@ -1,0 +1,190 @@
+<div class="add_template_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <form #saveAutomationTemplateForm="ngForm" (ngSubmit)="onSave(saveAutomationTemplateForm.valid)" novalidate>
+      <div class="modal-content extra_large_popup">
+        <div class="row row_flex_alignment popup_header">
+          <div class="col-md-6 col-sm-6">
+            <h4>Automation Template</h4>
+          </div>
+          <div class="col-md-6 col-sm-6 text-right mob-pt-2">
+            <mat-slide-toggle class="example-margin" [(checked)]="saveAutomationTemplateModel.IsActive"
+              [(ngModel)]="saveAutomationTemplateModel.IsActive" [disabled]="false" name="status">
+              {{saveAutomationTemplateModel.IsActive ? 'Active': 'Inactive'}}
+            </mat-slide-toggle>
+          </div>
+        </div>
+        <div class="popup_content cstm_scroll_bg" [ngClass] = "{'disable_box': saveAutomationTemplateModel.IsFixed}">
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-4 padding_left mob-pr-0 parallel_grid">
+              <div class="row temp_white_bg mb-0">
+                <div class="col-md-12">
+                  <h5 class="field_label">Template Type</h5>
+                  <div class="select_label">
+                    <select class="form-control" name="communicationType" [(ngModel)]="communicationTypeID"
+                      (ngModelChange)="onChangeCommunicationType($event)">
+                      <option *ngFor="let communicationType of fundamentals.CommunicationType"
+                        [ngValue]="communicationType.CommunicationTypeID" required>
+                        {{communicationType.CommunicationTypeName}}
+                      </option>
+                    </select>
+                  </div>
+                  <h5 class="field_label">Trigger Category</h5>
+                  <div class="select_label">
+                    <select class="form-control" name="eventCategoryType" [(ngModel)]="eventCategoryTypeID"
+                      (ngModelChange)="onChangeEventCategoryType($event)">
+                      <option *ngFor="let eventCategoryType of fundamentals.EventCategoryType"
+                        [ngValue]="eventCategoryType.EventCategoryTypeID" required>
+                        {{eventCategoryType.EventCategoryTypeName}}
+                      </option>
+                    </select>
+                  </div>
+                  <h5 class="field_label">Trigger</h5>
+                  <div class="select_label">
+                    <select class="form-control" name="eventType" [(ngModel)]="eventTypeID"
+                      (ngModelChange)="onChangeEventType($event)">
+                      <option *ngFor="let eventType of eventTypeList" [ngValue]="eventType.EventTypeID" required>
+                        {{eventType.EventTypeName}}
+                      </option>
+                    </select>
+                  </div>
+                  <h5 class="field_label">Contact Type</h5>
+                  <div class="select_label">
+                    <select class="form-control" name="isCustomer" [(ngModel)]="isCustomer"
+                      (ngModelChange)="onChangeAudienceType($event)">
+                      <option *ngFor="let audienceType of   audienceTypeList"
+                        [ngValue]="audienceType.id" required>
+                        {{audienceType.name}}
+                      </option>
+                    </select>
+                     <!-- <select class="form-control" name="isCustomer" [(ngModel)]="isCustomer"
+                      (ngModelChange)="onChangeAudienceType($event)">
+                      <option [ngValue]="true" required > Customer </option>
+                      <option [ngValue]="false" required > Staff </option>
+                    </select> -->
+                  </div>
+                </div>
+              </div>
+              <div class="row temp_white_bg cstm_scroll_bg automation_temp_placeholder">
+                <div class="col-md-12">
+                  <h5 class="field_label">Place Holder fields</h5>
+
+                  <div class="mb-1" id="{{ 'automation_place_accordian' + i }}"
+                    *ngFor="let vl of veriableList; let i = index">
+                    <div class="panel-heading collapsed" data-toggle="collapse"
+                      [attr.data-parent]="'#automation_place_accordian' + i"
+                      [attr.data-target]="'#automation_place_collapse' + i">
+                      <h3 class="sch_collapse_item accordion-toggle1">{{vl.name}}</h3>
+                    </div>
+                    <div id="{{ 'automation_place_collapse' + i }}" class="panel-collapse collapse">
+                      <!-- [ngClass]="{  'show': i == 0 }" -->
+                      <div class="sch_panel-body">
+                        <ul class="cstm_scroll_bg field-border">
+                          <li *ngFor="let classTV of vl.data" [draggable] [dragData]="classTV.VariableName"
+                            [dragEnabled]="true" class="nav-item">
+                             {{classTV.VariableName}} <i
+                              class="fa fa-bars float-right"></i>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div>
+            <div class="col-xl-9 col-lg-8 col-md-8 parallel_grid temp_white_bg last_div_bz">
+              <div id="errorMessagesPanel">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="alert alert-danger small_space"
+                      *ngIf="saveAutomationTemplateForm.submitted && saveAutomationTemplateForm.invalid && isInvalidData && !isInvalidEmailBody && !isInvalidSMSBody">
+                      {{messages.Validation.Info_Required}}
+                    </div>
+                    <div class="alert alert-danger small_space" *ngIf="isInvalidEmailBody && communicationTypeID == enu_CommunicationType.Email">
+                      {{emailMaxLengthMessage}}
+                    </div>
+                    <div class="alert alert-danger small_space" *ngIf="isInvalidSMSBody && (communicationTypeID == enu_CommunicationType.SMS || communicationTypeID == enu_CommunicationType.Notification)">
+                      <span *ngIf="communicationTypeID == 2">{{smsMaxLengthMessage}}</span>
+                      <span *ngIf="communicationTypeID == 3">{{notificationMaxLengthMessage}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-2">
+                  <div class="col-md-6 col-sm-6">
+                    <div class="field_label">
+                      <h5>Title</h5>
+                    </div>
+                    <div [ngClass]="{
+                                                      'has-danger': txtNameEmail.invalid &&
+                                                      (txtNameEmail.dirty || (saveAutomationTemplateForm.submitted && isInvalidData)),
+                                                      'has-success': txtNameEmail.valid && (txtNameEmail.dirty)}">
+                      <input type="text" name="txtNameEmail" class="form-control" #txtNameEmail="ngModel"
+                        [(ngModel)]="saveAutomationTemplateModel.TemplateTextTitle" maxlength="50"
+                        (blur)="onTitleUpdated()" tabindex="1" required />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6" *ngIf="communicationTypeID != enu_CommunicationType.SMS">
+                    <div class="field_label">
+                      <h5>Subject</h5>
+                    </div>
+                    <div [ngClass]="{
+                                                      'has-danger': txtSubject.invalid &&
+                                                      (txtSubject.dirty || txtSubject.touched || (saveAutomationTemplateForm.submitted && isInvalidData)),
+                                                      'has-success': txtSubject.valid && (txtSubject.dirty || txtSubject.touched )
+                                                          }">
+                      <input type="text" class="form-control" name="txtSubject" #txtSubject="ngModel"
+                        [(ngModel)]="saveAutomationTemplateModel.TemplateTextSubject" (blur)="onSubjectUpdated()"
+                        maxlength="50" tabindex="2" required />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 auto_temp_copy">
+                    <div *ngIf="isShowHtmlEditor"
+                      [ngClass]="{
+                        'has-danger': (txtDescriptionEmail.invalid && saveAutomationTemplateForm.submitted && isInvalidData)}">
+                      <div class="field_label">
+                        <h5>Description <span>(Remaining Characters: {{ _maxEmailBodyLength -
+                          emailTextDescription?.length }})</span></h5>
+                      </div>
+                      <email-editor droppable (onDrop)="onDropPlaceHoder($event)"
+                        (onEmailBodyChange)="onEmailDescriptionUpdated($event)" [value]="emailTextDescription" tabIndexNumber="3">
+                      </email-editor>
+                      <input type="text" name="txtDescriptionEmail" #txtDescriptionEmail="ngModel"
+                        [(ngModel)]="emailTextDescription" required [maxlength]="_maxEmailBodyLength"
+                        style="display: none" />
+                    </div>
+                    <div *ngIf="!isShowHtmlEditor"
+                      [ngClass]="{
+                        'has-danger': (txtDescriptionSMSAndNotification.invalid && saveAutomationTemplateForm.submitted && isInvalidData)}">
+                      <div class="field_label">
+                        <h5>Description <span>(Remaining Characters: {{ _maxSMSBodyLength -
+                          smsAndNotificationTextDescription?.length }})</span></h5>
+                      </div>
+                      <textarea rows="6" class="form-control" droppable (onDrop)="onDropPlaceHoder($event)" #myTextArea
+                        (click)="getCaretPos(myTextArea)" (keyup)="getCaretPos(myTextArea)"
+                        name="txtDescriptionSMSAndNotification" (ngModelChange)="onSMSDescriptionUpdated()"
+                        [(ngModel)]="smsAndNotificationTextDescription" required class="form-control" (blur)="onTextAreaUpdated()"
+                        #txtDescriptionSMSAndNotification="ngModel" [maxlength]="_maxSMSBodyLength" tabindex="3"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row popup_footer">
+          <div class="col-md-12 col-sm-12">
+            <div class="cancel_btn float-right">
+              <button class="simple_border_btn" mat-button type="button" (click)="onCloseDialog()">Cancel</button>
+              <button class="save primary_blue_btn">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

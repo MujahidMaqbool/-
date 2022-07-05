@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li *ngIf="allowedModules.CustomerReport">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['customer-reports']" role="tab">
+                    Customer
+                </a>
+            </li>
+            <!-- <li *ngIf="allowedModules.ClientReport">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['client-reports']" role="tab">
+                    Client
+                </a>
+            </li> -->
+            <li *ngIf="allowedModules.StaffReport">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['staff-reports']" role="tab">
+                    Staff
+                </a>
+            </li>
+            <li *ngIf="allowedModules.LeadReport">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['lead-reports']" role="tab">
+                    Lead
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['sale-reports']" role="tab">
+                    Sales
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['common-reports']" role="tab">
+                    Common
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="report_section">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <p *ngIf="this.customerTypeID == enuCustomerType.Lead">This report is useful to run when you want to see all the items bought by an individual lead.
+            </p>
+            <p *ngIf="this.customerTypeID != enuCustomerType.Lead">This report is useful to run when you want to see all the items bought by an individual customer.
+            </p>
+        </div>
+    </div>
+
+    <!-- <div class="col-md-6 col-sm-6">
+            <div class="report_button text-right">
+                <button (click)="ExportAllSaleBookedDetailReport()"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                    Export</button>
+                <button class="primary_blue_btn" (click)="ViewAllSaleBookedDetailReport()"> <i class="fa fa-eye" aria-hidden="true"></i>
+                    View</button>
+            </div>
+        </div> -->
+
+    <div class="small_space"></div>
+    <form #AllSaleDetailsForm="ngForm" (ngSubmit)="exportAllSaleBookedDetailReport(fileType.PDF)" novalidate>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <h5 class="field_label">{{customerTitle}}</h5>
+                <input type="text" placeholder="{{customerTypePlaceHolder}}" matInput [formControl]="searchPerson" class="form-control" [matAutocomplete]="auto" maxlength="30" name="searchPerson" [(ngModel)]="clearClientBookedDetailInput" (ngModelChange)="onClientNameChange(clearClientBookedDetailInput)">
+                <span *ngIf="clearClientBookedDetailInput != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPersonName" (optionSelected)='getSelectedPerson($event.option.value)'>
+                    <mat-option *ngFor="let person of allPerson" [value]="person">
+                        <span class="client_name">{{ person.FirstName + ' ' + person.LastName }}</span>
+                        <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                        <br>
+                        <span class="client_info">{{ person.Mobile }}</span>
+                        <br>
+                        <span class="client_info">{{ person.Email }}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+
+            <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #saleDetailByMemberRef>
+                </dateto-datefrom>
+            </div>
+        </div>
+        <div class="report_button text-right">
+            <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="submit"><i
+                    class="fal fa-file-pdf" aria-hidden="true"></i>
+            </button>
+            <button matTooltip="Excel File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="exportAllSaleBookedDetailReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+            </button>
+
+            <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="viewAllSaleBookedDetailReport(fileType.PDF)"><i class="fal fa-book-open"></i>
+            </button>
+            <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" type="button" (click)="resetSaleDetailsfilters()"><i class="fal fa-undo" aria-hidden="true"></i>
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,144 @@
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button *ngIf="allowedTaxPages.Save_tax" class="save" (click)="onAddClick()" data-toggle="modal"
+          data-target=".add_branch_pop">
+          Add Tax</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+        data-target="#taxes_search">
+        <div class="col-md-12">
+          <h3 class="panel-title accordion-toggle">
+            Search Filter
+          </h3>
+        </div>
+      </div>
+      <div id="taxes_search" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+          </div>
+          <div class="row flex-end">
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <div class="field_label">
+                <h5>Tax</h5>
+              </div>
+              <input type="text" class="form-control" tabindex="1" name="taxName" [(ngModel)]="searchTaxParams.TaxName"
+                id="taxName">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <div class="field_label">
+                <h5>Type</h5>
+              </div>
+              <div class="select_label">
+                <select name="taxType" class="form-control" [(ngModel)]="searchTaxParams.TaxTypeID"
+                  [disabled]="!isMultiBranch">
+                  <option [ngValue]="null">All</option>
+                  <option *ngFor="let type of TypeList" [ngValue]="type.TypeID">{{type.TypeName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <div class="field_label">
+                <h5>Status</h5>
+              </div>
+              <div class="select_label">
+                <select name="Status" [(ngModel)]="searchTaxParams.TaxStatusID">
+                  <option [ngValue]="null">All</option>
+                  <option *ngFor="let status of StatusList" [ngValue]="status.StatusID">{{status.StatusName}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6 mt-3">
+              <div class="row">
+                <div class="col-md-6 col-sm-6 padding_left xs-pr-0">
+                  <button class="reset_btn" (click)="onResetTax()" type="button"> Reset</button>
+                </div>
+                <div class="col-md-6 col-sm-6 full_width_btn padding_right xs-pl-0">
+                  <button tabindex="4" (click)="onSearchTax()" class="search" type="button">Search</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="grids_white_bg">
+    <div class="overflow-auto-tax">
+      <div class="row grid_header responsive_grid_header">
+        <div class="col">
+          <h5><a href="javascript:void(0)" (click)="changeSorting(1)" class="sort_icon">Tax <i
+                class="fas fa-sort-alt"></i></a></h5>
+        </div>
+        <div class="col">
+          <h5><a href="javascript:void(0)" (click)="changeSorting(2)" class="sort_icon">Type <i
+                class="fas fa-sort-alt"></i></a></h5>
+        </div>
+        <div class="col">
+          <h5>Status</h5>
+        </div>
+        <div class="col-2 text-center">
+          <h5>Actions</h5>
+        </div>
+      </div>
+
+      <div id="grid">
+        <div class="row grid_rows responsive_grid_rows" *ngFor="let tax of taxList ; let i = index">
+          <div class="col">
+            <!-- <div class="cst-collapse" data-toggle="collapse" attr.data-target="#collapseExample{{i}}"
+            aria-expanded="false" attr.aria-label="collapseExample{{i}}" ></div> -->
+            <h5>{{tax?.TaxName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{tax?.TaxTypeName}}</h5>
+          </div>
+          <div class="col">
+            <h5>{{tax.IsActive ? 'Active' : 'Inactive'}}</h5>
+          </div>
+          <div class="col-2 text-center">
+            <span class="blue" *ngIf="allowedTaxPages.View_tax">
+              <a href="javascript:void(0)" matTooltip="View" (click)="viewTaxDetail(tax.TaxID)"
+                matTooltipClass="custom-tooltip" matTooltipPosition="above">
+                <i class="fal fa-book-open"></i>
+              </a>
+            </span> &nbsp;
+            <span class="blue" *ngIf="allowedTaxPages.Save_tax">
+              <a href="javascript:void(0)" (click)="onEditClick(tax.TaxID)" matTooltip="Edit"
+                matTooltipClass="custom-tooltip" matTooltipPosition="above">
+                <i class="fal fa-edit"></i>
+              </a>
+            </span> &nbsp;
+            <span class="red_del"
+              *ngIf="tax.AppSourceTypeID === enumAppSourceType.OnSite || (allowedTaxPages.Save_tax && tax.HasBranchPermission)">
+              <a href="javascript:void(0)" (click)="deleteTax(tax.TaxID)" matTooltip="Delete"
+                matTooltipClass="custom-tooltip" matTooltipPosition="above">
+                <i class="fal fa-trash-alt"></i>
+              </a>
+            </span> &nbsp;
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+          <div class="col-md-12 col-sm-12 text-center">
+            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+          </div>
+        </div>
+      </div>
+      <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    </div>
+  </div>

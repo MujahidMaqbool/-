@@ -1,0 +1,137 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <button *ngIf="isSaveClass" class="save" data-toggle="modal" [routerLink]="['../class/save',0]">
+                Add Classes
+            </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#product_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle">
+                    Search Filter
+                </h3>
+            </div>
+        </div>
+        <div id="product_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                </div>
+                <div class="row flex-end">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Class Name</h5>
+                        </div>
+                        <input type="text" [(ngModel)]="parentClassSearchParam.parentClassName" class="form-control" tabindex="1" name="className">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Class Category</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="classCategoryId" [(ngModel)]="parentClassSearchParam.classCategoryID">
+                                <option value="null">All</option>
+                                <option *ngFor="let classCategory of classCategoryList" [ngValue]="classCategory.ClassCategoryID">
+                                  {{classCategory.ClassCategoryName}}
+                                </option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Status</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="status" [(ngModel)]="parentClassSearchParam.isActive">
+                                <option *ngFor="let status of statusList" [ngValue]="status.StatusID">
+                                  {{status.StatusName}}
+                                </option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 offset-lg-0 offset-md-6 col-md-6 col-sm-6 space no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button class="reset_btn" type="button" (click)="ResetSearchParam()">
+                                    Reset </button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 full_width_btn">
+                                <button tabindex="4" class="search" (click)="onSearchForm()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>Class Name </h5>
+            </div>
+            <div class="col">
+                <h5>Class Category </h5>
+            </div>
+            <div class="col text-center">
+                <h5>Status</h5>
+            </div>
+            <div class="col-md-2 text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="grid" *ngFor="let parentClass of ParentClassesList">
+            <div class="row grid_rows responsive_grid_rows" >
+                <div class="col">
+                    <h5>{{parentClass.ParentClassName}} </h5>
+                </div>
+                <div class="col">
+                    <h5>{{parentClass.ClassCategoryName}}</h5>
+                </div>
+                <div class="col text-center">
+                    <h5>{{parentClass.IsActive? 'Active' : 'Inactive'}}</h5>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h5>
+                        <span class="blue">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)" (click)="openDialog(parentClass.ParentClassID)">
+                                <i class="fal fa-book-open"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="isSaveClass">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)" [routerLink]="['../class/save',parentClass.ParentClassID]">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <span class="red_del" *ngIf="isSaveClass">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                href="javascript:void(0)">
+                                <i class="fal fa-trash-alt" (click)="DeleteParentClass(parentClass.ParentClassID)"></i>
+                            </a>
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

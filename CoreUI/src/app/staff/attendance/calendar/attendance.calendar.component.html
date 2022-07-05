@@ -1,0 +1,189 @@
+<div class="row">
+    <div class="col-xl-2 col-lg-3 col-md-4">
+        <div class="sch_left_bar attendence_left_bar">
+            <div class="inside_padding">
+                <div class="attendence_left_scroll cstm_scroll_bg">
+                    <div id="attendence_accordian1">
+                        <div class="panel-heading collapsed" data-toggle="collapse" data-parent="#attendence_accordian1"
+                            data-target="#attendence_collapse1">
+                            <h3 class="sch_collapse_item accordion-toggle1"> Position</h3>
+                        </div>
+                        <div id="attendence_collapse1" class="panel-collapse collapse">
+                            <div class="sch_panel-body">
+                                <!-- <div class="force-overflow">
+                                    <div class="form-group">
+                                        <div class="select_label">
+                                            <select class="form-control" name="StaffPositionID" [(ngModel)]="schedulerSearchParam.StaffPositionID"
+                                                (change)="staffPositionChange(schedulerSearchParam.StaffPositionID)">
+                                                <option [ngValue]="0">All</option>
+                                                <option *ngFor="let _position of staffPositionListDataSource" [ngValue]="_position.id">
+                                                    {{_position.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="form-group sch_border_bottom">
+                                    <input type="checkbox" id="allStaffPosition" name="allStaffPosition"
+                                        [(ngModel)]="schedulerSearchParam.AllStaffPosition" autocomplete="off"
+                                        (change)="staffPositionChangeAll()">
+                                    <div class="btn-group">
+                                        <label for="allStaffPosition" class="btn"
+                                            [ngClass]="{'check_bg': schedulerSearchParam.AllStaffPosition, 'uncheck_bg': !schedulerSearchParam.AllStaffPosition}">
+                                            <span class="fa fa-check"></span>
+                                            <span class="fa fa-times"></span>
+                                        </label>
+                                        <label for="allStaffPosition" class="btn btn-default sch_left_label_width">
+                                            <i class="fal fa-user-friends"></i> All
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group sch_border_bottom"
+                                    *ngFor="let _staffPosition of staffPositionListDataSource; let arrayIndex=index">
+                                    <input type="checkbox" [(ngModel)]="_staffPosition.selected"
+                                        id="{{'staffPositionID' + arrayIndex}}" (change)="onStaffPositionChange()"
+                                        name="{{'staffPositionID' + arrayIndex}}" autocomplete="off">
+                                    <div class="btn-group label_width">
+                                        <label for="{{'staffPositionID' + arrayIndex}}" class="btn"
+                                            [ngClass]="{'check_bg': _staffPosition.selected, 'uncheck_bg': !_staffPosition.selected}">
+                                            <span class="fa fa-check"></span>
+                                            <span class="fa fa-times"></span>
+                                        </label>
+                                        <label for="{{'staffPositionID' + arrayIndex}}" class="btn btn-default">
+                                            <i class="fal fa-user-friends"></i> {{_staffPosition.text}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="attendence_accordian2" class="accordian_last">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#attendence_accordian2"
+                            data-target="#attendence_collapse2">
+                            <h3 class="sch_collapse_item accordion-toggle1"> Staff</h3>
+                        </div>
+                        <div id="attendence_collapse2" class="panel-collapse collapse show">
+                            <div class="sch_panel-body">
+                                <div class="form-group sch_border_bottom">
+                                    <input type="checkbox" id="allStaff" name="allStaff"
+                                        [(ngModel)]="schedulerSearchParam.AllStaff" autocomplete="off"
+                                        (change)="staffListChangeAll()">
+                                    <div class="btn-group">
+                                        <label for="allStaff" class="btn"
+                                            [ngClass]="{'check_bg': schedulerSearchParam.AllStaff, 'uncheck_bg': !schedulerSearchParam.AllStaff}">
+                                            <span class="fa fa-check"></span>
+                                            <span class="fa fa-times"></span>
+                                        </label>
+                                        <label for="allStaff" class="btn btn-default">
+                                            <i class="fal fa-user-friends"></i> All
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group sch_border_bottom"
+                                    *ngFor="let _staff of filteredStaffListDataSource; let arrayIndex=index">
+                                    <input type="checkbox" [(ngModel)]="_staff.selected" id="{{'StaffID' + arrayIndex}}"
+                                        (change)="staffListChange()" name="{{'StaffID' + arrayIndex}}"
+                                        autocomplete="off">
+                                    <div class="btn-group ">
+                                        <label for="{{'StaffID' + arrayIndex}}" class="btn"
+                                            [ngClass]="{'check_bg': _staff.selected, 'uncheck_bg': !_staff.selected}">
+                                            <span class="fa fa-check"></span>
+                                            <span class="fa fa-times"></span>
+                                        </label>
+                                        <label for="{{'StaffID' + arrayIndex}}" class="btn btn-default active">
+                                            <i class="fal fa-user-alt"></i> {{_staff.text}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scheduler_btn sch_left_bar_btn">
+                <div class="attendence_reference">
+                    <h4>Legend</h4>
+                    <div class="attendence_reference_body">
+                        <p><i class="fal fa-calendar-check"></i> Completed Shift<span
+                                class="bg_blue color_size float-right"></span></p>
+                        <p><i class="fal fa-user-clock"></i> Shift in Progress <span
+                                class="bg_progress color_size float-right"></span></p>
+                        <p><i class="fal fa-calendar-alt"></i> Scheduled Shift <span
+                                class="bg_shift  color_size float-right"></span></p>
+                    </div>
+                </div>
+                <button (click)="resetSearchFundamentals()">
+                    Reset</button>
+                <button class="float-right primary_blue_btn" (click)="loadSearchFundamentals()"
+                    [disabled]="disbaleLoadButton">
+                    Load</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-10 col-lg-9 col-md-8 padding_left sm-pl-15 mob-mt-15">
+        <!-- <div class="options">
+            <label>Shift in Progress</label>
+            <label>Completed Shift</label>
+            <label>Scheduled Shift</label>
+        </div> -->
+        <div class="overflow-auto">
+            <dx-scheduler class="staff_attendence_height cstm_scroll_bg mob-scroll-grid staff_shift_height"
+                [dataSource]="shiftAndAttendanceDataSource" [views]="schedulerViews" [startDayHour]="0"
+                [endDayHour]="24" [cellDuration]="60" currentView="timelineDay" [showAllDayPanel]="false"
+                appointmentTemplate="attendance-template" resourceCellTemplate="resourceCellTemplate"
+                timeCellTemplate="timeCellTemplate" (onContentReady)="onContentReady($event)"
+                (onOptionChanged)="onOptionChanged($event)" (onAppointmentClick)="onAppointmentClick($event)"
+                (onAppointmentDblClick)="onAppointmentDblClick($event)"
+                (onAppointmentRendered)="onAppointmentRendered($event)" (onCellClick)="onCellClick($event)"
+                (onAppointmentUpdating)="updateAttendanceForDragDrop($event)"
+                [customizeDateNavigatorText]="customizeDateNavigatorText"
+                (onAppointmentFormCreated)="onAppointmentFormCreated($event)" [showCurrentTimeIndicator]="false"
+                [shadeUntilCurrentTime]="false">
+                <dxo-editing [allowDeleting]="false" [allowResizing]="false" [allowDragging]="false"></dxo-editing>
+                <dxi-resource fieldExpr="StaffID" [dataSource]="resourcesStaffList" editorType="dxSelectBox">
+                </dxi-resource>
+                <div *dxTemplate="let staff of 'resourceCellTemplate'" class="resourcesHeader">
+                    <div class='avatar'>
+                        <img src="{{staff.data.avatar}}" class="img-responsive rounded_image">
+                    </div>
+                    <div class='recourcesText'>
+                        <h2>{{staff.text}}</h2>
+                        <h3>{{staff.data.staffPositionName}}</h3>
+                    </div>
+                </div>
+                <div *dxTemplate="let _shift of 'attendance-template'">
+                    <div class="sch_activity_label">
+                        <span *ngIf="!_shift.appointmentData.IsStaffAttendance && !_shift.appointmentData.IsShiftAttended"
+                            style="background-color: #333">SHIFT</span>
+                        <span *ngIf="_shift.appointmentData.IsStaffAttendance && _shift.appointmentData.AttendanceStatus === 2"
+                            style="background-color: #1B6EB8">SHIFT
+                            IN PROGRESS</span>
+                        <span *ngIf="_shift.appointmentData.IsStaffAttendance && _shift.appointmentData.AttendanceStatus === 1"
+                            style="background-color: #0FA8CF">COMPLETED
+                            SHIFT</span>
+                        <label>{{(_shift.appointmentData.startDate | customdate: schedulerTimeFormat) + ' - ' + (_shift.appointmentData.endDate |
+                        date: schedulerTimeFormat)}}</label>
+                    </div>
+                </div>
+                <!-- <div *dxTemplate="let singleData of 'tooltip-template'">
+                <div class="appointment-tooltip-item-content">
+                    <div class="appointment-badge" [ngStyle]="{ 'backgroundColor': APPOINTMENT_DEFAULT_COLLOR }">
+                        </div>
+
+                    <div class="appointment-dates">
+                        {{(singleData.startDate | customdate : 'MMM d') + ' , ' + (singleData.startDate |
+                        date:'shortTime') +
+                        ' - ' + (singleData.endDate
+                        | customdate:'shortTime')}}
+                    </div>
+                    <dx-button class="delete-appointment" icon="edit" (onClick)="editShiftAttendance(singleData)">
+                    </dx-button>
+                </div>
+            </div> -->
+                <div *dxTemplate="let appointment of 'timeCellTemplate'">
+                    {{ (appointment.date | customdate: schedulerHeaderTimeFormat ) }}
+                </div>
+            </dx-scheduler>
+        </div>
+    </div>
+</div>

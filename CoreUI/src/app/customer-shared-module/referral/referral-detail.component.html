@@ -1,0 +1,64 @@
+﻿<div class="white_bg top_zero info_bar_bg">
+    <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+    <div class="row grid_header mob-scroll-grid">
+        <div class="col">
+            <h5>Customer Referred</h5>
+        </div>
+        <div class="col">
+            <h5>Customer Type</h5>
+        </div>
+        <div class="col">
+            <h5>Card Number</h5>
+        </div>
+        <div class="col">
+            <h5>Email</h5>
+        </div>
+        <div class="col">
+            <h5>Mobile</h5>
+        </div>
+        <!-- <div class="col-md-2">
+            <h5>Joining Date</h5>
+        </div>
+        <div class="col-md-2 text-center">
+            <h5>Status</h5>
+        </div> -->
+    </div>
+    <div id="grid" *ngIf="isDataExists">
+        <div class="row grid_rows mob-scroll-grid" *ngFor="let  memberReferralDetail of memberReferralDetailsList">
+            <div class="col">
+                <h5>{{memberReferralDetail.CustomerName }}</h5>
+            </div>
+            <div class="col">
+                <h5>{{memberReferralDetail.CustomerType }}</h5>
+            </div>
+            <div class="col">
+                <h5>{{memberReferralDetail.CardNumber ? memberReferralDetail.CardNumber: 'N/A'}}</h5>
+            </div>
+            <div class="col">
+                <h5>{{memberReferralDetail.Email }}</h5>
+            </div>
+            <div class="col">
+                <h5>{{memberReferralDetail.Mobile ? memberReferralDetail.Mobile: 'N/A' }}</h5>
+            </div>
+            <!-- <div class="col-md-2">
+                <h5>{{memberReferralDetail.CreatedOn | customdate: dateFormat}}</h5>
+            </div>
+            <div class="col-md-2 text-center">
+                <h5>
+                    <i class="fa  {{memberReferralDetail.IsActive ? 'fa-check-circle text-success': 'fa-times-circle text-danger'}}" aria-hidden="true"></i>
+                    {{memberReferralDetail.IsActive ? 'Active': 'Inactive'}}</h5>
+            </div> -->
+        </div>
+    </div>
+    </div>
+    <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+            </div>
+        </div>
+    </div>
+</div>

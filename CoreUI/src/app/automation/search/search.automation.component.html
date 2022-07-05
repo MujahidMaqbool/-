@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <button *ngIf="isSaveAutomationAllowed" type="button" class="save" (click)="onAddEditAutomation(0)">
+                Add Automation</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#client_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+            </div>
+        </div>
+        <div id="client_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Trigger Category</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="eventCategory"
+                                [(ngModel)]="automationSearchParameter.EventCategoryTypeID"
+                                (ngModelChange)="onChangeEventCategoryType($event)">
+                                <option *ngFor="let eventCategory of fundamentals.EventCategoryType"
+                                    [ngValue]="eventCategory.EventCategoryTypeID" required>
+                                    {{eventCategory.EventCategoryTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Trigger</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="eventType"
+                                [(ngModel)]="automationSearchParameter.EventTypeID"
+                                (ngModelChange)="onChangeEventType($event)">
+                                <option *ngFor="let eventType of eventTypeList" [ngValue]="eventType.EventTypeID">
+                                    {{eventType.EventTypeName}} {{getTriggerCategoryName(eventType.EventCategoryTypeID)}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Automation Name</h5>
+                        </div>
+                        <input type="text" class="form-control" [(ngModel)]="automationSearchParameter.RuleName"
+                            (blur)="onTitleUpdated()" name="RuleName">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Status</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="IsActive"
+                                [(ngModel)]="automationSearchParameter.IsActive">
+                                <option *ngFor="let statusObj of statusTypeList" [ngValue]="statusObj.StatusID">
+                                    {{statusObj.StatusName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Audience</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" name="audienceType"
+                                [(ngModel)]="automationSearchParameter.AudienceTypeID">
+                                <option *ngFor="let audienceType of audienceTypeList"
+                                    [ngValue]="audienceType.AudienceTypeID">
+                                    {{audienceType.AudienceTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 offset-lg-6 offset-md-0 offset-sm-0 col-sm-4 no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button class="reset_btn" type="button" (click)="resetForm()">
+                                    Reset</button>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="full_width_btn ">
+                                    <button type="button" class="search" (click)="onSearchForm()">
+                                        Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>Trigger Category</h5>
+            </div>
+            <div class="col">
+                <h5>Trigger</h5>
+            </div>
+            <div class="col">
+                <h5>Name</h5>
+            </div>
+            <div class="col">
+                <h5>Published Date</h5>
+            </div>
+            <div class=" col">
+                <h5>Created By</h5>
+            </div>
+            <div class="col">
+                <h5>Audience</h5>
+            </div>
+            <div class="col">
+                <h5>Status</h5>
+            </div>
+            <div *ngIf="isSaveAutomationAllowed" class="col text-center no_padding">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div id="grid" *ngIf="isDataExists">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let automation of automationList">
+                <div class="col">
+                    <h5>{{automation.EventCategoryTypeName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{automation.EventTypeName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{automation.RuleName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{automation.PublishedDate | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{automation.CreatedBy}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{automation.AudienceTypeName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>
+                        <i class="fa  {{automation.IsActive ? 'fa-check-circle text-success': 'fa-times-circle text-danger'}}"
+                            aria-hidden="true">
+                        </i> {{automation.IsActive ? 'Active' : 'Inactive'}}
+                    </h5>
+                </div>
+                <div class="col text-center no_padding" *ngIf="isSaveAutomationAllowed">
+                    <h5>
+                        <span class="blue">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onAddEditAutomation(automation.RuleID)" href="javascript:void(0)">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+
+                        <span class="red_del">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onDeleteAutomationRule(automation.RuleID)" href="javascript:void(0)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="row grid_rows" *ngIf="!isDataExists">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">No Records Found</h5>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    <!-- <div class="pagination">
+        <div class="col-md-12 no_padding">
+            <mat-paginator #paginator [length]="totalRecords"
+                [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" [showFirstLastButtons]="true">
+            </mat-paginator>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+</div>

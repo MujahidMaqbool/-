@@ -1,0 +1,220 @@
+<div class="page_content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="company_btn float-right">
+                <!-- <button *ngIf="isBackToSearchAllowed" class="simple_btn" type="button" role="navigation" [routerLink]="['/staff/Search']">
+                    Back to Search</button> -->
+                <button *ngIf="isSaveActivityAllowed" class="save" type="button" (click)="onAddActivity()">
+                    Add Activity</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg info_bar_bg">
+        <staff-basic-info [personTypeInfo]="personInfo" *ngIf="shouldGetPersonInfo"></staff-basic-info>
+    </div>
+
+    <div class="white_bg">
+        <div class="activities">
+            <mat-tab-group (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
+                <mat-tab label="{{activityTypes.All}}">
+                    <ng-template mat-tab-label>
+                        {{activityTypes.All}}
+                    </ng-template>
+                    <div *ngTemplateOutlet="activities"></div>
+                </mat-tab>
+                <mat-tab label="{{activityTypes.Task}}">
+                    <ng-template mat-tab-label>
+                        {{activityTypes.Task + 's'}}
+                        <!-- <span class="activity_count">{{activityCount.TaskCount}}</span> -->
+                    </ng-template>
+                    <div *ngTemplateOutlet="activities"></div>
+                </mat-tab>
+                <!-- <mat-tab label="{{activityTypes.Appointment}}">
+                    <ng-template mat-tab-label>
+                        {{activityTypes.Appointment}}
+                        <span class="activity_count">{{activityCount.AppointmentCount}}</span>
+                    </ng-template>
+                    <div *ngTemplateOutlet="activities"></div>
+                </mat-tab> -->
+                <mat-tab label="{{activityTypes.Email}}">
+                    <ng-template mat-tab-label>
+                        {{activityTypes.Email + 's'}}
+                        <!-- <span class="activity_count">{{activityCount.EmailCount}}</span> -->
+                    </ng-template>
+                    <div *ngTemplateOutlet="activities"></div>
+                </mat-tab>
+                <mat-tab label="{{activityTypes.SMS}}">
+                    <ng-template mat-tab-label>
+                        {{activityTypes.SMS}}
+                        <!-- <span class="activity_count">{{activityCount.SMSCount}}</span> -->
+                    </ng-template>
+                    <div *ngTemplateOutlet="activities"></div>
+                </mat-tab>
+                <mat-tab label="{{activityTypes.Note}}">
+                    <ng-template mat-tab-label>
+                        {{activityTypes.Note + 's'}}
+                        <!-- <span class="activity_count">{{activityCount.NoteCount}}</span> -->
+                    </ng-template>
+                    <div *ngTemplateOutlet="activities"></div>
+                </mat-tab>
+            </mat-tab-group>
+            <div class="pagination">
+                <div class="col-md-12 no_padding">
+                    <mat-paginator #paginator [length]="totalRecords" [pageSizeOptions]="pageSizeOptions"
+                        (page)="onPageChange($event)" [showFirstLastButtons]="true">
+                    </mat-paginator>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <ng-template #activities>
+            <div class="small_space"></div>
+            <div *ngIf="isDataExists">
+                <div class="media activity_bg center_flex_alignment" *ngFor="let activity of allActivities" [ngClass]="{
+                    'blue': activity.ActivityTypeID == activityType.Email,
+                    'perpall': activity.ActivityTypeID == activityType.Note,
+                    'task': activity.ActivityTypeID == activityType.Task,
+                    'sms': activity.ActivityTypeID == activityType.SMS
+                 }">
+                    <div class="mr-3">
+                        <div class="activity_icons" [ngClass]="{
+                                                    'email': activity.ActivityTypeID == activityType.Email,
+                                                    'note': activity.ActivityTypeID == activityType.Note,
+                                                    'task': activity.ActivityTypeID == activityType.Task,
+                                                    'sms': activity.ActivityTypeID == activityType.SMS
+                                                 }">
+                            <i class="fal" aria-hidden="true" [ngClass]="{
+                                                 'fa-envelope': activity.ActivityTypeID == activityType.Email,
+                                                 'fa-clipboard': activity.ActivityTypeID == activityType.Note,
+                                                 'fa-calendar': activity.ActivityTypeID == activityType.Task,
+                                                 'fa-sms': activity.ActivityTypeID == activityType.SMS
+                                            }"></i>
+                        </div>
+                    </div>
+                    <div class="media-body activity_note">
+                        <div class="row">
+                            <div class="col-md-12 no_padding">
+                                <div class="floating">
+                                    <h6 [ngClass]="{
+                                    'blue_title': activity.ActivityTypeID == activityType.Email,
+                                    'perpall_title': activity.ActivityTypeID == activityType.Note,
+                                    'task_title': activity.ActivityTypeID == activityType.Task,
+                                    'sms_title': activity.ActivityTypeID == activityType.SMS
+                                 }">{{activity.ActivityTypeName}} {{activity.ActivitySubTypeName? '(' + activity.ActivitySubTypeName +')':''}}</h6>
+                                </div>
+                                <div class="act_icon text-right">
+                                    <div class="activity_actions">
+                                        <span class="genral_cls"
+                                            *ngIf="(activity.ActivityOutComeName && activity.ActivityOutComeName !== '')">
+                                            {{activity.ActivityOutComeName}}
+                                        </span>
+                                        <span class="genral_cls"
+                                            *ngIf="(activity.ActivityWhatNextName && activity.ActivityWhatNextName !== '')">
+                                            {{activity.ActivityWhatNextName}}
+                                        </span>
+                                        <span class="genral_cls"
+                                            *ngIf="(activity.ActivityTypeID === this.activityType.Task && activity.MarkedAsDone)">
+                                            <b>Status: </b> Completed
+                                        </span>
+                                        <span class="genral_cls"
+                                            *ngIf="(activity.ContactReasonTypeName && activity.ContactReasonTypeName !== '')">
+                                            Contact Reason: {{activity.ContactReasonTypeName}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <h4 class="activity_title">
+                                    {{activity.ActivityTypeID == activityType.Email ? activity.EmailSubject :
+                                    activity.Title}}
+                                </h4>
+                                <p
+                                    [innerHTML]="activity.ActivityTypeID == activityType.Email ? activity.EmailBody : activity.Description">
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12 no_padding">
+                                <h5 class="floating">
+                                    <span *ngIf="(activity.StaffName && activity.StaffName !== '')">
+                                        <i class="fal fa-user"></i> Assigned To:
+                                        {{activity.StaffName}}
+                                    </span>
+                                    <span *ngIf="activity.CreatedOn">
+                                        <i class="fal fa-clock"></i> Created On:
+                                        {{activity.CreatedOn | customdate : dateFormat}}
+                                        {{activity.StartTime?'-':''}}
+                                        {{activity.StartTime}}
+                                    </span>
+                                    <span *ngIf="activity.ModifiedOn">
+                                        <i class="fal fa-clock"></i> Last Updated:
+                                        {{activity.ModifiedOn | customdate : dateFormat}}
+                                        {{activity.ModifiedTime?'-':''}}
+                                        {{activity.ModifiedTime}}
+                                    </span>
+                                    <span *ngIf="activity.FollowUpDate">
+                                        <i class="fal fa-calendar-alt"></i> Follow Up:
+                                        {{activity.FollowUpDate
+                                        | customdate : dateFormat}} 
+                                        {{activity.FollowUpStartTime?'-':''}}
+                                        {{activity.FollowUpStartTime | branchTimeFormat}}
+                                    </span>
+                                </h5>
+                                <div class="grid_rows float-right act_icon">
+                                    <h5 style="padding: 0 !important;">
+                                        
+                                         <!--View Member Icon-->
+                                         <span class="blue" *ngIf="activity.ShowViewIcon">
+                                            <a matTooltip="View" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip"
+                                                (click)="onViewTaskActivity(activity.ActivityID)"
+                                                href="javascript:void(0)">
+                                                <i class="fal fa-book-open"></i>
+                                            </a>
+                                        </span>
+                                        <!-- Edit Task Icon -->
+                                        <span class="blue" *ngIf="isSaveActivityAllowed && activity.ShowEditIcon">
+                                            <a matTooltip="Edit" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip"
+                                                (click)="onEditActivity(activity.ActivityID, activity.ActivityTypeID)"
+                                                href="javascript:void(0)">
+                                                <i class="fal fa-edit"></i>
+                                            </a>
+                                        </span>
+                                        <!--Mark As Complete Icon-->
+                                        <span class="green"
+                                            *ngIf="isSaveActivityAllowed && activity.ShowMarkAsDoneIcon">
+                                            <a matTooltip="Mark as done" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip"
+                                                (click)="onTaskMarkAsDone(activity.ActivityID)"
+                                                href="javascript:void(0)">
+                                                <i class="fal fa-check-circle"></i>
+                                            </a>
+                                        </span>
+                                        <!--Delete Icon-->
+                                        <span class="red_del" *ngIf="isSaveActivityAllowed && activity.ShowDeleteIcon">
+                                            <a matTooltip="Delete" matTooltipPosition="above"
+                                                matTooltipClass="custom-tooltip"
+                                                (click)="onDeleteActivity(activity.ActivityID, activity.ActivityTypeID)"
+                                                href="javascript:void(0)">
+                                                <i class="fal fa-trash-alt"></i>
+                                            </a>
+                                        </span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!isDataExists">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 text-center small_space">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>

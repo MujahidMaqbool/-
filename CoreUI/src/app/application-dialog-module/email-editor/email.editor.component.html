@@ -1,0 +1,20 @@
+<dx-html-editor class="email_editor" (valueChange)="onEmailValueChange($event)" [(value)]="value" tabIndex="{{tabIndexNumber}}">
+  <dxo-toolbar [items]="toolBarItems" [multiline]="false">
+    <!-- <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
+    <dxi-item formatName="font" [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']"></dxi-item>
+    <dxi-item *ngFor="let toolbarItem of toolBarConfig" formatName="{{toolbarItem}}"></dxi-item> -->
+    <!--
+   <dxi-item
+    formatName="header"
+    [formatValues]="[false, 1, 2, 3, 4, 5]"
+  ></dxi-item>
+  
+  <dxi-item formatName="color"></dxi-item>
+  <dxi-item formatName="background"></dxi-item>
+  <dxi-item formatName="separator"></dxi-item>
+  <dxi-item formatName="clear"></dxi-item>
+  <dxi-item formatName="codeBlock"></dxi-item> -->
+  </dxo-toolbar>
+  <!-- <dxo-media-resizing [enabled]="true"> </dxo-media-resizing> -->
+
+</dx-html-editor>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="25" viewBox="0 0 35 25">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_24" data-name="Rectangle 24" width="35" height="25" rx="4" transform="translate(2427 1145)" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="Rectangle_17" data-name="Rectangle 17" width="35" height="25" rx="4" transform="translate(4171 2233)" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clip-path-3">
+      <path id="Path_45" data-name="Path 45" d="M2258.712,1179.815s3.024-8.98,15.71-9.1,18.027-11.326,16.422-11.38-32.133.579-32.133.579Z" fill="#13b7a0"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_10" data-name="Mask Group 10" transform="translate(-2427 -1145)" clip-path="url(#clip-path)">
+    <g id="Group_17" data-name="Group 17">
+      <g id="Mask_Group_7" data-name="Mask Group 7" transform="translate(-1744 -1088)" clip-path="url(#clip-path-2)">
+        <g id="Group_16" data-name="Group 16" transform="translate(4170.722 2233)">
+          <rect id="Rectangle_16" data-name="Rectangle 16" width="35" height="25" transform="translate(0.278)" fill="#fff"/>
+        </g>
+      </g>
+      <g id="Mask_Group_8" data-name="Mask Group 8" transform="translate(167.142 -16)" clip-path="url(#clip-path-3)">
+        <path id="Path_46" data-name="Path 46" d="M4,0H31a3.882,3.882,0,0,1,3.858,4V21a3.96,3.96,0,0,1-3.969,3.984l-27.015.047A4.04,4.04,0,0,1-.141,21V3.984A4.014,4.014,0,0,1,4,0Z" transform="translate(2260 1161)" fill="#13b7a0"/>
+      </g>
+      <rect id="Rectangle_19" data-name="Rectangle 19" width="4.476" height="4.476" transform="translate(2447.665 1161.65) rotate(45)" fill="#50857e"/>
+      <rect id="Rectangle_21" data-name="Rectangle 21" width="4.714" height="4.714" transform="translate(2456.908 1161.482) rotate(45)" fill="#50857e"/>
+      <g id="Rectangle_20" data-name="Rectangle 20" transform="translate(2452.665 1160.573) rotate(45)" fill="#13b7a0" stroke="#fff" stroke-width="0.5">
+        <rect width="6" height="6" stroke="none"/>
+        <rect x="0.25" y="0.25" width="5.5" height="5.5" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,650 @@
+﻿<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="activity_tabs_popup">
+                <div class="row">
+                    <mat-tab-group class="col-sm-12 col-md-12 no_padding" (selectedTabChange)="onTabChange($event)" [selectedIndex]="activeTabIndex">
+                        <mat-tab label="{{activityTypes.Call}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.Call) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="call"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.FollowupCall}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.FollowupCall) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="call"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.Appointment}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.Appointment) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="appointment"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.FollowupAppointment}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.FollowupAppointment) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="appointment"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.Email}}" *ngIf="personInfo?.EmailAllowed && tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.Email) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="email"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.SMS}}" *ngIf="personInfo?.SMSAllowed && tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.SMS) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="sms"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.Note}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.Note) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="note"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.Achievements}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.Achievements) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="Achievements"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.AppNotification}}" *ngIf="personInfo?.AppNotificationAllowed && tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.AppNotification) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="appNotification"></div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+            <div class="row">
+                <div class="popup_footer col-sm-12 col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button tabindex="104" (click)="onClosePopup()">Cancel</button>
+                        <button *ngIf="!isActiveTabEmailOrSMS && !tabsOptions.isMarkAsDone" tabindex="105" class="save primary_blue_btn" [disabled]="saveInProgress || isInvalidFollowUpDate" (click)="onSaveClick()">Save</button>
+                        <button *ngIf="!isActiveTabEmailOrSMS && tabsOptions.isMarkAsDone" tabindex="105" class="save primary_blue_btn" [disabled]="saveInProgress || isInvalidFollowUpDate" (click)="onSaveClick()">Complete</button>
+                        <button *ngIf="isActiveTabEmailOrSMS && personInfo.Mobile || activeTab == activityTypes.Email || activeTab == activityTypes.AppNotification" tabindex="105" class="save primary_blue_btn" [disabled]="saveInProgress || isInvalidFollowUpDate" (click)="onSaveClick()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Messages Template -->
+<ng-template #errormessage>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="alert alert-danger" *ngIf="isInvalidData">
+                {{messages.Validation.Info_Required}}
+            </div>
+            <div class="alert alert-danger" *ngIf="isInvalidEndTime">
+                {{messages.Validation.Endtime_Should_Greater_Than_Start_Time}}
+            </div>
+            <div class="alert alert-danger" *ngIf="isInvalidFollowUpDate">
+                {{messages.Validation.FollowupDate_Cannot_Be_Past}}
+            </div>
+            <div class="alert alert-danger" *ngIf="isInvalidStartTime">
+                {{messages.Validation.StartTime_Should_Greater_Than_CurrentTime}}
+            </div>
+            <div class="alert alert-danger" *ngIf="isInvalidEmailBody">
+                {{emailMaxLengthMessage}}
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+
+<!-- Person Info Template -->
+<ng-template #personinfo>
+    <div class="view_main_bar border_bottom">
+        <div class="activity_person_info">
+            <i class="fal fa-user"></i> <span>{{personInfo.Name}}</span>
+            <span class="enq_status" *ngIf="personInfo.CustomerTypeID == 1 || personInfo.CustomerTypeID == 3">{{personInfo.CustomerTypeName}}</span>
+        </div>
+        <div class="activity_person_info">
+            <i class="fal fa-envelope"></i> {{personInfo.Email}}
+        </div>
+        <div *ngIf='personInfo.Mobile' class="activity_person_info">
+            <i class="fal fa-mobile-alt"></i> {{personInfo.Mobile}}
+        </div>
+    </div>
+</ng-template>
+
+<!-- Call Template -->
+<ng-template #call>
+    <form #callForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row mob-col-full">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+
+            <div class="row sch_mob_reverse">
+                <div class="col-lg-4 col-md-5 padding_left parallel_grid">
+                    <div class="sch_white_bg mob-sm-sche">
+                        <div class="smallScheduler" *ngIf="activeTab === activityTypes.Call || activeTab === activityTypes.FollowupCall">
+                            <one-day-scheduler [dayViewFormat]="dayViewFormat" [schedulerTimeFormat]="schedulerTimeFormat" [staffID]="callModel.AssignedToStaffID" [startDate]="currentCallDate" (onStartDateChange)="onCallDateChange($event)" #onedaySchedulerCallComp [minDate]="schedulerMinDate"
+                                [maxDate]="schedulerMaxDate">
+                            </one-day-scheduler>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 parallel_grid no_padding">
+                    <div class="sch_white_bg">
+                        <div class="smallScheduler">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="form_label">Select Date</h5>
+                                    <date-picker [disabled]="callModel.IsNow" [value]="callModel.FollowUpDate" [showClear]="false" (onDateChange)="onSelectDateCallValueChanged($event)">
+                                    </date-picker>
+                                </div>
+                                <div class="col-md-6" *ngIf="!tabsOptions.isEditMode">
+                                    <h5 class="form_label">When</h5>
+                                    <input id="callNow" type="radio" name="rdoCallNowLater" [(ngModel)]="callModel.IsNow" [value]="true" [checked]="callModel.IsNow" (ngModelChange)="onCallChangeToNow()" />
+                                    <label for="callNow"><span></span>Now</label> &nbsp; &nbsp; &nbsp;
+                                    <input id="callLater" type="radio" name="rdoCallNowLater" [(ngModel)]="callModel.IsNow" [value]="false" [checked]="callModel.IsNow" (ngModelChange)="onCallChangeToNow()" />
+                                    <label for="callLater"><span></span>Later</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="form_label">Title</h5>
+                                    <div [ngClass]="{
+                                               'has-danger': callTitle.invalid && (callTitle.dirty || callTitle.touched || isInvalidData),
+                                               'has-success': callTitle.valid && (callTitle.dirty || callTitle.touched)
+                                            }">
+                                        <input class="form-control" type="text" name="callTitle" [(ngModel)]="callModel.Title" #callTitle="ngModel" maxlength="50" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field_label">
+                                        <h5>Contact Reason</h5>
+                                    </div>
+                                    <div [ngClass]="{
+                                       'has-danger': callContactReasonTypeID.invalid && (callContactReasonTypeID.dirty || callContactReasonTypeID.touched || isInvalidData),
+                                       'has-success': callContactReasonTypeID.valid && (callContactReasonTypeID.dirty || callContactReasonTypeID.touched)
+                                    }">
+                                        <div class="select_label">
+                                            <select class="form-control" name="callContactReason" [(ngModel)]="callModel.ContactReasonTypeID" #callContactReasonTypeID="ngModel" required>
+                                            <option *ngFor="let clientContactReasonType of clientContactReasonTypeList"
+                                                [ngValue]="clientContactReasonType.ContactReasonTypeID">
+                                                {{clientContactReasonType.ContactReasonTypeName}}
+                                            </option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" *ngIf="callModel.IsNow">
+                                    <h5 class="form_label">Outcome</h5>
+                                    <span *ngFor="let outcome of outcomeList" class="radio_space">
+                                    <input id="{{'callOutcome' + outcome.ActivityOutcomeID }}" type="radio"
+                                        name="rdoCallOutcomeID" [(ngModel)]="callModel.ActivityOutcomeID"
+                                        [value]="outcome.ActivityOutcomeID" />
+                                    <label
+                                        for="{{'callOutcome' + outcome.ActivityOutcomeID }}"><span></span>{{outcome.ActivityOutComeName}}</label>
+                                    &nbsp; &nbsp;
+                                    </span>
+                                </div>
+                                <div class="col-md-12" *ngIf="callModel.IsNow">
+                                    <h5 class="form_label">What’s Next</h5>
+                                    <span *ngFor="let whatNext of whatNextList" class="radio_space">
+                                    <input id="{{'callNext' + whatNext.ActivityWhatNextID}}" type="radio"
+                                        name="rdoCallWhatNextID" [(ngModel)]="callModel.ActivityWhatNextID"
+                                        [value]="whatNext.ActivityWhatNextID" />
+                                    <label
+                                        for="{{'callNext' + whatNext.ActivityWhatNextID}}"><span></span>{{whatNext.ActivityWhatNextName}}</label>
+                                    &nbsp; &nbsp;
+                                    </span>
+                                </div>
+                                <div class="col-md-6" *ngIf="!callModel.IsNow">
+                                    <h5 class="form_label">Assign To</h5>
+                                    <div [ngClass]="{
+                                    'has-danger': callAssignedToStaffID.invalid && (callAssignedToStaffID.dirty || callAssignedToStaffID.touched || isInvalidData),
+                                    'has-success': callAssignedToStaffID.valid && (callAssignedToStaffID.dirty || callAssignedToStaffID.touched)
+                                }">
+                                        <div class="select_label">
+                                            <select class="form-control" name="callAssignedTo" [(ngModel)]="callModel.AssignedToStaffID" #callAssignedToStaffID="ngModel" required (ngModelChange)="onCallStaffChange(callModel.AssignedToStaffID)">
+                                            <option *ngFor="let staff of staffList" [ngValue]="staff.StaffID">
+                                                {{staff.StaffFullName}}
+                                            </option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" *ngIf="!callModel.IsNow">
+                                    <h5 class="form_label">Start Time</h5>
+                                    <dx-date-box type="time" [displayFormat]="schedulerTimeFormat" [interval]="15" (onValueChanged)="onCallStartTimeChanged($event)" [(value)]="schedulerStartTime" class="full_width" [useMaskBehavior]="true">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+                                <div class="col-md-6" *ngIf="!callModel.IsNow">
+                                    <h5 class="form_label">End Time</h5>
+                                    <dx-date-box type="time" [displayFormat]="schedulerTimeFormat" [interval]="15" (onValueChanged)="onCallEndTimeChanged($event)" [(value)]="schedulerEndTime" class="full_width" [useMaskBehavior]="true">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h5 class="field_label">Notes <span>(Remaining Characters: {{ 250 -
+                                    callModel?.Description?.length }})</span></h5>
+                                    <div [ngClass]="{
+                                               'has-danger': callModelNoteReq.invalid && (callModelNoteReq.dirty || callModelNoteReq.touched || isInvalidData),
+                                               'has-success': callModelNoteReq.valid && (callModelNoteReq.dirty || callModelNoteReq.touched)
+                                             }">
+                                        <textarea class="form-control form-control-description" rows="2" name="callModelNoteReq" #callModelNoteReq="ngModel" [(ngModel)]="callModel.Description" maxlength="250">
+                            </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- Appointment Template -->
+<ng-template #appointment>
+    <form #appointmentForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height">
+            <div class="row mob-col-full">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+            <div class="row sch_mob_reverse">
+                <div class="col-lg-4 col-md-5 padding_left parallel_grid">
+                    <div class="sch_white_bg mob-sm-sche">
+                        <div class="smallScheduler" *ngIf="activeTab === activityTypes.Appointment || activeTab === activityTypes.FollowupAppointment">
+                            <one-day-scheduler [dayViewFormat]="dayViewFormat" [schedulerTimeFormat]="schedulerTimeFormat" [staffID]="appointmentModel.AssignedToStaffID" [startDate]="currentAppointmentDate" #onedaySchedulerAppointmentComp (onStartDateChange)="onAppointmentDateChange($event)"
+                                [minDate]="schedulerMinDate" [maxDate]="schedulerMaxDate"></one-day-scheduler>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 parallel_grid no_padding">
+                    <div class="sch_white_bg">
+                        <div class="smallScheduler">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="form_label">Select Date</h5>
+                                    <date-picker [value]="appointmentModel.FollowUpDate" [disabled]="appointmentModel.IsNow" [showClear]="false" (onDateChange)="onSelectDateAppointmentValueChanged($event)">
+                                    </date-picker>
+                                </div>
+                                <div class="col-md-6" *ngIf="!tabsOptions.isEditMode">
+                                    <h5 class="form_label">When</h5>
+                                    <input id="appointnow" type="radio" name="rdoApptmntNowLater" [(ngModel)]="appointmentModel.IsNow" [value]="true" [checked]="appointmentModel.IsNow" (ngModelChange)="onAppointmentChangeToNow()" />
+                                    <label for="appointnow"><span></span>Now</label> &nbsp; &nbsp; &nbsp;
+                                    <input id="appointlater" type="radio" name="rdoApptmntNowLater" [(ngModel)]="appointmentModel.IsNow" [value]="false" [checked]="appointmentModel.IsNow" (ngModelChange)="onAppointmentChangeToNow()" />
+                                    <label for="appointlater"><span></span>Later</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="form_label">Title</h5>
+                                    <div [ngClass]="{
+                                   'has-danger': appointmentTitle.invalid && (appointmentTitle.dirty || appointmentTitle.touched || isInvalidData),
+                                   'has-success': appointmentTitle.valid && (appointmentTitle.dirty || appointmentTitle.touched)
+                                }">
+                                        <input class="form-control" type="text" name="appointmentTitle" [(ngModel)]="appointmentModel.Title" #appointmentTitle="ngModel" maxlength="50" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field_label">
+                                        <h5>Contact Reason</h5>
+                                    </div>
+                                    <div [ngClass]="{
+                        'has-danger': appointmentContactReasonTypeID.invalid && (appointmentContactReasonTypeID.dirty || appointmentContactReasonTypeID.touched || isInvalidData),
+                        'has-success': appointmentContactReasonTypeID.valid && (appointmentContactReasonTypeID.dirty || appointmentContactReasonTypeID.touched)
+                                    }">
+                                        <div class="select_label">
+                                            <select class="form-control" name="appointmentContactReason" [(ngModel)]="appointmentModel.ContactReasonTypeID" #appointmentContactReasonTypeID="ngModel" required>
+                                            <option *ngFor="let clientContactReasonType of clientContactReasonTypeList"
+                                                [ngValue]="clientContactReasonType.ContactReasonTypeID">
+                                                {{clientContactReasonType.ContactReasonTypeName}}
+                                            </option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" *ngIf="appointmentModel.IsNow">
+                                    <h5 class="form_label">What’s Next</h5>
+                                    <span class="radio_space" *ngFor="let whatNext of whatNextList">
+                                    <input id="{{'appointcall' + whatNext.ActivityWhatNextID}}" type="radio"
+                                        name="rdoAptWhatNextID" [(ngModel)]="appointmentModel.ActivityWhatNextID"
+                                        [value]="whatNext.ActivityWhatNextID" />
+                                    <label
+                                        for="{{'appointcall' + whatNext.ActivityWhatNextID}}"><span></span>{{whatNext.ActivityWhatNextName}}</label>
+                                    &nbsp; &nbsp;
+                                    </span>
+                                </div>
+                                <div class="col-md-6" *ngIf="!appointmentModel.IsNow">
+                                    <h5 class="form_label">Assigned To</h5>
+                                    <div [ngClass]="{
+                                    'has-danger': assignedToStaffID.invalid && (assignedToStaffID.dirty || assignedToStaffID.touched || isInvalidData),
+                                    'has-success': assignedToStaffID.valid && (assignedToStaffID.dirty || assignedToStaffID.touched)
+                                }">
+                                        <div class="select_label">
+                                            <select class="form-control" name="assignedTo" [(ngModel)]="appointmentModel.AssignedToStaffID" (ngModelChange)="onAppointmentStaffChange(appointmentModel.AssignedToStaffID)" #assignedToStaffID="ngModel" required>
+                                            <option *ngFor="let staff of staffList" [ngValue]="staff.StaffID">
+                                                {{staff.StaffFullName}}
+                                            </option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" *ngIf="!appointmentModel.IsNow">
+                                    <h5 class="form_label">Start Time</h5>
+                                    <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat" [interval]="15" (onValueChanged)="onAppointmentStartTimeChanged($event)" [(value)]="schedulerStartTime" [useMaskBehavior]="true">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+                                <div class="col-md-6" *ngIf="!appointmentModel.IsNow">
+                                    <h5 class="form_label">End Time</h5>
+                                    <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat" [interval]="15" (onValueChanged)="onAppointmentEndTimeChanged($event)" [(value)]="schedulerEndTime" [useMaskBehavior]="true">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 class="field_label">Notes <span>(Remaining Characters: {{ 250 -
+                                    appointmentModel?.Description?.length }})</span></h5>
+                                    <div [ngClass]="{
+                                       'has-danger': appointmentModelNoteReq.invalid && (appointmentModelNoteReq.dirty || appointmentModelNoteReq.touched || isInvalidData),
+                                       'has-success': appointmentModelNoteReq.valid && (appointmentModelNoteReq.dirty || appointmentModelNoteReq.touched)
+                                        }">
+                                        <textarea class="form-control form-control-description" rows="5" name="appointmentModelNoteReq" #appointmentModelNoteReq="ngModel" [(ngModel)]="appointmentModel.Description" maxlength="250">
+                            </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- Email Template -->
+<ng-template #email>
+    <form #emailForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row">
+                <div class="activity_bar_info">
+                    <div *ngIf="personInfo" class="col-md-12 col-sm-12">
+                        <div *ngTemplateOutlet="personinfo"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="sch_white_bg">
+                <div class="smallScheduler">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="form_label">Subject</h5>
+                            <div [ngClass]="{
+                                'has-danger': emailSubject.invalid && (emailSubject.dirty || emailSubject.touched || isInvalidData),
+                                'has-success': emailSubject.valid && (emailSubject.dirty || emailSubject.touched)
+                            }">
+                                <input class="form-control" type="text" name="emailSubject" [(ngModel)]="emailModel.EmailSubject" #emailSubject="ngModel" maxlength="50" required tabindex="1" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="field_label">
+                                <h5>Contact Reason</h5>
+                            </div>
+                            <div [ngClass]="{
+                              'has-danger': emailContactReasonTypeID.invalid && (emailContactReasonTypeID.dirty || emailContactReasonTypeID.touched || isInvalidData),
+                              'has-success': emailContactReasonTypeID.valid && (emailContactReasonTypeID.dirty || emailContactReasonTypeID.touched)
+                          }">
+                                <div class="select_label">
+                                    <select class="form-control" name="emailContactReason" [(ngModel)]="emailModel.ContactReasonTypeID" #emailContactReasonTypeID="ngModel" required tabindex="3">
+                                <option *ngFor="let clientContactReasonType of clientContactReasonTypeList"
+                                    [ngValue]="clientContactReasonType.ContactReasonTypeID">
+                                    {{clientContactReasonType.ContactReasonTypeName}}
+                                </option>
+                            </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="field_label">
+                                <h5>Email Template</h5>
+                            </div>
+                            <div class="select_label">
+                                <select class="form-control" name="txtTemplateTextID" [(ngModel)]="selectedTemplate" (ngModelChange)="onTemplateChange(selectedTemplate)" #templateTextID="ngModel" tabindex="2">
+                            <option *ngFor="let template of templateTextList" [ngValue]="template">
+                                {{template.TemplateTextTitle}}
+                            </option>
+                        </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="field_label">Text
+                                <span>(Remaining Characters: {{ emailMaxLength - emailModel?.EmailBody?.length}})</span>
+                            </h5>
+                            <div [ngClass]="{
+                        'has-danger': (emailBody.invalid && isInvalidData) || isInvalidEmailBody
+                    }">
+                                <email-editor [value]="emailModel?.EmailBody" (onEmailBodyChange)="onEmailBodyChange($event)">
+                                </email-editor>
+                            </div>
+                            <input type="text" name="emailBody" #emailBody="ngModel" [(ngModel)]="emailModel.EmailBody" required [maxlength]="emailMaxLength" style="display: none" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- Notes Template-->
+<ng-template #note>
+    <form #noteForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+            <div class="sch_white_bg">
+                <div class="smallScheduler">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="field_label">
+                                <h5>Title</h5>
+                            </div>
+                            <div [ngClass]="{
+                               'has-danger': noteTitle.invalid && (noteTitle.dirty || noteTitle.touched || isInvalidData),
+                               'has-success': noteTitle.valid && (noteTitle.dirty || noteTitle.touched)
+                            }">
+                                <input class="form-control" type="text" name="noteTitle" [(ngModel)]="noteModel.Title" #noteTitle="ngModel" maxlength="50" required tabindex="1" />
+                            </div>
+
+                            <div class="field_label">
+                                <h5>Description <span>(Remaining Characters: {{ 500 - noteModel?.Description?.length }})</span>
+                                </h5>
+                            </div>
+                            <div [ngClass]="{
+                               'has-danger': noteDescription.invalid && (noteDescription.dirty || noteDescription.touched || isInvalidData),
+                               'has-success': noteDescription.valid && (noteDescription.dirty || noteDescription.touched)
+                             }">
+                                <textarea class="form-control form-control-description" rows="12" name="noteDescription" #noteDescription="ngModel" [(ngModel)]="noteModel.Description" maxlength="500" required tabindex="2">
+                        </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- Achievements Template-->
+<ng-template #Achievements>
+    <form #achievementsForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+            <div class="sch_white_bg">
+                <div class="smallScheduler">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="field_label">
+                                <h5>Title</h5>
+                            </div>
+                            <input class="form-control" name="achievementTitle" [(ngModel)]="achievementModel.Title" #achievementTitle="ngModel" type="text" maxlength="50" required tabindex="1" />
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="field_label">
+                                <h5>Notes <span>(Remaining Characters: {{ 500 - achievementModel?.Description?.length }})</span>
+                                </h5>
+                            </div>
+                            <textarea class="form-control form-control-description" rows="12" name="achievementDescription" [(ngModel)]="achievementModel.Description" #achievementDescription="ngModel" type="text" maxlength="500" required tabindex="2">
+                        </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- SMS Template -->
+<ng-template #sms>
+    <form #smsForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+
+            <div class="sch_white_bg">
+                <div class="smallScheduler">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="alert alert-warning sms-warning" *ngIf="personInfo?.Mobile == ''"><i class="fal fa-exclamation-circle"></i> Please add mobile number in {{personInfo.CustomerTypeName}} profile to send SMS</p>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="form_label">Title</h5>
+                            <div [ngClass]="{
+                                'has-danger': smsTitle.invalid && (smsTitle.dirty || smsTitle.touched || isInvalidData),
+                                'has-success': smsTitle.valid && (smsTitle.dirty || smsTitle.touched)
+                              }">
+                                <input class="form-control" type="text" name="txtSmsTitle" [(ngModel)]="smsModel.Title" #smsTitle="ngModel" maxlength="50" required tabindex="1" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="field_label">
+                                <h5>Contact Reason</h5>
+                            </div>
+                            <div [ngClass]="{
+                              'has-danger': smsContactReasonTypeID.invalid && (smsContactReasonTypeID.dirty || smsContactReasonTypeID.touched || isInvalidData),
+                              'has-success': smsContactReasonTypeID.valid && (smsContactReasonTypeID.dirty || smsContactReasonTypeID.touched)
+                            }">
+                                <div class="select_label">
+                                    <select class="form-control" name="smsContactReason" [(ngModel)]="smsModel.ContactReasonTypeID" #smsContactReasonTypeID="ngModel" required tabindex="2">
+                                  <option *ngFor="let clientContactReasonType of clientContactReasonTypeList"
+                                      [ngValue]="clientContactReasonType.ContactReasonTypeID">
+                                      {{clientContactReasonType.ContactReasonTypeName}}
+                                  </option>
+                              </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="field_label">
+                                <h5>SMS Template</h5>
+                            </div>
+                            <div class="select_label">
+                                <select class="form-control" name="txtTemplateTextID" [(ngModel)]="selectedTemplate" (ngModelChange)="onTemplateChange(selectedTemplate)" #templateTextID="ngModel" tabindex="3">
+                              <option *ngFor="let template of templateTextList" [ngValue]="template">
+                                  {{template.TemplateTextTitle}}
+                              </option>
+                          </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="field_label">Text <span>(Remaining Characters: {{ 160 - smsModel?.Description?.length
+                              }})</span></h5>
+                            <div [ngClass]="{
+                                'has-danger': smsDescription.invalid && (smsDescription.dirty || smsDescription.touched || isInvalidData),
+                                'has-success': smsDescription.valid && (smsDescription.dirty || smsDescription.touched)
+                              }">
+                                <textarea class="form-control form-control-description" rows="8" name="txtSmsDescription" #smsDescription="ngModel" [(ngModel)]="smsModel.Description" maxlength="160" required tabindex="4">
+                          </textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- App Notification Template-->
+<ng-template #appNotification>
+    <form #appNotificationForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+            <div class="sch_white_bg">
+                <div class="smallScheduler">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="field_label">Title</h5>
+                            <div [ngClass]="{
+                               'has-danger': appNotificationTitle.invalid && (appNotificationTitle.dirty || appNotificationTitle.touched || isInvalidData),
+                               'has-success': appNotificationTitle.valid && (appNotificationTitle.dirty || appNotificationTitle.touched)
+                            }">
+                                <input class="form-control" type="text" name="txtAppNotificationTitle" [(ngModel)]="appNotificationModel.Title" #appNotificationTitle="ngModel" maxlength="50" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="field_label">
+                                <h5>Contact Reason</h5>
+                            </div>
+                            <div [ngClass]="{
+                             'has-danger': appNotificationContactReasonTypeID.invalid && (appNotificationContactReasonTypeID.dirty || appNotificationContactReasonTypeID.touched || isInvalidData),
+                             'has-success': appNotificationContactReasonTypeID.valid && (appNotificationContactReasonTypeID.dirty || appNotificationContactReasonTypeID.touched)
+                          }">
+                                <div class="select_label">
+                                    <select class="form-control" name="appNotificationContactReason" [(ngModel)]="appNotificationModel.ContactReasonTypeID" #appNotificationContactReasonTypeID="ngModel" required>
+                                <option *ngFor="let clientContactReasonType of clientContactReasonTypeList"
+                                    [ngValue]="clientContactReasonType.ContactReasonTypeID">
+                                    {{clientContactReasonType.ContactReasonTypeName}}
+                                </option>
+                            </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                    <div class="field_label">
+                        <h5>SMS Template</h5>
+                    </div>
+                    <div class="select_label">
+                        <select class="form-control" name="txtTemplateTextID" [(ngModel)]="selectedTemplate"
+                            (ngModelChange)="onTemplateChange(selectedTemplate)" #templateTextID="ngModel">
+                            <option *ngFor="let template of templateTextList" [ngValue]="template">
+                                {{template.TemplateTextTitle}}
+                            </option>
+                        </select>
+                    </div>
+                </div> -->
+                        <div class="col-md-12">
+                            <h5 class="field_label">Text <span>(Remaining Characters: {{ 300 -
+                            appNotificationModel?.Description?.length
+                            }})</span></h5>
+                            <div [ngClass]="{
+                               'has-danger': appNotificationDescription.invalid && (appNotificationDescription.dirty || appNotificationDescription.touched || isInvalidData),
+                               'has-success': appNotificationDescription.valid && (appNotificationDescription.dirty || appNotificationDescription.touched)
+                             }">
+                                <textarea class="form-control form-control-description" rows="10" name="txtAppNotificationDescription" #appNotificationDescription="ngModel" [(ngModel)]="appNotificationModel.Description" maxlength="300" required>
+                    </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>

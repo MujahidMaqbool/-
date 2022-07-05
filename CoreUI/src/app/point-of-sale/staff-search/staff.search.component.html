@@ -1,0 +1,15 @@
+<div class="row">
+    <input type="text" placeholder="Search Staff" matInput class="form-control"
+        [formControl]="searchPerson" [matAutocomplete]="auto" maxlength="30">
+        <span *ngIf="showClearStaff" (click)="onClearStaff()" class="clear_client"></span>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayStaffName"
+        (optionSelected)='getSelectedStaff($event.option.value)'>
+        <mat-option *ngFor="let staff of allStaff" [value]="staff">
+            <span class="client_name">{{ staff.FullName }}</span>
+            <br>
+            <span class="client_info">{{ staff.Mobile }}</span>
+            <br>
+            <span class="client_info">{{ staff.Email }}</span>
+        </mat-option>
+    </mat-autocomplete>
+</div>

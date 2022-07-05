@@ -1,0 +1,473 @@
+<!--View Membership popup Start -->
+
+<div class="view_membership" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content extra_large_popup">
+      <div class="popup_header">
+        <div>
+          <h4>View Membership</h4>
+        </div>
+      </div>
+      <div class="popup_content cstm_scroll_bg">
+        <div class="view_bg">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section_title">
+                <h4>Membership Info</h4>
+              </div>
+            </div>
+          </div>
+          <div class="row readonly_content">
+            <div class="col">
+              <h6 class="field_label">Membership Name</h6>
+              <p class="text_readonly">{{membership.MembershipName ? membership.MembershipName : 'N/A'}}</p>
+            </div>
+            <div class="col">
+                <h6 class="field_label">Membership Category</h6>
+                <p class="text_readonly">{{membership.MembershipCategoryName ? membership.MembershipCategoryName : 'N/A'}}</p>
+              </div>
+            <div class="col">
+              <h6 class="field_label">Membership Length</h6>
+              <p class="text_readonly">
+                {{membership.MembershipDurationValue ? membership.MembershipDurationValue : ''}}
+                {{membership.MembershipDurationTypeName ? membership.MembershipDurationTypeName : ''}}
+              </p>
+            </div>
+            <div class="col">
+              <h6 class="field_label">Member Limit</h6>
+              <p class="text_readonly">{{membership.MemberLimit ? membership.MemberLimit : 'No Limit'}} </p>
+            </div>
+          </div>
+
+          <div class="row readonly_content pt-2">
+            <div class="col">
+              <h6 class="field_label">Status</h6>
+              <p class="text_readonly">{{membership.IsActive ? 'Active' : 'Inactive'}}</p>
+            </div>
+            <div class="col">
+              <h6 class="field_label">Show Online</h6>
+              <p class="text_readonly">{{membership.IsOnline ? 'Yes' : 'No'}}</p>
+            </div>
+            <div class="col">
+              <h6 class="field_label">Hide Price Online</h6>
+              <p class="text_readonly">{{membership.IsHidePriceOnline ? 'Yes' : 'No'}}</p>
+            </div>
+            <div class="col">
+              <h6 class="field_label">Is Featured</h6>
+              <p class="text_readonly">
+                {{membership.IsFeatured ? 'Yes' : 'No'}}
+              </p>
+            </div>
+          </div>
+
+          <div class="row readonly_content pt-2">
+            <div class="col">
+              <h6 class="field_label">Allow Duplicate</h6><p class="text_readonly">{{membership.AllowDuplicate ? 'Yes' : 'No'}}</p>
+            </div>
+            <div class="col">
+              <h6 class="field_label">Check-In Benefits</h6>
+              <p class="text_readonly">{{membership.CheckedInSession ? membership.CheckedInSession : 'N/A'}} </p>
+            </div>
+            <div class="col">
+              <h6 class="field_label">Class Benefits</h6>
+              <p class="text_readonly">{{membership.ClassesSession ? membership.ClassesSession : 'N/A'}} </p>
+            </div>
+            <div class="col">
+              <h6 class="field_label">Service Benefits</h6>
+              <p class="text_readonly">{{membership.ServicesSession ? membership.ServicesSession : 'N/A'}} </p>
+            </div>
+          </div>
+          <div class="row readonly_content pt-2">
+            <div class="col col-3">
+              <h6 class="field_label">Product Benefits</h6>
+              <p class="text_readonly">{{membership.ProductsSession ? membership.ProductsSession : 'N/A'}} </p>
+            </div>
+            <div class="col" *ngIf="isPurchaseRestrictionAllowed">
+              <h6 class="field_label">Purchase Restriction</h6>
+            <p class="text_readonly">{{membership.RestrictedCustomerTypeNames ? membership.RestrictedCustomerTypeNames + " cannot purchase this item." : 'N/A'}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="view_bg">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section_title">
+                <h4>Branch List</h4>
+              </div>
+              <div class="overflow-auto">
+                <div class="row grid_header view_membership_detail verticle-scroll-md">
+                  <div class="col-md-3 col">
+                    <h5>Branch Name</h5>
+                  </div>
+                </div>
+                <div class="row grid_rows view_membership_content verticle-scroll-md"
+                  *ngFor="let branch of membershipBranchClassList">
+                  <div class="col-md-3 col">
+                    <h5>{{branch.BranchName}}</h5>
+                    <!-- <span class="label_default_branch" *ngIf="branch.IsDefault">Default</span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="view_bg">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section_title">
+                <h4>Time Based Availability</h4>
+              </div>
+            </div>
+            <div class="col-md-12 overflow-auto">
+              <div class="responsive_grid_rows">
+                <div class="row grid_header">
+                  <div class="col-md-3 col">
+                    <h5>Day</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5>Start Time</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5>End Time</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <h5>Permissions</h5>
+                  </div>
+                </div>
+                <div class="row grid_rows">
+                  <div class="col-md-3 col">
+                    <h5>Monday</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <div class="membership_time">
+                      <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Monday]?.StartTime | branchTimeFormat}}</h5>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Monday]?.EndTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <div class="checkbox checkbox-success permission_check">
+                      <input class="example-margin" type="checkbox" id="BranchOperationalTimesMonday"
+                        name="BranchOperationalTimesMonday"
+                        [checked]="membershipClockInTimeList[weekDays.Monday]?.IsBranchOperationTime" [disabled]="true">
+                      <label for="BranchOperationalTimesMonday">
+                        Branch Times
+                      </label>
+                    </div>
+                    <div class="checkbox checkbox-success">
+                      <input class="example-margin" type="checkbox" id="AccessPermissionMonday"
+                        name="AccessPermissionMonday"
+                        [checked]="membershipClockInTimeList[weekDays.Monday]?.IsDayRestricted" [disabled]="true">
+                      <label for="AccessPermissionMonday">
+                        No Access
+                      </label>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+                <div class="row grid_rows">
+                  <div class="col-md-3 col">
+                    <h5>Tuesday</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Tuesday]?.StartTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Tuesday]?.EndTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <div class="checkbox checkbox-success permission_check">
+                      <input class="example-margin" type="checkbox" id="BranchOperationalTimesTuesday"
+                        name="BranchOperationalTimesTuesday"
+                        [checked]="membershipClockInTimeList[weekDays.Tuesday]?.IsBranchOperationTime"
+                        [disabled]="true">
+                      <label for="BranchOperationalTimesTuesday">
+                        Branch Times
+                      </label>
+                    </div>
+                    <div class="checkbox checkbox-success">
+                      <input class="example-margin" type="checkbox" id="AccessPermissionTuesday"
+                        name="AccessPermissionTuesday"
+                        [checked]="membershipClockInTimeList[weekDays.Tuesday]?.IsDayRestricted" [disabled]="true">
+                      <label for="AccessPermissionTuesday">
+                        No Access
+                      </label>
+                    </div>
+
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+                <div class="row grid_rows">
+                  <div class="col-md-3 col">
+                    <h5>Wednesday</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Wednesday]?.StartTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Wednesday]?.EndTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <div class="checkbox checkbox-success permission_check">
+                      <input class="example-margin" type="checkbox" id="BranchOperationalTimesWednesday"
+                        name="BranchOperationalTimesWednesday"
+                        [checked]="membershipClockInTimeList[weekDays.Wednesday]?.IsBranchOperationTime"
+                        [disabled]="true">
+                      <label for="BranchOperationalTimesWednesday">
+                        Branch Times
+                      </label>
+                    </div>
+                    <div class="checkbox checkbox-success">
+                      <input class="example-margin" type="checkbox" id="AccessPermissionWednesday"
+                        name="AccessPermissionWednesday"
+                        [checked]="membershipClockInTimeList[weekDays.Wednesday]?.IsDayRestricted" [disabled]="true">
+                      <label for="AccessPermissionWednesday">
+                        No Access
+                      </label>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+                <div class="row grid_rows">
+                  <div class="col-md-3 col">
+                    <h5>Thursday</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Thursday]?.StartTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Thursday]?.EndTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <div class="checkbox checkbox-success permission_check">
+                      <input class="example-margin" type="checkbox" id="BranchOperationalTimesThursday"
+                        name="BranchOperationalTimesThursday"
+                        [checked]="membershipClockInTimeList[weekDays.Thursday]?.IsBranchOperationTime"
+                        [disabled]="true">
+                      <label for="BranchOperationalTimesThursday">
+                        Branch Times
+                      </label>
+                    </div>
+                    <div class="checkbox checkbox-success">
+                      <input class="example-margin" type="checkbox" id="AccessPermissionThursday"
+                        name="AccessPermissionThursday"
+                        [checked]="membershipClockInTimeList[weekDays.Thursday]?.IsDayRestricted" [disabled]="true">
+                      <label for="AccessPermissionThursday">
+                        No Access
+                      </label>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+                <div class="row grid_rows">
+                  <div class="col-md-3 col">
+                    <h5>Friday</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Friday]?.StartTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Friday]?.EndTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <div class="checkbox checkbox-success permission_check">
+                      <input class="example-margin" type="checkbox" id="BranchOperationalTimesFriday"
+                        name="BranchOperationalTimesFriday"
+                        [checked]="membershipClockInTimeList[weekDays.Friday]?.IsBranchOperationTime" [disabled]="true">
+                      <label for="BranchOperationalTimesFriday">
+                        Branch Times
+                      </label>
+                    </div>
+                    <div class="checkbox checkbox-success">
+                      <input class="example-margin" type="checkbox" id="AccessPermissionFriday"
+                        name="AccessPermissionFriday"
+                        [checked]="membershipClockInTimeList[weekDays.Friday]?.IsDayRestricted" [disabled]="true">
+                      <label for="AccessPermissionFriday">
+                        No Access
+                      </label>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+                <div class="row grid_rows">
+                  <div class="col-md-3 col">
+                    <h5>Saturday</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Saturday]?.StartTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Saturday]?.EndTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <div class="checkbox checkbox-success permission_check">
+                      <input class="example-margin" type="checkbox" id="BranchOperationalTimesStaruday"
+                        name="BranchOperationalTimesStaruday"
+                        [checked]="membershipClockInTimeList[weekDays.Saturday]?.IsBranchOperationTime"
+                        [disabled]="true">
+                      <label for="BranchOperationalTimesStaruday">
+                        Branch Times
+                      </label>
+                    </div>
+                    <div class="checkbox checkbox-success">
+                      <input class="example-margin" type="checkbox" id="AccessPermissionSaturday"
+                        name="AccessPermissionSaturday"
+                        [checked]="membershipClockInTimeList[weekDays.Saturday]?.IsDayRestricted" [disabled]="true">
+                      <label for="AccessPermissionSaturday">
+                        No Access
+                      </label>
+                    </div>
+
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+                <div class="row grid_rows">
+                  <div class="col-md-3 col">
+                    <h5>Sunday</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Sunday]?.StartTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5 class="text_readonly">{{membershipClockInTimeList[weekDays.Sunday]?.EndTime | branchTimeFormat}}</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <div class="checkbox checkbox-success permission_check">
+                      <input class="example-margin" type="checkbox" id="BranchOperationalTimesSunday"
+                        name="BranchOperationalTimesSunday"
+                        [checked]="membershipClockInTimeList[weekDays.Sunday]?.IsBranchOperationTime" [disabled]="true">
+                      <label for="BranchOperationalTimesSunday">
+                        Branch Times
+                      </label>
+                    </div>
+                    <div class="checkbox checkbox-success">
+                      <input class="example-margin" type="checkbox" id="AccessPermissionSunday"
+                        name="AccessPermissionSunday"
+                        [checked]="membershipClockInTimeList[weekDays.Sunday]?.IsDayRestricted" [disabled]="true">
+                      <label for="AccessPermissionSunday">
+                        No Access
+                      </label>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="view_bg">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section_title">
+                <h4>Single Payment</h4>
+              </div>
+            </div>
+            <div class="col-md-12 overflow-auto">
+              <div class="verticle-scroll-lg">
+                <div class="row grid_header view_membership_detail">
+                  <div class="col-md-5 col padding_right">
+                    <h5>Payment Types</h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <h5>Payment Name</h5>
+                  </div>
+                  <div class="col-md-2 col text-center">
+                    <h5>Amount</h5>
+                  </div>
+                </div>
+                <div class="row grid_rows view_membership_content" *ngFor="let objSinglepayment of singlePaymentList">
+                  <div class="col-md-5 col padding_right">
+                    <h5>{{objSinglepayment.SinglePaymentCollectionTypeName}} </h5>
+                  </div>
+                  <div class="col-md-5 col">
+                    <h5>{{objSinglepayment.MembershipPaymentName}}</h5>
+                  </div>
+                  <div class="col-md-2 col text-center">
+                    <h5>{{objSinglepayment.TotalPrice | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <div class="row grid_rows" *ngIf="!singlePaymentList || singlePaymentList.length <=0">
+                  <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">Payment Not Available</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="view_bg">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section_title">
+                <h4> Recurring Payment </h4>
+              </div>
+            </div>
+            <div class="col-md-12 overflow-auto">
+              <div class="verticle-scroll-lg">
+                <div class="row grid_header view_membership_detail">
+                  <div class="col-md-5 col padding_right">
+                    <h5>Payment Name</h5>
+                  </div>
+                  <div class="col-md-3 col">
+                    <h5>Interval Type</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5>Interval</h5>
+                  </div>
+                  <div class="col-md-2 col text-center">
+                    <h5>Amount</h5>
+                  </div>
+                </div>
+                <div class="row grid_rows view_membership_content"
+                  *ngFor="let objRecurringpayment of recurringPaymentList">
+                  <div class="col-md-5 col padding_right">
+                    <h5>{{objRecurringpayment.MembershipPaymentName}}</h5>
+                  </div>
+                  <div class="col-md-3 col">
+                    <h5>{{objRecurringpayment.DurationTypeName}}</h5>
+                  </div>
+                  <div class="col-md-2 col">
+                    <h5>{{objRecurringpayment.RecurringInterval}}</h5>
+                  </div>
+                  <div class="col-md-2 col text-center">
+                    <h5>{{objRecurringpayment.TotalPrice | currency: currencyFormat}}</h5>
+                  </div>
+                </div>
+                <div class="row grid_rows" *ngIf="!recurringPaymentList || recurringPaymentList.length <=0">
+                  <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">Payment Not Available</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="view_bg last_div_bz">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section_title">
+                <h4 class="field_label">
+                  Description
+                </h4>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <p class="text_readonly" [innerHTML]="membership.Description ? membership.Description : 'N/A'"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row popup_footer">
+        <div class="col-12">
+          <div class="cancel_btn float-right">
+            <button type="button" (click)="_dialogRef.close()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!----View Membership popup End--->

@@ -1,0 +1,144 @@
+<div id="accordion">
+    <div class="card" style="padding: 0">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
+                    All Clients
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <div class="report_section">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <p> Lorem ipsum test Lorem ipsum test Lorem ipsum test Lorem ipsum test. Lorem ipsum test Lorem ipsum test Lorem ipsum test Lorem ipsum test. </p>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                    <div class="row"></div>
+
+                    <div class="report_button float-right">
+                        <button class="pdf_btn" (click)="exportAllClient(fileExtensionType.PDF)"><i class="fal fa-file-pdf"></i> PDF</button>
+                        <!-- <button class="excle_btn" (click)="exportAllClient(fileExtensionType.Excel)"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel</button> -->
+                        <!-- <button class="csv_btn" (click)="exportAllClient(fileExtensionType.CSV,AllClients)"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                        <button class="view_btn" (click)="viewAllClientReport(fileExtensionType.View)"><i class="fal fa-book"></i> View</button>
+                    </div>
+
+                        <!-- <div class="col-md-6 col-sm-6">
+                            <div class="report_button text-right">
+                                <button (click)="ExportAllClient()"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    Export</button>
+                                <button class="primary_blue_btn" (click)="ViewAllClientReport()"> <i class="fa fa-eye"
+                                        aria-hidden="true"></i> View</button>
+                            </div>
+                        </div>
+                    <div class="small_space"></div> -->
+                    <!-- <div class="row">
+                                    <div class="col-md-3 col-sm-3">
+                                        <h5 class="field_label">Card Number</h5>
+                                        <input type="text" class="form-control" name="CardNumber" maxlength="50" [(ngModel)]="clientReportSearchParam.CardNumber">
+                                    </div>
+                                </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card" style="padding: 0">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                    aria-controls="collapseTwo">
+                    Client Detail
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <div class="report_section">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <p> Lorem ipsum test Lorem ipsum test Lorem ipsum test Lorem ipsum test.  Lorem ipsum test Lorem ipsum test Lorem ipsum test Lorem ipsum test.</p>
+                        </div>
+                    </div>
+                    <div class="small_space"></div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                                <h5 class="field_label">Client Name</h5>
+                            <input type="text" placeholder="Search Client" [value]="personName" matInput [formControl]="searchPerson"
+                                [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayClientName"
+                                (optionSelected)='getSelectedClient($event.option.value)'>
+                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                    <span class="client_name">{{ person.PersonName }}</span>
+                                    <small class="client_type float-right">{{person.PersonTypeName}}</small>
+                                    <br>
+                                    <span class="client_info">{{ person.Mobile }}</span>
+                                    <br>
+                                    <span class="client_info">{{ person.Email }}</span>
+                                </mat-option>
+                            </mat-autocomplete>
+
+                            <!-- <input type="text" class="form-control" name="CardNumber" maxlength="50" [(ngModel)]="clientReportSearchParam.ClientID"> -->
+                        </div>
+                    </div>
+
+                        <div class="report_button float-right">
+                            <button class="pdf_btn" (click)="exportClientDetailReport()"><i class="fal fa-file-pdf"></i> PDF</button>
+                            <!-- <button class="excle_btn" (click)="exportClientDetailReport(fileExtensionType.Excel)"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel</button> -->
+                            <!-- <button class="csv_btn"><i class="fa fa-file-code-o" aria-hidden="true"></i> CSV</button> -->
+                            <button class="view_btn" (click)="viewClientDetailReport()"><i class="fal fa-book" aria-hidden="true"></i> View</button>
+                        </div>
+
+                        <!-- <div class="col-md-6 col-sm-6">
+                            <div class="report_button text-right">
+                                <button (click)="exportClientDetailReport()"><i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    Export</button>
+                                <button class="primary_blue_btn" (click)="ViewClientDetailReport()"> <i class="fa fa-eye"
+                                        aria-hidden="true"></i> View</button>
+                            </div>
+                        </div> -->
+                    <!-- <div class="small_space"></div> -->
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="padding: 0">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="false" aria-controls="collapseThree">
+                    All Sale Booked Detail
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <all-sale-booked-detail-report [moduleName]="'Client'"></all-sale-booked-detail-report>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card" style="padding: 0">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                    aria-controls="collapseFour">
+                    All Sale History Report
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <all-sale-history-report [moduleName]="'Client'"></all-sale-history-report>
+            </div>
+        </div>
+    </div>
+</div>

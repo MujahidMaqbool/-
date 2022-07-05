@@ -1,0 +1,75 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <!-- <button *ngIf="isBackToSearchAllowed" class="simple_btn" type="button" role="navigation" [routerLink]="['/staff/search']">
+                 Back to Search</button> -->
+            <button *ngIf="isDocumentSaveAllowed" type="button" class="save" (click)="openAddNewStaffDocumentDialog()">
+                 Upload Document</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg info_bar_bg">
+    <staff-basic-info [personTypeInfo]="personInfo" *ngIf="shouldGetPersonInfo"></staff-basic-info>
+</div>
+<div class="grids_white_bg">
+            <div class="overflow-auto">
+            <div class="row grid_header mob-scroll-grid">
+                <div class="col-md-2 col">
+                    <h5>Date</h5>
+                </div>
+                <div class="col-md-3 col">
+                    <h5>Document Name</h5>
+                </div>
+                <div class="col-md-5 col">
+                    <h5>Description</h5>
+                </div>
+                <div class="col-md-2 col text-center">
+                    <h5>Actions</h5>
+                </div>
+            </div>
+            <div *ngIf="isDataExists">
+                <div class="row grid_rows mob-scroll-grid" *ngFor="let staffDocDataobj of staffDocumentGridDataObj">
+                    <div class="col-md-2 col">
+                        <h5>{{staffDocDataobj.CreatedOn | customdate: dateFormat}}</h5>
+                    </div>
+                    <div class="col-md-3 col">
+                        <h5>{{staffDocDataobj.StaffDocumentName}} </h5>
+                    </div>
+                    <div class="col-md-5 col">
+                        <h5>{{staffDocDataobj.Description}}</h5>
+                    </div>
+                    <div class="col-md-2 col text-center">
+                        <h5>
+                            <span class="blue">
+                                <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewdownloadFile(staffDocDataobj.DocumentPath,true)"
+                                    href="javascript:void(0)">
+                                    <i class="fal fa-book-open" *ngIf="staffDocDataobj.DocumentPath"></i>
+                                </a>
+                            </span>
+                            <!-- <span class="blue">
+                                    <a matTooltip="Download" matTooltipPosition="above" (click)="viewdownloadFile(staffDocDataobj.DocumentPath,false)"
+                                        href="javascript:void(0)">
+                                        <i class="fal fa-cloud-download" *ngIf="staffDocDataobj.DocumentPath"></i>
+                                    </a>
+                                </span> -->
+                            <span class="red_del" *ngIf="isDocumentSaveAllowed">
+                                <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="deleteStaffDocument(staffDocDataobj.StaffDocumentID)"
+                                    href="javascript:void(0)">
+                                    <i class="fal fa-trash-alt"></i>
+                                </a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div *ngIf="!isDataExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="space"></div>
+</div>

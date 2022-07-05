@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li *ngIf="allowedPages.Company">
+                <a [routerLinkActive]="['active']" [routerLink]="['company-details']" role="tab" (click)="getUrl('')">
+                    Company
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Branch_View">
+                <a [routerLinkActive]="['active']" [routerLink]="['branch']" role="tab" (click)="getUrl('')">
+                    Branches
+                </a>
+            </li>
+            <li *ngIf="allowedPages.StaffPosition_View">
+                <a [routerLinkActive]="['active']" [routerLink]="['staff-position']" role="tab" (click)="getUrl('')">Staff Positions </a>
+            </li>
+            <!-- <li *ngIf="allowedPages.Membership_View">
+                <a [routerLinkActive]="['active']" [routerLink]="['membership']" role="tab" (click)="getUrl('')"> Memberships </a>
+            </li> -->
+            <li *ngIf="allowedPages.Membership_View || allowedPages.MembershipCategory_View">
+              <a role="tab" class="nav-link dropdown-toggle" id="membership_nav" data-toggle="dropdown" [ngClass]="
+              { 'active' : url == 'membership-category' || url == 'membership'
+              }" aria-haspopup="true" aria-expanded="false">Memberships</a>
+              <div class="dropdown-menu sub_menu_nav" aria-labelledby="membership_nav">
+                  <a class="dropdown-item" *ngIf="allowedPages.MembershipCategory_View" [routerLinkActive]="['active']" (click)="getUrl('membership-category')"
+                      [routerLink]="['membership-category']" role="tab"> Categories</a>
+
+                  <a class="dropdown-item" *ngIf="allowedPages.Membership_View" [routerLinkActive]="['active']" (click)="getUrl('membership')"
+                      [routerLink]="['membership']" role="tab">Memberships</a>
+              </div>
+          </li>
+            <li *ngIf="allowedPages.ServiceCategory_View || allowedPages.Service_View">
+                <a role="tab" class="nav-link dropdown-toggle" id="services_nav" data-toggle="dropdown" [ngClass]="
+                { 'active' : url == 'service-category' || url == 'service'
+                }" aria-haspopup="true" aria-expanded="false">Services</a>
+                <div class="dropdown-menu sub_menu_nav" aria-labelledby="services_nav">
+                    <a class="dropdown-item" *ngIf="allowedPages.ServiceCategory_View" [routerLinkActive]="['active']"
+                        [routerLink]="['service-category']" role="tab" (click)="getUrl('service-category')">Categories</a>
+                    <a class="dropdown-item" *ngIf="allowedPages.Service_View" [routerLinkActive]="['active']"
+                        [routerLink]="['service']" (click)="getUrl('service')"> Services</a>
+                </div>
+            </li>
+            <li *ngIf="allowedPages.ClassCategory_View || allowedPages.Class_View">
+                <a role="tab" class="nav-link dropdown-toggle" id="class_nav" data-toggle="dropdown" [ngClass]="
+                { 'active' : url == 'class-category' || url == 'class'
+                }" aria-haspopup="true" aria-expanded="false">Classes</a>
+                <div class="dropdown-menu sub_menu_nav" aria-labelledby="class_nav">
+                    <a class="dropdown-item" *ngIf="allowedPages.ClassCategory_View" [routerLinkActive]="['active']" (click)="getUrl('class-category')"
+                        [routerLink]="['class-category']" role="tab"> Categories</a>
+
+                    <a class="dropdown-item" *ngIf="allowedPages.Class_View" [routerLinkActive]="['active']" (click)="getUrl('class')"
+                        [routerLink]="['class']" role="tab">Classes</a>
+                </div>
+            </li>
+            <li *ngIf="allowedPages.Facility_View">
+                <a [routerLinkActive]="['active']" [routerLink]="['facility']" role="tab" (click)="getUrl('')">Facilities </a>
+            </li>
+
+            <!-- <li *ngIf="allowedPages.Template_View">
+                <a [routerLinkActive]="['active']" [routerLink]="['template']" role="tab">Templates </a>
+            </li> -->
+            <li *ngIf="allowedPages.Template_View || allowedPages.Automation_Template_View">
+                <a role="tab" class="nav-link dropdown-toggle" id="templates_nav" data-toggle="dropdown" [ngClass]="
+                { 'active' : url == 'automation-template' || url == 'template'
+                }" aria-haspopup="true" aria-expanded="false">Templates</a>
+                <div class="dropdown-menu sub_menu_nav" aria-labelledby="templates_nav">
+                    <a class="dropdown-item" *ngIf="allowedPages.Template_View" [routerLinkActive]="['active']" (click)="getUrl('template')"
+                        [routerLink]="['template']" role="tab">General Template</a>
+                    <a class="dropdown-item" *ngIf="allowedPages.Automation_Template_View"
+                        [routerLinkActive]="['active']" [routerLink]="['automation-template']" (click)="getUrl('automation-template')" role="tab">Automation
+                        Template</a>
+
+                </div>
+            </li>
+
+            <!-- these screens move to congiguraiotn -->
+
+            <!-- <li *ngIf="allowedPages.Widget">
+                <a [routerLinkActive]="['active']" [routerLink]="['widget-settings']" role="tab">Widget </a>
+            </li> -->
+            <!-- <li *ngIf="allowedPages.LeadStatus">
+                <a [routerLinkActive]="['active']" [routerLink]="['lead-status']" role="tab">Lead</a>
+            </li> -->
+            <!-- <li *ngIf="allowedPages.ActivitiesColor">
+                <a [routerLinkActive]="['active']" [routerLink]="['activities-color']" role="tab">Activities Color </a>
+            </li> -->
+            <!-- <li *ngIf="allowedPages.GatewayIntegration">
+                <a [routerLinkActive]="['active']" [routerLink]="['payment-integration']" role="tab">Payment Integration
+                </a>
+            </li> -->
+            <!-- <li *ngIf="allowedPages.PrinterConfig">
+                <a [routerLinkActive]="['active']" [routerLink]="['printer-setup']" role="tab">POS </a>
+            </li> -->
+            <li *ngIf="allowedPages.Tax">
+                <a [routerLinkActive]="['active']" [routerLink]="['taxes']" role="tab" (click)="getUrl('')">Taxes </a>
+            </li>
+            <li *ngIf="allowedPages.ViewForm">
+                <a [routerLinkActive]="['active']" [routerLink]="['form']" role="tab" (click)="getUrl('')">Forms </a>
+            </li>
+            <li *ngIf="allowedPages.RewardProgramView">
+                <a [routerLinkActive]="['active']" [routerLink]="['reward-program']" role="tab" (click)="getUrl('')">Reward Program </a>
+            </li>
+            <li *ngIf="allowedPages.Role_View">
+                <a [routerLinkActive]="['active']" [routerLink]="['roles']" role="tab" (click)="getUrl('')">Roles </a>
+            </li>
+            <li>
+                <a [routerLinkActive]="['active']" [routerLink]="['configurations']" role="tab" (click)="getUrl('')">Configurations </a>
+            </li>
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="saved-payment-cards cstm_scroll_bg">
+<div class="row" *ngIf="isStripeIntegrated == false">
+  <div class="col-md-12">
+    <span class="text-danger pt-2">
+      Card payments are not setup. Please contact your administrator.
+    </span>
+  </div>
+</div>
+
+<div class="row" *ngIf="isStripeIntegrated">
+  <div class="col-md-12" *ngFor="let card of savedCards">
+    <div class="pos_saved_cards py-1" *ngIf="showCardNumber">
+      <input type="radio" id="{{card.CustomerPaymentGatewayID}}" name="cardid" [value]="card.CustomerPaymentGatewayID"
+        [(ngModel)]="cardId" (ngModelChange)="onCardSelectionChange(card)" />
+      <label for="{{card.CustomerPaymentGatewayID}}"><span></span>&nbsp;{{card.Title}}</label>
+    </div>
+  </div>
+  <div class="col-md-12 no_padding" *ngIf="cardId === 0">
+    <div class="row">
+      <div  [ngClass]="{'col-lg-12 col-md-12' : enumPage.AddGateWay == pageID, 'col-lg-4 col-md-12' : enumPage.AddGateWay != pageID}">
+        <label for="card-element">
+          <h5 class="gateway_label">Name on Card</h5>
+        </label>
+        <div [ngClass]="{
+                'has-danger': nameOnCard.invalid && (nameOnCard.dirty || nameOnCard.touched || isSubmitted),
+                'has-success': nameOnCard.valid && (nameOnCard.dirty || nameOnCard.touched)
+              }">
+          <input class="form-control" placeholder="Name on Card" name="name_on_card" type="text"
+            [formControl]="nameOnCard" required (blur)="onChangeNameOnCard()">
+        </div>
+      </div>
+      <div  [ngClass]="{'col-lg-12 col-md-12' : enumPage.AddGateWay == pageID, 'col-lg-8 col-md-12' : enumPage.AddGateWay != pageID}">
+        <label for="card-element">
+          <h5 class="gateway_label">Credit or Debit Card</h5>
+        </label>
+        <div id="card-element">
+          <!-- A Stripe Element will be inserted here. -->
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+          <div class="checkbox checkbox-success">
+            <input id="go_card_less" type="checkbox" name="stripe_terms_agreed" [(ngModel)]="isTermsAgreed"
+              [(checked)]="isTermsAgreed">
+            <label for="go_card_less"> <span></span>Please confirm you are the account holder and you are the only
+              <br/> person required to authorize debits from this account.</label>
+          </div>
+      </div>
+      <div class="col-lg-12 col-md-12 text-right ten_space">
+        <img class="float-right" src="assets/images/cards.svg">
+      </div>
+      <div class="col-md-12 col-sm-12 " *ngIf="showSaveCard && cardId === 0">
+        <div class="checkbox checkbox-success">
+          <input id="savecard" type="checkbox" name="SaveCard" [(ngModel)]="isSaveCard" [(checked)]="isSaveCard">
+          <label for="savecard">
+            Save Card
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

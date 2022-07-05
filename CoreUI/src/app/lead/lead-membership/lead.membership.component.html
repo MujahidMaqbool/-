@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <!-- <button *ngIf="allowedPages.Lead_View" type="button" class="simple_btn" role="navigation" [routerLink]="['/lead']">
+                    Back to Search</button> -->
+            <button *ngIf="allowedPages.Membership_Save" type="button" class="save" (click)="onAddMembership()">
+                Add Enquiries</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg info_bar_bg">
+    <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+<div class="grids_white_bg overflow-auto">
+    <div class="row grid_header responsive_grid_header">
+        <div class="col-md-2 col">
+            <h5>Membership Name</h5>
+        </div>
+        <div class="col-md-1 col">
+            <h5>Created On</h5>
+        </div>
+        <div class="col-md-1 col">
+            <h5>Source</h5>
+        </div>
+        <div class="col-md-2 col">
+            <h5>Lead Status</h5>
+        </div>
+        <div class="col-md-2 col">
+            <h5>Assigned To</h5>
+        </div>
+        <div class="col-md-2 col">
+            <h5>Last Updated By</h5>
+        </div>
+        <div class="col-md-2 col text-center">
+            <h5>Actions</h5>
+        </div>
+    </div>
+    <div id="grid" *ngIf="isDataExists">
+        <div class="row grid_rows responsive_grid_rows" *ngFor="let  leadMembershipobj of leadMembershipsViewList">
+            <div class="col-md-2 col">
+                <h5>{{leadMembershipobj.MembershipName }}</h5>
+            </div>
+            <div class="col-md-1 col">
+                <h5>{{leadMembershipobj.CreatedOn | customdate: dateFormat}}</h5>
+            </div>
+            <div class="col-md-1 col">
+                <h5>{{leadMembershipobj.AppSourceTypeName }}</h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>{{leadMembershipobj.LeadStatusTypeFriendlyName}}</h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>{{leadMembershipobj.AssignedToStaffName == "" ? 'Not Specified' : leadMembershipobj.AssignedToStaffName }}
+                </h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>{{leadMembershipobj.ModifiedOn | customdate: dateFormat}}</h5>
+            </div>
+            <div class="col-md-2 col text-center">
+                <h5>
+                    <span class="blue">
+                        <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            (click)="onViewLeadMembership(leadMembershipobj)">
+                            <i class="fal fa-book-open"></i>
+                        </a>
+                    </span>
+                    <span class="blue">
+                        <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            (click)="onEditEnquiry(leadMembershipobj)" href="javascript:void(0)">
+                            <i class="fal fa-edit"></i>
+                        </a>
+                    </span>
+                    <span class="red_del" *ngIf="allowedPages.Membership_Delete">
+                        <ng-container
+                            *ngIf="(leadMembershipobj.LeadStatusTypeID != leadStatusType.Lost) && (leadMembershipobj.LeadStatusTypeID != leadStatusType.Sale)">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onDeleteEnquiry(leadMembershipobj.CustomerID,leadMembershipobj.MembershipID)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </ng-container>
+                    </span>
+
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+            </div>
+        </div>
+    </div>
+</div>

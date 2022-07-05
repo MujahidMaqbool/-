@@ -1,0 +1,81 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content large_popup">
+      <div class="popup_header">
+        <h4>Activity Log</h4>
+      </div>
+      <div class="popup_content cstm_scroll_bg">
+
+        <!-- Sale History -->
+
+        <div class="popup_white_bg">
+          <div class="row">
+            <div class="col-md-12">
+            <div class="overflow-auto">
+              <div class="row grid_header mob-scroll-grid">
+                <div class="col">
+                  <h5>Date</h5>
+                </div>
+                <div class="col" *ngIf="logType != enumActivityLog.MemberShip">
+                  <h5>Item Type</h5>
+                </div>
+                <div class="col">
+                  <h5>Activity Type</h5>
+                </div>
+                <div class="col-4">
+                  <h5>Description</h5>
+                </div>
+                <div class="col">
+                  <h5>User</h5>
+                </div>
+                <div class="col" *ngIf="logType == enumActivityLog.MemberShip">
+                  <h5>Notes</h5>
+                </div>
+              </div>
+              <div class="mob-scroll-grid">
+
+                <div  class="row grid_rows" *ngIf="!isActivityFound">
+                  <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">No Activity Found</h5>
+                </div>
+                </div>
+                <div *ngIf="isActivityFound">
+                  <div class="row grid_rows view_membership_content" *ngFor='let log of activityLogDetails'>
+                    <div class="col">
+                      <h5>{{log.CreatedOn | customdate: dateTimeFormat}}</h5>
+                    </div>
+                    <div class="col" *ngIf="logType != enumActivityLog.MemberShip">
+                      <h5>{{log.ItemType}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5>{{log.ActivityType}}</h5>
+                    </div>
+                    <div class="col-4">
+                      <h5>{{log.Description}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5>{{log.UserName}}</h5>
+                    </div>
+                    <div class="col" *ngIf="logType == enumActivityLog.MemberShip">
+                      <h5>{{log.Notes}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row popup_footer">
+        <div class="col-md-12">
+          <div class="cancel_btn float-right">
+            <button type="button" (click)="onClose()">Close</button>
+            <!-- <button type="button" class="save primary_blue_btn" (click)="onPrint()">Print Receipt</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

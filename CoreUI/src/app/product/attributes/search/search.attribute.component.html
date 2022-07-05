@@ -1,0 +1,184 @@
+<div class="row" *ngIf="isSaveAllow">
+  <div class="col-md-12">
+    <div class="company_btn float-right"><button href="javascript:void(0)" (click)="onAddAttribute(null)"> Add Attribute
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="white_bg">
+  <div id="search_accordion">
+    <div (click)="focusInput()" class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+      data-target="#product_search">
+      <div class="col-md-12">
+        <h3 class="panel-title accordion-toggle">Search Filter</h3>
+      </div>
+    </div>
+    <div id="product_search" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row align-items-end">
+          <div class="col-md-12">
+            <div class="filter_seprator"></div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h5 class="field_label">Product Attribute</h5>
+            <input type="text" class="form-control" name="AttributeName" maxlength="50"
+              [(ngModel)]="attributesSearchParams.AttributeName" #attName tabindex="1" />
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h5 class="field_label">Type</h5>
+            <div class="select_label">
+              <select class="form-control" name="IsActive" [(ngModel)]="attributesSearchParams.TypeID" tabindex="2" [disabled]="!isMultiBranch">
+                <option [ngValue]=0>
+                  All
+                </option>
+                <option [ngValue]="1">
+                  Branch Level
+                </option>
+                <option [ngValue]="7">
+                  Enterprise
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <h5 class="field_label">Status</h5>
+            <div class="select_label">
+              <select class="form-control" name="IsActive" [(ngModel)]="attributesSearchParams.StatusID" tabindex="3">
+                <option [ngValue]=null>
+                  All
+                </option>
+                <option [ngValue]="1">
+                  Active
+                </option>
+                <option [ngValue]="0">
+                  Inactive
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 no_padding">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <button class="reset_btn" (click)="resetSearchFilter()" type="button">
+                  Reset</button>
+              </div>
+
+              <div class="col-md-6 col-sm-12 full_width_btn">
+                <button class="search" type="button" (click)="searchAttributeList()">
+                  Search</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grids_white_bg">
+  <div class="cstm_scroll_bg overflow-auto">
+
+    <div class="row align-items-center grid_header responsive_grid_header">
+      <div class="col col-3">
+        <h5>
+          <a class="primary-color" href="javascript:void(0)" (click)="changeSorting(1)">
+            Product Attribute
+            <i class="fas fa-sort-alt"></i>
+          </a>
+        </h5>
+      </div>
+      <div class="col">
+        <h5>
+          <a class="primary-color" href="javascript:void(0)" (click)="changeSorting(2)">
+            Type
+            <i class="fas fa-sort-alt"></i>
+          </a>
+        </h5>
+      </div>
+      <div class="col text-center">
+        <h5>Status</h5>
+      </div>
+      <div class="col text-center">
+        <h5>Actions</h5>
+      </div>
+    </div>
+
+    <ng-container *ngFor="let attribute Of attributeList;  let i = index">
+      <div class="row  align-items-center grid_rows  responsive_grid_rows">
+        <div class="col col-3">
+          <h5>{{attribute.AttributeName}}</h5>
+          <!-- <div class="cursor-pointer cst-collapse" data-toggle="collapse" attr.data-target="#collapseExample{{i}}"
+            aria-expanded="false" attr.aria-label="collapseExample{{i}}">
+
+          </div> -->
+        </div>
+        <div class="col">
+          <h5>{{attribute.Type}}</h5>
+        </div>
+
+        <div class="col text-center">
+          <h5>{{attribute.IsActive ? 'Active' : 'Inactive'}}</h5>
+        </div>
+        <div class="col text-center grid-actions-btn">
+          <h5>
+            <span class="blue" *ngIf="isViewAllow">
+              <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" href="javascript:void(0)"
+                (click)="onViewAttribute(attribute.AttributeID, attribute.IsActive)">
+                <i class="fal fa-book-open"></i>
+              </a>
+            </span>
+            <span class="blue" *ngIf="isSaveAllow && attribute.AppSourceTypeID == appSourceTypeID.OnSite || (attribute.AppSourceTypeID == appSourceTypeID.EnterPrise && attribute.HasBranchPermission)">
+              <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                (click)="onAddAttribute(attribute.AttributeID, attribute.AppSourceTypeID)" href="javascript:void(0)">
+                <i class="fal fa-edit"></i>
+              </a>
+            </span>
+            <span class="red_del" *ngIf="isDeleteAllow && attribute.HasBranchPermission">
+              <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                (click)="onDeleteAttribute(attribute.AttributeID)">
+                <i class="fal fa-trash-alt"></i>
+              </a>
+            </span>
+          </h5>
+        </div>
+      </div>
+
+      <!-- <div class="row grid_rows grid_child_rows responsive_grid_rows collapse show" *ngFor="let attributeChild of attribute.Detail"
+        id="collapseExample{{i}}">
+        <div class="col col-3">
+          <h5></h5>
+        </div>
+        <div class="col">
+          <h5></h5>
+        </div>
+
+        <div class="col text-center">
+          <h5>{{attributeChild.IsActive ? 'Active' :'Inactive'}}</h5>
+        </div>
+        <div class="col text-center grid-actions-btn">
+          <h5 *ngIf="isBranchPermission(staffChild.BranchID) && isEditAllow">
+                      <span class="blue">
+                        <a matTooltip="Edit" (click)="onRoutRrl(staffChild.StaffID ,staffChild.BranchID)"
+                          matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                          <i class="fal fa-edit"></i>
+                        </a>
+                      </span>
+                    </h5>
+        </div>
+      </div> -->
+    </ng-container>
+  </div>
+
+
+  <div class="row grid_rows" *ngIf="!isDataExists">
+    <div class="col-md-12 text-center">
+      <div class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</div>
+    </div>
+  </div>
+
+  <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

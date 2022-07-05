@@ -1,0 +1,110 @@
+<div class="modal-dialog-centered">
+    <div class="modal-content pos_payment_dialog">
+        <div class="popup_header">
+            <h4>Payment</h4>
+        </div>
+        <div class="popup_content cstm_scroll_bg">
+            <div class="row mob-p-0">
+                <div class="col-lg-4 col-md-5 no_padding parallel_grid">
+                    <div class="pay_section">
+                        <h3>Payment Date : &nbsp; <span>{{transactionDetail.CollectionDate | customdate: dateFormat}}</span></h3>
+                        <h4 class="grid_bg">Item Name<span class="float-right">Price</span></h4>
+
+                        <h6>
+                            {{transactionDetail.MembershipPaymentName}}
+                            <span class="float-right">{{transactionDetail.Price | currency: currencyFormat}}</span>
+                        </h6>
+                        <h6>
+                            Pro Rate Price
+                            <span class="float-right">{{transactionDetail.ProRataPrice | currency: currencyFormat}}</span>
+                        </h6>
+
+                        <div class="total-payment">
+                            <hr>
+                            <h3>Tax <span class="float-right">{{transactionDetail.TaxAmount | currency:
+                                    currencyFormat}}</span></h3>
+                            <button>
+                                Total <span class="float-right">{{transactionDetail.TotalAmount | currency:
+                                    currencyFormat}}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 padding_right">
+                    <div class="pay_section no_padding">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 col-sm-4" *ngIf="showCard || showPayTabs" (click)="onSaleTypeChange(transactionDetail.SaleTypeID)">
+                                <div class="pos_payment_options" [ngClass]="{
+                                        'active': transactionDetail.SaleTypeID === saleType.Card || transactionDetail.SaleTypeID === saleType.CardPM
+                                    }"> 
+                                    <i class="fal fa-credit-card"></i>
+                                    <h5>Card</h5>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-4" *ngIf="showCash" (click)="onSaleTypeChange(saleType.Cash)">
+                                <div class="pos_payment_options" [ngClass]="{
+                                        'active': transactionDetail.SaleTypeID === saleType.Cash
+                                    }">
+                                    <i class="fal fa-money-bill"></i>
+                                    <h5>Cash</h5>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-3 col-md-4 col-sm-4" *ngIf="showCash" (click)="onSaleTypeChange(saleType.Other)">
+                                <div class="pos_payment_options" [ngClass]="{
+                                        'active': transactionDetail.SaleTypeID === saleType.Other
+                                    }">
+                                    <i class="fal fa-university"></i>
+                                    <h5>3rd Party</h5>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="small_space"></div>
+                        <hr>
+                        <div class="row" *ngIf="showCard">
+                            <div class="col-md-12">
+                                <div class="pay_label">
+                                    <label class="active">Stripe</label>
+                                </div>
+                                <span class="small_space">{{transactionDetail.Card.InstrumentName + " **** **** **** " + transactionDetail.Card.InstrumentLastDigit}}</span>
+                                <add-stripe-customer #stripeRef [customerID]="transactionDetail.CustomerID"
+                                    [showAddCard]="false" [showCardNumber]="false"></add-stripe-customer>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="showPayTabs">
+                            <div class="col-md-12">
+                                <div class="pay_label">
+                                    <label class="active">PayTabs</label>
+                                </div>
+                                <span
+                                    class="small_space">{{transactionDetail.Card.InstrumentName + " **** **** **** " + transactionDetail.Card.InstrumentLastDigit}}</span>
+                                    
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="col-md-12">
+                                <h5 class="pos_payment_heading">Payment Notes 
+                                    <span class="optional">(Remaining Characters: {{ 250 -
+                                        paymentModel?.Notes?.length }})</span>
+                                </h5>
+                                <textarea rows="3" name="PaymentNote" [maxlength]="250" [(ngModel)]="paymentModel.Notes"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row popup_footer pt-0">
+            <div class="col-md-12 col-sm-12">
+                <div class="cancel_btn float-right">
+                    <button type="button" (click)="onClose()">Cancel</button>
+                    <!-- <button class="save primary_blue_btn float-right" (click)="onPay(true)" [disabled]="(!hasItemsInCart || (paymentTypeId === paymentType.Card && !stripeRef?.isStripeIntegrated) || saveInProgress || receiptId)">
+                                Pay & Print
+                            </button> -->
+                    <button class="save primary_blue_btn" (click)="onPay()" [disabled]="saveInProgress">Pay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg medium_popup">
+        <div class="popup_header">
+            <h4>Add Staff </h4>
+        </div>
+        <div class="popup_content delete_popup">
+            <div class="small_space"></div>
+            <div class="row delete_warning">
+                <div class="col-md-12 col-sm-12 no_padding flex_bar_noti">
+                    <i class="fal fa-user-check"></i>
+                    <span>This Staff already exists in another Branch. Do you want to associate in current branch?</span>
+                </div>
+            </div>
+            <div class="small_space"></div>
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12 no_padding">
+                <div class="cancel_btn float-right">
+                    <button (click)="onNo()" tabindex="2">No</button>
+                    <button class="primary_blue_btn" tabindex="1" (click)="onYes()">Yes</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

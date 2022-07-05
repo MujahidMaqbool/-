@@ -1,0 +1,28 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                    <h4>Image Uploader</h4>
+            </div>
+            <form>
+                <div class="popup_content">
+                    <div class="popup_white_bg">
+                        <image-editor #imageEditor [height]="config?.height" [width]="config?.width" [aspectRatio]="config?.aspectRatio" [showWebCam]="config?.showWebCam">
+                        </image-editor>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-4 col-sm-4"></div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="cancel_btn float-right">
+                            <button type="button" mat-button (click)="onClose()">Cancel</button>
+                            <button class="save primary_blue_btn" [disabled]="!imageEditor.croppedImg" (click)="onCrop()">
+                                 Crop
+                            </button>
+                        </div>
+                    </div>  
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

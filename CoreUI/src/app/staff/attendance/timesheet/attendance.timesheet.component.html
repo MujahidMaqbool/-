@@ -1,0 +1,279 @@
+<div class="row">
+    <div class="col-xl-2 col-lg-3 col-md-4">
+        <div class="staff-timesheet cstm_scroll_bg">
+            <!-- <div class="row">
+                <div class="col-md-12 no_padding">
+                    <h5>From</h5>
+                    <input type="text" name="DateFrom" class="form-control" [(ngModel)]="dateFrom" (ngModelChange)="onFromDateChange(dateFrom)"
+                        #DateFrom="ngModel" matInput [matDatepicker]="datefrom" />
+                    <mat-datepicker #datefrom></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom" style="top:55%; margin-right: 2px;">
+                    </mat-datepicker-toggle>
+                </div>
+                <div class="col-md-12 no_padding">
+                    <h5>To</h5>
+                    <input type="text" name="DateTo" class="form-control" [(ngModel)]="dateTo" (ngModelChange)="onToDateChange(dateTo)"
+                        #DateTo="ngModel" matInput [matDatepicker]="dateto" />
+                    <mat-datepicker #dateto></mat-datepicker>
+                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto" style="top:55%; margin-right: 2px;">
+                    </mat-datepicker-toggle>
+                </div>
+            </div> -->
+            <div class="inside_padding">
+                <div class="sch_left_scroll cstm_scroll_bg">
+                    <div id="timesheet_accordian3">
+                        <div class="panel-heading collapsed" data-toggle="collapse" data-parent="#timesheet_accordian3"
+                            data-target="#timesheet_collapse3">
+                            <h3 class="sch_collapse_item accordion-toggle1"> Date Filter</h3>
+                        </div>
+                        <div id="timesheet_collapse3" class="panel-collapse collapse">
+                            <div class="sch_panel-body input_heading no_padding time-sheet-date">
+                                <!-- <label class="small_label">From</label> -->
+                                <!-- <input placeholder="From" type="text" name="DateFrom" class="bg_transparent form-control"
+                                    [(ngModel)]="dateFrom" (ngModelChange)="onFromDateChange(dateFrom)" #DateFrom="ngModel"
+                                    matInput [matDatepicker]="datefrom" readonly />
+                                <mat-datepicker #datefrom></mat-datepicker>
+                                <mat-datepicker-toggle class="date-picker-toggle date_filter_from " matSuffix [for]="datefrom">
+                                </mat-datepicker-toggle> -->
+                                <!-- <date-picker [value]="dateFrom" class="date_filter_from" [max]="maxDate" (onDateChange)="onFromDateChange($event)"
+                                    [showClear]="false"></date-picker> -->
+                                <!-- <label class="small_label">To</label> -->
+                                <!-- <input placeholder="To" type="text" name="DateTo" class="bg_transparent form-control"
+                                    [(ngModel)]="dateTo" (ngModelChange)="onToDateChange(dateTo)" #DateTo="ngModel"
+                                    matInput [matDatepicker]="dateto" readonly /> -->
+                                <!-- <mat-datepicker #dateto></mat-datepicker>
+                                <mat-datepicker-toggle class="date-picker-toggle date_filter_to" matSuffix [for]="dateto">
+                                </mat-datepicker-toggle> -->
+                                <!-- <date-picker [value]="dateTo" class="date_filter_to" [max]="maxDate" (onDateChange)="onToDateChange($event)"
+                                    [showClear]="false"></date-picker> -->
+                                <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #attendenceTimesheetDate>
+                                </dateto-datefrom>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="timesheet_accordian1">
+                        <div class="panel-heading collapsed" data-toggle="collapse" data-parent="#timesheet_accordian1"
+                            data-target="#timesheet_collapse1">
+                            <h3 class="sch_collapse_item accordion-toggle1"> Positions</h3>
+                        </div>
+                        <div id="timesheet_collapse1" class="panel-collapse collapse">
+                            <div class="sch_panel-body">
+                                <!-- <div class="form-group">
+                                    <div class="select_label">
+                                        <select class="form-control" name="StaffPositionID" [(ngModel)]="timesheetSearchParam.StaffPositionID"
+                                            (change)="onChangePostionList(timesheetSearchParam.StaffPositionID)">
+                                            <option *ngFor="let _position of positionListDataSource" [ngValue]="_position.StaffPositionID">
+                                                {{_position.StaffPositionName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                                <div class="form-group sch_border_bottom">
+                                    <input type="checkbox" id="allStaffPosition" name="allStaffPosition"
+                                        [(ngModel)]="isAllStaffPosition" autocomplete="off"
+                                        (change)="onStaffPositionChangeAll()">
+                                    <div class="btn-group">
+                                        <label for="allStaffPosition" class="btn"
+                                            [ngClass]="{'check_bg': isAllStaffPosition, 'uncheck_bg': !isAllStaffPosition}">
+                                            <span class="fa fa-check"></span>
+                                            <span class="fa fa-times"></span>
+                                        </label>
+                                        <label for="allStaffPosition" class="btn btn-default sch_left_label_width">
+                                            <i class="fal fa-user-friends"></i> All
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group sch_border_bottom"
+                                    *ngFor="let _position of positionListDataSource; let arrayIndex=index">
+                                    <input type="checkbox" [(ngModel)]="_position.selected"
+                                        id="{{'staffPositionID' + arrayIndex}}" (change)="onStaffPositionChange()"
+                                        name="{{'staffPositionID' + arrayIndex}}" autocomplete="off">
+                                    <div class="btn-group label_width">
+                                        <label for="{{'staffPositionID' + arrayIndex}}" class="btn"
+                                            [ngClass]="{'check_bg': _position.selected, 'uncheck_bg': !_position.selected}">
+                                            <span class="fa fa-check"></span>
+                                            <span class="fa fa-times"></span>
+                                        </label>
+                                        <label for="{{'staffPositionID' + arrayIndex}}" class="btn btn-default">
+                                            <i class="fal fa-user-friends"></i> {{_position.StaffPositionName}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="timesheet_accordian2" class="accordian_last">
+                        <div class="panel-heading collapsed" data-toggle="collapse" data-parent="#timesheet_accordian2"
+                            data-target="#timesheet_collapse2">
+                            <h3 class="sch_collapse_item accordion-toggle1"> Staff</h3>
+                        </div>
+                        <div id="timesheet_collapse2" class="panel-collapse collapse">
+                            <div class="sch_panel-body">
+                                <div class="form-group sch_border_bottom">
+                                    <input type="checkbox" id="allStaff" name="allStaff" autocomplete="off"
+                                        (change)="staffListChangeAll()" [(ngModel)]="selectedAll">
+                                    <div class="btn-group label_width">
+                                        <label for="allStaff" class="btn"
+                                            [ngClass]="{'check_bg': selectedAll, 'uncheck_bg': !selectedAll}">
+                                            <span class="fa fa-check"></span>
+                                            <span class="fa fa-times"></span>
+                                        </label>
+                                        <label for="allStaff" class="btn btn-default">
+                                            <i class="fal fa-user-friends"></i> All {{timesheetSearchParam.AllStaff}}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group sch_border_bottom"
+                                    *ngFor="let _staff of filteredStaffList; let arrayIndex=index">
+                                    <input type="checkbox" [(ngModel)]="_staff.selected" id="{{'StaffID' + arrayIndex}}"
+                                        (change)="staffListChange()" name="{{'StaffID' + arrayIndex}}"
+                                        autocomplete="off">
+                                    <div class="btn-group label_width">
+                                        <label for="{{'StaffID' + arrayIndex}}" class="btn"
+                                            [ngClass]="{'check_bg': _staff.selected, 'uncheck_bg': !_staff.selected}">
+                                            <span class="fa fa-check"></span>
+                                            <span class="fa fa-times"></span>
+                                        </label>
+                                        <label for="{{'StaffID' + arrayIndex}}" class="btn btn-default active">
+                                            <i class="fal fa-user-alt"></i> {{_staff.StaffFullName}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scheduler_btn sch_left_bar_btn">
+                <button (click)="onReset()">
+                    Reset</button>
+                <button class="float-right primary_blue_btn" (click)="onLoadStaffAttendance()">
+                    Load</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xl-10 col-lg-9 col-md-8 padding_left sm-pl-15 mob-mt-15">
+        <div class="staff-timesheet cstm_scroll_bg" style=" overflow: auto;">
+            <div class="grids_white_bg overflow-auto" style="margin: 0 !important;">
+                <div class="row grid_header responsive_grid_header">
+                    <div class="col">
+                        <h5>Day</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Staff</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Shift Start</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Shift End</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Clock In</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Clock Out</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Scheduled</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Worked</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Difference</h5>
+                    </div>
+                    <div class="col text-center">
+                        <h5>Actions</h5>
+                    </div>
+                </div>
+                <div id="grid" *ngIf="isDataExists">
+                    <div class="row grid_rows responsive_grid_rows "
+                        *ngFor="let timesheetObj of attendanceTimesheetData">
+                        <div class="col">
+                            <h5>{{timesheetObj.ClockDate | customdate: dateFormat}}</h5>
+                        </div>
+                        <div class="col lead_member">
+                            <h5>{{timesheetObj.FirstName + ' ' + timesheetObj.LastName}} <span
+                                    class="active zero_margin">{{timesheetObj.StaffPositionName}}</span></h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{timesheetObj.ShiftStartTime | branchTimeFormat}}</h5>
+                        </div>
+                        <div class="col">
+                            <h5>
+                                {{timesheetObj.ShiftEndTime | branchTimeFormat}}
+                            </h5>
+                        </div>
+                        <!-- <div class="col-md-1 padding_right">
+                            <h5>{{timesheetObj.ClockInNotes}}</h5>
+                        </div> -->
+                        <div class="col">
+                            <div class="notes">
+                                <h5>{{timesheetObj.ClockIn | branchTimeFormat}}</h5>
+                            </div>
+
+                        </div>
+                        <!-- <div class="col-md-1 padding_right">
+                            <h5>{{timesheetObj.ClockOutNotes}}</h5>
+                        </div> -->
+                        <div class="col">
+                            <div class="notes">
+                                <h5>{{timesheetObj.ClockOut | branchTimeFormat}}</h5>
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <h5>{{timesheetObj.Scheduled}}</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{timesheetObj.Worked}}</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{timesheetObj.Difference}}
+                                <span class="time_difference"
+                                    *ngIf="timesheetObj.Difference && timesheetObj.Difference.length > 0" [ngClass]="{
+                                    'negative': timesheetObj.IsNegative,
+                                    'positive':!timesheetObj.IsNegative
+                                    }">
+                                </span>
+                            </h5>
+
+                        </div>
+                        
+                        <div class="col text-center" >
+                            <h5 *ngIf="(timesheetObj.CheckInAttendanceSourceTypeName == 'Terminal' || timesheetObj.CheckOutAttendanceSourceTypeName == 'Terminal') && (timesheetObj.ClockIn )">
+                               <span class="blue">
+                                <a matTooltip="View entry history based on geolocation." matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewLocation(timesheetObj)" href="javascript:void(0)">
+                                    <i class="fal fa-map-marker-alt"></i>
+                                </a>
+                                </span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!isDataExists">
+                    <div class="row grid_rows responsive_grid_rows ">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+            <!-- <div class="pagination">
+                <div class="col-md-12 no_padding">
+                    <mat-paginator #paginator [length]="[totalRecords]" [showFirstLastButtons]="true"
+                        [pageSize]="pageSize"  [pageSizeOptions]="pageSizeOptions"
+                        (page)="changePageSize($event)">
+                    </mat-paginator>
+                </div>
+                <div class="clearfix"></div>
+            </div> -->
+        </div>
+    </div>
+</div>

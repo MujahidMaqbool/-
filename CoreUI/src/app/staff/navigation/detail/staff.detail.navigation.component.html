@@ -1,0 +1,42 @@
+﻿<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li class="back_to_menu">
+                <a class="nav-link" role="navigation" [routerLink]="['search']">
+                        <i class="fal fa-arrow-left"></i>  Staff Search
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Save">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/staff/details', staffID]"
+                    role="tab">
+                    {{staffID == 0 ? 'New Staff' : 'Details'}}
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Activities">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['activities']" role="tab">
+                    Activities
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Documents">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['documents']" role="tab">
+                    Documents
+                </a>
+            </li>
+            <li *ngIf="allowedPages.NextOfKin">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['next-of-kin']" role="tab">
+                    Next of Kin
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Forms">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['staff-forms']" role="tab">
+                  Forms 
+                  <!-- <span class="form-badage">{{countCustomerForm.FormsCount == 0? '' : countCustomerForm.FormsCount}}</span> -->
+                </a>
+            </li>
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

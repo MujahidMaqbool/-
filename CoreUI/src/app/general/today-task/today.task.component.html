@@ -1,0 +1,155 @@
+<div class="white_bg zero_top">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#today_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+            </div>
+        </div>
+        <div id="today_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="field_label">Staff</h5>
+                        <input type="text" class="form-control" tabindex="1" name="StaffName" id="today_staff_name" maxlength="50">
+
+                        <!-- Feb 04,2020 at 11:30 hrs
+                            As per discussion with Tahir instead of auto complete search bar there should
+                            be an input text for search a staff
+                         -->
+                        <!-- <span (click)="onClearStaff()" class="clear_dob right_cross_btn"></span> -->
+                        <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayStaffName" (optionSelected)='getSelectedStaff($event.option.value)'>
+                            <mat-option *ngFor="let staff of allStaff" [value]="staff">
+                                <span class="client_name">{{ staff.FirstName + ' ' +
+                                    staff.LastName}}</span>
+                                <small>{{staff.CustomerTypeName}}</small>
+                                <br>
+                                <span class="client_info">{{ staff.Mobile }}</span>
+                                <br>
+                                <span class="client_info">{{ staff.Email }}</span>
+                            </mat-option>
+                        </mat-autocomplete> -->
+
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="field_label">Type</h5>
+                        <div class="select_label">
+                            <select class="form-control" tabindex="2" name="ActivityTypeID" [(ngModel)]="todayTaskSearch.ActvitiyTypeID" id="today_task">
+                                <option value="null">All</option>
+                                <option *ngFor="let activity of activitiesTypeList" [value]="activity.ActivityTypeID">
+                                    {{activity.ActivityTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-3 col-sm-3">
+                        <h5 class="field_label">From</h5>
+                        <date-picker tabindex="3" [value]="todayTaskSearch.DateFrom" (onDateChange)="onFromDateChange($event)"
+                            [showClear]="false"></date-picker>
+                    </div> -->
+                    <div class="col-md-6 col-sm-12 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #todayTaskRef>
+                        </dateto-datefrom>
+                        <!-- <h5 class="field_label">To</h5>
+                        <date-picker tabindex="4" [value]="todayTaskSearch.DateTo" (onDateChange)="onToDateChange($event)"
+                            [showClear]="false"></date-picker> -->
+                    </div>
+                    <div class="offset-lg-9 offset-md-6 col-lg-3 col-md-6 space no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6"><button class="reset_btn" type="button" (click)="onReset()">
+                                    Reset </button></div>
+                            <div class="col-md-6 col-sm-6 full_width_btn"><button class="search" type="button"
+                                    (click)="searchTodayTask()">
+                                    Search</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>Staff</h5>
+            </div>
+            <div class="col">
+                <h5>Type</h5>
+            </div>
+            <div class="col">
+                <h5>Title</h5>
+            </div>
+            <div class="col">
+                <h5>Customer</h5>
+            </div>
+            <div class="col">
+                <h5>Follow-up Date</h5>
+            </div>
+            <div class="col">
+                <h5>Start Time</h5>
+            </div>
+            <div class="col">
+                <h5>End Time</h5>
+            </div>
+            <div class="col">
+                <h5>Notes</h5>
+            </div>
+        </div>
+        <div id="grid" *ngIf="isDataExists">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let  staffActivityObj of allActivities">
+                <div class="col">
+                    <h5>{{staffActivityObj.StaffName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{staffActivityObj.ActivityTypeName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{staffActivityObj.Title}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{staffActivityObj.CustomerName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{staffActivityObj.FollowUpDate | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{staffActivityObj.StartTime | branchTimeFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{staffActivityObj.EndTime | branchTimeFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{staffActivityObj.Note}}</h5>
+                </div>
+                <!-- <div class="col text-center">
+                <h5> <span>
+                        <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip" href="javascript:void(0)">
+                            <i class="fal fa-book-open"></i>
+                        </a>
+                    </span></h5>
+            </div> -->
+
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isDataExists">
+        <div class="row grid_rows">
+            <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    <!-- <div class="pagination">
+        <div class="col-md-12 no_padding">
+            <mat-paginator #paginator [length]="totalRecords" [pageSizeOptions]="pageSizeOptions"
+                (page)="changePageSize($event)" [showFirstLastButtons]="true">
+            </mat-paginator>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+</div>

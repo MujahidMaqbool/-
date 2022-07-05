@@ -1,0 +1,460 @@
+<div class="login_form_user attendance_form" (mouseover)="onMouseOver()">
+
+    <div class="row attendance_member_detail" *ngIf="isPageLoad">
+        <div class="custom-container">
+            <div class="row row-align-center">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <!-- <a class="close_attendence" [routerLink]="['/attendance/member']">
+                      <i class="fal fa-arrow-left"></i> Back
+                  </a> -->
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="member-detail-head merchant_name text-center">
+                        <!-- <img src="assets/images/wellyx_logo.svg" class="center-block img-responsive" alt="logo" /> -->
+                        <h3>{{companyInfo.CompanyName}}</h3>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="member-detail-head vertical_right">
+                        <!--Date and Time Section-->
+                        <div class="attendance_time_section">
+                            <time-clock #clock></time-clock>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 mob-m5">
+                    <div class="member-personal-details tab-auto-height">
+                        <div class="member_attend_bg" [ngClass]="{'active_bg': !membershipAlertMessages || (membershipAlertMessages &&  membershipAlertMessages.length == 0) || membershipAlertMessages[0].RestrictionTypeId === enuMembershipAlertMessageRestrictionType.MembershipClassNotBookedForToday,
+                                      'alert_bg' : membershipAlertMessages && membershipAlertMessages.length > 0 && membershipAlertMessages[0].RestrictionTypeId != enuMembershipAlertMessageRestrictionType.MembershipIsFrozeen && membershipAlertMessages[0].RestrictionTypeId !== enuMembershipAlertMessageRestrictionType.MembershipClassNotBookedForToday,
+                                      'frozen_bg' : membershipAlertMessages && membershipAlertMessages.length > 0 && membershipAlertMessages[0].RestrictionTypeId == enuMembershipAlertMessageRestrictionType.MembershipIsFrozeen
+                                  }">
+                            <!-- active_bg alert_bg frozen_bg-->
+
+                            <div> <i class="fas"
+                                    [ngClass]="{'fa-exclamation-circle': membershipAlertMessages && membershipAlertMessages.length > 0 && membershipAlertMessages[0].RestrictionTypeId !== enuMembershipAlertMessageRestrictionType.MembershipClassNotBookedForToday,
+                                          'fa-check-circle' : !membershipAlertMessages || (membershipAlertMessages &&  membershipAlertMessages.length == 0) || membershipAlertMessages[0].RestrictionTypeId === enuMembershipAlertMessageRestrictionType.MembershipClassNotBookedForToday}"></i>
+                            </div>
+                            <div>
+                                <h3>{{membershipAlertMessages && membershipAlertMessages.length > 0 && membershipAlertMessages[0].RestrictionTypeId !== enuMembershipAlertMessageRestrictionType.MembershipClassNotBookedForToday? 'Membership Alert'
+                                    : 'Active Membership'}}
+                                </h3>
+                                <div *ngIf="membershipAlertMessages && membershipAlertMessages.length > 0">
+                                    <p *ngFor="let message of membershipAlertMessages">
+                                        {{message.MembershipAlertMessage}}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row member-bio">
+                            <div class="col-xl-4 col-lg-2 col-md-2">
+                                <img src="{{imagePath}}" width="120" alt="user_img" />
+                            </div>
+                            <div class="col-xl-8 col-lg-10 col-md-10">
+                                <div class="membership_bio">
+                                    <i class="fal fa-user"></i>
+                                    <h6>{{memberAttendaceModel.CustomerName}}</h6>
+                                </div>
+                                <div class="membership_bio">
+                                    <div> <i class="fal fa-map-marker-alt"></i></div>
+                                    <div>
+                                        <p>Branch</p>
+                                        <h5>{{memberAttendaceModel.BranchName}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-lg-6 col-md-8 mem_expire small_space">
+                                <div>
+                                    <i class="fal fa-star"></i>
+                                </div>
+                                <div>
+                                    <h5 class="form_label top_zero">Membership</h5>
+                                    <div class="select_label">
+                                        <select name="MembershipName" [(ngModel)]="selectedMembership"
+                                            #MembershipName="ngModel" (ngModelChange)="onMemberMembershipChange()">
+                                            <option *ngFor="let membership of filteredMemberMembershipList"
+                                                [ngValue]="membership">
+                                                {{membership.MembershipName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-4 mem_expire small_space">
+                                <div>
+                                    <i class="fal fa-hourglass-end"></i>
+                                </div>
+                                <div>
+                                    <h5 class="form_label top_zero">Expiration Date</h5>
+                                    <h6>{{selectedMembership.ExpirationDate | customdate:dateFormat}}</h6>
+                                </div>
+
+                            </div>
+                            <!-- <div class="col-lg-6 col-md-12">
+                                  <p>Membership No.</p>
+                                  <h6>{{selectedMembership.MembershipID}}</h6>
+                              </div> -->
+                        </div>
+                        <!-- <div class="row">
+                              <div class="col-lg-6 col-md-12">
+                                  <p>Membership Type</p>
+                                  <h6>{{membershipTypeName}}</h6>
+                              </div>
+                          </div> -->
+
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-12  col-md-12 col-sm-12 mob-m5 tab-member-detail-box">
+                    <!--Time Based/Time and Session Based Membership -->
+                    <!-- <div class="member-personal-details"
+                      *ngIf="selectedMembership.MembershipTypeID === membershipType.ClassAndSessionBased || selectedMembership.MembershipTypeID === membershipType.ClassBased ">
+
+                      <div class="member-att-detail text-center">
+                          <h4 *ngIf="showMembershipTime">Class Based Membership Details</h4>
+                      </div>
+                      <div class="member-detail-time cstm_scroll_bg">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class="member-att-grid">
+                                      <div class="row">
+                                          <div class="col">
+                                              <p><b>Class Name</b></p>
+                                          </div>
+                                          <div class="col">
+                                              <p><b>Class ID</b></p>
+                                          </div>
+                                          <div class="col">
+                                              <p><b>Class Type</b></p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-12" *ngFor="let membership of membershipDetailList">
+
+                                  <div class="member-att-grid">
+                                      <div class="row ">
+                                          <div class="col">
+                                              <p>{{membership.Name}}</p>
+                                              <div *ngIf="showMembershipTime" class="member-detail-time-cont">
+                                                  <p>
+                                                      {{membership.StartTime + ' - ' + membership.EndTime}}
+                                                  </p>
+                                              </div>
+                                          </div>
+                                          <div class="col">
+                                              <p> {{membership.ClassCode}}</p>
+                                          </div>
+                                          <div class="col">
+                                              <p> Free</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="member-att-detail text-center"
+                          *ngIf="selectedMembership.MembershipTypeID === membershipType.ClassAndSessionBased">
+                          <h4>Membership Sessions</h4>
+                      </div>
+                      <div class="member-detail-time">
+                          <div class="row">
+                              <div class="col-md-12" *ngFor="let session of sessionList">
+                                  <div class="member-detail-time-cont">
+                                      <p>This membership has the following sessions per
+                                          {{session.DurationTypeName}}
+                                      </p>
+                                      <p class="float-right"> {{session.TotalSession}}</p>
+                                  </div>
+                                  <div class="member-detail-time-cont">
+                                      <p>This membership has used the following sessions per
+                                          {{session.DurationTypeName}}
+                                      </p>
+                                      <p class="float-right">{{session.AttendedSession}}</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div> -->
+                    <!--Time Based/Time and Session Based Membership -->
+
+                    <!--Class Based/Class and Session Based Membership -->
+                    <div class="member-personal-details auto_height" *ngIf="branchTimingListForMemberShip">
+                        <div class="member-att-detail text-center">
+                            <h4>Door Check-In</h4>
+                        </div>
+                        <div class="member-detail-time cstm_scroll_bg check_in_box">
+                            <div class="row">
+                                <div class="col-md-12"
+                                    *ngFor="let branchTimeFormembership of branchTimingListForMemberShip">
+                                    <div class="member-detail-time-cont">
+                                        <p>{{branchTimeFormembership.Name}}</p>
+                                        <p
+                                            *ngIf="branchTimeFormembership && branchTimeFormembership.IsNoAccess == false && branchTimeFormembership.StartTime != null && branchTimeFormembership.EndTime != null">
+                                            {{branchTimeFormembership.StartTime | branchTimeFormat }} -
+                                            {{ branchTimeFormembership.EndTime | branchTimeFormat }}
+                                        </p>
+                                        <p
+                                            *ngIf="branchTimeFormembership && branchTimeFormembership.IsNoAccess == true">
+                                            No Access</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-personal-details cstm_scroll_bg benefit_box"
+                        [ngClass]="{'benefit_box_long' : !isShowDoorCheckInButton}" *ngIf="membershipGlobalSessionList">
+                        <div class="member-detail-time">
+                            <div class="row mem_attandence_grid_head">
+                                <div class="col col-6">
+                                    <h5>MEMBERSHIP BENEFITS</h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5>ALLOWED</h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5>CONSUMED</h5>
+                                </div>
+
+                            </div>
+                            <div class="row grid_rows" *ngFor="let session of membershipGlobalSessionList">
+                                <div class="col col-6">
+                                    <h5>
+                                        {{session.MembershipBenefitsTypeID ==
+                                        enuMembershipBenefitType.DoorCheckedInBenefits ? 'Door check-in sessions' :
+                                        'Class check-in session'}}
+                                        <span *ngIf="!session.NoLimits">
+                                            ({{
+                                            session.DurationTypeID == enuMemberShipBenefitDurations.Day ? 'Per Day' :
+                                            session.DurationTypeID == enuMemberShipBenefitDurations.Week ? 'Per Week' :
+                                            session.DurationTypeID == enuMemberShipBenefitDurations.FortnightBiweek ?
+                                            'Per Fortnight/Bi-week' :
+                                            session.DurationTypeID == enuMemberShipBenefitDurations.FourWeek ? 'Per Four
+                                            Week' :
+                                            session.DurationTypeID == enuMemberShipBenefitDurations.Month ? 'Per Month'
+                                            :
+                                            session.DurationTypeID == enuMemberShipBenefitDurations.Quarter ? 'Per
+                                            Quarter' :
+                                            session.DurationTypeID == enuMemberShipBenefitDurations.SixMonth ? 'Per Six
+                                            Month' :
+                                            session.DurationTypeID == enuMemberShipBenefitDurations.Year ? 'Per Year' :
+                                            'Per Membership'
+                                            }})
+                                        </span>
+                                    </h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5 class="allowed">{{ session.NoLimits ? 'No Limit' : session.TotalSessions}}</h5>
+                                </div>
+                                <div class="col text-center">
+                                    <h5 class="consumed">{{session.SessionConsumed}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Class Based/Class and Session Based Membership -->
+
+
+
+                </div>
+                <div class="col-xl-4 col-lg-12  col-md-12 col-sm-12 mob-m5 tab-member-detail-box">
+
+                    <div class="member-personal-details auto_height">
+                        <div class="row">
+                            <!-- <div class="col-md-12"> -->
+
+                            <!-- <div class="member-detail-box" *ngFor="let message of messagesList">
+                                      <p><strong>{{message.MembershipMessageTitle}}</strong></p>
+                                      <p>{{message.MembershipMessage}}</p>
+                                  </div> -->
+                            <!-- <div class="member-detail-box m-alert"
+                                  [ngClass]="{
+                                      'm-danger': message.RestrictionTypeId == enu_ClockinRestrictionType.SessionCompleted
+                                              ||  message.RestrictionTypeId == enu_ClockinRestrictionType.MembershipTodayTime
+                                              || message.RestrictionTypeId == enu_ClockinRestrictionType.MembershipPaymentMissing
+                                              || message.RestrictionTypeId == enu_ClockinRestrictionType.InactiveMembership
+                                              || message.RestrictionTypeId == enu_ClockinRestrictionType.MembershipNotStartedYet}"
+                                  *ngFor="let message of messagesList">
+                                  <div><i class="fas fa-exclamation-circle"></i></div>
+                                  <div>
+                                      <h3>Membership Alert</h3>
+                                      <p>{{message.MembershipMessage}}</p>
+                                  </div>
+                              </div> -->
+                            <!-- <div class="member-detail-box m-alert m-danger">
+                                      <div><i class="fas fa-exclamation-circle"></i></div>
+                                      <div>
+                                          <h3>Membership Alert</h3>
+                                          <p *ngFor="let message of messagesList">{{message.MembershipMessage}}</p>
+                                      </div>
+                                  </div> -->
+
+
+                            <!-- </div> -->
+
+
+
+                            <div class="col-md-12">
+                                <div class="member-personal-details auto_height overflow-auto">
+                                    <div class="verticle-scroll-md">
+                                        <div class="row collection_grid_header">
+                                            <div class="col padding_left">
+                                                <h5>Collection Date</h5>
+                                            </div>
+                                            <div class="col text-right">
+                                                <h5>Payment Status</h5>
+                                            </div>
+
+                                        </div>
+                                        <div id="grid" class="cstm_scroll_bg  check_in_box">
+                                            <div class="row grid_rows"
+                                                *ngFor="let  pendingPayment of customerMembershipPaymentInfoList">
+                                                <div class="col padding_left">
+                                                    <h5>{{pendingPayment.CollectionDate | customdate:dateFormat}}</h5>
+                                                </div>
+                                                <div class="col text-right">
+                                                    <h5>{{pendingPayment.PaymentStatusTypeName}}</h5>
+                                                </div>
+                                            </div>
+                                            <p class="text-center pt-2" style="color: #283138; font-size: 14px;"
+                                                *ngIf="!customerMembershipPaymentInfoList || (customerMembershipPaymentInfoList && customerMembershipPaymentInfoList.length ==0)">
+                                                No failed or frozen payments against this membership
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="member-personal-details cstm_scroll_bg benefit_box">
+                        <div class="member-detail-box no_padding">
+                            <div class="mem-border-bottom">
+                                <h5>MEMBER MESSAGE</h5>
+                            </div>
+                            <div *ngIf="memberMembershipMessages && memberMembershipMessages.length > 0">
+                                <div *ngFor="let  message of memberMembershipMessages">
+                                    <p class="semi_bold_font">{{message.Title}}</p>
+                                    <p>{{message.MemberMessage}}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-center" style="color: #283138;"
+                                    *ngIf="!memberMembershipMessages || (memberMembershipMessages && memberMembershipMessages.length == 0)">
+                                    No message for you today!
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" *ngIf="isShowDoorCheckInButton">
+                    <!-- 'disabled':isMembershipCancelled, -->
+                    <div class="member-bio-status" (click)="onMarkMembershipAttendance()" [ngClass]="{
+                          'disabled':isMembershipCancelled || isAllowedDoorCheckIns || IsDoorCheckInBenefitsSuspended,
+                          'check-mem':IsTodayAttendanceMarked,
+                          'uncheck-mem':!IsTodayAttendanceMarked}">
+                        <!-- <i class="fas fa-check-circle"></i>Checked-in Membership Attendance </div> -->
+
+                        <span class="column_flex_alignment">
+                            <i class="fas fa-user-check"></i>{{IsTodayAttendanceMarked ? 'Door Checked-in' : 'Door
+                            Check-in'}}
+                        </span>
+                        <!-- <span class="column_flex_alignment">
+                          <i class="fas fa-user-check"></i> Checked-in Membership Attendance
+                      </span> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="member-detail-carousel" *ngIf="hasClasses">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+
+                            <div ngxSlickItem *ngFor="let classItem of memberClassDetailList" class="slide">
+                                <div class="member-carousel-box text-center">
+                                    <i *ngIf="classItem.IsMembershipBenefit" class="fas fa-crown"></i>
+                                    <img alt="logo" src="{{classItem.ImagePath}}" width="100" class="center-block">
+                                    <!-- <div *ngIf="classItem.ClassStatus" class="out_time">
+                                      {{classItem.ClassStatus == 'Full' ? 'Full' : ''}}
+                                  </div> -->
+                                    <h6>{{classItem.ClassName}}</h6>
+                                    <p>{{classItem.StartTime | branchTimeFormat }} - {{ classItem.EndTime |
+                                        branchTimeFormat }}</p>
+                                    <div *ngIf="!classItem.IsFree && !classItem.IsMembershipBenefit && classItem.SaleDetailID > 0"
+                                        class="carousel-box-price paid dark_paid">
+                                        Paid
+                                    </div>
+                                    <div *ngIf="classItem.IsFree && classItem.IsMembershipBenefit"
+                                        class="carousel-box-price free">FREE</div>
+                                    <div *ngIf="!classItem.IsFree && classItem.IsMembershipBenefit"
+                                        class="carousel-box-price free">{{classItem.DiscountPercentage}}% Off</div>
+                                    <div *ngIf="!classItem.IsMembershipBenefit || classItem.IsClassBooked"
+                                        class="member-carousel-box text-center" (click)="onClassAttendance(classItem)">
+                                        <div *ngIf="classItem.IsAttended; else notSignedIn"
+                                            class="carousel-box-status present"
+                                            [ngClass]="{'disabled': classItem.IsMembershipBenefit && (isMembershipCancelled || IsItemBenefitsSuspended)}">
+                                            <i class="fa fa-check"></i>Checked-in
+                                        </div>
+                                        <ng-template #notSignedIn>
+                                            <div class="carousel-box-status absent"
+                                                [ngClass]="{'disabled': classItem.IsMembershipBenefit && (isMembershipCancelled || IsItemBenefitsSuspended)}">
+                                                <i class="fas fa-times"></i>Check-in
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                    <div class="member-carousel-box unreserved"
+                                        *ngIf="classItem.IsMembershipBenefit && !classItem.IsClassBooked">
+                                        Unreserved
+                                    </div>
+                                </div>
+                            </div>
+
+                        </ngx-slick-carousel>
+                    </div>
+
+                    <!-- <div class="col-five" >
+
+                  </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Footer Social Media Section-->
+    <!-- <div class="footer_section">
+      <div class="custom-container">
+          <div class="row">
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                  <ul>
+                      <li><a href="https://www.facebook.com/wellyxtech" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                      <li><a href="https://twitter.com/Wellyxtech" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                      <li><a href="https://www.instagram.com/wellyxtech/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                      <li><a href="https://www.youtube.com/channel/UCPhjbhMNqYWFJDe950DR5lg" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                  </ul>
+              </div>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                  <p>Powered by <a href="#">Wellyx</a></p>
+              </div>
+          </div>
+      </div>
+  </div> -->
+
+    <div class="login_page_title attend_logout_btn" [routerLink]="['/attendance/member']">
+        <i class="fal fa-arrow-left"></i>
+        <h3>Back</h3>
+    </div>
+
+    <!-- <a class="close_attendence" [routerLink]="['/attendance/member']">
+    <i class="fal fa-arrow-left"></i> Back
+</a> -->
+
+</div>

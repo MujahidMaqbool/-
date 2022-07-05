@@ -1,0 +1,136 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="small_popup">
+        <div class="popup_header">
+            <h4> {{dialogData?.IsClassAttendance && !dialogData?.IsEarlyCancellation ? "Late Cancel Booking" : "Cancel Booking"}}</h4>
+        </div>
+        <div class="popup_content">
+           
+            <ng-container *ngIf= "!dialogData.IsClassAttendance">
+                <div class="popup_white_bg row">
+                    <div class="col-md-12">
+                        <h5 class="field_label top_zero">How would you like to cancel the booking?</h5>
+                            <mat-select [(value)]="cancellationObj.CancellationTypeId" (selectionChange)="onCancellationChangeType()"
+                                class="form-control select_label" [(ngModel)]="cancellationObj.CancellationTypeId">
+                                <mat-option *ngFor="let option of cancellationTypeOptions" [value]="option.CancellationTypeId">
+                                    {{option.CancellationTypeName}}</mat-option>
+                            </mat-select>
+                        <h5 class="field_label">Select Cancellation Reason</h5>
+                            <mat-select [(value)]="cancellationObj.CancellationReasonTypeId" (selectionChange)="onReasonChange()"
+                                class="form-control select_label" [(ngModel)]="cancellationObj.CancellationReasonTypeId">
+                                <mat-option *ngFor="let option of cancellationReasonOptions" [value]="option.CancellationReasonTypeId">
+                                    {{option.CancellationReasonTypeName}}</mat-option>
+                            </mat-select>
+                    </div>
+                </div>
+    
+                <div class="popup_white_bg row" *ngIf="dialogData.CustomerMembershipID > 0">
+                    <div class="col-md-12 center_flex_alignment">
+                        <h5 class="field_label top_zero">Toggle on if the member loses benefit for this cancellation.</h5>
+                        <div>
+                            <mat-slide-toggle [checked]="isBenefitConsumed" [(ngModel)]="isBenefitConsumed"  class="wellyx-checked"
+                                name="BookingClasses" (change)="onChangeBenefitsSwitch($event)">
+                            </mat-slide-toggle>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="popup_white_bg row">
+                    <div class="col-md-12">
+                        <ng-container
+                            *ngIf="cancellationObj.CancellationTypeId == enumCancellationTypeValue.EarlyCancellation ">
+                            <h5 class="field_label top_zero">Early Cancellation Policy </h5>
+                        </ng-container>
+    
+                        <ng-container
+                            *ngIf="cancellationObj.CancellationTypeId == enumCancellationTypeValue.LateCancellation ">
+                            <h5 class="field_label top_zero">Late Cancellation Policy</h5>
+                        </ng-container>
+    
+                        <ng-container *ngIf="chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                            <p>Total paid for this booking is {{currencyFormat}}{{dialogData.AmountPaid}}. The amount of {{currencyFormat}}{{amountChargeRefund}} is due
+                                to be
+                                refunded. Select an
+                                option from the below dropdown on how you would like to proceed.</p>
+                        </ng-container>
+                        
+                        <ng-container *ngIf="!chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                                <p>Total paid for this booking is {{currencyFormat}}{{dialogData.AmountPaid}}. The amount of {{currencyFormat}}{{amountChargeRefund}} is due
+                                    to be
+                                    charged. Select an
+                                    option from the below dropdown on how you would like to proceed.</p>
+                        </ng-container>
+                        <ng-container *ngIf="chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                            <mat-select [(value)]="cancellationObj.RefundTypeId" (selectionChange)="onChangeStatus()"
+                                class="form-control select_label mt-2" [(ngModel)]="cancellationObj.RefundTypeId">
+                                <mat-option *ngFor="let option of RefundOptions" [value]="option.RefundTypeId">
+                                    {{option.RefundTypeName}}</mat-option>
+                            </mat-select>
+                        </ng-container>
+                        <ng-container *ngIf="!chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                            <mat-select [(value)]="cancellationObj.ChargeTypeId" (selectionChange)="onChangeStatus()"
+                                class="form-control select_label mt-2" [(ngModel)]="cancellationObj.ChargeTypeId">
+                                <mat-option *ngFor="let option of ChargeOptions" [value]="option.ChargeTypeId">
+                                    {{option.ChargeTypeName}}</mat-option>
+                            </mat-select>
+                        </ng-container>
+                        <div class="small_space"></div>
+                        <ng-container *ngIf="chargeRefundObj.IsRefund == null ">
+                            <p>No payment is due to be paid or refunded. Wellyx will update the invoice to
+                                reflect the cancellation. Click confirm to continue.</p>
+                        </ng-container>
+                    </div>
+                    <div></div>
+                    <div class="col-md-12"
+                        *ngIf="!chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                        <p> {{cancellationObj.ChargeTypeId == enumChargeValue.ChargeNow ? 'Charge now' : 'Charge later'}}  will update the invoice and allow you to  {{cancellationObj.ChargeTypeId == enumChargeValue.ChargeNow ? 'collect the balance due immediately.' : 'collect the balance due at a later time.'}}</p>
+                    </div>
+                    <div class="col-md-12"
+                    *ngIf="chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                    <p> {{cancellationObj.RefundTypeId == enumRefundValue.RefundNow ? 'Refund now' : 'Refund later'}}  will update the invoice and allow you to  {{cancellationObj.RefundTypeId == enumRefundValue.RefundNow ? 'refund the balance due immediately.' : 'refund the balance due at a later time.'}}</p>
+                </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf= "dialogData?.IsClassAttendance">
+                <div class="popup_white_bg row">
+                    <div class="col-md-12">
+                        <ng-container *ngIf="!dialogData?.IsEarlyCancellation">
+                            <p>
+                                {{dialogData.LateCancellationText != "" ?  dialogData.LateCancellationText : messages.Generic_Messages.LateCancellationMsg }}
+                            </p>
+                        </ng-container>
+
+                        <ng-container *ngIf="dialogData?.IsEarlyCancellation">
+                            <p>
+                                {{dialogData.EarlyCancellationText  != "" ? dialogData.EarlyCancellationText : messages.Generic_Messages.EarlyCacellationMsg }}
+                            </p>
+                        </ng-container>
+
+                        <ng-container *ngIf="!chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                            <p>
+                                Total paid for this booking is {{currencyFormat}}{{dialogData.AmountPaid}}.The amount of {{currencyFormat}}{{amountChargeRefund}} is due to be charged.A charge will be processed automatically for you .Click confirm to continue. 
+                            </p>
+                        </ng-container>
+                        <ng-container *ngIf="chargeRefundObj.IsRefund && chargeRefundObj.IsRefund != null">
+                            <p>
+                                Total paid for this booking is {{currencyFormat}}{{dialogData.AmountPaid}}.The amount of {{currencyFormat}}{{amountChargeRefund}} is due to be refunded.A refund will be processed automatically for you .Click confirm to continue. 
+                            </p>
+                        </ng-container>
+                        <ng-container *ngIf="chargeRefundObj.IsRefund == null ">
+                            <p>
+                                No payment is due to be paid or refunded.Click confirm to continue.
+                            </p>
+                        </ng-container>
+                        
+                    </div>
+                </div>
+            </ng-container>
+                <div class="row popup_footer cancel_btn float-right">
+                    <div class="col-md-12 col-sm-12 no_padding">
+                        <button (click)="onCancel()">Cancel</button>
+                        <button class="primary_blue_btn" [disabled]="disableConfirmBtn" (click)="onConfirm()">Confirm</button>
+                    </div>
+                </div>
+      
+        </div>
+    </div>
+</div>

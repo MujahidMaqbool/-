@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li class="back_to_menu">
+                <a class="nav-link" role="navigation" [routerLink]="['/customer/search']" (click)="getUrl('')">
+                    <i class="fal fa-arrow-left"></i> Customer Search
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Dashboard && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['dashboard']" role="tab" (click)="getUrl('')">
+                    Dashboard
+                </a>
+            </li>
+
+            <li *ngIf="allowedPages.Save">
+                <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+                    [routerLink]="['/customer/member/details', memberID]" role="tab" (click)="getUrl('')">
+                    Member Details
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Activities && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['activities']" role="tab" (click)="getUrl('')">
+                    Activities
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Memberships && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['memberships']" role="tab" (click)="getUrl('')">
+                    Memberships
+                </a>
+            </li>
+            <!-- <li *ngIf="allowedPages.BenefitsView && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['benefits']" role="tab">
+                    Benefits
+                </a>
+            </li> -->
+
+            <li *ngIf="memberID > 0">
+                <a role="tab" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" [ngClass]="
+                { 'active' : url == 'membership-benefits-log' || url == 'benefits'
+                }" aria-expanded="false">Benefits</a>
+                <div class="dropdown-menu sub_menu_nav" aria-labelledby="templates_nav">
+                    <a *ngIf="allowedPages.BenefitsView && memberID > 0" class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['benefits']" (click)="getUrl('benefits')"
+                        role="tab">Benefits</a>
+                    <a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['membership-benefits-log']" (click)="getUrl('membership-benefits-log')"
+                        role="tab"> Benefits Log</a>
+
+                </div>
+            </li>
+
+            <!-- <li *ngIf="allowedPages.Memberships && memberID > 0">
+                <a role="tab" class="nav-link dropdown-toggle" id="product_nav" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"> Memberships </a>
+                <div class="dropdown-menu sub_menu_nav" aria-labelledby="product_nav">
+                    <a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['memberships']" role="tab">
+                        All Memberships</a>
+
+                    <a class="dropdown-item" *ngIf="allowedPages.BenefitsView" [routerLinkActive]="['active']"
+                        [routerLink]="['benefits']" role="tab">
+                        Benefits
+                    </a>
+                </div>
+            </li> -->
+
+            <li *ngIf="allowedPages.Payments && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['payments']" role="tab" (click)="getUrl('')">
+                    Payments
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Invoices && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['invoice-history']" role="tab" (click)="getUrl('')" >
+                    Invoices
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Bookings && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['bookings']" role="tab" (click)="getUrl('')">
+                    Bookings
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Gateways && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['gateways']" role="tab" (click)="getUrl('')">
+                    Gateway Accounts
+                </a>
+            </li>
+            <li *ngIf="memberID > 0 && allowedPages.viewForm">
+                <a [routerLinkActive]="['active']" [routerLink]="['search-forms']" role="tab" (click)="getUrl('')">
+                    Forms <span
+                    [ngClass]=
+                    "countCustomerForm.FormsCount == 0 ? '' : !countCustomerForm.IsMandatory?
+                    'form-unsubmitted':'form-madatory'"
+                        class="form-badage">{{countCustomerForm.FormsCount == 0? '' : countCustomerForm.FormsCount}}</span>
+                </a>
+            </li>
+            <li *ngIf="memberID > 0 && allowedPages.ViewRewardProgram">
+                <a [routerLinkActive]="['active']" [routerLink]="['reward-programs']" role="tab" (click)="getUrl('')">
+                    Reward Programs
+                </a>
+            </li>
+            <li *ngIf="allowedPages.NextOfKin && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['next-of-kin']" role="tab" (click)="getUrl('')">
+                    Next of Kin
+                </a>
+            </li>
+            <li *ngIf="allowedPages.ReferredBy && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['referral-detail']" role="tab" (click)="getUrl('')">
+                    Referrals
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Documents && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['documents']" role="tab" (click)="getUrl('')">
+                    Documents
+                </a>
+            </li>
+            <li *ngIf="allowedPages.ViewWaitList && memberID > 0">
+                <a [routerLinkActive]="['active']" [routerLink]="['waitlist']" role="tab" (click)="getUrl('')">
+                    Waitlist
+                </a>
+            </li>
+
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿<!--View Staff Pop Up start-->
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="medium_popup">
+        <div class="modal-content">
+            <div class="popup_header">
+                <h4>View Task</h4>
+            </div>
+            <div class="popup_content">
+                <div class="popup_white_bg info_bar_bg">
+                    <staff-basic-info [personTypeInfo]="personInfo" *ngIf="shouldGetPersonInfo"></staff-basic-info>
+                </div>
+                <div class="popup_white_bg">
+                    <div class="row readonly_content">
+                        <div class="col-md-6 col-sm-6">
+                            <h6>Title</h6>
+                            <p>{{taskModel.Title}}</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <h6>Marked As Done</h6>
+                            <p>{{taskModel.MarkedAsDone ? 'Yes' : 'No'}}</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6 padding_right">
+                            <h6>Date</h6>
+                            <p>{{taskModel.FollowUpDate | customdate : dateFormat}}</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <h6>Priority</h6>
+                            <p>{{taskModel.PriorityTypeName}}</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <h6>Start Time</h6>
+                            <p>{{taskModel.FollowUpStartTime | branchTimeFormat }}</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <h6>End Time</h6>
+                            <p>{{taskModel.FollowUpEndTime | branchTimeFormat }}</p>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <h6>Description</h6>
+                            <p>{{taskModel.Description ? taskModel.Description : 'N/A'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--View Staff Pop Up End-->

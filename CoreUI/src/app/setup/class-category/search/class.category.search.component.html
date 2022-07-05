@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <button class="save" *ngIf="isSaveClassCategoryAllowed" data-toggle="modal" (click)="onAddClick()">
+                Add Category
+            </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div id="class_categories">
+        <div class="overflow-auto">
+            <div class="row grid_header mob-scroll-grid">
+                <div class="col-md-3 col">
+                    <h5>Class Category</h5>
+                </div>
+                <div class="col-md-5 col">
+                    <h5>Description</h5>
+                </div>
+                <div class="col-md-2 col">
+                    <h5>Status
+                    </h5>
+                </div>
+                <div class="col-md-2 col text-center">
+                    <h5>Actions</h5>
+                </div>
+            </div>
+            <div id="grid" *ngIf="isDataExists">
+                <div class="row grid_rows mob-scroll-grid" *ngFor="let classCategory of classCategoryies">
+                    <div class="col-md-3 col">
+                        <h5>{{classCategory.ClassCategoryName}}</h5>
+                    </div>
+                    <div class="col-md-5 col">
+                        <h5>{{classCategory.Description}}</h5>
+                    </div>
+                    <div class="col-md-2 col">
+                        <h5>{{classCategory.IsActive ? 'Active' : 'Inactive'}}</h5>
+                    </div>
+                    <div class="col-md-2 col text-center">
+                        <h5>
+                            <span class="blue" *ngIf="isSaveClassCategoryAllowed">
+                                <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    data-toggle="modal" data-target="" href="javascript:void(0);"
+                                    (click)="onEditClick(classCategory.ClassCategoryID)">
+                                    <i class="fal fa-edit"></i>
+                                </a>
+                            </span>
+                            <span class="red_del" *ngIf="isSaveClassCategoryAllowed">
+                                <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    (click)="deleteClassCategory(classCategory.ClassCategoryID)"
+                                    href="javascript:void(0)">
+                                    <i class="fal fa-trash-alt"></i>
+                                </a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!isDataExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pagination">
+            <div class="col-md-12 no_padding">
+                <mat-paginator #paginator [length]="totalRecords" [pageSizeOptions]="pageSizeOptions"
+                    (page)="onPageChange($event)" [showFirstLastButtons]="true">
+                </mat-paginator>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

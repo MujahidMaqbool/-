@@ -1,0 +1,86 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_medium_popup">
+            <div class="popup_header">
+                <h4>Product Category</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <div class="alert alert-danger" *ngIf="inValidProductCategoryName">
+                            <span
+                                *ngIf="categoryInformationForm.controls.productCategoryName?.errors?.required">{{messages.Validation.Info_Required}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form #categoryInformationForm="ngForm" novalidate>
+                    <div class="sch_class_head space-10">
+                        <div>
+                            <h5 class="field_label">Active</h5>
+                        </div>
+                        <div>
+                            <mat-slide-toggle
+                                [disabled]="productCategory.AppSourceTypeID === enum_AppSourceType.EnterPrise && productCategory.HasBranchPermission === false"
+                                class="wellyx-checked mt-2" [(ngModel)]="productCategory.IsActive" name="isActive">
+                            </mat-slide-toggle>
+                        </div>
+                    </div>
+                    <div class="popup_white_bg">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h5 class="field_label mt-0">Name</h5>
+                                <div [ngClass]="{
+                                            'has-danger': productCategoryName.invalid && (productCategoryName.dirty || productCategoryName.touched || inValidProductCategoryName),
+                                            'has-success': productCategoryName.valid && (productCategoryName.dirty || productCategoryName.touched )
+                                               }">
+                                    <input type="text" #productCategoryName="ngModel" required
+                                        [(ngModel)]="productCategory.ProductCategoryName"
+                                        [disabled]="productCategory.ProductCategoryID > 0 && productCategory.AppSourceTypeID === enum_AppSourceType.EnterPrise"
+                                        maxlength="50" (ngModelChange)="showValidation($event)"
+                                        name="productCategoryName" class="form-control" autoFocusDirective />
+                                </div>
+                                <h5 class="field_label">Description <span class="info-text"> (Remaining
+                                        Characters: {{ 250 -
+                                                    productCategory?.Description?.length }})</span></h5>
+                                <textarea rows="5"
+                                    [disabled]="productCategory.ProductCategoryID > 0 && productCategory.AppSourceTypeID === enum_AppSourceType.EnterPrise"
+                                    maxlength="250" [(ngModel)]="productCategory.Description" name="description"
+                                    class="form-control"></textarea>
+                            </div>
+                            <div class="col-md-5 pt-1"
+                                [style.pointer-events]="productCategory.ProductCategoryID > 0 && productCategory.AppSourceTypeID === enum_AppSourceType.EnterPrise ?  'none' : ''">
+                                <div class="upload_image_box square_img" *ngIf="!isImageExist"
+                                    (click)="showImageCropperDialog()"><i class="fal fa-cloud-upload"
+                                        aria-hidden="true"></i><br><button type="button" class="save">Upload
+                                        Image</button>
+                                </div>
+                                <div *ngIf="isImageExist && (imagePath && imagePath != '')" class="relative_cls" >
+                                    <img class="img-fluid" src="{{imagePath}}" alt="no image" />
+                                    <br>
+                                    <div class="changeimg_btn square_img_action" [hidden]="productCategory.AppSourceTypeID === enum_AppSourceType.EnterPrise">
+                                        <button type="button" (click)="showImageCropperDialog()" ><i
+                                                class="fal fa-pen"></i></button>
+                                        <button class="delete_img" type="button" (click)="onDeleteImage()"
+                                            *ngIf="productCategory.ProductCategoryID && productCategory.ImagePath"><i
+                                                class="fal fa-trash-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                        <button class="save primary_blue_btn" (click)="onSave()"
+                            [disabled]="(categoryInformationForm.pristine) || isDisabledSaveButton">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

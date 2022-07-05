@@ -1,0 +1,264 @@
+<div class="row" *ngIf="save_PO">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <button tabindex="1" [routerLink]="['../purchase-order/details/0']"> Add PO</button>
+        </div>
+    </div>
+</div>
+
+<div class="white_bg">
+    <div id="search_accordion">
+        <div (click)="focusInput()" class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#product_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle">Search Filter</h3>
+            </div>
+        </div>
+        <div id="product_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row align-items-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h5 class="field_label">PO No.</h5>
+                        <div class="d-flex">
+                            <span class="invoice_prefix right_radius" id="po">P.O-{{companyID ? companyID :'0'}}-{{branchID ? branchID :'0'}}-</span>
+                            <input [(ngModel)]="purchaseOrderSearchParameter.PONumber" type="text" class="form-control" (keydown)="preventCharactersForNumber($event)"
+                                aria-label="po" aria-describedby="po" autoFocusDirective #poNumber tabindex="1" maxlength="10" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h5 class="field_label">GRN No.</h5>
+                        <div class="d-flex">
+                            <span class="invoice_prefix right_radius" id="po-grn">GRN-{{companyID ? companyID :'0'}}-{{branchID ? branchID :'0'}}-</span>
+                            <input [(ngModel)]="purchaseOrderSearchParameter.GRNNumber" type="text" name="GRNNumber" (keydown)="preventCharactersForNumber($event)"
+                                class="form-control" aria-label="po-grn" aria-describedby="po-grn" tabindex="2" maxlength="10" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h5 class="field_label">Type</h5>
+                        <div class="select_label">
+                            <select class="form-control" [(ngModel)]="purchaseOrderSearchParameter.TypeID" name="TypeID" tabindex="3" [disabled]="!isMultiBranch">
+                                <option [ngValue]=0> All</option>
+                                <option [ngValue]="enumAppSourceType.OnSite">Branch Level</option>
+                                <option [ngValue]="enumAppSourceType.EnterPrise"> Enterprise Level </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h5 class="field_label">Supplier</h5>
+                        <div class="select_label">
+                            <select class="form-control" [(ngModel)]="purchaseOrderSearchParameter.SupplierID" name="Supplier" tabindex="4">
+                                <option [ngValue]=0>All</option>
+                                <option *ngFor="let supplier of suppliersList" [ngValue]="supplier.SupplierID">
+                                    {{supplier.SupplierName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 input_heading p-0">
+                        <dateto-datefrom (sendDateTo)="reciviedDate($event)" [dateToPlaceHolder]="dateFromToPlaceHolder"
+                            [dateFromPlaceHolder]="dateFromToPlaceHolder" #pODateSearch>
+                        </dateto-datefrom>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h5 class="field_label">Status</h5>
+                        <div class="select_label">
+                            <select class="form-control" [(ngModel)]="purchaseOrderSearchParameter.StatusID" name="poStatus" tabindex="5">
+                                <option [ngValue]=0>All</option>
+                                <option *ngFor="let po of purchaseOrderOptions" [ngValue]="po.poStatusID">
+                                    {{po.poStatusName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-3 col-md-4 col-sm-6 input_heading p-0">&nbsp;</div> -->
+
+                    <div class="offset-lg-3 offset-md-8  col-lg-3 col-md-4 col-sm-6 p-0">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button class="reset_btn" type="button" (click)="OnResetSearch()">Reset</button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 full_width_btn">
+                                <button type="button" class="search" (click)="searchPurchaseOrders()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="grids_white_bg">
+
+    <div class="overflow-auto">
+        <div class="cstm_scroll_bg master_row mob-scroll-grid-lg  collapse-dd">
+            <div class="row align-items-center grid_header">
+                <div class="col ">
+                    <h5>
+                        Reference Number
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>
+                        Type
+                    </h5>
+                </div>
+                <div class="col ">
+                    <h5>Created Date</h5>
+                </div>
+                <div class="col">
+                    <h5>Supplier</h5>
+                </div>
+                <div class="col">
+                    <h5>Status</h5>
+                </div>
+                <div class="col">
+                    <h5>Total</h5>
+                </div>
+                <div class="col">
+                    <h5>Last Updated</h5>
+                </div>
+                <div class="col text-center">
+                    <h5>Actions</h5>
+                </div>
+            </div>
+
+            <ng-container *ngFor="let po of purchaseOrdersList; let i=index;">
+                <div class="row align-items-center grid_rows grid_parent_rows_pos">
+                    <div class="col">
+                        <div class="cursor-pointer"
+                            [ngClass]="{'cst-collapse': po.PurchaseOrderStatusID === enumPOStatus.Received || po.PurchaseOrderStatusID === enumPOStatus.PartiallyReceived}"
+                            data-toggle="collapse" attr.data-target="#collapseExample{{i}}" aria-expanded="false"
+                            attr.aria-label="collapseExample{{i}}">
+                            <h5>{{po.PurchaseOrderNumber}}</h5>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h5>{{po.Type}}</h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{po.CreatedOn | customdate: dateFormat}}</h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{po.SupplierName}}</h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{po.Status}}</h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{po.TotalPrice | currency: currencySymbol}}</h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{po.PurchaseOrderCreatedName}} <br><span class=""> {{po.ModifiedOn | customdate: dateTimeFormat}}</span></h5>
+                    </div>
+                    <div class="col text-center">
+                        <h5>
+                            <span class="blue" *ngIf="view_PO">
+                                <a (click)="viewPurchaseOrderDetail(po.PurchaseOrderID, true)" matTooltip="View"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    href="javascript:void(0)"> <i class="fal fa-book-open"></i> </a>
+                            </span>
+                            <span class="blue" *ngIf="save_PO && po.PurchaseOrderStatusID === enumPOStatus.Ordered">
+                                <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    [routerLink]="['./details/'+po.PurchaseOrderID]" href="javascript:void(0)">
+                                    <i class="fal fa-edit"></i> </a>
+                            </span>
+                            <span class="blue" *ngIf="emailToSupplier">
+                                <a (click)="onEmailOrder(po)" matTooltip="Email Order"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    href="javascript:void(0)"> <i class="fal fa-envelope"></i></a>
+                            </span>
+                             <!---PDF for purchase Order-->
+                            <span class="blue" *ngIf="save_PO">
+                                <a matTooltip="PDF" (click)="downloadPurchaseOrderPDF(po)"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip" href="javascript:void(0)">
+                                    <i class="fal fa-file-pdf"></i> </a>
+                            </span>                            
+                            <span class="blue"
+                                *ngIf="save_PO && po.PurchaseOrderStatusID === enumPOStatus.Ordered || po.PurchaseOrderStatusID === enumPOStatus.PartiallyReceived">
+                                <a (click)="onReceivePurchaseOrder(po.PurchaseOrderID, po.PurchaseOrderStatusID, po.CreatedOn)"
+                                    matTooltip="Receive Purchase Order" matTooltipPosition="above"
+                                    matTooltipClass="custom-tooltip" href="javascript:void(0)">
+                                    <i class="fal fa-arrow-alt-square-down"></i>
+                                </a>
+                            </span>
+                            <span class="blue" *ngIf="save_PO && po.PurchaseOrderStatusID === enumPOStatus.PartiallyReceived">
+                                <a (click)="MarkAsReceived(po.PurchaseOrderID)" matTooltip="Mark as Received"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    href="javascript:void(0)"><i class="fal fa-check-circle"></i> </a>
+                            </span>
+                            <span class="blue" *ngIf="save_PO && (po.PurchaseOrderStatusID === enumPOStatus.Ordered)">
+                                <a (click)="cancelPurchaseOrder(po.PurchaseOrderID)" matTooltip="Cancel Order"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    href="javascript:void(0)"><i class="fal fa-ban"></i> </a>
+                            </span>
+                            <span class="red_del "
+                                *ngIf="delete_PO && (po.PurchaseOrderStatusID === enumPOStatus.Ordered || po.PurchaseOrderStatusID === enumPOStatus.Cancelled)">
+                                <a (click)="deletePurchaseOrder(po.PurchaseOrderID)" matTooltip="Delete"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                                    <i class="fal fa-trash-alt"></i> </a>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+                <ng-container
+                    *ngIf="po.PurchaseOrderStatusID === enumPOStatus.Received || po.PurchaseOrderStatusID === enumPOStatus.PartiallyReceived">
+                    <div *ngFor="let grn of po.grnList"
+                        class="row align-items-center grid_rows grid_child_rows collapse show"
+                        id="collapseExample{{i}}">
+                        <div class="col">
+                            <h5 class="pl-3">{{grn.GRNNumber}}</h5>
+                        </div>
+                        <div class="col">
+                            <h5></h5>
+                        </div>
+
+                        <div class="col">
+                            <h5>{{grn.CreatedOn | customdate: dateFormat}}</h5>
+                        </div>
+                        <div class="col">
+                            <h5></h5>
+                        </div>
+                        <div class="col">
+                            <h5></h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{grn.TotalReceivedTotal | currency: currencySymbol}}</h5>
+                        </div>
+                        <div class="col">
+                            <h5>{{grn.GRNCreatedName}} <br><span class=""> {{grn.ModifiedOn | customdate: dateTimeFormat}}</span></h5>
+                        </div>
+                        <div class="col text-center">
+                            <h5>
+                                <span class="blue">
+                                    <a (click)="viewPurchaseOrderDetail(grn.GRNID, false)" matTooltip="View"
+                                        matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                        href="javascript:void(0)">
+                                        <i class="fal fa-book-open"></i>
+                                    </a>
+                                </span>
+                            </h5>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="row grid_rows" *ngIf="!isDataExists">
+        <div class="col-md-12 text-center">
+            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+        </div>
+    </div>
+
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

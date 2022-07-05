@@ -1,0 +1,189 @@
+<div class="white_bg margin_top_zero">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#product_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+            </div>
+        </div>
+        <div id="product_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h5 class="field_label">Staff</h5>
+                        <input type="text" placeholder="Search Staff" [value]="personName" matInput
+                            [formControl]="searchPerson" [matAutocomplete]="auto" maxlength="30"
+                            [(ngModel)]="staffName">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayStaffName"
+                            (optionSelected)='getSelectedStaff($event.option.value)'>
+                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                <span class="client_name">{{ person.FirstName + ' ' + person.LastName }}</span>
+                                <!-- <small class="client_type float-right">{{person.RoleName ? person.RoleName : 'Super Admin'}}</small> -->
+                                <br>
+                                <span class="client_info">{{ person.Mobile }}</span>
+                                <br>
+                                <span class="client_info">{{ person.Email }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </div>
+                    <!-- <div class="col">
+                        <h5 class="field_label">Date From</h5>
+                         <input type="text" name="DateFrom" class="form-control bg_transparent" [(ngModel)]="taskDateFrom"
+                            (ngModelChange)="onFromDateChange(taskDateFrom)" #DateFrom="ngModel" matInput
+                            [matDatepicker]="mat_taskDateFrom" placeholder="DD/MM/YYYY" readonly />
+                        <mat-datepicker #mat_taskDateFrom></mat-datepicker>
+                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="mat_taskDateFrom">
+                        </mat-datepicker-toggle> 
+                        <date-picker [value]="staffTaskSearchParameter.DateFrom"
+                            (onDateChange)="onFromDateChange($event)"></date-picker>
+                    </div> -->
+                    <!-- <div class="col">
+                        <h5 class="field_label">Date To</h5>
+                         <input type="text" name="DateTo" class="form-control bg_transparent" [(ngModel)]="taskDateTo"
+                            (ngModelChange)="onToDateChange(taskDateTo)" #DateTo="ngModel" matInput [matDatepicker]="mat_taskDateTo"
+                            placeholder="DD/MM/YYYY" readonly />
+                        <mat-datepicker #mat_taskDateTo></mat-datepicker>
+                        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="mat_taskDateTo">
+                        </mat-datepicker-toggle> 
+                        <date-picker [value]="staffTaskSearchParameter.DateTo" (onDateChange)="onToDateChange($event)">
+                        </date-picker>
+                    </div> -->
+                    <div class="col-md-5 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #taskDateSearch>
+                        </dateto-datefrom>
+                    </div>
+                    <div class="col">
+                        <h5 class="field_label">Priority</h5>
+                        <div class="select_label">
+                            <select class="form-control" name="PriorityTypeID"
+                                [(ngModel)]="staffTaskSearchParameter.PriorityTypeID">
+                                <option *ngFor="let priorityTypeObj of priorityTypeList"
+                                    [ngValue]="priorityTypeObj.PriorityTypeID">
+                                    {{priorityTypeObj.PriorityTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h5 class="field_label">Status</h5>
+                        <div class="select_label">
+                            <select class="form-control" name="MarkedAsDone"
+                                [(ngModel)]="staffTaskSearchParameter.MarkedAsDone">
+                                <option *ngFor="let statusObj of taskStatusList" [ngValue]="statusObj.TaskStatusID">
+                                    {{statusObj.TaskStatusName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="offset-lg-8 offset-md-6 col-lg-4 col-md-6 space no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button class="reset_btn" type="button" (click)="onResetParameters()">
+                                    Reset</button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 full_width_btn">
+
+                                <button class="search" type="button" (click)="searchStaffTask()">
+                                    Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col-md-2 col">
+                <h5>Name </h5>
+            </div>
+            <div class="col-md-1 col">
+                <h5>Priority </h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>Start Time</h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>End Time</h5>
+            </div>
+            <div class="col-md-2 col">
+                <h5>Follow Up Date</h5>
+            </div>
+            <div class="col-md-1 col">
+                <h5>Status</h5>
+            </div>
+            <div class="col-md-2 col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div id="grid">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let staffTaskObj of allStaffTask">
+                <div class="col-md-2 col">
+                    <h5>
+                        {{staffTaskObj.AssignedToStaffName }}
+                    </h5>
+                </div>
+                <div class="col-md-1 col">
+                    <h5>{{staffTaskObj.PriorityTypeName}} </h5>
+                </div>
+                <div class="col-md-2 col">
+                    <h5>{{staffTaskObj.FollowUpStartTime | branchTimeFormat }} </h5>
+                </div>
+                <div class="col-md-2 col">
+                    <h5>{{staffTaskObj.FollowUpEndTime | branchTimeFormat }} </h5>
+                </div>
+                <div class="col-md-2 col">
+                    <h5>{{staffTaskObj.FollowUpDate | customdate: dateFormat}}</h5>
+                </div>
+                <div class="col-md-1 col">
+                    <h5>{{staffTaskObj.MarkedAsDone ? 'Done' : 'Not Done'}}</h5>
+                </div>
+                <div class="col-md-2 col text-center">
+                    <h5>
+                        <span class="blue">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onViewTask(staffTaskObj.StaffActivityID, staffTaskObj.AssignedToStaffID)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-book-open"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="isSaveTaskAllowed && !staffTaskObj.MarkedAsDone">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onEditTask(staffTaskObj.StaffActivityID, staffTaskObj.AssignedToStaffID)">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <span class="green" *ngIf="isSaveTaskAllowed && !staffTaskObj.MarkedAsDone">
+                            <a matTooltip="Mark as done" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onActivityMarkAsDone(staffTaskObj.StaffActivityID, staffTaskObj.AssignedToStaffID)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-check-circle"></i>
+                            </a>
+                        </span>
+                        <span class="red_del" *ngIf="isSaveTaskAllowed && !staffTaskObj.MarkedAsDone">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onDeleteActivity(staffTaskObj.AssignedToStaffID, staffTaskObj.StaffActivityID)"
+                                href="javascript:void(0)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows responsive_grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

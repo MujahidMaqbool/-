@@ -1,0 +1,367 @@
+ 
+ <div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-8" >
+                    <h5 class="font-medium">
+                        Shift Forecast - {{staffSchedulerHours?.ShiftForeCastStart | customdate : shiftForecastDateFormat}} -
+                        {{staffSchedulerHours?.ShiftForeCastEnd | customdate : shiftForecastDateFormat}}
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4 dashboard_header shift-box" *ngIf="AllowedDashboard.StaffActualHours">
+                    <div class="small_space"></div>
+                    <h5>Actual Hours This Week</h5>
+                    <div class="staff_das_forecast mpt-5">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5 col-md-12">
+                                <div class="sch_hours orange_border">
+                                    <h1>{{staffSchedulerHours?.CurrentWeekWorkedHours}}</h1>
+                                    <p class="font-medium">Actual this Week</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-12">
+                                <h2 class="mb-1">Actual Hours</h2>
+                                <p class="pb-1">Actual Hours last Week</p>
+                                <div class="forecast_detail">
+                                    <div class="light_green_bg color_size floating"></div>
+                                    <h6>{{staffSchedulerHours?.LastWeeksWorkedHours}}</h6>
+                                </div>
+
+                                <p class="py-2">Lower than the Actual last Week</p>
+                                <div class="forecast_detail pt-0">
+                                    <div class="bg_orange color_size floating"></div>
+                                    <h6>{{staffSchedulerHours?.CurrentWeekActualHours}}</h6>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 dashboard_header shift-box" *ngIf="AllowedDashboard.StaffSchedulerHours">
+                    <div class="small_space"></div>
+                    <h5>Scheduled Hours This Week</h5>
+                    <div class="staff_das_forecast">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5 col-md-12">
+                                <div class="sch_hours">
+                                    <h1>{{staffSchedulerHours?.CurrentWeekScheduledHours}}</h1>
+                                    <p class="font-medium">Scheduled this Week</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-12">
+                                <h2 class="mb-1">Scheduler Hours</h2>
+                                <p class="pb-1">Scheduled Hours last Week</p>
+                                <div class="forecast_detail">
+                                    <div class="light_green_bg color_size floating"></div>
+                                    <h6>{{staffSchedulerHours?.LastWeeksScheduledHours}} </h6>
+                                </div>
+
+                                <ng-container
+                                    *ngIf="staffSchedulerHours && staffSchedulerHours.ScheduledShiftHoursLastWeekPositive">
+                                    <p class="py-2">Increase from Scheduled last Week</p>
+                                    <div class="forecast_detail pt-0">
+                                        <div class="bg_orange color_size floating"></div>
+                                        <h6>{{staffSchedulerHours?.ElapsedShiftHoursLastWeek}} </h6>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container
+                                    *ngIf="staffSchedulerHours && !staffSchedulerHours.ScheduledShiftHoursLastWeekPositive">
+                                    <p class="py-2">Lower than the Scheduled last Week</p>
+                                    <div class="forecast_detail pt-0">
+                                        <div class="bg_orange color_size floating"></div>
+                                        <h6>{{staffSchedulerHours?.ScheduledHourDiff}}</h6>
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 dashboard_header shift-box" *ngIf="AllowedDashboard.StaffActualHours">
+                    <div class="small_space"></div>
+                    <h5>Schedule Hours Vs Actual Hours Last Week</h5>
+                    <div class="staff_das_forecast">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5 col-md-12">
+                                <div class="sch_hours sch_hours_blue">
+                                    <h1>{{staffSchedulerHours?.PreviousWeekDiff}}</h1>
+                                    <p class="font-medium">Difference</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-12">
+                                <h2 class="mb-0">Scheduled Hours Last Week</h2>
+                                <div class="forecast_detail">
+                                    <div class="bg_walkIn color_size floating"></div>
+                                    <h6>{{staffSchedulerHours?.LastWeeksScheduledHours}} </h6>
+                                </div>
+
+                                <h2 class="mb-1">Actual Hours Last Week</h2>
+                                <div class="forecast_detail">
+                                    <div class="bg_walkIn color_size floating"></div>
+                                    <h6>{{staffSchedulerHours?.LastWeeksWorkedHours}} </h6>
+                                </div>
+
+                                <p class="py-2">Actual Hours were more than Scheduled Hours</p>
+                                <div class="forecast_detail pt-0">
+                                    <div class="bg_perpal color_size floating"></div>
+                                    <h6>{{staffSchedulerHours?.DiffOfLastWeek}}</h6>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-12 parallel_grid mob-parallel-off padding_right mob-pr-15">
+        <div class="dashboard_bg">
+            <div class="dashboard_header">
+                <h3>Recent Staff Attendance</h3>
+            </div>
+            <div class="dash_cstm_height cstm_scroll_bg ng-star-inserted">
+                <div class="dash_gird_header mob-scroll-grid">
+                    <div class="row">
+                        <div class="col">
+                            <h4> Name</h4>
+                        </div>
+                        <div class="col">
+                            <h4>Date</h4>
+                        </div>
+                        <div class="col">
+                            <h4>Shift Start</h4>
+                        </div>
+                        <div class="col">
+                            <h4>Shift End</h4>
+                        </div>
+                        <div class="col">
+                            <h4>Clock In </h4>
+                        </div>
+                        <div class="col">
+                            <h4>Clock Out </h4>
+                        </div>
+                        <div class="col">
+                            <h4 class="text-center">View</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="ng-star-inserted">
+                    <div id="grid" *ngIf="isDataExists">
+                        <div class="row grid_rows dash_gird_row mob-scroll-grid"
+                            *ngFor="let timesheetObj of attendanceTimesheetData">
+                            <div class="col column_flex_alignment">
+                                <img src="" class="rounded-circle">
+                                <h5>{{timesheetObj.FirstName + ' ' + timesheetObj.LastName}}</h5>
+                            </div>
+                            <!-- <div class="col column_flex_alignment">
+                                <img class="rounded-circle"
+                                    src="https://sandboxapi.wellyx.com/UploadDownload/Images/cp1/b554e246-f8c0-4acc-9fc3-e45a565a525d.jpg">
+                                <div class="col lead_member">
+                                    <h5>{{timesheetObj.FirstName + ' ' + timesheetObj.LastName}} <span
+                                            class="active zero_margin">{{timesheetObj.StaffPositionName}}</span></h5>
+                                </div>
+                            </div> -->
+
+                            <div class="col">
+                                <h5>{{timesheetObj.ClockDate | customdate : dateFormat}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{timesheetObj.ShiftStartTime | branchTimeFormat }}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>
+                                    {{timesheetObj.ShiftEndTime | branchTimeFormat }}
+                                </h5>
+                            </div>
+                            <div class="col">
+                                <div class="notes">
+                                    <span *ngIf="timesheetObj.ClockIn > timesheetObj.ShiftStartTime"
+                                        class="time_difference negative left_float"></span>
+                                    <span
+                                        *ngIf="timesheetObj.ClockIn < timesheetObj.ShiftStartTime || timesheetObj.ClockIn == timesheetObj.ShiftStartTime"
+                                        class="time_difference positive left_float"></span>
+                                    <h5> {{timesheetObj.ClockIn | branchTimeFormat}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="notes">
+                                    <div *ngIf="timesheetObj.ClockOut != null">
+                                        <span *ngIf="timesheetObj.ClockOut < timesheetObj.ShiftEndTime"
+                                            class="time_difference negative left_float"></span>
+                                        <span
+                                            *ngIf="timesheetObj.ClockOut > timesheetObj.ShiftEndTime || timesheetObj.ClockIn == timesheetObj.ShiftEndTime"
+                                            class="time_difference positive left_float"></span>
+                                        <h5> {{timesheetObj.ClockOut | branchTimeFormat}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <a class="name_link" target="blank"
+                                    [routerLink]="['/staff/details',timesheetObj.StaffID]">
+                                    <i class="fal fa-book-open"></i> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col column_flex_alignment">
+                            <img class="rounded-circle"
+                                src="https://sandboxapi.wellyx.com/UploadDownload/Images/cp1/b554e246-f8c0-4acc-9fc3-e45a565a525d.jpg">
+                            <h4>Ateeq</h4>
+                        </div>
+                        <div class="col">
+                            <h4> 10 oct 2020 </h4>
+                        </div>
+                        <div class="col">
+                            <h4>17:00 </h4>
+                        </div>
+                        <div class="col">
+                            <h4>18:00</h4>
+                        </div>
+                        <div class="col">
+                            <h4><span class="time_difference negative no_float"></span> 17:00 </h4>
+                        </div>
+                        <div class="col">
+                            <h4>17:00</h4>
+                        </div>
+                        <div class="col text-center"><a class="name_link" target="blank" href="">
+                                <i class="fal fa-search-plus"></i></a></div>
+                    </div> -->
+                </div>
+
+            </div>
+            <!--bindings={
+            "ng-reflect-ng-if": "false"
+          }-->
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 parallel_grid mob-parallel-off" *ngIf="allowedPages.Tasks">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-md-4 col-sm-4">
+                    <h5>
+                        Pending Tasks 
+                    </h5>
+                </div>
+                <div class="col-md-8 col-sm-8 mob-md-calender">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.Tasks)" #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+
+            </div>
+            <div class="overflow-auto">
+            <div class="mob-scroll-grid" *ngIf="isPendingTaskDataExists">
+                <div class="dash_gird_header">
+                    <div class="row">
+                        <div class="col">
+                            <h4>Staff</h4>
+                        </div>
+                        <div class="col">
+                            <h4>Task</h4>
+                        </div>
+                        <!-- <div class="col">
+                            <h4>Start time</h4>
+                        </div> -->
+                        <div class="col">
+                            <h4>End time</h4>
+                        </div>
+                        <div class="col">
+                            <h4>End Date</h4>
+                        </div>
+                        <div class="col">
+                            <h4>Priority</h4>
+                        </div>
+                        <div class="col text-center">
+                            <h4>View</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="dash_cstm_height cstm_scroll_bg">
+                    <div class="dash_gird_row" *ngFor="let staffPendingTaskObj of staffPendingTask">
+                        <div class="row">
+                            <div class="col column_flex_alignment">
+                                <img src="{{staffPendingTaskObj.StaffImagePath}}" class="rounded-circle">
+                                <h4>{{staffPendingTaskObj.StaffFullName}}</h4>
+                            </div>
+                            <div class="col">
+                                <h4>{{staffPendingTaskObj.TaskTitle}}</h4>
+                            </div>
+                            <!-- <div class="col">
+                                <h4>{{staffPendingTaskObj.FollowUpStartTime}}</h4>
+                            </div> -->
+                            <div class="col">
+                                <h4>{{staffPendingTaskObj.FollowUpEndTime | branchTimeFormat }}</h4>
+                            </div>
+                            <div class="col">
+                                <h4>{{staffPendingTaskObj.FollowUpDate | customdate: dateFormat}}</h4>
+                            </div>
+                            <div class="col">
+                                <h4>{{staffPendingTaskObj.PriorityTypeName }} </h4>
+                            </div>
+                            <div class="col text-center"><a class="name_link" target="blank"
+                                    [routerLink]="['/staff/details',staffPendingTaskObj.StaffID]">
+                                    <i class="fal fa-book-open"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div *ngIf="!isPendingTaskDataExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 parallel_grid " [ngClass]="{
+        '': allowedPages.Tasks }" *ngIf="allowedPages.Attendance">
+        <div class="dashboard_bg">
+            <div class="row dashboard_header dashboard_header_border">
+                <div class="col-lg-8 col-md-4 col-sm-4">
+                    <h5>
+                        Attendance Notices
+                    </h5>
+                </div>
+                <div class="col-lg-4 col-md-8 col-sm-8 mob-md-calender">
+                    <dateto-datefrom (sendDateTo)="onDateChange($event,DataChangeDashboard.Attendance)"
+                        #fromToDateComoRef>
+                    </dateto-datefrom>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <dx-chart id="chart" [dataSource]="staffAttendance" [valueAxis]="[
+                    {
+                        tickInterval: 1
+                    }]">
+                        <dxi-series valueField="TotalCount" name="TotalCount" color="#BFE1FF"></dxi-series>
+                        <dxo-common-series-settings argumentField="Name" type="bar" hoverMode="allArgumentPoints"
+                            selectionMode="allArgumentPoints">
+                            <dxo-label [visible]="true" [format]="{ type: 'fixedPoint', precision: '0'  }">
+                            </dxo-label>
+                        </dxo-common-series-settings>
+                        <dxo-legend verticalAlignment="bottom" [visible]="false" horizontalAlignment="center"
+                            itemTextPosition="top">
+                        </dxo-legend>
+                        <dxo-tooltip [enabled]="true" [customizeTooltip]="AttendanceNoticesCustomizeTooltip"
+                            location="edge">
+                        </dxo-tooltip>
+                    </dx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="scheduler_space"></div>

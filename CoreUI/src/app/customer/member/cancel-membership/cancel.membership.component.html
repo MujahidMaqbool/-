@@ -1,0 +1,82 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg small_popup">
+        <div class="popup_header">
+            <h4>Cancel Membership</h4>
+        </div>
+        <form #cancelMemForm="ngForm" (ngSubmit)="onSaveCancelMembership()" novalidate>
+            <div class="popup_content">
+                <div class="row popup_white_bg">
+                    <div class="col-md-12">
+                        <p class="text_bottom_border">Member will not be allowed to book any benefits after the termination of membership, however the bookings already made will remain unaffected.</p>
+
+                    </div>
+                    <div class="col-md-12">
+                        <input id="rdCancelNow" name="cancelNow" type="radio" class="ng-untouched"
+                            [(ngModel)]="cancelMembershipModel.CancelMembershipNow" [value]="true"
+                            [checked]="cancelMembershipModel.CancelMembershipNow" (ngModelChange)="onStatusChange()">
+                        <label for="rdCancelNow">
+                            <span>
+                            </span> &nbsp;Cancel Membership Now?
+                        </label>
+                    </div>
+                    <div class="col-md-12 ten_space">
+                        <input id="rdSchCancel" name="schcancel" type="radio"
+                            [(ngModel)]="cancelMembershipModel.CancelMembershipNow" [value]="false"
+                            [checked]="!cancelMembershipModel.CancelMembershipNow" class="ng-untouched"
+                            (ngModelChange)="onStatusChange()">
+                        <label for="rdSchCancel">
+                            <span>
+                            </span> &nbsp;Schedule Membership Cancellation.
+                        </label>
+                    </div>
+                    <div class="col-md-12">
+                        <h5 class="field_label">Select Cancellation Date</h5>
+                        <date-picker [value]="cancelMembershipModel.ScheduledCancellationDate" [min]="minDate"
+                            [max]="maxDate" (onDateChange)="onCancellationDateChange($event)"
+                            [disabled]="cancelMembershipModel.CancelMembershipNow" [showClear]="false"
+                            [isCancelMembershipNow]="cancelMembershipModel.CancelMembershipNow"></date-picker>
+                    </div>
+                    <div class="col-md-12">
+                        <h5 class="field_label">Cancel Reason</h5>
+                        <div class="select_label">
+                            <select name="MembershipCancellationReasonTypeID" #cancelReason="ngModel"
+                                [(ngModel)]="cancelMembershipModel.MembershipCancellationReasonTypeID"
+                                (ngModelChange)="onMemCancellationReasonsChange()">
+                                <!-- <option [ngValue]="cancelReasonId"> Select Reason </option> -->
+                                <option *ngFor="let cancelReason of reasonsList"
+                                    [ngValue]="cancelReason.MembershipCancellationReasonTypeID">
+                                    {{cancelReason.MembershipCancellationReasonTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <div [ngClass]="{
+                                'has-danger':  MembershipCancellationReason.invalid && (MembershipCancellationReason.dirty || MembershipCancellationReason.touched || cancelMemForm.submitted),
+                                'has-success': MembershipCancellationReason.valid && (MembershipCancellationReason.dirty || MembershipCancellationReason.touched )
+                            }">
+                            <h5 class="field_label">Notes
+                              <span class="optional">(Remaining Characters: {{ 150 -
+                                cancelMembershipModel?.MembershipCancellationReason?.length }})</span>
+                            </h5>
+                                <textarea rows="3" [disabled]="!hasCancellationReasons"
+                                    name="MembershipCancellationReason" #MembershipCancellationReason="ngModel"
+                                    [(ngModel)]="cancelMembershipModel.MembershipCancellationReason"
+                                    class="form-control" placeholder="Type Reasons Here" maxlength="150"
+                                    (blur)="onCancellationReasonsUpdated()" required>
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right">
+                        <button class="left_margin_zero" type="button" (click)="onClose()">No</button>
+                        <button class="primary_blue_btn" type="submit">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

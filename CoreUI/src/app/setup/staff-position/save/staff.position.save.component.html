@@ -1,0 +1,68 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content medium_popup">
+      <div class="row popup_header">
+        <h4>{{pageTitle}}</h4>
+
+        <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" mat-button (click)="onClosePopup()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+      </div>
+      <form #staffPositionForm="ngForm" (ngSubmit)="saveStaffPosition(staffPositionForm.valid)" novalidate>
+        <div class="popup_content">
+          <div class="popup_white_bg">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="alert alert-danger" *ngIf="staffPositionForm.invalid && staffPositionForm.submitted">
+                  <div *ngIf="StaffPositionName?.errors?.required">
+                    {{messages.Validation.Info_Required}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 no_padding" [ngClass]="{
+                             'has-danger': StaffPositionName.invalid && (StaffPositionName.dirty || StaffPositionName.touched || staffPositionForm.submitted ),
+                             'has-success': StaffPositionName.valid && (StaffPositionName.dirty || StaffPositionName.touched )
+                                 }">
+                <div class="col-md-12">
+                  <mat-slide-toggle tabindex="1" class="float-right" class="example-margin" [(checked)]="staffPosition.IsActive" [(ngModel)]="staffPosition.IsActive"
+                    [disabled]="false" name="status">
+                    {{staffPosition.IsActive ? 'Active': 'Inactive'}}
+                  </mat-slide-toggle>
+                </div>
+                <div class="col-md-12">
+                  <div class="field_label">
+                    <h5>Position </h5>
+                  </div>
+                  <input type="text" name="StaffPositionName" [(ngModel)]="staffPosition.StaffPositionName" class="form-control" #StaffPositionName="ngModel"
+                    maxlength="50" tabindex="2" (blur)="onPositionNameUpdated()" required />
+                </div>
+                <div class="col-md-12 col-sm-12" [ngClass]="{
+                                  'has-danger': Description.invalid && (Description.dirty || Description.touched || staffPositionForm.submitted),
+                                  'has-success': Description.valid && (Description.dirty || Description.touched )
+                                 }">
+                  <div class="field_label">
+                    <h5>Description<span>&nbsp;(Remaining Characters: {{ 250 -
+                      staffPosition?.Description?.length }})</span></h5>
+                  </div>
+                  <textarea type="text" maxlength="250" name="Description" rows="3" tabindex="3" [(ngModel)]="staffPosition.Description" #Description="ngModel"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row popup_footer">
+          <div class="col-md-12 col-sm-12">
+            <div class="cancel_btn float-right">
+              <button tabindex="4" type="button" mat-button (click)="onClosePopup()">Cancel</button>
+              <button tabindex="5" class="save primary_blue_btn" [disabled]="(staffPositionForm.pristine)">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<form #schedulerTaskFormData="ngForm" (ngSubmit)="saveSchedulerTask(schedulerTaskFormData.valid)" novalidate>
+  <div class="popup_content cstm_scroll_bg">
+    <div class="row sch_mob_reverse">
+      <div class="col-lg-3 col-md-4 mob-pr-0 padding_left parallel_grid">
+        <div class="sch_white_bg smallScheduler sch_height_nohead" *ngIf="isShowScheduler">
+          <one-day-scheduler  [dayViewFormat]="dayViewFormat"
+            [schedulerTimeFormat]="schedulerTimeFormat" [staffID]="taskActivity.AssignedToStaffID"
+            [startDate]="currentDate" (onStartDateChange)="smallCalendarDateChange($event)" #onedaySchedulerComp>
+          </one-day-scheduler>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-8 parallel_grid no_padding">
+        <div class="sch_white_bg pt-2">
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div class="alert alert-danger" *ngIf="isShowError">{{dateTimeCompareError}}</div>
+              <div class="alert alert-danger" *ngIf="taskActivity.MarkedAsDone">
+                {{messages.Validation.SchedulerCompletedActivityError}}</div>
+              <!-- <div class="alert alert-danger" *ngIf="isInvalidFollowupDate">{{messages.Validation.FollowupDate_Cannot_Be_Past}}</div> -->
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <h5 class="field_label">Select Date</h5>
+              <date-picker [value]="currentDate" [required]="true" [showClear]="false"
+                (onDateChange)="onSelectDate_valueChanged($event)">
+              </date-picker>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <h5 class="field_label">Task Title</h5>
+              <div
+                [ngClass]="{'has-danger': ( Title.invalid || !Title.value || Title.value == '') && (schedulerTaskFormData.dirty || schedulerTaskFormData.touched || schedulerTaskFormData.submitted)}">
+                <input type="text" class="form-control" name="Title" [(ngModel)]="taskActivity.Title" #Title="ngModel"
+                  maxlength="50" [disabled]="taskActivity.MarkedAsDone" required>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <h5 class="field_label">Priority</h5>
+              <div class="select_label">
+                <select class="form-control" [(ngModel)]="taskActivity.PriorityTypeID" name="PriorityTypeID"
+                  #PriorityTypeID="ngModel" [disabled]="taskActivity.MarkedAsDone">
+                  <option *ngFor="let priority of priorityTypeList" [ngValue]="priority.PriorityTypeID">
+                    {{priority.PriorityTypeName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <h5 class="field_label">Start Time</h5>
+              <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat" [interval]="15"
+                [(value)]="taskActivity.FollowUpStartTime" (onValueChanged)="startDateChangeEvent($event)"
+                [showClearButton]="true" [useMaskBehavior]="true" [disabled]="taskActivity.MarkedAsDone">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="start time is required"></dxi-validation-rule>
+                </dx-validator>
+              </dx-date-box>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <h5 class="field_label">End Time</h5>
+              <dx-date-box type="time" class="full_width" [displayFormat]="schedulerTimeFormat" [interval]="15"
+                [(value)]="taskActivity.FollowUpEndTime" (onValueChanged)="endDateChangeEvent($event)"
+                [showClearButton]="true" [useMaskBehavior]="true" [disabled]="taskActivity.MarkedAsDone">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="end time is required"></dxi-validation-rule>
+                </dx-validator>
+              </dx-date-box>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <h5 class="field_label">Staff</h5>
+              <div class="select_label">
+                <select class="form-control" [(ngModel)]="taskActivity.AssignedToStaffID" name="AssignedToStaffID"
+                  #AssignedToStaffID="ngModel" [disabled]="taskActivity.MarkedAsDone"
+                  (ngModelChange)="onStaffChange(taskActivity.AssignedToStaffID)">
+                  <option *ngFor="let staff of staffList" [ngValue]="staff.StaffID">
+                    {{staff.StaffFullName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5 class="field_label">Note <span>(Remaining Characters: {{ 250 -
+                  taskActivity?.Description?.length }})</span></h5>
+              <textarea class="form-control form-control-description" rows="5" [(ngModel)]="taskActivity.Description"
+                name="Description" #Description="ngModel" maxlength="250"
+                [disabled]="taskActivity.MarkedAsDone"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row popup_footer">
+    <div class="col-md-12">
+      <div class="cancel_btn float-right">
+        <button type="button" (click)="onCloseSchedulerTaskPopup()">Cancel</button>
+        <button type="submit" *ngIf="!taskActivity.MarkedAsDone" [disabled]="isSaveButtonDisabled" class="save primary_blue_btn">Save</button>
+      </div>
+      <div class="small_space"></div>
+    </div>
+  </div>
+</form>

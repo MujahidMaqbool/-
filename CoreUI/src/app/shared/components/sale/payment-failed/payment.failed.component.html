@@ -1,0 +1,95 @@
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content large_popup">
+      <div class="popup_header">
+        <h4>Payment Failed</h4>
+      </div>
+      <div class="popup_content cstm_scroll_bg">
+
+        <div class="popup_white_bg py-2">
+          <div class="row">
+            <div class="col-md-12 px-2">
+
+              <div class="p-2">
+                <p class="pb-2">An invoice {{receiveData.saleInvoiceNumber}} has been created for the total amount of
+                  {{receiveData.totalDue | currency: currencyFormat}}. You have collected
+                  {{receiveData.totalAmountPaid | currency: currencyFormat}}. The remaining amount of
+                  {{receiveData.totalFailedAmountToBePaid | currency: currencyFormat}} has failed against the below
+                  payment methods. Please process these payments again or go to invoices to process the remaining
+                  payment in future.</p>
+              </div>
+
+              <div class="overflow-auto">
+                <div class="row grid_header mob-scroll-grid">
+                  <div class="col">
+                    <h5>Date</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Payment Method</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Payment Gateway</h5>
+                  </div>
+                  <div class="col text-center">
+                    <h5>Amount</h5>
+                  </div>
+                  <div class="col-3">
+                    <h5>Description</h5>
+                  </div>
+                  <div class="col">
+                    <h5>Status</h5>
+                  </div>
+                </div>
+                <div class="mob-scroll-grid" id="grid">
+                  <div class="row grid_rows py-2" *ngFor="let unProcessedPaymentObj of unProcessedPaymentsList">
+                    <div class="col">
+                      <h5>{{saleDate | customdate: dateTimeFormat}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5>
+                        {{unProcessedPaymentObj.SaleTypeID == paymentType.Cash ? 'Cash' :
+                            unProcessedPaymentObj.SaleTypeID == paymentType.Other ? 'Other' : unProcessedPaymentObj.SaleTypeID == paymentType.RewardPoint ? 'Reward Points' : 'Card'}}
+                        <span class="pl-1" *ngIf="unProcessedPaymentObj.CardLastFourDigits"> **** **** ****
+                          {{unProcessedPaymentObj.CardLastFourDigits}}</span></h5>
+                    </div>
+                    <div class="col">
+                        <h5>
+                            {{unProcessedPaymentObj.PaymentGatewayID == paymentgateway.Cash ? 'Cash' :
+                            unProcessedPaymentObj.PaymentGatewayID == paymentgateway.Stripe_Card ? 'Stripe Card' :
+                              unProcessedPaymentObj.PaymentGatewayID == paymentgateway.GoCardless ? 'GoCardless' :
+                              unProcessedPaymentObj.PaymentGatewayID == paymentgateway.PaySafe ? 'PaySafe' :
+                              unProcessedPaymentObj.PaymentGatewayID == paymentgateway.Stripe_DD ? 'Stripe_DD' :
+                              unProcessedPaymentObj.PaymentGatewayID == paymentgateway.Other ? 'Other' :
+                              unProcessedPaymentObj.PaymentGatewayID == paymentgateway.PayTabs ? 'PayTabs' :
+                              unProcessedPaymentObj.PaymentGatewayID == paymentgateway.RewardPoints ? 'Reward Points' : ''}}
+                        </h5>
+                    </div>
+                    <div class="col text-center">
+                      <h5>{{unProcessedPaymentObj.Amount | currency: currencyFormat}}</h5>
+                    </div>
+                    <div class="col-3">
+                      <h5>{{unProcessedPaymentObj.Message}}</h5>
+                    </div>
+                    <div class="col">
+                      <h5 class="red-color">Failed</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row popup_footer">
+        <div class="col-md-12">
+          <div class="cancel_btn float-right">
+            <button type="button" (click)="onCloseDialog()">Close</button>
+            <button type="button" class="save primary_blue_btn" (click)="onProcessPayment()">Process
+              Payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

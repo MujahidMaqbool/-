@@ -1,0 +1,736 @@
+<form #verifyAutomationForm="ngForm" (ngSubmit)="onSaveAutomation(verifyAutomationForm.valid)" novalidate>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="company_btn float-right">
+                <button type="button" class="save" type="submit" tabindex="1"
+                    [disabled]="!hasTempalte || saveAutomation.EventCategoryTypeID == 0 || saveAutomation.EventTypeID == 0">
+                    Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="alert alert-danger" *ngIf="verifyAutomationForm.invalid && verifyAutomationForm.submitted">
+                    <div *ngIf="verifyAutomationForm.invalid">
+                        {{messages.Validation.Info_Required}}
+                    </div>
+                    <div *ngIf="Email?.errors?.pattern">
+                        {{messages.Validation.Email_Invalid}}
+                    </div>
+                </div>
+                <!-- <div class="alert alert-danger" *ngIf="isInvalidStartTime">
+                    <div>
+                        {{messages.Validation.StartTime_Should_Greater_Than_CurrentTime}}
+                    </div>
+                </div>
+                <div class="alert alert-danger" *ngIf="isInvalidEndTime">
+                    <div>
+                        {{messages.Validation.Endtime_Should_Greater_Than_Start_Time}}
+                    </div>
+                </div> -->
+                <!-- <div class="alert alert-danger" *ngIf="!hasTempalte">
+                    <div>
+                        {{ eventTypeName + ' ' + messages.Error.Template_Not_Defined}}
+                    </div>
+                </div> -->
+                <!-- <div class="alert alert-danger" *ngIf="saveAutomation.EventTypeID == 0">
+                    <div>
+                        {{messages.Validation.Select_Trigger}}
+                    </div>
+                </div>
+                <div class="alert alert-danger" *ngIf="saveAutomation.EventCategoryTypeID == 0">
+                    <div>
+                        {{messages.Validation.Select_Trigger_Category}}
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="inside_margin">
+            <div class="row section_title">
+                <div class="col-md-6 col-sm-6 padding_left">
+                    <h4>Add Automation <span class="info_tip"
+                            matTooltip="Automation is the technology by which notifications are sent without human assistance upon the occurence of an event/trigger"
+                            matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                class="far fa-info-circle"></i></span>
+                    </h4>
+
+                </div>
+                <div class="col-md-6 col-sm-6 text-right">
+                    <mat-slide-toggle tabindex="2" class="float-right" class="example-margin bottom_zero"
+                        [(checked)]="saveAutomation.IsActive" [(ngModel)]="saveAutomation.IsActive" [disabled]="false"
+                        name="status">
+                        {{saveAutomation.IsActive ? 'Active': 'Inactive'}}
+                    </mat-slide-toggle>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <h5 class="field_label">
+                    Automation Name
+                </h5>
+                <div
+                    [ngClass]="{
+                    'has-danger': (RuleName.invalid || saveAutomation.RuleName == ' ') && (RuleName.dirty || RuleName.touched || verifyAutomationForm.submitted),
+                    'has-success': (RuleName.valid && saveAutomation.RuleName != ' ') && (RuleName.dirty || RuleName.touched )}">
+                    <input type="text" required class="form-control" name=" RuleName"
+                        [(ngModel)]="saveAutomation.RuleName" #RuleName="ngModel" maxlength="30" tabindex="3"
+                        (blur)="onRuleNameUpdated()" />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <h5 class="field_label">
+                    From Email Name
+                </h5>
+                <input type="text" class="form-control" name="FromEmailName" maxlength="30"
+                    [(ngModel)]="saveAutomation.FromEmailName" #FromEmailName="ngModel" tabindex="4" />
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <h5 class="field_label">
+                    Reply To Email Address
+                </h5>
+                <input type="text" class="form-control" name="Email" [(ngModel)]="saveAutomation.ReplyEmailAddress"
+                    #Email="ngModel" pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                    maxlength="50" (blur)="onEmailUpdated()" tabindex="5" />
+
+            </div>
+        </div>
+    </div>
+
+    <div class="white_bg auto_heading">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Schedule <span class="info_tip" matTooltip="Specify how and when a notification is sent"
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                            class="far fa-info-circle"></i></span></h4>
+            </div>
+            <div class="col-md-12">
+                <div class="sky_bg">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <h5 class="field_label">
+                                Trigger Category <span class="info_tip"
+                                    matTooltip="The category narrows down the search for Triggers of specific areas"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span>
+                            </h5>
+                            <div
+                                [ngClass]="{
+                                'has-danger': saveAutomation.EventCategoryTypeID == 0 && (EventCategory.dirty || EventCategory.touched || verifyAutomationForm.submitted),
+                                'has-success': saveAutomation.EventCategoryTypeID > 0 && (EventCategory.dirty || EventCategory.touched )}">
+                                <div class="select_label">
+                                    <select required class="form-control" name="EventCategory"
+                                        [(ngModel)]="saveAutomation.EventCategoryTypeID" #EventCategory="ngModel"
+                                        tabindex="6" (ngModelChange)="onChangeEventCategory()">
+                                        <option value='0'> - Select Trigger Category - </option>
+                                        <option *ngFor="let eventCategory of eventCategoryType"
+                                            [ngValue]="eventCategory.EventCategoryTypeID">
+                                            {{eventCategory.EventCategoryTypeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <h5 class="field_label">
+                                Trigger <span class="info_tip"
+                                    matTooltip="Trigger is an automatic event that fires the notification; choose one trigger at a time to schedule the automated notifications against it"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span>
+                            </h5>
+                            <div
+                                [ngClass]="{
+                                'has-danger': saveAutomation.EventTypeID == 0 && (EventType.dirty || EventType.touched || verifyAutomationForm.submitted),
+                                'has-success': saveAutomation.EventTypeID > 0 && (EventType.dirty || EventType.touched )}">
+                                <div class="select_label">
+                                    <select required class="form-control" name="EventType"
+                                        [(ngModel)]="saveAutomation.EventTypeID" #EventType="ngModel" tabindex="7"
+                                        (ngModelChange)="onEventTypeChanged()">
+                                        <option value='0'> - Select Trigger - </option>
+                                        <option *ngFor="let event of eventType" [ngValue]="event.EventTypeID">
+                                            {{event.EventTypeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6" *ngIf="automationPermission && automationPermission.AllowSegment">
+                            <h5 class="field_label">
+                                Segment
+                            </h5>
+                            <div [ngClass]="{
+                                'has-danger': Segment.invalid && (Segment.dirty || Segment.touched || verifyAutomationForm.submitted),
+                                'has-success': Segment.valid && (Segment.dirty || Segment.touched )}">
+                                <div class="select_label">
+                                    <select required class="form-control" name="Segment"
+                                        [(ngModel)]="saveAutomation.SegmentID" #Segment="ngModel" tabindex="8">
+                                        <option *ngFor="let audience of audienceType"
+                                            [ngValue]="audience.AudienceTypeID">
+                                            {{audience.AudienceTypeName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Options <span class="info_tip" matTooltip="Additional settings to schedule the automation"
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                            class="far fa-info-circle"></i></span></h4>
+            </div>
+            <div class="col-md-12">
+                <div class="light_yellow_bg">
+                    <div class="row">
+                        <div class="col-md-5ths col-sm-6">
+                            <h5 class="field_label">
+                                Do not send notifications before
+                            </h5>
+                            <dx-date-box type="time" [displayFormat]="timeFormat" class="full_width form-control"
+                                [interval]="60" name="StartTime" [(value)]="doNotSendBefore" [showClearButton]="true"
+                                (onValueChanged)="onStartTimeChange($event)" [useMaskBehavior]="true" tabindex="9">
+                            </dx-date-box>
+                        </div>
+                        <div class="col-md-5ths col-sm-6">
+                            <h5 class="field_label">
+                                Do not send notifications after
+                            </h5>
+                            <dx-date-box type="time" [displayFormat]="timeFormat" class="full_width form-control"
+                                [interval]="60" name="EndTime" [(value)]="doNotSendAfter" [showClearButton]="true"
+                                [useMaskBehavior]="true" (onValueChanged)="onEndTimeChange($event)" tabindex="10">
+                            </dx-date-box>
+                        </div>
+                        <div class="col-md-5ths col-sm-6"
+                            *ngIf="automationPermission.AllowAfter || automationPermission.AllowBefore || automationPermission.AllowRepeat">
+                            <h5 class="field_label" *ngIf="automationPermission.AllowAfter">
+                                Send After
+                                <span class="info_tip"
+                                    matTooltip="Specify the period when notfication should be sent post Trigger event. By default the notfication are sent 24 hours after Trigger event"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span>
+
+                            </h5>
+                            <h5 class="field_label" *ngIf="automationPermission.AllowBefore">
+                                Remind Before
+                                <span class="info_tip"
+                                    matTooltip="By default reminders are sent 24 hours Booking time. You can set your own Reminders too"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span>
+
+                            </h5>
+
+                            <h5 class="field_label" *ngIf="automationPermission.AllowRepeat">
+                                Repeat Every
+                                <span class="info_tip"
+                                    matTooltip="Send same notfication again at specified period until the Trigger status is no longer the same. Repeat option Off by default"
+                                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                        class="far fa-info-circle"></i></span>
+                            </h5>
+                            <div [ngClass]="{
+                                    'has-danger': SendAfter.invalid && (SendAfter.dirty || SendAfter.touched || verifyAutomationForm.submitted),
+                                    'has-success': SendAfter.valid  && (SendAfter.dirty || SendAfter.touched ) }">
+                                <input required class="form-control" type="number" name="SendAfter" min="1"
+                                    pattern="\d+" [(ngModel)]="saveAutomation.DurationValue"
+                                    (keypress)="preventDecimalValue($event)" #SendAfter="ngModel" tabindex="11">
+                            </div>
+
+                        </div>
+                        <div class="col-md-5ths col-sm-6"
+                            *ngIf="automationPermission.AllowRepeat || automationPermission.AllowAfter || automationPermission.AllowBefore ">
+                            <h5 class="field_label">
+                                Duration
+                            </h5>
+                            <div class="select_label">
+                                <select required class="form-control" name="DurationType"
+                                    [(ngModel)]="saveAutomation.DurationTypeID" #DurationType="ngModel">
+                                    <option *ngFor="let duration of durationType" [ngValue]="duration.DurationTypeID">
+                                        {{duration.DurationTypeName}}
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-5ths col-sm-6" *ngIf="automationPermission.AllowRepeat">
+                            <h5 class="field_label">
+                                End Repeat Occurrence(s)
+                            </h5>
+                            <div class="select_label">
+                                <select required class="form-control" name="EndRepeat"
+                                    [(ngModel)]="saveAutomation.RepeatValue" #EndRepeat="ngModel">
+                                    <option *ngFor="let endRepeat of endRepeatOccurrence" [ngValue]="endRepeat.value">
+                                        {{endRepeat.text}}
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Audience <span class="info_tip" matTooltip="Choose who receives the notification"
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                            class="far fa-info-circle"></i></span></h4>
+            </div>
+        </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-md-12" *ngIf="automationPermission.AllowCustomer">
+        <div class="perpal_bg">
+            <h5 class="field_label"> Contact List All Customers</h5>
+            <div class="tax_row">
+                <div class="check_cls_bg tax_items" *ngFor="let audienceType of ruleAudienceCustomer">
+                    <div class="checkbox checkbox-success tax_checkbox">
+                        <input id="{{'checkbox'+audienceType.AudienceTypeID}}" name="{{audienceType.AudienceTypeID}}"
+                            type="checkbox" [(checked)]="audienceType.AudienceChecked"
+                            [(ngModel)]="audienceType.AudienceChecked"
+                            (ngModelChange)="onAudienceChanged(audienceType)">
+                        <label for="{{'checkbox'+audienceType.AudienceTypeID}}">
+                            {{audienceType.AudienceTypeName}}
+                            <span class="info_tip"
+                                matTooltip="Target all customers to send a standard notification or select the specific type of customers to customize notifications for each one of them."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                    class="far fa-info-circle"></i></span>
+                        </label>
+                        <span *ngIf="enu_AudienceType.Customer === audienceType.AudienceTypeID && !hasCustomerTemplate"
+                            class="membership_processing_days alert-warning">
+                            <i class="fal fa-info-circle"> </i>
+                            {{messages.Error.Customer_Template_Not_Defined}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12" *ngIf="automationPermission.AllowRelatedStaff || automationPermission.AllowStaffPosition">
+        <div class="perpal_bg">
+            <h5 class="field_label">
+              Contact List  {{automationPermission.AllowRelatedStaff && automationPermission.AllowStaffPosition ? 'Related Staff and Staff Position' : (automationPermission.AllowRelatedStaff ? 'Related Staff' : 'Staff Position')}}
+            </h5>
+            <div class="tax_row">
+                <div class="check_cls_bg tax_items" *ngFor="let  audienceStaff of ruleAudienceStaff">
+                    <div class="checkbox checkbox-success tax_checkbox">
+                        <input id="{{'checkbox'+audienceStaff.AudienceTypeID}}" name="{{audienceStaff.AudienceTypeID}}"
+                            type="checkbox" [(checked)]="audienceStaff.AudienceChecked"
+                            [(ngModel)]="audienceStaff.AudienceChecked"
+                            (ngModelChange)="onAudienceChanged(audienceStaff)">
+                        <label for="{{'checkbox'+audienceStaff.AudienceTypeID}}">
+                            {{audienceStaff.AudienceTypeName}}
+                            <span class="info_tip"
+                                *ngIf="audienceStaff.AudienceTypeID ==  enu_AudienceType.RelatedStaff"
+                                matTooltip="Target all customers to send a standard notification or select the specific type of customers to customize notifications for each one of them."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                    class="far fa-info-circle"></i></span>
+                            <span class="info_tip"
+                                *ngIf="audienceStaff.AudienceTypeID ==  enu_AudienceType.StaffPosition"
+                                matTooltip="Select specific group or multiple groups of staff that should receive notification."
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                    class="far fa-info-circle"></i></span>
+
+                        </label>
+                    </div>
+                </div>
+                <div *ngIf="automationPermission.AllowStaffPosition">
+                    <mat-select [ngClass]="{'disable_bg': !audienceDisabled.staffPositionSeleted }"
+                        class="form-control multi_select"  placeholder="Select Staff Position"  name="StaffPosition" [(ngModel)]="selectedStaffPosition"
+                        multiple [disabled]="!audienceDisabled.staffPositionSeleted">
+                        <mat-select-trigger *ngIf="selectedStaffPosition.length > 2">
+                            {{selectedStaffPosition.length > 0 ? selectedStaffPosition[0].StaffPositionName : ''}}
+                            <span *ngIf="selectedStaffPosition.length > 2" class="example-additional-selection">
+                              (+{{selectedStaffPosition.length - 1}} {{selectedStaffPosition.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger>
+
+                        <mat-option *ngFor="let ruleStaffPosition of automationRuleStaffPosition"
+                            [value]="ruleStaffPosition">
+                            {{ruleStaffPosition.StaffPositionName}} </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+        </div>
+      </div>
+
+        <div class="clearfix" style="clear: both;"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Template <span class="info_tip"
+                        matTooltip="Upload default or customized template and select the medium to send it"
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                            class="far fa-info-circle"></i></span></h4>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+
+                    <!-- Customer Template  -->
+                    <div class="col-lg-4 col-md-12 mob-pr-0 padding_left"
+                        *ngIf="hasCustomerTemplate && automationPermission.AllowCustomer && audienceDisabled.customerSelected">
+                        <div class="light_gren_bg">
+                            <h3>All Customers</h3>
+
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero" name="AudienceCustomerEmail"
+                                        [(checked)]="audienceTemplate.AudienceCustomerEmailIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceCustomerEmailIsActive"
+                                        #AudienceCustomerEmail="ngModel"
+                                        [disabled]="audienceCustomerEmailtemplate.length === 0 || !audienceDisabled.customerSelected">
+                                        Email
+                                    </mat-slide-toggle>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceCustomerEmailtemplate.length > 0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudineceCustomerEmailTemplate"
+                                            [(ngModel)]="audienceTemplate.CustomerEmailTemplateTextID"
+                                            #AudineceCustomerEmailTemplate="ngModel"
+                                            [disabled]="!audienceDisabled.customerSelected || !audienceTemplate.AudienceCustomerEmailIsActive">
+                                            <option *ngFor="let audienceCustomerEmail of audienceCustomerEmailtemplate"
+                                                [ngValue]="audienceCustomerEmail.TemplateTextID">
+                                                {{audienceCustomerEmail.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style="width: 65%;" *ngIf="audienceCustomerEmailtemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Customer_Email_Template_Not_Selected}}
+
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero" name="AudienceCustomerSMS"
+                                        [(checked)]="audienceTemplate.AudienceCustomerSMSIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceCustomerSMSIsActive"
+                                        #AudienceCustomerSMS="ngModel"
+                                        [disabled]="audienceCustomerSMStemplate.length === 0 || !audienceDisabled.customerSelected">
+                                        SMS
+                                    </mat-slide-toggle>
+                                </div>
+                                <div style="width: 65%" *ngIf="audienceCustomerSMStemplate.length > 0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudineceCustomerSMSTemplate"
+                                            [(ngModel)]="audienceTemplate.CustomerSMSTemplateTextID"
+                                            #AudineceCustomerSMSTemplate="ngModel"
+                                            [disabled]="!audienceDisabled.customerSelected || !audienceTemplate.AudienceCustomerSMSIsActive ">
+                                            <option *ngFor="let audienceCustomerSMS of audienceCustomerSMStemplate"
+                                                [ngValue]="audienceCustomerSMS.TemplateTextID">
+                                                {{audienceCustomerSMS.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style="width: 65%;" *ngIf="audienceCustomerSMStemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Customer_SMS_Template_Not_Selected}}
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero"
+                                        name="AudienceCustomerNotification"
+                                        [(checked)]="audienceTemplate.AudienceCustomerNotificationIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceCustomerNotificationIsActive"
+                                        #AudienceCustomerNotification="ngModel"
+                                        [disabled]="audienceCustomerNotificationtemplate.length === 0 || !audienceDisabled.customerSelected">
+                                        Notification
+                                    </mat-slide-toggle>
+                                </div>
+
+                                <div style="width: 65%" *ngIf="audienceCustomerNotificationtemplate.length > 0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudienceCustomerNotificationtemplate"
+                                            [(ngModel)]="audienceTemplate.CustomerNotficationTemplateTextID"
+                                            #AudienceCustomerNotificationtemplate="ngModel"
+                                            [disabled]="!audienceDisabled.customerSelected || !audienceTemplate.AudienceCustomerNotificationIsActive ">
+                                            <option
+                                                *ngFor="let audienceCustomerNotfi of audienceCustomerNotificationtemplate"
+                                                [ngValue]="audienceCustomerNotfi.TemplateTextID">
+                                                {{audienceCustomerNotfi.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style="width: 65%;" *ngIf="audienceCustomerNotificationtemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Customer_Notification_Template_Not_Selected}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Related Staff Template  -->
+                    <div class="col-lg-4 col-md-12 mob-pr-0 padding_left"
+                        *ngIf="hasStaffTemplate && automationPermission.AllowRelatedStaff && audienceDisabled.relatedStaffSelected">
+                        <div class="light_gren_bg">
+                            <h3>Related Staff</h3>
+
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero" name="AudienceStaffEmail"
+                                        [(checked)]="audienceTemplate.AudienceStaffEmailIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceStaffEmailIsActive"
+                                        #AudienceStaffEmail="ngModel"
+                                        [disabled]="audienceStaffEmailtemplate.length === 0 || !audienceDisabled.relatedStaffSelected">
+                                        Email
+                                    </mat-slide-toggle>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceStaffEmailtemplate.length >0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudineceStaffEmailTemplate"
+                                            [(ngModel)]="audienceTemplate.StaffEmailTemplateTextID"
+                                            #AudineceStaffEmailTemplate="ngModel"
+                                            [disabled]="!audienceTemplate.AudienceStaffEmailIsActive || !audienceDisabled.relatedStaffSelected">
+                                            <option *ngFor="let audienceStaffEmail of audienceStaffEmailtemplate"
+                                                [ngValue]="audienceStaffEmail.TemplateTextID">
+                                                {{audienceStaffEmail.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceStaffEmailtemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Staff_Email_Template_Not_Selected}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero" name="AudienceStaffSMS"
+                                        [(checked)]="audienceTemplate.AudienceStaffSMSIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceStaffSMSIsActive"
+                                        #AudienceStaffSMS="ngModel"
+                                        [disabled]="audienceStaffSMStemplate.length === 0 || !audienceDisabled.relatedStaffSelected">
+                                        SMS
+                                    </mat-slide-toggle>
+                                </div>
+                                <div style="width: 65%" *ngIf="audienceStaffSMStemplate.length > 0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudineceStaffSMSTemplate"
+                                            [(ngModel)]="audienceTemplate.StaffSMSTemplateTextID"
+                                            #AudineceStaffSMSTemplate="ngModel"
+                                            [disabled]="!audienceTemplate.AudienceStaffSMSIsActive || !audienceDisabled.relatedStaffSelected">
+                                            <option *ngFor="let audienceStaffSMS of audienceStaffSMStemplate"
+                                                [ngValue]="audienceStaffSMS.TemplateTextID">
+                                                {{audienceStaffSMS.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceStaffSMStemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Staff_SMS_Template_Not_Selected}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero"
+                                        name="AudienceStaffNotification"
+                                        [(checked)]="audienceTemplate.AudienceStaffNotificationIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceStaffNotificationIsActive"
+                                        #AudienceStaffNotification="ngModel"
+                                        [disabled]="audienceStaffNotificationtemplate.length === 0 || !audienceDisabled.relatedStaffSelected">
+                                        Notification
+                                    </mat-slide-toggle>
+                                </div>
+
+                                <div style="width: 65%" *ngIf="audienceStaffNotificationtemplate.length > 0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudienceStaffNotificationtemplate"
+                                            [(ngModel)]="audienceTemplate.StaffNotficationTemplateTextID"
+                                            #AudienceStaffNotificationtemplate="ngModel"
+                                            [disabled]="!audienceTemplate.AudienceStaffNotificationIsActive || !audienceDisabled.relatedStaffSelected">
+                                            <option *ngFor="let audienceStaffNotfi of audienceStaffNotificationtemplate"
+                                                [ngValue]="audienceStaffNotfi.TemplateTextID">
+                                                {{audienceStaffNotfi.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceStaffNotificationtemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Staff_Notification_Template_Not_Selected}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Staff Position Template  -->
+                    <div class="col-lg-4 col-md-12 mob-pr-0 padding_left"
+                        *ngIf="hasStaffPositionTemplate && automationPermission.AllowStaffPosition && audienceDisabled.staffPositionSeleted">
+                        <div class="light_gren_bg">
+                            <h3>Staff Position</h3>
+
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero"
+                                        name="AudienceStaffPositionEmail"
+                                        [(checked)]="audienceTemplate.AudienceStaffPositionEmailIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceStaffPositionEmailIsActive"
+                                        #AudienceStaffPositionEmail="ngModel"
+                                        [disabled]="audienceStaffPositionEmailtemplate.length === 0 || !audienceDisabled.staffPositionSeleted">
+                                        Email
+                                    </mat-slide-toggle>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceStaffPositionEmailtemplate.length >0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudineceStaffPositionEmailTemplate"
+                                            [(ngModel)]="audienceTemplate.StaffPositionEmailTemplateTextID"
+                                            #AudineceStaffPositionEmailTemplate="ngModel"
+                                            [disabled]="!audienceTemplate.AudienceStaffPositionEmailIsActive || !audienceDisabled.staffPositionSeleted">
+                                            <option
+                                                *ngFor="let audienceStaffPositionEmail of audienceStaffPositionEmailtemplate"
+                                                [ngValue]="audienceStaffPositionEmail.TemplateTextID">
+                                                {{audienceStaffPositionEmail.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceStaffPositionEmailtemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Staff_Email_Template_Not_Selected}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero" name="AudienceStaffPositionSMS"
+                                        [(checked)]="audienceTemplate.AudienceStaffPositionSMSIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceStaffPositionSMSIsActive"
+                                        #AudienceStaffPositionSMS="ngModel"
+                                        [disabled]="audienceStaffPositionSMStemplate.length === 0 || !audienceDisabled.staffPositionSeleted">
+                                        SMS
+                                    </mat-slide-toggle>
+                                </div>
+                                <div style="width: 65%" *ngIf="audienceStaffPositionSMStemplate.length > 0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudineceStaffPositionSMSTemplate"
+                                            [(ngModel)]="audienceTemplate.StaffSMSTemplateTextID"
+                                            #AudineceStaffPositionSMSTemplate="ngModel"
+                                            [disabled]="!audienceTemplate.AudienceStaffPositionSMSIsActive || !audienceDisabled.staffPositionSeleted">
+                                            <option
+                                                *ngFor="let audienceStaffPositionSMS of audienceStaffPositionSMStemplate"
+                                                [ngValue]="audienceStaffPositionSMS.TemplateTextID">
+                                                {{audienceStaffPositionSMS.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceStaffPositionSMStemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Staff_SMS_Template_Not_Selected}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="template-items">
+                                <div>
+                                    <mat-slide-toggle class="example-margin bottom_zero"
+                                        name="AudienceStaffPositionNotification"
+                                        [(checked)]="audienceTemplate.AudienceStaffPositionNotificationIsActive"
+                                        [(ngModel)]="audienceTemplate.AudienceStaffPositionNotificationIsActive"
+                                        #AudienceStaffPositionNotification="ngModel"
+                                        [disabled]="audienceStaffPositionNotificationtemplate.length === 0 || !audienceDisabled.staffPositionSeleted">
+                                        Notification
+                                    </mat-slide-toggle>
+                                </div>
+
+                                <div style="width: 65%" *ngIf="audienceStaffPositionNotificationtemplate.length > 0">
+                                    <div class="select_label">
+                                        <select class="form-control" name="AudienceStaffPositionNotificationtemplate"
+                                            [(ngModel)]="audienceTemplate.StaffPositionNotficationTemplateTextID"
+                                            #AudienceStaffPositionNotificationtemplate="ngModel"
+                                            [disabled]="!audienceTemplate.AudienceStaffPositionNotificationIsActive || !audienceDisabled.staffPositionSeleted">
+                                            <option
+                                                *ngFor="let audienceStaffPositionNotfi of audienceStaffPositionNotificationtemplate"
+                                                [ngValue]="audienceStaffPositionNotfi.TemplateTextID">
+                                                {{audienceStaffPositionNotfi.TemplateTextTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="width: 65%;" *ngIf="audienceStaffPositionNotificationtemplate.length === 0">
+                                    <div>
+                                        <span class="membership_processing_days alert-warning">
+                                            <i class="fal fa-info-circle"> </i>
+                                            {{messages.Validation.Staff_Notification_Template_Not_Selected}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row grid_rows" *ngIf="!hasCustomerTemplate && !hasStaffTemplate">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">No templates found.</h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,87 @@
+<div class="modal-dialog-centered">
+    <div class="modal-content extra_large_popup">
+        <div class="popup_header">
+            <h4>Process Membership</h4>
+        </div>
+        <form #membershipBuyForm="ngForm" novalidate>
+            <div class="row popup_content pop_fix_height cstm_scroll_bg no_padding">
+                <div class="col-md-12 col-sm-12 ten_space">
+                    <div class="zero_margin view_bg info_bar_bg">
+                        <person-info *ngIf="shouldGetPersonInfo"></person-info>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 no_padding popup_ten_space">
+                    <mat-horizontal-stepper #stepper>
+                        <mat-step>
+                            <ng-template matStepLabel>Select Membership</ng-template>
+                            <save-member-memberhsip (CountrySchema)="CountrySchema($event)"
+                                (selectedPaymentGateWay)="selectedPaymentGateWayID($event)" #saveMemberMembershipRef>
+                            </save-member-memberhsip>
+                        </mat-step>
+
+                        <mat-step>
+                            <ng-template matStepLabel>Payment Plan</ng-template>
+                            <save-member-payment #saveMemberPaymentRef [getMembershipPlanModel]="getMembershipPlanModel"
+                                [getPaymentSummary]="(activeTabIndex === 1)"></save-member-payment>
+                        </mat-step>
+                        <ng-container *ngIf="customFormView">
+                            <mat-step *ngFor="let form of customFormView ; index as i">
+                                <ng-template matStepLabel>{{form.FormName}}</ng-template>
+                                <membership-form #formComponents [customeFormViewModel]="form"
+                                    (onSubmitForms)=onSubmitFormsHandler($event)></membership-form>
+                            </mat-step>
+                        </ng-container>
+                        <ng-container *ngIf="isRewardProgramExistsForJoin" #rewardProgram>
+                            <div id="rewardProgram">
+                                <mat-step>
+                                    <ng-template matStepLabel>Reward Program</ng-template>
+                                    <reward-point-template [isCustomerProfile]="true" [optinRewardProgram]="model.BranchDefaultRewardProgramVM"></reward-point-template>
+                                </mat-step>
+                            </div>
+                           
+                        </ng-container>
+
+                        <mat-step>
+                            <ng-template matStepLabel>Payment Method</ng-template>
+                            <div id="PaymentMethod" class="row" *ngIf="showMembershipPayment && !showSkipAndContinue">
+                                <div class="col-md-12">
+                                    <pos-membership-payment #posPaymentRef 
+                                        [isByMemberShip]="true" (saleTypeChange)="onSaleTypeChange($event)">
+                                    </pos-membership-payment>
+                                </div>
+                            </div>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12 col-sm-12">
+                    <div class="cancel_btn float-right popup-btn3">
+                        <button type="button" *ngIf="showSkipAndContinue" class="simple_btn light_blu"
+                            (click)="onSkipForm()">
+                            {{ showNextAndContinue ? 'Next & Continue' : 'Skip & Continue' }} <i
+                                class="fas fa-step-forward"></i>
+                        </button>
+                        <button type="button" *ngIf="showSkipRewardProgramAndContinue" class="simple_btn light_blu"
+                            (click)="onSkipRewardProgram()">
+                            {{'Skip & Continue' }} <i class="fas fa-step-forward"></i>
+                        </button>
+                        <span *ngIf="showSkipAndContinue" class="verticle-bar"></span>
+                        <button type="button" (click)="onCloseDialog()" tabindex="7">Cancel</button>
+                        <button class="save primary_blue_btn" (click)="onPrevious()" [disabled]="!showPrevious"
+                            tabindex="8">Previous</button>
+                        <button class="save primary_blue_btn" (click)="onContinue()" *ngIf="showContinue" tabindex="9"
+                            [disabled]="continueInProgress ">{{showContinue && !showSkipAndContinue ? 'Continue' : 'Submit & Continue'}}</button>
+                        <button class="save primary_blue_btn" (click)="onJoinRewardProgram()"
+                            *ngIf="!showContinue && showJoinRewardProgramAndContinue" tabindex="9"
+                            [disabled]="continueInProgress ">{{'Join & Continue'}}</button>
+                        <button class="save primary_blue_btn" (click)="onSave()" *ngIf="showSave"
+                            [disabled]="saveInProgress && !showSkipAndContinue">Save</button>
+                        <button class="save primary_blue_btn" (click)="onSave()" *ngIf="showPay"
+                            [disabled]="saveInProgress && !showSkipAndContinue">Pay</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

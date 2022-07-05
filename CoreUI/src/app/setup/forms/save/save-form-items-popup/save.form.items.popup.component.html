@@ -1,0 +1,68 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <div class="col-md-6 col-sm-6 no_padding">
+                    <h4>{{itemTypeHeading}}</h4>
+                </div>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="all_service">
+                                    All {{itemTypeHeading}} </label>
+                                <button class="btn-sm de_seleect_btn float-right" (click)="onAllItemsChange(false)">
+                                    Deselect All {{itemTypeHeading}}
+                                </button>
+                                <button class="btn-sm de_seleect_btn float-right" (click)="onAllItemsChange(true)">
+                                    Select All {{itemTypeHeading}}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12" *ngFor="let itemCategory of fundamentalsItemList">
+                            <div class="staff_provide_service">
+                                <div class="checkbox checkbox-success full_width">
+                                    <input type="checkbox" id="{{'chk_it_'+ itemCategory.CategoryID}}"
+                                        [(ngModel)]="itemCategory.IsSelected" [(checked)]="itemCategory.IsSelected"
+                                        (ngModelChange)="onServiceCategoryAllChange()">
+                                    <h3>{{itemCategory.CategoryName}}</h3>
+                                    <button class="btn-sm de_seleect_btn float-right" (click)="onSetAllItemsInCategory(false, itemCategory.CategoryID)">
+                                        Deselect All
+                                    </button>
+                                    <button class="btn-sm de_seleect_btn float-right" (click)="onSetAllItemsInCategory(true, itemCategory.CategoryID)">
+                                        Select All
+                                    </button>
+                                    <!-- </label> -->
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="checkbox checkbox-success" *ngFor="let item of itemCategory.ItemList">
+                                        <input class="example-margin" type="checkbox" name="{{'Chk_item' + item.ItemID}}"
+                                            id="{{'Chk_item' + item.ItemID}}" [(ngModel)]="item.IsSelected"
+                                            [(checked)]="item.IsSelected" />
+                                        <label for="{{'Chk_item' + item.ItemID}}">{{item.ItemName}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-9 col-sm-9 saved_service">
+                    <p>Please close and click save/next to confirm changes.</p>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="cancel_btn float-right">
+                        <button type="button" mat-button (click)="onSelect()">Close</button>
+                        <!-- <button class="save primary_blue_btn" (click)="onSelect()">Save</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

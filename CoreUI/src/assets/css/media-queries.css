@@ -1,0 +1,2815 @@
+.navbar-light .navbar-toggler {
+    border-color: rgba(0, 0, 0, .1);
+    background: #fff;
+}
+
+/********************Media Quries Start Here***************************/
+
+
+/* ----------- Non-Retina Screens ----------- */
+
+@media screen and (min-width:1780px) {
+    .lead_dropdwn {
+        width: 20em;
+    }
+}
+
+@media screen and (min-device-width: 1281px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
+    .bf_dd_btn button {
+        width: 91%;
+    }
+    .field_label h5 {
+        font-size: 13px;
+    }
+    .form_left_bar {
+        max-height: calc(100vh - 325px);
+    }
+    .form_right_bar {
+        max-height: calc(100vh - 296px);
+    }
+    .main_search input[type="text"] {
+        height: 35px !important;
+    }
+    .main_branch select {
+        height: 35px !important;
+    }
+    h5.field_label {
+        font-size: 13px;
+    }
+    .main_nav ul li a {
+        font-size: 14px;
+        color: #fff;
+        display: block;
+        padding: 18px 14px;
+        text-align: center;
+    }
+    /* .main_nav ul li a.active{
+      background: #fff;
+      color: #364760;
+      border-top-right-radius: 7px;
+      border-top-left-radius: 7px;
+      padding: 16px 14px;
+      margin-top: 4px;
+  } */
+    .main_nav ul li a:hover i {
+        color: #DBE8F4;
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+        transition: all 0.2s ease-in;
+    }
+    .main_nav ul li a {
+        padding: 15px 9px;
+        font-size: 13px;
+    }
+    .main_nav ul li a i {
+        font-size: 15px;
+    }
+    .mat-autocomplete-panel .client_type {
+        padding: 0px 2px;
+        font-size: 10px;
+    }
+    .mat-autocomplete-panel .client_name {
+        font-size: 12px;
+        max-width: 75px;
+    }
+    .mat-option {
+        padding: 0 6px !important;
+    }
+    .mat-autocomplete-panel .client_info {
+        font-size: 11px;
+    }
+    .red_del a {
+        font-size: 14px;
+    }
+    .company_btn button {
+        font-size: 13px;
+    }
+    .notification {
+        margin-left: 6em;
+    }
+    .sch_ten_column {
+        max-width: 81.333333% !important;
+        flex: 0 0 81.333333%;
+    }
+    .sch_two_column {
+        max-width: 18.66% !important;
+        flex: 0 0 18.66%;
+    }
+    .inside_padding {
+        padding: 10px 5px 0;
+    }
+    .sch_panel-body {
+        padding: 7px 7px;
+    }
+    .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+        z-index: 99;
+    }
+    h3.sch_collapse_item {
+        padding: 11px 10px;
+    }
+    .sch_left_scroll {
+        max-height: calc(100vh - 250px);
+    }
+    .sch_pop_width.attendee_pop_width {
+        max-width: 1300px;
+        width: 1300px;
+    }
+    .sch_pop_width {
+        width: 100%;
+    }
+    .smallScheduler {
+        max-height: calc(78vh - 12px) !important;
+    }
+    .activity_tabs_popup .smallScheduler {
+        max-height: calc(72vh - 54px) !important;
+        min-height: calc(72vh - 54px) !important;
+    }
+    .sch_service_scroll .smallScheduler {
+        max-height: calc(78vh - 80px) !important;
+    }
+    .multi_section_scroll {
+        max-height: calc(78vh - 12px);
+    }
+    .dx-button-has-text .dx-button-content {
+        padding: 7px 10px 8px !important;
+        font-size: 13px !important;
+    }
+    .sch_popup_overflow {
+        max-height: 450px;
+    }
+    .popup_content.sch_service_scroll {
+        max-height: 600px !important;
+        height: auto;
+    }
+    .sch_duration_text {
+        padding: 12px 15px;
+    }
+    /* .service_scheduler .sch_white_bg {height: 100%;} */
+    button.reset_btn {
+        font-size: 14px;
+    }
+    .full_width_btn button.search {
+        padding: 0;
+    }
+    .full_width_btn button {
+        font-size: 14px;
+    }
+    .upload_image_box button {
+        font-size: 13px;
+    }
+    label {
+        font-size: 13px;
+    }
+    .genral_checkbox label {
+        font-size: 12px;
+    }
+    .scheduler_btn button {
+        font-size: 13px;
+        padding: 5px 8px;
+    }
+    .url_width {
+        width: 61%;
+    }
+    .grids_white_bg {
+        padding: 10px 10px;
+    }
+    .popup_content {
+        max-height: calc(80vh - 6px) !important;
+    }
+    .auto_height {
+        max-height: initial !important;
+    }
+    .save_shift {
+        max-height: 440px;
+    }
+    .top_nav ul li a {
+        padding: 11px 12px;
+        font-size: 13px;
+    }
+    .sch_hours {
+        height: 130px;
+        width: 130px;
+    }
+    .sch_hours h1 {
+        font-size: 17px;
+    }
+    .staff_das_forecast p {
+        font-size: 12px;
+    }
+    .staff_das_forecast h2 {
+        font-size: 17px;
+    }
+    .staff_das_forecast {
+        padding: 20px 0;
+    }
+    .staff_das_forecast {
+        min-height: 228px;
+    }
+    .dashboard_bg svg {
+        width: 100%;
+    }
+    .mpt-5 {
+        padding-top: 42px;
+    }
+    .staff_das_forecast h2 span {
+        font-size: 13px;
+    }
+    .dashboard_header h3 {
+        font-size: 16px;
+    }
+    .dashboard_header h5 {
+        font-size: 16px;
+    }
+    .client_service h6 {
+        font-size: 14px;
+    }
+    .logout_dp h3 {
+        font-size: 13px;
+        padding: 12px 0 12px 15px;
+    }
+    .logout_dp ul li {
+        padding: 8px 5px 8px 0;
+    }
+    .notifications_dp {
+        width: 30% !important;
+    }
+    .user_logout a {
+        font-size: 13px;
+    }
+    .ql_list a p {
+        font-size: 12px;
+    }
+    .ql_list a i {
+        font-size: 15px;
+    }
+    .notifications_dp h3 {
+        font-size: 16px;
+    }
+    .staff_das_forecast .col-md-8 {
+        padding-left: 2em;
+    }
+    .img_editor .btn_upload {
+        padding: 10.3em 0;
+    }
+    .paid {
+        padding: 2px 6px;
+    }
+    .pp_button {
+        padding: 40px 0 0 0;
+    }
+    .promote_products h2 {
+        font-size: 30px;
+    }
+    .promote_products p {
+        font-size: 20px;
+    }
+    .pp_button a {
+        padding: 10px 0;
+        min-width: 135px;
+    }
+    .pps_icon i {
+        font-size: 28px;
+    }
+    .pps_icon {
+        padding: 10px 9px 6px;
+    }
+    .pps_des h3 {
+        font-size: 15px;
+    }
+    .pps_des p {
+        font-size: 13px;
+    }
+    .dash_gird_row img {
+        display: none;
+    }
+    .right_space {
+        margin: 0 1em 0 0 !important;
+    }
+    .view_main_bar_item {
+        font-size: 13px;
+        margin-left: 1em;
+    }
+    .section_title h4 {
+        font-size: 15px;
+        padding: 8px 0;
+    }
+    .new_lead h5 {
+        width: 120px;
+    }
+    .new_lead {
+        padding: 10px 7px;
+    }
+    .bf_mem_label {
+        max-width: 90px;
+    }
+    .new_lead h3 {
+        width: 110px;
+    }
+    .no_record_found {
+        font-size: 14px !important;
+        padding: 15px 0;
+    }
+    .final_meeting_dp {
+        left: -4.3em !important;
+    }
+    .lead_dropdwn {
+        width: 16em;
+    }
+    .lead_assigen_icon a {
+        margin-left: 10px;
+    }
+    .lead_activty_datetime {
+        font-size: 11px;
+        padding-right: 8px;
+    }
+    .grid_center {
+        padding-bottom: 40px;
+    }
+    .promote_products_services {
+        margin-top: 40px;
+    }
+    .url_btn button {
+        margin: 0 3px 0 7px;
+    }
+    .class_attendence h3 {
+        font-size: 15px;
+    }
+    .pos_payment .calculator h5 {
+        font-size: 18px;
+    }
+    .pos_payment .calculator button {
+        font-size: 18px;
+        min-height: 42px;
+    }
+    .pos_payment .calculator {
+        max-width: 240px;
+        bottom: unset !important;
+    }
+    .pos_calculator input[type="password"] {
+      padding: 6px;
+      min-height: 45px;
+    }
+    .benefit_box .member-detail-time {
+        min-width: 450px;
+    }
+}
+
+@media(min-width:1281px) and (max-width: 1480px) {
+    .cst-col-5 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    .tip_res {
+        position: absolute !important;
+        right: auto;
+        left: auto !important;
+    }
+    .sch_pop_width {
+        width: 100%;
+    }
+    .cst-xl-popup-overlay {
+        max-width: 94vw !important;
+        width: 100% !important;
+    }
+    .extra_large_popup {
+        width: 1100px;
+    }
+    .attendee_pop_width {
+        width: 960px !important;
+    }
+    .sch_pop_width.mob-col-width {
+        width: 900px;
+    }
+    .tax_row .multi_select {
+        width: 230px !important;
+    }
+    /* .pos_payment {
+  height: 28vh;
+} */
+    .bf-grid-row {
+        min-width: 1360px;
+    }
+    .select-membership-benefit-terminated,
+    .select-membership-benefit-cancel,
+    .select-membership-benefit-frozen,
+    .select-membership-benefit-expired {
+        right: 14px;
+    }
+
+}
+
+@media(min-width:1024px) and (max-width: 1400px) {
+    .reward_r_f_column{
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .end_flex{
+        align-items: flex-end !important;
+    }
+    .cust_r_f_column{flex-direction: column;}
+    .welcome_page {
+        background-size: 40%;
+    }
+    .member-bio img {
+        width: 95px;
+    }
+    .m-alert h3 {
+        font-size: 22px;
+    }
+    .total_amount h5 {
+        font-size: 17px !important;
+    }
+    .tip_res {
+        position: absolute !important;
+        right: auto;
+        left: auto !important;
+    }
+    .md-block {
+      display: block !important;
+    }
+}
+
+@media (max-width: 1280px) {
+  .item-wrapper-height .checkbox{display: block !important;}  
+  .sm-mat-select {
+    right: 12px;
+  }
+  .checkbox.mob-checkbox-full {
+    display: block !important;
+  }
+
+    .cust_r_f_column{flex-direction: column;}
+    .r_f_column{flex-direction: column;}
+    /* .service_scheduler .sch_white_bg {height: 100%;} */
+    .bf_dd_btn button {
+        width: 91%;
+    }
+    .top_nav>ul {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        overflow: auto;
+    }
+    .top_nav>ul>li.back_to_menu {
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: fit-content;
+        background: #fff;
+    }
+    .top_nav>ul>li {
+        display: inherit;
+        min-width: fit-content;
+    }
+    .top_nav .dropdown-menu.show {
+        top: 30px !important;
+    }
+    .responsive_grid_rows,
+    .responsive_grid_header {
+        min-width: 1300px;
+    }
+    .img-toolbar button {
+        font-size: 15px;
+        padding: 8px 10px;
+        min-width: 60px;
+    }
+    .activity_tabs_popup {
+        min-height: auto;
+    }
+    .sub_menu_nav a {
+        font-size: 13px;
+    }
+    .top_nav>ul>li>a {
+        font-size: 13px;
+        padding: 11px 15px;
+    }
+    .mob-scroll-grid-md {
+        min-width: 520px;
+    }
+    .mob-scroll-grid {
+        min-width: 650px;
+    }
+    .mob-lg-scroll-grid {
+        min-width: 805px;
+    }
+    .upload_image_box.square_img {
+        height: auto;
+    }
+    .checkbox {
+        display: inline-flex !important;
+    }
+    .bf-grid-row {
+        min-width: 1440px;
+    }
+    .lead_dropdwn {
+        width: 17em;
+    }
+    .m-pb-20 {
+        padding-bottom: 20px;
+    }
+    .bg_height {
+        height: auto;
+        min-height: auto;
+    }
+}
+
+@media (min-width: 1200px) {
+   
+.reward-program-join-desc {
+  max-height: calc(40vh - 80px);
+}
+.lg-overflow-auto {
+  overflow: auto;
+}
+
+/* 5th Column */
+.col-cst-5 {
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+.dashboard_header .dash_label {
+  width: auto;
+}
+.dashboard_header dateto-datefrom .col-md-6 {
+  padding-right: 5px;
+}
+.dashboard_header dateto-datefrom .col-md-6:last-child {
+  padding-right: 0;
+}
+.max-fit-content {
+    max-width: fit-content;
+    padding: 0 15px !important;
+}
+
+
+}
+
+@media(min-width:1200px) and (max-width: 1320px) {
+    .sales_summary .calculations button.show_calculator {
+        font-size: 13px;
+    }
+    .list_view_class .class_status_btn button {
+        font-size: 12px;
+        padding: 4px 11px;
+    }
+    .brancg-policy-link {
+        width: 55%;
+    }
+    .member-detail-time .allowed {
+        font-size: 12px;
+        padding: 4px 4px;
+    }
+    .collection_grid_header h5,
+    .membership_bio p,
+    .mem-border-bottom h5 {
+        font-size: 15px;
+    }
+    .member-att-detail h4 {
+        font-size: 16px;
+    }
+    .membership_bio h6,
+    .member_attend_bg h3 {
+        font-size: 22px;
+    }
+    .mem_attandence_grid_head h5 {
+        font-size: 13px !important;
+    }
+    .text-danger {font-size: 12px;}
+    .benefit_box .member-detail-time {
+        min-width: 450px;
+    }
+    .lead_dropdwn {
+        width: 16em;
+    }
+    .split-payment-section .pos_textfield .input-group-text,
+    .split-payment-section .pos_textfield input[type="text"] {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+    .pro-list-box {
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+    }
+    .pos-category-tag i {
+        padding-right: 6px;
+        font-size: 15px;
+    }
+    .pos-category-tag {
+        font-size: 13px;
+    }
+}
+
+@media(min-width:992px) and (max-width: 1280px) {
+    .cst-col-5 {
+        flex: 0 0 33%;
+        max-width: 33%;
+    }
+    .main_nav ul li a {
+        font-size: 13px;
+        padding: 15px 10px;
+    }
+    .staff_das_forecast .col-md-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .shift-box {
+        text-align: center;
+    }
+    .shift-box .forecast_detail {
+        display: flex;
+        justify-content: center;
+    }
+    .staff_das_forecast {
+        min-height: 397px;
+    }
+    .staff_das_forecast .col-md-8 {
+        margin-top: 15px;
+    }
+    .dashboard_bg svg {
+        width: 100%;
+    }
+    .attendee_btn button {
+        padding: 7px 12px;
+        font-size: 13px;
+    }
+    .upload_image_box {
+        height: 200px;
+        width: 200px;
+    }
+    .border_circle {
+        height: 180px;
+        width: 180px;
+    }
+    .perpal_bg .tax_row {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 10px;
+    }
+    .perpal_bg .tax_row>div {
+        width: 100% !important;
+    }
+    .perpal_bg .tax_row .multi_select {
+        width: 100% !important;
+        margin-left: 0;
+    }
+    .auto_heading .perpal_bg {
+        min-height: 174px;
+    }
+    .mob-parallel-off {
+        display: initial;
+    }
+}
+
+
+/* Large devices (desktops, less than 1200px) */
+
+@media(min-width:1024px) and (max-width: 1280px) {
+    .r_f_column{
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .pos_payment .calculator h5 {
+        font-size: 17px;
+    }
+    .pos_payment .calculator button {
+        font-size: 17px;
+        min-height: 40px;
+    }
+    .pos_payment .calculator {
+        width: 240px;
+        height: auto;
+        right: 15px;
+    }
+    .small-checkbox {
+        flex-flow: column;
+    }
+    .small-checkbox>div {
+        width: auto;
+    }
+    refund-payment .large_popup,
+    automation-template-save .large_popup {
+        width: 100% !important;
+    }
+    .welcome_page_content {
+        padding-left: 0px;
+    }
+    .promote_products h2 {
+        font-size: 28px;
+    }
+    .promote_products p {
+        font-size: 20px;
+    }
+    .pp_button {
+        padding: 35px 0;
+    }
+    .grid_center {
+        align-items: center;
+        padding-bottom: 0px;
+    }
+    /* End Welcome page css */
+    .qucik_link_dp {
+        width: 22%;
+        right: 9.1em !important;
+    }
+    .qucik_link_dp h3 {
+        font-size: 15px;
+    }
+    .ql_list a {
+        font-size: 14px !important;
+        margin: 0 !important;
+    }
+    .qucik_link_dp.notifications_dp {
+        right: 11.66em !important;
+    }
+    .notifications_dp ul li a i {
+        margin: 0 10px 0 0;
+    }
+    .logout_dp {
+        width: 20%;
+        right: 1em !important;
+    }
+    .logout_dp h3 {
+        font-size: 13px;
+    }
+    .notification {
+        margin-left: 0;
+    }
+    .notification a {
+        font-size: 15px;
+    }
+    .user_logout a {
+        font-size: 12px;
+    }
+    .user_logout img {
+        width: 26px;
+        margin-right: 3px;
+    }
+    .main_nav ul li a i {
+        display: none;
+    }
+    .main_branch select {
+        font-size: 11px !important;
+        padding-left: 1em;
+        height: 32px !important;
+        margin-top: 12px;
+    }
+    .branch_select::after {
+        top: 16px !important;
+        font-size: 18px;
+    }
+    .main_search input[type="text"] {
+        padding-left: 2.2em;
+        font-size: 12px;
+        margin-top: 12px;
+        height: 32px !important;
+    }
+    .main_search i {
+        top: 1.8em;
+        font-size: 13px;
+    }
+    .sch_two_column {
+        max-width: auto;
+    }
+    .sch_ten_column {
+        max-width: auto;
+    }
+    h3.sch_collapse_item {
+        padding: 10px 10px;
+        font-size: 12px;
+    }
+    .accordion-toggle1:after {
+        font-size: 14px;
+    }
+    .field_label h5 {
+        font-size: 12px;
+    }
+    h5.field_label {
+        font-size: 12px;
+    }
+    .section_title h4 {
+        font-size: 14px;
+    }
+    .white_bg {
+        margin: 10px 10px !important;
+        padding: 10px;
+    }
+    .url_btn a {
+        font-size: 12px;
+        padding: 9px 12px;
+    }
+    .url_btn button {
+        margin: 0 3px 0 5px;
+        /* padding: 3px 5px; */
+    }
+    .url_btn button i {
+        font-size: 14px;
+    }
+    .url_width {
+        width: 60%;
+    }
+    .section_title {
+        margin-bottom: 12px;
+    }
+    .widget_save_btn button {
+        font-size: 14px;
+    }
+    .checkbox label::after {
+        width: 18px;
+        height: 18px;
+        padding: 2px 0 0 4px;
+        font-size: 10px;
+    }
+    .checkbox label::before {
+        width: 18px;
+        height: 18px;
+    }
+    .checkbox label {
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .grid_header h5 {
+        font-size: 13px !important;
+    }
+    .grid_rows h5 {
+        font-size: 13px;
+    }
+    .grid_rows h5 i {
+        font-size: 15px;
+    }
+    h3.panel-title {
+        font-size: 16px;
+    }
+    .accordion-toggle:after {
+        font-size: 15px;
+    }
+    .full_width_btn button.search {
+        font-size: 14px;
+    }
+    .sch_two_column {
+        max-width: 22.666667%;
+        flex: 0 0 22.666667%;
+    }
+    .sch_ten_column {
+        max-width: 77.333333%;
+        flex: 0 0 77.333333%;
+    }
+    .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+        z-index: 99;
+    }
+    /* .inside_padding {
+        padding: 7px 7px 0;
+    } */
+    .sch_panel-body {
+        padding: 10px 7px !important;
+    }
+    .inside_padding {
+        padding: 10px 7px 0;
+    }
+    .btn-group>.btn:last-child:not(:first-child),
+    .btn-group>.dropdown-toggle:not(:first-child) {
+        font-size: 12px !important;
+    }
+    .btn-group>.btn:last-child:not(:first-child),
+    .btn-group>.dropdown-toggle:not(:first-child) {
+        font-size: 12px !important;
+    }
+    .col,
+    .col-1,
+    .col-10,
+    .col-11,
+    .col-12,
+    .col-2,
+    .col-3,
+    .col-4,
+    .col-5,
+    .col-6,
+    .col-7,
+    .col-8,
+    .col-9,
+    .col-auto,
+    .col-lg,
+    .col-lg-1,
+    .col-lg-10,
+    .col-lg-11,
+    .col-lg-12,
+    .col-lg-2,
+    .col-lg-3,
+    .col-lg-4,
+    .col-lg-5,
+    .col-lg-6,
+    .col-lg-7,
+    .col-lg-8,
+    .col-lg-9,
+    .col-lg-auto,
+    .col-md,
+    .col-md-1,
+    .col-md-10,
+    .col-md-11,
+    .col-md-12,
+    .col-md-2,
+    .col-md-3,
+    .col-md-4,
+    .col-md-5,
+    .col-md-6,
+    .col-md-7,
+    .col-md-8,
+    .col-md-9,
+    .col-md-auto,
+    .col-sm,
+    .col-sm-1,
+    .col-sm-10,
+    .col-sm-11,
+    .col-sm-12,
+    .col-sm-2,
+    .col-sm-3,
+    .col-sm-4,
+    .col-sm-5,
+    .col-sm-6,
+    .col-sm-7,
+    .col-sm-8,
+    .col-sm-9,
+    .col-sm-auto,
+    .col-xl,
+    .col-xl-1,
+    .col-xl-10,
+    .col-xl-11,
+    .col-xl-12,
+    .col-xl-2,
+    .col-xl-3,
+    .col-xl-4,
+    .col-xl-5,
+    .col-xl-6,
+    .col-xl-7,
+    .col-xl-8,
+    .col-xl-9,
+    .col-xl-auto {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    .form-group input[type="checkbox"]+.btn-group>label span {
+        width: 15px !important;
+    }
+    .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+        padding: 1px 0px !important;
+        height: 16px !important;
+        width: 16px !important;
+        font-size: 9px !important;
+        margin-top: 3px !important;
+    }
+    .scheduler_btn button {
+        font-size: 13px;
+        padding: 6px;
+    }
+    .sch_duration_text {
+        padding: 12px 15px;
+    }
+    .sch_left_scroll {
+        max-height: calc(100vh - 250px);
+    }
+    .upload_image_box button {
+        font-size: 11px;
+        height: 30px;
+    }
+    .activity_tabs_popup .smallScheduler {
+        max-height: 490px !important;
+    }
+    .popup_content {
+        max-height: calc(70vh - 100px);
+    }
+    .popup_header h4 {
+        font-size: 13px;
+        padding: 20px 14px 12px;
+    }
+    select {
+        font-size: 13px !important;
+        height: 35px !important;
+    }
+    button.reset_btn {
+        font-size: 14px;
+    }
+    .sch_pop_width {
+        width: 100%;
+    }
+    .sch_pop_width.mob-col-width,
+    .extra_large_popup {
+        width: 800px;
+    }
+    .multi_section_scroll {
+        max-height: 560px;
+    }
+    .smallScheduler {
+        max-height: 500px !important;
+    }
+    .sch_service_scroll .smallScheduler {
+        max-height: 490px !important;
+    }
+    .sch_popup_overflow {
+        max-height: 450px;
+    }
+    .sch_service_scroll {
+        max-height: 570px;
+    }
+    .sch_height_nohead.smallScheduler {
+        max-height: 560px !important;
+    }
+    .mat-autocomplete-panel .client_info {
+        font-size: 11px;
+    }
+    .grids_white_bg {
+        padding: 10px 10px;
+    }
+    .genral_cls {
+        font-size: 10px !important;
+        padding: 5px 8px 5px;
+    }
+    .sch_hours {
+        height: 150px;
+        width: 150px;
+    }
+    .sch_hours h1 {
+        font-size: 20px;
+    }
+    .staff_das_forecast .col-md-8 {
+        padding-left: 2em;
+    }
+    s .staff_das_forecast h2 {
+        font-size: 18px;
+        margin: 14px 0 0;
+    }
+    .dash_label {
+        font-size: 13px;
+        width: 30px;
+    }
+    .dashboard_header input {
+        width: 73% !important;
+    }
+    .dashboard_header .date-picker-toggle {
+        right: 0.8em;
+    }
+    .dashboard_header h5 {
+        font-size: 15px;
+    }
+    .dashboard_header h3 {
+        font-size: 15px;
+        padding: 17px 15px;
+    }
+    .dash_gird_header h4 {
+        font-size: 13px;
+    }
+    .form-control {
+        font-size: 13px !important;
+    }
+    .img_editor .btn_upload {
+        padding: 10em 0;
+    }
+    .changeimg_btn button {
+        font-size: 14px;
+    }
+    .paid {
+        padding: 2px 4px;
+        font-size: 11px;
+    }
+    .sales_total_amount,
+    .sales_detail {
+        padding: 12px 0;
+    }
+    .attendance_time_section p {
+        font-size: 19px;
+    }
+    .attendance_time_section .date_time i {
+        font-size: 42px;
+    }
+    .attendance_time_section .date_time h6 {
+        font-size: 45px;
+    }
+    .login_page_title h3 {
+        font-size: 1.5rem;
+    }
+    .m-alert h3 {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+    save-member-activity .large_popup {
+        width: 100% !important;
+    }
+    sale-detail .large_popup {
+        width: 780px !important;
+    }
+    .flex_align_sp .checkbox.white_btn {
+        padding: 3px 0;
+    }
+    .rp-currency-value {
+      max-width: 80px;
+      margin: 0 0 0 auto;
+      padding-left: 15px;
+    }
+    .rp-dashboard p {
+      font-size: 13px;
+    }
+    .rp-dashboard h3 {
+      font-size: 18px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .sch_height_nohead {
+        max-height: 542px !important;
+    }
+    .flex_align_sp .checkbox.white_btn {
+        padding: 3px 0;
+    }
+    .sch_pop_width,
+    .dashboard_bg svg,
+    .lead-dash-chart svg {
+        width: 100%;
+    }
+    .mob-scroll-grid {
+        min-width: 870px;
+    }
+    .login_form_user {
+        background-size: cover;
+    }
+    .extra_large_popup,
+    save-staff-attendance .medium_popup {
+        width: 100% !important;
+    }
+    .popup_content,
+    .sch_service_scroll {
+        max-height: 66vh;
+    }
+    .mob-overflow {
+        overflow: auto;
+    }
+    a.close_attendence {
+        padding: 8px 25px;
+        font-size: 16px;
+        display: inline-block;
+        margin: 0px 0 15px;
+    }
+    .member-bio img {
+        width: 70px;
+    }
+    .member-personal-details h6 {
+        font-size: 14px;
+    }
+    .m-alert h3 {
+        font-size: 18px;
+    }
+    .m-alert i {
+        font-size: 30px;
+    }
+    .member-bio-status {
+        padding: 10px 0;
+        font-size: 14px;
+    }
+    .member-detail-box p {
+        font-size: 13px;
+    }
+    .verticle-scroll-md {
+        min-width: 290px;
+    }
+    .member-att-detail h4 {
+        font-size: 16px;
+    }
+    .grid_rows.total_amount h5 {
+        font-size: 16px !important;
+    }
+    .large_popup {
+        width: 100% !important;
+    }
+    image-editor-popup .large_popup {
+        width: 900px !important;
+    }
+    .wrap_checkbox.genral_checkbox {
+        flex-flow: wrap;
+        width: 95%;
+    }
+    .large_popup.md_banner_size {
+        width: 460px !important;
+    }
+    .tab-hide {
+        display: none;
+    }
+    .smallScheduler.schedulerHeight {
+        max-height: 474px !important;
+    }
+    .member-bio-status i {
+        font-size: 14px;
+        width: 28px;
+        height: 28px;
+        line-height: 15px;
+    }
+    .dashboard_header dateto-datefrom .col-md-6 {
+      margin-bottom: 15px;
+      padding-right: 0;
+    }
+}
+
+@media(min-width:992px) and (max-width: 1199px) {
+    .exception_btn { font-size: 11px; }
+    .tab-col-rev {
+        flex-direction: column-reverse;
+    }
+    .tab-col-rev .col-lg-9,
+    .tab-col-rev .col-lg-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .field_label h5 span {
+        font-size: 12px;
+    }
+    label {
+        font-size: 13px;
+    }
+    h5.field_label,
+    .field_label h5 {
+        font-size: 13px !important;
+    }
+    .changeimg_btn {
+        right: 38%;
+    }
+    .pos_payment_dialog .view_main_bar>div {
+        flex: 0 0 50%;
+        margin: 4px 0 !important;
+    }
+    .pos_payment_dialog .view_main_bar {
+        flex-flow: wrap;
+    }
+    .pos_persontype_badge {
+        padding: 4px 12px;
+        font-size: 13px;
+        float: unset;
+    }
+    .snapshot_data_bar {
+        min-height: 119px;
+    }
+    .calculations.pos-pay-cal .ng-star-inserted>div,
+    .calculations.pos-pay-cal .ng-star-inserted>.text-right {
+        text-align: center !important;
+    }
+    .calculations.pos-pay-cal .ng-star-inserted>div {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 5px 0;
+    }
+    .sales_summary .calculations.pos-pay-cal .row {
+        height: auto;
+        padding: 14px 0;
+    }
+    .payment_types button {
+        min-width: 100%;
+    }
+    .tab-member-detail-box>div {
+        width: 100%;
+        margin: 0 auto;
+        height: 290px !important;
+    }
+    .tab-member-detail-box>div:first-child {
+        margin-right: 12px;
+    }
+    .tab-member-detail-box {
+        display: flex;
+        align-items: center;
+    }
+    .tab-auto-height {
+        height: auto !important;
+        padding-bottom: 20px;
+    }
+    .mob-m5 {
+        margin-bottom: 30px;
+    }
+    .right-box-points {
+      padding-right: 0;
+      padding-left: 5px;
+    }
+    .page-link {
+        padding: 0.35rem 0.6rem;
+        line-height: 1.15;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1023px) {
+  .md-block {
+    display: block !important;
+  }
+    .promote_products h2 {
+        font-size: 32px;
+    }
+    .promote_products h2 br {
+        display: none;
+    }
+    .promote_products p {
+        font-size: 22px;
+    }
+    .welcome_page {
+        background-position: center left, center right;
+        background-size: 50%, 45%;
+    }
+    .main_nav ul li a i {
+        display: none;
+    }
+    .mob-full-scroll {
+        overflow: auto;
+    }
+    .dashboard_header h5,
+    .dashboard_header h3 {
+        font-size: 16px;
+    }
+    .mob-md-calender .dash_label {
+        font-size: 12px;
+        padding-top: 10px;
+    }
+    .mob-md-calender .form-control {
+        padding: 0 0 0 4px !important;
+        font-size: 12px !important;
+    }
+    .mob-md-calender .mat-datepicker-toggle {
+        background-size: 80% !important;
+    }
+    .mob-md-calender .date-picker-toggle {
+        right: 1.1em;
+    }
+    .mob-md-calender input[type="text"] {
+        margin-bottom: 0;
+    }
+    .mob-parallel-off {
+        display: initial;
+    }
+    .img_editor .btn_upload {
+        padding: 6em 0;
+        font-size: 16px !important;
+    }
+    .member_attend_bg h3 {
+        font-size: 20px;
+    }
+}
+
+
+/***************************MD MD MD*****************************/
+
+@media (min-width:768px) {
+  .md-scroll {
+      max-height: 25vh;
+      overflow: auto;
+  }
+}
+
+@media (min-width:768px) and (max-width:1199px) {
+
+  /* 5th Column */
+.col-cst-5 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+.edit-variant-item div:nth-child(2) {width: 30%;}
+.edit-variant-item div:first-child {width: 4%;}
+.edit-variant-item div:nth-child(3) {width: 30%;}
+.pos-item-pagination .pagination {
+    justify-content: flex-start;
+}
+
+}
+
+@media(min-width:768px) and (max-width:1023px) {
+
+    .r_f_column{
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .small-checkbox {
+        flex-flow: column;
+    }
+    .small-checkbox>div {
+        width: auto;
+    }
+    .url_width {
+        width: 100% !important;
+    }
+    .logo_c {
+        margin: 0 auto;
+    }
+    .widget_section {
+        margin: 10px 0;
+        padding: 10px 10px;
+    }
+    .url_btn button {
+        margin: 0 3px 0 7px !important;
+        padding: 7px 8px !important;
+    }
+    .url_btn a {
+        padding: 7px 8px;
+    }
+    .widget_label h5 {
+        padding: 0px 0 0px;
+    }
+    .widget_save_btn button {
+        font-size: 13px !important;
+    }
+    .widget_save_btn button {
+        width: 80px !important;
+    }
+    .responsive_grid_header {
+        width: 1000px;
+    }
+    .responsive_grid_rows {
+        width: 1000px;
+    }
+    .space {
+        margin-top: 10px;
+    }
+    .mob-space-30 {
+        margin-top: 30px !important;
+    }
+    .sch_hours {
+        height: 150px;
+        width: 150px;
+    }
+    .sch_hours h1,
+    .attendance_time_section p {
+        font-size: 18px;
+    }
+    .staff_das_forecast p {
+        font-size: 13px;
+    }
+    .staff_das_forecast h2 {
+        font-size: 16px;
+        padding-top: 12px;
+        line-height: 1.3;
+    }
+    .mob-full-col .col {
+        flex-basis: 33.33%;
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+    .login_page_title {
+        top: 6%;
+        padding: 12px 18px 12px 28px;
+    }
+    .login_page_title h3 {
+        font-size: 1.4rem;
+    }
+    .attendance_time_section .date_time h6,
+    .attendance_time_section .date_time i {
+        font-size: 40px;
+    }
+    .attendance_time_section {
+        right: 5%;
+        top: 5%;
+    }
+    .view_main_bar>div.activity_person_info {
+        flex: 0 0 100%;
+        margin: 3px auto;
+    }
+    .pay_section h4,
+    .pay_section h3,
+    .alert {
+        font-size: 14px;
+    }
+    .pay_section h6,
+    input[type="radio"]+label {
+        font-size: 13.5px;
+    }
+    .pay_section button {
+        height: 44px;
+        font-size: 17px;
+    }
+    #sale_histroy_search .col {
+        flex: 50%;
+    }
+    .sales_summary .calculations .row {
+        height: auto;
+        padding: 14px 0;
+    }
+    .pos_payment_btn button {
+        width: 31%;
+        font-size: 13px;
+        padding: 5px;
+    }
+    .pos_payment_dialog {
+        width: 100%!important;
+    }
+    .pos_payment_btn.pos-pay-button {
+        display: inline-flex;
+        width: 100%;
+    }
+    .calculator {
+        height: auto;
+    }
+    .sch_ten_column {
+        max-width: 69.333333%;
+        flex: 0 0 69.333333%;
+    }
+    .sch_two_column {
+        max-width: 30.666667%;
+        flex: 0 0 30.333333%;
+    }
+    .genral_checkbox {
+        width: 46%;
+        margin: 1em 10px 1em 10px;
+    }
+    .multi_section_scroll {
+        max-height: 542px;
+    }
+    .member_attend_bg {
+        padding: 2em;
+    }
+    .mob-m5 {
+        margin-bottom: 30px;
+    }
+    .merchant_name h3 {
+        font-size: 32px;
+    }
+}
+
+
+/***************************XS XS XS*****************************/
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .cst-col-5 {
+        flex: 0 0 47%;
+        max-width: 47%;
+    }
+    .notification { margin-right: 1em; }
+    .exception_btn { font-size: 11px; }
+    .rfc_sd{flex-direction: column;}
+    .r_f_column{
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .checkbox label::after {
+        top: -2px;
+    }
+    .staff_das_forecast {
+        min-height: 423px;
+    }
+    .login_form_user .footer_section p {
+        padding-top: 6px;
+    }
+    .qucik_link_dp.logout_dp.notifications_dp {
+        right: 13.1em;
+        width: 260px;
+    }
+    .qucik_link_dp {
+        right: 10.3em;
+    }
+    .qucik_link_dp.logout_dp {
+        right: 0.7em;
+    }
+    .attendee_search i.fa-search {
+        top: 3.5em;
+    }
+    .img_editor .btn_upload {
+        padding: 6em 0;
+        font-size: 16px;
+    }
+    .mob-p-0>.padding_left,
+    .mob-p-0>.padding_right {
+        padding: 0 10px !important;
+    }
+    .changeimg_btn {
+        right: 38%;
+    }
+    .pos_payment_dialog .view_main_bar>div {
+        flex: 0 0 100%;
+    }
+    .col-md-5ths {
+        width: 33.33%;
+    }
+    member-dashboard .full_width_btn button {
+        font-size: 13px;
+    }
+    .brancg-policy-link {
+        width: 50%;
+    }
+    .inner-col-pl-0 .col-md-6 {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}
+
+@media (max-width: 991px) {
+
+    .md-mb-15 {
+      margin-bottom: 15px;
+    }
+    .mat-horizontal-stepper-header {
+        min-width: 120px;
+        padding: 0 10px !important;
+    }
+    .mat-horizontal-stepper-header-container {
+        overflow: auto;
+        padding: 0 !important;
+    }
+    body {
+        font-size: 0.94rem;
+    }
+    span.info_tip {
+        top: 0px;
+        left: 0;
+    }
+    .tab-text-left {
+        text-align: left !important;
+    }
+    .activity_person_info>div {
+        padding-bottom: 6px;
+        padding-top: 6px;
+    }
+    .top_bar {
+        padding-bottom: 65px;
+        border-bottom: 1px solid #1B6EB8;
+    }
+    .user_logout img {
+        width: 30px;
+        margin-right: 8px;
+    }
+    .navbar {
+        justify-content: flex-end;
+    }
+    .navbar-light .navbar-toggler {
+        border-color: rgba(0, 0, 0, .1);
+        background: #fff;
+        position: absolute;
+        top: -50px;
+        right: 12px;
+    }
+    .main_search {
+        width: 100%;
+    }
+    .main_nav ul li a.active,
+    .main_nav ul li a.active:hover {
+        padding: 10px 14px;
+        border-radius: 5px;
+    }
+    .welcome_page_content {
+        padding-left: 0;
+        margin: 0 auto;
+    }
+    .promote_products h2 {
+        font-size: 22px;
+    }
+    .promote_products h2 br {
+        display: none;
+    }
+    .promote_products p {
+        font-size: 18px;
+    }
+    .welcome_page {
+        background-position: top 4% left;
+        background-size: 30%;
+    }
+    .home_slider {
+        max-width: 520px;
+        margin: 0 auto;
+    }
+    .paid {
+        padding: 2px 10px !important;
+        font-size: 11px;
+    }
+    .mob-pl-15 {
+        padding-left: 15px !important;
+    }
+    .mob-pr-15 {
+        padding-right: 15px !important;
+    }
+    .dashboard_header_border {
+        padding: 10px 0;
+    }
+    .dashboard_header h5 {
+        padding: 5px 0 15px;
+    }
+    .dash_label,
+    .dash_gird_header h4,
+    .dash_gird_row h4,
+    .upload_image_box button,
+    .field_label h5,
+    label,
+    .das_activity h6,
+    .pos_persontype_badge,
+    .company_btn button {
+        font-size: 13px;
+    }
+    .dashboard_header select {
+        margin-bottom: 12px;
+    }
+    .boder_box h4,
+    .no_record_found,
+    .client_service h5,
+    .pos_payment_heading {
+        font-size: 14px;
+    }
+    .dashboard_header h5,
+    .dashboard_header h3,
+    h3.panel-title {
+        font-size: 16px;
+    }
+    .form-control,
+    h5.field_label,
+    .grid_header h5,
+    #gridContainer .dx-datagrid-headers h5,
+    .grid_rows h5,
+    .c-col h5 {
+        font-size: 13px !important;
+    }
+    .mob-parallel-off {
+        display: initial;
+    }
+    .shift-box,
+    .login_form_user .footer_section p,
+    .login_form .footer_section p a {
+        text-align: center;
+    }
+    .shift-box .forecast_detail {
+        display: flex;
+        justify-content: center;
+    }
+    .staff_das_forecast {
+        margin: 0 0 10px;
+    }
+    .staff_das_forecast .col-md-8 {
+        margin-top: 15px;
+    }
+    .mob-full-scroll {
+        overflow: auto;
+    }
+    .pagination .mat-paginator {
+        max-height: max-content !important;
+        padding-top: 20px;
+    }
+    .login_form_user .footer_section ul li a {
+        height: 35px;
+        width: 35px;
+        line-height: 35px;
+        font-size: 15px;
+    }
+    .footer_section ul {
+        display: flex;
+        justify-content: center;
+    }
+    .mob-full-col .col>div {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .mob-full-col .col {
+        text-align: center;
+    }
+    /* .add_attendee_icon {margin-bottom: 12px;} */
+    .attendee_btn button {
+        font-size: 13px;
+        margin-bottom: 8px;
+        width: 90%;
+    }
+    .mob-col-rev {
+        flex-direction: column-reverse;
+    }
+    .upload_image_box {
+        height: 170px;
+        width: 170px;
+    }
+    .border_circle {
+        height: 150px;
+        width: 150px;
+        padding: 2.6em 0;
+    }
+    .upload_image_box i {
+        font-size: 24px;
+    }
+    .camera {
+        height: 32px;
+        width: 32px;
+    }
+    .camera i {
+        font-size: 14px !important;
+        padding: 8px 0 0;
+    }
+    .section_title h4,
+    .summary_lead p {
+        font-size: 15px;
+    }
+    .field_label h5 span {
+        font-size: 12px;
+    }
+    .checkbox label::before {
+        width: 16px;
+        height: 16px;
+    }
+    .checkbox label::after {
+        top: -2px;
+    }
+    .checkbox label::after {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+    }
+    .permission_checkbox label::before {
+        width: 16px !important;
+        height: 16px !important;
+    }
+    .permission_checkbox label::after {
+        width: 16px !important;
+        height: 16px !important;
+        padding: 0px 0 0 3px;
+    }
+    button.billing_address {
+        font-size: 13px;
+        line-height: 20px;
+    }
+    .client_service h6 {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+    .summary_lead p span {
+        font-size: 20px;
+    }
+    .calculator button {
+        font-size: 22px;
+        padding: 8px;
+        min-height: 50px;
+    }
+    .calculations.pos-pay-cal .ng-star-inserted>div,
+    .calculations.pos-pay-cal .ng-star-inserted>.text-right {
+        text-align: center !important;
+    }
+    .calculations.pos-pay-cal .ng-star-inserted>div {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 5px 0;
+    }
+    .payment_types {
+        flex-direction: column;
+    }
+    .payment_types_btn {
+        margin-top: 15px;
+    }
+    .login_page_title.attend_logout_btn {
+        top: 3%;
+    }
+    .custom-container {
+        width: 90%;
+        margin: 60px auto 0;
+    }
+    .member-detail-time .member-detail-time-cont {
+        padding: 8px 0;
+    }
+    .member_attend_bg h3 {
+        font-size: 22px;
+        padding: 12px 0 6px;
+    }
+    .member-detail-head.vertical_right,
+    .member-detail-head .attendance_time_section .date_time {
+        justify-content: center;
+    }
+    .member-detail-head.merchant_name {
+        margin-bottom: 0;
+    }
+    .member-personal-details {
+        height: auto !important;
+        padding-bottom: 20px;
+    }
+    .check_in_box {
+        height: auto !important;
+    }
+    .benefit_box .member-detail-time {
+        min-width: 490px;
+    }
+    .collection_grid_header h5,
+    button.suspend_btn {
+        font-size: 14px;
+    }
+    .pos_saved_cards {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .pos_saved_cards .delete-card {
+        margin-top: 0;
+    }
+    .mob-col-p0 .col {
+        flex: 100%;
+        max-width: 100%;
+        padding: 0 15px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .p-0-sm{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .cst-col-5 {
+        flex: 0 0 47%;
+        max-width: 47%;
+    }
+    .edit-variant-item div:nth-child(2) {
+        width: 40%;
+        margin-right: 10px;
+    }
+    .edit-variant-item div:first-child {
+        width: 4%;
+    }
+    .edit-variant-item div:nth-child(3) {
+        width: 40%;
+        margin-right: 10px;
+    }
+    .edit-variant-item div:nth-child(4) {
+        width: 12%;
+    }  
+  .pos_addclient_btn {
+    margin: 0px 0 15px;
+  }
+  .mob-scroll-grid-sm {
+    min-width: 530px;
+  }
+    .r_f_column{flex-direction: column;}
+    .sign_view {
+        width: 100%;
+    }
+    .mob-non-float {
+        float: none !important;
+    }
+    image-editor-popup .large_popup {
+        width: 100% !important;
+    }
+    .white_bg.form_whitebg.mb-0 {
+        margin-bottom: 0 !important;
+    }
+    .form_whitebg {
+        margin-bottom: 15px;
+    }
+    .mob_zero_padding {
+        padding: 0 !important;
+        margin-bottom: 15px;
+    }
+    .service_scheduler.schedulerHeight {
+        max-height: 100% !important;
+    }
+    .popup_content.sch_service_scroll {
+        max-height: 58vh;
+    }
+    .service_scheduler .sch_white_bg {
+        height: auto;
+    }
+    .sales_detail,
+    .sales_total_amount {
+        padding: 12px 0px;
+    }
+    .logo_c {
+        margin: 0 auto;
+    }
+    .top_nav>ul>li.back_to_menu>a {
+        padding: 11px 25px 11px 0px;
+        display: flex;
+        align-items: center;
+    }
+    .member-detail-message .responsive_grid_rows,
+    .verticle-scroll-lg {
+        min-width: 400px;
+    }
+    /* input[type="text"].date-picker {margin-bottom: 5px;} */
+    .notification.noti_icon {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+    }
+    .welcome_page_content {
+        max-width: 320px;
+    }
+    .promote_products h2,
+    .ql_list a p {
+        font-size: 18px;
+    }
+    .promote_products p,
+    .company_name,
+    .close_attendence i,
+    .member-att-detail h4,
+    .membership_payments h3 {
+        font-size: 16px;
+    }
+    .welcome_page {
+        background-position: top 8% left;
+        background-size: 50%;
+    }
+    .wrapper_user_attandance form .next_btn {
+        height: 40px;
+        font-size: 14px;
+    }
+    .switch_company_account .company_name {
+        margin-top: 12px;
+    }
+    .user_img_paddingleft {
+        height: 50px;
+    }
+    .user_add_account i {
+        font-size: 16px;
+        margin-top: 17px;
+    }
+    .choose_company_title,
+    button.reset_btn,
+    .full_width_btn button,
+    .membership_list h4,
+    .pay_section h4,
+    .pay_section h3,
+    .sales_total_amount h5 {
+        font-size: 14px;
+    }
+    .text-danger,
+    .notifications_dp p {
+        font-size: 12px;
+        padding: 5px 0 10px;
+    }
+    .mob-full-col .col {
+        flex-basis: 100%;
+        text-align: center;
+        padding: 6px 0 !important;
+    }
+    .class_attendence h3 {
+        font-size: 15px;
+        line-height: 1;
+    }
+    .class_attendence h3 span,
+    .ql_list a p,
+    .field_label h5,
+    .grid_rows h5,
+    .c-col h5,
+    .member-personal-details p,
+    .top_nav>ul>li>a,
+    .mat-step-label-selected,
+    .mat-step-label,
+    .pay_section h6,
+    .payment_terms p,
+    .pay_section p,
+    .go_cardless_terms p,
+    .dx-widget,
+    input[type="radio"]+label,
+    .sales_detail h5,
+    .alert,
+    .staff_provide_service h3,
+    .saved_service p,
+    .activity_person_info,
+    .url_btn a,
+    .printer_btn button {
+        font-size: 13px;
+    }
+    .popup_header h4 {
+        padding: 18px 13px 10px;
+    }
+    h5.field_label,
+    .grid_header h5,
+    #gridContainer .dx-datagrid-headers h5 {
+        font-size: 13px !important;
+    }
+    .qucik_link_dp.logout_dp.notifications_dp,
+    .qucik_link_dp {
+        width: 250px;
+        left: 10px;
+        top: 2.6em;
+    }
+    .qucik_link_dp.notifications_dp::before {
+        right: 5em;
+    }
+    .notifications_dp h3,
+    .ql_list a {
+        font-size: 14px;
+        padding: 12px 0;
+    }
+    .qucik_link_dp h3 {
+        font-size: 14px;
+        padding: 12px 15px;
+    }
+    .qucik_link_dp::before {
+        right: 2.2em;
+    }
+    .qucik_link_dp.logout_dp {
+        width: 288px;
+        top: 4em;
+        left: auto;
+    }
+    .attendee_search_btn button {
+        margin-top: 0.9em;
+    }
+    .attendee_btn button {
+        font-size: 13px;
+        margin-bottom: 8px;
+        width: 100%;
+        margin-left: 0;
+    }
+    .mob-col-rev .padding_right {
+        padding: 0;
+    }
+    .img_editor .btn_upload {
+        padding: 5em 0;
+        font-size: 15px;
+    }
+    .mob-p-0>.padding_left,
+    .mob-p-0>.padding_right,
+    .mob-pay-p0>.padding_left,
+    .mob-pay-p0>.padding_right {
+        padding: 0;
+    }
+    .img-toolbar button {
+        font-size: 14px;
+        padding: 6px 10px;
+        min-width: 50px;
+    }
+    .login_field {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    .staff_img img.login_image {
+        width: 70px;
+    }
+    .user_clockout_text,
+    .shift_scheduled p,
+    .delete_popup .delete_warning h5,
+    .read_istruction h6,
+    .sales_detail_paid h5,
+    .sales_detail.refund_bg h5 {
+        font-size: 15px;
+    }
+    .shift_scheduled button {
+        height: 40px;
+        font-size: 14px;
+        padding: 0px 50px;
+    }
+    .mob-m2 {
+        margin-bottom: 10px;
+    }
+    .mob-m5 {
+        margin-bottom: 15px;
+    }
+    .m-alert h3 {
+        font-size: 20px;
+    }
+    .company_btn button {
+        font-size: 13px;
+        min-width: 100px;
+        height: 32px;
+    }
+    .view_main_bar {
+        flex-direction: column;
+    }
+    .view_main_bar>div {
+        padding: 8px 0;
+        margin: 0 !important;
+    }
+    .mob-img-detail img {
+        width: 60px !important;
+    }
+    .view_main_bar_item {
+        word-break: break-all;
+        line-height: 1.2;
+    }
+    .small_popup,
+    .series_popup {
+        width: 100% !important;
+    }
+    .delete_popup .delete_warning i.fal,
+    .delete_popup .delete_warning i.fa {
+        font-size: 22px;
+        height: 2.2em;
+        width: 2.2em;
+    }
+    .floating span {
+        padding: 2px 0;
+    }
+    .mob-col-full .col {
+        flex: 100%;
+    }
+    .pay_section button {
+        height: 38px;
+        font-size: 16px;
+    }
+    .summary_label label,
+    .pay_label label {
+        font-size: 15px;
+        padding: 10px 10px;
+        min-width: 92px;
+    }
+    .pay_section h5.field_label {
+        margin: 10px 0 2px;
+    }
+    #sale_histroy_search .col {
+        flex: 100%;
+    }
+    .mob-sm-sche {
+        min-width: 104%;
+    }
+    #chart {
+        height: auto;
+    }
+    .mob-merge-col {
+        flex-grow: 3;
+    }
+    .readonly_content>div {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+    .sales_summary .calculations .row {
+        height: auto;
+        padding: 14px 0;
+    }
+    .sticky_bottom {
+        position: relative;
+        bottom: 0%;
+    }
+    .pos_payment_btn button {
+        width: 100%;
+        font-size: 14px;
+    }
+    .pos_payment_btn {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .pos_payment_btn button {
+        margin-left: 0px;
+    }
+    .col-md-5ths {
+        width: 100%;
+    }
+    .checkmark {
+        top: -12px;
+    }
+    .pos_payment_dialog,
+    .medium_popup {
+        width: 100% !important;
+    }
+    member-dashboard div.zero_margin {
+        margin: 15px auto 0 !important;
+    }
+    .singal_info img {
+        width: 100px !important;
+    }
+    .singal_info>div {
+        padding-bottom: 15px;
+    }
+    .singal_info {
+        text-align: center;
+    }
+    .mob-plr-15 {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    .sch_two_column {
+        max-width: 100%;
+    }
+    .sch_ten_column {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+    .sm-pl-0 {
+        padding-left: 0px !important;
+    }
+    .sm-pl-15 {
+        padding-left: 15px !important;
+    }
+    .sm-pr-15 {
+        padding-right: 15px !important;
+    }
+    .mob-mt-15 {
+        margin-top: 15px;
+    }
+    .mob-mb-15 {
+        margin-bottom: 15px;
+    }
+    .pos_height {
+        height: auto;
+    }
+    .pos_items_height {
+        max-height: calc(100vh - 300px);
+        margin-bottom: 15px;
+    }
+    .mob-xs-parallel-off {
+        display: initial;
+    }
+    .pos_product .payment_btn {
+        position: relative;
+    }
+    .extra_right_space {
+        padding-right: 15px !important;
+    }
+    .mob-pr-0 {
+        padding-right: 0px !important;
+    }
+    .mob-pl-0 {
+        padding-left: 0px !important;
+    }
+    .calculator {
+        width: 100%;
+        left: 0px;
+        right: 0;
+        height: auto;
+        margin: 0 auto !important;
+    }
+    .calculator .col-md-4 {
+        width: 33%;
+    }
+    .blank_btn button {
+        margin-top: 10px;
+    }
+    staff-position-save .medium_popup,
+    save-facility .medium_popup {
+        width: 650px !important;
+    }
+    .singal_membership .checkmark {
+        top: -10px !important;
+        left: 0;
+        right: 0;
+        margin: 0px auto;
+    }
+    product-category-save .medium_popup {
+        width: 480px !important;
+    }
+    h3.sch_collapse_item,
+    .temp_white_bg ul li {
+        font-size: 12px;
+    }
+    .mob-none {
+        display: none;
+    }
+    .sm-full-canvas canvas {
+        width: 100%;
+    }
+    .perpal_bg .tax_row {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 10px;
+    }
+    .perpal_bg .tax_row>div {
+        width: 100% !important;
+    }
+    .perpal_bg .tax_row .multi_select {
+        width: 100% !important;
+        margin-left: 0;
+    }
+    .sch_mob_reverse {
+        flex-direction: column-reverse;
+    }
+    .url_btn a {
+        padding: 8px 8px;
+    }
+    .url_btn button {
+        padding: 7px 10px;
+    }
+    .multi_section_scroll {
+        max-height: 100%;
+    }
+    .membership_bio {
+        align-items: baseline;
+        text-align: left;
+        justify-content: center;
+    }
+    .member-bio img {
+        width: 86px;
+        margin-bottom: 30px;
+    }
+    .member-bio {
+        text-align: center;
+    }
+    .activity_tabs_popup .smallScheduler {
+        min-height: auto;
+        max-height: fit-content;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .staff_das_forecast {
+        padding: 20px 0;
+    }
+    .sch_hours {
+        height: 125px;
+        width: 125px;
+    }
+    .sch_hours h1 {
+        font-size: 16px;
+    }
+    .staff_das_forecast p {
+        font-size: 12px;
+    }
+    .staff_das_forecast h2 {
+        font-size: 15px;
+        line-height: 1.3;
+    }
+    .staff_das_forecast h2 span {
+        font-size: 12px;
+        line-height: 1.3;
+        padding-top: 3px;
+    }
+    .staff_das_forecast h6 {
+        font-size: 13px;
+        margin: 0 0 0 10px;
+    }
+    .staff_das_forecast {
+        min-height: 384px;
+    }
+    .login_form_user .footer_section p {
+        padding-top: 6px;
+    }
+    .mob-p-0>.padding_left,
+    .mob-p-0>.padding_right {
+        padding: 0 10px !important;
+    }
+    .staff_img img.login_image {
+        width: 80px;
+    }
+    .changeimg_btn {
+        right: 35%;
+    }
+    .mob-col-full .col,
+    #sale_histroy_search .col {
+        flex: 50%;
+    }
+    .activity_tabs_popup .mob-col-full .col {
+        flex: 100%;
+    }
+    .pos_payment_btn button {
+        width: 30%;
+    }
+    .pos_payment_btn {
+        display: initial;
+    }
+    .pos_payment_btn button {
+        margin-left: 5px;
+    }
+    .col-md-5ths {
+        width: 50%;
+    }
+    .singal_info {
+        text-align: left;
+    }
+    .pos_payment_btn.pos-pay-button {
+        display: inline-flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .calculator {
+        width: 350px;
+    }
+    .genral_checkbox {
+        width: 46%;
+        margin: 1em 10px 1em 10px;
+    }
+    .merchant_name h3 {
+        font-size: 30px;
+    }
+    .inner-col-pl-0 .col-md-6 {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    .sm-mb-0 {
+        margin-bottom: 0px;
+    }
+}
+
+@media (max-width: 575px) {
+    .cst-col-5 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .space-36 {  margin-top: 15px; }
+    .auto_mark_btn button,
+    .auto_mark_btn h5 {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .merchant_name h3 {
+        font-size: 28px;
+    }
+    .member_attend_bg {
+        padding: 1.5em;
+        flex-direction: column;
+        text-align: center;
+    }
+    .inner-col-pl-0 .col-md-6 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .variant-items div:first-child {
+        width: 8%;
+    }
+}
+
+@media (min-width: 425px) and (max-width: 575px) {
+    .signature-pad canvas {
+        width: 100% !important;
+    }
+    .mob-pro-box {
+        width: 33.33%;
+    }
+    .percent_width {
+        width: 90% !important;
+    }
+    .xs-pl-15 {
+        padding-left: 15px !important;
+    }
+    .xs-pr-15 {
+        padding-right: 15px !important;
+    }
+    .xs-pl-0 {
+        padding-left: 0px !important;
+    }
+    .xs-pr-0 {
+        padding-right: 0px !important;
+    }
+    .mob-pt-2 {
+        padding-top: 20px;
+    }
+    .widget_section .url_width {
+        width: 100%;
+    }
+    .printer_btn button {
+        margin: 0px 0 8px 0;
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .label_with_input > div {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    .ml-15{margin-left: 0;}
+    .reward_points_blocks > div {
+        margin-right: 0;
+        width: 100%;
+    }
+    .cancel_btn button {min-width: 90px;}
+    .reward_points_blocks {display: block !important;}
+    .mob-scroll-grid .reward_points_blocks{display: flex !important;}
+    .mob-scroll-grid > .reward_points_blocks > div, .reward_grid_rows > .reward_points_blocks > div {margin-right: 10px !important;}
+    .seprate_border {
+        height: 0;
+    }
+    .notification a {
+        margin-left: 15px;
+    }
+    .signature-pad canvas {
+        width: 100% !important;
+    }
+    .brows-btn.img_editor label,
+    .brows-btn.img_editor button {
+        min-width: 120px;
+        font-size: 13px;
+    }
+    .img-toolbar button {
+        font-size: 13px;
+        padding: 6px 10px;
+        min-width: 38px;
+    }
+    .user_clockout_text,
+    .membership_list h2 {
+        font-size: 14px;
+    }
+    .m-alert h3 {
+        font-size: 18px;
+    }
+    .mob-full-btn button {
+        margin: auto 4px;
+    }
+    .mr-3 {
+        padding: 10px 0;
+    }
+    .config_bg .mat-tab-labels {margin: 15px 15px 0 0; }
+    .config_bg .mat-tab-header-pagination { min-width: 16px; }
+    .mob-pa{padding: 0 15px !important;}
+    .waitlist_items .mr-3 {margin: 0 !important;}
+    .wait_2left_margin { margin-left: 0 !important; }
+    .wait_left_margin {  margin-left: 0 !important; }
+    .r_f_column{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .add_braket input {margin: 5px 0 0; }
+    .add_braket { padding: 10px 15px; }
+    .bracket_time dx-date-box { margin: 5px 0 0; }
+    .waitlist_items .media-body { margin-right: 0;}
+    .activity_note {
+        width: 100%;
+    }
+    .inline-max-cont {
+        inline-size: max-content;
+    }
+    .popup-btn3 {
+        width: 100%;
+    }
+    .cancel_btn.popup-btn3 button {
+        font-size: 12px;
+        min-width: 30%;
+        margin: 10px 0px 20px 5px;
+    }
+    .cancel_btn.popup-btn3 button:first-child {
+        margin-left: 0 !important;
+    }
+    .mob-sm-sche {
+        min-width: 107%;
+    }
+    .mob-mt-0 {
+        margin-top: 0px !important;
+    }
+    .view_role_btn button {
+        margin-top: 1.5em;
+    }
+    .series_popup .cancel_btn button {
+        width: 31.55%;
+        margin: 6px 0 15px 6px;
+        min-width: auto;
+        height: auto;
+    }
+    .series_popup .cancel_btn button:first-child {
+        margin-left: 0px;
+    }
+    .pos_actions.company_btn button {
+        width: 100%;
+        min-width: 100%;
+        margin: 5px 0;
+    }
+    .pos_actions.company_btn {
+        flex-direction: column;
+    }
+    .delete_popup .delete_warning {
+        flex-direction: column;
+    }
+    .delete_popup .delete_warning i.fal,
+    .delete_popup .delete_warning i.fa {
+        font-size: 28px;
+        height: 2.5em;
+        width: 2.5em;
+        margin: 0 0 20px;
+    }
+    .appointment-content {
+        width: 200px;
+        padding: 0px 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .appointment-content>div {
+        margin: 10px 0;
+    }
+    .appointment-text h4 {
+        text-align: center;
+    }
+    .appointment-content-detail {
+        width: 200px;
+    }
+    .cancel_btn.auto_btn button {
+        min-width: auto;
+        height: auto;
+        padding: 8px 10px;
+    }
+    .xs-pl-0 {
+        padding-left: 0px !important;
+    }
+    .xs-btn-width button {
+        width: 46%;
+        margin: 2%;
+    }
+    .notifications_dp p {
+        width: 100%;
+        white-space: pre-wrap;
+    }
+    .qucik_link_dp.logout_dp.notifications_dp,
+    .qucik_link_dp {
+        width: 300px;
+    }
+    .qucik_link_dp.notifications_dp::before {
+        right: 8.7em;
+    }
+}
+
+@media (max-width: 424px) {
+    .user_logout .name_width {
+        display: none;
+    }
+    .user_logout img {
+        margin-right: 0px;
+    }
+    /* .welcome_page { background-size: 40%, 85%;} */
+    .column_flex_alignment.mob-attendee {
+        flex-direction: column;
+    }
+    .add_attendee_icon {
+        margin-bottom: 20px;
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+    }
+    .mob-full-btn button {
+        width: 100%;
+        margin: 5px 0px;
+    }
+    .activity_title {
+        font-size: 14px;
+    }
+    .pay_section h3 span {
+        padding-top: 5px;
+    }
+    .popup_content p,
+    h5.form_label {
+        font-size: 13.5px;
+    }
+    .mob-pro-box {
+        width: 50%;
+    }
+    .payment_btn.total_bill {
+        font-size: 14px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .payment_btn span.items {
+        font-size: 11px;
+        margin-left: 2px;
+    }
+    .percent_width {
+        width: 90% !important;
+    }
+    .xs-pl-15 {
+        padding-left: 15px !important;
+    }
+    .xs-pr-15 {
+        padding-right: 15px !important;
+    }
+    .xs-pl-0 {
+        padding-left: 0px !important;
+    }
+    .xs-pr-0 {
+        padding-right: 0px !important;
+    }
+    .mob-payment-plan .create_package {
+        margin: 20px auto 15px;
+        text-align: center;
+        width: 100%;
+    }
+    .mob-pt-2 {
+        padding-top: 20px;
+    }
+    .widget_section .url_width {
+        width: 100%;
+    }
+    .printer_btn button {
+        margin: 0px 0 8px 0;
+        min-width: 100%;
+    }
+    .promote_products p {
+        width: 64%;
+    }
+    /* dashboard Reward Program */
+    .rp-dashboard {
+      flex-direction: column;
+      text-align: center;
+    }
+    .rp-dashboard > div:last-child {
+      margin-bottom: 0;
+    }
+    .rp-dashboard > div {
+        margin-bottom: 15px;
+    }
+    .rp-currency-value {
+      margin: 0 auto;
+      padding-left: 0;
+      border: 0 !important;
+    }
+
+}
+
+
+/* @media (max-width: 374px) and (max-height: 570px) {
+  .center_flex_alignment {flex-direction: column;}
+  .welcome_page {background-image: url(/assets/images/main-left-bg.png);}
+
+} */
+
+@media (max-width: 374px) {
+    .cancel_btn button {
+        font-size: 12.5px;
+        min-width: 98px;
+    }
+    .activity_actions {
+        padding: 5px 0;
+        flex-direction: column;
+    }
+    .genral_cls {
+        margin: 0px 0 5px 0px;
+    }
+    .act_icon {
+        text-align: left !important;
+    }
+    add-member .company_btn button {
+        min-width: 85px;
+    }
+    .cancel_btn button:first-child {
+        margin-left: 0;
+    }
+    .cancel_btn.xs-btn button {
+        min-width: 80px;
+    }
+    .xs-three-btn button {
+        min-width: auto;
+        padding: 5px 18px;
+    }
+}
+
+
+/********All Media Queries End Here*********/

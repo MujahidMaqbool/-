@@ -1,0 +1,70 @@
+<form #emailForm="ngForm" novalidate>
+    <div class="popup_content">
+        <div class="row sch_white_bg">
+            <div class="col-md-12 col-sm-12 no_padding">
+                <div class="alert alert-danger" *ngIf="emailForm.invalid && isInvalidData">
+                    {{messages.Validation.Info_Required}}
+                </div>
+                <div class="alert alert-danger" *ngIf="isInvalidEmailBody">
+                    {{emailMaxLengthMessage}}
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <h5 class="form_label">Subject</h5>
+                <div [ngClass]="{
+                                   'has-danger': emailSubject.invalid && (emailSubject.dirty || emailSubject.touched || isInvalidData),
+                                   'has-success': emailSubject.valid && (emailSubject.dirty || emailSubject.touched)
+                                }">
+                    <input class="form-control" type="text" name="emailSubject" [(ngModel)]="emailModel.EmailSubject"
+                        #emailSubject="ngModel" maxlength="50" [disabled]="(emailModel.TemplateTextID && emailModel.TemplateTextID > 0)"
+                        required />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="field_label">
+                    <h5>Contact Reason</h5>
+                </div>
+                <div [ngClass]="{
+                                     'has-danger': emailContactReasonTypeID.invalid && (emailContactReasonTypeID.dirty || emailContactReasonTypeID.touched || isInvalidData),
+                                     'has-success': emailContactReasonTypeID.valid && (emailContactReasonTypeID.dirty || emailContactReasonTypeID.touched)
+                                  }">
+                    <div class="select_label">
+                        <select class="form-control" name="emailContactReason" [(ngModel)]="emailModel.ContactReasonTypeID"
+                            #emailContactReasonTypeID="ngModel" required>
+                            <option *ngFor="let contactReasonType of contactReasonTypeList" [ngValue]="contactReasonType.ContactReasonTypeID">
+                                {{contactReasonType.ContactReasonTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="field_label">
+                    <h5>Email Template</h5>
+                </div>
+                <div class="select_label">
+                    <select class="form-control" name="txtTemplateTextID" [(ngModel)]="selectedTemplate"
+                        (ngModelChange)="onTemplateChange(selectedTemplate)" #templateTextID="ngModel">
+                        <option *ngFor="let template of templateTextList" [ngValue]="template">
+                            {{template.TemplateTextTitle}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <h5 class="field_label">
+                    Text <span>(Remaining Characters: {{ emailMaxLength - emailModel?.EmailBody?.length}})</span>
+                </h5>
+                <div [ngClass]="{
+                    'has-danger': (emailBody.invalid && isInvalidData) || isInvalidEmailBody
+                }">
+                    <email-editor [value]="emailModel?.EmailBody" (onEmailBodyChange)="onEmailBodyChange($event)"></email-editor>
+                </div>
+                <input type="text" name="emailBody" #emailBody="ngModel" [(ngModel)]="emailModel.EmailBody" required
+                    [maxlength]="emailMaxLength" style="display: none" />
+            </div>
+        </div>
+    </div>
+</form>

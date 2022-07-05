@@ -1,0 +1,91 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content popup_content full_screen_pop">
+            <div class="popup_header">
+                <h4>Add Product</h4>
+            </div>
+            <div class="popup_content full-content-no-header cstm_scroll_bg">
+
+                <div class="popup_white_bg mb-3 pt-2 pb-2">
+                    <div class="row pb-2">
+                        <div class="col-md-3">
+                            <h5 class="field_label">Product</h5>
+                            <input placeholder="Search Product" type="text" class="form-control"
+                                [(ngModel)]="productVariantSearchParameter.ProductName" />
+                        </div>
+                        <div class="col-md-1 space-36 full_width_btn p-0">
+                            <button (click)="getProductsVariantList()" class="search m-0" type="button">Search</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="popup_white_bg  ">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-title mb-1">
+                                <h3>Product <span *ngIf="isDataExists" class="float-right light-blue-color"><a
+                                            href="javascript:void(0)" class="plus-item"
+                                            (click)="selectOrDeselectAllItems(true)">Select
+                                            All</a>
+                                        &nbsp; &nbsp; <a href="javascript:void(0)" class="plus-item"
+                                            (click)="selectOrDeselectAllItems(false)">Deselect All</a></span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="po-add-pro item-wrapper-height  cstm_scroll_bg">
+                        <ng-container *ngIf="isDataExists">
+                            <div class="row">
+                                <div class="col-md-12" *ngFor="let pvariant of productvariantsList; let i=index">
+                                    <div class="checkbox checkbox-success ml-md-5 ml-sm-0 pb-2 pt-2 border-bottom">
+                                        <input type="checkbox" id="{{'Chk_'+pvariant.ProductVariantID}}"
+                                            name="{{'Chk_'+pvariant.ProductVariantID}}"
+                                            [(ngModel)]="pvariant.IsSelected" [(checked)]="pvariant.IsSelected"
+                                            (ngModelChange)="onVariantSelection($event, pvariant)" />
+                                        <label for="{{'Chk_'+pvariant.ProductVariantID}}"
+                                            class="font-medium ">{{pvariant.ProductName}} <span
+                                                class="variant-des">{{pvariant.ProductVariantName}}</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <div class="row grid-content no-hover" *ngIf="!isDataExists">
+                            <div class="col-md-12 text-center">
+                                <div class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div
+                                class="border-top d-flex justify-content-between align-items-end selected-items popup-pagination">
+                                <div>
+                                    <p class="font-medium">{{selectedProductvariantsList.length}}
+                                        {{selectedProductvariantsList.length > 1? 'Records Selected' : 'Record
+                                        Selected'}} </p>
+                                </div>
+                                <div>
+                                    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)">
+                                    </app-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                        <button type="button" class="save primary_blue_btn" (click)="addProductsToPO()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

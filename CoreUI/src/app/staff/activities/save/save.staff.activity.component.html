@@ -1,0 +1,314 @@
+﻿<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="activity_tabs_popup">
+                <div class="row">
+                    <mat-tab-group class="col-sm-12 col-md-12 no_padding" (selectedTabChange)="onTabChange($event)" [selectedIndex]="activeTabIndex">
+                        <mat-tab label="{{activityTypes.Task}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.Task) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="task"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.Email}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.Email) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="email"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.SMS}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.SMS) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="sms"></div>
+                        </mat-tab>
+                        <mat-tab label="{{activityTypes.Note}}" *ngIf="tabsOptions && tabsOptions.activeTabs && tabsOptions.activeTabs.indexOf(activityTypes.Note) > -1">
+                            <div *ngTemplateOutlet="errormessage"></div>
+                            <div *ngTemplateOutlet="note"></div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+            <div class="row">
+                <div class="popup_footer col-sm-12 col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button tabindex="104" (click)="onClosePopup()">Cancel</button>
+                        <button *ngIf="!isActiveTabEmailOrSMS && !tabsOptions.isMarkAsDone" tabindex="105" class="save primary_blue_btn" [disabled]="saveInProgress" (click)="onSaveClick()">Save</button>
+                        <button *ngIf="!isActiveTabEmailOrSMS && tabsOptions.isMarkAsDone" tabindex="105" class="save primary_blue_btn" [disabled]="saveInProgress || isInvalidFollowUpDate" (click)="onSaveClick()">Complete</button>
+                        <button *ngIf="isActiveTabEmailOrSMS && personInfo.Mobile || activeTab == 'Email'" tabindex="105" class="save primary_blue_btn" [disabled]="saveInProgress || isInvalidFollowUpDate" (click)="onSaveClick()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Messages Template -->
+<ng-template #errormessage>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="alert alert-danger" *ngIf="isInvalidData">
+                {{messages.Validation.Info_Required}}
+            </div>
+            <div class="alert alert-danger" *ngIf="isInvalidEndTime">
+                {{messages.Validation.Endtime_Should_Greater_Than_Start_Time}}
+            </div>
+            <div class="alert alert-danger" *ngIf="isInvalidFollowUpDate">
+                {{messages.Validation.FollowUpDate_Cannot_Be_Past}}
+            </div>
+            <div class="alert alert-danger" *ngIf="isInvalidStartTime">
+                {{messages.Validation.StartTime_Should_Greater_Than_CurrentTime}}
+            </div>
+            <div class="alert alert-danger" *ngIf="isInvalidEmailBody">
+                {{emailMaxLengthMessage}}
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+
+<!-- Person Info Template -->
+<ng-template #personinfo>
+    <div class="view_main_bar  border_bottom">
+        <div class="activity_person_info">
+            <i class="fal fa-user"></i> <span>{{personInfo.Name}}</span>
+        </div>
+        <div class="activity_person_info">
+            <i class="fal fa-envelope"></i> {{personInfo.Email}}
+        </div>
+        <div class="activity_person_info" *ngIf="personInfo.Mobile">
+            <i class="fal fa-mobile-alt"></i> {{personInfo.Mobile}}
+        </div>
+    </div>
+</ng-template>
+
+<!-- Task Template -->
+<ng-template #task>
+    <form #taskForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row mob-col-full">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+            <div class="row sch_mob_reverse">
+                <div class="col-lg-4 col-md-5 padding_left parallel_grid">
+                    <div class="sch_white_bg mob-sm-sche">
+                        <div class="smallScheduler">
+                            <one-day-scheduler [dayViewFormat]="dayViewFormat" [schedulerTimeFormat]="schedulerTimeFormat" [staffID]="assignedToStaffID" [startDate]="currentCallDate" (onStartDateChange)="onTaskDateChange($event)">
+                            </one-day-scheduler>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 parallel_grid no_padding">
+                    <div class="sch_white_bg">
+                        <div class="smallScheduler">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="form_label">Select Date</h5>
+                                    <date-picker [value]="taskModel.FollowUpDate" [showClear]="false" (onDateChange)="onSelectDateCallValueChanged($event)">
+                                    </date-picker>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <h5 class="form_label">Title</h5>
+                                    <div [ngClass]="{
+                                          'has-danger': taskTitle.invalid && (taskTitle.dirty || taskTitle.touched || isInvalidData),
+                                          'has-sucess': taskTitle.valid && (taskTitle.dirty || taskTitle.touched)
+                                                                        }">
+                                        <input type="text" class="form-control" name="taskTitle" [(ngModel)]="taskModel.Title" #taskTitle="ngModel" maxlength="50" required tabindex="1" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field_label">
+                                        <h5>Start Time</h5>
+                                    </div>
+                                    <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat" [interval]="15" (onValueChanged)="onTaskStartTimeChanged($event)" [(value)]="schedulerStartTime" tabindex="2" [useMaskBehavior]="true">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field_label">
+                                        <h5>End Time</h5>
+                                    </div>
+                                    <dx-date-box class="full_width" type="time" [displayFormat]="schedulerTimeFormat" [interval]="15" (onValueChanged)="onTaskEndTimeChanged($event)" [(value)]="schedulerEndTime" tabindex="3" [useMaskBehavior]="true">
+                                        <dx-validator>
+                                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                                        </dx-validator>
+                                    </dx-date-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field_label">
+                                        <h5>Priority</h5>
+                                    </div>
+                                    <div [ngClass]="{
+                                            'has-danger': priortyTypeID.invalid && (priortyTypeID.dirty || priortyTypeID.touched || isInvalidData),
+                                            'has-success': priortyTypeID.valid && (priortyTypeID.dirty || priortyTypeID.touched)
+                                        }">
+                                        <div class="select_label">
+                                            <select class="form-control" name="priortyTypeID" [(ngModel)]="taskModel.PriorityTypeID" #priortyTypeID="ngModel" required tabindex="4">
+                                        <option *ngFor="let priorityType of priorityTypeList"
+                                            [ngValue]="priorityType.PriorityTypeID">
+                                            {{priorityType.PriorityTypeName}}
+                                        </option>
+                                    </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="field_label">
+                                        <h5>Note <span>(Remaining Characters: {{ 250 - taskModel?.Description?.length }})</span>
+                                        </h5>
+                                    </div>
+                                    <textarea rows="6" name="taskDescription" [(ngModel)]="taskModel.Description" maxlength="250" tabindex="4"> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- Email Template -->
+<ng-template #email>
+    <form #emailForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+            <div class="sch_white_bg">
+                <div class="smallScheduler">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <h5 class="form_label">Subject</h5>
+                            <div [ngClass]="{
+                               'has-danger': emailSubject.invalid && (emailSubject.dirty || emailSubject.touched || isInvalidData),
+                               'has-success': emailSubject.valid && (emailSubject.dirty || emailSubject.touched)
+                            }">
+                                <input class="form-control" type="text" name="emailSubject" [(ngModel)]="emailModel.EmailSubject" #emailSubject="ngModel" maxlength="50" required tabindex="1" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="field_label">
+                                <h5>Email Template</h5>
+                            </div>
+                            <div class="select_label">
+                                <select class="form-control" name="txtTemplateTextID" [(ngModel)]="selectedTemplate" (ngModelChange)="onTemplateChange(selectedTemplate)" #templateTextID="ngModel" tabindex="2">
+                            <option *ngFor="let template of templateTextList" [ngValue]="template">
+                                {{template.TemplateTextTitle}}
+                            </option>
+                        </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="field_label">
+                                Text <span>(Remaining Characters: {{ emailMaxLength - emailModel?.EmailBody?.length}})</span>
+                            </h5>
+                            <div [ngClass]="{
+                        'has-danger': (emailBody.invalid && isInvalidData) || isInvalidEmailBody
+                    }">
+                                <email-editor [value]="emailModel?.EmailBody" (onEmailBodyChange)="onEmailBodyChange($event)">
+                                </email-editor>
+                            </div>
+                            <input type="text" name="emailBody" #emailBody="ngModel" [(ngModel)]="emailModel.EmailBody" required [maxlength]="emailMaxLength" style="display: none" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- Notes Template-->
+<ng-template #note>
+    <form #noteForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+            <div class="sch_white_bg">
+                <div class="smallScheduler">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="field_label">
+                                <h5>Title</h5>
+                            </div>
+                            <div [ngClass]="{
+                               'has-danger': noteTitle.invalid && (noteTitle.dirty || noteTitle.touched || isInvalidData),
+                               'has-success': noteTitle.valid && (noteTitle.dirty || noteTitle.touched)
+                            }">
+                                <input class="form-control" type="text" name="noteTitle" [(ngModel)]="noteModel.Title" #noteTitle="ngModel" maxlength="50" required tabindex="1" />
+                            </div>
+                            <div class="field_label">
+                                <h5>Description <span>(Remaining Characters: {{ 500 - noteModel?.Description?.length }})</span>
+                                </h5>
+                            </div>
+                            <div [ngClass]="{
+                               'has-danger': noteDescription.invalid && (noteDescription.dirty || noteDescription.touched || isInvalidData),
+                               'has-success': noteDescription.valid && (noteDescription.dirty || noteDescription.touched)
+                             }">
+                                <textarea class="form-control form-control-description" rows="12" name="noteDescription" #noteDescription="ngModel" [(ngModel)]="noteModel.Description" maxlength="500" required tabindex="2">
+                        </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- SMS Template -->
+<ng-template #sms>
+    <form #smsForm="ngForm" novalidate>
+        <div class="popup_content add_activity_height cstm_scroll_bg">
+            <div class="row">
+                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                    <div *ngTemplateOutlet="personinfo"></div>
+                </div>
+            </div>
+            <div class="sch_white_bg">
+                <div class="smallScheduler">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <h5 class="form_label">Title</h5>
+                            <div [ngClass]="{
+                               'has-danger': smsTitle.invalid && (smsTitle.dirty || smsTitle.touched || isInvalidData),
+                               'has-success': smsTitle.valid && (smsTitle.dirty || smsTitle.touched)
+                            }">
+                                <input class="form-control" type="text" name="txtSmsTitle" [(ngModel)]="smsModel.Title" #smsTitle="ngModel" maxlength="50" required tabindex="1" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="field_label">
+                                <h5>SMS Template</h5>
+                            </div>
+                            <div class="select_label">
+                                <select class="form-control" name="txtTemplateTextID" [(ngModel)]="selectedTemplate" (ngModelChange)="onTemplateChange(selectedTemplate)" #templateTextID="ngModel" tabindex="2">
+                                <option *ngFor="let template of templateTextList" [ngValue]="template">
+                                    {{template.TemplateTextTitle}}
+                                </option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="field_label">Text <span>(Remaining Characters: {{ 160 - smsModel?.Description?.length
+                            }})</span></h5>
+                            <div [ngClass]="{
+                               'has-danger': smsDescription.invalid && (smsDescription.dirty || smsDescription.touched || isInvalidData),
+                               'has-success': smsDescription.valid && (smsDescription.dirty || smsDescription.touched)
+                             }">
+                                <textarea class="form-control form-control-description" rows="8" name="txtSmsDescription" #smsDescription="ngModel" [(ngModel)]="smsModel.Description" maxlength="160" required tabindex="3">
+                        </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="alert alert-warning sms-warning" *ngIf="personInfo?.Mobile == ''"><i class="fal fa-exclamation-circle"></i> Please add mobile number in staff profile to send SMS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>

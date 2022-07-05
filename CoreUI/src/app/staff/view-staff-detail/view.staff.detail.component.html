@@ -1,0 +1,248 @@
+﻿<!--View Staff Pop Up start-->
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Staff Details</h4>
+                <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" (click)="onCloseDialog()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="section_content readonly_content">
+                    <div class="view_bg info_bar_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="view_main_bar">
+                                    <div>
+                                        <img src="{{imagePath}}" style="width:40px;"
+                                            class="img-responsive rounded-circle">
+                                    </div>
+                                    <div class="view_main_bar_item">
+                                        <span>
+                                            {{staffViewModel.Title + ' ' + staffViewModel.FirstName + ' ' +
+                                            staffViewModel.LastName}}</span>
+                                        <!-- <span [ngClass]="{
+                                                                        'active': staffViewModel.IsActive,
+                                                                        'inactive': !staffViewModel.IsActive
+                                                                    }">
+                                                                {{staffViewModel.IsActive ? 'Active' : 'Inactive'}}
+                                                            </span> -->
+                                    </div>
+                                    <div class="view_main_bar_item">
+                                        <i class="fal fa-envelope"></i> {{staffViewModel.Email}}
+                                    </div>
+                                    <div *ngIf="staffViewModel.Mobile" class="view_main_bar_item">
+                                        <i class="fal fa-mobile-android-alt"></i>{{staffViewModel.Mobile}}
+                                    </div>
+                                    <div>
+                                        <!-- <div class="float-right">
+                                                        <button type="button" class="edit" (click)="onEdit()"> Edit</button>
+                                                    </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Personal Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Gender</h6>
+                                <p>{{staffViewModel.Gender ? staffViewModel.Gender: 'Not Specified'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Date of Brith</h6>
+                                <p>{{staffViewModel.BirthDate ? (staffViewModel.BirthDate | customdate: dateFormat) : 'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Phone</h6>
+                                <p>{{staffViewModel.Phone ? staffViewModel.Phone : 'N/A'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Staff Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Role</h6>
+                                <p>{{staffViewModel.StaffBranchRoleName}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Position</h6>
+                                <p>{{staffViewModel.StaffPositionName}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Online Display Name</h6>
+                                <p>{{staffViewModel.Permission.OnlineDisplayName ? staffViewModel.Permission.OnlineDisplayName : 'N/A'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Address</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Country</h6>
+                                <p>{{staffViewModel.CountryName ? staffViewModel.CountryName : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>County/State</h6>
+                                <p>{{staffViewModel.StateCountyName ? staffViewModel.StateCountyName : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>City</h6>
+                                <p>{{staffViewModel.CityName ? staffViewModel.CityName : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 1</h6>
+                                <p>{{staffViewModel.Address1 ? staffViewModel.Address1 : 'N/A'}} </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 2</h6>
+                                <p>{{staffViewModel.Address2 ? staffViewModel.Address2 : 'N/A'}} </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Post Code / Zip Code</h6>
+                                <p>{{staffViewModel.PostCode ? staffViewModel.PostCode : 'N/A'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>General Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Card Number</h6>
+                                <p>{{staffViewModel.CardNumber ? staffViewModel.CardNumber : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <h6>Notes</h6>
+                                <p>{{staffViewModel.Notes ? staffViewModel.Notes : 'N/A'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Permissions</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Show on Scheduler</h6>
+                                <p>{{staffViewModel.Permission.ShowOnScheduler ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Classes On Scheduler</h6>
+                                <p>{{staffViewModel.Permission.CanDoClass ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="showServicesCheck">
+                                <h6>Services in Core</h6>
+                                <p> {{staffViewModel.Permission.CanDoService ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="showServicesCheck">
+                                <h6>Services on Widget & Apps</h6>
+                                <p>{{staffViewModel.Permission.CanDoServiceOnline ? 'Yes': 'No'}}</p>
+                            </div>
+                            <!-- </div>
+                        <div class="row"> -->
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Login Access</h6>
+                                <p>{{staffViewModel.AllowLogin ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>First Aid </h6>
+                                <p>{{staffViewModel.Permission.FirstAidAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Tips</h6>
+                                <p>{{staffViewModel.Permission.AllowTip ? 'Yes' : 'No'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg last_div_bz">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Branches</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="overflow-auto">
+                                    <div class="row grid_header verticle-scroll-lg">
+                                        <div class="col">
+                                            <h5>Branch Name</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Role Name</h5>
+                                        </div>
+                                    </div>
+                                    <div id="grid" class="view_only_grid verticle-scroll-lg">
+                                        <div class="row grid_rows view_membership_content"
+                                            *ngFor="let objBranch of staffViewModel.StaffBranchList">
+                                            <div class="col">
+                                                <h5>{{objBranch.BranchName}}</h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5>{{objBranch.RoleName}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <div class="small_space"></div>
+                            <div class="staff_details">
+                                <h6>Online Display Name</h6>
+                                <p>{{staffViewModel.OnlineDisplayName}}</p>
+                                <h6>Addrees2</h6>
+                                <p>{{staffViewModel.Address2 ? staffViewModel.Address2 : 'N/A'}}</p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right scroll_close">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--View Staff Pop Up End-->

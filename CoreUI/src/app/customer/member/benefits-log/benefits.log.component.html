@@ -1,0 +1,149 @@
+<div class="white_bg info_bar_bg top_zero">
+    <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#membership_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+            </div>
+        </div>
+        <div id="membership_search" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="field_label">Membership</h5>
+                        <div class="select_label">
+                            <select class="form-control" name="CustomerMembershipID"
+                                [(ngModel)]="membershipBenefitsLogSearch.CustomerMembershipID">
+                                <option value="null">All</option>
+                                <option *ngFor="let membership of memberMembershipList"
+                                    [value]="membership.CustomerMembershipID">
+                                    {{membership.MembershipName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <h5 class="field_label">Activity Type</h5>
+                        <div class="select_label">
+                            <select class="form-control" name="MembershipBenefitActivityTypeID"
+                                [(ngModel)]="membershipBenefitsLogSearch.MembershipBenefitActivityTypeID">
+                                <option [ngValue]="null">All</option>
+                                <option *ngFor="let activityType of activitiesTypeList"
+                                    [value]="activityType.MembershipBenefitActivityTypeID">
+                                    {{activityType.MembershipBenefitActivityTypeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 input_heading no_padding">
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" [dateToPlaceHolder]="dateToPlaceHolder"
+                        [dateFromPlaceHolder]="dateFromPlaceHolder" #benefitLogSearchDate>
+                        </dateto-datefrom>
+                    </div>
+
+                    <div class="offset-lg-9 offset-md-6 col-lg-3 col-md-6 space no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6"><button type="button" class="reset_btn"
+                                    (click)="resetBenefitsLog()"> Reset</button></div>
+                            <div class="col-md-6 col-sm-6 full_width_btn">
+                                <button type="button" (click)="searchBenefitsLog()" class="search">
+                                    Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>
+                    Membership Name
+                </h5>
+            </div>
+            <div class="col">
+                <h5>
+                    Date
+                </h5>
+            </div>
+            <div class="col">
+                <h5>
+                    Item Type
+                </h5>
+            </div>
+            <div class="col">
+                <h5>
+                    Activity Type
+                </h5>
+            </div>
+            <div class="col">
+                <h5>Balance
+                </h5>
+            </div>
+            <div class="col">
+                <h5>Description
+                </h5>
+            </div>
+            <div class="col">
+                <h5>User
+                </h5>
+            </div>
+
+        </div>
+        <div id="grid">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let  benefitsLogObj of memberMembershipBenefitsLog">
+                <div class="col">
+                    <h5>
+                        {{benefitsLogObj.MembershipName}}
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>
+                        {{benefitsLogObj.CreatedOn | customdate: dateTimeFormat}}
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>
+                        {{benefitsLogObj.ItemTypeName}}
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>
+                        {{benefitsLogObj.MembershipBenefitActivityTypeName}}
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5> {{benefitsLogObj.Balance}}
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>{{benefitsLogObj.Description}}
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>{{benefitsLogObj.CreatedBy}}
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

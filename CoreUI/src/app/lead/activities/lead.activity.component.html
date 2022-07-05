@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="company_btn float-right">
+            <!-- <button type="button" class="simple_btn" [routerLink]="['/lead']" *ngIf="allowedPages.Lead_View">
+                        Back to Search
+                    </button> -->
+            <!-- <button class="simple_btn" (click)="deleteLead()" *ngIf="allowedPages.Lead_Save">
+                        Delete
+                    </button> -->
+            <button class="simple_btn" type="button" [routerLink]="['/lead/business-flow']" *ngIf="allowedPages.BusinessFlow_Save">
+                Business Flow
+            </button>
+            <button class="save" (click)="onAddActivity()" *ngIf="allowedPages.Activities_Save">
+                Add Activity
+            </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="white_bg">
+    <div class="row">
+        <div class="col-lg-6 col-md-12 mob-m5 no_padding column_flex_alignment">
+            <person-info style="width: 100%;" *ngIf="shouldGetPersonInfo"></person-info>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="alert alert-warning zero_margin" *ngIf="!hasMemberships">No Memberships in Enquiry state.
+            </div>
+            <div class="row" *ngIf="hasMemberships">
+                <div class="col-md-4 col-sm-4">
+                    <h5 class="field_label"> Membership Enquiry </h5>
+                    <div class="select_label">
+                        <select name="MembershipID" [(ngModel)]="leadActivity.MembershipID" (ngModelChange)="onMembershipChange()">
+                            <option *ngFor="let existingMembership of existingMembershipList" [(ngValue)]="existingMembership.MembershipID">
+                                {{existingMembership.MembershipName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <h5 class="field_label"> Lead Status</h5>
+                    <div class="select_label">
+                        <select name="LeadStatusTypeID" [(ngModel)]="leadActivity.LeadStatusTypeID" (ngModelChange)="onLeadStatusChange()"
+                            [disabled]="!allowedPages.Membership_Save">
+                            <option *ngFor="let leadStatusTypeObj of leadStatusTypeList" [(ngValue)]="leadStatusTypeObj.LeadStatusTypeID">
+                                {{leadStatusTypeObj.LeadStatusTypeFriendlyName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <h5 class="field_label">Assigned To</h5>
+                    <div class="select_label">
+                        <select name="AssignedToStaffID" [(ngModel)]="leadAssignedTo.AssignedToStaffID" (ngModelChange)="onLeadAssingedToChange()"
+                            [disabled]="!allowedPages.Membership_Save">
+                            <option value="-1">Not Specified</option>
+                            <option *ngFor="let staffListObj of staffList" [(ngValue)]="staffListObj.StaffID">
+                                {{staffListObj.StaffFullName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="white_bg">
+                <div class="section_title">
+                    <div class="row">
+                        <div class="col-md-12 no_padding">
+                            <h4>Activities Overview</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 padding_left">
+                        <div class="activity_count">
+                            <h6>
+                                <i class="fal fa-phone" aria-hidden="true"></i> &nbsp; Call
+                                <span class="float-right">{{leadActivityCount.CallCount}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding_left">
+                        <div class="activity_count">
+                            <h6>
+                                <i class="fa fa-calendar" aria-hidden="true"></i> &nbsp; Appointment
+                                <span class="float-right">{{leadActivityCount.AppointmentCount}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding_left">
+                        <div class="activity_count">
+                            <h6>
+                                <i class="fal fa-calendar-check" aria-hidden="true"></i> &nbsp; Task
+                                <span class="float-right">{{leadActivityCount.TaskCount}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding_left">
+                        <div class="activity_count">
+                            <h6>
+                                <i class="fa fa-envelope" aria-hidden="true"></i> &nbsp; Email
+                                <span class="float-right">{{leadActivityCount.EmailCount}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding_left">
+                        <div class="activity_count">
+                            <h6>
+                                <i class="fal fa-envelopepen" aria-hidden="true"></i> &nbsp; SMS
+                                <span class="float-right">{{leadActivityCount.SMSCount}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding_left">
+                        <div class="activity_count">
+                            <h6>
+                                <i class="fa fa-file-text" aria-hidden="true"></i> &nbsp; Notes
+                                <span class="float-right">{{leadActivityCount.NoteCount}}</span>
+                            </h6>
+                        </div>
+                    </div>                            
+                </div>
+            </div> -->
+<div class="white_bg">
+    <search-activity [tabsOptions]="tabsOptions"> </search-activity>
+</div>

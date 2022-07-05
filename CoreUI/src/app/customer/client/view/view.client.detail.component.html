@@ -1,0 +1,168 @@
+﻿<!--View Client Pop Up start-->
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <div>
+                    <h4>Client Details</h4>
+                </div>
+                <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" (click)="onCloseDialog()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+            </div>
+            <div class="popup_content cstm_scroll_bg section_container readonly_content">
+                <div class="view_bg info_bar_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="view_main_bar">
+                                <div class="mob-img-detail">
+                                    <img src="{{imagePath}}" style="width:40px" class="img-responsive rounded-circle">
+                                </div>
+                                <div class="view_main_bar_item">
+                                    <span>{{clientViewModel.FullName}}</span>
+                                </div>
+                                <div class="view_main_bar_item"> <i class="fal fa-envelope"></i>
+                                    {{clientViewModel.Email}}
+                                </div>
+                                <div class="view_main_bar_item"><i class="fal fa-mobile-android-alt"></i>
+                                    {{clientViewModel.Mobile}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>Personal Info</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Gender</h6>
+                            <p>{{clientViewModel.Gender === 'Select Gender' ? 'Not Specified' : clientViewModel.Gender}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Source Name</h6>
+                            <p>{{clientViewModel.EnquirySourceTypeName ? clientViewModel.EnquirySourceTypeName :
+                                'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Date of Birth</h6>
+                            <p>{{clientViewModel.BirthDate ? (clientViewModel.BirthDate | customdate: dateFormat) : 'N/A' }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>General Info</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h6>Notes</h6>
+                            <p>
+                                {{clientViewModel.Description ? clientViewModel.Description : 'N/A'}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>Address</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Country</h6>
+                            <p>{{clientViewModel.CountryName ? clientViewModel.CountryName : 'N/A' }}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>County / State</h6>
+                            <p>{{clientViewModel.StateCountyName ? clientViewModel.StateCountyName : 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>City</h6>
+                            <p>{{clientViewModel.CityName ? clientViewModel.CityName : 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Address 1</h6>
+                            <p>{{clientViewModel.Address1 ? clientViewModel.Address1 : 'N/A'}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Address 2</h6>
+                            <p>{{clientViewModel.Address2 ? clientViewModel.Address2 : 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Postal Code / Zip Code</h6>
+                            <p>
+                                {{clientViewModel.PostCode ? clientViewModel.PostCode : 'N/A'}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view_bg last_div_bz">
+                    <div class="row readonly_content">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h4>Permissions</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Allow Postal Mail </h6>
+                            <p>{{clientViewModel.PostalMailAllowed ? 'Yes' : 'No'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Allow Phone Call</h6>
+                            <p>{{clientViewModel.PhoneCallAllowed ? 'Yes' : 'No'}}</p>
+                        </div>
+                        <div *ngIf="isEmailAllowed" class="col-md-3 col-sm-6">
+                            <h6>Allow Email</h6>
+                            <p>{{clientViewModel.EmailAllowed ? 'Yes' : 'No'}}</p>
+                        </div>
+                        <div *ngIf="isSmsAllowed" class="col-md-3 col-sm-6">
+                            <h6>Allow SMS</h6>
+                            <p>{{clientViewModel.SMSAllowed ? 'Yes' : 'No'}}</p>
+                        </div>
+                        <div *ngIf="isPushNotificationAllowed" class="col-md-3 col-sm-6">
+                          <h6>Push Notification</h6>
+                          <p> {{clientViewModel.PushNotificationAllowed ? 'Yes' : 'No'}}</p>
+                      </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Allow First Aid</h6>
+                            <p>{{clientViewModel.FirstAidAllowed ? 'Yes' : 'No'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6" *ngIf="isPartialPaymentAllow">
+                            <h6>Allow Part Payment On Core</h6>
+                            <p>{{clientViewModel.AllowPartPaymentOnCore ? 'Yes' : 'No'}}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6" *ngIf="isPartialPaymentAllow">
+                            <h6>Allow Part Payment On Widget</h6>
+                            <p>{{clientViewModel.AllowPartPaymentOnWidget ? 'Yes' : 'No'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right scroll_close">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--View Client Pop Up End-->

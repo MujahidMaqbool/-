@@ -1,0 +1,310 @@
+<div class="row">
+  <div class="col-md-2 scheduler_space sch_two_column">
+    <div class="sch_left_bar">
+      <div class="inside_padding">
+        <div class="sch_left_scroll cstm_scroll_bg" style="max-height: calc(100vh - 235px)">
+          <!--Scheduler Grouping Section Start-->
+          <div id="sch_left_accordian5" *ngIf="hasFacilityInPackage && isShowTaskInRole">
+            <div class="panel-heading collapsed" data-toggle="collapse" data-parent="#sch_left_accordian5"
+              data-target="#sch_left_collapse5">
+              <h3 class="sch_collapse_item accordion-toggle1"> Grouping</h3>
+            </div>
+            <div id="sch_left_collapse5" class="panel-collapse collapse">
+              <div class="sch_panel-body">
+                <div class="form-group sch_border_bottom">
+                  <input type="checkbox" [disabled]="facilityList.length == 0" [(ngModel)]="isGroupByStaff"
+                    (ngModelChange)="onChangeGrouping()" id="groupbystaff" autocomplete="off">
+                  <div class="btn-group label_width">
+                    <label for="groupbystaff" class="btn"
+                      [ngClass]="{'check_bg': isGroupByStaff, 'uncheck_bg': !isGroupByStaff}">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="groupbystaff" class="btn btn-default">
+                      <i class="fal fa-user-friends"></i> Group by Staff
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group sch_border_bottom">
+                  <input type="checkbox" [disabled]="facilityList.length == 0" [(ngModel)]="isGroupByStaff"
+                    (ngModelChange)="onChangeGrouping()" id="groupbyfacility" autocomplete="off">
+                  <div class="btn-group label_width">
+                    <label for="groupbyfacility" class="btn"
+                      [ngClass]="{'check_bg': !isGroupByStaff, 'uncheck_bg': isGroupByStaff}">
+                      <span class="fa fa-times"></span>
+                      <span class="fa fa-check"></span>
+                    </label>
+                    <label for="groupbyfacility" class="btn btn-default">
+                      <i class="fal fa-city"></i> Group by Facility
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Scheduler Grouping Section End-->
+          <div id="sch_left_accordian4" *ngIf="!ShowMyOwnScheduler">
+            <div class="panel-heading collapsed" data-toggle="collapse" data-parent="#sch_left_accordian4"
+              data-target="#sch_left_collapse4">
+              <h3 class="sch_collapse_item accordion-toggle1"> Positions</h3>
+            </div>
+            <div id="sch_left_collapse4" class="panel-collapse collapse">
+              <div class="sch_panel-body">
+              
+                <div class="form-group sch_border_bottom">
+                  <input type="checkbox" id="allStaffPosition" name="allStaffPosition"
+                    [(ngModel)]="schedulerSearchParam.AllStaffPosition" autocomplete="off"
+                    (change)="staffPositionChangeAll()">
+                  <div class="btn-group">
+                    <label for="allStaffPosition" class="btn"
+                      [ngClass]="{'check_bg': schedulerSearchParam.AllStaffPosition, 'uncheck_bg': !schedulerSearchParam.AllStaffPosition}">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="allStaffPosition" class="btn btn-default sch_left_label_width">
+                      <i class="fal fa-user-friends"></i> All
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group sch_border_bottom"
+                  *ngFor="let _staffPosition of staffPositionListDataSource; let arrayIndex=index">
+                  <input type="checkbox" [(ngModel)]="_staffPosition.selected" id="{{'staffPositionID' + arrayIndex}}"
+                    (change)="onStaffPositionChange()" name="{{'staffPositionID' + arrayIndex}}" autocomplete="off">
+                  <div class="btn-group label_width">
+                    <label for="{{'staffPositionID' + arrayIndex}}" class="btn"
+                      [ngClass]="{'check_bg': _staffPosition.selected, 'uncheck_bg': !_staffPosition.selected}">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="{{'staffPositionID' + arrayIndex}}" class="btn btn-default">
+                      <i class="fal fa-user-friends"></i> {{_staffPosition.text}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="sch_left_accordian1" *ngIf="!ShowMyOwnScheduler">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#sch_left_accordian1"
+              data-target="#sch_left_collapse1">
+              <h3 class="sch_collapse_item accordion-toggle1"> Staff</h3>
+            </div>
+            <div id="sch_left_collapse1" class="panel-collapse collapse show">
+              <div class="sch_panel-body">
+                <div class="form-group sch_border_bottom">
+                  <input type="checkbox" id="allStaff" name="allStaff" [(ngModel)]="schedulerSearchParam.AllStaff"
+                    autocomplete="off" (change)="staffListChangeAll()">
+                  <div class="btn-group">
+                    <label for="allStaff" class="btn"
+                      [ngClass]="{'check_bg': schedulerSearchParam.AllStaff, 'uncheck_bg': !schedulerSearchParam.AllStaff}">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="allStaff" class="btn btn-default sch_left_label_width">
+                      <i class="fal fa-user-friends"></i> All
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group sch_border_bottom"
+                  *ngFor="let _staff of filteredStaffListDataSource; let arrayIndex=index">
+                  <input type="checkbox" [(ngModel)]="_staff.selected" id="{{'StaffID' + arrayIndex}}"
+                    (change)="staffListChange()" name="{{'StaffID' + arrayIndex}}" autocomplete="off">
+                  <div class="btn-group label_width">
+                    <label for="{{'StaffID' + arrayIndex}}" class="btn"
+                      [ngClass]="{'check_bg': _staff.selected, 'uncheck_bg': !_staff.selected}">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="{{'StaffID' + arrayIndex}}" class="btn btn-default">
+                      <i class="fal fa-user"></i> {{_staff.text}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="sch_left_accordian2">
+            <div class="panel-heading collapsed" data-toggle="collapse" data-parent="#sch_left_accordian2"
+              data-target="#sch_left_collapse2">
+              <h3 class="sch_collapse_item accordion-toggle1"> Activities</h3>
+            </div>
+            <div id="sch_left_collapse2" class="panel-collapse collapse" [class.show]="ShowMyOwnScheduler == true">
+              <div class="sch_panel-body">
+                <div class="form-group sch_border_bottom">
+                  <input type="checkbox" [(ngModel)]="schedulerSearchParam.AllSchedulerActivityType" id="allActivity"
+                    name="allActivity" autocomplete="off" (change)="activityListChangeAll()">
+                  <div class="btn-group label_width">
+                    <label for="allActivity" class="btn btn-primary">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="allActivity" class="btn btn-default">
+                      <i class="fal fa-user-friends"></i> All
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group sch_border_bottom"
+                  *ngFor="let _actvity of CalendarActivitiesListDataSource; let arrayIndex=index">
+                  <input type="checkbox" [(ngModel)]="_actvity.selected" id="{{'SchedulerActivityTypeID' + arrayIndex}}"
+                    name="{{'SchedulerActivityTypeID' + arrayIndex}}" autocomplete="off"
+                    (change)="activityListChange($event)">
+                  <div class="[ btn-group ]">
+                    <label for="{{'SchedulerActivityTypeID' + arrayIndex}}" class="btn btn-primary"
+                      [ngStyle]="{'background': _actvity.color, 'border-color': _actvity.color}">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="{{'SchedulerActivityTypeID' + arrayIndex}}" class="btn btn-default">
+                      <i class="fal fa-heartbeat" *ngIf="_actvity.id == 1"></i>
+                      <i class="fal fa-tasks" *ngIf="_actvity.id == 2"></i>
+                      <i class="fal fa-phone" *ngIf="_actvity.id == 3"></i>
+                      <i class="fal fa-calendar-alt" *ngIf="_actvity.id == 4"></i>
+                      <i class="fal fa-spa" *ngIf="_actvity.id == 5"></i>
+                      <i class="fal fa-user-clock" *ngIf="_actvity.id == 6"></i>
+                      {{_actvity.text}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="sch_left_accordian3" class="accordian_last" *ngIf="hasFacilityInPackage && isShowTaskInRole">
+            <div class="panel-heading collapsed" data-toggle="collapse" data-parent="#sch_left_accordian3"
+              data-target="#sch_left_collapse3">
+              <h3 class="sch_collapse_item accordion-toggle1">
+                Facilities <i class="fas fa-exclamation-circle" *ngIf="disableFacilityList"
+                  matTooltip="To select a facility, a class or service must be pre-selected." matTooltipPosition="above"
+                  matTooltipClass="custom-tooltip" style="color: orange;"></i></h3>
+
+            </div>
+            <div id="sch_left_collapse3" class="panel-collapse collapse">
+              <div class="sch_panel-body">
+                <div class="form-group">
+                  <input type="checkbox" id="allFacility" name="allFacility"
+                    [(ngModel)]="schedulerSearchParam.AllFacility" autocomplete="off" (change)="facilityListChangeAll()"
+                    [disabled]="disableFacilityList">
+                  <div class="btn-group sch_border_bottom">
+                    <label for="allFacility" class="btn"
+                      [ngClass]="{'check_bg': schedulerSearchParam.AllFacility, 'uncheck_bg': !schedulerSearchParam.AllFacility}">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="allFacility" class="btn btn-default">
+                      <i class="fal fa-city"></i> All
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group " *ngFor="let _facility of facilityList; let arrayIndex=index">
+                  <input type="checkbox" [(ngModel)]="_facility.selected" id="{{'FacilityID' + arrayIndex}}"
+                    name="{{'FacilityID' + arrayIndex}}" autocomplete="off" (change)="facilityListChange()"
+                    [disabled]="disableFacilityList">
+                  <div class="btn-group sch_border_bottom">
+                    <label for="{{'FacilityID' + arrayIndex}}" class="btn"
+                      [ngClass]="{'check_bg': _facility.selected, 'uncheck_bg': !_facility.selected.AllFacility}">
+                      <span class="fa fa-check"></span>
+                      <span class="fa fa-times"></span>
+                    </label>
+                    <label for="{{'FacilityID' + arrayIndex}}" class="btn btn-default">
+                      <i class="fal fa-building"></i> {{_facility.text}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scheduler_btn sch_left_bar_btn">
+        <!-- <button (click)="resetSearchFundamentals()"> -->
+          <button (click)="resetSearchFundamentalFilters()">
+            Reset
+          </button>
+        <button class="float-right primary_blue_btn" (click)="loadSearchFundamentals()">
+          Load</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-10 scheduler_space sch_ten_column padding_left sm-pl-15">
+    <div class="overflow-auto">
+      <div class="responsive_sch-width position-relative">
+
+        <div *ngIf="isFavouriteViewInPackage" class="favourite-view-wrapper">
+          <mat-select #mySelect tabindex="9"
+            class="form-control select_label sch_select_label bookingStatusDropdown schedulerServiceBookingDropDown mt-2"
+            panelClass="favouriteViewSelector" [(ngModel)]="defaultFavouriteViewValue" name="favouriteViewSelector"
+            (ngModelChange)="onFavouriteViewChange(mySelect.value)">
+            <mat-option class="border-bottom" *ngFor="let option of SchedulerFavouriteViewList"
+              [value]="option.SchedulerFavouriteViewID">
+              <div class="align_sp">
+                <span class="favt-option">{{option.SchedulerFavouriteViewName}}</span>
+                <span *ngIf="option.SchedulerFavouriteViewID !==0"
+                  (click)="deleteFavouriteView($event, option.SchedulerFavouriteViewID)">
+                  <i class="far fa-trash-alt"></i>
+                </span>
+              </div>
+            </mat-option>
+          </mat-select>
+          <div class="favouriteButtonIcon" matTooltip="Save the current view as your favourite" matTooltipClass="custom-tooltip"
+            matTooltipPosition="above" (click)="addFavouriteView()"></div>
+
+        </div>
+
+        <dx-scheduler id="MainSchedulerControl" #scheduler [dataSource]="schedulerDataSourceList"
+          [views]="schedulerViews" [firstDayOfWeek]="1" currentView="day" [startDayHour]="schedulerStartDayHour"
+          [endDayHour]="schedulerEndDayHour" [showAllDayPanel]="false" crossScrollingEnabled="true" [cellDuration]="15"
+          [customizeDateNavigatorText]="customizeDateNavigatorText" (onContentReady)="onContentReady($event)"
+          (onAppointmentClick)="onAppointmentClick($event)" (onAppointmentDblClick)="onAppointmentDblClick($event)"
+          (onAppointmentUpdating)="updateActivityForDragDrop($event)"
+          (onAppointmentRendered)="onAppointmentRendered($event)" (onCellClick)="onCellClick($event)"
+          (onAppointmentFormOpening)="onAppointmentFormOpening($event)"
+          (onOptionChanged)="onSchedulerOptionChanged($event)" resourceCellTemplate="resourceCellTemplate"
+          appointmentTemplate="activity-template" timeCellTemplate="timeCellTemplate"
+          dropDownAppointmentTemplate="dropdownTooltipTemplate" appointmentTooltipTemplate="tooltip-template"
+          recurrenceEditMode="series" [showCurrentTimeIndicator]="true" [shadeUntilCurrentTime]="false" class="sch_box">
+          <dxi-resource fieldExpr="StaffID" [dataSource]="resourcesStaffList" editorType="dxSelectBox"
+            *ngIf="!isShowFacilityIcon">
+          </dxi-resource>
+          <dxi-resource fieldExpr="FacilityID" [dataSource]="resourcesStaffList" editorType="dxSelectBox"
+            *ngIf="isShowFacilityIcon">
+          </dxi-resource>
+          <div *dxTemplate="let staff of 'resourceCellTemplate'" class="resourcesHeader">
+            <div class='avatar facility_icon'>
+              <img src="{{staff.data.avatar}}" class="img-responsive rounded_image" *ngIf="!isShowFacilityIcon">
+              <i class="fal fa-city" *ngIf="isShowFacilityIcon"></i>
+            </div>
+            <div class='recourcesText'>
+              <h2>{{staff.text}}</h2>
+            </div>
+          </div>
+          <dxo-editing [allowDragging]="true" [allowResizing]="allowResizingOnScheduler"></dxo-editing>
+          <div *dxTemplate="let singleActivity of 'activity-template'">
+            <scheduler-activity-template [singleActivityData]="singleActivity.appointmentData"
+              [currentView]="currentView" [showStaffPositionName]="showStaffPositionNameInTemplate"
+              [showTimeInTemplate]="showTimeInTemplate" [showStatusInTemplate]="showStatusInTemplate">
+            </scheduler-activity-template>
+          </div>
+          <div *dxTemplate="let singleData of 'tooltip-template'">
+            <app-add-tooltip-component [schedulerData]="singleData.appointmentData"
+              (editActivity)="editSchedulerActivity(singleData.appointmentData,false)"
+              (deleteActivity)="deleteActivity(singleData.appointmentData)"
+              (rescheduleActivity)="reScheduleServiceActivity(singleData.appointmentData,false)"
+              (closeActivity)="closeActivity()" [isDropdownTooltip]="false"
+              (manageAttendeeActivity)="manageAttendeeActivity(singleData.appointmentData)">
+            </app-add-tooltip-component>
+          </div>
+          <div *dxTemplate="let singleData of 'dropdownTooltipTemplate'">
+            <app-add-tooltip-component [schedulerData]="singleData"
+              (editActivity)="editSchedulerActivity(singleData,true)"
+              (rescheduleActivity)="reScheduleServiceActivity(singleData,false)"
+              [isDropdownTooltip]="true" (deleteActivity)="deleteActivity(singleData)" (closeActivity)="closeActivity()"
+              (manageAttendeeActivity)="manageAttendeeActivity(singleData)"></app-add-tooltip-component>
+          </div>
+          <div *dxTemplate="let appointment of 'timeCellTemplate'">
+            <div *ngIf="appointment.date.getMinutes() == 0">
+              {{ (appointment.date | customdate: schedulerHeaderTimeFormat ) }}</div>
+          </div>
+        </dx-scheduler>
+      </div>
+    </div>
+  </div>
+</div>

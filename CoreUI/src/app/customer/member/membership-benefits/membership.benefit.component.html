@@ -1,0 +1,146 @@
+<div class="white_bg info_bar_bg top_zero">
+    <div class="row">
+        <div class="col-md-12">
+            <person-info *ngIf="shouldGetPersonInfo"></person-info>
+        </div>
+    </div>
+</div>
+
+<!-- member membership list  -->
+<div class="grids_white_bg">
+    <div class="row flex-end">
+        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-8 padding_left mob_zero_padding sm-mb-0">
+            <div class="field_label">
+                <h5>Membership</h5>
+            </div>
+            <div class="select_label">
+                <mat-select class="form-control custom_select_option" name="memberShip" [(ngModel)]="searchMembership"
+                    (ngModelChange)="getMemberhipBenefit()">
+                    <mat-select-trigger *ngIf="searchMembership">
+                        <span [innerHTML]="searchMembership.MembershipName"></span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let member of membershipList" [value]="member">
+                        <span [innerHTML]="member.MembershipName"></span>
+                        <!-- <span [ngStyle]="{'color':member.MembershipStatusTypeID == membershipStatus_Enum.Active ? 'green' : member.MembershipStatusTypeID == membershipStatus_Enum.Frozen ? 'blue' : member.MembershipStatusTypeID == membershipStatus_Enum.Terminated ? 'red' :member.MembershipStatusTypeID == membershipStatus_Enum.Expired ? 'Orange':'red'}">{{member.MembershipStatusName}}</span> -->
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="col-xl-7 col-lg-6 col-md-4 col-sm-6 padding_right"
+            *ngIf="allowedPages.BenefitsSuspend && (searchMembership.MembershipStatusTypeID == membershipStatus_Enum.Frozen || searchMembership.MembershipStatusTypeID == membershipStatus_Enum.Active) && branchId == searchMembership.BranchID">
+            <button class="suspend_btn float-right" (click)="onSuspendBenefitDialog()" type="button"> Suspend /
+                Unsuspend Benefits</button>
+        </div>
+    </div>
+    <div class="cstm_scroll_bg overflow-auto master_row pt-3">
+        <div class="row grid_header benefits_grid_header  mob-scroll-grid">
+            <div class="col">
+                <h5></h5>
+            </div>
+            <div class="col">
+                <h5>Benefits Allowed </h5>
+            </div>
+            <div class="col">
+                <h5>Benefits Consumed</h5>
+            </div>
+            <div class="col">
+                <h5>Benefits Remaining</h5>
+            </div>
+            <div class="col">
+                <h5>Benefits Interval</h5>
+            </div>
+            <div class="col">
+                <h5>Next Reset Date</h5>
+            </div>
+            <div class="col">
+                <h5>Status</h5>
+            </div>
+            <div *ngIf="allowedPages.BenefitsSave" class="col text-center">
+                <h5>Actions</h5>
+            </div>
+        </div>
+
+        <ng-container *ngIf="memberhsipBenefit">
+            <ng-container *ngFor="let membenefit of memberhsipBenefit">
+                <div class="row grid_rows member_benefits_grid mob-scroll-grid">
+                    <div class="col">
+                        <h5><b>{{membenefit.BenefitName}}</b></h5>
+                    </div>
+                    <div class="col">
+                        <h5><b>{{membenefit.NoLimits?'No Limits':membenefit.TotalSessions}}</b></h5>
+                    </div>
+                    <div class="col">
+                        <h5><b>{{membenefit.SessionConsumed}}</b></h5>
+                    </div>
+                    <div class="col">
+                        <h5><b>{{membenefit.NoLimits?'No Limits':membenefit.SessionRemaining}}</b></h5>
+                    </div>
+                    <div class="col">
+                        <h5><b>{{membenefit.DurationTypeName}}</b></h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{membenefit.BenefitResetDate | customdate: dateFormat}}</h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{membenefit.SessionStatus}}</h5>
+                    </div>
+                    <div class="col text-center blue" *ngIf="allowedPages.BenefitsSave">
+                        <a
+                            *ngIf="branchId == searchMembership.BranchID && !membenefit.NoLimits && searchMembership.MembershipStatusTypeID == membershipStatus_Enum.Active && membenefit.SessionStatus != memberShipBenefitsStatus.Suspended"
+                            matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            aria-describedby="cdk-describedby-message-109" cdk-describedby-host=""
+                            ng-reflect-position="above" ng-reflect-message="Edit"
+                            (click)="editBenefitsDialog(membenefit,membenefit.MembershipBenefitsTypeID, true)"><i
+                                class="fal fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+                <ng-container *ngIf="membenefit.MemberBenefitsBranch">
+                    <ng-container *ngFor="let benefit of membenefit.MemberBenefitsBranch">
+                        <div
+                            class="row grid_rows benefits_grid_header grid_branch_rows grid_child_rows mob-scroll-grid">
+                            <div class="col">
+                                <h5><b>{{benefit.BranchName}}</b></h5>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="benefit.MemberBenefitsItemDetail">
+                            <div class="row grid_rows grid_child_rows mob-scroll-grid"
+                                *ngFor="let item of benefit.MemberBenefitsItemDetail">
+                                <div class="col">
+                                    <h5>{{item.ItemName}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{item.NoLimits?'No Limits': item.TotalSessions}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{item.SessionConsumed}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{item.NoLimits?'No Limits':item.SessionRemaining}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{item.DurationTypeName}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{item.BenefitResetDate | customdate: dateFormat}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5>{{item.SessionStatus}}</h5>
+                                </div>
+                                <div class="col text-center blue" *ngIf="allowedPages.BenefitsSave">
+                                    <a
+                                        *ngIf="branchId == searchMembership.BranchID && !item.NoLimits && searchMembership.MembershipStatusTypeID == membershipStatus_Enum.Active && item.SessionStatus != memberShipBenefitsStatus.Suspended"
+                                        aria-describedby="cdk-describedby-message-109" matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" cdk-describedby-host=""
+                                        ng-reflect-position="above" ng-reflect-message="Edit"><i class="fal fa-edit"
+                                            (click)="editBenefitsDialog(item,membenefit.MembershipBenefitsTypeID,false)"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
+    </div>
+</div>

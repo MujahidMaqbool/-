@@ -1,0 +1,177 @@
+﻿<!--Suspend Membership Pop Up Start-->
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <form #freezeMembershipForm="ngForm" (ngSubmit)="onSave(freezeMembershipForm.valid)" novalidate>
+            <div class="modal-content medium_popup">
+                <div class="popup_header">
+                    <h4>Freeze/Unfreeze Memberships</h4>
+                </div>
+                <div class="popup_content cstm_scroll_bg">
+
+                    <div class="popup_white_bg">
+                        <div class="row row_flex_alignment">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger" *ngIf="hasNoPayments">
+                                    {{messages.Generic_Messages.Memebrships_No_Payments_Alert}}
+                                </div>
+                                <div class="alert alert-warning" *ngIf="!hasNoPayments">
+                                    {{messages.Generic_Messages.Adhoc_Transactions_Not_Affect}}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="text_bottom_border">Members will not be allowed to book any benefits during the frozen period however the bookings already made will remain unaffected. Also, ad-hoc/manual transactions will not be affected.</p>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label top_zero">
+                                    <h5>Membership</h5>
+                                </div>
+                                <div class="select_label">
+                                    <select name="MembershipID" [(ngModel)]="selectedMembership" #MembershipID="ngModel"
+                                        tabindex="2" class="form-control" (ngModelChange)="onMembershipChange()"
+                                        required>
+                                        <optgroup label="{{(membership.StartDate | customdate: dateFormat) + ' - ' + (membership.EndDate | customdate: dateFormat)}}"
+                                            *ngFor="let membership of membershipList">
+                                            <option class="membership_drpdwn" [ngValue]="membership">
+                                                {{membership.MembershipName}}
+                                                {{membership.IsAutoRoll ? "- Auto Roll" : ""}}
+                                            </option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 space">
+                                <input id="Freeze" type="radio" name="rdoFreeze" [(ngModel)]="membershipFreezeDetail.Freeze"
+                                    [value]="true" [checked]="membershipFreezeDetail.Freeze" (ngModelChange)="onStatusChange()" />
+                                <label for="Freeze"><span></span>Freeze</label> &nbsp; &nbsp; &nbsp;
+
+                                <input id="UnFreeze" type="radio" name="rdoUnFreeze" [value]="false" [(ngModel)]="membershipFreezeDetail.Freeze"
+                                    [checked]="!membershipFreezeDetail.Freeze" (ngModelChange)="onStatusChange()" />
+                                <label for="UnFreeze"><span></span>Unfreeze</label>
+
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="OpenEndedSuspension" id="OpenEndedSuspension"
+                                        [(ngModel)]="membershipFreezeDetail.OpenEndedSuspension" #OpenEndedSuspension="ngModel"
+                                        [(checked)]="membershipFreezeDetail.OpenEndedSuspension">
+                                    <label for="OpenEndedSuspension">
+                                        Open Ended Suspension
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row flex-end">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Suspension Start Date</h5>
+                                </div>
+                                <div class="select_label">
+                                    <select name="StartSuspensionDate" [(ngModel)]="membershipFreezeDetail.StartCollectionDateID"
+                                        (ngModelChange)="onSuspensionDateChange()" #StartSuspensionDate="ngModel"
+                                        tabindex="2" class="form-control">
+                                        <option *ngFor="let collectionDate of startMembershipFreezeDateList" [ngValue]="collectionDate.CustomerMembershipPaymentID">
+                                            {{collectionDate.CollectionDate}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Intervals <span>(Available payments in series)</span></h5>
+                                </div>
+                                <div class="select_label">
+                                    <select name="Intervals" [(ngModel)]="membershipFreezeDetail.Intervals" [disabled]="membershipFreezeDetail.OpenEndedSuspension"
+                                        #Intervals="ngModel" tabindex="2" class="form-control">
+                                        <option *ngFor="let interval of intervalList" [ngValue]="interval">
+                                            {{interval}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="small_space"></div>
+                        <div id="search_accordion">
+                            <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+                                data-target="#suspend_membership">
+                                <div class="col-md-12">
+                                    <h3 class="panel-title accordion-toggle" style="font-size: 16px;">Optional</h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="filter_seprator"></div>
+                                </div>
+                            </div>
+                            <div id="suspend_membership" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row flex-end">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="field_label">
+                                                <h5>Suspension Fee <span>(Excluding
+                                                        {{selectedMembership?.TotalTaxPercentage > 0 ?
+                                                        selectedMembership?.TotalTaxPercentage + '%' : '' }} Tax)</span></h5>
+                                            </div>
+                                            <input type="text" numberControl name="Price" [(ngModel)]="membershipFreezeDetail.Price"
+                                                #Price="ngModel" tabindex="4" (ngModelChange)="onPriceChange()" class="form-control">
+
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="field_label">
+                                                <h5>Payment Type</h5>
+                                            </div>
+                                            <div class="select_label">
+                                                <select name="PaymentGatewayID" [(ngModel)]="selectedGateway"
+                                                    #PaymentGatewayID="ngModel" tabindex="2" class="form-control"
+                                                    (ngModelChange)="onPaymentMethodChange()">
+                                                    <option *ngFor="let gateway of paymentGatewayList"
+                                                        [ngValue]="gateway">
+                                                        {{gateway.PaymentGatewayName}}
+                                                        {{gateway.InstrumentName ? ' - ' + gateway.InstrumentName : ''}}
+                                                        {{gateway.InstrumentLastDigit ? ' - ' + gateway.InstrumentLastDigit : ''}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span class="payment_alert"> <b> Total Amount :</b> {{totalAmount |
+                                                currency: currencyFormat}}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="field_label">
+                                                <h5>Collection Date</h5>
+                                            </div>
+                                            <date-picker [value]="currentDate" [min]="minDate" [showClear]="false"
+                                                (onDateChange)="onCollectionDateChange($event)"></date-picker>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="field_label">
+                                                <h5>Notes</h5>
+                                            </div>
+                                            <textarea type="text" name="Notes" [(ngModel)]="membershipFreezeDetail.Notes"
+                                                #Notes="ngModel" rows="5" tabindex="5" class="form-control" maxlength="100"></textarea>
+                                        </div>
+                                        <div class="col-md-12" *ngIf="showProcessingDaysMessage">
+                                            <span class="membership_processing_days alert-warning mt-2">
+                                                <i class="fal fa-info-circle pr-1"></i>
+                                                <span *ngIf="!isShowPrecessDayStripeACH">Minimum Due date for Go Cardless is {{minDate | customdate: dateFormat}}</span>
+                                                <span *ngIf="isShowPrecessDayStripeACH">Minimum Due date for Stripe ACH is {{minDate | customdate: dateFormat}}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12">
+                        <div class="cancel_btn float-right">
+                            <button type="button" (click)="onCloseDialog()">Close</button>
+                            <button type="submit" class="save primary_blue_btn" [disabled]="hasNoPayments">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Suspend Membership Pop Up End-->

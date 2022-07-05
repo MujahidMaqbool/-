@@ -1,0 +1,767 @@
+<div class="row" *ngIf="showError">
+  <div class="col-md-12">
+    <div class="alert alert-danger">
+      {{messages.Error.ValueMustBeGreatThenZero}}
+    </div>
+  </div>
+</div>
+
+<!-- Communications -->
+<div class="white_bg waitlist_items">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1>Communications</h1>
+      <p>Suspend/unsuspend different communication means with your staff and customers.</p>
+    </div>
+    <div class="col-md-12">
+      <div class="form_border my-10"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Suspend Outgoing Emails</h3>
+          <p>Toggle on to suspend all system generated and manual emails except password reset emails.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" [(ngModel)]="brachBasic.SuspendCustomerEmail"
+            class="wellyx-checked float-right" name="suspendCustomerEmail">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mr-3"></div>
+        <div class="media-body mr-0">
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3>Display Name <span class="optional">(optional)</span></h3>
+              <p>A customized name that appears as a sender’s name in the recipient’s inbox.</p>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <input type="text" [(ngModel)]="brachBasic.BranchEmailFromName" name="branchEmailFromName" class="mb-0">
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3>‘Reply to’ Email Address <span class="optional">(optional)</span></h3>
+              <p>An email address that receives all email responses from your customers.</p>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <input type="text" [(ngModel)]="brachBasic.BranchReplyToEmail" name="branchReplyToEmail" class="mb-0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+        <div class="col-md-9">
+          <h3>Suspend Outgoing SMSs</h3>
+          <p>Toggle on to suspend all system generated and manual SMSs.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" [(ngModel)]="brachBasic.SuspendOutgoingSMS" class="wellyx-checked float-right"
+            name="suspendOutgoingSMS">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Suspend Push Notifications</h3>
+          <p>Toggle on to suspend all system generated and manual push notifications.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" [(ngModel)]="brachBasic.SuspendOutgoingNotification"
+            class="wellyx-checked float-right" name="suspendOutgoingNotification">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Zero Value Invoices</h3>
+          <p>Toggle on to suspend all outgoing emails for invoices where total amount due is zero.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" [(ngModel)]="brachBasic.RestrictCustomerInvoiceEmail"
+            class="wellyx-checked float-right" name="restrictCustomerInvoiceEmail">
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Membership Benefits -->
+<div class="white_bg waitlist_items">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1>Membership Benefits</h1>
+      <p>Suspend/unsuspend membership benefits when a membership payment has failed. This setting does not
+        override the ‘Enforce Manual Settings’ check in a member’s profile.</p>
+    </div>
+    <div class="col-md-12">
+      <div class="form_border my-10"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Suspend All Benefits</h3>
+          <p>Toggle on to automatically suspend all or selective membership benefits when membership
+            payment has failed for the respective interval.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" [(ngModel)]="brachBasic.SuspendAllBenefits"
+            (change)="onChangeAllbenefits()" name="suspendAllBenefits">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mr-3"></div>
+        <div class="media-body mr-0">
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-0">Suspend Door Check-ins</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <mat-slide-toggle tabindex="1" (change)="chekedAllBenefitSwithedIfAllBenefitCheked()"
+                [(ngModel)]="brachBasic.SuspendDoorCheckInBenefits" class="wellyx-checked float-right"
+                name="BookingClasses">
+              </mat-slide-toggle>
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-0">Suspend Service Benefits</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <mat-slide-toggle tabindex="1" (change)="chekedAllBenefitSwithedIfAllBenefitCheked()"
+                [(ngModel)]="brachBasic.SuspendServiceBenefits" class="wellyx-checked float-right"
+                name="suspendServiceBenefits">
+              </mat-slide-toggle>
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-0">Suspend Class Benefits</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <mat-slide-toggle tabindex="1" (change)="chekedAllBenefitSwithedIfAllBenefitCheked()"
+                [(ngModel)]="brachBasic.SuspendClassBenefits" class="wellyx-checked float-right"
+                name="suspendClassBenefits">
+              </mat-slide-toggle>
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3 class="mb-0">Suspend Products Benefits</h3>
+            </div>
+            <div class="col-md-3 padding_right mob-pa">
+              <mat-slide-toggle tabindex="1" (change)="chekedAllBenefitSwithedIfAllBenefitCheked()"
+                class="wellyx-checked float-right" [(ngModel)]="brachBasic.SuspendProductBenefits"
+                name="suspendProductBenefits">
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center" *ngIf="showHidePriceLabel">
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+        <div class="col-md-9">
+          <h3>Show Prices Online – Widget & Customer App</h3>
+          <p>Toggle on to show prices for items within a members’ membership that are currently unavailable due to item
+            level configuration that are hiding their prices.
+            E.g. If a Zumba class is currently configured to hide its prices online, but is part of a members’
+            membership, the member will not be able to book
+            the Zumba class online unless this toggle is turned on.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right"
+            [(ngModel)]="brachBasic.MembershipItemsShowPriceOnlineForWidgetAndApp"
+            name="membershipItemsShowPriceOnlineForWidgetAndApp">
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Access Control -->
+<div class="white_bg waitlist_items" *ngIf="hasAccessControlPackage">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1 class="mb-0">Access Control</h1>
+    </div>
+    <div class="col-md-12">
+      <div class="form_border my-10"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-10">
+          <h3>Members</h3>
+          <p>Toggle on to allow members to use access control systems in your branch.</p>
+        </div>
+        <div class="col-md-2 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" [(ngModel)]="accessControlMembers"
+            (change)="onChangeMembersAccessControl()" [(checked)]="accessControlMembers" name="accessControlMembers">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mr-3"></div>
+        <div class="media-body mr-0">
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-8">
+              <h3>Bluetooth Access</h3>
+              <p>Toggle on to allow members to use their customer app to access the branch.</p>
+            </div>
+            <div class="col-md-4 padding_right label_with_input mob-pa">
+              <mat-slide-toggle [(ngModel)]="brachBasicControlAccess.MemberBLEAccess"
+                (change)="onChangeMembersAccessControlType()" [(checked)]="brachBasicControlAccess.MemberBLEAccess" [disabled]="!accessControlMembers"
+                name="memberBLEAccess" class="wellyx-checked float-right">
+              </mat-slide-toggle>
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-8">
+              <h3>NFC Access</h3>
+              <p>Toggle on to allow members to use their customer app or fobs to access the branch through NFC . Please
+                note NFC access does not work with iOS devices.</p>
+            </div>
+            <div class="col-md-4 padding_right label_with_input mob-pa">
+              <mat-slide-toggle [(ngModel)]="brachBasicControlAccess.MemberNFCAccess"
+                (change)="onChangeMembersAccessControlType()" [(checked)]="brachBasicControlAccess.MemberNFCAccess" [disabled]="!accessControlMembers"
+                name="memberNFCAccess" class="wellyx-checked float-right">
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+        <div class="col-md-10">
+          <h3>Staff</h3>
+          <p>Toggle on to allow staff to use access control systems in your branch.</p>
+        </div>
+        <div class="col-md-2 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" [(ngModel)]="accessControlStaff"
+            (change)="onChangeStaffAccessControl()" [(checked)]="accessControlStaff" name="accessControlStaff">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mr-3"></div>
+        <div class="media-body mr-0">
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3>Access Control – Timing</h3>
+              <p>Set the default times for staff. Staff can either gain access anytime or during branch opening hours.
+                You can also set a grace period for branch opening hours between 0 minutes to 60 minutes.</p>
+            </div>
+            <div class="col-md-3 padding_right d-flex justify-content-end mob-pa">
+             
+              <div class="select_label mr-md-2 flex-grow">
+                <select name="MembserhipName" class="mb-0" [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTiming" [disabled]="!accessControlStaff" tabindex="7" (ngModelChange)="onSelectStaffDoorAccessTiming()">
+                  <option *ngFor="let accessOpening of AccessControlOpeningTime" [ngValue]="accessOpening.value" >
+                    {{accessOpening.text}}</option>
+                </select>
+              </div>
+              <div class="flex-grow" *ngIf="brachBasicControlAccess.StaffDoorAccessTiming == 1">
+                <input type="text" maxlength="4" [disabled]="brachBasicControlAccess.StaffDoorAccessTiming == 1"
+                [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTimeGracePeriodInMinutesText"
+                name="StaffDoorAccessTiming"
+                #StaffDoorAccessTiming="ngModel" min="1"
+                numberControl>
+              </div>
+              <div class="select_label flex-grow" *ngIf="brachBasicControlAccess.StaffDoorAccessTiming == 2">
+                <select name="StaffDoorAccessTimeGracePeriodInMinutes" class="mb-0" [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTimeGracePeriodInMinutes" tabindex="7">
+                  <option *ngFor="let accessControl of AccessControlTimeIntervel" [ngValue]="accessControl.value">
+                    {{accessControl.text}}</option>
+                </select>
+              </div>
+              
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-8">
+              <h3>Bluetooth Access</h3>
+              <p>Toggle on to allow staff to use their customer app to access the branch.</p>
+            </div>
+            <div class="col-md-4 padding_right label_with_input mob-pa">
+              <mat-slide-toggle [(ngModel)]="brachBasicControlAccess.StaffBLEAccess"
+                (change)="onChangeStaffAccessControlType()" [(checked)]="brachBasicControlAccess.StaffBLEAccess" [disabled]="!accessControlStaff"
+                name="staffBLEAccess" class="wellyx-checked float-right">
+              </mat-slide-toggle>
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-8">
+              <h3>NFC Access</h3>
+              <p>Toggle on to allow staff to use their customer app or fobs to access the branch through NFC . Please
+                note NFC access does not work with iOS devices.</p>
+            </div>
+            <div class="col-md-4 padding_right label_with_input mob-pa">
+              <mat-slide-toggle [(ngModel)]="brachBasicControlAccess.StaffNFCAccess" [disabled]="!accessControlStaff"
+                (change)="onChangeStaffAccessControlType()" [(checked)]="brachBasicControlAccess.StaffNFCAccess"
+                name="staffNFCAccess" class="wellyx-checked float-right">
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Class Configurations -->
+<div class="white_bg waitlist_items">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1 class="mb-0">Class Configurations</h1>
+    </div>
+    <div class="col-md-12">
+      <div class="form_border my-10"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Show Free Spaces - Widget & App</h3>
+          <p>Toggle on to allow customers to see available spaces against each class on the widget & app.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right"
+            [(ngModel)]="brachBasic.ClassShowFreeSpacesOnWidgetAndApp" name="classShowFreeSpacesOnWidgetAndApp">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="hasFamilyAndFriendInPackage">
+        <div class="row waitlist_subtitle align-items-center">
+          <div class="col-md-9">
+            <h3>Booking for Family and Friends</h3>
+            <p>Toggle on to allow a customer to book multiple spaces in a class for family and friends.</p>
+          </div>
+          <div class="col-md-3 padding_right mob-pa">
+            <mat-slide-toggle [(ngModel)]="brachBasic.IsClassBookingForFamilyAndFriends"
+              (change)="onChangeClassBookingForFamilyAndFriends()"
+              [(checked)]="brachBasic.IsClassBookingForFamilyAndFriends" name="IsClassBookingForFamilyAndFriends"
+              class="wellyx-checked float-right">
+            </mat-slide-toggle>
+          </div>
+          <div class="col-md-12 pr-0 mob-pa">
+            <div class="form_border my-10"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mr-3"></div>
+          <div class="media-body mr-0">
+            <div class="row waitlist_subtitle align-items-center">
+              <div class="col-md-7">
+                <h3>Use Discounted Benefits for Booking Family and Friends</h3>
+                <p>Toggle on to allow members to use their benefits for booking family and friends in the discounted
+                  classes.</p>
+              </div>
+              <div class="col-md-5 padding_right label_with_input mob-pa">
+                <mat-slide-toggle [(ngModel)]="brachBasic.IsClassBookingDiscountBenefitsForFamilyAndFriends"
+                  [disabled]="!brachBasic.IsClassBookingForFamilyAndFriends"
+                  [(checked)]="brachBasic.IsClassBookingDiscountBenefitsForFamilyAndFriends"
+                  name="IsClassBookingDiscountBenefitsForFamilyAndFriends" class="wellyx-checked float-right">
+                </mat-slide-toggle>
+              </div>
+              <div class="col-md-12 pr-0 mob-pa">
+                <div class="form_border my-10"></div>
+              </div>
+            </div>
+            <div class="row waitlist_subtitle align-items-center">
+              <div class="col-md-7">
+                <h3>Use Free Benefits for Booking Family and Friends</h3>
+                <p>Toggle on to allow members to use their benefits for booking family and friends in the free
+                  classes.</p>
+              </div>
+              <div class="col-md-5 padding_right label_with_input mob-pa">
+                <mat-slide-toggle [(ngModel)]="brachBasic.IsClassBookingFreeBenefitsForFamilyAndFirends"
+                  [disabled]="!brachBasic.IsClassBookingForFamilyAndFriends"
+                  [(checked)]="brachBasic.IsClassBookingFreeBenefitsForFamilyAndFirends"
+                  name="IsClassBookingFreeBenefitsForFamilyAndFirends" class="wellyx-checked float-right">
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+        <div class="col-md-9">
+          <h3>Customer Check-In</h3>
+          <p>Toggle on to allow customer to check-in for classes from the widget & app.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right" (change)="onChangeCustomerCheckIn()"
+            [(ngModel)]="brachBasic.ClassCustomerCheckIn" name="classCustomerCheckIn">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mr-3"></div>
+        <div class="media-body mr-0">
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3>Check-In Starts Before</h3>
+              <p>How early can a customer check-in before the class start time.</p>
+            </div>
+            <div class="col-md-3 padding_right label_with_input mob-pa">
+              <div class="cst-disable-checkbox" [ngClass]="{
+                        'has-danger': classCustomerCheckInStartsBefore.invalid
+                                      && (classCustomerCheckInStartsBefore.dirty || classCustomerCheckInStartsBefore.touched)
+                                      || ((!classCustomerCheckInStartsBefore.value) || classCustomerCheckInStartsBefore.value == null)
+                                      && showError && brachBasic.ClassCustomerCheckInStartsBefore,
+                        'has-success': (classCustomerCheckInStartsBefore.value)
+                                       && classCustomerCheckInStartsBefore.valid && (classCustomerCheckInStartsBefore.dirty || classCustomerCheckInStartsBefore.touched)
+                        }"><input type="text" maxlength="4" [disabled]="!brachBasic.ClassCustomerCheckIn"
+                  [(ngModel)]="brachBasic.ClassCustomerCheckInStartsBefore"
+                  (keydown)="preventCharactersForClassBooking($event)" name="CheckInStartBefore"
+                  #classCustomerCheckInStartsBefore="ngModel" min="1"
+                  (ngModelChange)="onPercentageChangeOnlyNumbers($event)" class="form-control text-center mb-0" required
+                  numberControl></div>
+              <div class="select_label">
+                <select class="mb-0" [disabled]="!brachBasic.ClassCustomerCheckIn"
+                  [(ngModel)]="brachBasic.ClassCustomerCheckInStartsBeforeDurationTypeId">
+                  <option *ngFor="let durationType of durationTypeList" [ngValue]="durationType.DurationTypeID">
+                    {{durationType.DurationTypeName}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3>Check-In Ends After</h3>
+              <p>How late can a customer check-in after the class start time. Selecting ‘Class Start Time’ would
+                result in customers not being allowed to check in after the ‘Class Start Time’.</p>
+            </div>
+            <div class="col-md-3 padding_right label_with_input mob-pa">
+
+              <div class="cst-disable-checkbox" [ngClass]="{
+                        'has-danger': classCustomerCheckInEndsBefore.invalid
+                                      && (classCustomerCheckInEndsBefore.dirty || classCustomerCheckInEndsBefore.touched)
+                                      || ((!classCustomerCheckInEndsBefore.value) || classCustomerCheckInEndsBefore.value == null)
+                                      && showError && brachBasic.ClassCustomerCheckInEndsAfter,
+                        'has-success': (classCustomerCheckInEndsBefore.value)
+                                       && classCustomerCheckInEndsBefore.valid && (classCustomerCheckInEndsBefore.dirty || classCustomerCheckInEndsBefore.touched)
+                        }"><input type="text" maxlength="4" [disabled]="!brachBasic.ClassCustomerCheckIn"
+                  [(ngModel)]="brachBasic.ClassCustomerCheckInEndsAfter"
+                  (keydown)="preventCharactersForClassBooking($event)" name="classCustomerCheckInEndsBefore"
+                  #classCustomerCheckInEndsBefore="ngModel" min="1"
+                  (ngModelChange)="onPercentageChangeOnlyNumbers($event)" class="form-control text-center mb-0" required
+                  numberControl></div>
+              <div class="select_label">
+                <select class="mb-0" [disabled]="!brachBasic.ClassCustomerCheckIn"
+                  [(ngModel)]="brachBasic.ClassCustomerCheckInEndsAfterDurationTypeId">
+                  <option *ngFor="let durationType of durationTypeList" [ngValue]="durationType.DurationTypeID">
+                    {{durationType.DurationTypeName}} </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+        <div class="col-md-10 col-sm-12">
+          <h3>Date Filter for Classes</h3>
+          <p>Set a default date filter for classes tab on widget & app.</p>
+        </div>
+        <div class="col-md-2 col-sm-12 padding_right mob-pa">
+          <div class="select_label">
+            <select class="mb-0" [(ngModel)]="brachBasic.DateFilterForClasses">
+              <option *ngFor="let dateIntervalForClasses of DateIntervalForClasses"
+                [ngValue]="dateIntervalForClasses.value">
+                {{dateIntervalForClasses.text}} </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Service Configurations -->
+<div class="white_bg waitlist_items">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1 class="bottom_zero">Service Configurations</h1>
+    </div>
+    <div class="col-md-12 pr-0 mob-pa">
+      <div class="form_border my-10"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Customer Check-In</h3>
+          <p>Toggle on to allow customer to check-in for services from the widget & app.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right"
+            [(ngModel)]="brachBasic.ServiceCustomerCheckIn" (change)="onChangeCustomerCheckIn()"
+            name="serviceCustomerCheckIn">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mr-3"></div>
+        <div class="media-body mr-0">
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-7">
+              <h3>Check-In Starts Before</h3>
+              <p>How early can a customer check-in before the service start time.</p>
+            </div>
+            <div class="col-md-5 padding_right label_with_input mob-pa">
+
+              <div class="cst-disable-checkbox" [ngClass]="{
+                        'has-danger': serviceCustomerCheckInStartsBefore.invalid
+                                      && (serviceCustomerCheckInStartsBefore.dirty || serviceCustomerCheckInStartsBefore.touched)
+                                      || ((!serviceCustomerCheckInStartsBefore.value) || serviceCustomerCheckInStartsBefore.value == null)
+                                      && showError && brachBasic.ServiceCustomerCheckInStartsBefore,
+                        'has-success': (serviceCustomerCheckInStartsBefore.value)
+                                       && serviceCustomerCheckInStartsBefore.valid && (serviceCustomerCheckInStartsBefore.dirty || serviceCustomerCheckInStartsBefore.touched)
+                        }"><input type="text" maxlength="4" [disabled]="!brachBasic.ServiceCustomerCheckIn"
+                  [(ngModel)]="brachBasic.ServiceCustomerCheckInStartsBefore"
+                  (keydown)="preventCharactersForClassBooking($event)" name="CheckInStartBefore"
+                  #serviceCustomerCheckInStartsBefore="ngModel" min="1"
+                  (ngModelChange)="onPercentageChangeOnlyNumbers($event)" class="form-control text-center mb-0" required
+                  numberControl></div>
+              <div class="select_label">
+                <select class="mb-0" [disabled]="!brachBasic.ServiceCustomerCheckIn"
+                  [(ngModel)]="brachBasic.ServiceCustomerCheckInStartsBeforeDurationTypeId">
+                  <option *ngFor="let durationType of durationTypeList" [ngValue]="durationType.DurationTypeID">
+                    {{durationType.DurationTypeName}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 pr-0 mob-pa">
+              <div class="form_border my-10"></div>
+            </div>
+          </div>
+
+          <div class="row waitlist_subtitle align-items-center">
+            <div class="col-md-9">
+              <h3>Check-In Ends After</h3>
+              <p>How late can a customer check-in after the service start time. Selecting ‘Service Start Time’
+                would result in customers not being allowed to check in after the ‘Service Start Time’.</p>
+            </div>
+            <div class="col-md-3 padding_right label_with_input mob-pa">
+              <div class="cst-disable-checkbox" [ngClass]="{
+                        'has-danger': serviceCustomerCheckInEndsAfter.invalid
+                                      && (serviceCustomerCheckInEndsAfter.dirty || serviceCustomerCheckInEndsAfter.touched)
+                                      || ((!serviceCustomerCheckInEndsAfter.value) || serviceCustomerCheckInEndsAfter.value == null)
+                                      && showError && brachBasic.ServiceCustomerCheckInEndsAfter,
+                        'has-success': (serviceCustomerCheckInEndsAfter.value)
+                                       && serviceCustomerCheckInEndsAfter.valid && (serviceCustomerCheckInEndsAfter.dirty || serviceCustomerCheckInEndsAfter.touched)
+                        }"><input type="text" maxlength="4" [disabled]="!brachBasic.ServiceCustomerCheckIn"
+                  [(ngModel)]="brachBasic.ServiceCustomerCheckInEndsAfter"
+                  (keydown)="preventCharactersForClassBooking($event)" name="CheckInEndAfter"
+                  #serviceCustomerCheckInEndsAfter="ngModel" min="1"
+                  (ngModelChange)="onPercentageChangeOnlyNumbers($event)" class="form-control text-center mb-0" required
+                  numberControl></div>
+              <div class="select_label">
+                <select class="mb-0" [disabled]="!brachBasic.ServiceCustomerCheckIn"
+                  [(ngModel)]="brachBasic.ServiceCustomerCheckInEndsAfterDurationTypeId">
+                  <option *ngFor="let durationType of durationTypeList" [ngValue]="durationType.DurationTypeID">
+                    {{durationType.DurationTypeName}} </option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+        <div class="col-md-10">
+          <h3>Service Lead Time</h3>
+          <p>Select how close to a service time the customer can book with your branch from the widget & app.
+          </p>
+        </div>
+        <div class="col-md-2 padding_right mob-pa">
+          <div class="select_label">
+            <select class="mb-0" [(ngModel)]="brachBasic.ServiceLeadTime">
+              <option *ngFor="let serviceInterval of ServiceInterval" [ngValue]="serviceInterval.value">
+                {{serviceInterval.text}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-10">
+          <h3>Service Interval</h3>
+          <p>Select the interval between time slots as they appear in core, widget & app.</p>
+        </div>
+        <div class="col-md-2 padding_right mob-pa">
+          <div class="select_label">
+            <select class="mb-0" [(ngModel)]="brachBasic.ServiceTimeSlotsInterval">
+              <option *ngFor="let serviceInterval of ServiceInterval" [ngValue]="serviceInterval.value">
+                {{serviceInterval.text}} </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Reward Program -->
+<div class="white_bg waitlist_items" *ngIf="hasRewardProgramPackage">
+  <div class="row center_flex_alignment">
+    <div class="col-md-12 col-sm-12">
+      <h1 class="bottom_zero">Reward Program</h1>
+    </div>
+    <div class="col-md-12 pr-0 mob-pa">
+      <div class="form_border my-10"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mr-3"></div>
+    <div class="media-body">
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Reward Program - Widget & App</h3>
+          <p>Toggle on to hide ‘reward program menu’ from widget & app for customers if you wish to discontinue reward
+            program for your branch. The configuration does not automatically terminate/freeze program for customers.
+          </p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right"
+            [(ngModel)]="brachBasic.RewardProgramOnWidgetAndApp" name="rewardProgramOnWidgetAndApp">
+          </mat-slide-toggle>
+        </div>
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+      </div>
+
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-9">
+          <h3>Cancellations and Refunds</h3>
+          <p>Toggle on to automatically revoke all earned reward points when a booking is cancelled/marked as no show or
+            an invoice is refunded.</p>
+        </div>
+        <div class="col-md-3 padding_right mob-pa">
+          <mat-slide-toggle tabindex="1" class="wellyx-checked float-right"
+            [(ngModel)]="brachBasic.RevokeRewardPointsonCacellationandRefund" name="rewardProgramCancellationAndRefund">
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

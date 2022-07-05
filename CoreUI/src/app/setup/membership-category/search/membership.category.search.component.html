@@ -1,0 +1,138 @@
+<div class="page_content">
+  <div class="row" *ngIf="isAllowedSave">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button class="save" (click)="onAddClick()" data-toggle="modal" data-target=".add_product_pop">
+          Add Category</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="white_bg">
+    <div id="search_accordion">
+      <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+        data-target="#membership_search">
+        <div class="col-md-12">
+          <h3 class="panel-title accordion-toggle">
+            Search Filter
+          </h3>
+        </div>
+      </div>
+      <div id="membership_search" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="filter_seprator"></div>
+            </div>
+          </div>
+          <div class="row flex-end">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="field_label">
+                <h5>Membership Category</h5>
+              </div>
+              <input type="text" class="form-control" tabindex="1" name="membershipCategory" maxlength="50"
+                [(ngModel)]="membershipCategorySearchParams.membershipCategoryName">
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="field_label">
+                <h5>Status</h5>
+              </div>
+              <div class="select_label">
+                <select name="isActive" tabindex="3" [(ngModel)]="membershipCategorySearchParams.IsActive">
+                  <option [ngValue]="null">
+                    All
+                  </option>
+                  <option [ngValue]="true">
+                    Active
+                  </option>
+                  <option [ngValue]="false">
+                    Inactive
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 offset-lg-3 col-md-4 col-sm-6 space no_padding">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <button class="reset_btn" type="button" (click)="resetSearchFilters()">
+                    Reset </button>
+                </div>
+                <div class="col-md-6 col-sm-6 full_width_btn">
+                  <button tabindex="4" class="search" (click)="searhMembership()">Search</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grids_white_bg">
+    <div id="product_categories">
+      <div class="overflow-auto">
+        <div class="cstm_scroll_bg master_row mob-scroll-grid-lg">
+
+          <div class="row grid_header">
+            <div class="col-md-3 col">
+              <h5>
+                <a (click)="changeSorting(1)" href="javascript:void(0)" class="sort_icon"> Membership Category <i
+                    class="fas fa-sort-alt" aria-hidden="true"></i></a>
+              </h5>
+            </div>
+            <div class="col-md-5 col">
+              <h5>Description</h5>
+            </div>
+            <div class="col-md-2 col">
+              <h5>Status</h5>
+            </div>
+            <div class="col-md-2 col text-center">
+              <h5>Actions</h5>
+            </div>
+          </div>
+          <div id="grid" *ngIf="isDataExists">
+            <div class="row grid_rows " *ngFor="let membershipCategory of membershipCategories">
+              <div class="col-md-3 col">
+                <h5>{{membershipCategory.CategoryName}}</h5>
+              </div>
+              <div class="col-md-5 col">
+                <h5>{{membershipCategory.Description}}</h5>
+              </div>
+              <div class="col-md-2 col">
+                <h5> {{membershipCategory.IsActive ? 'Active' : 'Inactive'}}</h5>
+              </div>
+              <div class="col-md-2 col text-center">
+                <h5>
+                  <span class="blue" *ngIf="isAllowedSave">
+                    <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip" data-toggle="modal"
+                      data-target=".edit_product_pop" href="javascript:void(0);"
+                      (click)="onEditClick(membershipCategory.MembershipCategoryID)">
+                      <i class="fal fa-edit"></i>
+                    </a>
+                  </span>
+                  <span class="red_del" *ngIf="isAllowedSave">
+                    <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                      (click)="deleteMembershipCategory(membershipCategory.MembershipCategoryID)"
+                      href="javascript:void(0)">
+                      <i class="fal fa-trash-alt"></i>
+                    </a>
+                  </span>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+              <div class="col-md-12 col-sm-12 text-center">
+                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,346 @@
+<div class="page_content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="company_btn float-right">
+                <button *ngIf="allowedPages.saveClient" type="button" class="simple_btn"
+                    [routerLink]="['/customer/client/details', 0]">
+                    Add Client
+                </button>
+                <button *ngIf="allowedPages.saveMember" type="button" class="save"
+                    [routerLink]="['/customer/member/details', 0]">
+                    Add Member
+                </button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="white_bg">
+        <div id="search_accordion">
+            <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+                data-target="#members_search">
+                <div class="col-md-12">
+                    <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+                </div>
+            </div>
+            <div id="members_search" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row flex-end">
+                        <div class="col-md-12">
+                            <div class="filter_seprator"></div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <h5 class="field_label">Name</h5>
+                            <input type="text" class="form-control" name="Name"
+                                [(ngModel)]="customerSearchParameter.CustomerName" maxlength="50" id="member_name">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <h5 class="field_label">Type</h5>
+                            <div class="select_label">
+                                <select [(ngModel)]="customerSearchParameter.CustomerTypeID" [disabled]="!customerType">
+                                    <option *ngFor="let customerType of customerTypeList"
+                                        [ngValue]="customerType.value">
+                                        {{customerType.text}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <h5 class="field_label">Email</h5>
+                            <div>
+                                <input type="text" class="form-control" name="Email"
+                                    [(ngModel)]="customerSearchParameter.Email" #Email="ngModel"
+                                    pattern="^([a-zA-Z0-9_\-\.]+)@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,10})$"
+                                    maxlength="50" />
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4" *ngIf='checkClient'>
+                            <h5 class="field_label">Membership(s)</h5>
+                            <div class="select_label">
+                                <select class="form-control" [(ngModel)]="customerSearchParameter.MembershipID"
+                                    name="MembershipID" id="member_membership">
+                                    <option *ngFor="let membership of membershipList" [value]="membership.MembershipID">
+                                        {{membership.MembershipName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4" *ngIf='checkClient'>
+                            <h5 class="field_label">Membership Status</h5>
+                            <div class="select_label">
+                                <select class="form-control"
+                                    [(ngModel)]="customerSearchParameter.MembershipStatusTypeID"
+                                    name="MembershipStatusTypeID" id="member_status">
+                                    <option *ngFor="let membershipStatus of membershipStatusTypeList"
+                                        [value]="membershipStatus.MembershipStatusTypeID">
+                                        {{membershipStatus.MembershipStatusTypeName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4" *ngIf='checkClient'>
+                            <h5 class="field_label">Card Number</h5>
+                            <input type="text" class="form-control" [(ngModel)]="customerSearchParameter.CardNumber"
+                                name="number" id="member_card" maxlength="50">
+                        </div>
+                        <div class="col-lg-6 col-md-8 col-sm-8 input_heading no_padding">
+                            <dateto-datefrom [dateToPlaceHolder]="dateToPlaceHolder"
+                                [dateFromPlaceHolder]="dateFromPlaceHolder" #memberDateSearch>
+                            </dateto-datefrom>
+                        </div>
+                        <div class="offset-lg-9 offset-md-0 col-lg-3 col-md-4 col-sm-8 no_padding space">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <button class="reset_btn" type="button" (click)="resetSearchFilter()">
+                                        Reset
+                                    </button>
+                                </div>
+                                <div class="col-md-6 col-sm-6 full_width_btn">
+                                    <button class="search" type="button" [disabled]="Email?.errors?.pattern"
+                                        (click)="searchAllCustomers()">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grids_white_bg">
+        <div class="overflow-auto">
+            <div class="row align-items-center grid_header responsive_grid_header">
+                <div class="col">
+                    <h5>
+                        <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                            Name
+                            <i class="fas fa-sort-alt"></i>
+                        </a>
+                    </h5>
+                </div>
+                <div class="col" *ngIf='customerType'>
+                    <h5>
+                        <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">Type <i
+                                class="fas fa-sort-alt"></i></a>
+                    </h5>
+                </div>
+                <div class="col">
+                    <h5>Email </h5>
+                </div>
+                <div class="col">
+                    <h5>Mobile</h5>
+                </div>
+                <div class="col" *ngIf='checkClient'>
+                    <h5>Card Number </h5>
+                </div>
+                <div class="col-md-5 col mob-merge-col no_padding" *ngIf='checkClient'>
+                    <div class="row align-items-center">
+                        <div class="col" *ngIf='checkClient'>
+                            <h5>Membership(s)</h5>
+                        </div>
+                        <div class="col" *ngIf='checkClient'>
+                            <h5><a class="sort_icon" (click)="changeSorting(3)" href="javascript:void(0)">Membership
+                                    <br>Status <i class="fas fa-sort-alt"></i>
+                                </a>
+                            </h5>
+                        </div>
+                        <div class="col" *ngIf='checkClient'>
+                            <h5>
+                                <a class="sort_icon" (click)="changeSorting(4)" href="javascript:void(0)">
+                                    Membership <br>Start Date
+                                    <i class="fas fa-sort-alt"></i>
+                                </a>
+                            </h5>
+                        </div>
+                        <div class="col" *ngIf='checkClient'>
+                            <h5><a class="sort_icon" (click)="changeSorting(5)" href="javascript:void(0)">Membership
+                                    <br>End Date <i class="fas fa-sort-alt"></i></a></h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col text-center">
+                    <h5>Actions</h5>
+                </div>
+            </div>
+            <div id="grid" *ngIf="isDataExists">
+                <div class="row grid_rows responsive_grid_rows"
+                    *ngFor="let  customerDataobj of allCustomers; let i = index">
+                    <ng-container [ngSwitch]="customerDataobj.CustomerTypeID">
+                        <!-- for Client -->
+
+                        <div class="col lead_member"
+                            *ngSwitchCase="customerDataobj.CustomerTypeID == CustomerType.Client">
+                            <h5 *ngIf="allowedPages.saveClient">
+                                <i *ngIf="customerDataobj.CustomerMembershipList.length > 1" class="fal"
+                                    aria-hidden="true" [ngClass]="{
+                  'fa-caret-right': toggleStatuses[i].collapse == true,
+                  'fa-sort-down': toggleStatuses[i].collapse == false
+              }" (click)="onToggleClick(i)"></i>
+
+                                <a class="name_link"
+                                    (click)="editCustomerDetail(customerDataobj, customerDataobj.CustomerTypeID )">
+                                    {{customerDataobj.CustomerName }}
+                                </a>
+                                <span *ngIf="!allowedPages.saveClient">
+                                    {{customerDataobj.CustomerName }}
+                                </span>
+                                <span [ngClass]="{
+                                'active': customerDataobj.IsLead
+                            }">
+                                    {{customerDataobj.IsLead ? 'Lead' : ''}}
+                                </span>
+                            </h5>
+                            <h5 *ngIf="!allowedPages.saveClient">
+                                {{customerDataobj.CustomerName }}
+                                <span [ngClass]="{
+                                    'active': customerDataobj.IsLead
+                                }">
+                                    {{customerDataobj.IsLead ? 'Lead' : ''}}
+                                </span>
+                            </h5>
+                        </div>
+                        <!-- for member -->
+
+                        <div class="col lead_member" *ngSwitchDefault>
+                            <h5>
+                                <i *ngIf="customerDataobj.CustomerMembershipList.length > 1" class="fal"
+                                    aria-hidden="true" [ngClass]="{
+                  'fa-caret-right': toggleStatuses[i].collapse == true,
+                  'fa-sort-down': toggleStatuses[i].collapse == false
+              }" (click)="onToggleClick(i)"></i>
+
+                                <a *ngIf="allowedPages.saveMember" class="name_link"
+                                    (click)="editCustomerDetail(customerDataobj, customerDataobj.CustomerTypeID )">
+                                    {{customerDataobj.CustomerName }}
+                                </a>
+                                <span *ngIf="!allowedPages.saveMember">
+                                    {{customerDataobj.CustomerName }}
+                                </span>
+                                <span *ngIf="allowedPages.saveMember" [ngClass]="{
+                                'active': customerDataobj.IsLead
+                            }">
+                                    {{customerDataobj.IsLead ? 'Lead' : ''}}
+                                </span>
+                            </h5>
+                            <h5 *ngIf="!allowedPages.saveMember">
+                                {{customerDataobj.CustomerName }}
+                                <span [ngClass]="{
+                                    'active': customerDataobj.IsLead
+                                }">
+                                    {{customerDataobj.IsLead ? 'Lead' : ''}}
+                                </span>
+                            </h5>
+                        </div>
+                    </ng-container>
+
+                    <div class="col" *ngIf='customerType'>
+                        <h5> {{ customerDataobj.CustomerTypeID == CustomerType.Client ? "Client": "Member" }} </h5>
+                    </div>
+                    <div class="col">
+                        <h5>{{customerDataobj.Email}}</h5>
+                    </div>
+
+                    <!--- AS discussed with Fahad dashes will be replaced by Empty space -->
+                    <div class="col">
+                        <h5>{{customerDataobj.Mobile ? customerDataobj.Mobile: "" }}</h5>
+                    </div>
+                    <div class="col" *ngIf='checkClient'>
+                        <h5>{{customerDataobj.CardNumber ? customerDataobj.CardNumber: ''}}</h5>
+                    </div>
+                    <div class="col-md-5 col mob-merge-col no_padding" *ngIf='checkClient'>
+                        <div class="row" *ngFor="let membershipobj of customerDataobj.Membership">
+                            <div class="col">
+                                <h5>{{membershipobj.MembershipName}}
+                                    <span class="plus_mem" (click)="onToggleClick(i)"
+                                        *ngIf="customerDataobj.CustomerMembershipList.length > 1 && toggleStatuses[i].collapse == true">
+                                        (+
+                                        {{customerDataobj.CustomerMembershipList.length - 1}} others) </span>
+                                </h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{membershipobj.MembershipStatusTypeName}}
+                                </h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{membershipobj.MembershipStartDate}}
+                                </h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{membershipobj.MembershipEndDate}}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col text-center">
+                        <h5>
+                            <span class="blue">
+                                <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    (click)="openCustomerDetailDialog(customerDataobj, customerDataobj.CustomerTypeID )"
+                                    href="javascript:void(0)">
+                                    <i class="fal fa-book-open"></i>
+                                </a>
+                            </span>
+                            <ng-container [ngSwitch]="customerDataobj.CustomerTypeID">
+                                <ng-container *ngSwitchCase="customerDataobj.CustomerTypeID == CustomerType.Client">
+                                    <span class="blue" *ngIf="allowedPages.saveClient && !customerDataobj.IsWalkedIn">
+                                        <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                            (click)="editCustomerDetail(customerDataobj, customerDataobj.CustomerTypeID )"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-edit"></i>
+                                        </a>
+                                    </span>
+                                    <span class="blue"
+                                        *ngIf="beneftisViewAllowedInPermission && benefitsViewInculdeInPackage && customerDataobj.IsBenefitView">
+                                        <a matTooltip="Membership Benefits" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip"
+                                            (click)="onViewCustomerBenefits(customerDataobj.CustomerID)"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-list-alt"></i>
+                                        </a>
+                                    </span>
+                                    <span class="red_del"
+                                        *ngIf="allowedPages.DeleteClient && !customerDataobj.IsWalkedIn">
+                                        <a matTooltip="Delete Client" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip"
+                                            (click)="deleteCustomer(customerDataobj.CustomerID, customerDataobj.CustomerTypeID )"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-trash-alt"></i>
+                                        </a>
+                                    </span>
+
+                                </ng-container>
+                                <ng-container *ngSwitchDefault>
+                                    <span class="blue" *ngIf="allowedPages.saveMember && !customerDataobj.IsWalkedIn">
+                                        <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                            (click)="editCustomerDetail(customerDataobj, customerDataobj.CustomerTypeID )"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-edit"></i>
+                                        </a>
+                                    </span>
+                                    <span class="red_del"
+                                        *ngIf="allowedPages.DeleteMember && !customerDataobj.IsWalkedIn">
+                                        <a matTooltip="Delete Member" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip"
+                                            (click)="deleteCustomer(customerDataobj.CustomerID, customerDataobj.CustomerTypeID )"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-trash-alt"></i>
+                                        </a>
+                                    </span>
+
+                                </ng-container>
+                            </ng-container>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!isDataExists">
+                <div class="row grid_rows">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+    </div>
+</div>

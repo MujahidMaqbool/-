@@ -1,0 +1,52 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <h4>Member Memberships</h4>
+            </div>
+            <form #MembershipFormData="ngForm" (ngSubmit)="markAttendance()" novalidate>
+                <div class="popup_content">
+                    <div class="popup_white_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="membership_processing_days alert-warning float-right">
+                                    <i class="fal fa-info-circle"></i>
+                                    Class exist in your multiple memberhisps,please select a memberhip to mark
+                                    attendance
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6">
+                                <div class="field_label">
+                                    <h5>Membership</h5>
+                                </div>
+                                <div class="select_label">
+                                    <select class="form-control" name="MemberMemberhsipID"  #MemberMemberhsipID="ngModel" [(ngModel)]="memberMemberhsip.CustomerMembershipID" tabindex="1">
+                                            <option  value='0'> -- Select Membership -- </option>
+                                        <option *ngFor="let membership of attendeMemberhisp"
+                                            [(ngValue)]="membership.CustomerMembershipID">
+                                            {{membership.MembershipName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-4 col-sm-4"></div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="cancel_btn float-right">
+                            <button tabindex="4" type="button" mat-button (click)="onClosePopup()">Close</button>
+                            <button tabindex="5" class="save primary_blue_btn">Mark
+                                Attendance</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,182 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content medium_popup">
+      <div class="popup_header">
+        <h4>Transaction Details</h4>
+      </div>
+      <form #transactionDetailForm="ngForm" (ngSubmit)="onSave(transactionDetailForm.valid)" novalidate>
+        <div class="popup_content">
+          <div class="popup_white_bg">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="blue-heading-section">
+                  <p>Membership</p>
+                  <h2>{{selectedMembership?.MembershipName}}
+                    {{selectedMembership?.IsAutoRoll ? "- Auto Roll" : ""}}</h2>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12">
+                <div class="alert alert-danger"
+                  *ngIf="transactionModel.Price == 0 || (transactionDetailForm.invalid || (datePicker && datePicker.dateElement && datePicker.dateElement.invalid)) && transactionDetailForm.submitted">
+                  <div *ngIf="transactionDetailForm.invalid || transactionModel.Price == 0">
+                    {{messages.Validation.Please_Enter_A_Value_Greater_Than_0}}
+                  </div>
+                  <div *ngIf="datePicker.dateElement.invalid">
+                    {{messages.Validation.DueDate_Invalid}}
+                  </div>
+                  <div *ngIf="Price?.errors?.pattern">
+                    {{messages.Validation.InValid_Payment}}
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-6 col-sm-6">
+                <div class="field_label">
+                  <h5>Membership</h5>
+                </div>
+                <div [ngClass]="{
+                                        'has-danger': MembershipName.invalid && (MembershipName.dirty || MembershipName.touched || transactionDetailForm.submitted),
+                                        'has-success': MembershipName.valid && (MembershipName.dirty || MembershipName.touched )
+                                    }">
+                  <div class="select_label">
+                    <select name="MembershipName" [(ngModel)]="selectedMembership"
+                      (ngModelChange)="onMembershipSelectionChange()" #MembershipName="ngModel" class="form-control"
+                      tabindex="1" [disabled]="true" required>
+                      <option *ngFor="let membership of membershipList" [ngValue]="membership">
+                        {{membership.MembershipName}} {{membership.IsAutoRoll ? "- Auto Roll" : ""}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div> -->
+              <div class="col-md-6 col-sm-6">
+                <div class="field_label">
+                                         <h5>Payment Method</h5>
+                </div>
+                <div [ngClass]="{
+                                        'has-danger': PaymentMethod.invalid && (PaymentMethod.dirty || PaymentMethod.touched || transactionDetailForm.submitted),
+                                        'has-success': PaymentMethod.valid && (PaymentMethod.dirty || PaymentMethod.touched )
+                                    }">
+                  <div class="select_label">
+                    <select name="PaymentMethod" [(ngModel)]="selectedGateway"
+                      (ngModelChange)="onGatewaySelectionChange()" #PaymentMethod="ngModel" tabindex="2"
+                      class="form-control" required>
+                      <option *ngFor="let gateway of paymentGatewayList" [ngValue]="gateway">
+                        {{gateway.PaymentGatewayName}}
+                        {{gateway.InstrumentName ? ' - ' + gateway.InstrumentName : ''}}
+                        {{gateway.InstrumentLastDigit ? ' - ' + gateway.InstrumentLastDigit : ''}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="field_label">
+                  <h5>Due Date</h5>
+                </div>
+
+                <date-picker #datePicker [value]="transactionModel.CollectionDate" [min]="minDate" [showClear]="false"
+                  (onDateChange)="onTransactionDateChange($event)" [name]="'CollectionDate'"></date-picker>
+                <!-- <date-picker #datePicker [value]="transactionModel.CollectionDate" [min]="minDate"   [showClear]="false"
+                                    (onDateChange)="onTransactionDateChange($event)" [max]="maxDate" [name]="'CollectionDate'"></date-picker> -->
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="field_label">
+                  <h5>Amount
+                    <span>(Excluding
+                      {{selectedMembership?.TotalTaxPercentage > 0 ? selectedMembership?.TotalTaxPercentage + "%" : "0%" }}
+                      Tax)</span>
+                  </h5>
+                </div>
+                <div [ngClass]="{
+                                        'has-danger': Price.value == 0 ||Price.invalid && (Price.dirty || Price.touched || transactionDetailForm.submitted),
+                                        'has-success': Price.value != 0 && Price.valid && (Price.dirty || Price.touched )
+                                    }">
+                  <input type="text" name="Price" [(ngModel)]="transactionModel.Price" #Price="ngModel" maxlength="5"
+                    tabindex="4" class="form-control" (ngModelChange)="onPriceChange()" numberControl required
+                    onkeypress="isNumber(event)">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="field_label">
+                  <h5>Pro Rata</h5>
+                </div>
+                <div [ngClass]="{
+                                        'has-danger': ProRataPrice.invalid && (ProRataPrice.dirty || ProRataPrice.touched || transactionDetailForm.submitted),
+                                        'has-success': ProRataPrice.valid && (ProRataPrice.dirty || ProRataPrice.touched )
+                                    }">
+                  <input type="text" #ProRataPrice="ngModel" name="ProRataPrice" maxlength="5" tabindex="4" class="form-control" [(ngModel)]="transactionModel.ProRataPrice"
+                    numberControl required (ngModelChange)="onProRataChange()" [disabled]="isDisabledProRata">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="tax-amount-row">
+                  <div class="d-flex justify-content-between w-50 pr-4">
+                    <div class="">Tax: {{transactionModel.AppliedTaxNames ? '(' + transactionModel.AppliedTaxNames + ')' : null}}</div>
+                    <div class="">{{transactionModel.TaxAmount | currency: currencyFormat}}</div>
+                  </div>
+                  <div class="d-flex justify-content-between w-50 pl-4">
+                    <div class=""><strong>Total Amount:</strong></div>
+                    <div class="light-blue-color"><strong>{{totalAmount | currency: currencyFormat}}</strong></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12" *ngIf="!showAdjustFuturePayments">
+                <div class="field_label">
+                  <h5 class="field_label">Notes <span>(Remaining Characters: {{ 250 -
+                                        transactionModel?.Notes?.length }})</span></h5>
+                </div>
+                <div [ngClass]="{
+                                        'has-danger': Notes.invalid && (Notes.dirty || Notes.touched || transactionDetailForm.submitted),
+                                        'has-success': Notes.valid && (Notes.dirty || Notes.touched )
+                                    }">
+                  <textarea type="text" name="Notes" [(ngModel)]="transactionModel.Notes" #Notes="ngModel" rows="5"
+                    tabindex="5" class="form-control" maxlength="250"></textarea>
+                </div>
+              </div>
+              <div class="col-md-12" *ngIf="showProcessingDaysMessage">
+                <span class="membership_processing_days alert-warning mt-2">
+                  <i class="fal fa-info-circle pr-1"></i>
+                  <span *ngIf="!isShowPrecessDayStripeACH">Minimum Due date for GoCardless is
+                    {{minDate | customdate: dateFormat}}</span>
+                  <span *ngIf="isShowPrecessDayStripeACH">Minimum Due date for Stripe ACH is
+                    {{minDate | customdate: dateFormat}}</span>
+                </span>
+              </div>
+
+            </div>
+          </div>
+          <div class="popup_white_bg" *ngIf="showAdjustFuturePayments && PaymentStatusTypeID != enu_PaymentStatus.Failed">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="permission_box not-bg p-0">
+                  <div>
+                    <h5>Adjust future payments</h5>
+                    <p class="p-0">Toggle on to apply these changes to all the future payments of this membership.</p>
+                  </div>
+                  <div>
+                    <mat-slide-toggle class="wellyx-checked" name="AdjustFuturePayment" [(ngModel)]="transactionModel.IsAdjustFuturePayment"
+                    [(checked)]="transactionModel.IsAdjustFuturePayment">
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row popup_footer">
+          <div class="col-md-12">
+            <div class="cancel_btn float-right">
+              <button type="button" tabindex="6" (click)="onCloseDialog()">Close</button>
+              <button type="submit" tabindex="7" class="save primary_blue_btn"
+                [disabled]="(transactionDetailForm.pristine)">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

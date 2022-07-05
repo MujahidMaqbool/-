@@ -1,0 +1,1429 @@
+<div class="page_content setup_add_membership">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right xs-btn-width">
+        <button type="button" class="simple_btn" role="navigation" [routerLink]="['/setup/membership']">
+          Back to Search
+        </button>
+        <button type="button" class="simple_btn" (click)="onReset()">
+          Reset </button>
+        <button class="save simple_btn" (click)="onPrevious()" [disabled]="!showPrevious"
+          tabindex="22">Previous</button>
+
+        <button class="save simple_btn" (click)="onSaveMembershipBenefitTypeClass(0)" *ngIf="showSaveClass">Add
+          Class</button>
+        <button class="save simple_btn" (click)="onSaveMembershipBenefitTypeService(0)" *ngIf="showSaveService">Add
+          Service</button>
+        <button class="save simple_btn" (click)="onSaveMembershipBenefitTypeProduct(0)" *ngIf="showSaveProduct">Add
+          Product</button>
+        <button class="save" (click)="onContinue()" *ngIf="showContinue" tabindex="21">Continue</button>
+        <button class="save" (click)="onSaveMembership()" *ngIf="showSave">
+          Save
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-danger" *ngIf="showMembershipDetailsValidation ||
+                                      showPaymentRequiredValidation ||
+                                      showMembershipTypeValidation ||
+                                      showDescriptionValidation ||
+                                      showSessionDurationRequiredValidation ||
+                                      showMemberLimitValidation ||
+                                      showMemberLengthValidation ||
+                                      showSelectBenefitValidation ||
+                                      !isValidEndTime ||
+                                      !isBranchValid ||
+                                      !isBranchClassValid ||
+                                      (membershipTypeForm.invalid) ||
+                                      showSelectClassValidation ||
+                                      showSelectServiceValidation ||
+                                      showSelectProductValidation ||
+                                      showRecurringPaymentsBeyondMembershipLengthValidation">
+
+        {{ getErrorMessage() }}
+        <!-- <div
+          *ngIf="showMembershipDetailsValidation && !showDescriptionValidation && !showMemberLimitValidation && !showMemberLengthValidation && !showRecurringPaymentsBeyondMembershipLengthValidation">
+          {{messages.Validation.Info_Required}}
+        </div>
+        <div *ngIf="showPaymentRequiredValidation">
+          {{messages.Validation.Membership_Payment_Required}}
+        </div>
+        <div *ngIf="showMembershipTypeValidation && !showSessionDurationRequiredValidation">
+          {{messages.Validation.Membership_Checkin_Sessions_AllDays}}
+        </div>
+        <div *ngIf="!isBranchValid">
+          {{messages.Validation.Default_Branch_Invalid}}
+        </div>
+        <div *ngIf="!isBranchClassValid">
+          {{messages.Validation.Branch_Class_Invalid}}
+        </div>
+        <div *ngIf="!isValidEndTime">
+          {{messages.Validation.Endtime_Should_Greater_Than_Start_Time}}
+        </div>
+        <div *ngIf="showPaymentDurationValidation">
+          {{messages.Validation.Payment_Interval_GreaterThan_MembershipDuration}}
+        </div>
+        <div *ngIf="showSessionDurationRequiredValidation">
+          {{messages.Validation.Session_Duration_Required}}
+        </div>
+        <div *ngIf="showDescriptionValidation">
+          {{descriptionMaxLengthMessage}}
+        </div>
+        <div *ngIf="showMemberLimitValidation">
+          {{messages.Validation.Member_Limit}}
+        </div>
+        <div *ngIf="showMemberLengthValidation">
+          {{messages.Validation.Membership_Length}}
+        </div>
+        <div *ngIf="showSelectBenefitValidation">
+          {{messages.Validation.Please_Add_At_Least_One_Type_Of_Benefit_To_Proceed}}
+        </div>
+        <div *ngIf="membershipTypeForm.invalid">
+          {{messages.Validation.Total_Sessions_Length}}
+        </div>
+        <div *ngIf="showSelectClassValidation">
+          {{messages.Validation.Please_Add_At_Least_One_Class_To_Proceed}}
+        </div>
+        <div *ngIf="showSelectServiceValidation">
+          {{messages.Validation.Please_Add_At_Least_One_Service_To_Proceed}}
+        </div>
+        <div *ngIf="showSelectProductValidation">
+          {{messages.Validation.Please_Add_At_Least_One_Product_To_Proceed}}
+        </div>
+        <div *ngIf="showRecurringPaymentsBeyondMembershipLengthValidation">
+          {{messages.Validation.Recurring_Payments_Cannot_Be_Scheduled_Beyond_Membership_Length}}
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <mat-horizontal-stepper #stepper>
+
+    <!-- change default 'edit' icon -->
+    <ng-template matStepperIcon="edit">
+      <mat-icon>edit</mat-icon>
+    </ng-template>
+
+    <!-- changed step icons -->
+    <!-- <ng-template matStepperIcon="contract">
+      <mat-icon>assignment</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="membershipBenefit">
+      <mat-icon>supervised_user_circle</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="branches">
+      <mat-icon>store</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="classes">
+      <mat-icon>stars</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="services">
+      <mat-icon>event_seat</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="products">
+      <mat-icon>local_offer</mat-icon>
+    </ng-template> -->
+
+    <mat-step>
+      <form #membershipDetailsForm="ngForm" novalidate>
+        <ng-template matStepLabel>Contract</ng-template>
+        <div class="white_bg no_bg">
+          <div class="row mob-col-full">
+            <div class="col padding_left mob-m2 mob-pr-0">
+              <div class="sch_class_head">
+                <h5 class="field_label">Active
+                  <span class="info_tip" matTooltip="Toggle it on to allow members to join this membership"
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <mat-slide-toggle class="wellyx-checked" [(checked)]="membership.IsActive"
+                  [(ngModel)]="membership.IsActive" [disabled]="false" name="IsActive" tabindex="2"
+                  (ngModelChange)="onIsActiveChange()">
+                  {{membership.IsActive ? 'Yes': 'No'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="col padding_left mob-m2 mob-pr-0">
+              <div class="sch_class_head">
+                <h5 class="field_label">Show Online
+                  <span class="info_tip" matTooltip="Toggle it on to allow customers to join this membership online"
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <mat-slide-toggle tabindex="7" class="wellyx-checked " [(checked)]="membership.IsOnline"
+                  [(ngModel)]="membership.IsOnline" name="IsOnline" (ngModelChange)="onShowOnlineChange()"
+                  [disabled]="!membership.IsActive">
+                  {{membership.IsOnline ? 'Yes': 'No'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+
+            <div class="col padding_left mob-m2 mob-pr-0" *ngIf="showHidePriceLabel">
+              <div class="sch_class_head">
+                <h5 class="field_label">Hide Price Online
+                  <span class="info_tip" matTooltip="Toggle on to hide the price of this membership on the widget & customer app."
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <mat-slide-toggle  class="wellyx-checked " [(checked)]="membership.IsHidePriceOnline"
+                  [(ngModel)]="membership.IsHidePriceOnline" name="HidePrice"
+                  [disabled]="!membership.IsOnline">
+                  <!-- {{membership.IsHidePriceOnline ? 'Yes': 'No'}} -->
+                </mat-slide-toggle>
+              </div>
+            </div>
+
+            <div class="col padding_left mob-m2 mob-pr-0">
+              <div class="sch_class_head">
+                <h5 class="field_label">Allow Duplicate
+                  <span class="info_tip" matTooltip="Toggle it on to allow customers to purchase duplicate membership."
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <mat-slide-toggle tabindex="7" class="wellyx-checked " [(checked)]="membership.AllowDuplicate"
+                  [(ngModel)]="membership.AllowDuplicate" name="AllowDuplicate" [disabled]="!membership.IsActive">
+                  {{membership.AllowDuplicate ? 'Yes': 'No'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+
+            <div class="col no_padding">
+              <div class="sch_class_head">
+                <h5 class="field_label">Is Featured
+                  <span class="info_tip"
+                    matTooltip="Featured is an additional, optional way by which you can make the membership stand out for prospective customers on Widget by featuring it on home page"
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                      class="far fa-info-circle"></i></span>
+                </h5>
+                <mat-slide-toggle tabindex="8" class="wellyx-checked " [(checked)]="membership.IsFeatured"
+                  [(ngModel)]="membership.IsFeatured" name="IsFeatured" [disabled]="!membership.IsOnline">
+                  {{membership.IsFeatured ? 'Yes': 'No'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="white_bg">
+          <div class="row mob-col-rev">
+            <div class="col-lg-9 col-md-12 no_padding">
+              <div class="row">
+                <div class="col-md-4 col-sm-6">
+                  <div class="field_label">
+                    <h5>Membership Name <span class="info_tip"
+                        matTooltip="This is the name that will be used throughout Wellyx when creating a membership for a member."
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                          class="far fa-info-circle"></i></span></h5>
+                  </div>
+                  <div [ngClass]="{
+                              'has-danger': MembershipName.invalid && (MembershipName.dirty || MembershipName.touched || showMembershipDetailsValidation),
+                              'has-success': MembershipName.valid && (MembershipName.dirty || MembershipName.touched )
+                          }">
+                    <input class="form-control" type="text" name="MembershipName" (blur)="onChangeMembershipName()"
+                      [(ngModel)]="membership.MembershipName" #MembershipName="ngModel" maxlength="50" tabindex="1"
+                      required />
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6" >
+                    <div class="field_label">
+                      <h5>Membership Category</h5>
+                    </div>
+
+                    <div [ngClass]="{
+                              'has-danger': (MembershipCategoryID.invalid || membership.MembershipCategoryID == 0 || membership.MembershipCategoryID == null || membership.MembershipCategoryID == undefined)
+                                              && (membershipDetailsForm.dirty || membershipDetailsForm.touched || membershipDetailsForm.submitted || showMembershipDetailsValidation)}">
+                      <div class="select_label">
+                      <select class="form-control" name="MembershipCategoryID" [(ngModel)]="membership.MembershipCategoryID" #MembershipCategoryID="ngModel" required>
+                        <option value="0">Select Category</option>
+                        <option *ngFor="let membershipCategoryObj of membershipCategoryList" [ngValue]="membershipCategoryObj.MembershipCategoryID">
+                          {{membershipCategoryObj?.CategoryName}}
+                        </option>
+                      </select>
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-md-4 col-sm-6">
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <div class="field_label">
+                    <h5>Membership Length <span class="info_tip"
+                        matTooltip="This is the contract length of the membership." matTooltipPosition="above"
+                        matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                    </h5>
+                  </div>
+                  <div class="row no_padding">
+                    <div class="col-md-6 col-sm-6 padding_left xs-pr-0">
+                      <div [ngClass]="{
+                                           'has-danger': DurationValue.invalid && (DurationValue.dirty || DurationValue.touched || showMembershipDetailsValidation),
+                                           'has-success': DurationValue.valid && (DurationValue.dirty || DurationValue.touched )
+                                          }">
+                        <input class="form-control" type="text" min="1" [(ngModel)]="membership.MembershipDurationValue"
+                          #DurationValue="ngModel" name="DurationValue" numberControl tabindex="4" maxlength="6"
+                          required (ngModelChange)="onMLengthChangeOnlyNumbers($event)" />
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 padding_right xs-pl-0">
+                      <div [ngClass]="{
+                                           'has-danger': DurationTypeID.invalid && (DurationTypeID.dirty || DurationTypeID.touched || showMembershipDetailsValidation),
+                                           'has-success': DurationTypeID.valid && (DurationTypeID.dirty || DurationTypeID.touched )
+                                          }">
+                        <div class="select_label">
+                          <select class="form-control" [(ngModel)]="membership.MembershipDurationTypeID"
+                            name="DurationTypeID" #DurationTypeID="ngModel" tabindex="5" required>
+                            <!-- <option *ngFor="let durationType of durationTypeList"
+                              [ngValue]="durationType.DurationTypeID">
+                              {{durationType.DurationTypeName}}
+                            </option> -->
+                            <option value="{{enuMemberShipBenefitDurations.Day}}" required>Day(s)</option>
+                            <option value="{{enuMemberShipBenefitDurations.Week}}" required>Week(s)</option>
+                            <option value="{{enuMemberShipBenefitDurations.Month}}" required>Month(s)</option>
+                            <option value="{{enuMemberShipBenefitDurations.Quarter}}" required>Quarter(s)</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <div class="field_label">
+                    <h5>Member(s) Limit
+                      <span class="info_tip"
+                        matTooltip="This section allows you to specify the number of members that can be allocated to this membership."
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                          class="far fa-info-circle"></i></span>
+                      <span style="font-weight: 400; color: #95989A; font-size: 13px;"> (Optional)</span>
+                    </h5>
+                  </div>
+                  <input type="text" min="1" name="MemberLimit" [(ngModel)]="membership.MemberLimit" numberControl
+                    [tabindex]="6" maxlength="3" (ngModelChange)="onMLimitChangeOnlyNumbers($event)" />
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="field_label">
+                    <h5>Tax</h5>
+                  </div>
+                  <div class="select_label">
+                    <mat-select class="form-control multi_select_tax" placeholder="Select Tax" name="ClassTax"
+                      [(ngModel)]="selectedTaxList" tabindex="10" multiple>
+                      <!-- <mat-select-trigger>
+                      {{selectedTaxList && selectedTaxList.length > 0 ? selectedTaxList[0].TaxName : ''}}
+                    <span *ngIf="selectedTaxList && selectedTaxList.length >= 2" class="example-additional-selection">
+                      (+{{selectedTaxList.length - 1}} {{selectedTaxList.length === 2 ? 'other' : 'others'}})
+                    </span>
+                    </mat-select-trigger> -->
+
+                      <mat-select-trigger *ngIf="selectedTaxList && selectedTaxList.length > 0">
+                        {{selectedTaxList && selectedTaxList.length > 0 && selectedTaxList[0].TaxName ?
+                        selectedTaxList[0].TaxName :
+                        selectedTaxList && selectedTaxList.length >= 2 && selectedTaxList[0].TaxName == undefined ?
+                        selectedTaxList[1].TaxName : ''}}
+                        <span *ngIf="selectedTaxList && selectedTaxList.length >= 2"
+                          class="example-additional-selection">
+                          (+{{selectedTaxList[0].TaxName == undefined ? selectedTaxList.length - 2 :
+                          selectedTaxList.length - 1 }}
+                          {{selectedTaxList[0].TaxName == undefined && selectedTaxList.length === 3 ? 'other' :
+                          selectedTaxList.length === 2 ? 'other' : 'others'}})
+                        </span>
+                      </mat-select-trigger>
+                      <span *ngIf="taxList && taxList.length > 1">
+                        <mat-option #allSelectedTax (click)="toggleAllTaxSelection()" [value]="0">All Taxes</mat-option>
+                      </span>
+                      <mat-option *ngFor="let taxItem of taxList" [value]="taxItem" (click)="tosslePerOneTax(taxItem)">
+                        {{taxItem.TaxName}} </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6" *ngIf="isPurchaseRestrictionAllowed">
+                  <div class="field_label">
+                    <h5>Purchase Restriction <span class="info_tip"
+                      matTooltip="By checking a customer type, you can restrict a particular customer type from viewing or buying this membership on the widget and customer app. For core & staff app, a tag will be displayed for information purposes only, however you can still sell the membership to all customers."
+                      matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+                    <span>&nbsp;(Optional)</span></h5>
+                  </div>
+                  <div class="select_label">
+                    <mat-select class="form-control multi_select_tax" placeholder="Select Purchase Restriction" name="mainSearch"
+                      #selectItem [(ngModel)]="selectedRestrictedList" tabindex="10" multiple>
+
+                      <mat-select-trigger *ngIf="selectedRestrictedList && selectedRestrictedList.length > 0">
+                        {{selectedRestrictedList && selectedRestrictedList.length > 0 &&
+                              selectedRestrictedList[0].text ?
+                              selectedRestrictedList[0].text :
+                              selectedRestrictedList && selectedRestrictedList.length >= 2 &&
+                              selectedRestrictedList[0].text == undefined ?
+                              selectedRestrictedList[1].text : ''}}
+                        <span *ngIf="selectedRestrictedList && selectedRestrictedList.length >= 2"
+                          class="example-additional-selection">
+                          (+{{selectedRestrictedList[0].text == undefined ? selectedRestrictedList.length
+                                  - 2 :
+                                  selectedRestrictedList.length - 1 }}
+                          {{selectedRestrictedList[0].text == undefined && selectedRestrictedList.length
+                                  === 3 ? 'other' :
+                                  selectedRestrictedList.length === 2 ? 'other' : 'others'}})
+                        </span>
+                      </mat-select-trigger>
+                      <span *ngIf="restrictedList && restrictedList.length > 1">
+                        <mat-option #allRestrictionSelection (click)="toggleAllRestrictionSelection()" [value]="0">
+                          All</mat-option>
+                      </span>
+                      <mat-option *ngFor="let option of restrictedList" [value]="option" (click)="togglePerOneRestriction()">
+                        {{option.text}} </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-12 no_padding">
+              <div class="row mob-col-rev">
+                <!-- <div class="col-lg-6 col-md-12">
+                  <div class="genral_checkbox mb-1">
+                    <div class="btn-group">
+                      <mat-slide-toggle class="example-margin" [(checked)]="membership.IsActive"
+                        [(ngModel)]="membership.IsActive" [disabled]="false" name="IsActive" required tabindex="2"
+                        (ngModelChange)="onIsActiveChange()">
+                        {{membership.IsActive ? 'Active': 'Inactive'}}
+                      </mat-slide-toggle>
+                    </div>
+                    <div class="checkbox checkbox-success text-left">
+                      <input class="example-margin" type="checkbox" id="IsSaleSuspended" name="IsSaleSuspended"
+                        #IsSaleSuspended="ngModel" [(ngModel)]="membership.IsSaleSuspended"
+                        [(checked)]="membership.IsSaleSuspended" [disabled]="!membership.IsActive" tabindex="3"
+                        (ngModelChange)="onSuspendSaleChange()">
+                      <label for="IsSaleSuspended">
+                        Suspend Sale
+                        <span class="info_tip"
+                          matTooltip="Withdraw membership from sale and remove it from the list of available options when selling a membership."
+                          matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                          <i class="far fa-info-circle"></i>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="genral_checkbox mt-1">
+
+                    <div class="checkbox checkbox-success">
+                      <input class="example-margin" id="IsOnline" type="checkbox" [(ngModel)]="membership.IsOnline"
+                        name="IsOnline" #IsOnline="ngModel" [(checked)]="membership.IsOnline" tabindex="7"
+                        [disabled]="membership.IsSaleSuspended || !membership.IsActive"
+                        (ngModelChange)="onShowOnlineChange()">
+                      <label for="IsOnline">
+                        Show Online <span class="info_tip"
+                          matTooltip="Allows you to specify whether this membership is available for inquiry & purchase through your website."
+                          matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                          <i class="far fa-info-circle"></i>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="checkbox checkbox-success text-left">
+                      <input class="example-margin" type="checkbox" id="IsFeatured" name="IsFeatured"
+                        #IsFeatured="ngModel" [(ngModel)]="membership.IsFeatured" [(checked)]="membership.IsFeatured"
+                        tabindex="8" [disabled]="!membership.IsOnline || membership.IsSaleSuspended ">
+                      <label for="IsFeatured">
+                        Is Featured
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="field_label">
+                    <h5>Tax</h5>
+                  </div>
+                  <div class="check_cls_bg tax_items tax_row" *ngFor="let taxItem of taxList">
+                    <div class="checkbox checkbox-success tax_checkbox">
+                      <input type="checkbox" id="{{'taxItem' + taxItem.TaxID}}"
+                        name="{{taxItem.TaxName + taxItem.TaxID}}" [(ngModel)]="taxItem.IsSelected"
+                        [(checked)]="taxItem.IsSelected" (ngModelChange)="onTaxSelectionChange(taxItem)" tabindex="10">
+                      <label for="{{'taxItem' + taxItem.TaxID}}"> {{taxItem.TaxName}} </label>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="col-md-12">
+                  <div *ngIf="!isImageExists" class="upload_image_box square_img" (click)="showImageCropperDialog()">
+                    <i class="fal fa-cloud-upload-alt"></i>
+                    <br>
+                    <button type="button" class="save">Upload Image</button>
+                  </div>
+                  <div *ngIf="isImageExists && (imagePath && imagePath != '')">
+                    <img class="img-responsive center-block" src="{{imagePath}}" alt="no image" />
+                    <br>
+                    <div class="changeimg_btn square_img_action">
+                      <button type="button" (click)="showImageCropperDialog()"><i class="fal fa-pen"></i></button>
+                      <button class="delete_img" type="button" (click)="onDeleteImage()"
+                        *ngIf="membership.MembershipID && membership.ImagePath"><i
+                          class="fal fa-trash-alt"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="white_bg">
+          <div class="row">
+            <div class="col-md-12 membership_editor">
+              <div [ngClass]="{ 'has-danger': showDescriptionValidation }">
+                <div class="email_edditor field_label">
+                  <h5>Description
+                    <span class="info_tip"
+                      matTooltip="This description is read by customers online under Membership details"
+                      matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                        class="far fa-info-circle"></i></span>
+                    <span> (Remaining Characters: {{ _maxDescriptionLength -
+                      desciptionWithoutHTML?.length }})</span>
+                  </h5>
+                  <email-editor [value]="membership.Description" (onEmailBodyChange)="onDescriptionUpdated($event)">
+                  </email-editor>
+                  <input type="text" name="Description" #Description="ngModel" [(ngModel)]="membership.Description"
+                    style="display: none" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="white_bg">
+          <div class="membership_payments">
+            <h3>Single Payment </h3>
+            <div class="membership_btn float-right">
+              <a role="button" (click)="addSinglePayment()">
+                <i class="fal fa-plus-circle" aria-hidden="true"></i> Add New Payment </a>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+
+
+
+          <div class="small_space single_payment" *ngFor="let singlePayment of singlePayments; index as i">
+            <div class="row column_flex_alignment">
+              <div class="col-lg-5 col-md-4 col-sm-6 no_padding">
+                <div class="row">
+                  <div class="col">
+                    <div class="field_label">
+                      <h5>Payment Type</h5>
+                    </div>
+                    <div [ngClass]="{
+                  'has-danger': (SinglePaymentCollectionTypeID.invalid || ((!SinglePaymentCollectionTypeID.value) || SinglePaymentCollectionTypeID.value == 0))
+                              && (SinglePaymentCollectionTypeID.dirty || SinglePaymentCollectionTypeID.touched || showMembershipDetailsValidation),
+                  'has-success':  SinglePaymentCollectionTypeID.valid && (SinglePaymentCollectionTypeID.value &&
+                                SinglePaymentCollectionTypeID.value != 0) && (SinglePaymentCollectionTypeID.dirty || SinglePaymentCollectionTypeID.touched)
+                  }">
+                      <div class="select_label">
+                        <select class="form-control" [(ngModel)]="singlePayment.SinglePaymentCollectionTypeID"
+                          #SinglePaymentCollectionTypeID="ngModel" required
+                          name="{{'SinglePaymentCollectionTypeID' + singlePayment.controlIndex}}" tabindex="11">
+                          <option *ngFor="let singlePaymentCollectionType of singlePaymentCollectionTypeList"
+                            [ngValue]="singlePaymentCollectionType.SinglePaymentCollectionTypeID">
+                            {{singlePaymentCollectionType.SinglePaymentCollectionTypeName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="field_label">
+                      <h5>Payment Name</h5>
+                    </div>
+                    <div [ngClass]="{
+                                  'has-danger': (!arePaymentsValid && (singlePayment.MembershipPaymentName == '')) && (SingleMembershipPaymentName.dirty || SingleMembershipPaymentName.touched || showMembershipDetailsValidation),
+                                  'has-success': (singlePayment.MembershipPaymentName !== '') && (SingleMembershipPaymentName.dirty || SingleMembershipPaymentName.touched )
+                              }">
+                      <input type="text" class="form-control"
+                        name="{{'SingleMembershipPaymentName' + singlePayment.controlIndex}}"
+                        [(ngModel)]="singlePayment.MembershipPaymentName" #SingleMembershipPaymentName="ngModel"
+                        maxlength="50" (blur)="validatePayments(i)" tabindex="12" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-lg-3 col-md-4 col-sm-6 no_padding">
+                <div class="row">
+                  <div class="col">
+                    <div [ngClass]="{
+                      'has-danger': SingleMembershipAmount.invalid
+                                    && (SingleMembershipAmount.dirty || SingleMembershipAmount.touched || showMembershipDetailsValidation),
+                      'has-success': SingleMembershipAmount.valid && (SingleMembershipAmount.dirty || SingleMembershipAmount.touched)
+                      }">
+                      <div class="field_label">
+                        <h5> {{currencySymbol}} Fee</h5>
+                      </div>
+                      <input class="form-control" type="number" numberControl
+                        name="{{'SinglePaymentAmount' + singlePayment.controlIndex}}" min="0" maxlength="13"
+                        [(ngModel)]="singlePayment.Price" #SingleMembershipAmount="ngModel" pattern="[0-9]+(\.[0-9]+)?"
+                        (ngModelChange)="updatePaymentTotal()" tabindex="13" required />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="field_label">
+                      <h5>{{currencySymbol}} Total Amount</h5>
+                    </div>
+                    <!-- <input class="form-control" type="text" name="{{'SinglePaymentTotalAmount' + singlePayment.controlIndex}}"
+                  [ngModel]="singlePayment.TotalPrice" [disabled]="true" /> -->
+                    <div class="readonly_price">{{singlePayment.TotalPrice | currency: currencyFormat}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-6 flex_align_sp">
+                <div class="checkbox checkbox-success">
+                  <input name="{{'SinglePaymentProRata' + singlePayment.controlIndex}}"
+                    id="{{'SinglePaymentProRata' + singlePayment.controlIndex}}" type="checkbox"
+                    [(ngModel)]="singlePayment.IsProRata" [(checked)]="singlePayment.IsProRata" tabindex="14" />
+                  <label for="{{'SinglePaymentProRata' + singlePayment.controlIndex}}"> Pro rata payment</label>
+                </div>
+                <div class="red_del">
+                  <a class="float-right white_btn" role="button"
+                    (click)="removeSinglePayments(singlePayment.controlIndex)">
+                    <i class="fal fa-trash-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="space" *ngIf="!singlePayments || singlePayments.length == 0">
+            <div class="text-center">No Single Payments</div>
+          </div>
+        </div>
+        <div class="white_bg">
+          <div class="membership_payments">
+            <h3>Recurring Payment</h3>
+            <div class="membership_btn float-right">
+              <a role="button" *ngIf="showAddRecurringPayment" (click)="addRecurringPayment()">
+                <i class="fal fa-plus-circle" aria-hidden="true"></i> Add New Payment</a>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="small_space" *ngFor="let recurringPayment of recurringPayments; index as i">
+            <div class="row">
+              <div class="col-lg-5 col-md-6 col-sm-6 no_padding">
+                <div class="row">
+                  <div class="col-md-4 col-sm-6">
+                    <div class="field_label">
+                      <h5>Payment Name</h5>
+                    </div>
+                    <div [ngClass]="{
+                                       'has-danger': ((recurringPayment.MembershipPaymentName == '') && !arePaymentsValid)
+                                                     && (RecurringMembershipPaymentName.dirty || RecurringMembershipPaymentName.touched || showMembershipDetailsValidation),
+                                        'has-success': (recurringPayment.MembershipPaymentName != '') && (RecurringMembershipPaymentName.dirty || RecurringMembershipPaymentName.touched )
+                                           }">
+                      <input type="text" class="form-control"
+                        name="{{'RecurringMembershipPaymentName' + recurringPayment.controlIndex}}"
+                        [(ngModel)]="recurringPayment.MembershipPaymentName" #RecurringMembershipPaymentName="ngModel"
+                        maxlength="50" (blur)="validatePayments(i)" tabindex="15" />
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6">
+                    <div [ngClass]="{
+                                 'has-danger': !recurringPayment.IsDurationValid || (RecurringPaymentIntervalTypeID.invalid || ((!RecurringPaymentIntervalTypeID.value) || RecurringPaymentIntervalTypeID.value == 0))
+                                             && (RecurringPaymentIntervalTypeID.dirty || RecurringPaymentIntervalTypeID.touched || showMembershipDetailsValidation),
+                                 'has-success':recurringPayment.IsDurationValid && RecurringPaymentIntervalTypeID.valid && (RecurringPaymentIntervalTypeID.value &&
+                                               RecurringPaymentIntervalTypeID.value != 0) && (RecurringPaymentIntervalTypeID.dirty || RecurringPaymentIntervalTypeID.touched)
+                                 }">
+                      <div class="field_label">
+                        <h5>Interval Type
+                          <span class="info_tip"
+                            matTooltip="Specify how frequently recurring payments should be made by the member over a given membership length"
+                            matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                              class="far fa-info-circle"></i></span>
+                        </h5>
+                      </div>
+                      <div class="select_label">
+                        <select class="form-control" [(ngModel)]="recurringPayment.DurationTypeID"
+                          name="{{'RecurringPaymentIntervalTypeID' + recurringPayment.controlIndex}}" required
+                          #RecurringPaymentIntervalTypeID="ngModel" tabindex="16">
+                          <option value="{{enuMemberShipBenefitDurations.Day}}" required>Day(s)</option>
+                          <option value="{{enuMemberShipBenefitDurations.Week}}" required>Week(s)</option>
+                          <option value="{{enuMemberShipBenefitDurations.FortnightBiweek}}" required>
+                            Fortnight(s)/Bi-week(s)</option>
+                          <option value="{{enuMemberShipBenefitDurations.FourWeek}}" required>Four Week(s)</option>
+                          <option value="{{enuMemberShipBenefitDurations.Month}}" required>Month(s)</option>
+                          <option value="{{enuMemberShipBenefitDurations.Quarter}}" required>Quarter(s)</option>
+                          <option value="{{enuMemberShipBenefitDurations.SixMonth}}" required>Six Month(s)</option>
+                          <!-- <option value="{{enuMemberShipBenefitDurations.Year}}" required>Year(s)</option> -->
+                          <!-- <option *ngFor="let recurringPaymentIntervalType of recurringPaymentIntervalTypeList"
+                        [ngValue]="recurringPaymentIntervalType.DurationTypeID">
+                        {{recurringPaymentIntervalType.DurationTypeName}}
+                      </option> -->
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6">
+                    <div [ngClass]="{
+                                             'has-danger': !recurringPayment.IsDurationValid || RecurringInterval.invalid || ((!RecurringInterval.value) || RecurringInterval.value == 0) &&
+                                                             (RecurringInterval.dirty || RecurringInterval.touched || showMembershipDetailsValidation),
+                                             'has-success':recurringPayment.IsDurationValid && RecurringInterval.valid && (RecurringInterval.value && RecurringInterval.value != 0) && (RecurringInterval.dirty || RecurringInterval.touched)
+                                             }">
+                      <div class="field_label">
+                        <h5>Interval(s)</h5>
+                      </div>
+                      <input type="text" class="form-control" min="1"
+                        name="{{'RecurringInterval' + recurringPayment.controlIndex}}" numberControl
+                        [(ngModel)]="recurringPayment.RecurringInterval" #RecurringInterval="ngModel" maxlength="4"
+                        (ngModelChange)="onRecurringIntervalChangeOnlyNumbers($event, i)"
+                        (ngModelChange)="updatePaymentTotal()" tabindex="17" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-lg-3 col-md-6 col-sm-6 no_padding">
+                <div class="row">
+                  <div class="col">
+                    <div [ngClass]="{
+                            'has-danger': RecurringPaymentAmount.invalid &&
+                                          (RecurringPaymentAmount.dirty || RecurringPaymentAmount.touched || showMembershipDetailsValidation)
+                                          || ((!RecurringPaymentAmount.value) || RecurringPaymentAmount.value == 0)
+                                          && (RecurringPaymentAmount.dirty || RecurringPaymentAmount.touched),
+                            'has-success': (RecurringPaymentAmount.value && RecurringPaymentAmount.value != 0)
+                                            && RecurringPaymentAmount.valid && (RecurringPaymentAmount.dirty || RecurringPaymentAmount.touched)
+                            }">
+                      <div class="field_label">
+                        <h5>{{currencySymbol}} Fee</h5>
+                      </div>
+                      <input type="number" class="form-control"
+                        name="{{'RecurringPaymentAmount' + recurringPayment.controlIndex}}" numberControl min="1"
+                        pattern="[0-9]+(\.[0-9]+)?" [(ngModel)]="recurringPayment.Price"
+                        #RecurringPaymentAmount="ngModel" maxlength="13" (ngModelChange)="updatePaymentTotal()"
+                        tabindex="18" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="field_label">
+                      <h5> {{currencySymbol}} Total Amount</h5>
+                    </div>
+                    <!-- <input class="form-control" type="text" name="{{'RecurPaymentTotalAmount' + recurringPayment.controlIndex}}"
+                  [ngModel]="recurringPayment.TotalPrice" [disabled]="true" /> -->
+                    <div class="readonly_price">{{recurringPayment.TotalPrice | currency: currencyFormat}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6 col-sm-12 flex_align_sp">
+                <div class="recurring_payment">
+                  <div class="checkbox checkbox-success white_btn">
+                    <input class="example-margin" type="checkbox" [(ngModel)]="recurringPayment.IsAutoRoll"
+                      id="{{'AutoRecurring' + recurringPayment.controlIndex}}"
+                      name="{{'AutoRecurring' + recurringPayment.controlIndex}}" #AutoRecur="ngModel"
+                      [(checked)]="recurringPayment.IsAutoRoll" tabindex="19">
+                    <label for="{{'AutoRecurring' + recurringPayment.controlIndex}}">
+                      Then automatically 'roll' (recur) after contract period
+                    </label>
+                  </div>
+                  <div class="checkbox checkbox-success">
+                    <input name="{{'RecurrPaymentProRata' + recurringPayment.controlIndex}}"
+                      id="{{'RecurrPaymentProRata' + recurringPayment.controlIndex}}" type="checkbox"
+                      [(ngModel)]="recurringPayment.IsProRata" [(checked)]="recurringPayment.IsProRata" tabindex="20">
+                    <label for="{{'RecurrPaymentProRata' + recurringPayment.controlIndex}}"> Pro Rata </label>
+                  </div>
+                </div>
+                <div class="red_del">
+                  <a class="float-right white_btn" role="button"
+                    (click)="removeRecurringPayments(recurringPayment.controlIndex)">
+                    <i class="fal fa-trash-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="space" *ngIf="!recurringPayments || recurringPayments.length == 0">
+            <div class="text-center">No Recurring Payments</div>
+          </div>
+        </div>
+
+        <div class="white_bg">
+          <div class="payment_bar text-right">
+            Total : <span> {{ paymentTotal | currency: currencyFormat}} </span>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <form #membershipTypeForm="ngForm" novalidate>
+        <ng-template matStepLabel>Membership Benefits</ng-template>
+        <div class="row" *ngIf="membership.MembershipBenefits">
+          <div class="col-md-3 col-sm-6 no_padding" *ngFor="let Benefit of membership.MembershipBenefits; index as i">
+            <div class="white_bg margin_bottom_zero pt-1">
+              <div class="sch_class_head">
+                <h5 class="field_label">
+                  {{
+                  Benefit.MembershipBenefitsTypeID == membershipBenefitType.DoorCheckedInBenefits ? 'Check-In Benefits'
+                  :
+                  Benefit.MembershipBenefitsTypeID == membershipBenefitType.Classes ? 'Class Benefits' :
+                  Benefit.MembershipBenefitsTypeID == membershipBenefitType.Services ? 'Service Benefits' :
+                  'Product Benefits'
+                  }}
+                  <span class="info_tip"
+                    matTooltip="
+                    Total {{
+                      Benefit.MembershipBenefitsTypeID == membershipBenefitType.DoorCheckedInBenefits ? 'Check-In Benefits' :
+                      Benefit.MembershipBenefitsTypeID == membershipBenefitType.Classes ? 'Class Benefits' :
+                      Benefit.MembershipBenefitsTypeID == membershipBenefitType.Services ? 'Service Benefits' :
+                      'number of Product(s)'
+                    }} allowed as part of the membership over a given period of time. Benefits keep rolling over (but do not accumulate) until the membership expires."
+                    matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                    <i class="far fa-info-circle"></i>
+                  </span>
+                </h5>
+                <span *ngIf="Benefit.MembershipBenefitsTypeID == membershipBenefitType.DoorCheckedInBenefits">
+                  <mat-slide-toggle tabindex="7" class="" [(checked)]="membership.IsDoorCheckedInBenefitsAllowed"
+                    [(ngModel)]="membership.IsDoorCheckedInBenefitsAllowed" name="IsDoorCheckedInBenefitsAllowed"
+                    (ngModelChange)="resetDoorCheckedInBenefitsValidation('1')">
+                  </mat-slide-toggle>
+                </span>
+                <span *ngIf="Benefit.MembershipBenefitsTypeID == membershipBenefitType.Classes">
+                  <mat-slide-toggle tabindex="7" class="" [(checked)]="membership.IsClassBenefitsAllowed"
+                    [(ngModel)]="membership.IsClassBenefitsAllowed" name="IsClassBenefitsAllowed"
+                    (ngModelChange)="resetClassBenefitsValidation('2')">
+                  </mat-slide-toggle>
+                </span>
+                <span *ngIf="Benefit.MembershipBenefitsTypeID == membershipBenefitType.Services">
+                  <mat-slide-toggle tabindex="7" class="" [(checked)]="membership.IsServiceBenefitsAllowed"
+                    [(ngModel)]="membership.IsServiceBenefitsAllowed" name="IsServiceBenefitsAllowed"
+                    (ngModelChange)="resetServiceBenefitsValidation('3')">
+                  </mat-slide-toggle>
+                </span>
+                <span *ngIf="Benefit.MembershipBenefitsTypeID == membershipBenefitType.Products">
+                  <mat-slide-toggle tabindex="7" class="" [(checked)]="membership.IsProductBenefitsAllowed"
+                    [(ngModel)]="membership.IsProductBenefitsAllowed" name="IsProductBenefitsAllowed"
+                    (ngModelChange)="resetProductBenefitsValidation('4')">
+                  </mat-slide-toggle>
+                </span>
+              </div>
+              <div class="row mem_benefit_box no_padding flex-end">
+                <div class="col-md-12">
+                  <div class="checkbox checkbox-success pb-0">
+                    <input tabindex="19" type="checkbox" name="{{i + Benefit.MembershipBenefitsTypeID + 'rollover' }}"
+                      ng-reflect-model="true" id="{{ i + Benefit.MembershipBenefitsTypeID + 'rollover' }}"
+                      [(ngModel)]="Benefit.RollOverBenefitsOnEachInterval" [disabled]="
+                        (Benefit.MembershipBenefitsTypeID == membershipBenefitType.DoorCheckedInBenefits && !membership.IsDoorCheckedInBenefitsAllowed ? true :
+                          Benefit.MembershipBenefitsTypeID == membershipBenefitType.Classes && !membership.IsClassBenefitsAllowed ? true :
+                          Benefit.MembershipBenefitsTypeID == membershipBenefitType.Services && !membership.IsServiceBenefitsAllowed ? true :
+                          Benefit.MembershipBenefitsTypeID == membershipBenefitType.Products && !membership.IsProductBenefitsAllowed ? true : false
+                        )"
+                      class="ng-untouched ng-pristine ng-valid">
+                    <label for="{{ i + Benefit.MembershipBenefitsTypeID + 'rollover' }}">Allow Benefits Rollover
+                      <span class="info_tip"
+                      matTooltip="When checked, the remaining benefits are rolled over to next interval, allowing accumulation of benefits until the membership is expired/terminated."
+                      matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                      <i class="far fa-info-circle"></i>
+                    </span></label>
+                  </div>
+                  <div class="checkbox checkbox-success pt-0">
+                    <input tabindex="20" type="checkbox" name="{{ i + Benefit.MembershipBenefitsTypeID }}"
+                      ng-reflect-model="true" id="{{ i + Benefit.MembershipBenefitsTypeID }}"
+                      [(ngModel)]="Benefit.NoLimits" [disabled]="
+                        (Benefit.MembershipBenefitsTypeID == membershipBenefitType.DoorCheckedInBenefits && !membership.IsDoorCheckedInBenefitsAllowed ? true :
+                          Benefit.MembershipBenefitsTypeID == membershipBenefitType.Classes && !membership.IsClassBenefitsAllowed ? true :
+                          Benefit.MembershipBenefitsTypeID == membershipBenefitType.Services && !membership.IsServiceBenefitsAllowed ? true :
+                          Benefit.MembershipBenefitsTypeID == membershipBenefitType.Products && !membership.IsProductBenefitsAllowed ? true : false
+                        )" (ngModelChange)="onNoLimitChange(Benefit.MembershipBenefitsTypeID)"
+                      class="ng-untouched ng-pristine ng-valid">
+                    <label for="{{ i + Benefit.MembershipBenefitsTypeID }}"> No Limits</label>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 padding_right">
+                  <div [ngClass]="{
+                    'has-danger': i.invalid &&
+                                  (i.dirty || i.touched)
+                                  || ((!i.value) || i.value == 0)
+                                  && (i.dirty || i.touched) && !Benefit.NoLimits
+
+                    }">
+                    <h5 class="field_label">Total Benefits</h5>
+                    <input class="form-control" min="1" maxlength="4" required [(ngModel)]="Benefit.TotalSessions"
+                      name="{{'TotalSession_' + Benefit.MembershipBenefitsTypeID}}" #i="ngModel" numbercontrol
+                      type="text"
+                      (ngModelChange)="onBenefitSessionDurationChangeOnlyNumbers($event, Benefit.MembershipBenefitsTypeID)"
+                      [disabled]="Benefit.NoLimits">
+                  </div>
+                </div>
+                <div class="col-md-8 col-sm-8">
+                  <div class="select_label">
+                    <select class="form-control"
+                      name="{{'MembershipBenefitsTypeID' + Benefit.MembershipBenefitsTypeID}}"
+                      [(ngModel)]="Benefit.DurationTypeID"
+                      id="{{'MembershipBenefitsTypeID' + Benefit.MembershipBenefitsTypeID}}"
+                      [disabled]="Benefit.NoLimits">
+                      <option value="{{enuMemberShipBenefitDurations.Day}}" required>Per Day</option>
+                      <option value="{{enuMemberShipBenefitDurations.Week}}" required>Per Week</option>
+                      <option value="{{enuMemberShipBenefitDurations.FortnightBiweek}}" required>Per Fortnight/Bi-week
+                      </option>
+                      <option value="{{enuMemberShipBenefitDurations.FourWeek}}" required>Per Four Week</option>
+                      <option value="{{enuMemberShipBenefitDurations.Month}}" required>Per Month</option>
+                      <option value="{{enuMemberShipBenefitDurations.Quarter}}" required>Per Quarter</option>
+                      <option value="{{enuMemberShipBenefitDurations.SixMonth}}" required>Per Six Month</option>
+                      <!-- <option value="{{enuMemberShipBenefitDurations.Year}}" required>Per Year</option> -->
+                      <option value="{{enuMemberShipBenefitDurations.Membership}}" required>Per Membership</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="white_bg" *ngIf="membership.IsDoorCheckedInBenefitsAllowed">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="small_space"></div>
+              <div class="overflow-auto">
+                <div class="grid_bg_disabled responsive_grid_header">
+                  <div class="row grid_header">
+                    <div class="col">
+                      <h5>Day</h5>
+                    </div>
+                    <div class="col">
+                      <h5>Start Time</h5>
+                    </div>
+                    <div class="col">
+                      <h5>End Time</h5>
+                    </div>
+                    <div class="col col-md-3">
+                      <div class="checkbox checkbox-success white_label">
+                        <input class="example-margin" type="checkbox" id="AllBranchOperationalTimes"
+                          name="AllBranchOperationalTimes" [(checked)]="isAllBranchOperationalTimes"
+                          [(ngModel)]="isAllBranchOperationalTimes"
+                          (ngModelChange)="onAllBranchOperationTimeAccessChange($event)">
+                        <label for="AllBranchOperationalTimes" class="semi_bold_font">
+                          All Branch Times
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row grid_rows">
+                    <div class="col">
+                      <h5>Monday</h5>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                        'has-danger': (membershipClockInTimeList[weekDays.Monday].IsStartTimeInvalid) ||
+                                      (membershipClockInTimeList[weekDays.Monday].IsStartTimeRequired)
+                      }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Monday].StartTime"
+                            (onValueChanged)="onStartTimeChange($event, weekDays.Monday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Monday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Monday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                      'has-danger': (membershipClockInTimeList[weekDays.Monday].IsEndTimeInvalid) ||
+                                    (membershipClockInTimeList[weekDays.Monday].IsEndTimeRequired)
+                    }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Monday].EndTime"
+                            (onValueChanged)="onEndTimeChange($event, weekDays.Monday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Monday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Monday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-md-3">
+                      <div class="checkbox checkbox-success permission_check">
+                        <input class="example-margin" type="checkbox" id="BranchOperationalTimesMonday"
+                          name="BranchOperationalTimesMonday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Monday].IsBranchOperationTime"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Monday].IsBranchOperationTime"
+                          (ngModelChange)="onBranchOperationTimeAccessChange($event, weekDays.Monday)">
+                        <label for="BranchOperationalTimesMonday">
+                          Branch Times
+                        </label>
+                      </div>
+                      <div class="checkbox checkbox-success">
+                        <input class="example-margin" type="checkbox" id="AccessPermissionMonday"
+                          name="AccessPermissionMonday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Monday].IsDayRestricted"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Monday].IsDayRestricted"
+                          (ngModelChange)="onAccessPermissionChange($event, weekDays.Monday)">
+                        <label for="AccessPermissionMonday">
+                          No Access
+                        </label>
+                      </div>
+
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="row grid_rows">
+                    <div class="col">
+                      <h5>Tuesday</h5>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                          'has-danger': (membershipClockInTimeList[weekDays.Tuesday].IsStartTimeInvalid) ||
+                                        (membershipClockInTimeList[weekDays.Tuesday].IsStartTimeRequired)
+                        }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Tuesday].StartTime"
+                            (onValueChanged)="onStartTimeChange($event, weekDays.Tuesday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Tuesday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Tuesday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                        'has-danger': ( membershipClockInTimeList[weekDays.Tuesday].IsEndTimeInvalid) ||
+                                      (membershipClockInTimeList[weekDays.Tuesday].IsEndTimeRequired)
+                      }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Tuesday].EndTime"
+                            (onValueChanged)="onEndTimeChange($event, weekDays.Tuesday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Tuesday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Tuesday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-md-3">
+                      <div class="checkbox checkbox-success permission_check">
+                        <input class="example-margin" type="checkbox" id="BranchOperationalTimesTuesday"
+                          name="BranchOperationalTimesTuesday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Tuesday].IsBranchOperationTime"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Tuesday].IsBranchOperationTime"
+                          (ngModelChange)="onBranchOperationTimeAccessChange($event, weekDays.Tuesday)">
+                        <label for="BranchOperationalTimesTuesday">
+                          Branch Times
+                        </label>
+                      </div>
+                      <div class="checkbox checkbox-success">
+                        <input class="example-margin" type="checkbox" id="AccessPermissionTuesday"
+                          name="AccessPermissionTuesday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Tuesday].IsDayRestricted"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Tuesday].IsDayRestricted"
+                          (ngModelChange)="onAccessPermissionChange($event, weekDays.Tuesday)">
+                        <label for="AccessPermissionTuesday">
+                          No Access
+                        </label>
+                      </div>
+
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="row grid_rows">
+                    <div class="col">
+                      <h5>Wednesday</h5>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                          'has-danger': ( membershipClockInTimeList[weekDays.Wednesday].IsStartTimeInvalid) ||
+                                        ( membershipClockInTimeList[weekDays.Wednesday].IsStartTimeRequired)
+                        }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Wednesday].StartTime"
+                            (onValueChanged)="onStartTimeChange($event, weekDays.Wednesday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Wednesday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Wednesday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                        'has-danger': ( membershipClockInTimeList[weekDays.Wednesday].IsEndTimeInvalid) ||
+                                      (membershipClockInTimeList[weekDays.Wednesday].IsEndTimeRequired)
+                      }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Wednesday].EndTime"
+                            (onValueChanged)="onEndTimeChange($event, weekDays.Wednesday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Wednesday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Wednesday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-md-3">
+                      <div class="checkbox checkbox-success permission_check">
+                        <input class="example-margin" type="checkbox" id="BranchOperationalTimesWednesday"
+                          name="BranchOperationalTimesWednesday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Wednesday].IsBranchOperationTime"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Wednesday].IsBranchOperationTime"
+                          (ngModelChange)="onBranchOperationTimeAccessChange($event, weekDays.Wednesday)">
+                        <label for="BranchOperationalTimesWednesday">
+                          Branch Times
+                        </label>
+                      </div>
+                      <div class="checkbox checkbox-success">
+                        <input class="example-margin" type="checkbox" id="AccessPermissionWednesday"
+                          name="AccessPermissionWednesday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Wednesday].IsDayRestricted"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Wednesday].IsDayRestricted"
+                          (ngModelChange)="onAccessPermissionChange($event, weekDays.Wednesday)">
+                        <label for="AccessPermissionWednesday">
+                          No Access
+                        </label>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="row grid_rows">
+                    <div class="col">
+                      <h5>Thursday</h5>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                          'has-danger': ( membershipClockInTimeList[weekDays.Thursday].IsStartTimeInvalid) ||
+                                        ( membershipClockInTimeList[weekDays.Thursday].IsStartTimeRequired)
+                        }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Thursday].StartTime"
+                            (onValueChanged)="onStartTimeChange($event, weekDays.Thursday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Thursday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Thursday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                      'has-danger': ( membershipClockInTimeList[weekDays.Thursday].IsEndTimeInvalid) ||
+                                    ( membershipClockInTimeList[weekDays.Thursday].IsEndTimeRequired)
+                    }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Thursday].EndTime"
+                            (onValueChanged)="onEndTimeChange($event, weekDays.Thursday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Thursday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Thursday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-md-3">
+                      <div class="checkbox checkbox-success permission_check">
+                        <input class="example-margin" type="checkbox" id="BranchOperationalTimesThursday"
+                          name="BranchOperationalTimesThursday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Thursday].IsBranchOperationTime"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Thursday].IsBranchOperationTime"
+                          (ngModelChange)="onBranchOperationTimeAccessChange($event, weekDays.Thursday)">
+                        <label for="BranchOperationalTimesThursday">
+                          Branch Times
+                        </label>
+                      </div>
+                      <div class="checkbox checkbox-success">
+                        <input class="example-margin" type="checkbox" id="AccessPermissionThursday"
+                          name="AccessPermissionThursday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Thursday].IsDayRestricted"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Thursday].IsDayRestricted"
+                          (ngModelChange)="onAccessPermissionChange($event, weekDays.Thursday)">
+                        <label for="AccessPermissionThursday">
+                          No Access
+                        </label>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="row grid_rows">
+                    <div class="col">
+                      <h5>Friday</h5>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                          'has-danger': ( membershipClockInTimeList[weekDays.Friday].IsStartTimeInvalid) ||
+                                        ( membershipClockInTimeList[weekDays.Friday].IsStartTimeRequired)
+                        }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Friday].StartTime"
+                            (onValueChanged)="onStartTimeChange($event, weekDays.Friday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Friday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Friday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                      'has-danger': ( membershipClockInTimeList[weekDays.Friday].IsEndTimeInvalid) ||
+                                    ( membershipClockInTimeList[weekDays.Friday].IsEndTimeRequired)
+                    }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Friday].EndTime"
+                            (onValueChanged)="onEndTimeChange($event, weekDays.Friday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Friday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Friday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-md-3">
+                      <div class="checkbox checkbox-success permission_check">
+                        <input class="example-margin" type="checkbox" id="BranchOperationalTimesFriday"
+                          name="BranchOperationalTimesFriday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Friday].IsBranchOperationTime"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Friday].IsBranchOperationTime"
+                          (ngModelChange)="onBranchOperationTimeAccessChange($event, weekDays.Friday)">
+                        <label for="BranchOperationalTimesFriday">
+                          Branch Times
+                        </label>
+                      </div>
+                      <div class="checkbox checkbox-success">
+                        <input class="example-margin" type="checkbox" id="AccessPermissionFriday"
+                          name="AccessPermissionFriday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Friday].IsDayRestricted"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Friday].IsDayRestricted"
+                          (ngModelChange)="onAccessPermissionChange($event, weekDays.Friday)">
+                        <label for="AccessPermissionFriday">
+                          No Access
+                        </label>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="row grid_rows">
+                    <div class="col">
+                      <h5>Saturday</h5>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                          'has-danger': ( membershipClockInTimeList[weekDays.Saturday].IsStartTimeInvalid) ||
+                                        ( membershipClockInTimeList[weekDays.Saturday].IsStartTimeRequired)
+                        }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Saturday].StartTime"
+                            (onValueChanged)="onStartTimeChange($event, weekDays.Saturday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Saturday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Saturday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                      'has-danger': ( membershipClockInTimeList[weekDays.Saturday].IsEndTimeInvalid) ||
+                                    (membershipClockInTimeList[weekDays.Saturday].IsEndTimeRequired)
+                    }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Saturday].EndTime"
+                            (onValueChanged)="onEndTimeChange($event, weekDays.Saturday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Saturday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Saturday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-md-3">
+                      <div class="checkbox checkbox-success permission_check">
+                        <input class="example-margin" type="checkbox" id="BranchOperationalTimesStaruday"
+                          name="BranchOperationalTimesStaruday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Saturday].IsBranchOperationTime"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Saturday].IsBranchOperationTime"
+                          (ngModelChange)="onBranchOperationTimeAccessChange($event, weekDays.Saturday)">
+                        <label for="BranchOperationalTimesStaruday">
+                          Branch Times
+                        </label>
+                      </div>
+                      <div class="checkbox checkbox-success">
+                        <input class="example-margin" type="checkbox" id="AccessPermissionSaturday"
+                          name="AccessPermissionSaturday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Saturday].IsDayRestricted"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Saturday].IsDayRestricted"
+                          (ngModelChange)="onAccessPermissionChange($event, weekDays.Saturday)">
+                        <label for="AccessPermissionSaturday">
+                          No Access
+                        </label>
+                      </div>
+
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="row grid_rows">
+                    <div class="col">
+                      <h5>Sunday</h5>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                          'has-danger': (membershipClockInTimeList[weekDays.Sunday].IsStartTimeInvalid) ||
+                                        (membershipClockInTimeList[weekDays.Sunday].IsStartTimeRequired)
+                        }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Sunday].StartTime"
+                            (onValueChanged)="onStartTimeChange($event, weekDays.Sunday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Sunday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Sunday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="membership_time">
+                        <div [ngClass]="{
+                        'has-danger': ( membershipClockInTimeList[weekDays.Sunday].IsEndTimeInvalid) ||
+                                      ( membershipClockInTimeList[weekDays.Sunday].IsEndTimeRequired)
+                      }">
+                          <dx-date-box class="form-control" type="time"
+                            [(value)]="membershipClockInTimeList[weekDays.Sunday].EndTime"
+                            (onValueChanged)="onEndTimeChange($event, weekDays.Sunday)"
+                            [displayFormat]="schedulerTimeFormat" [useMaskBehavior]="true"
+                            [placeholder]="timePlaceholder"
+                            [disabled]="(membershipClockInTimeList[weekDays.Sunday].IsBranchOperationTime || membershipClockInTimeList[weekDays.Sunday].IsDayRestricted)">
+                          </dx-date-box>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-md-3">
+                      <div class="checkbox checkbox-success permission_check">
+                        <input class="example-margin" type="checkbox" id="BranchOperationalTimesSunday"
+                          name="BranchOperationalTimesSunday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Sunday].IsBranchOperationTime"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Sunday].IsBranchOperationTime"
+                          (ngModelChange)="onBranchOperationTimeAccessChange($event, weekDays.Sunday)">
+                        <label for="BranchOperationalTimesSunday">
+                          Branch Times
+                        </label>
+                      </div>
+                      <div class="checkbox checkbox-success">
+                        <input class="example-margin" type="checkbox" id="AccessPermissionSunday"
+                          name="AccessPermissionSunday"
+                          [(checked)]="membershipClockInTimeList[weekDays.Sunday].IsDayRestricted"
+                          [(ngModel)]="membershipClockInTimeList[weekDays.Sunday].IsDayRestricted"
+                          (ngModelChange)="onAccessPermissionChange($event, weekDays.Sunday)">
+                        <label for="AccessPermissionSunday">
+                          No Access
+                        </label>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <form #membershipFormData="ngForm" novalidate>
+        <ng-template matStepLabel>Branches</ng-template>
+        <div class="white_bg row">
+          <div class="col-md-12">
+            <div class="section_title">
+              <h4>Branches</h4>
+            </div>
+            <div class="overflow-auto">
+              <div class="row grid_header mob-scroll-grid">
+                <div class="col">
+                  <h5>Branch Name</h5>
+                </div>
+                <div class="col">
+                  <h5>City</h5>
+                </div>
+                <div class="col">
+                  <h5>Phone No</h5>
+                </div>
+                <div class="col">
+                  <h5>Email</h5>
+                </div>
+                <div class="col col-md-2 text-center">
+                  <h5>Actions</h5>
+                </div>
+              </div>
+              <div class="row grid_rows mob-scroll-grid" *ngFor="let branch of staffBranchList; let i = index">
+                <div class="col">
+                  <h5> {{branch.BranchName}}</h5>
+                </div>
+                <div class="col">
+                  <h5>{{branch.CityName}}</h5>
+                </div>
+                <div class="col">
+                  <h5>{{branch.Mobile ? branch.Mobile : 'N/A'}}</h5>
+                </div>
+                <div class="col">
+                  <h5>{{branch.Email}}</h5>
+                </div>
+                <div class="col col-md-2 text-center">
+                  <!-- <h5>
+                    <span class="red_del ng-star-inserted"><a href="javascript:void(0)" mattooltip="Delete"
+                        mattooltipclass="custom-tooltip" mattooltipposition="above"
+                        aria-describedby="cdk-describedby-message-35" cdk-describedby-host=""
+                        ng-reflect-position="above" ng-reflect-message="Delete"
+                        ng-reflect-tooltip-class="custom-tooltip" class=""><i class="fal fa-trash-alt"></i></a></span>
+                  </h5> -->
+                  <h5>
+                    <mat-slide-toggle class="example-margin"
+                      [ngClass]="branch.BranchID == branchID ? 'current_branch_disabled': ''"
+                      [(checked)]="branch.IsSelected" [(ngModel)]="branch.IsSelected"
+                      (ngModelChange)="onBranchSelectionChange($event, branch)" [disabled]="branch.BranchID == branchID"
+                      name="{{'branchIsSelected' + i}}" required>
+                      {{branch.IsSelected ? 'Added': 'Not Added'}}
+                    </mat-slide-toggle>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <ng-container *ngIf="membership.IsClassBenefitsAllowed">
+      <mat-step>
+        <ng-template matStepLabel>Classes</ng-template>
+        <benefit-item-types [membershipBranchList]="membership.MembershipBranchList" [ItemTypeID]="enuItemType.Class"
+          [itemTypeName]="membershipBenefitTypeName.Class" [itemTypeHeading]="membershipBenefitTypesName.Classes"
+          [BenefitItemList]="membershipAddedClassList" [filterMembershipItemTypeList]="membershipAddedClassList"
+          #benifitItemTypeClass></benefit-item-types>
+      </mat-step>
+    </ng-container>
+
+    <ng-container *ngIf="membership.IsServiceBenefitsAllowed">
+      <mat-step>
+        <ng-template matStepLabel>Services</ng-template>
+        <benefit-item-types [membershipBranchList]="membership.MembershipBranchList" [ItemTypeID]="enuItemType.Service"
+          [itemTypeName]="membershipBenefitTypeName.Service" [itemTypeHeading]="membershipBenefitTypesName.Services"
+          [BenefitItemList]="membershipAddedServiceList" [filterMembershipItemTypeList]="membershipAddedServiceList"
+          #benifitItemTypeService></benefit-item-types>
+      </mat-step>
+    </ng-container>
+
+    <ng-container *ngIf="membership.IsProductBenefitsAllowed">
+      <mat-step>
+        <ng-template matStepLabel>Products</ng-template>
+        <benefit-item-types [membershipBranchList]="membership.MembershipBranchList" [ItemTypeID]="enuItemType.ProductVariant"
+          [itemTypeName]="membershipBenefitTypeName.Product" [itemTypeHeading]="membershipBenefitTypesName.Products"
+          [BenefitItemList]="membershipAddedProductList" [filterMembershipItemTypeList]="membershipAddedProductList"
+          #benifitItemTypeProduct></benefit-item-types>
+      </mat-step>
+    </ng-container>
+
+  </mat-horizontal-stepper>
+</div>

@@ -1,0 +1,265 @@
+<form #viewStaffForm="ngForm" (ngSubmit)="onSave(viewStaffForm.valid)" novalidate>
+    <div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog-centered">
+            <div class="modal-content large_popup">
+                <div class="popup_header">
+                    <div class="col-md-6 col-sm-6">
+                        <h4>Staff Details</h4>
+                    </div>
+                </div>
+                <div class="popup_content cstm_scroll_bg readonly_content">
+                    <div class="row">
+                        <div class="col-md-12 no_padding">
+                            <div class="alert alert-danger" *ngIf="viewStaffForm.submitted && (viewStaffForm.invalid )">
+                                <div *ngIf="viewStaffForm.invalid ">
+                                    {{messages.Validation.Info_Required}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg info_bar_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="view_main_bar">
+                                    <div class="mob-img-detail">
+                                        <img src="{{imagePath}}" style="width: 40px;"
+                                            class="img-responsive rounded-circle">
+                                    </div>
+                                    <div class="view_main_bar_item"><span>
+                                            {{staffViewModel.Title + ' ' + staffViewModel.FirstName + ' ' +
+                                        staffViewModel.LastName}}</span></div>
+                                    <div class="view_main_bar_item"><i class="fal fa-envelope"></i>
+                                        {{staffViewModel.Email}}
+                                    </div>
+                                    <div class="view_main_bar_item"><i class="fal fa-mobile-android-alt"></i>
+                                        {{staffViewModel.Mobile}} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Personal Info</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Gender</h6>
+                                <p>{{staffViewModel.Gender}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Position</h6>
+                                <p>{{staffViewModel.StaffPositionName}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Card Number</h6>
+                                <p>{{staffViewModel.CardNumber ? staffViewModel.CardNumber : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Phone</h6>
+                                <p>{{staffViewModel.Phone ? staffViewModel.Phone : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Date of Brith</h6>
+                                <p>{{staffViewModel.BirthDate | customdate: dateFormat}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Address</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Country</h6>
+                                <p>{{staffViewModel.CountryName}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>County/State</h6>
+                                <p>{{staffViewModel.StateCountyName}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>City</h6>
+                                <p>{{staffViewModel.CityName}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address</h6>
+                                <p>{{staffViewModel.Address1}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Post Code</h6>
+                                <p>{{staffViewModel.PostCode ? staffViewModel.PostCode : 'N/A'}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Permissions</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section_content readonly_content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="permission_header">
+                                        <h3>Show on Scheduler</h3>
+                                        <mat-slide-toggle class="example-margin float-right"
+                                            [(checked)]="otherBranchStaffModel.Permission.ShowOnScheduler"
+                                            [(ngModel)]="otherBranchStaffModel.Permission.ShowOnScheduler"
+                                            [disabled]="false" #ShowOnScheduler="ngModel" name="ShowOnScheduler">
+                                            {{otherBranchStaffModel.Permission.ShowOnScheduler ? 'Allowed': 'Not
+                                                Allowed'}}
+                                        </mat-slide-toggle>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="permission_body">
+                                        <div class="permission_item">
+                                            <h4>Provide Classes</h4>
+                                            <input name="CanDoClass" class="float-right" id="provide_classes"
+                                                type="checkbox"
+                                                [(ngModel)]="otherBranchStaffModel.Permission.CanDoClass"
+                                                #Class="ngModel"
+                                                [(checked)]="otherBranchStaffModel.Permission.CanDoClass"
+                                                [disabled]="false" tabindex="22" />
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="permission_item">
+                                            <h4>Provide Service</h4>
+                                            <input name="CanDoService" class="float-right" id="provide_services"
+                                                type="checkbox"
+                                                [(ngModel)]="otherBranchStaffModel.Permission.CanDoService"
+                                                #Service="ngModel"
+                                                [(checked)]="otherBranchStaffModel.Permission.CanDoService"
+                                                [disabled]="false" tabindex="23" />
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="permission_item">
+                                            <h4>Provide Service Online</h4>
+                                            <input name="CanDoServiceOnline" class="float-right" id="CanDoServiceOnline"
+                                                type="checkbox"
+                                                [(ngModel)]="otherBranchStaffModel.Permission.CanDoServiceOnline"
+                                                #Service="ngModel"
+                                                [(checked)]="otherBranchStaffModel.Permission.CanDoServiceOnline"
+                                                [disabled]="false" tabindex="23" />
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="permission_item">
+                                            <h4>Allow First Aid</h4>
+                                            <input name="FirstAidAllowed" class="float-right" id="first_aid_perm"
+                                                type="checkbox"
+                                                [(ngModel)]="otherBranchStaffModel.Permission.FirstAidAllowed"
+                                                #FirstAidAllowed="ngModel"
+                                                [(checked)]="otherBranchStaffModel.Permission.FirstAidAllowed"
+                                                [disabled]="false" tabindex="26">
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="permission_item">
+                                            <h4>Allow Tip</h4>
+                                            <input name="AllowTip" class="float-right" id="tip_tip_perm" type="checkbox"
+                                                [(ngModel)]="otherBranchStaffModel.Permission.AllowTip"
+                                                #AllowTip="ngModel"
+                                                [(checked)]="otherBranchStaffModel.Permission.AllowTip"
+                                                [disabled]="false" tabindex="26">
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <h5 class="field_label">Online Display Name</h5>
+                                    <input name="OnlineDisplayName" type="text"
+                                        [(ngModel)]="otherBranchStaffModel.Permission.OnlineDisplayName" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Branches</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section_content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row grid_header">
+                                        <div class="col-md-6">
+                                            <h5>Branch Name</h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>Role Name</h5>
+                                        </div>
+                                    </div>
+                                    <div id="grid" class="view_only_grid">
+                                        <div class="row grid_rows view_membership_content"
+                                            *ngFor="let objBranch of staffViewModel.StaffBranchList">
+                                            <div class="col-md-6">
+                                                <h5>{{objBranch.BranchName}}</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5>{{objBranch.RoleName}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5 class="field_label required">Role</h5>
+                                    <div [ngClass]="{
+                                            'has-danger': RoleID.invalid && (RoleID.dirty || RoleID.touched || viewStaffForm.submitted ),
+                                            'has-success': RoleID.valid && (RoleID.dirty || RoleID.touched )
+                                            }">
+                                        <div class="role_dropdown">
+                                            <div class="select_label">
+                                                <select class="form-control" name="RoleID" #RoleID="ngModel"
+                                                    [(ngModel)]="otherBranchStaffModel.Permission.RoleID" required>
+                                                    <option *ngFor="let role of roleList" [ngValue]="role.RoleID">
+                                                        {{role.RoleName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 view_role_btn">
+                                    <button type="button" class="save"
+                                        (click)="onViewRole(otherBranchStaffModel.Permission.RoleID)"
+                                        [disabled]="!otherBranchStaffModel.Permission.RoleID || otherBranchStaffModel.Permission.RoleID == 0">
+                                        View Role
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-md-12">
+                        <div class="cancel_btn float-right">
+                            <button type="submit" class="save primary_blue_btn">Save</button>
+                        </div>
+                        <div class="cancel_btn float-right">
+                            <button type="button" (click)="onCloseDialog()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

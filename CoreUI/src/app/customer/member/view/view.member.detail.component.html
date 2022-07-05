@@ -1,0 +1,268 @@
+﻿<!--View Member Pop Up Start-->
+<div class="view_staff_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup">
+            <div class="popup_header">
+                <h4>Customer Details</h4>
+                <!-- <div class="col-6 col-sm-6">
+                    <button type="button" class="close" (click)="onCloseDialog()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="readonly_content">
+                    <div class="view_bg info_bar_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="view_main_bar">
+                                    <div>
+                                        <img src="{{imagePath}}" style="width:40px"
+                                            class="img-responsive rounded-circle">
+                                    </div>
+                                    <div class="view_main_bar_item">
+                                        <span>{{customerDetail.Title +
+                                            ' ' + customerDetail.FirstName + ' ' +
+                                            customerDetail.LastName}}</span>
+                                        <span *ngIf="customer.CustomerTypeID == 3" class="enq_status">Member</span>
+                                        <span *ngIf="customer.CustomerTypeID == 1" class="enq_status">Client</span>
+                                    </div>
+                                    <div class="view_main_bar_item">
+                                        <i class="fal fa-envelope"></i>{{customerDetail.Email}}
+                                    </div>
+                                    <div *ngIf="customerDetail.Mobile" class="view_main_bar_item">
+                                        <i class="fal fa-mobile-android-alt"></i>{{customerDetail.Mobile}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Personal Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Gender</h6>
+                                <p>{{(!customerDetail.Gender) ? 'Not Specified' :
+                                    customerDetail.Gender}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Date of Birth</h6>
+                                <p>{{customerDetail.BirthDate ? (customerDetail.BirthDate | customdate: dateFormat) :
+                                    'N/A' }}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Phone</h6>
+                                <p>{{customerDetail.Phone ? customerDetail.Phone : 'N/A'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>General Information</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6" *ngIf="customer.CustomerTypeID == 3">
+                                <h6>Card Number</h6>
+                                <p>{{customerDetail.CardNumber ? customerDetail.CardNumber : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="allowedReferredBy">
+                                <h6>Referred By</h6>
+                                <p>{{customerDetail.ReferenceCustomerName ? customerDetail.ReferenceCustomerName :
+                                    'N/A'}}
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Source</h6>
+                                <p>{{customerDetail.EnquirySourceTypeName ? customerDetail.EnquirySourceTypeName :
+                                    'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Company Name</h6>
+                                <p>{{customerDetail.CompanyName ? customerDetail.CompanyName : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Occupation</h6>
+                                <p>{{customerDetail.Occupation ? customerDetail.Occupation : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Created Date</h6>
+                                <p>{{customerDetail.CreatedOn ? (customerDetail.CreatedOn | customdate: dateFormat) : 'N/A'}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>Notes</h6>
+                                <p>
+                                    {{customerDetail.Description ? customerDetail.Description : 'N/A'}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Home Address</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Country</h6>
+                                <p>{{customerDetail.CountryName ? customerDetail.CountryName: defaultCountry}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>State/County</h6>
+                                <p>{{customerDetail.StateCountyName ? customerDetail.StateCountyName : 'N/A' }}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>City</h6>
+                                <p>{{customerDetail.CityName ? customerDetail.CityName : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address Line 1</h6>
+                                <p> {{customerDetail.Address1 ? customerDetail.Address1 : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Address line 2</h6>
+                                <p> {{customerDetail.Address2 ? customerDetail.Address2 : 'N/A'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Postal Code / Zip Code</h6>
+                                <p> {{customerDetail.PostCode ? customerDetail.PostCode : 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view_bg last_div_bz">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Permissions</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- <div class="col-md-3 col-sm-6">
+                                    <h6>Online Access</h6>
+                                    <p> {{customerDetail.OnlineAccessAllowed ? 'Allowed' : 'Not Allowed'}}</p>
+                                </div> -->
+
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Postal Mail</h6>
+                                <p> {{customerDetail.PostalMailAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Phone Call</h6>
+                                <p> {{customerDetail.PhoneCallAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div *ngIf="isEmailAllowed" class="col-md-3 col-sm-6">
+                                <h6>Email</h6>
+                                <p> {{customerDetail.EmailAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div *ngIf="isSmsAllowed" class="col-md-3 col-sm-6">
+                                <h6>SMS</h6>
+                                <p> {{customerDetail.SMSAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="isPushNotificationAllowed" class="col-md-3 col-sm-6">
+                                <h6>Push Notification</h6>
+                                <p> {{customerDetail.PushNotificationAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <h6>Allow First Aid</h6>
+                                <p> {{customerDetail.FirstAidAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <!-- <div class="col-md-3 col-sm-6">
+                                <h6>Suspend Free Class Bookings
+                                </h6>
+                                <p> {{customerDetail.FreeClassSuspended ? 'Yes' : 'No'}}</p>
+                            </div> -->
+                            <div *ngIf="customer.CustomerTypeID == 3" class="col-md-3 col-sm-6">
+                                <h6> Member Message</h6>
+                                <p> {{customerDetail.MemberMessageAllowed ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div *ngIf="customer.CustomerTypeID == 3" class="col-md-3 col-sm-6">
+                                <h6>Contract Signed</h6>
+                                <p> {{customerDetail.ContractSigned ? 'Yes' : 'No'}}</p>
+                            </div>
+
+                            <div class="col-md-3 col-sm-6" *ngIf="isPartialPaymentAllow && !customerDetail.IsWalkedIn">
+                                <h6>Partial Payment - Core</h6>
+                                <p>{{customerDetail.AllowPartPaymentOnCore ? 'Yes' : 'No'}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-6" *ngIf="isPartialPaymentAllow && !customerDetail.IsWalkedIn">
+                                <h6>Partial Payment - Widget</h6>
+                                <p>{{customerDetail.AllowPartPaymentOnWidget ? 'Yes' : 'No'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="customer.CustomerTypeID == 3" class="view_bg last_div_bz">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_title">
+                                    <h4>Memberships</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row overflow-auto">
+                            <div class="col-md-12 verticle-scroll-lg">
+                                <div class="row grid_header view_membership_detail membership_bg">
+                                    <div class="col col-md-9">
+                                        <h5> Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <h5>Status</h5>
+                                    </div>
+                                    <!-- <div class="col">
+                                        <h5>Suspend Free Class Bookings</h5>
+                                    </div> -->
+                                </div>
+                                <div id="grid" *ngIf="isDataExists">
+                                    <div class="row grid_rows view_membership_content"
+                                        *ngFor="let membershipObj of membershipList">
+                                        <div class="col col-md-9">
+                                            <h5>{{membershipObj.MembershipName}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{membershipObj.MembershipStatusTypeName}}</h5>
+                                        </div>
+                                        <!-- <div class="col">
+                                            <h5>{{membershipObj.FreeClassSuspended ? 'Yes' : 'No'}}</h5>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div *ngIf="!isDataExists">
+                                    <div class="row grid_rows">
+                                        <div class="col-md-12 col-sm-12 text-center">
+                                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right scroll_close">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--View Member Pop Up End-->

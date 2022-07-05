@@ -1,0 +1,188 @@
+<div class="row">
+    <div class="col-md-12" *ngIf="allowedPages.isSaveFormAllow">
+        <div class="company_btn float-right">
+            <button type="button" class="save" (click)="onAddForm()">
+                Add Form</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="white_bg info_bar_bg">
+    <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+
+<div class="white_bg">
+    <div id="search_accordion">
+        <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+            data-target="#forms_search">
+            <div class="col-md-12">
+                <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+            </div>
+        </div>
+        <div class="panel-collapse collapse" id="forms_search">
+            <div class="panel-body">
+                <div class="row flex-end">
+                    <div class="col-md-12">
+                        <div class="filter_seprator"></div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="field_label">
+                            <h5>Form Name</h5>
+                        </div>
+                        <input type="text" [(ngModel)]="customerFormSearchModel.formName" maxlength="50" class="form-control"
+                            name="formName" maxlength="50">
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="field_label">
+                            <h5>Status</h5>
+                        </div>
+                        <div class="select_label">
+                            <select class="form-control" [(ngModel)]="customerFormSearchModel.formStatusID"
+                                name="formStatusID">
+                                <option *ngFor="let customerForm of customerFormStatus" [ngValue]="customerForm.value">
+                                    {{customerForm.text}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6"></div>
+                    <div class="col-lg-3 col-md-6 offset-lg-0 offset-md-6 offset-sm-6 col-sm-6 no_padding">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <button class="reset_btn" type="button" (click)="resetSearchFilter()">
+                                    Reset</button>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="full_width_btn ">
+                                    <button type="button" class="search" (click)="onSearchForm()">
+                                        Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grids_white_bg">
+    <div class="overflow-auto">
+        <div class="row grid_header responsive_grid_header">
+            <div class="col">
+                <h5>Form Name</h5>
+            </div>
+            <div class="col">
+                <h5>Configuration</h5>
+            </div>
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                        Mandatory
+                        <i class="fas fa-sort-alt"></i>
+                      </a>
+                </h5>
+            </div>
+            <div class="col">
+                <h5>Item Purchased</h5>
+            </div>
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
+                        Status
+                        <i class="fas fa-sort-alt"></i>
+                      </a>
+                </h5>
+            </div>
+            <div class="col">
+                <h5>
+                    <a class="sort_icon" (click)="changeSorting(3)" href="javascript:void(0)">
+                        Created Date
+                        <i class="fas fa-sort-alt"></i>
+                      </a>
+                </h5>
+            </div>
+            <div class="col">
+                <h5>Last Updated</h5>
+            </div>
+            <div class="col text-center no_padding">
+                <h5>Actions</h5>
+            </div>
+        </div>
+        <div id="grid">
+            <div class="row grid_rows responsive_grid_rows" *ngFor="let customerForms of customerForm">
+                <div class="col">
+                    <h5>{{customerForms.FormName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.ConfigurationsName}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.IsMandatory? 'Yes':'No'}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.ItemPurchased}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.FormStatusID == enuFormTypes.Submitted ? 'Submitted' : 'Not Submitted'}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.CreatedOn | customdate: dateFormat}} - {{customerForms.CreatedOnTime | branchTimeFormat}}</h5>
+                </div>
+                <div class="col">
+                    <h5>{{customerForms.ModifiedOn | customdate: dateFormat}} {{customerForms.ModifiedOn != null?'-':''}} {{customerForms.ModifiedOnTime | branchTimeFormat}}</h5>
+                </div>
+                <div class="col text-center no_padding">
+                    <h5>
+                        <span class="blue">
+                            <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onViewForm(customerForms.CustomerFormID)" href="javascript:void(0)">
+                                <i class="fal fa-book-open"></i>
+                            </a>
+                        </span>
+                        <span class="blue">
+                            <a matTooltip="PDF" matTooltipPosition="above" target="_blank" (click)="openPDF(customerForms.CustomerFormID)" matTooltipClass="custom-tooltip">
+                                <i class="fal fa-file-pdf"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="customerForms.FormStatusID != enuFormTypes.Submitted && customerForms.EmailAllowed">
+                            <a matTooltip="Email" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onEmailForm(customerForms.CustomerFormID)">
+                                <i class="fal fa-envelope"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="customerForms.FormStatusID != enuFormTypes.Submitted && customerForms.SMSAllowed">
+                            <a matTooltip="SMS" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onSmsForm(customerForms.CustomerFormID)">
+                                <i class="fal fa-comment"></i>
+                            </a>
+                        </span>
+                        <span class="blue" *ngIf="allowedPages.isSaveFormAllow">
+                            <a matTooltip="Edit" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                (click)="onEditForm(customerForms.CustomerFormID)" href="javascript:void(0)">
+                                <i class="fal fa-edit"></i>
+                            </a>
+                        </span>
+                        <span class="red_del" *ngIf="allowedPages.isSaveFormAllow">
+                            <a matTooltip="Delete" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            (click)="onDeleteForm(customerForms.CustomerFormID)" href="javascript:void(0)">
+                                <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </span>
+
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isDataExists">
+            <div class="row grid_rows">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-12 top_nav">
+        <ul>
+            <li *ngIf="allowedPages.Dashboard">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['dashboard']" role="tab">
+                    Dashboard
+                </a>
+            </li>
+            <li *ngIf="allowedPages.AllStaff">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['search']" role="tab">
+                    Staff
+                </a>
+            </li>
+            <li *ngIf="allowedPages.ShiftTemplate">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['shift-template']" role="tab">
+                    Shift Template
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Shift">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['shifts']" role="tab">
+                    Shifts
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Attendance">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['attendance']" role="tab">
+                    Attendance
+                </a>
+            </li>
+            <li *ngIf="allowedPages.Timesheet">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['timesheet']" role="tab">
+                    Time Sheet
+                </a>
+            </li>
+            <li *ngIf="allowedPages.AllTask">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['task']" role="tab">
+                    Task
+                </a>
+            </li>
+        </ul>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-12 no_padding">
+        <router-outlet></router-outlet>
+    </div>
+</div>

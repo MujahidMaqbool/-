@@ -1,0 +1,316 @@
+<style>
+  .mat-horizontal-content-container {
+    padding: 3em 1em !important;
+}
+.mat-horizontal-stepper-header-container {
+    padding: 18px 0 !important;
+}
+.mat-horizontal-content-container {
+     background: transparent !important;
+    margin: 15px 0 !important;
+    border-radius: 6px !important;
+    padding: 18px 0 !important;
+}
+.customer_login_logo img{
+  padding: 6em 0 1em;
+  margin: 0 auto;
+}
+.title_bar h3{
+    color: #364760;
+    font-size: 16px;
+    border-bottom: 1px solid #C2CDDE;
+    font-weight: 700;
+    padding-bottom: 10px;
+    margin: 0 0 1em 0;
+}
+.singal_module{
+  border: 1px solid #d9d9d9;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 1em;
+}
+.singal_module p{
+  float: left;
+  color: #26344B;
+  font-weight: 600;
+  font-size: 15px;
+  padding-top: 5px;
+}
+</style>
+<div class="container">
+  <div class="customer_login_logo">
+    <img src="/assets/images/wellyx.png" class="center-block">
+  </div>
+
+  <mat-horizontal-stepper #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Company Information</ng-template>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 title_bar">
+          <h3>Company Information</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Company Information</h5>
+          <input type="text">
+          <h5 class="field_label">Mobile</h5>
+          <input type="text">
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Email</h5>
+          <input type="text">
+          <h5 class="field_label">Website</h5>
+          <input type="text">
+        </div>
+      </div>
+      <div class="space"></div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 title_bar">
+          <h3>Address</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Country</h5>
+          <div class="select_label">
+            <select>
+              <option>London</option>
+              <option>USA</option>
+            </select>
+          </div>
+          <h5 class="field_label">City</h5>
+          <div class="select_label">
+            <select>
+              <option>London</option>
+              <option>USA</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">County/State</h5>
+          <div class="select_label">
+            <select>
+              <option>London</option>
+              <option>USA</option>
+            </select>
+          </div>
+          <h5 class="field_label">Postal Code</h5>
+          <input type="text">
+        </div>
+        <div class="col-md-12 col-sm-12">
+          <h5 class="field_label">Address</h5>
+          <input type="text">
+        </div>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Branch Information</ng-template>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 title_bar">
+          <h3>Branch Information</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Branch Name</h5>
+          <input type="text">
+        </div>
+        <div class="col-md-6 col-sm-6">
+        </div>
+      </div>
+      <div class="space"></div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 title_bar">
+          <h3>Address</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Country</h5>
+          <div class="select_label">
+            <select>
+              <option>London</option>
+              <option>USA</option>
+            </select>
+          </div>
+          <h5 class="field_label">City</h5>
+          <div class="select_label">
+            <select>
+              <option>London</option>
+              <option>USA</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">County/State</h5>
+          <div class="select_label">
+            <select>
+              <option>London</option>
+              <option>USA</option>
+            </select>
+          </div>
+          <h5 class="field_label">Postal Code</h5>
+          <input type="text">
+        </div>
+        <div class="col-md-12 col-sm-12">
+          <h5 class="field_label">Address</h5>
+          <input type="text">
+        </div>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Owner / Software Admin</ng-template>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 title_bar">
+          <h3>Owner/Software Admin</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-sm-2">
+          <h5 class="field_label">Title</h5>
+          <div class="select_label">
+            <select>
+              <option>Mr</option>
+              <option>Mrs</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <h5 class="field_label">First Name</h5>
+          <input type="text">
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Last Name</h5>
+          <input type="text">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Email</h5>
+          <input type="text">
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Mobile</h5>
+          <input type="text">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Gender</h5>
+          <div class="select_label">
+            <select>
+              <option>
+                Male
+              </option>
+              <option>Female</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Brith Date</h5>
+          <input type="text">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <h5 class="field_label">Address</h5>
+          <input type="text">
+        </div>
+      </div>
+
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Module Setup</ng-template>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 title_bar">
+          <h3>Module Setup</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="singal_module">
+            <p>Scheduler</p>
+            <div class="form-group "><input type="checkbox" id="1" class="ng-untouched ng-pristine ng-valid">
+              <div class="[ btn-group ] float-right"><label class="btn btn-primary" for="1" style="background:#26344B; border-color: #26344B; width:38px;"><span
+                    class="fa fa-check"></span><span class="fa fa-remove"></span></label></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="singal_module">
+            <p>Scheduler</p>
+            <div class="form-group "><input type="checkbox" id="1" class="ng-untouched ng-pristine ng-valid">
+              <div class="[ btn-group ] float-right"><label class="btn btn-primary" for="1" style="background:#26344B; border-color: #26344B; width:38px;"><span
+                    class="fa fa-check"></span><span class="fa fa-remove"></span></label></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="singal_module">
+            <p>Scheduler</p>
+            <div class="form-group "><input type="checkbox" id="1" class="ng-untouched ng-pristine ng-valid">
+              <div class="[ btn-group ] float-right"><label class="btn btn-primary" for="1" style="background:#26344B; border-color: #26344B; width:38px;"><span
+                    class="fa fa-check"></span><span class="fa fa-remove"></span></label></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Payment Setup</ng-template>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 title_bar">
+          <h3>Payment Setup</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Name</h5>
+          <input type="text">
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Bank</h5>
+          <input type="text">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Account Number</h5>
+          <input type="text">
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h5 class="field_label">Sort Code</h5>
+          <input type="text">
+        </div>
+      </div>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="company_btn float-right">
+        <button type="button" (click)="onReset()">
+          <i class="fal fa-undo"></i> Reset </button>
+        <button class="save primary_blue_btn" (click)="onPrevious()" [disabled]="!showPrevious">Previous</button>
+        <button class="save primary_blue_btn" (click)="onContinue()" *ngIf="showContinue">Continue</button>
+        <button class="save primary_blue_btn" (click)="onSave()" *ngIf="showSave">
+          Save
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

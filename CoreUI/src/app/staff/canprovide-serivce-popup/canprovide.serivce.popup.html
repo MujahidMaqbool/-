@@ -1,0 +1,80 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class="popup_header">
+                <div class="col-md-6 col-sm-6 no_padding">
+                    <h4>Select Services</h4>
+                </div>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <div class="popup_white_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- <div class="checkbox checkbox-success zero_margin">
+                                <input type="checkbox" id="all_service" [(ngModel)]="isAllServices" (ngModelChange)="onAllServicesChange()">
+                                <label for="all_service">
+                                    All Services </label>
+                            </div> -->
+                            <div>
+                                <label for="all_service">
+                                    All Services </label>
+                                <button class="btn-sm de_seleect_btn float-right" (click)="onAllServicesChange(false)">
+                                    Deselect All Services
+                                </button>
+                                <button class="btn-sm de_seleect_btn float-right" (click)="onAllServicesChange(true)">
+                                    Select All Services
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12" *ngFor="let serviceCategory of serviceCategoryList">
+                            <div class="staff_provide_service">
+                                <div class="checkbox checkbox-success full_width">
+                                    <input type="checkbox" id="{{'chk_sc_'+ serviceCategory.ServiceCategoryID}}"
+                                        [(ngModel)]="serviceCategory.IsSelected" [(checked)]="serviceCategory.IsSelected">
+                                    <!-- <label for="{{'chk_sc_'+ serviceCategory.ServiceCategoryID}}"> -->
+                                    <h3>{{serviceCategory.ServiceCategoryName}}</h3>
+                                    <!-- </label> -->
+                                    <!-- <label for="{{'chk_sc_'+ serviceCategory.ServiceCategoryID}}" > -->
+                                    <!-- <a href="" (click)="onSelectAllServicesInCategoiesChange()">Select All</a> -->
+
+                                    <!-- </label> -->
+                                    <!-- <label for="{{'chk_sc_'+ serviceCategory.ServiceCategoryID}}"> -->
+                                    <!-- <a href="" (click)="onDeselectAllServicesInCategoriesChange()">Deselect All</a> -->
+                                    <button class="btn-sm de_seleect_btn float-right" (click)="onSetAllServicesInCategory(false, serviceCategory.ServiceCategoryID)">
+                                        Deselect All
+                                    </button>
+                                    <button class="btn-sm de_seleect_btn float-right" (click)="onSetAllServicesInCategory(true, serviceCategory.ServiceCategoryID)">
+                                        Select All
+                                    </button>
+                                    <!-- </label> -->
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="checkbox checkbox-success" *ngFor="let service of serviceCategory.ServiceList">
+                                        <input class="example-margin" type="checkbox" name="{{'Chk_service' + service.ServiceID}}"
+                                            id="{{'Chk_service' + service.ServiceID}}" [(ngModel)]="service.IsSelected"
+                                            [(checked)]="service.IsSelected" />
+                                        <label for="{{'Chk_service' + service.ServiceID}}">{{service.ServiceName}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-9 col-sm-9 saved_service">
+                    <p> Please close and click save to confirm changes.</p>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="cancel_btn float-right">
+                        <button type="button" mat-button (click)="onSelect()">Close</button>
+                        <!-- <button class="save primary_blue_btn" (click)="onSelect()">Select</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

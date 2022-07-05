@@ -1,0 +1,213 @@
+<div class="row" *ngIf="isRewardProgramSave">
+  <div class="col-md-12">
+    <div class="company_btn mob-full-btn float-right">
+      <button class="simple_btn" type="button" role="navigation" *ngIf="RewardProgramEnrolledBranchID == currentBranchId && isCustomerEnrolled" (click)="onTerminateRewardProgram()">
+      Terminate Reward Program</button>
+      <button type="button" class="simple_btn" *ngIf="isCustomerEnrolled" [disabled]="RewardProgramEnrolledBranchID !== currentBranchId" (click)="onAdjustRewardPoints()">
+        Adjust Reward Points</button>
+      <button type="button"  (click)="onAddRewardProgram()">
+        Add Reward Program</button>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="white_bg info_bar_bg">
+  <person-info *ngIf="shouldGetPersonInfo"></person-info>
+</div>
+
+<div class="row reward-program-points">
+  <div class="col-lg-3 col-md-6 pr-lg-0 pr-md-0 pr-3 mb-3 mb-lg-0">
+    <div class="reward-box d-flex align-items-center justify-content-between">
+      <div class="left-box-desc">
+        <div class="d-flex align-items-center">
+          <i class="fal fa-hands-usd"></i>
+          <h3>Points Redeemed in Last 30 Days</h3>
+        </div>
+      </div>
+      <div class="right-box-points red-color">{{customersRewardPoints?.PointsRedeemedThirtyDays ? customersRewardPoints?.PointsRedeemedThirtyDays : 0}}</div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 pr-lg-0 pr-3 mb-3 mb-lg-0">
+    <div class="reward-box d-flex align-items-center justify-content-between">
+      <div class="left-box-desc">
+        <div class="d-flex align-items-center">
+          <i class="fal fa-calendar-times"></i>
+          <h3>Points Expiring in 7 Days</h3>
+        </div>
+      </div>
+      <div class="right-box-points">{{customersRewardPoints?.PointsExpiringSevenDays ? customersRewardPoints?.PointsExpiringSevenDays : 0}}</div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 pr-lg-0 pr-md-0 pr-3 mb-lg-0 mb-md-0 mb-3">
+    <div class="reward-box d-flex align-items-center justify-content-between">
+      <div class="left-box-desc">
+        <div class="d-flex align-items-center">
+          <i class="fal fa-trophy-alt"></i>
+          <h3>Points Balance</h3>
+        </div>
+      </div>
+      <div class="right-box-points">{{customersRewardPoints?.PointsBalance ? customersRewardPoints?.PointsBalance :0 }}</div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="reward-box d-flex align-items-center justify-content-between">
+      <div class="left-box-desc">
+        <div class="d-flex align-items-center">
+          <i class="fal fa-hand-holding-usd"></i>
+          <h3>Redemption Value</h3>
+        </div>
+      </div>
+      <div class="right-box-points">{{currencyFormat}}{{customersRewardPoints?.RedemptionValue ? customersRewardPoints?.RedemptionValue : 0 | number:'1.0-0'}}</div>
+    </div>
+  </div>
+</div>
+
+<div class="white_bg">
+  <div id="search_accordion">
+    <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
+      data-target="#membership_search">
+      <div class="col-md-12">
+        <h3 class="panel-title accordion-toggle"> Search Filter</h3>
+      </div>
+    </div>
+    <div id="membership_search" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row align-items-end">
+          <div class="col-md-12">
+            <div class="filter_seprator"></div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4">
+            <h5 class="field_label">Reward Program</h5>
+            <div class="select_label">
+              <mat-select class="form-control custom_select_option cst-mb-5" name="rewardProgram"
+                [(ngModel)]="customerRewardProgramsObj" placeholder="Select Reward Program" [disabled]="customerRewardProgramsList == null || customerRewardProgramsList.length == 0">
+                <mat-select-trigger *ngIf="customerRewardProgramsObj">
+                  <span [innerHTML]="customerRewardProgramsObj.RewardProgramName"></span>
+                  <span class="sm-mat-select" [ngClass]="{
+                                    'select-membership-benefit-active': customerRewardProgramsObj.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Enrolled,
+                                    'select-membership-benefit-terminated': customerRewardProgramsObj.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Terminated
+                                    }">{{customerRewardProgramsObj.RewardProgramStatusTypeName}}</span>
+                </mat-select-trigger>
+                <!-- <mat-option *ngFor="let crp of customerRewardProgramsList" [value]="crp" (click)="getCustomerRewardPoints(crp.RewardProgramID)"> -->
+                  <mat-option *ngFor="let crp of customerRewardProgramsList" [value]="crp" (click)="onChangeRewardProgram()">
+                  <span [innerHTML]="crp.RewardProgramName"></span>
+                  <span class="sm-mat-select-list" [ngClass]="{
+                                    'select-membership-benefit-active': crp.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Enrolled,
+                                    'select-membership-benefit-terminated': crp.RewardProgramStatusTypeID == enumRewardProgramStatusTypeName.Terminated
+                                    }">{{crp.RewardProgramStatusTypeName}}</span>
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4">
+            <h5 class="field_label">Branch</h5>
+            <div class="select_label">
+              <select class="form-control" name="rewardBranch" [(ngModel)]="rewardProgramSearchParams.BranchID" [disabled]="customerBranchList && customerBranchList.length == 1">
+                <option [ngValue]="null">All</option>
+                <option *ngFor="let customerBranch of customerBranchList" [ngValue]="customerBranch.BranchID">
+                  {{customerBranch.BranchName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4">
+            <h5 class="field_label">Status</h5>
+            <div class="select_label">
+              <select class="form-control" name="rewardStatus" [(ngModel)]="rewardProgramSearchParams.StatusID">
+                <option *ngFor="let rewardStatus of rewardProgramStatusList"
+                  [ngValue]="rewardStatus.RewardProgramStatusTypeID">
+                  {{rewardStatus.RewardProgramStatusTypeName}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-8 col-sm-8 input_heading no_padding">
+            <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #rewardProgramDateSearch>
+            </dateto-datefrom>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-sm-4 px-0 pl-sm-3">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 pl-md-0 pl-sm-0"><button type="button" class="reset_btn"
+                  (click)="onRewardProgramReset()"> Reset</button></div>
+              <div class="col-md-6 col-sm-6 pl-md-0 pl-sm-0 full_width_btn">
+                <button type="button" (click)="onRewardProgramSearch()" class="search">
+                  Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="grids_white_bg">
+  <div class="overflow-auto">
+    <div class="row grid_header responsive_grid_header">
+      <div class="col">
+        <h5>Date</h5>
+      </div>
+      <div class="col">
+        <h5>Status</h5>
+      </div>
+      <div class="col">
+        <h5>Activity Type</h5>
+      </div>
+      <div class="col">
+        <h5>Branch</h5>
+      </div>
+      <div class="col">
+        <h5>Points</h5>
+      </div>
+      <div class="col">
+        <h5>Redemption Value</h5>
+      </div>
+      <div class="col">
+        <h5>Last Updated By</h5>
+      </div>
+      <div class="col text-center">
+        <h5>Balance</h5>
+      </div>
+    </div>
+    <div id="grid" *ngIf="isDataExists">
+      <div class="row grid_rows responsive_grid_rows"
+        *ngFor="let customerDataobj of allCustomersRewardProgram; let i = index">
+        <div class="col">
+          <h5>{{customerDataobj.RewardDate | customdate: dateFormat}}</h5>
+        </div>
+        <div class="col">
+          <h5>{{customerDataobj.RewardPointStatusTypeName}}</h5>
+        </div>
+        <div class="col">
+          <h5>{{customerDataobj.ActivityType}}</h5>
+        </div>
+        <div class="col">
+          <h5>{{customerDataobj.BranchName}}</h5>
+        </div>
+        <div class="col">
+          <h5>{{customerDataobj.Points}}</h5>
+        </div>
+        <div class="col">
+          <h5>{{customerDataobj.RedemptionValue | currency: currencyFormat}}</h5>
+        </div>
+        <div class="col">
+          <h5>{{customerDataobj.LastUpdatedBy}}</h5>
+        </div>
+        <div class="col text-center">
+          <h5>{{customerDataobj.PointsBalance}}</h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isDataExists">
+      <div class="row grid_rows">
+        <div class="col-md-12 col-sm-12 text-center">
+          <!-- <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5> -->
+          <h5 class="no_record_found">No Record Found</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
+</div>

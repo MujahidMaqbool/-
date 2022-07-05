@@ -1,0 +1,154 @@
+<div tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_large_popup">
+            <div class="popup_header">
+                <h4>My Tasks</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+                <!-- <div class="sch_white_bg"> -->
+                <div class="ten_space"></div>
+                <div class="grids_white_bg zero_margin">
+                    <div id="mytasksSearch_Accordion">
+                        <div class="panel-heading collapsed row" data-toggle="collapse"
+                            data-parent="#mytasksSearch_Accordion" data-target="#mytasks_search">
+                            <div class="col-md-12 no_padding">
+                                <h3 class="panel-title accordion-toggle"> Search Filter </h3>
+                            </div>
+                        </div>
+                        <div id="mytasks_search" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 no_padding">
+                                        <div class="filter_seprator"></div>
+                                    </div>
+                                </div>
+                                <div class="row mob-p-0 flex-end">
+                                    <div class="col-lg-4 col-md-8 col-sm-12 input_heading no_padding inner-col-pl-0">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #allTasksToFromDateComoRef>
+                                        </dateto-datefrom>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6 padding_left">
+                                        <h5 class="field_label">Priority</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="PriorityTypeID"
+                                                [(ngModel)]="staffTaskSearchParameter.PriorityTypeID">
+                                                <option *ngFor="let priorityTypeObj of priorityTypeList"
+                                                    [ngValue]="priorityTypeObj.PriorityTypeID">
+                                                    {{priorityTypeObj.PriorityTypeName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6 padding_left">
+                                        <h5 class="field_label">Status</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" name="MarkedAsDone"
+                                                [(ngModel)]="staffTaskSearchParameter.MarkedAsDone">
+                                                <option *ngFor="let statusObj of taskStatusList"
+                                                    [ngValue]="statusObj.TaskStatusID">
+                                                    {{statusObj.TaskStatusName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6 padding_right">
+                                        <button class="reset_btn" type="button"
+                                            (click)="onResetParameters()">Reset</button>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6 padding_right full_width_btn">
+                                        <button class="search" type="button" (click)="searchStaffTask()">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ten_space"></div>
+                <div class="grids_white_bg zero_margin overflow-auto">
+                    <div class="row grid_header responsive_grid_header">
+                        <div class="col">
+                            <h5>Name </h5>
+                        </div>
+                        <div class="col">
+                            <h5>Priority </h5>
+                        </div>
+                        <div class="col">
+                            <h5>Start Time</h5>
+                        </div>
+                        <div class="col">
+                            <h5>End Time</h5>
+                        </div>
+                        <div class="col">
+                            <h5>Date</h5>
+                        </div>
+                        <div class="col">
+                            <h5>Status</h5>
+                        </div>
+                        <div class="col text-center">
+                            <h5>Actions</h5>
+                        </div>
+                    </div>
+                    <div id="grid">
+                        <div class="row grid_rows responsive_grid_rows " *ngFor="let myTaskObj of myTasksList">
+                            <div class="col">
+                                <h5>
+                                    {{myTaskObj.AssignedToStaffName }}
+                                </h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{myTaskObj.PriorityTypeName}} </h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{myTaskObj.FollowUpStartTime | branchTimeFormat}} </h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{myTaskObj.FollowUpEndTime | branchTimeFormat}} </h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{myTaskObj.FollowUpDate | customdate: dateFormatForView}}</h5>
+                            </div>
+                            <div class="col">
+                                <h5>{{myTaskObj.MarkedAsDone ? 'Done' : 'Not Done'}}</h5>
+                            </div>
+                            <div class="col text-center">
+                                <h5>
+                                    <span class="blue">
+                                        <a matTooltip="View" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                            (click)="onViewTask(myTaskObj.StaffActivityID, myTaskObj.AssignedToStaffID)"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-book-open"></i>
+                                        </a>
+                                    </span>
+                                    <span class="green" *ngIf="!myTaskObj.MarkedAsDone">
+                                        <a matTooltip="Mark as done" matTooltipPosition="above"
+                                            matTooltipClass="custom-tooltip"
+                                            (click)="onActivityMarkAsDone(myTaskObj.StaffActivityID, myTaskObj.AssignedToStaffID)"
+                                            href="javascript:void(0)">
+                                            <i class="fal fa-check-circle"></i>
+                                        </a>
+                                    </span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!isDataExists">
+                        <div class="row grid_rows">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-4 col-sm-4"></div>
+                <div class="col-md-8 col-sm-8">
+                    <div class="cancel_btn float-right">
+                        <button tabindex="4" type="button" mat-button (click)="onClosePopup()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

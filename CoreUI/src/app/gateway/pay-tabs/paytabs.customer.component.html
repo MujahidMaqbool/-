@@ -1,0 +1,89 @@
+<div class="cstm_scroll_bg" [ngClass]="{'saved-payment-cards' : areaID == 1}">
+  <div class="row" *ngIf="isPayTabsIntegrated">
+    <div class="col-md-12 no_padding" *ngFor="let card of savedCards">
+      <div class="pos_saved_cards py-1" *ngIf="showCardNumber">
+        <input type="radio" id="{{card.CustomerPaymentGatewayID}}" name="cardid" [value]="card.CustomerPaymentGatewayID"
+          [(ngModel)]="cardId" (ngModelChange)="onCardSelectionChange()" />
+        <label for="{{card.CustomerPaymentGatewayID}}"><span></span>&nbsp;{{card.Title}}
+        </label>
+        <!-- <span class="delete-card float-right" (click)="onDeleteSavedCard(card)"
+          *ngIf="card.CustomerPaymentGatewayID > 0 "> <i class="fal fa-trash-alt"></i></span> -->
+      </div>
+    </div>
+    <div class="col-md-12 no_padding" *ngIf="cardId == 0 ">
+
+      <label for="card-element">
+        <h5 class="gateway_label">Name on Card</h5>
+      </label>
+      <div [ngClass]="{
+                    'has-danger': nameOnCard.invalid && (nameOnCard.dirty || nameOnCard.touched || hasInvalidData ),
+                    'has-success': nameOnCard.valid && (nameOnCard.dirty || nameOnCard.touched)
+                  }">
+        <input class="form-control"  placeholder="Card Holder's Name" name="name_on_card" type="text"
+          [formControl]="nameOnCard"  required (blur)="onChangeNameOnCard()" minlength="3">
+      </div>
+
+      <form #payform >
+        <div class="row mob-full-col" >
+          <div [ngClass]="{'col-12 no_padding' : enumPage.AddGateWay == pageID, 'col-md-6 col-sm-12 pl-0' : enumPage.AddGateWay != pageID}">
+            <label for="card-element">
+              <h5 class="gateway_label">Card Information</h5>
+            </label>
+            <div [ngClass]="{
+              'has-danger': creditCardType === undefined
+            }">
+            <input type="text" id="card-number" class="form-control"  data-paylib="number" placeholder="Card number"
+            maxlength="19" (keyup)="onFocus($event,ExpMonth)">
+            <span class="paytabscardspan" *ngIf="creditCardType == 'credit-card' || creditCardType === undefined "><img src="assets\images\genericcard.svg"/></span>
+            <span class=" paytabscardspan" *ngIf="creditCardType != 'credit-card' && creditCardType != undefined "><img src="assets\images\{{creditCardType}}.svg"/></span>
+            </div>
+          </div>
+          <div [ngClass]="{'col space-15 padding_left' : enumPage.AddGateWay == pageID, 'col-md-2 col-sm-12 pl-0 space-44' : enumPage.AddGateWay != pageID}">
+            <input id="card-month" type="text"  #ExpMonth class="form-control" placeholder="MM" data-paylib="expmonth"
+              maxlength="2" (keyup)="onFocus($event,ExpYear)">
+          </div>
+          <div  [ngClass]="{'col space-15 padding_left' : enumPage.AddGateWay == pageID, 'col-md-2 col-sm-12 pl-0 space-44' : enumPage.AddGateWay != pageID}">
+            <input id="card-year" type="text"  class="form-control" #ExpYear placeholder="YYYY" data-paylib="expyear"
+              maxlength="4" (keyup)="onFocus($event,CardCVC)">
+          </div>
+          <div [ngClass]="{'col space-15 padding_right' : enumPage.AddGateWay == pageID, 'col-md-2 col-sm-12 pl-0 space-44' : enumPage.AddGateWay != pageID}">
+            <input id="card-cvc" placeholder="CVC"  class="form-control" #CardCVC type="text" data-paylib="cvv"
+              minlength="3" maxlength="4">
+          </div>
+          <button type="submit" #cardbtn style="display: none;" class="btn btn-primary">Verify</button>
+        </div>
+      </form>
+      <div class="col-lg-12 col-md-12 ">
+        <div class="left_space">
+          <div class="checkbox checkbox-success input_hide">
+            <input id="go_card_less" type="checkbox" name="stripe_terms_agreed" [(ngModel)]="isTermsAgreed"
+              [(checked)]="isTermsAgreed">
+            <label for="go_card_less"> <span></span>Please confirm you are the account holder and you are the only
+              person required to authorize debits from this account.
+              <div class="space-15"></div>
+              To validate the customers’ card, we will be doing a test authorization for a micro amount, which will be refunded immediately. Cards cannot be added/used if this test authorization fails.
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 text-right ">
+        <img class="float-right" src="assets/images/cards.svg">
+      </div>
+      <div class="col-md-12 col-sm-12 pt-0 " *ngIf="showSaveCard && cardId == 0">
+        <div class="checkbox checkbox-success" style="margin-top: 15px;">
+          <input id="savecard" type="checkbox" name="SaveCard" [(ngModel)]="payTabs.isSaveCard"
+            [(checked)]="payTabs.isSaveCard">
+          <label for="savecard">
+            Save Card
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-12 text-center">
+      <p *ngIf="isShowCounter" style="text-align: center;
+      font-size: 30px;
+      margin-top: 0px;
+      color: red;">00:{{countDown}}</p>
+    </div> -->
+  </div>
+</div>

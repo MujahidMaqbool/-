@@ -1,0 +1,985 @@
+<div class="white_bg row zero_top">
+    <div class="col-md-12">
+        <div id="accordion" style="margin: 0;">
+
+            <!-- All Customer Report -->
+            <div class="card no_padding" *ngIf="allowedPages.AllCustomerReports">
+                <div class="card-header" id="headingTwelve">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwelve"
+                            (click)="resetAllFilters()" aria-expanded="true" aria-controls="collapseTwelve">
+                            All Customers
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwelve" class="collapse show" aria-labelledby="headingTwelve" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p>This report explains how many individual customers are present within the system.
+                                        Furthermore, it shows customer details based on date range and status.</p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row mob-col-full flex-end">
+                                <div class="col-md-3" *ngIf="!disableCustomerTypeDropdown">
+                                    <div class="field_label">
+                                        <h5>Customer Type</h5>
+                                    </div>
+                                    <div class="select_label">
+                                        <select class="form-control" name="CustomerTypeID"
+                                            [(ngModel)]="CustomerReportSearchParameter.CustomerTypeID"
+                                            #CustomerTypeID="ngModel">
+                                            <option *ngFor="let customerTypeObj of customerTypeList" tabindex="1"
+                                                [ngValue]="customerTypeObj.value" style="font-size: 16px;">
+                                                {{customerTypeObj.text}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="field_label">
+                                        <h5>Customer Status</h5>
+                                    </div>
+                                    <div class="select_label">
+                                        <select class="form-control" name="customerStatusID"
+                                            [(ngModel)]="CustomerReportSearchParameter.customerStatusID"
+                                            #customerStatusID="ngModel" tabindex="2">
+                                            <option *ngFor="let customerTypeObj of customerStatusList"
+                                                [ngValue]="customerTypeObj.value" style="font-size: 16px;">
+                                                {{customerTypeObj.text}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col col-md-6 input_heading no_padding">
+                                    <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                        #allCustomersToFromDateComoRef>
+                                    </dateto-datefrom>
+
+                                </div>
+
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" type="button"
+                                    matTooltipClass="custom-tooltip" (click)="exportAllCustomerReport(fileType.PDF)"><i
+                                        class="fal fa-file-pdf"></i>
+                                </button>
+                                <button matTooltip="Excel File" matTooltipPosition="above" type="button"
+                                    matTooltipClass="custom-tooltip" type="button"
+                                    (click)="exportAllCustomerReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                </button>
+                                <button matTooltip="View File" matTooltipPosition="above"
+                                    matTooltipClass="custom-tooltip" type="button"
+                                    (click)="viewAllCustomerReport(fileType.PDF)"><i
+                                        class="fal fa-book-open"></i></button>
+                                <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    type="button" (click)="resetAllFilters()"><i class="fal fa-undo"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Detail Report -->
+            <div class="card no_padding" *ngIf="allowedPages.CustomerDetailReport">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" (click)="resetAllFilters()" data-toggle="collapse"
+                            data-target="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+                            Customer Detail
+                        </button>
+                    </h5>
+                </div>
+                <form #customerDetailForm="ngForm" (ngSubmit)="exportCustomerDetailReport(fileType.PDF)" novalidate>
+                    <div id="collapseThirteen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p>This report is useful to run when you want to see all the information you
+                                            hold on an individual customer.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label"> Customer Name</h5>
+                                        <div
+                                            [ngClass]="{
+                                          'has-danger': ((searchPerson.invalid || !searchPerson.value || searchPerson.value == '') && (customerDetailForm.dirty || customerDetailForm.touched || customerDetailForm.submitted )) }">
+                                            <input type="text" placeholder="Customer Name" tabindex="6" matInput
+                                                class="form-control" [formControl]="searchPerson"
+                                                [matAutocomplete]="SingleCustomer" [(ngModel)]="clearCustomerInput"
+                                                (ngModelChange)="onNameChange(clearCustomerInput)" maxlength="30">
+                                            <span *ngIf="clearCustomerInput != ''" (click)="resetCustomerDeatil()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #SingleCustomer="matAutocomplete"
+                                                [displayWith]="displayMemberName"
+                                                (optionSelected)='getSelectedCustomerID($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FullName }}</span>
+                                                    <small
+                                                        class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" type="submit"
+                                        matTooltipClass="custom-tooltip"><i class="fal fa-file-pdf"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="viewCustomerDetailReport(fileType.PDF)"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Customer Activities Report -->
+            <div class="card no_padding" *ngIf="allowedPages.CustomerActivitiesReport">
+                <div class="card-header" id="headingTen">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTen"
+                            (click)="resetMemberActivitiesReportFilters()" aria-expanded="false"
+                            aria-controls="collapseTen">
+                            Customer Activities
+                        </button>
+                    </h5>
+                </div>
+                <form #CustomerActivtiesForm="ngForm" (ngSubmit)="exportCustomerActivitiesReport(fileType.PDF)"
+                    novalidate>
+                    <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p>This report is useful to run when you want to see all your customers’ or an
+                                            individual customer’s activities.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row mob-col-full">
+                                    <div class="col" *ngIf="!disableCustomerTypeDropdown">
+                                        <div class="field_label">
+                                            <h5>Customer Type</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="CustomerTypeID"
+                                                (change)="onCustomerTypeChange()"
+                                                [(ngModel)]="CustomerReportSearchParameter.CustomerTypeID"
+                                                #CustomerTypeID="ngModel">
+                                                <option *ngFor="let customerTypeObj of customerTypeList" tabindex="1"
+                                                    [ngValue]="customerTypeObj.value" style="font-size: 16px;">
+                                                    {{customerTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <h5 class="field_label">Customer Name</h5>
+                                        <input type="text" tabindex="4" placeholder="Customer Name" matInput
+                                            [formControl]="searchPerson" class="form-control"
+                                            [(ngModel)]="clearCustomerActivtiesInput"
+                                            (ngModelChange)="onNameChange(clearCustomerActivtiesInput)"
+                                            [matAutocomplete]="SingleCustomerActivities" maxlength="30">
+                                        <span *ngIf="clearCustomerActivtiesInput != ''" (click)="onClearDate()"
+                                            class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #SingleCustomerActivities="matAutocomplete"
+                                            [displayWith]="displayMemberName"
+                                            (optionSelected)='getSelectedMemberships1($event.option.value)'>
+                                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                <span class="client_name">{{ person.FullName }}</span>
+                                                <small
+                                                    class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                <br>
+                                                <span class="client_info">{{ person.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ person.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="field_label">Activities</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" tabindex="5" name="ActivityTypeID"
+                                                [(ngModel)]="CustomerReportSearchParameter.ActivityTypeID">
+                                                <option *ngFor="let sourceTypeObj of activityList"
+                                                    [ngValue]="sourceTypeObj.value" style="font-size: 16px;">
+                                                    {{sourceTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col col-md-5 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                            #allMemberActivtiesToFromDateComoRef>
+                                        </dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="exportCustomerActivitiesReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="viewCustomerActivitiesReport(fileType.PDF)"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="resetMemberActivitiesReportFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- All Sale Booked Detail Report -->
+            <div class="card no_padding" *ngIf="allowedPages.AllBookedDetailReport">
+                <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+                            aria-expanded="false" aria-controls="collapseFive">
+                            All Sales Detail By Customer
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                    <div class="card-body" *ngIf="showAllSaleBookedReport">
+                        <all-sale-booked-detail-report [reportPackageBasedText]="reportPackageBasedText"
+                            [customerTypeID]="CustomerTypeID" [moduleName]="moduleName"
+                            #customerSearch_MemberAllSaleDetailByInvoiceRef></all-sale-booked-detail-report>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Sale Detail Report -->
+            <div class="card no_padding" *ngIf="allowedPages.AllSaleDetailReport">
+                <div class="card-header" id="headingSix">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix"
+                            aria-expanded="false" aria-controls="collapseSix">
+                            All Payment & Refund History </button>
+                    </h5>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div class="card-body">
+                        <all-sale-history-report [customerTypeID]="CustomerTypeID"
+                            #customerSearch_MemberAllSaleHistoryRef>
+                        </all-sale-history-report>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer By Source Report -->
+            <div class="card no_padding" *ngIf="allowedPages.CustomerBySourceReport">
+                <div class="card-header" id="headingEight">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight"
+                            (click)="resetSourceTypeFilters()" aria-expanded="false" aria-controls="collapseEight">
+                            Customer By Source Type
+                        </button>
+                    </h5>
+                </div>
+                <form #memberSourceTypeForm="ngForm" (ngSubmit)="exportCustomerBySourceTypeReport(fileType.PDF)">
+                    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p>This report is useful to run when you want to see customers by source based
+                                            on Customer's created date. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+
+                                    <div class="col" *ngIf="!disableCustomerTypeDropdown">
+                                        <div class="field_label">
+                                            <h5>Customer Type</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="CustomerTypeID"
+                                                [(ngModel)]="CustomerReportSearchParameter.CustomerTypeID"
+                                                #SourceTypeID="ngModel">
+                                                <option *ngFor="let customerTypeObj of customerTypeList" tabindex="1"
+                                                    [ngValue]="customerTypeObj.value" style="font-size: 16px;">
+                                                    {{customerTypeObj.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <div class="field_label">
+                                            <h5>Source Type</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="EnquirySourceTypeID" tabindex="9"
+                                                [(ngModel)]="CustomerReportSearchParameter.EnquirySourceTypeID"
+                                                #EnquirySourceTypeID="ngModel">
+                                                <option *ngFor="let sourceTypeObj of enquirySourceTypeList"
+                                                    [ngValue]="sourceTypeObj.EnquirySourceTypeID"
+                                                    style="font-size: 16px;">
+                                                    {{sourceTypeObj.EnquirySourceTypeName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                            #allMemberBySourceToFromDateComoRef>
+                                        </dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="exportCustomerBySourceTypeReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+                                    <button matTooltip="View File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="viewCustomerBySourceTypeReport(fileType.PDF)"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="resetSourceTypeFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- All Member Report -->
+            <div class="card no_padding" *ngIf="allowedPages.AllMemberReport">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                            (click)="resetAllMemberReportFilters()" aria-expanded="false" aria-controls="collapseOne">
+                            All Members
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="report_section">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <p>This report is useful to run when you want to see all the individual members and
+                                        the details associated with them within your system. </p>
+                                </div>
+                            </div>
+                            <div class="small_space"></div>
+                            <div class="row flex-end">
+                                <div class="col-md-3">
+                                    <div class="field_label">
+                                        <h5>Source Type</h5>
+                                    </div>
+                                    <div class="select_label">
+                                        <select class="form-control" name="SourceTypeID"
+                                            [(ngModel)]="CustomerReportSearchParameter.EnquirySourceTypeID"
+                                            #SourceTypeID="ngModel">
+                                            <option *ngFor="let sourceTypeObj of enquirySourceTypeList" tabindex="1"
+                                                [ngValue]="sourceTypeObj.EnquirySourceTypeID" style="font-size: 16px;">
+                                                {{sourceTypeObj.EnquirySourceTypeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="field_label">
+                                        <h5>Category</h5>
+                                    </div>
+                                    <div class="select_label">
+                                        <select class="form-control" name="MembershipCategoryID"
+                                            [(ngModel)]="CustomerReportSearchParameter.MembershipCategoryID"
+                                            #MembershipCategoryID="ngModel" tabindex="4">
+                                            <option *ngFor="let paymentGateway of membershipCategoryType"
+                                                [ngValue]="paymentGateway.MembershipCategoryID"
+                                                [selected]="paymentGateway.MembershipCategoryID == 2 ? 'selected' : ''"
+                                                style="font-size: 16px;">
+                                                {{paymentGateway.CategoryName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="field_label">
+                                        <h5>Membership</h5>
+                                    </div>
+                                    <div class="select_label">
+                                        <select class="form-control" name="MembershipID"
+                                            [(ngModel)]="CustomerReportSearchParameter.MembershipID"
+                                            #MembershipID="ngModel" tabindex="2">
+                                            <option *ngFor="let membershipObj of membershipList"
+                                                [ngValue]="membershipObj.MembershipID" style="font-size: 16px;">
+                                                {{membershipObj.MembershipName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-3">
+                                    <div class="field_label">
+                                        <h5>Membership Status</h5>
+                                    </div>
+                                    <div class="select_label">
+                                        <select class="form-control" name="MembershipStatusTypeID"
+                                            [(ngModel)]="CustomerReportSearchParameter.MembershipStatusTypeID"
+                                            #SourceTypeID="ngModel" tabindex="3">
+                                            <option *ngFor="let StatusObj of membershipStatusList"
+                                                [ngValue]="StatusObj.MembershipStatusTypeID" style="font-size: 16px;">
+                                                {{StatusObj.MembershipStatusTypeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 input_heading no_padding">
+                                    <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                        [dateToLabelName]="AllMemberDateToLabelName"
+                                        [dateFromLabelName]="AllMemberDateFromLabelName" #allMembersToFromDateComoRef>
+                                    </dateto-datefrom>
+
+                                </div>
+
+                            </div>
+                            <div class="report_button text-right">
+                                <button matTooltip="PDF File" matTooltipPosition="above" type="button"
+                                    matTooltipClass="custom-tooltip" (click)="exportAllMemberReport(fileType.PDF)"><i
+                                        class="fal fa-file-pdf"></i>
+                                </button>
+                                <button matTooltip="Excel File" matTooltipPosition="above" type="button"
+                                    matTooltipClass="custom-tooltip" type="button"
+                                    (click)="exportAllMemberReport(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                </button>
+                                <button matTooltip="View File" matTooltipPosition="above"
+                                    matTooltipClass="custom-tooltip" type="button"
+                                    (click)="viewAllMemberReport(fileType.PDF)"><i
+                                        class="fal fa-book-open"></i></button>
+                                <button matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                                    type="button" (click)="resetAllMemberReportFilters()"><i
+                                        class="fal fa-undo"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Member Membership Report -->
+            <div class="card no_padding" *ngIf="allowedPages.MemberMembershipReport">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                            (click)="resetMemberMembershipReportFilters()" data-target="#collapseTwo"
+                            aria-expanded="false" aria-controls="collapseTwo">
+                            Member Memberships
+                        </button>
+                    </h5>
+                </div>
+                <form #singleMemberForm="ngForm" (ngSubmit)="exportMemberAllMembershipsReport(fileType.PDF)" novalidate>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to see a member’s memberships
+                                            details. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Search By Member</h5>
+                                        <div
+                                            [ngClass]="{
+                                        'has-danger': ((searchMember.invalid || !searchMember.value || searchMember.value == '') && (singleMemberForm.dirty || singleMemberForm.touched || singleMemberForm.submitted )) }">
+                                            <input type="text" placeholder="Member Name" tabindex="6" matInput
+                                                class="form-control" [formControl]="searchMember"
+                                                [matAutocomplete]="SingleMemberMembership"
+                                                [(ngModel)]="clearMemberMembershipInput"
+                                                (ngModelChange)="onNameChange(clearMemberMembershipInput)"
+                                                maxlength="30">
+                                            <span *ngIf="clearMemberMembershipInput != ''" (click)="onClearDate()"
+                                                class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #SingleMemberMembership="matAutocomplete"
+                                                [displayWith]="displayMemberName"
+                                                (optionSelected)='getSelectedMemberID($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FullName }}</span>
+                                                    <small
+                                                        class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="exportMemberAllMembershipsReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+                                    <button matTooltip="View File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="viewMemberAllMembershipsReport(fileType.PDF)"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Member Membership Payment Report-->
+            <div class="card no_padding" *ngIf="allowedPages.MemberMembershipPaymentReport">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button (click)="resetMemberMembershipPaymentsReportsFilters()" class="btn btn-link collapsed"
+                            data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                            aria-controls="collapseThree">
+                            Member Membership Payments
+                        </button>
+                    </h5>
+                </div>
+                <form #paymentsForSingleMemberForm="ngForm" (ngSubmit)="exportAllPayments(fileType.PDF)" novalidate>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> The report is useful to run when you want to view historical and upcoming
+                                            membership payments, with the option to filter the report based on specific
+                                            date range or other filters.</p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-md-3 col-xs-6">
+                                        <h5 class="field_label">Member</h5>
+                                        <div>
+                                            <input type="text" placeholder="Search Member" tabindex="11" matInput
+                                                class="form-control" [formControl]="searchMember"
+                                                [matAutocomplete]="SingleMemberPayments"
+                                                [(ngModel)]="clearMemberMembershipPaymentsInput"
+                                                (ngModelChange)="onNameChange(clearMemberMembershipPaymentsInput)"
+                                                maxlength="30">
+
+                                            <span *ngIf="clearMemberMembershipPaymentsInput != ''"
+                                                (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                                            <mat-autocomplete #SingleMemberPayments="matAutocomplete"
+                                                [displayWith]="displayMemberName"
+                                                (optionSelected)='getSelectedMemberIDForPaymentsReport($event.option.value)'>
+                                                <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                    <span class="client_name">{{ person.FullName }}</span>
+                                                    <small
+                                                        class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Mobile }}</span>
+                                                    <br>
+                                                    <span class="client_info">{{ person.Email }}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="field_label">
+                                            <h5>Category</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="MembershipCategoryID"
+                                                [(ngModel)]="CustomerReportSearchParameter.MembershipCategoryID"
+                                                #MembershipCategoryID="ngModel" tabindex="4">
+                                                <option *ngFor="let paymentGateway of membershipCategoryType"
+                                                    [ngValue]="paymentGateway.MembershipCategoryID"
+                                                    [selected]="paymentGateway.MembershipCategoryID == 2 ? 'selected' : ''"
+                                                    style="font-size: 16px;">
+                                                    {{paymentGateway.CategoryName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="field_label">
+                                            <h5>Membership</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="MembershipIDOfSelectedMemberInput"
+                                                tabindex="2"
+                                                [(ngModel)]="CustomerReportSearchParameter.CustomerMembershipID"
+                                                #MembershipIDOfSelectedMemberInput="ngModel">
+                                                <option selected="selected" value="0" style="font-size: 16px;">All
+                                                </option>
+                                                <option
+                                                    *ngFor="let memerbMemberShip of ActiveMemberMembershipForPaymentReport"
+                                                    [ngValue]="memerbMemberShip.CustomerMembershipID"
+                                                    style="font-size: 16px;">
+                                                    {{memerbMemberShip.MembershipName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="field_label">
+                                            <h5>Membership Status</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="MembershipStatusIDInput"
+                                                [(ngModel)]="CustomerReportSearchParameter.MembershipStatusID"
+                                                #MembershipStatusIDInput="ngModel" tabindex="3">
+                                                <option *ngFor="let StatusObj of membershipStatusList"
+                                                    [ngValue]="StatusObj.MembershipStatusTypeID"
+                                                    style="font-size:16px;">
+                                                    {{StatusObj.MembershipStatusTypeName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="field_label">
+                                            <h5>Payment Gateway</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="PaymentGatewayIDInput"
+                                                [(ngModel)]="CustomerReportSearchParameter.PaymentGatewayID"
+                                                #PaymentGatewayIDInput="ngModel" tabindex="4">
+                                                <option *ngFor="let paymentGateway of BranchPaymentGatewayList"
+                                                    [ngValue]="paymentGateway.PaymentGatewayID"
+                                                    [selected]="paymentGateway.PaymentGatewayID == 2 ? 'selected' : ''"
+                                                    style="font-size: 16px;">
+                                                    {{paymentGateway.PaymentGatewayName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="field_label">
+                                            <h5>Payment Status</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="PaymentStatusTypeIDInput"
+                                                [(ngModel)]="CustomerReportSearchParameter.PaymentStatusTypeID"
+                                                #PaymentStatusTypeIDInput="ngModel" tabindex="5">
+
+                                                <option *ngFor="let paymentStatusType of PaymentStatusTypeList"
+                                                    [ngValue]="paymentStatusType.PaymentStatusTypeID"
+                                                    style="font-size: 16px;">
+                                                    {{paymentStatusType.PaymentStatusTypeName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col col-md-6 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                            #memberMembershipPaymentsDateComoRef
+                                            [dateToLabelName]="MemberMembershipPaymentDateToLabelName"
+                                            [dateFromLabelName]="MemberMembershipPaymentDateFromLabelName">
+                                        </dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="exportAllPayments(fileType.Excel)"><i class="fal fa-file-excel"></i>
+                                    </button>
+                                    <button matTooltip="View File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="viewAllPayments(fileType.PDF)"><i class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="resetMemberMembershipPaymentsReportsFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+              <!-- Expired & Terminated Memberships -->
+              <div class="card no_padding" *ngIf="allowedPages.ExpiredAndTerminatedMemberships">
+                <div class="card-header" id="headingNine">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine"
+                            (click)="resetExpiredAndTerminatedMembershipsReportsFilters()" aria-expanded="false"
+                            aria-controls="collapseNine">
+                            Expired & Terminated Memberships
+                        </button>
+                    </h5>
+                </div>
+                <form #refferalForm="ngForm" (ngSubmit)="exportExpiredAndTerminatedMembershipsReport(fileType.PDF)"
+                    novalidate>
+                    <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to view how many customers’
+                                            memberships have expired or terminated between a defined date range. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <div class="field_label">
+                                            <h5>Membership Status</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select class="form-control" name="MembershipStatusIDInput11"
+                                                [(ngModel)]="CustomerReportSearchParameter.MembershipStatusID"
+                                                #MembershipStatusIDInput="ngModel" tabindex="3">
+                                                <option
+                                                    *ngFor="let StatusObj of expiredAndTerminatedMembershipsStatusList"
+                                                    [ngValue]="StatusObj.MembershipStatusTypeID"
+                                                    style="font-size:16px;">
+                                                    {{StatusObj.MembershipStatusTypeName}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                            #expiredAndTerminatedMembershipsReportsFiltersToFromDateComoRef>
+                                        </dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="exportExpiredAndTerminatedMembershipsReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+                                    <button matTooltip="View File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="viewExpiredAndTerminatedMembershipsReport(fileType.PDF)"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="resetExpiredAndTerminatedMembershipsReportsFilters()"><i
+                                            class="fal fa-undo" aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <!-- Customer Referral Report -->
+            <div class="card no_padding" *ngIf="allowedPages.MemberReferralReport">
+                <div class="card-header" id="headingSeven">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven"
+                            (click)="resetReferalReportsFilters()" aria-expanded="false" aria-controls="collapseSeven">
+                            Customer Referrals
+                        </button>
+                    </h5>
+                </div>
+                <form #refferalForm="ngForm" (ngSubmit)="exportRefferedByMemberReport(fileType.PDF)" novalidate>
+                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to see customer referral details
+                                            with respect to numerous filters. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Referred By</h5>
+
+                                        <input type="text" placeholder="Customer Name" matInput
+                                            [(ngModel)]="clearRefferedByMemberInput"
+                                            (ngModelChange)="onNameChange(clearRefferedByMemberInput)"
+                                            [formControl]="searchPerson" class="form-control"
+                                            [matAutocomplete]="SingleMembershipPyaments" tabindex="8" maxlength="30">
+
+                                        <mat-autocomplete #SingleMembershipPyaments="matAutocomplete"
+                                            [displayWith]="displayMemberName"
+                                            (optionSelected)='getSelectedMemberships1($event.option.value)'>
+                                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                <span class="client_name">{{ person.FullName }}</span>
+                                                <small
+                                                    class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                <br>
+                                                <span class="client_info">{{ person.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ person.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <span *ngIf="clearRefferedByMemberInput != ''" (click)="onClearDate()"
+                                            class="clear_dob right_cross_btn"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-8 col-sm-12 input_heading no_padding">
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
+                                            #allMemberReferadToFromDateComoRef>
+                                        </dateto-datefrom>
+                                    </div>
+                                </div>
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="submit"><i class="fal fa-file-pdf"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button matTooltip="Excel File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="exportRefferedByMemberReport(fileType.Excel)"><i
+                                            class="fal fa-file-excel"></i>
+                                    </button>
+                                    <button matTooltip="View File" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="viewRefferedByMemberReport(fileType.PDF)"><i
+                                            class="fal fa-book-open"></i>
+                                    </button>
+                                    <button matTooltip="Reset" matTooltipPosition="above"
+                                        matTooltipClass="custom-tooltip" type="button"
+                                        (click)="resetReferalReportsFilters()"><i class="fal fa-undo"
+                                            aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Member Membership Contract -->
+            <!-- <div class="card no_padding" *ngIf="allowedPages.MemberMembershipContract">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" (click)="resetMembershipContract()" data-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+                            Member's Membership Contract
+                        </button>
+                    </h5>
+                </div>
+                <form #singleMemberForm="ngForm" novalidate>
+                    <div id="collapseEleven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="report_section">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <p> This report is useful to run when you want to see a member’s membership contract. </p>
+                                    </div>
+                                </div>
+                                <div class="small_space"></div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <h5 class="field_label">Search By Member</h5>
+
+                                        <input type="text" placeholder="Member Name" tabindex="6" matInput class="form-control" [formControl]="searchMember" [matAutocomplete]="SingleMemberMembership" [(ngModel)]="clearSaleInvoiceMemberInput" (ngModelChange)="onNameChange(clearSaleInvoiceMemberInput)"
+                                            maxlength="30">
+                                        <span *ngIf="clearSaleInvoiceMemberInput != ''" (click)="onClearDate()" class="clear_dob right_cross_btn"></span>
+                                        <mat-autocomplete #SingleMemberMembership="matAutocomplete" [displayWith]="displayMemberName" (optionSelected)='getSelectedMemberID($event.option.value)'>
+                                            <mat-option *ngFor="let person of allPerson" [value]="person">
+                                                <span class="client_name">{{ person.FullName }}</span>
+                                                <small class="client_type float-right">{{person.CustomerTypeName}}</small>
+                                                <br>
+                                                <span class="client_info">{{ person.Mobile }}</span>
+                                                <br>
+                                                <span class="client_info">{{ person.Email }}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <div class="field_label">
+                                            <h5>Memberships</h5>
+                                        </div>
+                                        <div class="select_label">
+                                            <select [disabled]="!isExist" class="form-control" name="EnquirySourceTypeID" tabindex="9" [(ngModel)]="CustomerReportSearchParameter.CustomerMemberMembership" #EnquirySourceTypeID="ngModel">
+                                                <option [disabled]="true" value="undefined">Please Select Membership
+                                                </option>
+                                                <option *ngFor="let memerbMemberShip of ActiveMemberMembership"
+                                                    [ngValue]="memerbMemberShip" style="font-size: 16px;">
+                                                    {{memerbMemberShip.MembershipName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="report_button text-right">
+                                    <button matTooltip="PDF File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="exportSaleInvoiceReport(fileType.PDF)">
+                                        <i class="fal fa-file-pdf" aria-hidden="true"></i>
+                                    </button>
+
+                                    <button matTooltip="View File" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="viewSaleInvoiceReport(fileType.PDF)">
+                                        <i class="fal fa-book-open"></i></button>
+                                    <button type="button" matTooltip="Reset" matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="resetSaleInvoiceForm()"><i
+                                            class="fal fa-undo" aria-hidden="true"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div> -->
+
+          
+
+        </div>
+    </div>
+</div>

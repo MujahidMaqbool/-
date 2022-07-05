@@ -1,0 +1,35 @@
+    <div class="white_bg">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="reward-program-join">
+            <div class="blue-heading-section py-3 no-border text-center">
+              <h2 class="mb-0">{{optinRewardProgram?.RewardProgramName}}</h2>
+            </div>
+            <div>
+              <img class="img-responsive" src="assets/images/reward_banner.jpg">
+            </div>
+            <div class="lg-overflow-auto cstm_scroll_bg my-3 px-4">
+              <div class="reward-program-join-desc" [innerHTML]="optinRewardProgram?.Description"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="row" *ngIf="isCustomerProfile">
+      <div class="col-md-12 mob-buy-memb-btn pb-3">
+        <hr>
+        <div class="row">
+          <div class="col-lg-4 col-md-12 no_padding">
+            <button type="button" class="action_btn_lite mem_btn enquire_btn full_filled_btn mt-0"
+              (click)="onBack()">Back</button>
+          </div>
+          <div class="col-lg-8 col-md-12 text-right no_padding">
+            <button type="button" class="action_btn_lite mem_btn enquire_btn full_filled_btn mt-0"
+            (click)="onSkipAndNext()">Skip & Next</button>
+            <button type="button"  class="enquire_btn detail_btn action_btn mt-0 ml-2"
+              (click)="onJoinAndNext()">Join & Next</button>
+          </div>
+        </div>
+      </div>
+    </div> -->

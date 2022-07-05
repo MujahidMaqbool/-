@@ -1,0 +1,72 @@
+﻿<!--Lost Reason pop up start-->
+<div class="lost_region" tabindex="-1" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content medium_popup">
+            <div class=" popup_header">
+                <div>
+                    <h4>Lost Reason</h4>
+                </div>
+                <!-- <div class="col-6 col-sm-6">
+                    <button tabindex="1" type="button" class="close" mat-button (click)="closePopup()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+            </div>
+            <form #LostReasonForm="ngForm" (ngSubmit)="onLeadLostSave(LostReasonForm.valid)" novalidate>
+                <div class="popup_content">
+                    <div class="sch_white_bg">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="alert alert-danger" *ngIf="LostReasonForm.invalid && LostReasonForm.submitted">
+                                    {{messages.Validation.Info_Required}}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div [ngClass]="{
+                                            'has-danger': LostReasonTypeID.invalid &&
+                                            (LostReasonTypeID.dirty || LostReasonForm.submitted),
+                                            'has-success': LostReasonTypeID.valid && (LostReasonTypeID.dirty)}">
+                                    <h5 class="form_label">
+                                        Lost Reason
+                                    </h5>
+                                    <div class="select_label">
+                                        <select name="LostReasonTypeID" [(ngModel)]="leadLostReasonModel.LostReasonTypeID"
+                                            #LostReasonTypeID="ngModel" class="form-control" required>
+                                            <option [ngValue]="undefined" [disabled]="true">Select Lost Reason</option>
+                                            <option *ngFor="let leadLostReason of leadLostReasonList" [ngValue]="leadLostReason.LostReasonTypeID">
+                                                {{leadLostReason.LostReasonTypeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="field_label">
+                                    <h5>Description</h5>
+                                </div>
+                                <div [ngClass]="{
+                                            'has-danger': LostReason.invalid &&
+                                            (LostReason.dirty ||LostReasonForm.submitted),
+                                            'has-success': LostReason.valid && (LostReason.dirty)}">
+                                    <textarea class="form-control form-control-description" rows="6" maxlength="200"
+                                        name="LostReason" [(ngModel)]="leadLostReasonModel.Description" tabindex="3"
+                                        #LostReason="ngModel" required>
+                                 </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row popup_footer">
+                    <div class="col-12">
+                        <div class="cancel_btn float-right">
+                            <button tabindex="4" type="button" mat-button (click)="closePopup()">Cancel</button>
+                            <button tabindex="5" class="save primary_blue_btn" data-dismiss="modal" [disabled]="(LostReasonForm.pristine)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Lost Reason pop up End-->

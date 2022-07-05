@@ -1,0 +1,170 @@
+<form #addGoCardlessForm="ngForm" novalidate>
+  <div class="row">
+    <div class="col-md-12 col-sm-12  pos_saved_cards" *ngFor="let account of savedAccounts">
+      <input type="radio" id="{{account.CustomerPaymentGatewayID}}" name="accountId" (change)="onChangePaymentGateway()"
+        [value]="account.CustomerPaymentGatewayID" [(ngModel)]="accountId" />
+      <label for="{{account.CustomerPaymentGatewayID}}"><span></span>&nbsp;{{account.Title}}</label>
+    </div>
+  </div>
+  <ng-container *ngIf="accountId === 0">
+
+    <div class="row mob-col-full">
+
+      <div
+        [ngClass]="{'col-md-12 no_padding' : enumPage.AddGateWay == pageID, 'col-md-4 ten_space' : enumPage.AddGateWay != pageID}"
+        *ngIf="isACH">
+
+        <div [ngClass]="{
+
+      'has-danger': AccType.invalid && (AccType.dirty || AccType.touched || isSubmitted),
+
+        'has-success': AccType.valid && (AccType.dirty || AccType.touched )}">
+
+          <h5 class="field_label">Account Type</h5>
+
+          <div class="select_label">
+
+            <select tabindex="2" required class="form-control" [(ngModel)]="saveGoCardlessModel.AccountType"
+              name="Acctype" #AccType="ngModel">
+
+              <option *ngFor="let accType of accountTypeList" [ngValue]="accType.id">
+
+                {{accType.name}}
+
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+        [ngClass]="{'col-md-12 no_padding' : enumPage.AddGateWay == pageID, 'col-md-4 ten_space' : enumPage.AddGateWay != pageID}"
+        *ngIf="sepaCountryList && sepaCountryList.length > 0 ">
+        <div [ngClass]="{
+        'has-danger': AccHolderCountry.invalid && (AccHolderCountry.dirty || AccHolderCountry.touched || isSubmitted),
+          'has-success': AccHolderCountry.valid && (AccHolderCountry.dirty || AccHolderCountry.touched )}">
+          <h5 class="field_label">Select Country</h5>
+          <div class="select_label">
+            <select tabindex="2" required class="form-control" [(ngModel)]="saveGoCardlessModel.CountryCode"
+              name="AccHolderCountry" #AccHolderCountry="ngModel" (ngModelChange)="onSEPACountryChange($event)">
+              <option *ngFor="let sepaCountry of sepaCountryList" [ngValue]="sepaCountry.ISOCode">
+                {{sepaCountry.CountryName}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        [ngClass]="{'col-md-12' : enumPage.AddGateWay == pageID, 'col-md-8 ten_space' : enumPage.AddGateWay != pageID}"
+        *ngIf="sepaCountryList && sepaCountryList.length > 0 "></div>
+
+      <div
+        [ngClass]="{'col-md-12 no_padding' : enumPage.AddGateWay == pageID, 'col ten_space' : enumPage.AddGateWay != pageID}">
+        <h5 class="field_label">Account Holder Name</h5>
+        <div [ngClass]="{
+          'has-danger': AccHolderName.invalid && (AccHolderName.dirty || AccHolderName.touched || isSubmitted),
+          'has-success': AccHolderName.valid && (AccHolderName.dirty || AccHolderName.touched )
+      }">
+          <input class="form-control" placeholder="Account Holder Name" name="account_holder_name" type="text"
+            #AccHolderName="ngModel" [(ngModel)]="saveGoCardlessModel.AccountHolderName" maxlength="18" required
+            (blur)="onAccountHolderName()">
+        </div>
+      </div>
+
+      <div
+        [ngClass]="{'col-md-12 no_padding' : enumPage.AddGateWay == pageID, 'col ten_space' : enumPage.AddGateWay != pageID}">
+        <h5 class="field_label">Account Number</h5>
+        <div [ngClass]="{
+              'has-danger': AccNumber.invalid && (AccNumber.dirty || AccNumber.touched || isSubmitted),
+              'has-success': AccNumber.valid && (AccNumber.dirty || AccNumber.touched )
+          }">
+          <input class="form-control" placeholder="Account Number" name="account_number" type="text"
+            #AccNumber="ngModel" [(ngModel)]="saveGoCardlessModel.AccountNumber"
+            [accountCodeDirective]="sepaDashAfterDigit" [maxlength]='accountMax?accountMax:paymentAccountLength.Default'
+            required>
+        </div>
+      </div>
+
+
+      <div
+        [ngClass]="{'col-md-12 no_padding' : enumPage.AddGateWay == pageID, 'col space-44' : enumPage.AddGateWay != pageID}"
+        *ngIf="saveGoCardlessModel.CountryCode == enu_SEPACountryCode.SK">
+        <div [ngClass]="{
+              'has-danger': PrefixAccNumber.invalid && (PrefixAccNumber.dirty || PrefixAccNumber.touched || isSubmitted),
+              'has-success': PrefixAccNumber.valid && (PrefixAccNumber.dirty || PrefixAccNumber.touched )
+          }">
+          <input class="form-control" placeholder="Account Prefix Number" name="account_prefix_number" type="text"
+            #PrefixAccNumber="ngModel" [(ngModel)]="saveGoCardlessModel.PrefixAccountNumber" [maxlength]='6' required>
+        </div>
+      </div>
+
+
+      <div class="col" [ngClass]="{
+                        'px-0 space-15' : enumPage.AddGateWay == pageID, 'space-44' : enumPage.AddGateWay != pageID
+                      }" *ngIf="bankCodeMax != null">
+        <div [ngClass]="{
+              'has-danger': BankCode.invalid && (BankCode.dirty || BankCode.touched || isSubmitted),
+              'has-success': BankCode.valid && (BankCode.dirty || BankCode.touched )
+          }">
+
+          <input class="form-control" placeholder="Bank Code" name="bank_code" type="text" #BankCode="ngModel"
+            [(ngModel)]="saveGoCardlessModel.BankCode"
+            [maxlength]='bankCodeMax?bankCodeMax:paymentSortCodeLength.Default' required>
+        </div>
+      </div>
+
+      <div class="col"
+        [ngClass]="{'no_padding space-15' : enumPage.AddGateWay == pageID, 'space-44' : enumPage.AddGateWay != pageID}"
+        *ngIf="branchCodeRequired">
+        <div [ngClass]="{
+              'has-danger': BranchCode.invalid && (BranchCode.dirty || BranchCode.touched || isSubmitted),
+              'has-success': BranchCode.valid && (BranchCode.dirty || BranchCode.touched )
+              
+          }">
+          <input class="form-control" placeholder="Branch/Sort Code" name="branch_code" type="text"
+            #BranchCode="ngModel" [(ngModel)]="saveGoCardlessModel.BranchCode"
+            [branchCodeDirective]="sepaDashAfterDigit"
+            [maxlength]='branchCodeMax?branchCodeMax:paymentSortCodeLength.Default' required>
+        </div>
+      </div>
+
+
+
+      <div class="col"
+        [ngClass]="{'pr-0 space-15' : enumPage.AddGateWay == pageID, 'space-44' : enumPage.AddGateWay != pageID}"
+        *ngIf="checkMax != null">
+        <div [ngClass]="{
+              'has-danger': Check.invalid && (Check.dirty || Check.touched || isSubmitted),
+              'has-success': Check.valid && (Check.dirty || Check.touched )
+          }">
+
+          <input class="form-control" placeholder="Check" name="Check" type="text" #Check="ngModel"
+            [(ngModel)]="saveGoCardlessModel.Check" [maxlength]='checkMax?checkMax:paymentSortCodeLength.Default'
+            required>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row">
+      <div class="col-md-12 ten_space" [ngClass]="{'p-0' : enumPage.AddGateWay == pageID}">
+        <div class="checkbox checkbox-success d-flex">
+          <input id="go_card_less" type="checkbox" name="gc_terms_agreed" [(ngModel)]="isTermsAgreed"
+            [(checked)]="isTermsAgreed">
+          <label for="go_card_less">
+            Please confirm you are the account holder and you are the only person required to authorize direct debits
+            from this account.</label>
+        </div>
+      </div>
+      <div class="col-md-12 text-right ten_space" [ngClass]="{'p-0' : enumPage.AddGateWay == pageID}">
+        <img class="img-reponsive" src="assets/images/direct-debit-terms-logo.png" width="100px;">
+      </div>
+
+    </div>
+
+  </ng-container>
+</form>

@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <label class="dash_label">{{dateFromLabelName}}</label>
+        <input type="text" name="DateFrom" class="form-control date-picker  float-right" [(ngModel)]="dateFrom" (ngModelChange)="onFromDateChange(dateFrom)" #DateFrom="ngModel" matInput [matDatepicker]="datefrom" [placeholder]="dateToPlaceHolderValue"
+            [max]="maxDate" [min]="fromMinDate" readonly (click)="onOpenCalendar(datefrom)" />
+        <mat-datepicker #datefrom></mat-datepicker>
+        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom"></mat-datepicker-toggle>
+    </div>
+    <div class="col-md-6 col-sm-6">
+    <label class="dash_label">{{dateToLabelName}}</label>
+        <input type="text" name="DateTo" class="form-control date-picker  float-right" [(ngModel)]="dateTo" (ngModelChange)="onToDateChange(dateTo)" #DateTo="ngModel" matInput [matDatepicker]="dateto" [placeholder]="dateFromPlaceHolderValue" [max]="toMaxDate"
+            [min]="toMinimumDate ? toMinimumDate : dateFrom" (click)="onOpenCalendar(dateto)" readonly />
+        <mat-datepicker #dateto></mat-datepicker>
+        <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto"> </mat-datepicker-toggle>
+    </div>
+</div>

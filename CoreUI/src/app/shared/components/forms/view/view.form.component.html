@@ -1,0 +1,252 @@
+<div class="view_forms_popup container" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog-centered">
+    <div class="modal-content extra_large_popup">
+      <div class="popup_content pt-2 cstm_scroll_bg container popup_content_tr" id="content" #content>
+        <div class="view_bg form_info_bar mb-0">
+          <div class="row row-align-center">
+            <!-- <div class="col-md-1">
+              <div class="mob-img-detail">
+                <img src="{{imagePath}}" style="width:60px; height: 60px;"
+                  class="img-responsive rounded-circle img_obj_fit">
+              </div>
+            </div> -->
+            <div class="col-md-12 padding_left">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>{{CompanyInfo.CompanyName}} </h3>
+                </div>
+                <div class="col-md-12">
+                  <div class="view_main_bar">
+                    <div class="view_main_bar_item ml-0"><i class="fal fa-building"></i>
+                      {{BranchInfo?.BranchName}}
+                    </div>
+                    <div class="view_main_bar_item"><i class="fal fa-envelope"></i>
+                      {{BranchInfo?.Email}}
+                    </div>
+                    <div class="view_main_bar_item"><i class="fal fa-mobile-android-alt"></i>
+                      {{BranchInfo?.Phone1}}
+                    </div>
+                    <div class="view_main_bar_item"><i class="far fa-map-marker-alt"></i>
+                      {{BranchInfo?.Address1}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-type" *ngIf="customeFormViewModel.IsMandatory">Mandatory</div>
+            </div>
+          </div>
+        </div>
+        <div class="view_bg mb-0">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="short-desc">
+                <h3>{{customeFormViewModel.FormName}}</h3>
+                <p>{{customeFormViewModel.Description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="view_bg mb-0 cstm_scroll_bg" [style.backgroundColor]="customeFormViewModel.JsonText.theme?.bgColor"
+          [style.color]="customeFormViewModel.JsonText.theme?.textColor">
+          <div class="custom-form-data">
+            <div class="field" *ngFor="let item of customeFormViewModel.JsonText.attributes;let i= index;">
+              <div class="row form-group cust_form column_flex_alignment">
+                <div class="col-md-12">
+                  <div *ngIf="item.type=='text'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div [ngClass]="{ 'has-danger': item.error }">
+                      <input type="text" class="form-control" id="{{item.name}}" *ngIf="!customForms.isViewForm"
+                        maxlength="550" [(ngModel)]="item.value" (ngModelChange)="focusFunction(i)"
+                        placeholder="{{item.placeholder}}" (blur)="onBlurFunction(i)">
+
+                      <textarea rows="{{item.rows}}" class="form-control" id="{{item.name}}"
+                        *ngIf="customForms.isViewForm" readonly maxlength="1000" (blur)="onBlurFunction(i)"
+                        [(ngModel)]="item.value" (ngModelChange)="focusFunction(i)" placeholder="{{item.placeholder}}">
+                        </textarea>
+                    </div>
+                  </div>
+                  <div *ngIf="item.type=='email'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div [ngClass]="{ 'has-danger': item.error }">
+                      <input type="email" class="form-control" id="{{item.name}}" [readonly]="customForms.isViewForm"
+                        maxlength="50" [(ngModel)]="item.value" (ngModelChange)="focusFunction(i)"
+                        placeholder="{{item.placeholder}}" (blur)="onBlurFunction(i)">
+                    </div>
+                    <div *ngIf="item.error" class="text-danger">{{item.errorText}}</div>
+                  </div>
+                  <div *ngIf="item.type=='phone'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div [ngClass]="{ 'has-danger': item.error }">
+                      <input type="text" class="form-control" id="{{item.name}}" [readonly]="customForms.isViewForm"
+                        maxlength="15" [(ngModel)]="item.value" (ngModelChange)="focusFunction(i)"
+                        placeholder="{{item.placeholder}}" (blur)="onBlurFunction(i)">
+                    </div>
+                    <div *ngIf="item.error" class="text-danger">{{item.errorText}}</div>
+                  </div>
+                  <div *ngIf="item.type=='number'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div [ngClass]="{ 'has-danger': item.error }">
+                      <input type="number" class="form-control" id="{{item.name}}" min="{{item.min}}"
+                        [(ngModel)]="item.value" (ngModelChange)="focusFunction(i)" [readonly]="customForms.isViewForm"
+                        max="{{item.max}}" placeholder="{{item.placeholder}}">
+                    </div>
+                    <div *ngIf="item.error" class="text-danger">{{item.errorText}}</div>
+                  </div>
+                  <div *ngIf="item.type=='date'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div class="form-date-picker" [ngClass]="{ 'has-danger': item.error }">
+                      <input class="form-control" matInput [matDatepicker]="picker" id="{{item.name}}"
+                        [disabled]="customForms.isViewForm" [readonly]="customForms.isViewForm" [(ngModel)]="item.value"
+                        (ngModelChange)="focusFunction(i)" placeholder="{{item.placeholder}}"
+                        (click)="onOpenCalendar(picker)">
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    </div>
+                  </div>
+                  <div *ngIf="item.type=='datetime-local'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div [ngClass]="{ 'has-danger': item.error }">
+                      <dx-date-box id="{{item.name}}" [disabled]="customForms.isViewForm" [displayFormat]="dateFormat"
+                        (onFocusOut)="focusFunction(i)" [placeholder]="item.placeholder" [(value)]="item.value"
+                        type="datetime">
+                      </dx-date-box>
+                    </div>
+                  </div>
+                  <div *ngIf="item.type=='textarea'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div [ngClass]="{ 'has-danger': item.error }">
+                      <textarea rows="{{item.rows}}" class="form-control" id="{{item.name}}"
+                        [readonly]="customForms.isViewForm" maxlength="1000" (blur)="onBlurFunction(i)"
+                        [(ngModel)]="item.value" (ngModelChange)="focusFunction(i)" placeholder="{{item.placeholder}}">
+                                      </textarea>
+                    </div>
+                  </div>
+                  <div *ngIf="item.type=='paragraph'">
+                    <p class="form-text" style="color: inherit;">{{item.value}}</p>
+                  </div>
+                  <div *ngIf="item.type=='textarea-readonly'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <textarea rows="{{item.rows}}" class="form-control" id="{{item.name}}" readonly
+                      [ngModel]="item.value" placeholder="{{item.placeholder}}">
+                                      </textarea>
+                  </div>
+                  <div class="signature-pad" *ngIf="item.type=='eSignature'">
+                    <label class="full_width">{{item.label}} <span *ngIf="item.required"
+                        class="text-danger">&nbsp;*</span></label>
+
+                    <img class="sign_view" src="{{item.value}}" alt="item.label"
+                      *ngIf="(customForms.isViewForm || isShowEditSignatureButton) && item.value">
+                    <textarea rows="8" class="form-control" readonly
+                      *ngIf="(customForms.isViewForm || isShowEditSignatureButton) && !item.value"></textarea>
+                    <div *ngIf="!customForms.isViewForm">
+                      <div class="wrapper" [hidden]="isShowEditSignatureButton">
+                        <canvas (drawStart)="drawStart(index)" #signaturePadCanvas width=400 height=200></canvas>
+                      </div>
+                    </div>
+                    <button type="button" *ngIf="!customForms.isViewForm && !isShowEditSignatureButton"
+                      (click)="drawClear(i)">Clear</button>
+                    <button type="button" *ngIf="isShowEditSignatureButton && !customForms.isViewForm"
+                      (click)="onEditSignature(i)">Edit</button>
+                  </div>
+                  <div *ngIf="item.type=='autocomplete' ">
+
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div class="select_label" [ngClass]="{ 'has-danger': item.error }">
+                      <select [(ngModel)]="item.value" class="form-control" (ngModelChange)="focusFunction(i)" [disabled]="customForms.isViewForm">
+                        <option *ngFor="let v of item.values" [value]="v.value" >
+                          {{v.label}}</option>
+                      </select>
+                    </div>
+                  </div>
+               
+                  <div *ngIf="item.type=='checkbox'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div class="form_label_border"></div>
+                    <div class="checkbox checkbox-success tax_checkbox left-15"
+                      *ngFor="let v of item.values; let c = index">
+                      <div [ngClass]="{ 'has-danger': item.error }">
+                        <input type="checkbox" class="form-control" [value]="v.value" [(ngModel)]="v.selected"
+                          name="{{ 'checkbox' + c + i }}" id="{{ 'checkbox' + c + i }}"
+                          [disabled]="customForms.isViewForm" (click)="toggleValue(v, c, i)"
+                          (ngModelChange)="focusFunction(i)">
+                        <label for="{{ 'checkbox' + c + i }}">
+                          {{v.label}}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="item.type=='radio'">
+                    <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">&nbsp;*</label>
+                    <div class="form_label_border"></div>
+                    <div *ngFor="let v of item.values; let r = index" class="inline-form-group radioo">
+                      <div [ngClass]="{ 'has-danger': item.error }">
+                        <input type="radio" class="form-control" [value]="v.value" [(ngModel)]="item.value"
+                          (ngModelChange)="focusFunction(i)" name="{{item.name}}" id="{{ 'radio' + r + i }}"
+                          [disabled]="customForms.isViewForm">
+                        <label for="{{ 'radio' + r + i }}">
+                          <span></span>
+                          {{v.label}}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="small_space"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row popup_footer" *ngIf="customForms.isViewForm">
+        <div class="col-md-12">
+          <div class="cancel_btn float-right ">
+            <button type="button" (click)="onSkipCloseDialog()">Close</button>
+          </div>
+        </div>
+      </div>
+      <div class="row popup_footer view_form_footer" *ngIf="!customForms.isViewForm">
+        <div>
+          <div class="cancel_btn float-left">
+            <button class="left_margin_zero" type="button" (click)="onSkipCloseDialog()">Close</button>
+          </div>
+        </div>
+        <div>
+          <div class="column_flex_center" *ngIf="customForms.CustomFormView.length > 1">
+            <div *ngFor="let v of customForms.CustomFormView; let i = index" [ngClass]="{ 'blue_dot': i == formIndex }"
+              class="form-dosts">
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="cancel_btn float-right scroll_close" *ngIf="isShowSubmitAndNext">
+            <button class="primary_blue_btn" type="button" [disabled]="isDisabledSubmitButton"
+              (click)="onSubmit()">Submit & Next</button>
+          </div>
+          <div class="cancel_btn float-right" *ngIf="!isShowSubmitAndNext && !isDisabledSubmitButton">
+            <button class="primary_blue_btn" type="button" (click)="onSubmit()">Submit</button>
+          </div>
+          <div class="cancel_btn float-right scroll_close"
+            *ngIf="!isShowSubmitAndNext && customeFormViewModel.FormStatusID == enuFormTypes.Submitted && isDisabledSubmitButton">
+            <button class="primary_blue_btn" type="button" (click)="onSubmit()">Finish</button>
+          </div>
+          <div class="cancel_btn float-right scroll_close"
+            *ngIf="customForms.CustomFormView.length > 1 && customeFormViewModel.FormStatusID != enuFormTypes.Submitted">
+            <button type="button" (click)="onSkip()">{{customForms.CustomFormView.length -1 == formIndex ? 'Skip &
+              Close' : 'Skip'}}</button>
+          </div>
+          <div class="cancel_btn float-right scroll_close"
+            *ngIf="customForms.CustomFormView.length > 1 && customeFormViewModel.FormStatusID == enuFormTypes.Submitted && customForms.CustomFormView.length - 1 != formIndex">
+            <button type="button" (click)="onSkip()">Next</button>
+          </div>
+          <div class="cancel_btn float-right scroll_close"
+            *ngIf="customForms.CustomFormView.length > 0 && formIndex > 0">
+            <button type="button" (click)="onBack()">Back</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

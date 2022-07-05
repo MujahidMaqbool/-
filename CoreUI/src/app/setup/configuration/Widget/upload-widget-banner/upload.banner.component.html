@@ -1,0 +1,61 @@
+<div class="view_popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content large_popup md_banner_size">
+            <div class="popup_header">
+                <h4>Upload Banner</h4>
+            </div>
+            <div class="popup_content">
+                <div class="sch_white_bg">
+                    <div class="section_container">
+                        <div class="section_content widget_banner">
+                            <div class="row" *ngIf="showCropper && imageUrl">
+                                <div class="col-sm-12">
+                                    <h5>Change Image</h5>
+                                    <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                                        <input type="file" name="photo" (change)="onFileSelected($event)" class="sr-only"
+                                            id="inputImage" accept="image/*">
+                                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
+                                            <i class="fal fa-cloud-upload"></i>
+                                        </span>
+                                        Browse File
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-12">
+                                    <angular-cropper #cropper [cropperOptions]="cropperConfig" [imageUrl]="imageUrl"
+                                        (zoom)="zoomManual()" (ready)="readyImage($event)" (cropend)="cropendImage($event)">
+                                    </angular-cropper>
+                                </div>
+                                <div class="col-sm-12 col-md-12 img-preview">
+                                    <img class="img-responsive" *ngIf="croppedImg || imageUrl" [src]="croppedImg || imageUrl">
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="!showCropper">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="img_editor">
+                                        <label class="btn_upload" for="inputImage" title="Upload image file">
+                                            <input type="file" name="photo" (change)="onFileSelected($event)" class="sr-only"
+                                                id="inputImage" accept="image/*">
+                                            <span class="docs-tooltip" data-toggle="tooltip" title=""
+                                                data-original-title="Import image with Blob URLs">
+                                                <i class="fal fa-cloud-upload"></i>
+                                            </span>
+                                             Browse Image
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button class="save primary_blue_btn" (click)="onUpload()">Upload</button>
+                        <button type="button" (click)="onCancel()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

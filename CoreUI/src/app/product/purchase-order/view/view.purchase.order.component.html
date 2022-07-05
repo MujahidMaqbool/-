@@ -1,0 +1,295 @@
+<div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog-centered">
+        <div class="modal-content extra_large_popup">
+            <div class="popup_header">
+                <h4>{{purchaseOrderViewDetail.isPO ? 'Purchase Order Details' : 'Goods Receiving Note Details'}}</h4>
+            </div>
+            <div class="popup_content cstm_scroll_bg">
+
+                <div class="view_bg readonly_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title">
+                                <h3>Order Information</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h6>Branch</h6>
+                            <p>{{purchaseOrderViewDetail.BranchName ? purchaseOrderViewDetail.BranchName : 'N/A'}}</p>
+                        </div> -->
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h6>Supplier</h6>
+                            <p>{{purchaseOrderViewDetail.SupplierName ? purchaseOrderViewDetail.SupplierName : 'N/A'}}
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="!purchaseOrderViewDetail.isPO">
+                            <h6>GRN No.</h6>
+                            <p>{{purchaseOrderViewDetail.GRNNumber ?
+                                purchaseOrderViewDetail.GRNNumber : 'N/A'}}</p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h6>Purchase Order No.</h6>
+                            <p>{{purchaseOrderViewDetail.PurchaseOrderNumber ?
+                                purchaseOrderViewDetail.PurchaseOrderNumber : 'N/A'}}</p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="purchaseOrderViewDetail.isPO">
+                            <h6>Purchase Order Name</h6>
+                            <p>{{purchaseOrderViewDetail.PurchaseOrderName ? purchaseOrderViewDetail.PurchaseOrderName :
+                                'N/A'}}</p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h6>Purchase Order Date</h6>
+                            <p>{{purchaseOrderViewDetail.PurchaseOrderDate ? (purchaseOrderViewDetail.PurchaseOrderDate
+                                | customdate: dateFormat) :
+                                'N/A'}}</p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h6>Expected Delivery Date</h6>
+                            <p>{{purchaseOrderViewDetail.ExpectedDeliveryDate ?
+                                (purchaseOrderViewDetail.ExpectedDeliveryDate | customdate: dateFormat) : 'N/A'}}</p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="!purchaseOrderViewDetail.isPO">
+                            <h6>Actual Delivery Date</h6>
+                            <p>{{purchaseOrderViewDetail.GRNDate ?
+                                (purchaseOrderViewDetail.GRNDate | customdate: dateFormat) : 'N/A'}}</p>
+                        </div>                       
+                        <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="purchaseOrderViewDetail.isPO">
+                            <h6>Status</h6>
+                            <p>{{purchaseOrderViewDetail.Status ? purchaseOrderViewDetail.Status : 'N/A'}}</p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="purchaseOrderViewDetail.isPO">
+                            <h6>Type</h6>
+                            <p>{{purchaseOrderViewDetail.Type ? purchaseOrderViewDetail.Type : 'N/A'}}</p>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <h6>Notes </h6>
+                            <p>{{purchaseOrderViewDetail.Notes ? purchaseOrderViewDetail.Notes : 'N/A'}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view_bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title mb-2">
+                                <h3>Order Summary</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="overflow-auto">
+                                <div class="responsive_grid_rows cstm_scroll_bg">
+                                    <div class="row align-items-center grid_header">
+                                        <div class="col">
+                                            <h5>Product</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Barcode</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>SKU</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Supplier Code</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Ordered Quantity</h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderViewDetail.PurchaseOrderStatusID == enumPOStatus.Received || purchaseOrderViewDetail.PurchaseOrderStatusID == enumPOStatus.PartiallyReceived">
+                                            <h5>Received Quantity</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Supplier Price</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Ordered Total</h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderViewDetail.PurchaseOrderStatusID == enumPOStatus.Received || purchaseOrderViewDetail.PurchaseOrderStatusID == enumPOStatus.PartiallyReceived">
+                                            <h5>Received Total</h5>
+                                        </div>
+
+                                    </div>
+                                    <div class="row align-items-center grid_rows"
+                                        *ngFor="let purchaseOrder of purchaseOrderViewDetail.PurchaseOrderDetails">
+                                        <div class="col">
+                                            <h5>{{purchaseOrder.ProductName}}{{purchaseOrder.ProductVariantName.length > 0 ? ' - ' + purchaseOrder.ProductVariantName: ''}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder.Barcode}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder.SKU}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder.SupplierCode}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder.OrderQuantity}}</h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderViewDetail.PurchaseOrderStatusID == enumPOStatus.Received || purchaseOrderViewDetail.PurchaseOrderStatusID == enumPOStatus.PartiallyReceived">
+                                            <h5>{{purchaseOrder.ReceivedQuantity}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder.SupplierPrice | currency: currencyFormat}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{purchaseOrder.TotalPrice | currency: currencyFormat}}</h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderViewDetail.PurchaseOrderStatusID == enumPOStatus.Received || purchaseOrderViewDetail.PurchaseOrderStatusID == enumPOStatus.PartiallyReceived">
+                                            <h5>{{purchaseOrder.ReceivedTotal | currency: currencyFormat}}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="row grid_rows no_border" *ngIf="!isDataExists">
+                                        <div class="col-md-12 text-center">
+                                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="row align-items-center grid_header row-highlight" *ngIf="isDataExists">
+                                        <div class="col">
+                                            <h5 class="font-weight-bold">Total</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="font-weight-bold">
+                                                {{purchaseOrderViewDetail.PurchaseOrderDetails[0].TotalOrderQuantity}}
+                                            </h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderViewDetail.Status == 'Received' || purchaseOrderViewDetail.Status == 'Partially Received'">
+                                            <h5 class="font-weight-bold">
+                                                {{purchaseOrderViewDetail.PurchaseOrderDetails[0].TotalReceivedQuantity}}
+                                            </h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="font-weight-bold">
+                                                {{purchaseOrderViewDetail.PurchaseOrderDetails[0].OrderdTotal |
+                                                currency: currencyFormat}} </h5>
+                                        </div>
+                                        <div class="col"
+                                            *ngIf="purchaseOrderViewDetail.Status == 'Received' || purchaseOrderViewDetail.Status == 'Partially Received'">
+                                            <h5 class="font-weight-bold">
+                                                {{purchaseOrderViewDetail.PurchaseOrderDetails[0].TotalReceivedTotal |
+                                                currency: currencyFormat}} </h5>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view_bg mb-0"
+                    *ngIf="(purchaseOrderViewDetail.PurchaseOrderStatusID === enumPOStatus.Received || purchaseOrderViewDetail.PurchaseOrderStatusID === enumPOStatus.PartiallyReceived) && purchaseOrderViewDetail.isPO">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_title mb-2">
+                                <h3>GRN History</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="overflow-auto">
+                                <div class="responsive_grid_rows cstm_scroll_bg">
+                                    <div class="row align-items-center grid_header">
+                                        <div class="col">
+                                            <h5>Reference No.</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Received Quantity</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Delivery Date</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Notes</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>Total</h5>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row align-items-center grid_rows"
+                                        *ngFor="let grn of purchaseOrderViewDetail.grnList">
+                                        <div class="col">
+                                            <h5>GRN-{{grn.GRNNumber}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{grn.ReceivedQuantity}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5> {{grn.GRNDate | customdate: dateFormat}}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{grn.Notes}}</h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5>{{grn.GRNTotal | currency:
+                                                currencyFormat}}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="row grid_rows no_border" *ngIf="!isDataExistsGRN">
+                                        <div class="col-md-12 text-center">
+                                            <h5 class="no_record_found">{{messages.Generic_Messages.No_Record_Found}}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="row align-items-center grid_header row-highlight" *ngIf="isDataExistsGRN">
+                                        <div class="col">
+                                            <h5 class="font-weight-bold">Total</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{grnTotalReceivedQuantity}}</h5>
+                                        </div>
+
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+
+                                        <div class="col">
+                                            <h5></h5>
+                                        </div>
+                                        <div class="col text-center">
+                                            <h5 class="font-weight-bold">
+                                                {{grnTotal | currency:
+                                                currencyFormat}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row popup_footer">
+                <div class="col-md-12">
+                    <div class="cancel_btn float-right">
+                        <button type="button" (click)="onCloseDialog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
