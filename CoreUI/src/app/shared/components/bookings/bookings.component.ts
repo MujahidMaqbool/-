@@ -103,6 +103,8 @@ export class BookingsComponent extends AbstractGenericComponent implements OnIni
     package = ENU_Package;
     bookingStatusList = Configurations.BookingStatusList;
 
+    dateToPlaceHolder: string = 'Booking Date';
+    dateFromPlaceHolder: string = 'Booking Date';
     // #endregion
 
     constructor(

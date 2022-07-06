@@ -13,7 +13,7 @@
                         <div class="filter_seprator"></div>
                     </div>
                     <div class="col-md-6 input_heading no_padding">
-                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #classesDateSearch>
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #classesDateSearch [isFromMaxDate]="false" [dateToPlaceHolder]="dateToPlaceHolder" [dateFromPlaceHolder]="dateFromPlaceHolder">
                         </dateto-datefrom>
                     </div>
                     <div class="col-md-3 col-sm-6">
