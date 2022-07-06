@@ -69,6 +69,9 @@ export class POSClassBookingDetailComponent extends AbstractGenericComponent imp
     classStatus = ClassStatus;
     classStatusName = ClassStatusName;
 
+    dateToPlaceHolder: string = 'Booking Date';
+    dateFromPlaceHolder: string = 'Booking Date';
+
     constructor(
         private _messageService: MessageService,
         private _dateTimeService: DateTimeService,
