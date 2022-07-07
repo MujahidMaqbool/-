@@ -70,8 +70,8 @@ export class MemberReportComponent implements OnInit, AfterViewInit {
   MemberMembershipPaymentDateToLabelName: string =  "To - Payment Due Date";
   MemberMembershipPaymentDateFromLabelName: string = "From - Payment Due Date";
 
-  AllMemberDateToLabelName: string =  "To - Membership Created Date";
-  AllMemberDateFromLabelName: string = "From - Membership Created Date";
+  AllMemberDateToLabelName: string =  "To - Membership Start Date";
+  AllMemberDateFromLabelName: string = "From - Membership Start Date";
 
   isExist: boolean = false;
   isExistMemberships: boolean = false;
@@ -708,6 +708,32 @@ export class MemberReportComponent implements OnInit, AfterViewInit {
 
   // #region TotalMembershipsPaymentsagaisntsinglemember
 
+  reciviedDateToAllPayments($event) {
+
+    let dateTo = new Date($event.DateTo);
+    let dateFrom = new Date($event.DateFrom);
+    var Time = dateTo.getTime() - dateFrom.getTime();
+    var daysDifference = Time / (1000 * 3600 * 24); //Diference in Days
+
+    if (daysDifference > 30) {
+      this.memberMembershipPaymentsDateComoRef.onFromDateChangeForParent($event.DateFrom);
+      $event.DateTo = dateFrom.setMonth(dateFrom.getMonth() + 1);
+      $event.DateTo = this._dateTimeService.convertDateObjToString($event.DateTo, this.dateFormat)
+      this.memberMembershipPaymentsDateComoRef.onToDateChangeForParent($event.DateTo);
+
+      this.CustomerReportSearchParameter.DateFrom = $event.DateFrom;
+      this.CustomerReportSearchParameter.DateTo = $event.DateTo;
+    } else {
+      this.CustomerReportSearchParameter.DateFrom = $event.DateFrom;
+      this.CustomerReportSearchParameter.DateTo = $event.DateTo;
+    }
+    if (new Date($event.DateFrom) < this.memberMembershipPaymentsDateComoRef.branchDate) {
+      this.memberMembershipPaymentsDateComoRef.toMaxDate = new Date($event.DateFrom);
+      this.memberMembershipPaymentsDateComoRef.toMaxDate.setMonth(this.memberMembershipPaymentsDateComoRef.toMaxDate.getMonth() + 1);
+    }
+
+  }
+
   exportAllPayments(fileFormatTypeID: number) {
   
     if (this.CustomerReportSearchParameter.DateTo >= this.CustomerReportSearchParameter.DateFrom) {
@@ -723,7 +749,7 @@ export class MemberReportComponent implements OnInit, AfterViewInit {
         dateTo: this.CustomerReportSearchParameter.DateTo
       }
 
-      if(this.CustomerReportSearchParameter.CustomerID > 0){
+      // if(this.CustomerReportSearchParameter.CustomerID > 0){
         this._httpService.get(MemberApi.getMemberPastAndFuturePaymentsReport, _params)
         .subscribe(
           (response: ApiResponse) => {
@@ -739,9 +765,9 @@ export class MemberReportComponent implements OnInit, AfterViewInit {
               this._messageService.showErrorMessage(response.MessageText);
             }
           })
-      } else{
-        this._messageService.showErrorMessage("Please select Member");
-      }
+      // } else{
+      //   this._messageService.showErrorMessage("Please select Member");
+      // }
       /**CustomerID / Customer is nullable (optional) */
      
              
@@ -765,7 +791,7 @@ export class MemberReportComponent implements OnInit, AfterViewInit {
         dateTo: this.CustomerReportSearchParameter.DateTo
       }
       /**CustomerID / Customer is nullable (optional) */
-     if(this.CustomerReportSearchParameter.CustomerID > 0){
+     //if(this.CustomerReportSearchParameter.CustomerID > 0){
       this._httpService.get(MemberApi.getMemberPastAndFuturePaymentsReport, _params)
       .subscribe(
         (response: ApiResponse) => {
@@ -776,9 +802,9 @@ export class MemberReportComponent implements OnInit, AfterViewInit {
             this._messageService.showErrorMessage(response.MessageText);
           }
         })
-     } else{
-      this._messageService.showErrorMessage("Please select Member");
-     }
+    //  } else{
+    //   this._messageService.showErrorMessage("Please select Member");
+    //  }
      
 
     } else {
