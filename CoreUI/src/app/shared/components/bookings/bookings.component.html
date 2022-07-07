@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col-md-5 input_heading no_padding">
-                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #bookingRef>
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #bookingRef [isFromMaxDate]="false" [dateToPlaceHolder]="dateToPlaceHolder" [dateFromPlaceHolder]="dateFromPlaceHolder">
                         </dateto-datefrom>
                     </div>
                     <div class="col">
