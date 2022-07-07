@@ -140,12 +140,12 @@
     <div id="grid" *ngIf="isDataExists">
         <div class="row grid_rows " *ngFor="let  bookedClassObj of bookedClasses">
             <div class="col" *ngIf="isPOSBooking">
-                <h5>{{bookedClassObj.StartDate | customdate: dateFormat }} <br><span class="booking_time">
+                <h5>{{bookedClassObj.StartDate | customdate: longDateFormat }} <br><span class="booking_time">
                     {{bookedClassObj.StartTime | branchTimeFormat  }} - {{ bookedClassObj.EndTime | branchTimeFormat  }} {{ ' - ' +
                         (bookedClassObj.ServiceDuration + bookedClassObj.CleaningTime) + ' ' + 'Minute(s)' }}</span> </h5>
             </div>
             <div class="col" *ngIf="!isPOSBooking">
-                <h5>{{bookedClassObj.StartDate | customdate: dateFormat }} <br><span class="booking_time">
+                <h5>{{bookedClassObj.StartDate | customdate: longDateFormat }} <br><span class="booking_time">
                         {{bookedClassObj.StartTime | branchTimeFormat  }} - {{ bookedClassObj.EndTime | branchTimeFormat  }} {{ ' - ' +
                         bookedClassObj.ServiceDuration + ' ' + 'Minute(s)'}}</span> </h5>
             </div>
