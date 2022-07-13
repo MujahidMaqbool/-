@@ -38,7 +38,7 @@
     <div class="row mob-col-rev">
       <div class="col-lg-9 col-md-12 col-sm-12 no_padding">
         <div class="row">
-          <div class="col-md-6 col-sm-6">
+          <div class="col-md-3 col-sm-3">
             <div class="field_label">
               <h5>Class Name
                 <span class="info_tip" matTooltip="Enter the name of this specific Class, as you want clients to see it"
@@ -88,6 +88,21 @@
                 <option *ngFor="let classLevel of classLevelList" [ngValue]="classLevel.ClassLevelID">
                   {{classLevel.LevelName}}
                 </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-3">
+            <div class="field_label">
+              <h5>Show Online As
+                <span class="info_tip"
+                  matTooltip="This section allows you to direct the customers to either the classes tab or the events tab in the widget or customer app."
+                  matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
+              </h5>
+            </div>
+            <div class="select_label">
+              <select class="form-control" name="">
+                <option value="null">Class</option>
+                <option value="1">Event</option>               
               </select>
             </div>
           </div>

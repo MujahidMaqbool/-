@@ -9,7 +9,9 @@
         <button (click)="saveWidgetSettings()" class="save secondry_btn mb-0"> Save </button>
       </div>
     </div>
-    <div class="col-md-12"><div class="form_border my-10"></div></div>
+    <div class="col-md-12">
+      <div class="form_border my-10"></div>
+    </div>
   </div>
 
   <div class="row waitlist_subtitle align-items-center">
@@ -20,12 +22,15 @@
     </div>
     <div class="col-md-2 col-sm-6">
       <div class="select_label">
-        <select class="mb-0" [(ngModel)]="permissions.defaultLandingPage" name="defaultLandingPage" (change)="onSelectLandingPage()">
+        <select class="mb-0" [(ngModel)]="permissions.defaultLandingPage" name="defaultLandingPage"
+          (change)="onSelectLandingPage()">
           <option *ngFor="let landingpage of landingPageList" [value]="landingpage.value">{{landingpage.text}}</option>
         </select>
       </div>
     </div>
-    <div class="col-md-12"><div class="form_border my-10"></div></div>
+    <div class="col-md-12">
+      <div class="form_border my-10"></div>
+    </div>
   </div>
 
   <div class="row landing_disable">
@@ -51,7 +56,7 @@
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
-      <div class="permission_box" >
+      <div class="permission_box">
         <div class="center_flex_alignment">
           <div>
             <i class="fal fa-address-card"></i>
@@ -63,16 +68,17 @@
           </div>
         </div>
         <div>
-          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Memberships"
-            #ShowMembershipOnline="ngModel" name="{{'chk_boxMembership' +  branch.BranchID}}"
-            [(ngModel)]="permissions.ShowMembershipOnline" [(checked)]="permissions.ShowMembershipOnline">
+          <mat-slide-toggle class="wellyx-checked"
+            [disabled]="permissions.defaultLandingPage == enu_LandingPage.Memberships" #ShowMembershipOnline="ngModel"
+            name="{{'chk_boxMembership' +  branch.BranchID}}" [(ngModel)]="permissions.ShowMembershipOnline"
+            [(checked)]="permissions.ShowMembershipOnline">
 
           </mat-slide-toggle>
         </div>
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
-      <div class="permission_box" >
+      <div class="permission_box">
         <div class="center_flex_alignment">
           <div>
             <i class="fal fa-address-card"></i>
@@ -93,8 +99,27 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="permission_box">
+        <div class="center_flex_alignment">
+          <div>
+            <i class="fal fa-box-full"></i>
+          </div>
+          <div>
+            <h5>Packages</h5>
+            <p>Toggle on to display the packages tab on your widget & app. Toggling off will result in customers being
+              unable to purchase packages.</p>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="">
+
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
-      <div class="permission_box" >
+      <div class="permission_box">
         <div class="center_flex_alignment">
           <div>
             <i class="fal fa-users-class"></i>
@@ -106,9 +131,29 @@
           </div>
         </div>
         <div>
-          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Classes"
+          <mat-slide-toggle class="wellyx-checked"
+            [disabled]="permissions.defaultLandingPage == enu_LandingPage.Classes"
             name="{{'chk_boxClass' + branch.BranchID}}" [(ngModel)]="permissions.ShowClassOnline"
             [(checked)]="permissions.ShowClassOnline" #ShowClassOnline="ngModel">
+
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="permission_box">
+        <div class="center_flex_alignment">
+          <div>
+            <i class="fal fa-users"></i>
+          </div>
+          <div>
+            <h5>Events</h5>
+            <p>Toggle on to display the events tab on your widget & app. Toggling off will result in customers being
+              unable to book/purchase events.</p>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="">
 
           </mat-slide-toggle>
         </div>
@@ -127,7 +172,8 @@
           </div>
         </div>
         <div>
-          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Services"
+          <mat-slide-toggle class="wellyx-checked"
+            [disabled]="permissions.defaultLandingPage == enu_LandingPage.Services"
             name="{{'chk_boxService' + branch.BranchID}}" [(ngModel)]="permissions.ShowServiceOnline"
             [(checked)]="permissions.ShowServiceOnline" #ShowServiceOnline="ngModel">
           </mat-slide-toggle>
@@ -135,7 +181,7 @@
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isProductAllowed">
-      <div class="permission_box" >
+      <div class="permission_box">
         <div class="center_flex_alignment">
           <div>
             <i class="fal fa-archive"></i>
@@ -147,7 +193,8 @@
           </div>
         </div>
         <div>
-          <mat-slide-toggle class="wellyx-checked" [disabled]="permissions.defaultLandingPage == enu_LandingPage.Products"
+          <mat-slide-toggle class="wellyx-checked"
+            [disabled]="permissions.defaultLandingPage == enu_LandingPage.Products"
             name="{{'chk_boxProduct' + branch.BranchID}}" [(ngModel)]="permissions.ShowProductOnline"
             [(checked)]="permissions.ShowProductOnline" #ShowProductOnline="ngModel">
 
@@ -168,11 +215,14 @@
         share these URLs to grow your business.</p>
     </div>
     <div class="col-md-2 col-sm-12">
-      <div class="printer_btn padding_left text-right"> <button (click)="saveSocialMedia()" class="save secondry_btn mb-0"> Save
+      <div class="printer_btn padding_left text-right"> <button (click)="saveSocialMedia()"
+          class="save secondry_btn mb-0"> Save
         </button>
       </div>
     </div>
-    <div class="col-md-12"><div class="form_border mt-10 mb-0"></div></div>
+    <div class="col-md-12">
+      <div class="form_border mt-10 mb-0"></div>
+    </div>
   </div>
   <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -193,7 +243,7 @@
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
-      <div class="field_label widget_label" >
+      <div class="field_label widget_label">
         <h5> Memberships URL</h5>
       </div>
       <div class="row url_btn text-right" *ngIf="isGymPackage">
@@ -207,6 +257,21 @@
             </i>
           </button></div>
         <div><a href="{{widgetUrl.MembershipUrl}}" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="field_label widget_label">
+        <h5>Packages URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="" name="" readonly />
+        </div>
+        <div><button type="button" matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="#" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
@@ -223,6 +288,21 @@
             <i class="fal fa-link"></i>
           </button></div>
         <div><a href="{{widgetUrl.ClassUrl}}" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="field_label widget_label">
+        <h5>Events URL</h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" value="" name="" readonly />
+        </div>
+        <div><button type="button" matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-link">
+            </i>
+          </button></div>
+        <div><a href="#" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isServiceAllowed">
@@ -284,7 +364,9 @@
       <p>We have uploaded default banners for all your widget pages. You can customize the look and upload banners of
         your own choice. <span class="optional">(Size: W1920 x H460)</span></p>
     </div>
-    <div class="col-md-12"><div class="form_border mt-10 mb-0"></div></div>
+    <div class="col-md-12">
+      <div class="form_border mt-10 mb-0"></div>
+    </div>
   </div>
   <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -333,6 +415,29 @@
           </button></div>
       </div>
     </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" >
+      <div class="field_label widget_label">
+        <h5> Packages </h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="MembershipBanner" #MembershipBanner="ngModel"
+            [(ngModel)]="bannerModel.MembershipBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.MembershipBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Membership)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Membership, bannerModel.MembershipBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+    </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
       <div class="field_label widget_label">
         <h5>Classes </h5>
@@ -351,6 +456,29 @@
             <i class="fal fa-cloud-upload"></i>
           </button></div>
         <div><button type="button" (click)="onRemoveBanner(bannerType.Class , bannerModel.ClassBanner)"
+            matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-trash-alt"></i>
+          </button></div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" >
+      <div class="field_label widget_label">
+        <h5> Events </h5>
+      </div>
+      <div class="row url_btn text-right" *ngIf="isGymPackage">
+        <div class="col no_padding">
+          <input class="form-control" type="text" name="MembershipBanner" #MembershipBanner="ngModel"
+            [(ngModel)]="bannerModel.MembershipBanner" readonly />
+        </div>
+        <div><button type="button" (click)="onViewBanner(bannerModel.MembershipBanner)" matTooltip="View banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-eye"></i>
+          </button></div>
+        <div><button type="button" (click)="onUploadBanner(bannerType.Membership)" matTooltip="Upload banner"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
+            <i class="fal fa-cloud-upload"></i>
+          </button></div>
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Membership, bannerModel.MembershipBanner)"
             matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-trash-alt"></i>
           </button></div>
@@ -434,7 +562,9 @@
       <p>Display & advertise your social media accounts from the widget & app. Social media icons will not be displayed
         if the URL is not provided.</p>
     </div>
-    <div class="col-md-12"><div class="form_border mt-10 mb-0"></div></div>
+    <div class="col-md-12">
+      <div class="form_border mt-10 mb-0"></div>
+    </div>
   </div>
   <div class="row space-15">
     <div class="col-lg-4 col-md-4 col-sm-12">

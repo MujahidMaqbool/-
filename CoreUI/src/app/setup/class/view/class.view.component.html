@@ -52,6 +52,10 @@
                             <h6>Status</h6>
                             <p>{{parentClassObj.IsActive === true? 'Active': 'InActive'}}</p>
                         </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h6>Show Online As</h6>
+                            <p>Event</p>
+                        </div>
                         <div class="col-md-12 col-sm-12" *ngIf="isPurchaseRestrictionAllowed">
                             <h6>Purchase Restriction</h6>
                             <p>{{parentClassObj.RestrictedCustomerTypeNames ? parentClassObj.RestrictedCustomerTypeNames + " cannot purchase this item." : 'N/A'}}</p>

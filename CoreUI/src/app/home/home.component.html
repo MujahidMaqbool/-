@@ -267,12 +267,12 @@
               </li>
               <li *ngIf="allowedModules.PointOfSale">
                 <a [routerLinkActive]="['active']" [routerLink]="['/point-of-sale']" (click)="mobToogle()">
-                  <i class="fal fa-desktop"></i>
+                  <i class="fa-light fa-display"></i>
                   Point Of Sale</a>
               </li>
               <li *ngIf="allowedModules.Automation">
                 <a [routerLinkActive]="['active']" [routerLink]="['/automation']" (click)="mobToogle()">
-                  <i class="fal fa-magic"></i>
+                  <i class="fa-light fa-wand-magic-sparkles"></i>
                   Automation</a>
               </li>
               <li *ngIf="allowedModules.Product">

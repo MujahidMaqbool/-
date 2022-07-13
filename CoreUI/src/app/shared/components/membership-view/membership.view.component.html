@@ -82,9 +82,13 @@
               <h6 class="field_label">Product Benefits</h6>
               <p class="text_readonly">{{membership.ProductsSession ? membership.ProductsSession : 'N/A'}} </p>
             </div>
-            <div class="col" *ngIf="isPurchaseRestrictionAllowed">
+            <div class="col col-3" *ngIf="isPurchaseRestrictionAllowed">
               <h6 class="field_label">Purchase Restriction</h6>
             <p class="text_readonly">{{membership.RestrictedCustomerTypeNames ? membership.RestrictedCustomerTypeNames + " cannot purchase this item." : 'N/A'}}</p>
+            </div>
+            <div class="col col-3">
+              <h6 class="field_label">Show Online As</h6>
+            <p class="text_readonly">Package</p>
             </div>
           </div>
         </div>

@@ -165,13 +165,13 @@
             <div class="col padding_left mob-m2 mob-pr-0" *ngIf="showHidePriceLabel">
               <div class="sch_class_head">
                 <h5 class="field_label">Hide Price Online
-                  <span class="info_tip" matTooltip="Toggle on to hide the price of this membership on the widget & customer app."
+                  <span class="info_tip"
+                    matTooltip="Toggle on to hide the price of this membership on the widget & customer app."
                     matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
                       class="far fa-info-circle"></i></span>
                 </h5>
-                <mat-slide-toggle  class="wellyx-checked " [(checked)]="membership.IsHidePriceOnline"
-                  [(ngModel)]="membership.IsHidePriceOnline" name="HidePrice"
-                  [disabled]="!membership.IsOnline">
+                <mat-slide-toggle class="wellyx-checked " [(checked)]="membership.IsHidePriceOnline"
+                  [(ngModel)]="membership.IsHidePriceOnline" name="HidePrice" [disabled]="!membership.IsOnline">
                   <!-- {{membership.IsHidePriceOnline ? 'Yes': 'No'}} -->
                 </mat-slide-toggle>
               </div>
@@ -228,24 +228,27 @@
                       required />
                   </div>
                 </div>
-                <div class="col-md-4 col-sm-6" >
-                    <div class="field_label">
-                      <h5>Membership Category</h5>
-                    </div>
+                <div class="col-md-4 col-sm-6">
+                  <div class="field_label">
+                    <h5>Membership Category</h5>
+                  </div>
 
-                    <div [ngClass]="{
+                  <div
+                    [ngClass]="{
                               'has-danger': (MembershipCategoryID.invalid || membership.MembershipCategoryID == 0 || membership.MembershipCategoryID == null || membership.MembershipCategoryID == undefined)
                                               && (membershipDetailsForm.dirty || membershipDetailsForm.touched || membershipDetailsForm.submitted || showMembershipDetailsValidation)}">
-                      <div class="select_label">
-                      <select class="form-control" name="MembershipCategoryID" [(ngModel)]="membership.MembershipCategoryID" #MembershipCategoryID="ngModel" required>
+                    <div class="select_label">
+                      <select class="form-control" name="MembershipCategoryID"
+                        [(ngModel)]="membership.MembershipCategoryID" #MembershipCategoryID="ngModel" required>
                         <option value="0">Select Category</option>
-                        <option *ngFor="let membershipCategoryObj of membershipCategoryList" [ngValue]="membershipCategoryObj.MembershipCategoryID">
+                        <option *ngFor="let membershipCategoryObj of membershipCategoryList"
+                          [ngValue]="membershipCategoryObj.MembershipCategoryID">
                           {{membershipCategoryObj?.CategoryName}}
                         </option>
                       </select>
-                      </div>
                     </div>
                   </div>
+                </div>
                 <div class="col-md-4 col-sm-6">
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -341,39 +344,59 @@
                 <div class="col-md-4 col-sm-6" *ngIf="isPurchaseRestrictionAllowed">
                   <div class="field_label">
                     <h5>Purchase Restriction <span class="info_tip"
-                      matTooltip="By checking a customer type, you can restrict a particular customer type from viewing or buying this membership on the widget and customer app. For core & staff app, a tag will be displayed for information purposes only, however you can still sell the membership to all customers."
-                      matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
-                    <span>&nbsp;(Optional)</span></h5>
+                        matTooltip="By checking a customer type, you can restrict a particular customer type from viewing or buying this membership on the widget and customer app. For core & staff app, a tag will be displayed for information purposes only, however you can still sell the membership to all customers."
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                          class="far fa-info-circle"></i></span>
+                      <span>&nbsp;(Optional)</span>
+                    </h5>
                   </div>
                   <div class="select_label">
-                    <mat-select class="form-control multi_select_tax" placeholder="Select Purchase Restriction" name="mainSearch"
-                      #selectItem [(ngModel)]="selectedRestrictedList" tabindex="10" multiple>
+                    <mat-select class="form-control multi_select_tax" placeholder="Select Purchase Restriction"
+                      name="mainSearch" #selectItem [(ngModel)]="selectedRestrictedList" tabindex="10" multiple>
 
                       <mat-select-trigger *ngIf="selectedRestrictedList && selectedRestrictedList.length > 0">
                         {{selectedRestrictedList && selectedRestrictedList.length > 0 &&
-                              selectedRestrictedList[0].text ?
-                              selectedRestrictedList[0].text :
-                              selectedRestrictedList && selectedRestrictedList.length >= 2 &&
-                              selectedRestrictedList[0].text == undefined ?
-                              selectedRestrictedList[1].text : ''}}
+                        selectedRestrictedList[0].text ?
+                        selectedRestrictedList[0].text :
+                        selectedRestrictedList && selectedRestrictedList.length >= 2 &&
+                        selectedRestrictedList[0].text == undefined ?
+                        selectedRestrictedList[1].text : ''}}
                         <span *ngIf="selectedRestrictedList && selectedRestrictedList.length >= 2"
                           class="example-additional-selection">
                           (+{{selectedRestrictedList[0].text == undefined ? selectedRestrictedList.length
-                                  - 2 :
-                                  selectedRestrictedList.length - 1 }}
+                          - 2 :
+                          selectedRestrictedList.length - 1 }}
                           {{selectedRestrictedList[0].text == undefined && selectedRestrictedList.length
-                                  === 3 ? 'other' :
-                                  selectedRestrictedList.length === 2 ? 'other' : 'others'}})
+                          === 3 ? 'other' :
+                          selectedRestrictedList.length === 2 ? 'other' : 'others'}})
                         </span>
                       </mat-select-trigger>
                       <span *ngIf="restrictedList && restrictedList.length > 1">
                         <mat-option #allRestrictionSelection (click)="toggleAllRestrictionSelection()" [value]="0">
                           All</mat-option>
                       </span>
-                      <mat-option *ngFor="let option of restrictedList" [value]="option" (click)="togglePerOneRestriction()">
+                      <mat-option *ngFor="let option of restrictedList" [value]="option"
+                        (click)="togglePerOneRestriction()">
                         {{option.text}} </mat-option>
                     </mat-select>
                   </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <div class="field_label">
+                    <h5>Show Online As <span class="info_tip"
+                        matTooltip="This section allows you to direct the customers to either the membership tab or the packages tab in the widget or customer app."
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                          class="far fa-info-circle"></i></span>
+                    </h5>
+                  </div>
+                  <div class="select_label">
+                    <select>
+                      <option>Membership</option>
+                      <option>Package</option>
+                    </select>
+                  </div>
+
+
                 </div>
 
               </div>
@@ -810,14 +833,13 @@
                           Benefit.MembershipBenefitsTypeID == membershipBenefitType.Classes && !membership.IsClassBenefitsAllowed ? true :
                           Benefit.MembershipBenefitsTypeID == membershipBenefitType.Services && !membership.IsServiceBenefitsAllowed ? true :
                           Benefit.MembershipBenefitsTypeID == membershipBenefitType.Products && !membership.IsProductBenefitsAllowed ? true : false
-                        )"
-                      class="ng-untouched ng-pristine ng-valid">
+                        )" class="ng-untouched ng-pristine ng-valid">
                     <label for="{{ i + Benefit.MembershipBenefitsTypeID + 'rollover' }}">Allow Benefits Rollover
                       <span class="info_tip"
-                      matTooltip="When checked, the remaining benefits are rolled over to next interval, allowing accumulation of benefits until the membership is expired/terminated."
-                      matTooltipPosition="above" matTooltipClass="custom-tooltip">
-                      <i class="far fa-info-circle"></i>
-                    </span></label>
+                        matTooltip="When checked, the remaining benefits are rolled over to next interval, allowing accumulation of benefits until the membership is expired/terminated."
+                        matTooltipPosition="above" matTooltipClass="custom-tooltip">
+                        <i class="far fa-info-circle"></i>
+                      </span></label>
                   </div>
                   <div class="checkbox checkbox-success pt-0">
                     <input tabindex="20" type="checkbox" name="{{ i + Benefit.MembershipBenefitsTypeID }}"
@@ -1418,10 +1440,10 @@
     <ng-container *ngIf="membership.IsProductBenefitsAllowed">
       <mat-step>
         <ng-template matStepLabel>Products</ng-template>
-        <benefit-item-types [membershipBranchList]="membership.MembershipBranchList" [ItemTypeID]="enuItemType.ProductVariant"
-          [itemTypeName]="membershipBenefitTypeName.Product" [itemTypeHeading]="membershipBenefitTypesName.Products"
-          [BenefitItemList]="membershipAddedProductList" [filterMembershipItemTypeList]="membershipAddedProductList"
-          #benifitItemTypeProduct></benefit-item-types>
+        <benefit-item-types [membershipBranchList]="membership.MembershipBranchList"
+          [ItemTypeID]="enuItemType.ProductVariant" [itemTypeName]="membershipBenefitTypeName.Product"
+          [itemTypeHeading]="membershipBenefitTypesName.Products" [BenefitItemList]="membershipAddedProductList"
+          [filterMembershipItemTypeList]="membershipAddedProductList" #benifitItemTypeProduct></benefit-item-types>
       </mat-step>
     </ng-container>
 
