@@ -1788,7 +1788,7 @@ select:focus {
     font-size: 14px !important;
     margin: 0;
     font-weight: 600;
-    word-break: break-word !important;
+    /* word-break: break-word !important; */
     position: relative;
 }
 
