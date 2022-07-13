@@ -4023,7 +4023,8 @@ hr {
 }
 
 .company_name {
-    font-size: 19px;
+    font-size: 18px;
+    line-height: 1.3;
     font-weight: 600;
     margin-top: 10px;
 }

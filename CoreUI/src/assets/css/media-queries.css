@@ -1130,6 +1130,7 @@
     }
     .login_form_user {
         background-size: cover;
+        background-position: bottom left -90px, 20%;
     }
     .extra_large_popup,
     save-staff-attendance .medium_popup {
@@ -1995,9 +1996,6 @@
     .wrapper_user_attandance form .next_btn {
         height: 40px;
         font-size: 14px;
-    }
-    .switch_company_account .company_name {
-        margin-top: 12px;
     }
     .user_add_account i {
         font-size: 16px;

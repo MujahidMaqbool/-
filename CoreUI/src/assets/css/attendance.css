@@ -237,6 +237,7 @@ a:hover{text-decoration: none;}
 .user_add_account{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid #3F79A7;
     padding: 10px 0px;
     cursor: pointer;
@@ -254,7 +255,7 @@ a:hover{text-decoration: none;}
 }
 .switch_company_account {flex-basis: 260px;}
 .switch_company_account .company_name{
-    margin-top: 14px;
+    margin-top: 0;
 }
 
 /*Account_Section*/
@@ -693,6 +694,13 @@ input[type=number]{
     .user_account .col-lg-3{
         max-width: 26%;
     }
+    .switch_company_account {
+        flex-basis: 54%;
+    }
+    .user_add_account .user_img_paddingleft {
+        flex-grow: initial;
+        margin-right: 15px;
+    }
 }
 @media screen and (max-width: 575px) {
 
@@ -730,9 +738,10 @@ input[type=number]{
     .login_form_user .logo_div img {
         width: 160px;
     }
-    .switch_company_account {
-        flex-basis: auto;
+    div.login_form_user {
+        background-size: 0, cover;
     }
+    
 
 
 }
