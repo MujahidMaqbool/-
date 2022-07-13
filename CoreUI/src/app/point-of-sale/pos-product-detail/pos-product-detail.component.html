@@ -28,7 +28,7 @@
                     <div class="col-md-6 parallel_grid">
                         <div class="product-detail-box">
                           <form #productForm="ngForm" >
-                            <div class="product-details-variants" [ngClass]="{'stock-avail': isCheckAvaliblity,
+                            <div class="product-details-variants cstm_scroll_bg" [ngClass]="{'stock-avail': isCheckAvaliblity,
                             'inneer-scroll': product.ProductAttributes.length > 4}">
                               <ng-container *ngFor="let productAttribute of product.ProductAttributes; let i = index">
                                   <h5 class="field_label">{{productAttribute?.AttributeName}}</h5>
