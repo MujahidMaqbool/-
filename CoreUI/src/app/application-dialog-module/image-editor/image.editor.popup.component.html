@@ -9,6 +9,12 @@
                     <div class="popup_white_bg">
                         <image-editor #imageEditor [height]="config?.height" [width]="config?.width" [aspectRatio]="config?.aspectRatio" [showWebCam]="config?.showWebCam">
                         </image-editor>
+                        <div class="row">
+                          <div class="col-md-12 mt-2">
+                            <h6 class="info-text pt-3">Uploaded image will be cropped to fit within: Width of {{config?.width}} pixels & Height of {{config?.height}} pixels.</h6>
+                          </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row popup_footer">
@@ -20,7 +26,7 @@
                                  Crop
                             </button>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </form>
         </div>

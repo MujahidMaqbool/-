@@ -55,7 +55,7 @@ input::-webkit-inner-spin-button {
 }
 
 .checkbox-clr{
-    accent-color: #1B6EB8;    
+    accent-color: #1B6EB8;
 }
 /* Generic CSS */
 a, .cursor-pointer {
@@ -73,6 +73,9 @@ a, .cursor-pointer {
   .dark-color {
     color: #000000;
   }
+  .white-bg {
+    background-color: #ffffff;
+  }
   button {
     border: none;
     padding: 5px 10px;
@@ -82,6 +85,13 @@ a, .cursor-pointer {
   }
   i, span {
     display: inline-block;
+}
+.cst-border-rounded {
+  border-radius: 6px !important;
+}
+.info-text {
+  font-size: 14px;
+  color: #95989A;
 }
 .font-bold {
   font-weight: bold !important;
@@ -11384,7 +11394,7 @@ input[type="number"].font-20 {
 .ms-pop .mat-select-trigger, .ms-pop .mat-select-value {width: 100% !important;}
 .overflow-auto-tax{
     overflow: auto;
-    overflow-y: hidden;    
+    overflow-y: hidden;
 }
 /*****Main Product Css End******/
 

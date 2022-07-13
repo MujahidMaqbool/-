@@ -41,7 +41,7 @@ export class LoginComponent {
   invalidEmail: boolean;
   invalidPassword: boolean;
   loginInProcess: boolean = false;
-  imagePath: string = 'assets/images/company_placeholder.jpg';
+  imagePath: string = 'assets/images/wellyx-company-logo.png';
 
   loginStates = ENU_LoginState;
   enum_AppSourceType = EnumSaleSourceType;
@@ -151,8 +151,8 @@ export class LoginComponent {
     )
   }
 
-   onEmailTrim(){       
-     this.loginModel.Email =  this.loginModel.Email.trim();  
+   onEmailTrim(){
+     this.loginModel.Email =  this.loginModel.Email.trim();
    }
 
   getStaffCompanies() {
@@ -172,7 +172,7 @@ export class LoginComponent {
                   company.LogoPath = environment.imageUrl.replace("{ImagePath}", company.CompanyID) + company.CompanyLogo;
                 }
                 else {
-                  company.LogoPath = environment.imageUrl.replace("{ImagePath}", company.CompanyID) + company.CompanyLogo;
+                  company.LogoPath = this.imagePath;
                 }
               })
 

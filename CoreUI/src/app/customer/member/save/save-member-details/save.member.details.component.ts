@@ -195,6 +195,9 @@ export class SaveMemberDetailsComponent extends AbstractGenericComponent impleme
       disableClose: true,
       data: {
         showWebCam: true,
+        height: 200,
+        width: 200,
+        aspectRatio: 200 / 200,
       },
     });
 

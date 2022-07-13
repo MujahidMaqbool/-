@@ -73,7 +73,7 @@ export class ImageEditorComponent implements OnInit, OnDestroy {
             this.imageUrl = img._imageAsDataUrl;
             this.refreshCrop(this.imageUrl);
             this.showCropper = true;
-        }        
+        }
     }
 
     onImageCaptureError(hasError: boolean){
@@ -94,7 +94,7 @@ export class ImageEditorComponent implements OnInit, OnDestroy {
     }
 
     getCroppedImage(height: number, width: number) {
-        return this.imgCropper.cropper.getCroppedCanvas({height: height, width: width}).toDataURL('image/jpeg');
+        return this.imgCropper.cropper.getCroppedCanvas({height: height, width: width}).toDataURL('image/png');
     }
 
     rotate(turn) {

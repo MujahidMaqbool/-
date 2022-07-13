@@ -138,6 +138,9 @@ export class ServiceCategorySaveComponent implements OnInit {
     const dialogInst = this._dialog.open(ImageEditorPopupComponent, {
       disableClose: true,
       data: {
+        height: 200,
+        width: 200,
+        aspectRatio: 200 / 200,
         showWebCam: true
       }
     });
@@ -169,7 +172,7 @@ export class ServiceCategorySaveComponent implements OnInit {
   discardImage() {
     this._commonService.deleteFile(ENU_Permission_Setup.ServiceCategory_Save, this.serviceCategory.ServiceCategoryID, this.serviceCategory.ImagePath)
       .subscribe((response: ApiResponse) => {
-        if (response && response.MessageCode > 0) {          
+        if (response && response.MessageCode > 0) {
           this._messageService.showSuccessMessage(this.messages.Success.Delete_Success.replace("{0}", "Image"));
           this.serviceCategory.ImageFile = "";
           this.serviceCategory.ImagePath = "";

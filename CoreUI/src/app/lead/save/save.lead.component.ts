@@ -199,7 +199,10 @@ export class SaveLeadComponent extends AbstractGenericComponent implements OnIni
     const dialogInst = this._viewDialogue.open(ImageEditorPopupComponent, {
       disableClose: true,
       data: {
-        showWebCam: true
+        showWebCam: true,
+        height: 200,
+        width: 200,
+        aspectRatio: 200 / 200,
       }
     });
 

@@ -36,7 +36,7 @@
                                 <div [ngClass]="{'chose-all-companies': staffCompanyList.length > 3 }" class=" cstm_scroll_bg">
                                 <div class="user_add_account" *ngFor="let company of staffCompanyList" (click)="onChooseAccount(company)">
                                     <div class="user_img_paddingleft column_flex_center">
-                                        <img class="" src="{{company.LogoPath}}" width="62px">
+                                        <img class="cst-border-rounded white-bg" src="{{company.LogoPath}}" width="62" height="62">
                                     </div>
                                     <div class="switch_company_account">
                                         <span class="company_name">{{company.CompanyName}}</span>

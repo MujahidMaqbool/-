@@ -127,6 +127,8 @@
               <i class="fal fa-cloud-upload-alt"></i>
               <br>
               <button type="button" class="save">Upload Logo</button>
+              <br>
+              <!-- <span class="optional">Maximum Dimension ({{this.width}}px Width x {{this.height}}px Height)</span> -->
             </div>
             <div *ngIf="isImageExist && (imagePath && imagePath != '')">
               <img class="img-responsive center-block" src="{{imagePath}}" alt="no image" />

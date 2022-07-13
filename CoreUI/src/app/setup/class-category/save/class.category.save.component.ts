@@ -69,7 +69,7 @@ export class ClassCategorySaveComponent implements OnInit {
 
   //#endregion
 
-  // #region Events  
+  // #region Events
 
   /**close popup */
   onClosePopup(): void {
@@ -83,7 +83,7 @@ export class ClassCategorySaveComponent implements OnInit {
 
   // #endregion
 
-  // #region Methods   
+  // #region Methods
 
   /**save class category and after saved class close popup and set image path */
   saveClassCategory(isvalid: boolean) {
@@ -126,6 +126,9 @@ export class ClassCategorySaveComponent implements OnInit {
     const dialogInst = this._dialog.open(ImageEditorPopupComponent, {
       disableClose: true,
       data: {
+        height: 200,
+        width: 200,
+        aspectRatio: 200 / 200,
         showWebCam: true
       }
     });

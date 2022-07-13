@@ -79,7 +79,7 @@ export class StaffProfilePopupComponent extends AbstractGenericComponent impleme
         this.getFundamentals();
         this.getStaffProfile();
 
-        
+
 
         this.loggedInStaffSubscription = this._dataSharingService.loggedInStaffID.subscribe((staffId: number) => {
             this.loggedInStaffID = staffId;
@@ -100,7 +100,10 @@ export class StaffProfilePopupComponent extends AbstractGenericComponent impleme
         const dialogInst = this._dialog.open(ImageEditorPopupComponent, {
             disableClose: true,
             data: {
-                showWebCam: true
+              height: 200,
+              width: 200,
+              aspectRatio: 200 / 200,
+              showWebCam: true
             }
         });
 
@@ -116,7 +119,7 @@ export class StaffProfilePopupComponent extends AbstractGenericComponent impleme
     onBirthDateChange(date: any) {
         this.staffProfileForm.form.markAsDirty();
         setTimeout(() => {
-            this.staffProfileModel.BirthDate = date;            
+            this.staffProfileModel.BirthDate = date;
         });
     }
 
@@ -140,7 +143,7 @@ export class StaffProfilePopupComponent extends AbstractGenericComponent impleme
     {
         //implementation change after discuss with tahir bhai show branch current date not browser date implementaed by fahad dated on 03-03-2021
     }
-    
+
     getFundamentals() {
         this._staffService.get(StaffApi.getFundamentals)
             .subscribe(
@@ -242,7 +245,7 @@ export class StaffProfilePopupComponent extends AbstractGenericComponent impleme
                 if (response && response.MessageCode > 0) {
                     this._messageService.showSuccessMessage(this.messages.Success.Delete_Success.replace("{0}", "Image"));
                     this.staffProfileModel.ImageFile = "";
-                    this.staffProfileModel.ImagePath = "";                
+                    this.staffProfileModel.ImagePath = "";
                     this.setStaffImage();
                     this.shareData();
                 }

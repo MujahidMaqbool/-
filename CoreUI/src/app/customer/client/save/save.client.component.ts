@@ -322,6 +322,9 @@ export class SaveClientComponent
     const dialogInst = this._dialog.open(ImageEditorPopupComponent, {
       disableClose: true,
       data: {
+        height: 200,
+        width: 200,
+        aspectRatio: 200 / 200,
         showWebCam: true,
       },
     });

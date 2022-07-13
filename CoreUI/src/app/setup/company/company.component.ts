@@ -70,6 +70,9 @@ export class CompanyComponent extends AbstractGenericComponent  implements OnIni
   /* Model Refrences */
   public companyDetails: CompanyDetails = new CompanyDetails();
 
+  //for logo height and width
+  height = 200;
+  width = 200;
   // #endregion
 
 
@@ -240,9 +243,9 @@ export class CompanyComponent extends AbstractGenericComponent  implements OnIni
     const dialogInst = this._dialog.open(ImageEditorPopupComponent, {
       disableClose: true,
       data: {
-        height: 44,
-        width: 272,
-        aspectRatio: 272 / 44,
+        height: this.height,
+        width: this.width,
+        aspectRatio: this.width / this.height,
         showWebCam: true
       }
     });

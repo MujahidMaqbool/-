@@ -60,6 +60,10 @@ a:hover{text-decoration: none;}
   font-size: 1.1rem;
 }
 .user_img_paddingleft {width: 62px; height: 62px;}
+.user_add_account .user_img_paddingleft {
+  flex-grow: 0.3;
+  justify-content: flex-start;
+}
 .staff_label{
     background: #fff !important;
     color: #134E70 !important;

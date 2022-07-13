@@ -199,7 +199,10 @@ export class SaveStaffDetailsComponent extends AbstractGenericComponent implemen
             const dialogInst = this._dialog.open(ImageEditorPopupComponent, {
                 disableClose: true,
                 data: {
-                    showWebCam: true
+                  height: 200,
+                  width: 200,
+                  aspectRatio: 200 / 200,
+                  showWebCam: true
                 }
             });
 
