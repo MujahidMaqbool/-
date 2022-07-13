@@ -430,7 +430,7 @@
 }
 
 @media (max-width: 1280px) {
-  .item-wrapper-height .checkbox{display: block !important;}  
+  .item-wrapper-height .checkbox{display: block !important;}
   .sm-mat-select {
     right: 12px;
   }
@@ -514,7 +514,7 @@
 }
 
 @media (min-width: 1200px) {
-   
+
 .reward-program-join-desc {
   max-height: calc(40vh - 80px);
 }
@@ -1916,7 +1916,7 @@
     }
     .edit-variant-item div:nth-child(4) {
         width: 12%;
-    }  
+    }
   .pos_addclient_btn {
     margin: 0px 0 15px;
   }
@@ -1998,9 +1998,6 @@
     }
     .switch_company_account .company_name {
         margin-top: 12px;
-    }
-    .user_img_paddingleft {
-        height: 50px;
     }
     .user_add_account i {
         font-size: 16px;
