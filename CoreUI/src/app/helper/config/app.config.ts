@@ -155,7 +155,7 @@ export class Configurations {
     public static readonly CustomerCheckInActivityList: any[] = [{ value: 0, text: "All" }, { value: 1, text: "Class" }, { value: 2, text: "Service" }, { value: 3, text: "Product" }, { value: 5, text: "Door Check-In" }];
 
 
-    public static readonly CustomerCheckInActivityListForCommon: any[] = [{ value: 0, text: "All" }, { value: 1, text: "Class is Attended" }, { value: 2, text: "Service is Completed" }, { value: 3, text: "Product is Purchased" }, { value: 5, text: "Door Check-In" }];
+    public static readonly CustomerCheckInActivityListForCommon: any[] = [{ value: 0, text: "All" }, { value: 1, text: "Class is Attended" }, { value: 2, text: "Service is Completed" }, { value: 9, text: "Product is Purchased" }, { value: 5, text: "Door Check-In" }];
     public static readonly CustomerWaitlistStatuses: any[] = [{ value: 1, text: "All" }, { value: 2, text: "Added to Waitlist" }, { value: 3, text: "Available to Book" }, { value: 4, text: "Timed out" },]
 
     public static readonly MembershipStatusList: any[] = [{ value: null, text: "All" }, { value: 1, text: "Active Memberships Only" }, { value: 2, text: "Active and Frozen Memberships" }];
