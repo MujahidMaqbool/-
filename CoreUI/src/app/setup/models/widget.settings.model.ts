@@ -4,7 +4,9 @@ export class WidgetUrl {
     ServiceUrl: string;
     ProductUrl: string;
     MembershipUrl: string;
-    QRCodeUrl: string
+    QRCodeUrl: string;
+    EventUrl: string;
+    PackageUrl: string;
 }
 
 export class Permission {
@@ -14,7 +16,9 @@ export class Permission {
     ShowMembershipOnline: boolean;
     ShowMembershipForMembersOnline: boolean;
     ShowHomeOnline: boolean;
-    defaultLandingPage : number;
+    ShowEventOnline: boolean;
+    ShowPackageOnline: boolean;
+    defaultLandingPage: number;
 }
 
 export class SocialMedia {
@@ -33,6 +37,8 @@ export class Banner {
     ProductBanner: string = "";
     CheckoutBanner: string = "";
     PromotionalBanner: string = "";
+    EventBanner: string = "";
+    PackageBanner: string = "";
 }
 
 export class WidgetSetting {

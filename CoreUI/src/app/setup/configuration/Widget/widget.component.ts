@@ -299,7 +299,14 @@ export class WidgetComponent implements OnInit {
         this.bannerModel.ServiceBanner = imgPath;
         break;
       }
-
+      case (this.bannerType.Event): {
+        this.bannerModel.EventBanner = imgPath;
+        break;
+      }
+      case (this.bannerType.Package): {
+        this.bannerModel.PackageBanner = imgPath;
+        break;
+      }
       case (this.bannerType.Checkout): {
         this.bannerModel.CheckoutBanner = imgPath;
         break;

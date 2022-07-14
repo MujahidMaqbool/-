@@ -257,7 +257,9 @@ export enum ENU_BannerType {
     Class = 4,
     Service = 5,
     Product = 6,
-    Checkout = 7
+    Checkout = 7,
+    Event = 8,
+    Package =9
 }
 
 export enum ENU_LandingPage {
@@ -265,7 +267,9 @@ export enum ENU_LandingPage {
     Memberships = 2,
     Classes = 3,
     Services = 4,
-    Products = 5
+    Products = 5,
+    Events = 6,
+    Packages = 7,
 }
 
 export enum FileType {

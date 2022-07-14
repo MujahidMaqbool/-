@@ -112,8 +112,10 @@
           </div>
         </div>
         <div>
-          <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="">
-
+          <mat-slide-toggle class="wellyx-checked"
+            [disabled]="permissions.defaultLandingPage == enu_LandingPage.Packages"
+            [(ngModel)]="permissions.ShowPackageOnline" #ShowPackageOnline="ngModel"
+            [(checked)]="permissions.ShowPackageOnline" name="{{'chk_Packages' +  branch.BranchID}}">
           </mat-slide-toggle>
         </div>
       </div>
@@ -153,8 +155,10 @@
           </div>
         </div>
         <div>
-          <mat-slide-toggle class="wellyx-checked" [disabled]="false" name="">
-
+          <mat-slide-toggle class="wellyx-checked" name="{{'chk_boxEvent' + branch.BranchID}}"
+            [disabled]="permissions.defaultLandingPage == enu_LandingPage.Events"
+            [(ngModel)]="permissions.ShowEventOnline" #ShowEventOnline="ngModel"
+            [(checked)]="permissions.ShowEventOnline">
           </mat-slide-toggle>
         </div>
       </div>
@@ -265,13 +269,14 @@
       </div>
       <div class="row url_btn text-right" *ngIf="isGymPackage">
         <div class="col no_padding">
-          <input class="form-control" type="text" value="" name="" readonly />
+          <input class="form-control" type="text" value="{{widgetUrl.PackageUrl}}" name="PackageUrl" readonly />
         </div>
-        <div><button type="button" matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+        <div><button type="button" matTooltip="Copy URL" (click)="copyUrl(widgetUrl.PackageUrl,'')"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-link">
             </i>
           </button></div>
-        <div><a href="#" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
+        <div><a href="{{widgetUrl.PackageUrl}}" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isGymPackage">
@@ -296,13 +301,14 @@
       </div>
       <div class="row url_btn text-right" *ngIf="isGymPackage">
         <div class="col no_padding">
-          <input class="form-control" type="text" value="" name="" readonly />
+          <input class="form-control" type="text" value="{{widgetUrl.EventUrl}}" name="EventUrl" readonly />
         </div>
-        <div><button type="button" matTooltip="Copy URL" matTooltipPosition="above" matTooltipClass="custom-tooltip">
+        <div><button type="button" (click)="copyUrl(widgetUrl.EventUrl,'')" matTooltip="Copy URL"
+            matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-link">
             </i>
           </button></div>
-        <div><a href="#" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
+        <div><a href="{{widgetUrl.EventUrl}}" target="_blank" *ngIf="isGymPackage">Open URL</a></div>
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isServiceAllowed">
@@ -415,24 +421,24 @@
           </button></div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-12" >
+    <div class="col-lg-4 col-md-4 col-sm-12">
       <div class="field_label widget_label">
         <h5> Packages </h5>
       </div>
       <div class="row url_btn text-right" *ngIf="isGymPackage">
         <div class="col no_padding">
-          <input class="form-control" type="text" name="MembershipBanner" #MembershipBanner="ngModel"
-            [(ngModel)]="bannerModel.MembershipBanner" readonly />
+          <input class="form-control" type="text" name="PackageBanner" #PackageBanner="ngModel"
+            [(ngModel)]="bannerModel.PackageBanner" readonly />
         </div>
-        <div><button type="button" (click)="onViewBanner(bannerModel.MembershipBanner)" matTooltip="View banner"
+        <div><button type="button" (click)="onViewBanner(bannerModel.PackageBanner)" matTooltip="View banner"
             matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-eye"></i>
           </button></div>
-        <div><button type="button" (click)="onUploadBanner(bannerType.Membership)" matTooltip="Upload banner"
+        <div><button type="button" (click)="onUploadBanner(bannerType.Package)" matTooltip="Upload banner"
             matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-cloud-upload"></i>
           </button></div>
-        <div><button type="button" (click)="onRemoveBanner(bannerType.Membership, bannerModel.MembershipBanner)"
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Package, bannerModel.PackageBanner)"
             matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-trash-alt"></i>
           </button></div>
@@ -461,24 +467,24 @@
           </button></div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-12" >
+    <div class="col-lg-4 col-md-4 col-sm-12">
       <div class="field_label widget_label">
         <h5> Events </h5>
       </div>
       <div class="row url_btn text-right" *ngIf="isGymPackage">
         <div class="col no_padding">
-          <input class="form-control" type="text" name="MembershipBanner" #MembershipBanner="ngModel"
-            [(ngModel)]="bannerModel.MembershipBanner" readonly />
+          <input class="form-control" type="text" name="EventBanner" #EventBanner="ngModel"
+            [(ngModel)]="bannerModel.EventBanner" readonly />
         </div>
-        <div><button type="button" (click)="onViewBanner(bannerModel.MembershipBanner)" matTooltip="View banner"
+        <div><button type="button" (click)="onViewBanner(bannerModel.EventBanner)" matTooltip="View banner"
             matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-eye"></i>
           </button></div>
-        <div><button type="button" (click)="onUploadBanner(bannerType.Membership)" matTooltip="Upload banner"
+        <div><button type="button" (click)="onUploadBanner(bannerType.Event)" matTooltip="Upload banner"
             matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-cloud-upload"></i>
           </button></div>
-        <div><button type="button" (click)="onRemoveBanner(bannerType.Membership, bannerModel.MembershipBanner)"
+        <div><button type="button" (click)="onRemoveBanner(bannerType.Event, bannerModel.EventBanner)"
             matTooltip="Remove banner" matTooltipPosition="above" matTooltipClass="custom-tooltip">
             <i class="fal fa-trash-alt"></i>
           </button></div>
