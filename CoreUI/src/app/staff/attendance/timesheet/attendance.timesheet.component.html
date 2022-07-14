@@ -1,24 +1,6 @@
 <div class="row">
     <div class="col-xl-2 col-lg-3 col-md-4">
         <div class="staff-timesheet cstm_scroll_bg">
-            <!-- <div class="row">
-                <div class="col-md-12 no_padding">
-                    <h5>From</h5>
-                    <input type="text" name="DateFrom" class="form-control" [(ngModel)]="dateFrom" (ngModelChange)="onFromDateChange(dateFrom)"
-                        #DateFrom="ngModel" matInput [matDatepicker]="datefrom" />
-                    <mat-datepicker #datefrom></mat-datepicker>
-                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="datefrom" style="top:55%; margin-right: 2px;">
-                    </mat-datepicker-toggle>
-                </div>
-                <div class="col-md-12 no_padding">
-                    <h5>To</h5>
-                    <input type="text" name="DateTo" class="form-control" [(ngModel)]="dateTo" (ngModelChange)="onToDateChange(dateTo)"
-                        #DateTo="ngModel" matInput [matDatepicker]="dateto" />
-                    <mat-datepicker #dateto></mat-datepicker>
-                    <mat-datepicker-toggle class="date-picker-toggle" matSuffix [for]="dateto" style="top:55%; margin-right: 2px;">
-                    </mat-datepicker-toggle>
-                </div>
-            </div> -->
             <div class="inside_padding">
                 <div class="sch_left_scroll cstm_scroll_bg">
                     <div id="timesheet_accordian3">
@@ -28,24 +10,6 @@
                         </div>
                         <div id="timesheet_collapse3" class="panel-collapse collapse">
                             <div class="sch_panel-body input_heading no_padding time-sheet-date">
-                                <!-- <label class="small_label">From</label> -->
-                                <!-- <input placeholder="From" type="text" name="DateFrom" class="bg_transparent form-control"
-                                    [(ngModel)]="dateFrom" (ngModelChange)="onFromDateChange(dateFrom)" #DateFrom="ngModel"
-                                    matInput [matDatepicker]="datefrom" readonly />
-                                <mat-datepicker #datefrom></mat-datepicker>
-                                <mat-datepicker-toggle class="date-picker-toggle date_filter_from " matSuffix [for]="datefrom">
-                                </mat-datepicker-toggle> -->
-                                <!-- <date-picker [value]="dateFrom" class="date_filter_from" [max]="maxDate" (onDateChange)="onFromDateChange($event)"
-                                    [showClear]="false"></date-picker> -->
-                                <!-- <label class="small_label">To</label> -->
-                                <!-- <input placeholder="To" type="text" name="DateTo" class="bg_transparent form-control"
-                                    [(ngModel)]="dateTo" (ngModelChange)="onToDateChange(dateTo)" #DateTo="ngModel"
-                                    matInput [matDatepicker]="dateto" readonly /> -->
-                                <!-- <mat-datepicker #dateto></mat-datepicker>
-                                <mat-datepicker-toggle class="date-picker-toggle date_filter_to" matSuffix [for]="dateto">
-                                </mat-datepicker-toggle> -->
-                                <!-- <date-picker [value]="dateTo" class="date_filter_to" [max]="maxDate" (onDateChange)="onToDateChange($event)"
-                                    [showClear]="false"></date-picker> -->
                                 <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #attendenceTimesheetDate>
                                 </dateto-datefrom>
                             </div>
@@ -58,16 +22,7 @@
                         </div>
                         <div id="timesheet_collapse1" class="panel-collapse collapse">
                             <div class="sch_panel-body">
-                                <!-- <div class="form-group">
-                                    <div class="select_label">
-                                        <select class="form-control" name="StaffPositionID" [(ngModel)]="timesheetSearchParam.StaffPositionID"
-                                            (change)="onChangePostionList(timesheetSearchParam.StaffPositionID)">
-                                            <option *ngFor="let _position of positionListDataSource" [ngValue]="_position.StaffPositionID">
-                                                {{_position.StaffPositionName}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div> -->
+
                                 <div class="form-group sch_border_bottom">
                                     <input type="checkbox" id="allStaffPosition" name="allStaffPosition"
                                         [(ngModel)]="isAllStaffPosition" autocomplete="off"
@@ -209,18 +164,14 @@
                                 {{timesheetObj.ShiftEndTime | branchTimeFormat}}
                             </h5>
                         </div>
-                        <!-- <div class="col-md-1 padding_right">
-                            <h5>{{timesheetObj.ClockInNotes}}</h5>
-                        </div> -->
+
                         <div class="col">
                             <div class="notes">
                                 <h5>{{timesheetObj.ClockIn | branchTimeFormat}}</h5>
                             </div>
 
                         </div>
-                        <!-- <div class="col-md-1 padding_right">
-                            <h5>{{timesheetObj.ClockOutNotes}}</h5>
-                        </div> -->
+
                         <div class="col">
                             <div class="notes">
                                 <h5>{{timesheetObj.ClockOut | branchTimeFormat}}</h5>
@@ -244,7 +195,7 @@
                             </h5>
 
                         </div>
-                        
+
                         <div class="col text-center" >
                             <h5 *ngIf="(timesheetObj.CheckInAttendanceSourceTypeName == 'Terminal' || timesheetObj.CheckOutAttendanceSourceTypeName == 'Terminal') && (timesheetObj.ClockIn )">
                                <span class="blue">
@@ -265,15 +216,6 @@
                 </div>
             </div>
             <app-pagination #appPagination (paginationEvent)="reciviedPagination($event)"></app-pagination>
-            <!-- <div class="pagination">
-                <div class="col-md-12 no_padding">
-                    <mat-paginator #paginator [length]="[totalRecords]" [showFirstLastButtons]="true"
-                        [pageSize]="pageSize"  [pageSizeOptions]="pageSizeOptions"
-                        (page)="changePageSize($event)">
-                    </mat-paginator>
-                </div>
-                <div class="clearfix"></div>
-            </div> -->
         </div>
     </div>
 </div>
