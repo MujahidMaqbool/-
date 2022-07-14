@@ -1813,7 +1813,8 @@ mapRescheduleData(serviceDetail){
     onMembershipChange(event, arrayIndex) {
         this.customerMembershipId = this.saveServicesModel.ServiceBookingList[arrayIndex].CustomerMembershipID;
         this.remainingSessionDetail = [];
-        let serviceSessoin = this.serviceBenefitsPackage.filter(c => c.GlobalRemainingSession && c.GlobalRemainingSession > 0 && c.CustomerMembershipID == this.saveServicesModel.ServiceBookingList[arrayIndex].CustomerMembershipID)[0];
+        let serviceSessoin = this.serviceBenefitsPackage.filter(c => c.GlobalRemainingSession == null || (c.GlobalRemainingSession && c.GlobalRemainingSession > 0) && c.CustomerMembershipID == this.saveServicesModel.ServiceBookingList[arrayIndex].CustomerMembershipID)[0];
+
         if (serviceSessoin) {
              this.serviceGlobalRemainingSession = serviceSessoin.GlobalRemainingSession ? serviceSessoin.GlobalRemainingSession : null;
         }
