@@ -183,7 +183,7 @@
             <div class="row grid_rows responsive_grid_rows" *ngFor="let leadDataobj of leadGridDataObj; let i = index">
                 <div class="col lead_member">
                     <h5 *ngIf="allowedPages.Save ">
-                        <i *ngIf="leadDataobj.CustomerMembershipList.length > 1" class="fal" aria-hidden="true" [ngClass]="{
+                        <i *ngIf="leadDataobj.CustomerMembershipList.length > 1" class="fas" aria-hidden="true" [ngClass]="{
                             'fa-caret-right': toggleStatuses[i].collapse == true,
                             'fa-sort-down': toggleStatuses[i].collapse == false
                         }" (click)="onToggleClick(i)"></i>

@@ -170,7 +170,7 @@
                         <div class="col lead_member"
                             *ngSwitchCase="customerDataobj.CustomerTypeID == CustomerType.Client">
                             <h5 *ngIf="allowedPages.saveClient">
-                                <i *ngIf="customerDataobj.CustomerMembershipList.length > 1" class="fal"
+                                <i *ngIf="customerDataobj.CustomerMembershipList.length > 1" class="fas"
                                     aria-hidden="true" [ngClass]="{
                   'fa-caret-right': toggleStatuses[i].collapse == true,
                   'fa-sort-down': toggleStatuses[i].collapse == false
@@ -202,7 +202,7 @@
 
                         <div class="col lead_member" *ngSwitchDefault>
                             <h5>
-                                <i *ngIf="customerDataobj.CustomerMembershipList.length > 1" class="fal"
+                                <i *ngIf="customerDataobj.CustomerMembershipList.length > 1" class="fas"
                                     aria-hidden="true" [ngClass]="{
                   'fa-caret-right': toggleStatuses[i].collapse == true,
                   'fa-sort-down': toggleStatuses[i].collapse == false
