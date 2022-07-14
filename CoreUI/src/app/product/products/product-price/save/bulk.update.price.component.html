@@ -204,8 +204,11 @@
                     <div class="row">
                         <div class="col">
                             <div class="light-blue-badge mt-2">
-                                <h5 class="field_label m-0">Retail Price <div class="float-right">
-                                    {{savePricingDetail.TotalPrice ? data.currencySymbol : '' }}{{savePricingDetail.TotalPrice ? savePricingDetail.TotalPrice : ''}}</div>
+                                <h5 class="field_label m-0" *ngIf="!savePricingDetail.TotalPrice">Retail Price <div class="float-right">
+                                    {{''}}</div>
+                                </h5>
+                                <h5 class="field_label m-0" *ngIf="savePricingDetail.TotalPrice">Retail Price <div class="float-right">
+                                    {{savePricingDetail.TotalPrice | currency: currencyFormat}}</div>
                                 </h5>
                             </div>
                         </div>
