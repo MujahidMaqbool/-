@@ -103,6 +103,10 @@ export class BookingsComponent extends AbstractGenericComponent implements OnIni
     package = ENU_Package;
     bookingStatusList = Configurations.BookingStatusList;
 
+    dateToPlaceHolder: string = 'Booking Date';
+    dateFromPlaceHolder: string = 'Booking Date';
+
+    longDateFormat: string = "";
     // #endregion
 
     constructor(
@@ -203,6 +207,7 @@ export class BookingsComponent extends AbstractGenericComponent implements OnIni
 
     async getCurrentBranchDetail() {
         const branch = await super.getBranchDetail(this._dataSharingService);
+        this.longDateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.LongDateFormat);
         if (branch && branch.hasOwnProperty("Currency")) {
             this.currencyFormat = branch.CurrencySymbol;
         }

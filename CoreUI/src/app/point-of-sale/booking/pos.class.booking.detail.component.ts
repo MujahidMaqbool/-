@@ -17,7 +17,7 @@ import { MessageService } from '@app/services/app.message.service';
 /** Configurations, Messages & Constants */
 import { Configurations, ClassStatusName } from '@app/helper/config/app.config';
 import { BookingApi } from '@app/helper/config/app.webapi';
-import { ClassStatus } from '@app/helper/config/app.enums';
+import { ClassStatus, ENU_DateFormatName } from '@app/helper/config/app.enums';
 import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
 import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
@@ -68,6 +68,11 @@ export class POSClassBookingDetailComponent extends AbstractGenericComponent imp
     dateFormatForSearch = Configurations.DateFormat;
     classStatus = ClassStatus;
     classStatusName = ClassStatusName;
+
+    dateToPlaceHolder: string = 'Booking Date';
+    dateFromPlaceHolder: string = 'Booking Date';
+
+    longDateFormat: string = "";
 
     constructor(
         private _messageService: MessageService,
@@ -131,6 +136,7 @@ export class POSClassBookingDetailComponent extends AbstractGenericComponent imp
     //#region Method Start
 
     async getCurrentBranchDetail(){
+        this.longDateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.LongDateFormat);
         this.dateFormat = await super.getBranchDateFormat(this._dataSharingService, "DateFormat");
         const branch = await super.getBranchDetail(this._dataSharingService);
         if (branch && branch.hasOwnProperty("Currency")) {

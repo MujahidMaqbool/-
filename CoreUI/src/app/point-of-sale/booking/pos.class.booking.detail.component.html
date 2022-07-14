@@ -13,7 +13,7 @@
                         <div class="filter_seprator"></div>
                     </div>
                     <div class="col-md-6 input_heading no_padding">
-                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #classesDateSearch>
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #classesDateSearch [isFromMaxDate]="false" [dateToPlaceHolder]="dateToPlaceHolder" [dateFromPlaceHolder]="dateFromPlaceHolder">
                         </dateto-datefrom>
                     </div>
                     <div class="col-md-3 col-sm-6">
@@ -32,16 +32,16 @@
 <div class="grids_white_bg">
     <div class="overflow-auto">
         <div class="row grid_header responsive_grid_header">
-            <div class="col">
+            <div class="col col-1">
                 <h5>Name
-                    <a  class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
+                    <a (click)="changeSorting(1)" href="javascript:void(0)">
                         <i class="fas fa-sort-alt"></i>
                     </a>
                 </h5>
             </div>
-            <div class="col">
+            <div class="col col-1 px-0">
                 <h5>Scheduled On
-                    <a  class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
+                    <a (click)="changeSorting(2)" href="javascript:void(0)">
                         <i class="fas fa-sort-alt"></i>
                     </a>
                 </h5>
@@ -88,11 +88,11 @@
         </div>
         <div id="grid" *ngIf="isGridDataExist">
             <div class="row grid_rows responsive_grid_rows" *ngFor="let bookedClassObj of bookedClasses">
-                <div class="col">
+                <div class="col col-1">
                     <h5>{{bookedClassObj.ClassName}}</h5>
                 </div>
-                <div class="col">
-                    <h5>{{bookedClassObj.OccurrenceDate | customdate: dateFormat }}
+                <div class="col col-1 px-0">
+                    <h5>{{bookedClassObj.OccurrenceDate | customdate: longDateFormat }}
                         <span class="booking_time">{{bookedClassObj.ClassTime}}</span>
                     </h5>
                 </div>

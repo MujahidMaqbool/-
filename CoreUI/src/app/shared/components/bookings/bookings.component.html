@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col-md-5 input_heading no_padding">
-                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #bookingRef>
+                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)" #bookingRef [isFromMaxDate]="false" [dateToPlaceHolder]="dateToPlaceHolder" [dateFromPlaceHolder]="dateFromPlaceHolder">
                         </dateto-datefrom>
                     </div>
                     <div class="col">
@@ -140,12 +140,12 @@
     <div id="grid" *ngIf="isDataExists">
         <div class="row grid_rows " *ngFor="let  bookedClassObj of bookedClasses">
             <div class="col" *ngIf="isPOSBooking">
-                <h5>{{bookedClassObj.StartDate | customdate: dateFormat }} <br><span class="booking_time">
+                <h5>{{bookedClassObj.StartDate | customdate: longDateFormat }} <br><span class="booking_time">
                     {{bookedClassObj.StartTime | branchTimeFormat  }} - {{ bookedClassObj.EndTime | branchTimeFormat  }} {{ ' - ' +
                         (bookedClassObj.ServiceDuration + bookedClassObj.CleaningTime) + ' ' + 'Minute(s)' }}</span> </h5>
             </div>
             <div class="col" *ngIf="!isPOSBooking">
-                <h5>{{bookedClassObj.StartDate | customdate: dateFormat }} <br><span class="booking_time">
+                <h5>{{bookedClassObj.StartDate | customdate: longDateFormat }} <br><span class="booking_time">
                         {{bookedClassObj.StartTime | branchTimeFormat  }} - {{ bookedClassObj.EndTime | branchTimeFormat  }} {{ ' - ' +
                         bookedClassObj.ServiceDuration + ' ' + 'Minute(s)'}}</span> </h5>
             </div>
