@@ -390,9 +390,9 @@
                     </h5>
                   </div>
                   <div class="select_label">
-                    <select>
-                      <option>Membership</option>
-                      <option>Package</option>
+                    <select class="form-control" name="ShowOnlineAs" [(ngModel)]="membership.ShowAsPackage">
+                      <option [ngValue]="false">Membership</option>
+                      <option [ngValue]="true">Package</option>
                     </select>
                   </div>
 

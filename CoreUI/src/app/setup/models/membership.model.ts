@@ -5,6 +5,7 @@ export class Membership {
     //public MembershipTypeID: number;
     public MembershipName: string;
     public MembershipCategoryID: number = 0;
+    public ShowAsPackage: boolean = false;
     public Description: string;
     public MembershipDurationValue: number;
     public MembershipDurationTypeID: number;
