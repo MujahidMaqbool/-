@@ -582,7 +582,7 @@
                     <h5>{{productBranches.TotalPrice | currency: currencyFormat}}</h5>
                   </div>
                   <div class="col 2.8" *ngIf="hideAndShowFavouriteViewColumn.isCurrentStockColumn">
-                    <h5>{{productBranches.CurrentStock}}</h5>
+                    <h5>{{productBranches.HasTrackInventory ? productBranches.CurrentStock : ""}}</h5>
                   </div>
 
                   <!-- Start Dynamic Loop Handling -->

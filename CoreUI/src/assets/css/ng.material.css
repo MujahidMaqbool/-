@@ -210,7 +210,7 @@ mat-icon {
 }
 .pagination .mat-select-arrow-wrapper::after {
     content: "\f107";
-    font-family: "Font Awesome 5 Pro";
+    font-family: "Font Awesome 6 Pro";
     font-size: 14px;
     color: #999;
     right: 0;

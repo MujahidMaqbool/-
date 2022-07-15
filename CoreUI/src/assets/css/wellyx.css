@@ -1754,7 +1754,7 @@ select.form-control {
 
 .select_label:after {
     content: "\f107";
-    font-family: "Font Awesome 5 Pro";
+    font-family: "Font Awesome 6 Pro";
     font-size: 14px;
     color: #999;
     right: 5px;
@@ -2700,7 +2700,7 @@ input [type="checkbox"] {
         } */
 
 .checkbox input[type="checkbox"]:checked+label::after {
-    font-family: 'Font Awesome 5 Pro';
+    font-family: 'Font Awesome 6 Pro';
     content: "\f00c";
     text-align: initial;
 }
@@ -6116,7 +6116,7 @@ input:checked+.sch_slider:before {
 
 .refreshButtonIcon:before {
     content: "\f021";
-    font-family: "Font Awesome 5 Pro";
+    font-family: "Font Awesome 6 Pro";
     position: relative;
     top: -2px;
 }
@@ -7384,7 +7384,7 @@ h4.panel-title {
 
 .accordion-toggle:after {
     /* symbol for "opening" panels */
-    font-family: 'Font Awesome 5 Pro';
+    font-family: 'Font Awesome 6 Pro';
     content: "\f056";
     float: right;
     color: #1B6EB8;
@@ -7924,7 +7924,7 @@ h3.sch_collapse_item {
 
 .accordion-toggle1:after {
     /* symbol for "opening" panels */
-    font-family: 'Font Awesome 5 Pro';
+    font-family: 'Font Awesome 6 Pro';
     content: "\f107";
     float: right;
     color: #202D39;
@@ -9092,7 +9092,7 @@ input[type="radio"]:checked+label span {
 }
 
 .clear_dob:before {
-    font-family: "Font Awesome 5 Pro";
+    font-family: "Font Awesome 6 Pro";
     content: "\f057";
     font-weight: 300;
 }

@@ -100,9 +100,9 @@
               </h5>
             </div>
             <div class="select_label">
-              <select class="form-control" name="">
-                <option value="null">Class</option>
-                <option value="1">Event</option>               
+              <select class="form-control" name="ShowOnlineID" [(ngModel)]="parentClassObj.ShowAsEvent">
+                <option [ngValue]="false">Class</option>
+                <option [ngValue]="true">Event</option>
               </select>
             </div>
           </div>

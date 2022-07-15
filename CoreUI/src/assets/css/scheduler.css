@@ -203,7 +203,7 @@
      } 
      .favouriteButtonIcon:before {
         content: "\f762";
-        font-family: "Font Awesome 5 Pro";
+        font-family: "Font Awesome 6 Pro";
         position: relative;
         top: -5px;
         color: #1B6EB8;

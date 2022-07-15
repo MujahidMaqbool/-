@@ -276,7 +276,7 @@ input[type="text"].pos_search, date-picker .pos_search {
 }
 
 .clear_client:before {
-    font-family: "Font Awesome 5 Pro";
+    font-family: "Font Awesome 6 Pro";
     content: "\f057";
     font-weight: 300;
 }

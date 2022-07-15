@@ -616,7 +616,7 @@ input[type=number]{
 }
 
 .clear_card:before {
-    font-family: "Font Awesome 5 Pro";
+    font-family: "Font Awesome 6 Pro";
     content: "\f057";
     font-weight: 300;
 }

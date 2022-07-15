@@ -2,6 +2,7 @@ export class ParentClass {
     public ParentClassID: number = 0;
     public ParentClassName: string = "";
     public ClassCategoryID: number = null;
+    public ShowAsEvent: boolean = false;
     public ClassLevelID: number = 0;
     public Description: string = "";
     public HowToPrepare: string = "";
@@ -16,7 +17,6 @@ export class ParentClass {
     public ImageFile : string = "";
     public IsActive : boolean = true;
     public RestrictedCustomerTypeID : string = "";
-
 }
 
 export class ParentClassSearchParameter

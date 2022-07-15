@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <h6>Show Online As</h6>
-                            <p>Event</p>
+                            <p>{{parentClassObj.ShowAsEvent === false? 'Class' : 'Event' }}</p>
                         </div>
                         <div class="col-md-12 col-sm-12" *ngIf="isPurchaseRestrictionAllowed">
                             <h6>Purchase Restriction</h6>
