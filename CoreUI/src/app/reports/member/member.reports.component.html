@@ -722,10 +722,10 @@
                                         </div>
                                     </div>
                                     <div class="col col-md-6 input_heading no_padding">
-                                        <dateto-datefrom (sendDateTo)="reciviedDateToAllPayments($event)"
+                                        <dateto-datefrom (sendDateTo)="reciviedDateTo($event)"
                                             #memberMembershipPaymentsDateComoRef
                                             [dateToLabelName]="MemberMembershipPaymentDateToLabelName"
-                                            [dateFromLabelName]="MemberMembershipPaymentDateFromLabelName">
+                                            [dateFromLabelName]="MemberMembershipPaymentDateFromLabelName" [isFromMaxDate]="false">
                                         </dateto-datefrom>
                                     </div>
                                 </div>
