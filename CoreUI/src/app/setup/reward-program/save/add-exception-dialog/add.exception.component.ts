@@ -150,8 +150,8 @@ export class SaveAddExceptionComponent  extends AbstractGenericComponent impleme
                     this.selectItem.options.forEach((item: MatOption) => {
                         var result = this.gridTableList.find(i => i.ItemID == item?.value.ItemID);
                         if (result) {
-                            if (item.value.ItemID == result.ItemID)
-                                item.select()
+                            // if (item.value.ItemID == result.ItemID)
+                            //     item.select()
                         }
                     });
                 }
@@ -170,8 +170,8 @@ export class SaveAddExceptionComponent  extends AbstractGenericComponent impleme
                 setTimeout(() => {
                     if (this.selectItem) {
                         this.selectItem.options.forEach((item: MatOption) => {
-                            if (item.viewValue == "All")
-                                item.select()
+                            // if (item.viewValue == "All")
+                            //     item.select()
                         });
                     }
                 }, 400);
@@ -373,19 +373,19 @@ export class SaveAddExceptionComponent  extends AbstractGenericComponent impleme
             }
         })
 
-        var removedItemIndex = [];
-        //remove unselected item
-        this.gridTableList.forEach((item, index) => {
-            var result = this.selectedItemTypeList.find(i => i.ItemID == item.ItemID);
-            if (!result) {
-                removedItemIndex.push(item.ItemID);
-                // this.gridTableList.splice(index, 1);
-            }
-        })
+        // var removedItemIndex = [];
+        // //remove unselected item
+        // this.gridTableList.forEach((item, index) => {
+        //     var result = this.selectedItemTypeList.find(i => i.ItemID == item.ItemID);
+        //     if (!result) {
+        //         removedItemIndex.push(item.ItemID);
+        //         // this.gridTableList.splice(index, 1);
+        //     }
+        // })
 
-        removedItemIndex.forEach((id) => {
-            this.gridTableList = this.gridTableList.filter(i => i.ItemID != id);
-        })
+        // removedItemIndex.forEach((id) => {
+        //     this.gridTableList = this.gridTableList.filter(i => i.ItemID != id);
+        // })
 
         this.sortExceptionList();
 
@@ -396,6 +396,8 @@ export class SaveAddExceptionComponent  extends AbstractGenericComponent impleme
 
         this.searchItemTypeList = JSON.parse(JSON.stringify(this.gridTableList));
         this.copySearchItemTypeList = JSON.parse(JSON.stringify(this.gridTableList));
+
+        this.selectedItemTypeList = [];
     }
 
     /** Sort exception list in grid  **/ 
