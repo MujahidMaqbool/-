@@ -134,8 +134,8 @@ export class SearchProductsComponent implements OnInit {
 
   ) {
     this.getFundamentals();
-    this.getBranchInfo();
     this.isMultiBranchID();
+    this.getBranchInfo();
 
   }
 
@@ -162,6 +162,12 @@ export class SearchProductsComponent implements OnInit {
     if(!this.isExceedPackage){
       //we are not showing supplier info if package is not exceed
       this.favouriteViewColumnNameList = this.favouriteViewColumnNameList.filter(i => i.FavouriteViewColumnIndex != 16 && i.FavouriteViewColumnIndex != 17 && i.FavouriteViewColumnIndex != 18  )
+    }
+
+    //we are not showing Type info if Single Branch
+    if(!this.isMultiBranch){
+      this.favouriteViewColumnNameList = this.favouriteViewColumnNameList.filter(i => i.FavouriteViewColumnIndex != 3 );
+      this.dummyFavouriteViewColumnNameList = this.dummyFavouriteViewColumnNameList.filter(i => i.FavouriteViewColumnIndex != 3 )
     }
     this.deepCopyFavouriteViewColumnNameList = JSON.parse(JSON.stringify(this.favouriteViewColumnNameList));
 
@@ -424,7 +430,7 @@ export class SearchProductsComponent implements OnInit {
     }, 1000);
   }
 
-  //temporaray fav view (noy saved on backend)
+  //temporaray fav view (not saved on backend)
   temporaryFavView() {
     this.dummyFavouriteViewColumnNameList = [...this.favouriteViewColumnNameList,];
     this.favouriteViewColumnNameList.forEach((x) => {
@@ -621,9 +627,15 @@ export class SearchProductsComponent implements OnInit {
       if(!this.isExceedPackage){
         this.favouriteViewColumnNameList = favViewListForExceedPackage.filter(i => i.FavouriteViewColumnIndex != 16 && i.FavouriteViewColumnIndex != 17 && i.FavouriteViewColumnIndex != 18 );
         this.dummyFavouriteViewColumnNameList = dummyFavouriteViewColumnNameListExceedPackage.filter(i => i.FavouriteViewColumnIndex != 16 && i.FavouriteViewColumnIndex != 17 && i.FavouriteViewColumnIndex != 18 );
-      }else{
+      } else{
         this.favouriteViewColumnNameList = Configurations.ProductFavouriteViewColumnNameList;
         this.dummyFavouriteViewColumnNameList = Configurations.ProductDefaultViewColumnNameList;
+      }
+
+      //we are not showing Type info if Single Branch
+      if(!this.isMultiBranch){
+        this.favouriteViewColumnNameList = this.favouriteViewColumnNameList.filter(i => i.FavouriteViewColumnIndex != 3 );
+        this.dummyFavouriteViewColumnNameList = this.dummyFavouriteViewColumnNameList.filter(i => i.FavouriteViewColumnIndex != 3 )
       }
 
 
@@ -1208,6 +1220,7 @@ export class SearchProductsComponent implements OnInit {
     this._httpService.get(ProductApi.getDetail + productID).subscribe(data => {
       if (data && data.Result != null) {
         let productDetail = data.Result;
+        productDetail.isMultiBranch = this.isMultiBranch;
 
         this._dialog.open(ViewProductComponent, {
           disableClose: true,

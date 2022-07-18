@@ -59,7 +59,7 @@
                             <h6>Status</h6>
                             <p>{{purchaseOrderViewDetail.Status ? purchaseOrderViewDetail.Status : 'N/A'}}</p>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="purchaseOrderViewDetail.isPO">
+                        <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="purchaseOrderViewDetail.isPO && purchaseOrderViewDetail.isMultiBranch">
                             <h6>Type</h6>
                             <p>{{purchaseOrderViewDetail.Type ? purchaseOrderViewDetail.Type : 'N/A'}}</p>
                         </div>

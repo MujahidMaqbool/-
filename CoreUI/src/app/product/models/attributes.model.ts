@@ -20,6 +20,7 @@ export class AttributeViewModel {
     public Type: string = "";
     public VariantValue: string = "";
     public HasBranchPermission: boolean;
+    public IsMultiBranch: boolean;
     public AttributeBranchVM: AttributeBranch[] = [];
 
 }

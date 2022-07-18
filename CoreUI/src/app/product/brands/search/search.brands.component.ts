@@ -243,7 +243,7 @@ viewBrandDetail(brandID: number) {
   this._httpService.get(BrandApi.getBrandByID + brandID).subscribe(data => {
     if (data && data.Result != null) {
       this.brandViewDetail = data.Result;
-
+      this.brandViewDetail.isMultiBranch = this.isMultiBranch;
       this._dialog.open(ViewBrandComponent, {
         disableClose: true,
         data: { ...this.brandViewDetail }

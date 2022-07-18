@@ -37,7 +37,7 @@
                                 class="form-control" aria-label="po-grn" aria-describedby="po-grn" tabindex="2" maxlength="10" />
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="isMultiBranch">
                         <h5 class="field_label">Type</h5>
                         <div class="select_label">
                             <select class="form-control" [(ngModel)]="purchaseOrderSearchParameter.TypeID" name="TypeID" tabindex="3" [disabled]="!isMultiBranch">
@@ -78,7 +78,9 @@
                     </div>
                     <!-- <div class="col-lg-3 col-md-4 col-sm-6 input_heading p-0">&nbsp;</div> -->
 
-                    <div class="offset-lg-3 offset-md-8  col-lg-3 col-md-4 col-sm-6 p-0">
+                    <div class="col-lg-3 col-md-4 col-sm-6 p-0" [ngClass]="{
+                        'offset-lg-3 offset-md-8' : isMultiBranch,
+                        'offset-lg-6 offset-md-12' : !isMultiBranch}">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <button class="reset_btn" type="button" (click)="OnResetSearch()">Reset</button>
@@ -106,7 +108,7 @@
                         Reference Number
                     </h5>
                 </div>
-                <div class="col">
+                <div class="col" *ngIf="isMultiBranch">
                     <h5>
                         Type
                     </h5>
@@ -141,7 +143,7 @@
                             <h5>{{po.PurchaseOrderNumber}}</h5>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col" *ngIf="isMultiBranch">
                         <h5>{{po.Type}}</h5>
                     </div>
                     <div class="col">
@@ -217,7 +219,7 @@
                         <div class="col">
                             <h5 class="pl-3">{{grn.GRNNumber}}</h5>
                         </div>
-                        <div class="col">
+                        <div class="col" *ngIf="isMultiBranch">
                             <h5></h5>
                         </div>
 

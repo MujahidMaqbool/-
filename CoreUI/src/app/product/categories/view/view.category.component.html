@@ -25,7 +25,7 @@
                             <h6>Active</h6>
                             <p>{{catrgoryObj.IsActive ? 'Yes' : 'No'}}</p>
                         </div>
-                        <div class=" col-sm-6 "
+                        <div class=" col-sm-6 " *ngIf="catrgoryObj.isMultiBranch"
                             [ngClass]="[catrgoryObj.AppSourceTypeID === enumAppSourceType.OnSite ? 'col-lg-4 col-md-4' :'col-lg-3 col-md-3']">
                             <h6>Type</h6>
                             <p>{{catrgoryObj.AppSourceTypeID === enumAppSourceType.EnterPrise ? 'Enterprise Level' : 'Branch Level'}}</p>

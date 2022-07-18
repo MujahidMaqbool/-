@@ -184,7 +184,8 @@ export class SearchSuppliersComponent implements OnInit {
       this._httpService.get(SupplierApi.getSupplierByID + supplier.SupplierID).subscribe(data => {
         if (data && data.Result != null) {
           this.supplierViewDetail = data.Result;
-
+          this.supplierViewDetail.IsMultiBranch = this.isMultiBranch;
+          
           this.supplierViewDetail.AppSourceTypeID = supplier.AppSourceTypeID;
           this.supplierViewDetail.IsActive = supplier.IsActive;
 

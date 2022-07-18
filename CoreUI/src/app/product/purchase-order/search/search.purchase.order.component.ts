@@ -179,6 +179,7 @@ export class SearchPurchaseOrderComponent extends AbstractGenericComponent imple
       if (data && data.Result != null) {
         this.purchaseOrderDetails = data.Result;
         this.purchaseOrderDetails.isPO = isPO;
+        this.purchaseOrderDetails.isMultiBranch = this.isMultiBranch;
         this._dialog.open(ViewPurchaseOrderComponent, {
           disableClose: true,
           data: { ...this.purchaseOrderDetails }

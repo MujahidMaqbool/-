@@ -64,7 +64,6 @@ export class SearchCategoriesComponent implements OnInit {
   ) {
     this.isMultiBranchID();
     this.getCategoryID();
-
   }
 
   ngOnInit() {
@@ -199,9 +198,11 @@ async isMultiBranchID() {
   //call view categoreis api and pass response to popup
   onViewCategory(ProductCategoryID: any) {
     this.viewCategoryID(ProductCategoryID).then((response: any) => {
+      response.isMultiBranch = this.isMultiBranch;
       this._dialog.open(ViewCategoryComponent, {
         disableClose: true,
-        data: response
+        data:
+          response
       });
     })
   }

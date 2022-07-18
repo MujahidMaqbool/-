@@ -43,7 +43,7 @@
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="isMultiBranch">
             <h5 class="field_label">Type</h5>
             <div class="select_label">
               <select class="form-control" name="productType" id="productType" [disabled]="!isMultiBranch"
@@ -233,7 +233,9 @@
             </div>
           </ng-container>
 
-          <div class="offset-md-0 col-xl-5 col-lg-6 col-md-8 mt-3 p-0 offset-xl-7 offset-lg-6">
+          <div class="col-xl-5 col-lg-6 col-md-8 mt-3 p-0 offset-md-4" [ngClass]="{
+            'offset-xl-7 offset-lg-6': !isMultiBranch && !isAdvanceSearch,
+            'offset-xl-1 offset-lg-0': !isMultiBranch && isAdvanceSearch}">
 
             <div class="row button-space">
               <div class="col-md-4 col-sm-4">
@@ -437,7 +439,7 @@
           <div class="col 2" *ngIf="hideAndShowFavouriteViewColumn.isClassificationColumn">
             <h5>{{products.ProductClassificationName}}</h5>
           </div>
-          <div class="col 3" *ngIf="hideAndShowFavouriteViewColumn.isTypeColumn">
+          <div class="col 3" *ngIf="hideAndShowFavouriteViewColumn.isTypeColumn && isMultiBranch">
             <h5>{{products.Type}}</h5>
           </div>
           <div class="col 4" *ngIf="hideAndShowFavouriteViewColumn.isCategoryColumn">
@@ -569,7 +571,7 @@
                   <div class="col 2.2" *ngIf="hideAndShowFavouriteViewColumn.isClassificationColumn">
                     <h5></h5>
                   </div>
-                  <div class="col 2.3" *ngIf="hideAndShowFavouriteViewColumn.isTypeColumn">
+                  <div class="col 2.3" *ngIf="hideAndShowFavouriteViewColumn.isTypeColumn && isMultiBranch">
                     <h5></h5>
                   </div>
                   <div class="col 2.5" *ngIf="hideAndShowFavouriteViewColumn.isCategoryColumn">
