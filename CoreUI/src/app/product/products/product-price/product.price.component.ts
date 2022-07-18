@@ -182,7 +182,7 @@ export class ProductPriceComponent implements OnInit {
   // open bulk update dialog
   openBulkUpdateDialog(bulkUpdateType: any, productVariant: any, parentIndex: number, childIndex: number, subChild: number, pricingDetail: any) {
     let data = {
-      taxList: this.taxList,
+      taxList: (bulkUpdateType == 1 || bulkUpdateType == 2) ? this.taxList.filter(i => i.BranchID === 0) : this.taxList.filter(i => i.BranchID === pricingDetail.BranchID || i.BranchID === 0),
       supplierList: this.supplierList,
       areaName: this.productClassification.Variant,
       pricingDetail: pricingDetail,

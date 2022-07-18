@@ -12,7 +12,9 @@ export class SavePackagingComponent implements OnInit {
 
   @ViewChild("productPackagingForm") productPackagingForm: NgForm;
 
-  unitList: any[] = [];
+  unitList: any[] = [];  
+  weightUnitList: any[] = [];
+  dimensionsUnitList: any[] = [];
 
   @Output() savePackagingModel = new EventEmitter<ProductVariantPackagingViewModel>();
 
@@ -34,16 +36,16 @@ export class SavePackagingComponent implements OnInit {
     this.oldPackagingDetail = this.data?.pcakagingDetail ? JSON.parse(JSON.stringify(this.data?.pcakagingDetail)): this.savePackagingDetail;
     
     this.unitList = this.data.measurementUnitList.filter(mu => mu.MeasurementUnitTypeID == this.enumMeasurementUnitType.SizeOrVolume);
+    this.weightUnitList = this.data.measurementUnitList.filter(mu => mu.MeasurementUnitTypeID == this.enumMeasurementUnitType.Weight);
+    this.dimensionsUnitList = this.data.measurementUnitList.filter(mu => mu.MeasurementUnitTypeID == this.enumMeasurementUnitType.Dimension);
     
     this.dimensionUnitName = this.data.measurementUnitList.find(mu => mu.MeasurementUnitTypeID == this.enumMeasurementUnitType.Dimension)?.UnitName;
-    this.weighrUnitName = this.data.measurementUnitList.find(mu => mu.MeasurementUnitTypeID == this.enumMeasurementUnitType.Weight)?.UnitCode;
-
-
-    this.savePackagingDetail.DimensionUnitID = this.savePackagingDetail.DimensionUnitID && this.savePackagingDetail.DimensionUnitID > 0 ? this.savePackagingDetail.DimensionUnitID : this.data.measurementUnitList.find(mu => mu.MeasurementUnitTypeID == this.enumMeasurementUnitType.Dimension)?.UnitID;
-    this.savePackagingDetail.WeightUnitID = this.savePackagingDetail.WeightUnitID && this.savePackagingDetail.WeightUnitID > 0 ? this.savePackagingDetail.WeightUnitID : this.data.measurementUnitList.find(mu => mu.MeasurementUnitTypeID == this.enumMeasurementUnitType.Weight)?.UnitID;
+    this.weighrUnitName = this.data.measurementUnitList.find(mu => mu.MeasurementUnitTypeID == this.enumMeasurementUnitType.Weight)?.UnitCode;    
 
     this.savePackagingDetail = this.data.pcakagingDetail == undefined || this.data.pcakagingDetail == undefined? this.savePackagingDetail : this.data.pcakagingDetail;
     this.savePackagingDetail.SizeVolumeUnitID = this.savePackagingDetail.SizeVolumeUnitID ? this.savePackagingDetail.SizeVolumeUnitID : null;
+    this.savePackagingDetail.DimensionUnitID = this.savePackagingDetail.DimensionUnitID && this.savePackagingDetail.DimensionUnitID > 0 ? this.savePackagingDetail.DimensionUnitID : null;
+    this.savePackagingDetail.WeightUnitID = this.savePackagingDetail.WeightUnitID && this.savePackagingDetail.WeightUnitID > 0 ? this.savePackagingDetail.WeightUnitID : null;
   }
 
   onClose(isSaved: boolean = false) {
