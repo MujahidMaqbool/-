@@ -99,7 +99,7 @@ export class BookingsComponent extends AbstractGenericComponent implements OnIni
     /* Configurations */
     timeFormat = Configurations.TimeFormat;
     dateFormat: string = "";//Configurations.DateFormat;
-    itemType = Configurations.ItemType;
+    itemType = Configurations.ItemTypeForBooking;
     package = ENU_Package;
     bookingStatusList = Configurations.BookingStatusList;
 

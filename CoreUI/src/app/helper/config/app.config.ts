@@ -117,6 +117,7 @@ export class Configurations {
     public static readonly SaleType: any[] = [{ SaleTypeID: 1, SaleTypeName: "Membership Sale" }, { SaleTypeID: 2, SaleTypeName: "Product Sale" }, { SaleTypeID: 3, SaleTypeName: "Service Sale" }, { SaleTypeID: 4, SaleTypeName: "Class Sale" }]
     public static readonly CustomerTypeList: any[] = [{ CustomerTypeID: 0, CustomerTypeName: "All" }, { CustomerTypeID: 1, CustomerTypeName: "Client" }, { CustomerTypeID: 2, CustomerTypeName: "Lead" }, { CustomerTypeID: 3, CustomerTypeName: "Member" }]
     public static readonly ItemType: any[] = [{ ItemTypeID: 0, ItemTypeName: "All" }, { ItemTypeID: 1, ItemTypeName: "Class" }, { ItemTypeID: 2, ItemTypeName: "Service" }];
+    public static readonly ItemTypeForBooking: any[] = [{ ItemTypeID: 0, ItemTypeName: "All" }, { ItemTypeID: 1, ItemTypeName: "Class & Event" }, { ItemTypeID: 2, ItemTypeName: "Service" }];
     public static readonly ItemTypeOnReport: any[] = [{ ItemTypeID: 0, ItemTypeName: "All" }, { ItemTypeID: 1, ItemTypeName: "Class" }, { ItemTypeID: 2, ItemTypeName: "Service" }, { ItemTypeID: 3, ItemTypeName: "Product" }]
     public static readonly Status: any[] = [{ StatusID: 1, StatusName: "Active" }, { StatusID: 0, StatusName: "Inactive" }];
     public static readonly PersonTypeList: any[] = [{ PersonID: 0, PersonName: "All" }, { PersonID: 2, PersonName: "Customer" }, { PersonID: 1, PersonName: "Staff" }];
