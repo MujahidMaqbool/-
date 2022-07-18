@@ -11,17 +11,30 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <h5 class="field_label">Weight</h5>
+                            </div>
+                            <div class="col-lg-8 col-md-8 pb-2">
                                 <div class="d-flex cst-input-group">
                                     <input type="text" name="weight" id="weight"
                                         [(ngModel)]="savePackagingDetail.Weight" class="form-control" maxlength="15"
                                         numberControl TwoDigitDecimaNumber>
-                                    <span class="dollar_prefix right_radius" id="basic-addon2">{{weighrUnitName}}</span>
+                                    <!-- <span class="dollar_prefix right_radius" id="basic-addon2">{{weighrUnitName}}</span> -->
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="select_label">
+                                    <select class="form-control" name="WeightUnitID" id="WeightUnitID"
+                                        [(ngModel)]="savePackagingDetail.WeightUnitID">
+                                        <option [ngValue]="null">Select Unit</option>
+                                        <option *ngFor="let unit of weightUnitList" [ngValue]="unit.UnitID">
+                                            {{unit.UnitName}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
-                                <h5 class="field_label">Dimensions <span>({{dimensionUnitName}})</span></h5>
+                                <h5 class="field_label">Dimensions <!--<span>({{dimensionUnitName}})</span>--></h5>
                             </div>
-                            <div class="col-md-4 col-sm-6 pr-md-0">
+                            <div class="col pr-md-0">
                                 <div class="d-flex cst-input-group">
                                     <span class="dollar_prefix left_radius" id="dimension-length">Length</span>
                                     <input type="text" name="length" id="length" class="form-control"
@@ -29,7 +42,7 @@
                                         TwoDigitDecimaNumber>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-6 pr-md-0">
+                            <div class="col pr-md-0">
                                 <div class="d-flex cst-input-group">
                                     <span class="dollar_prefix left_radius" id="dimension-width">Width</span>
                                     <input type="text" name="width" id="width" class="form-control"
@@ -37,7 +50,7 @@
                                         TwoDigitDecimaNumber>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-6">
+                             <div class="col">
                                 <div class="d-flex cst-input-group">
                                     <span class="dollar_prefix left_radius" id="dimension-height">Height</span>
                                     <input type="text" name="height" id="height" class="form-control"
@@ -45,6 +58,18 @@
                                         TwoDigitDecimaNumber>
                                 </div>
                             </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="select_label">
+                                    <select class="form-control" name="DimensionUnitID" id="DimensionUnitID"
+                                        [(ngModel)]="savePackagingDetail.DimensionUnitID">
+                                        <option [ngValue]="null">Select Unit</option>
+                                        <option *ngFor="let unit of dimensionsUnitList" [ngValue]="unit.UnitID">
+                                            {{unit.UnitName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="col-lg-12 col-md-12">
                                 <h5 class="field_label">Size/Volume</h5>
                             </div>
