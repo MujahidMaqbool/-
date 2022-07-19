@@ -69,7 +69,7 @@
             <div class="col">
                 <h5>Reward Program Name</h5>
             </div>
-            <div class="col">
+            <div class="col" *ngIf="isMultiBranch">
                 <h5>Type</h5>
             </div>
             <div class="col text-center">
@@ -85,7 +85,7 @@
                     <div class="col">
                         <h5>{{data.Name}}</h5>
                     </div>
-                    <div class="col">
+                    <div class="col" *ngIf="isMultiBranch">
                         <h5>{{data.Type}}</h5>
                     </div>
                     <div class="col text-center">

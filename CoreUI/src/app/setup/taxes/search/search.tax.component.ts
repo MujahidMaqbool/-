@@ -133,6 +133,7 @@ export class SearchTaxComponent {
         this._httpService.get(TaxApi.getByID + taxID).subscribe(data => {
             if (data && data.Result != null) {
                 tax = data.Result;
+                tax.isMultiBranch = this.isMultiBranch;
 
                 this._dialog.open(ViewTaxComponent, {
                     disableClose: true,

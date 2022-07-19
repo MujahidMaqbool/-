@@ -34,7 +34,7 @@
               <input type="text" class="form-control" tabindex="1" name="taxName" [(ngModel)]="searchTaxParams.TaxName"
                 id="taxName">
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="col-lg-3 col-md-3 col-sm-6" *ngIf="isMultiBranch">
               <div class="field_label">
                 <h5>Type</h5>
               </div>
@@ -58,7 +58,7 @@
               </div>
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-6 mt-3">
+            <div class="col-lg-3 col-md-3 col-sm-6 mt-3" [ngClass]="{'offset-lg-3 offset-md-3 offset-sm-6' : !isMultiBranch}">
               <div class="row">
                 <div class="col-md-6 col-sm-6 padding_left xs-pr-0">
                   <button class="reset_btn" (click)="onResetTax()" type="button"> Reset</button>
@@ -82,7 +82,7 @@
           <h5><a href="javascript:void(0)" (click)="changeSorting(1)" class="sort_icon">Tax <i
                 class="far fa-sort-alt"></i></a></h5>
         </div>
-        <div class="col">
+        <div class="col" *ngIf="isMultiBranch">
           <h5><a href="javascript:void(0)" (click)="changeSorting(2)" class="sort_icon">Type <i
                 class="far fa-sort-alt"></i></a></h5>
         </div>
@@ -101,7 +101,7 @@
             aria-expanded="false" attr.aria-label="collapseExample{{i}}" ></div> -->
             <h5>{{tax?.TaxName}}</h5>
           </div>
-          <div class="col">
+          <div class="col" *ngIf="isMultiBranch">
             <h5>{{tax?.TaxTypeName}}</h5>
           </div>
           <div class="col">
