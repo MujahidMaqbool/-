@@ -10557,6 +10557,7 @@ section.dndDropArea {
     text-align: center;
     border-left: 1px solid #e5e5e5;
 }
+
 .pos_dollar_prefix{
     background: #DBE8F4;
     font-size: 18px;
@@ -10568,6 +10569,9 @@ section.dndDropArea {
 .cst-input-group .dollar_prefix {
     width: fit-content;
     padding: 8px 20px;
+}
+.popup_content .cst-input-group .dollar_prefix {
+    padding: 8px 10px;
 }
 .block_counter{margin-right: 10px;}
 .block_counter span{

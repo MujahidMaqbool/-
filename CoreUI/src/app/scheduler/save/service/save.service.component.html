@@ -117,10 +117,14 @@
                                                 [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled || serviceObj.IsPartialPaid || serviceObj.IsPaidService || serviceObj.SaleID > 0 || (serviceObj.IsMembershipBenefit && serviceObj.ID > 0)" required>
                                                 <optgroup *ngFor="let serviceCategory of getServiceFundamentalList"
                                                     [label]="serviceCategory.ServiceCategoryName">
-                                                    <option *ngFor="let service of serviceCategory.ServiceList"
-                                                        [ngValue]="service.ServiceID">
-                                                        {{service.ServiceName}}
-                                                    </option>
+                                                    <ng-container *ngFor="let service of serviceCategory.ServiceList">
+                                                        <option *ngIf="serviceObj.ID > 0 && service.ServiceID == serviceObj.ServiceID" [ngValue]="service.ServiceID">
+                                                            {{service.ServiceName}}
+                                                        </option>
+                                                        <option *ngIf="service.IsActive" [ngValue]="service.ServiceID">
+                                                            {{service.ServiceName}}
+                                                        </option>
+                                                    </ng-container>
                                                 </optgroup>
                                             </select>
                                         </div>
