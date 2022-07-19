@@ -19,6 +19,7 @@ export class BrandViewModel {
   public IsActive: boolean = true;
   public HasBranchPermission: boolean = false;
   public AppSourceTypeID: number = 0;
+  public isMultiBranch: boolean;
 }
 
 export class SaveBrand {

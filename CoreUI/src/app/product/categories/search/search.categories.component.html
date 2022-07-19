@@ -26,7 +26,7 @@
             <input type="text" class="form-control" [(ngModel)]="searchCategory.CategoryName" name="categoryName"
               maxlength="50">
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isMultiBranch">
             <h5 class="field_label">Type</h5>
             <div class="select_label">
               <select class="form-control" [(ngModel)]="searchCategory.CategoryTypeID" name="categoryTypeID" [disabled]="!isMultiBranch">
@@ -44,7 +44,7 @@
               </select>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 no_padding">
+          <div class="col-lg-3 col-md-6 col-sm-6 no_padding" [ngClass]="{'offset-lg-3 offset-md-6 offset-sm-6' : !isMultiBranch}">
             <div class="row">
               <div class="col-md-6 col-sm-12">
                 <button class="reset_btn" type="button" (click)="onReset()">
@@ -76,7 +76,7 @@
           </a>
         </h5>
       </div>
-      <div class="col">
+      <div class="col" *ngIf="isMultiBranch">
         <h5>
           <a class="primary-color" (click)="changeSorting(2)" href="javascript:void(0)">
             Type
@@ -101,7 +101,7 @@
           <h5>{{category.ProductCategoryName}}</h5>
           <!-- </div> -->
         </div>
-        <div class="col">
+        <div class="col" *ngIf="isMultiBranch">
           <h5>{{category.CategoryTypeName}}</h5>
         </div>
         <div class="col">

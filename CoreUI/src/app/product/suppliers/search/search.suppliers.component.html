@@ -25,7 +25,7 @@
                       <input type="text" class="form-control" name="supplierName" id="supplierName" maxlength="50" [(ngModel)]="supplierSearchParameter.SupplierName">
                   </div>
 
-                  <div class="col-md-3 col-sm-6">
+                  <div class="col-md-3 col-sm-6" *ngIf="isMultiBranch">
                       <h5 class="field_label">Type</h5>
                       <div class="select_label">
                         <select class="form-control" name="selectLevel" id="selectLevel" [(ngModel)]="supplierSearchParameter.TypeID" [disabled]="!isMultiBranch">
@@ -57,7 +57,7 @@
                             </select>
                       </div>
                   </div>
-                  <div class="col-md-3 col-sm-6 no_padding">
+                  <div class="col-md-3 col-sm-6 no_padding" [ngClass]="{'offset-md-3 offset-sm-6' : !isMultiBranch}">
                       <div class="row">
                           <div class="col-md-6 col-sm-6">
                               <button class="reset_btn" type="button" (click)="resetSearchFilter()" id="resetbutton" name="resetbutton">
@@ -85,7 +85,7 @@
               </a>
           </h5>
       </div>
-      <div class="col">
+      <div class="col" *ngIf="isMultiBranch">
         <h5>
           <a class="sort_icon" (click)="changeSorting(2)" href="javascript:void(0)">
             Type
@@ -107,7 +107,7 @@
           <div class="col">
             <h5>{{supplier.SupplierName}}</h5>
           </div>
-          <div class="col">
+          <div class="col" *ngIf="isMultiBranch">
             <h5>{{supplier.Type}}</h5>
           </div>
           <div class="col text-center">

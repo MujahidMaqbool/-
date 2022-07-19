@@ -23,7 +23,8 @@
                                 <h6>Value</h6>
                                 <p>{{taxViewDetail.TaxPercentage}}{{'%'}}</p>
                             </div>
-                            <div class="col-sm-6" [ngClass]="[taxViewDetail.AppSourceTypeID === enumAppSourceType.OnSite ? 'col-md-4' :'col-md-3']">
+                            <div class="col-sm-6" *ngIf="taxViewDetail.isMultiBranch" 
+                                [ngClass]="[taxViewDetail.AppSourceTypeID === enumAppSourceType.OnSite ? 'col-md-4' :'col-md-3']">
                                 <h6>Type</h6>
                                 <p>{{taxViewDetail.TaxTypeName ? taxViewDetail.TaxTypeName: 'N/A'}}</p>
                             </div>

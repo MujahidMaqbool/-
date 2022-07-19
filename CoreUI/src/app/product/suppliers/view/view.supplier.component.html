@@ -33,7 +33,7 @@
                                 <h6>Active</h6>
                                 <p>{{supplierViewDetail.IsActive ? 'Yes' : 'No'}}</p>
                             </div>
-                            <div class="col-md-3 col-sm-6">
+                            <div class="col-md-3 col-sm-6" *ngIf="supplierViewDetail.IsMultiBranch">
                                 <h6>Type</h6>
                                 <p>{{supplierViewDetail.Type ? supplierViewDetail.Type : 'N/A'}}</p>
                             </div>

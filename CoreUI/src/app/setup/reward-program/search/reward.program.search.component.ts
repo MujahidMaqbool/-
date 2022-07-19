@@ -47,6 +47,7 @@ export class SearchRewardProgramComponent extends AbstractGenericComponent imple
   isDataExists: boolean = false;
   isSaveRewardProgramAllowed: boolean;
   branchID: number;
+  isMultiBranch:boolean = false;
 
   /***********Objects Reference*********/
   rewardProgramSearchParameter: RewardProgramSearchParameter = new RewardProgramSearchParameter();
@@ -67,14 +68,23 @@ export class SearchRewardProgramComponent extends AbstractGenericComponent imple
 
   ngOnInit(): void {
     this.setPermissions();
+    this.isMultiBranchID();
     this.rewardProgramSearchParameter.StatusIDs = "";
     this.getCurrentBranchDetail();
   } 
 
- 
-
   ngAfterViewInit() {
     this.getAllrewardProgram();
+  }
+
+  //check here if we have interprise level permission or not
+  async isMultiBranchID() {
+    await this._dataSharingService.sharedIsMultiBranchCompany.subscribe((isMultiBranch: boolean) => {
+    this.isMultiBranch = isMultiBranch;
+    // if(!isMultiBranch){
+    //   this.searchCategory.CategoryTypeID = EnumSaleSourceType.OnSite;
+    // }
+  });
   }
 
   setPermissions() {

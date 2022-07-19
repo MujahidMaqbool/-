@@ -26,6 +26,7 @@ export class SupplierViewModel{
     public CountryID	:number = 0;
     public HasBranchPermission: boolean = true;
     public AppSourceTypeID: number;
+    public IsMultiBranch : boolean = false;
     public SupplierBranchVM :SupplierBranch[] = [];
 }
 

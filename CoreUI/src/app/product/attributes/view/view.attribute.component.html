@@ -25,7 +25,8 @@
                             <h6>Active</h6>
                             <p>{{attributeViewDetail.isActive ? 'Yes' : "No"}}</p>
                         </div>
-                        <div class="col-sm-6" [ngClass]="attributeViewDetail.AppSourceTypeID == enumAppsourceTypeID.EnterPrise ? 'col-md-3' : 'col-md-4'">
+                        <div class="col-sm-6" *ngIf="attributeViewDetail.IsMultiBranch" 
+                        [ngClass]="attributeViewDetail.AppSourceTypeID == enumAppsourceTypeID.EnterPrise ? 'col-md-3' : 'col-md-4'">
                             <h6>Type</h6>
                             <p>{{attributeViewDetail.Type ? attributeViewDetail.Type : "N/A"}}</p>
                         </div>

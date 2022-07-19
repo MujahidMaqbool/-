@@ -227,6 +227,7 @@ export class AttributesSearchComponent implements OnInit, OnDestroy, AfterViewIn
     this._httpService.get(AttributeApi.getAttributeByID + productAttributeID).subscribe(data => {
       if (data && data.Result != null) {
         this.attributeViewDetail = data.Result;
+        this.attributeViewDetail.IsMultiBranch = this.isMultiBranch;
 
         this._dialog.open(ViewAttributeComponent, {
           disableClose: true,

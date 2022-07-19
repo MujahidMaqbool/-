@@ -24,7 +24,7 @@
                       <input type="text" class="form-control" name="productBrand" id="productBrand" maxlength="50" [(ngModel)]="brandSearchParameter.BrandName">
                   </div>
 
-                  <div class="col-md-3 col-sm-6">
+                  <div class="col-md-3 col-sm-6" *ngIf="isMultiBranch">
                       <h5 class="field_label">Type</h5>
                       <div class="select_label">
                         <select class="form-control" name="brandType" id="brandType" [(ngModel)]="brandSearchParameter.BrandTypeID" [disabled]="!isMultiBranch">
@@ -63,7 +63,9 @@
                             </select>
                       </div>
                   </div>
-                  <div class="offset-lg-9 offset-md-6 col-lg-3 col-md-6 space no_padding">
+                  <div class="col-lg-3 col-md-6 space no_padding" [ngClass]="{
+                    'offset-lg-9 offset-md-6': isMultiBranch, 
+                    'offset-lg-0 offset-md-6': !isMultiBranch}">
                       <div class="row">
                           <div class="col-md-6 col-sm-6">
                               <button class="reset_btn" type="button" (click)="resetSearchFilter()" id="resetbutton" name="resetbutton">
@@ -91,7 +93,7 @@
               </a>
           </h5>
       </div>
-      <div class="col">
+      <div class="col" *ngIf="isMultiBranch">
         <h5>
           <a class="sort_icon" (click)="changeSorting(1)" href="javascript:void(0)">
             Type
@@ -116,7 +118,7 @@
           <div class="col">
             <h5>{{brand.BrandName}}</h5>
           </div>
-          <div class="col">
+          <div class="col" *ngIf="isMultiBranch">
             <h5>{{brand.BrandTypeName}}</h5>
           </div>
           <div class="col">
