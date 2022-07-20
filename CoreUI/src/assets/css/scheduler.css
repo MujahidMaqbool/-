@@ -54,7 +54,8 @@
       min-width: calc(100% + 20px) !important;
   }
     .multi_select_tax .mat-select-trigger {
-      height: 38px;
+      height: auto;  
+      /* height:38px; */
   }
   /* .form-control.multi_select_tax .mat-select-value {
     padding: 8px 0px !important;
