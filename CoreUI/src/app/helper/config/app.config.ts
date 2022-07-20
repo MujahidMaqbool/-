@@ -217,7 +217,7 @@ export class Configurations {
     public static readonly ClassificationList: any[] = [{ value: 1, text: "Standard Product" }, { value: 2, text: "Variant Product" }];
     // #endregion
 
-    public static readonly LandingPageList: any[] = [{ value: 1, text: "Home" }, { value: 2, text: "Memberships" }, { value: 3, text: "Classes" }, { value: 4, text: "Services" }, { value: 5, text: "Products" }, { value: 6, text: "Events" },{ value: 7, text: "Packages" },]
+    public static readonly LandingPageList: any[] = [{ value: 1, text: "Home" }, { value: 2, text: "Memberships" },{ value: 7, text: "Packages" }, { value: 3, text: "Classes" },{ value: 6, text: "Events" }, { value: 4, text: "Services" }, { value: 5, text: "Products" } ]
 
     public static readonly LeadStatusTypeID: any[] = [{ LeadStatusTypeID: 0, LeadStatusTypeName: "All" }, { LeadStatusTypeID: 1, LeadStatusTypeName: "Enquiry" }, { LeadStatusTypeID: 6, LeadStatusTypeName: "Lost" }, { LeadStatusTypeID: 10, LeadStatusTypeName: "Trial" }, { LeadStatusTypeID: 8, LeadStatusTypeName: "Tour" }, { LeadStatusTypeID: 7, LeadStatusTypeName: "Sale" }];
 
