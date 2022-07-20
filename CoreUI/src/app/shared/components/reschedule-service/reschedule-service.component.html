@@ -82,18 +82,16 @@
                         (change)="onServiceChange($event, arrayIndex)" required>
                         <optgroup *ngFor="let serviceCategory of getServiceFundamentalList"
                           [label]="serviceCategory.ServiceCategoryName">
-                          <!-- <option *ngFor="let service of serviceCategory.ServiceList" [ngValue]="service.ServiceID">
-                            {{service.ServiceName}}
-                          </option> -->
                           <!-----For active & In-Active services-->
                           <ng-container *ngFor="let service of serviceCategory.ServiceList">
-                            <option *ngIf="serviceObj.ID > 0 && service.ServiceID == serviceObj.ServiceID" [ngValue]="service.ServiceID">
-                                {{service.ServiceName}}
+                            <option *ngIf="serviceObj.ID > 0 && service.ServiceID == serviceObj.ServiceID && !service.IsActive"
+                              [ngValue]="service.ServiceID">
+                              {{service.ServiceName}}
                             </option>
                             <option *ngIf="service.IsActive" [ngValue]="service.ServiceID">
-                                {{service.ServiceName}}
+                              {{service.ServiceName}}
                             </option>
-                        </ng-container>  
+                          </ng-container>
                         </optgroup>
                       </select>
                     </div>
