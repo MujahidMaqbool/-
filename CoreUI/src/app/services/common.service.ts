@@ -593,19 +593,7 @@ export class CommonService extends AbstractGenericComponent {
         result.saleInvoice = this.setSaleClassFinalData(customerID, classDetailObj.ClassID, freeClassServiceMemberships, itemType.WaitListDetailID , itemType.RequestDate);
         result.personInfo = personInfo;
         return result;
-        // this.setSaleClassFinalData(waitlistDetailId);
 
-        // if (this.isRewardProgramInPackage) {
-        //     this._commonService.getItemRewardPoints(POSItemType.Class, cartItem.ItemID, personInfo.CustomerID, freeClassMemberships ? freeClassMemberships?.IsFree : false, freeClassMemberships ? freeClassMemberships?.IsBenefitSuspended : false, this.posCartItems[0].CustomerMembershipID && this.posCartItems[0].CustomerMembershipID > 0 ? true : false).subscribe((response: any) => {
-        //         cartItem.AmountSpent = response.Result.AmountSpent;
-        //         cartItem.MemberBaseEarnPoints = response.Result.MemberBaseEarnPoints ? response.Result.MemberBaseEarnPoints : 0;
-        //         cartItem.CustomerEarnedPoints = response.Result.CustomerEarnedPoints ? response.Result.CustomerEarnedPoints : 0;
-        //         this.saleInvoice.TotalEarnedRewardPoints = this._commonService.calculateRewardPointsPerItem(personInfo, cartItem);
-        //         this.openDialogForPayment(personInfo, freeClassMemberships, waitlistDetailId);
-        //     })
-        // } else {
-        //     this.openDialogForPayment(personInfo, freeClassMemberships, waitlistDetailId);
-        // }
     }
 
     setSaleClassFinalData(customerID?: number, classID?: number, freeClassMemberships?: FreeClassesMemberships, WaitListDetailID?: number , requestDate?:any) {
