@@ -827,7 +827,8 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
                                 classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT),
                                 freeClassMemberships: this.freeClassMemberships,
                                 classInfo: this.classDetailObj,
-                                customerMemberShipID: 0
+                                customerMemberShipID: 0,
+                                itemTypeName: 'Class'
 
                             }
                             const dialogRef = this._openDialog.open(RedeemMembershipComponent, {
@@ -1050,6 +1051,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
             freeClassMemberships: this.freeClassMemberships,
             classInfo: this.classDetailObj,
             customerMemberShipID: classAttendeObj.CustomerMembershipID,
+            itemTypeName: 'Class'
         }
         const redeemDialogRef = this._openDialog.open(RedeemMembershipComponent, {
             disableClose: true,
@@ -1079,8 +1081,8 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
         personInfo.AllowPartPaymentOnCore = classAttendeObj.AllowPartPaymentOnCore;
         personInfo.IsBlocked = classAttendeObj.IsBlocked;
 
-        if (classAttendeObj.CustomerMembershipID > 0) {
-            this._commonService.getMemberShipBenefits(POSItemType.Class, this.classDetailObj.ParentClassID, classAttendeObj.CustomerMembershipID).subscribe((response: any) => {
+        if (classAttendeObj.CustomerMembershipID > 0)  {
+            this._commonService.getMemberShipBenefits(POSItemType.Class, this.classDetailObj.ParentClassID, classAttendeObj.CustomerMembershipID , this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT)).subscribe((response: any) => {
                 var freeClassMemberships = response.Result;
                 freeClassMemberships.IsBenefitSuspended = freeClassMemberships.IsBenefitsSuspended;
 

@@ -39,6 +39,21 @@
                                 <date-picker [value]="classInfo.ClassDate" [min]="minDate" [showClear]="false"
                                     (onDateChange)="onDateChange($event)"></date-picker>
                             </div>
+                            <div class="col-md-4">
+                              <div class="field_label top_zero">
+                                  <h5>Class</h5>
+                              </div>
+                              <div class="select_label">
+                                  <select class="form-control"
+                                      [(ngModel)]="classInfo.ClassID" (ngModelChange)="selectClassToBeSchedule()">
+                                      <option [value]="0" [disabled]="true">-- Select Class --</option>
+                                      <option *ngFor="let callObj of attendeeClass" [value]="callObj.ClassID">
+                                          {{callObj.Name}} ({{callObj.StartTime }} -
+                                          {{callObj.EndTime }})
+                                      </option>
+                                  </select>
+                              </div>
+                          </div>
                             <div class="col-md-4" *ngIf="hasMemberhsip">
                                 <div class="field_label top_zero">
                                     <h5>Select Membership</h5>
@@ -50,25 +65,11 @@
                                 <option *ngFor="let membership of customerMembershipList" [value]="membership.CustomerMembershipID">
                                     {{membership.MembershipName}}
                                 </option>
-                                <option [ngValue] = null>Apply no membership</option>
+                                <option [ngValue]=null>Apply no membership</option>
                             </select>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="field_label top_zero">
-                                    <h5>Class</h5>
-                                </div>
-                                <div class="select_label">
-                                    <select class="form-control"
-                                        [(ngModel)]="classInfo.ClassID" (ngModelChange)="selectClassToBeSchedule()">
-                                        <option [value]="0" [disabled]="true">-- Select Class --</option>
-                                        <option *ngFor="let callObj of attendeeClass" [value]="callObj.ClassID">
-                                            {{callObj.Name}} ({{callObj.StartTime }} -
-                                            {{callObj.EndTime }})
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div *ngIf="!isClassSearch" style="height: 180px;"

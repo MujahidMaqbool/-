@@ -158,19 +158,12 @@ setPackagePermissions(packageId: number) {
 
   async getCurrentBranchDetail() {
     this.classInfo.ClassDate = this.minDate;
-    this.minDate =
-      await this._dateTimeService.getCurrentDateTimeAcordingToBranch();
-    this.dateFormForView = await super.getBranchDateFormat(
-      this._dataSharingService,
-      ENU_DateFormatName.DateFormat
-    );
+    this.minDate = await this._dateTimeService.getCurrentDateTimeAcordingToBranch();
+    this.dateFormForView = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.DateFormat);
 
     this.timeFormat = await super.getBranchTimeFormat(this._dataSharingService);
 
-    this.classDate = this._dateTimeService.convertDateObjToString(
-      this.classInfo.ClassDate,
-      this.dateFormatForSearch
-    );
+    this.classDate = this._dateTimeService.convertDateObjToString(this.classInfo.ClassDate,this.dateFormatForSearch);
     this.oldCustomerMembershipID = this.data.attendeeObj.CustomerMembershipID;
 
     const branch = await super.getBranchDetail(this._dataSharingService);
@@ -179,49 +172,41 @@ setPackagePermissions(packageId: number) {
     }
     this.setClassStatus();
     this.getRescheduleClasses();
-    this.getCustomerMemberhsips();
   }
 
   //this event class when we select the class or change the class
   selectClassToBeSchedule() {
     this.selectedRescheduledClass = JSON.parse(JSON.stringify(this.attendeeClass.filter((s) => s.ClassID == Number(this.classInfo.ClassID))));
     this.copySelectedRescheduledClass = JSON.parse(JSON.stringify(this.selectedRescheduledClass));
-
     this.getClassAttendanceDetail();
     this.getFormsData();
-    this.isClassHasMembershipBenfits();
+    this.getCustomerMemberhsips().then(
+      (isPromiseResolved: boolean) =>{
+        if(isPromiseResolved){
+          this.isClassHasMembershipBenfits();
+        }
+      }
+    )
+
   }
 
   // here we calculate the sale level discount
-  getItemTotalDiscountedPrice(
-    discountedPricePerUnit,
-    saleDiscountPerItemPercentage
-  ) {
+  getItemTotalDiscountedPrice( discountedPricePerUnit, saleDiscountPerItemPercentage) {
     if (saleDiscountPerItemPercentage > 0) {
-      discountedPricePerUnit -=
-        (discountedPricePerUnit / 100) * saleDiscountPerItemPercentage;
+      discountedPricePerUnit -= (discountedPricePerUnit / 100) * saleDiscountPerItemPercentage;
     }
     return this._taxCalculationService.getRoundValue(discountedPricePerUnit);
   }
 
   //get the details of selected class
   getClassAttendanceDetail() {
-    let url = AttendeeApi.getClassAttendanceDetail
-      .replace("{classID}", this.classInfo.ClassID.toString())
-      .replace("{classDate}", this.classDate);
+    let url = AttendeeApi.getClassAttendanceDetail.replace("{classID}", this.classInfo.ClassID.toString()).replace("{classDate}", this.classDate);
     this._httpService.get(url).subscribe(
       (data) => {
         if (data && data.MessageCode > 0) {
           this.classDetailObj = data.Result;
-          this.classDetailObj.StartTime =
-            this._dateTimeService.formatTimeString(
-              this.classDetailObj.StartTime,
-              this.timeFormat
-            );
-          this.classDetailObj.EndTime = this._dateTimeService.formatTimeString(
-            this.classDetailObj.EndTime,
-            this.timeFormat
-          );
+          this.classDetailObj.StartTime = this._dateTimeService.formatTimeString(this.classDetailObj.StartTime,this.timeFormat);
+          this.classDetailObj.EndTime = this._dateTimeService.formatTimeString(this.classDetailObj.EndTime,this.timeFormat);
           this.isClassSearch = true;
           this.setClassStatus();
         } else {
@@ -239,16 +224,12 @@ setPackagePermissions(packageId: number) {
   //this method calls when we change the date and loaded classes accordingly.
   onDateChange(date: any) {
     setTimeout(() => {
-      this.classDate = this._dateTimeService.convertDateObjToString(
-        date,
-        this.dateFormatForSearch
-      );
+      this.classDate = this._dateTimeService.convertDateObjToString(date,this.dateFormatForSearch);
       this.classInfo.ClassID = 0;
       this.classDetailObj = new ClassAttendanceDetail();
       this.isClassSearch = false;
-      this.data.attendeeObj.CustomerMembershipID =
-        this.customerMembershipList[0].CustomerMembershipID;
-
+      this.hasMemberhsip = false;
+      this.data.attendeeObj.CustomerMembershipID = this.customerMembershipList[0].CustomerMembershipID;
       this.getRescheduleClasses();
     });
   }
@@ -368,27 +349,15 @@ setPackagePermissions(packageId: number) {
       .subscribe(
         (data) => {
           if (data && data.MessageCode > 0) {
-            this.isClassesExists =
-              data.Result != null && data.Result.length > 0 ? true : false;
+            this.isClassesExists = data.Result != null && data.Result.length > 0 ? true : false;
             if (this.isClassesExists) {
               this.attendeeClass = JSON.parse(JSON.stringify(data.Result));
               this.attendeeClass.forEach((element: any) => {
-                if (
-                  element.ClassID == this.data.classDetailObj.ClassID &&
-                  element.OccurrenceDate == this.data.classDetailObj.StartDate
-                ) {
-                  this.attendeeClass = this.attendeeClass.filter(
-                    (x) => x.ClassID != element.ClassID
-                  );
+                if (element.ClassID == this.data.classDetailObj.ClassID && element.OccurrenceDate == this.data.classDetailObj.StartDate) {
+                  this.attendeeClass = this.attendeeClass.filter((x) => x.ClassID != element.ClassID);
                 }
-                element.StartTime = this._dateTimeService.formatTimeString(
-                  element.StartTime,
-                  this.timeFormat
-                );
-                element.EndTime = this._dateTimeService.formatTimeString(
-                  element.EndTime,
-                  this.timeFormat
-                );
+                element.StartTime = this._dateTimeService.formatTimeString( element.StartTime, this.timeFormat);
+                element.EndTime = this._dateTimeService.formatTimeString( element.EndTime, this.timeFormat);
               });
             } else {
               this.attendeeClass = [];
@@ -409,29 +378,19 @@ setPackagePermissions(packageId: number) {
   isClassHasMembershipBenfits() {
     this.getMemberMembershipBenefitsDetail().then(
       (isPromiseResolved: boolean) => {
+
         if (isPromiseResolved) {
-          // var discountType = "";
           if (this.data.attendeeObj.CustomerMembershipID && this.data.attendeeObj.CustomerMembershipID > 0 && this.selectedClassHasBenefits)
           {
             var freeClassMemberships = this.freeClassMemberships;
             freeClassMemberships.IsBenefitSuspended = freeClassMemberships.IsBenefitSuspended;
 
-            if (freeClassMemberships != null && freeClassMemberships.IsMembershipBenefit && !freeClassMemberships.IsBenefitSuspended && (freeClassMemberships.RemainingSession > 0 || freeClassMemberships.RemainingSession == null)
-            ) {
-              if (freeClassMemberships.IsFree) {
+            if (freeClassMemberships != null && freeClassMemberships.IsMembershipBenefit && !freeClassMemberships.IsBenefitSuspended && (freeClassMemberships.RemainingSession > 0 || freeClassMemberships.RemainingSession == null)) {
+              if(freeClassMemberships.IsFree) {
                 this.itemTotalPrice = 0;
-              } else if (
-                !freeClassMemberships.IsFree &&
-                freeClassMemberships.DiscountPerncentage
-              ) {
-                var itemDiscountAmount =
-                  this._taxCalculationService.getTwoDecimalDigit(
-                    (this.selectedRescheduledClass[0].PricePerSession *
-                      freeClassMemberships.DiscountPerncentage) /
-                      100
-                  );
-                var totalAmountExcludeTax = freeClassMemberships.RemainingSession > 0 || freeClassMemberships.RemainingSession == null || freeClassMemberships.NoLimits
-                ? this.selectedRescheduledClass[0].PricePerSession - itemDiscountAmount : this.selectedRescheduledClass[0].PricePerSession;
+              } else if (!freeClassMemberships.IsFree && freeClassMemberships.DiscountPerncentage) {
+                var itemDiscountAmount = this._taxCalculationService.getTwoDecimalDigit((this.selectedRescheduledClass[0].PricePerSession * freeClassMemberships.DiscountPerncentage) / 100 );
+                var totalAmountExcludeTax = freeClassMemberships.RemainingSession > 0 || freeClassMemberships.RemainingSession == null || freeClassMemberships.NoLimits ? this.selectedRescheduledClass[0].PricePerSession - itemDiscountAmount : this.selectedRescheduledClass[0].PricePerSession;
 
                 totalAmountExcludeTax = this.getItemTotalDiscountedPrice(totalAmountExcludeTax,this.data.attendeeObj.SaleDiscountPerItemPercentage);
 
@@ -441,96 +400,41 @@ setPackagePermissions(packageId: number) {
             } else {
               //if the custmer have membership but remaining sessions are null
               let itemDiscountAmount = 0; //Manage line item discount.
-              var totalAmountExcludeTax: any = this.getItemTotalDiscountedPrice(
-                this.selectedRescheduledClass[0].PricePerSession -
-                  itemDiscountAmount,
-                this.data.attendeeObj.SaleDiscountPerItemPercentage
-              );
-              var itemTotalTaxAmount =
-                this._taxCalculationService.getTaxAmount(
-                  this.selectedRescheduledClass[0].TotalTaxPercentage,
-                  totalAmountExcludeTax
-                ) * 1;
-              this.itemTotalPrice = this._taxCalculationService.getRoundValue(
-                Number(totalAmountExcludeTax) + itemTotalTaxAmount
-              );
+              var totalAmountExcludeTax: any = this.getItemTotalDiscountedPrice(this.selectedRescheduledClass[0].PricePerSession - itemDiscountAmount, this.data.attendeeObj.SaleDiscountPerItemPercentage);
+              var itemTotalTaxAmount = this._taxCalculationService.getTaxAmount(this.selectedRescheduledClass[0].TotalTaxPercentage,totalAmountExcludeTax) * 1;
+              this.itemTotalPrice = this._taxCalculationService.getRoundValue(Number(totalAmountExcludeTax) + itemTotalTaxAmount);
 
               // this.data.attendeeObj.CustomerMembershipID = null;
               this.selectedClassHasBenefits = false;
             }
           } else {
             let itemDiscountAmount = 0; //Manage line item discount.
-            var totalAmountExcludeTax: any = this.getItemTotalDiscountedPrice(
-              this.selectedRescheduledClass[0].PricePerSession -
-                itemDiscountAmount,
-              this.data.attendeeObj.SaleDiscountPerItemPercentage
-            );
-            var itemTotalTaxAmount =
-              this._taxCalculationService.getTaxAmount(
-                this.selectedRescheduledClass[0].TotalTaxPercentage,
-                totalAmountExcludeTax
-              ) * 1;
-            this.itemTotalPrice = this._taxCalculationService.getRoundValue(
-              Number(totalAmountExcludeTax) + itemTotalTaxAmount
-            );
+            var totalAmountExcludeTax: any = this.getItemTotalDiscountedPrice(this.selectedRescheduledClass[0].PricePerSession - itemDiscountAmount,this.data.attendeeObj.SaleDiscountPerItemPercentage);
+            var itemTotalTaxAmount = this._taxCalculationService.getTaxAmount(this.selectedRescheduledClass[0].TotalTaxPercentage,totalAmountExcludeTax) * 1;
+            this.itemTotalPrice = this._taxCalculationService.getRoundValue(Number(totalAmountExcludeTax) + itemTotalTaxAmount);
           }
 
           if (this.data.isRewardProgramInPackage) {
-            this._commonService
-              .getItemRewardPoints(
-                POSItemType.Class,
-                Number(this.classInfo.ClassID),
-                this.data.attendeeObj.CustomerID,
-                this.freeClassMemberships
-                  ? this.freeClassMemberships?.IsFree
-                  : false,
-                this.freeClassMemberships
-                  ? this.freeClassMemberships?.IsBenefitSuspended
-                  : false,
-                this.data.attendeeObj.CustomerMembershipID ? true : false
-              )
+            this._commonService.getItemRewardPoints(POSItemType.Class,Number(this.classInfo.ClassID),
+            this.data.attendeeObj.CustomerID,this.freeClassMemberships ? this.freeClassMemberships?.IsFree: false,
+            this.freeClassMemberships ? this.freeClassMemberships?.IsBenefitSuspended : false,
+            this.data.attendeeObj.CustomerMembershipID ? true : false )
               .subscribe((response: any) => {
                 let cartItem: POSCartItem = new POSCartItem();
                 cartItem.AmountSpent = response.Result?.AmountSpent;
-                cartItem.MemberBaseEarnPoints = response.Result
-                  .MemberBaseEarnPoints
-                  ? response.Result.MemberBaseEarnPoints
-                  : 0;
-                cartItem.CustomerEarnedPoints = response.Result
-                  .CustomerEarnedPoints
-                  ? response.Result.CustomerEarnedPoints
-                  : 0;
-                cartItem.DiscountPercentage =
-                  this.freeClassMemberships &&
-                  this.freeClassMemberships?.DiscountPerncentage
-                    ? this.freeClassMemberships?.DiscountPerncentage
-                    : 0;
-                cartItem.IsConsumed =
-                  this.data.attendeeObj.CustomerMembershipID &&
-                  this.data.attendeeObj.CustomerMembershipID > 0
-                    ? false
-                    : true;
-                cartItem.IsMembershipBenefit =
-                  this.data.attendeeObj.CustomerMembershipID &&
-                  this.data.attendeeObj.CustomerMembershipID > 0
-                    ? true
-                    : false;
-                cartItem.IsBenefitsSuspended =
-                  this.freeClassMemberships &&
-                  this.freeClassMemberships?.IsBenefitSuspended
-                    ? this.freeClassMemberships?.IsBenefitSuspended
-                    : false;
+                cartItem.MemberBaseEarnPoints = response.Result.MemberBaseEarnPoints ? response.Result.MemberBaseEarnPoints : 0;
+                cartItem.CustomerEarnedPoints = response.Result.CustomerEarnedPoints ? response.Result.CustomerEarnedPoints : 0;
+                cartItem.DiscountPercentage = this.freeClassMemberships && this.freeClassMemberships?.DiscountPerncentage ? this.freeClassMemberships?.DiscountPerncentage : 0;
+                cartItem.IsConsumed = this.data.attendeeObj.CustomerMembershipID && this.data.attendeeObj.CustomerMembershipID > 0 ? false : true;
+                cartItem.IsMembershipBenefit = this.data.attendeeObj.CustomerMembershipID && this.data.attendeeObj.CustomerMembershipID > 0 ? true : false;
+                cartItem.IsBenefitsSuspended = this.freeClassMemberships && this.freeClassMemberships?.IsBenefitSuspended ? this.freeClassMemberships?.IsBenefitSuspended : false;
                 cartItem.ItemTypeID = POSItemType.Class;
                 cartItem.TotalAmountIncludeTax = this.itemTotalPrice;
 
                 var personInfo = {
                   CustomerTypeID: this.data.attendeeObj.CustomerTypeID,
                 };
-                this.TotalEarnedRewardPoints =
-                  this._commonService.calculateRewardPointsPerItem(
-                    personInfo,
-                    cartItem
-                  );
+                this.TotalEarnedRewardPoints = this._commonService.calculateRewardPointsPerItem(personInfo,cartItem);
               });
           } else {
             this.TotalEarnedRewardPoints = null;
@@ -556,38 +460,25 @@ setPackagePermissions(packageId: number) {
         let params = {
           parentClassId: this.selectedRescheduledClass[0].ParentClassID,
           customerId: this.data.attendeeObj.CustomerID,
-          classDate: this._dateTimeService.convertDateObjToString(
-            this.selectedRescheduledClass[0].OccurrenceDate,
-            this.DATE_FORMAT
-          ),
+          classDate: this._dateTimeService.convertDateObjToString(this.selectedRescheduledClass[0].OccurrenceDate,this.DATE_FORMAT),
         };
         this._httpService
-          .get(AttendeeApi.getMemberClassDetailWithOtherMemberships, params)
-          .subscribe(
+          .get(AttendeeApi.getMemberClassDetailWithOtherMemberships, params).subscribe(
             async (response: ApiResponse) => {
               if (response && response.MessageCode > 0) {
                 if ((await response.Result) && response.Result.length > 0) {
+
                   this.freeClassMembershipsList = response.Result;
-                  var findSelectedMembershipBenefit =
-                    this.freeClassMembershipsList.find(
-                      (i) =>
-                        i.CustomerMembershipID ==
-                        this.data.attendeeObj.CustomerMembershipID
-                    );
+
+                  var findSelectedMembershipBenefit = this.freeClassMembershipsList.find((i) => i.CustomerMembershipID == this.data.attendeeObj.CustomerMembershipID);
+
                   if (findSelectedMembershipBenefit) {
-                    if (
-                      this.data.attendeeObj.CustomerMembershipID &&
-                      this.data.attendeeObj.CustomerMembershipID > 0
-                    ) {
+                    if ( this.data.attendeeObj.CustomerMembershipID && this.data.attendeeObj.CustomerMembershipID > 0 ) {
                       if (this.freeClassMembershipsList.length >= 1) {
                         this.freeClassMembershipsList.forEach((element) => {
-                          if (
-                            element.CustomerMembershipID ==
-                            this.data.attendeeObj.CustomerMembershipID
-                          ) {
+                          if ( element.CustomerMembershipID == this.data.attendeeObj.CustomerMembershipID) {
                             this.freeClassMemberships = element;
-                            this.data.attendeeObj.CustomerMembershipID =
-                              element.CustomerMembershipID;
+                            this.data.attendeeObj.CustomerMembershipID = element.CustomerMembershipID;
                             this.selectedClassHasBenefits = true;
                             isPromiseResolved(true);
                           }
@@ -603,7 +494,6 @@ setPackagePermissions(packageId: number) {
                   }
                 } else {
                   this.selectedClassHasBenefits = false;
-                  // this.data.attendeeObj.CustomerMembershipID = null;
                   isPromiseResolved(true);
                 }
               } else {
@@ -628,30 +518,41 @@ setPackagePermissions(packageId: number) {
 
   // here we get the list of member Memberships
   getCustomerMemberhsips() {
-    let url = SaleApi.getCustomerMemberhsips.replace(
-      "{customerID}",
-      this.data.attendeeObj.CustomerID.toString()
-    );
-    this._httpService.get(url).subscribe(
-      (res: ApiResponse) => {
+    return new Promise<any>((isPromiseResolved, reject) => {
+      try {
+        let params = {
+          parentClassId: this.selectedRescheduledClass[0].ParentClassID,
+          customerId: this.data.attendeeObj.CustomerID,
+          classDate: this._dateTimeService.convertDateObjToString(this.selectedRescheduledClass[0].OccurrenceDate,this.DATE_FORMAT),
+        };
+
+        this._httpService.get(AttendeeApi.getMemberClassDetailWithOtherMemberships, params).subscribe(
+          (res: ApiResponse) => {
+
         if (res && res.MessageCode > 0) {
-          this.hasMemberhsip =
-            res.Result && res.Result.length > 0 ? true : false;
+          this.hasMemberhsip = res.Result && res.Result.length > 0 ? true : false;
           if (this.hasMemberhsip) {
             this.customerMembershipList = res.Result;
-            this.data.attendeeObj.CustomerMembershipID =
-            this.customerMembershipList[0].CustomerMembershipID;
+            this.data.attendeeObj.CustomerMembershipID = this.customerMembershipList[0].CustomerMembershipID;
+            isPromiseResolved(true);
             }
         } else {
           this._messageService.showErrorMessage(res.MessageText);
+          isPromiseResolved(false);
         }
       },
       (error) => {
-        this._messageService.showErrorMessage(
-          this.messages.Error.Get_Error.replace("{0}", "Customer Memberhsips")
-        );
+        this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace("{0}", "Customer Memberhsips"));
+        isPromiseResolved(false);
       }
     );
+        } catch (err) {
+          reject(
+            this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace("{0}", "Reschedule Class")
+            )
+          );
+        }
+    });
   }
    getSelectedMembershipName(){
     let selectedMember = this.customerMembershipList.find((i) =>i.CustomerMembershipID == this.data.attendeeObj.CustomerMembershipID);
@@ -659,6 +560,7 @@ setPackagePermissions(packageId: number) {
       return selectedMember.MembershipName;
     }
    }
+
   //open the reschedule booking dialog and preparing data
   onOpenRescheduleDailog() {
 
@@ -728,7 +630,7 @@ setPackagePermissions(packageId: number) {
   }
 
   //here we open the form dialog
-  openClassAttendeeForm() {
+  openClassAttendeeForm()  {
     let dialogRef = this._openDialog.open(AttendeeComponent, {
       disableClose: true,
       data: {

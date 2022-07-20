@@ -421,7 +421,7 @@ setPackagePermissions(packageId: number) {
     if (waitList.ItemTypeID == POSItemType.Class) {
 
 
-      this.getClassAttendanceDetail(waitList.ItemID,this._dateTimeService.convertDateObjToString(this.classDate, this.dateFormatForSearch)).subscribe((response: any) => {
+      this.getClassAttendanceDetail(waitList.ItemID,this._dateTimeService.convertDateObjToString(itemType.RequestDate, this.dateFormatForSearch)).subscribe((response: any) => {
         if (response) {
           this.classDetailObj = response.Result;
           this.classDetailObj.StartTime = this._dateTimeService.formatTimeString(this.classDetailObj.StartTime, this.timeFormat);
@@ -467,10 +467,12 @@ setPackagePermissions(packageId: number) {
     var hasCustomerMembershipBenefits = {
         parentClassId: this.classDetailObj.ParentClassID,
         customerId: itemType.CustomerID,
-        classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT),
+        classDate: this._dateTimeService.convertDateObjToString(itemType.RequestDate, this.DATE_FORMAT),
         freeClassMemberships: freeClassServiceMemberships,
         classInfo: this.classDetailObj,
         customerMemberShipID: itemType.CustomerMembershipID,
+        itemTypeName: 'Class'
+
     }
     const redeemDialogRef = this._openDialog.open(RedeemMembershipComponent, {
         disableClose: true,
@@ -597,7 +599,7 @@ setPackagePermissions(packageId: number) {
       customerMembershipModel = {
         parentClassId: waitList.ItemList[0].ParentClassID,
         customerId: itemType.CustomerID,
-        classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT)
+        classDate: this._dateTimeService.convertDateObjToString(itemType.RequestDate, this.DATE_FORMAT)
     }
     } else {
       customerMembershipModel.ItemID = itemType.ItemID;

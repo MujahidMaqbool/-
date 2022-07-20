@@ -574,6 +574,11 @@ export class CommonService extends AbstractGenericComponent {
                     cartItem.Price = cartItem.TotalAmountExcludeTax;
                 }
             }
+           // here we handle the case of future membership and assiging the membership Id null
+           else{
+            freeClassServiceMemberships.CustomerMembershipID = null;
+          }
+
 
         cartItem.ItemTotalTaxAmount = (this._taxCalculationService.getTaxAmount(classDetailObj.TotalTaxPercentage, cartItem.Price) * cartItem.Qty);
         cartItem.TotalAmountIncludeTax = this._taxCalculationService.getRoundValue(cartItem.TotalAmountExcludeTax + cartItem.ItemTotalTaxAmount);
@@ -585,7 +590,7 @@ export class CommonService extends AbstractGenericComponent {
         result.grossAmount = posCartItems[0].TotalAmountExcludeTax;
         result.vatTotal = this._taxCalculationService.getTaxAmount(classDetailObj.TotalTaxPercentage, posCartItems[0].TotalAmountExcludeTax);
         result.posCartItems = posCartItems;
-        result.saleInvoice = this.setSaleClassFinalData(customerID, classDetailObj.ClassID, freeClassServiceMemberships, itemType.WaitListDetailID);
+        result.saleInvoice = this.setSaleClassFinalData(customerID, classDetailObj.ClassID, freeClassServiceMemberships, itemType.WaitListDetailID , itemType.RequestDate);
         result.personInfo = personInfo;
         return result;
         // this.setSaleClassFinalData(waitlistDetailId);
@@ -603,7 +608,7 @@ export class CommonService extends AbstractGenericComponent {
         // }
     }
 
-    setSaleClassFinalData(customerID?: number, classID?: number, freeClassMemberships?: FreeClassesMemberships, WaitListDetailID?: number) {
+    setSaleClassFinalData(customerID?: number, classID?: number, freeClassMemberships?: FreeClassesMemberships, WaitListDetailID?: number , requestDate?:any) {
         var saleInvoice = new SaleInvoice();
         saleInvoice.ApplicationArea = SaleArea.Waitlist;
         saleInvoice.SaleDetailList = [];
@@ -619,7 +624,7 @@ export class CommonService extends AbstractGenericComponent {
         //saleItem.StartDate = this._dateTimeService.convertDateObjToString(new Date(this.classDetailObj.StartDate), "yyyy-MM-dd");
         // var classDate =  await this._dateTimeService.getCurrentDateTimeAcordingToBranch();
 
-        saleItem.StartDate = this._dateTimeService.convertDateObjToString(this.classDate, 'yyyy-MM-dd');
+        saleItem.StartDate = this._dateTimeService.convertDateObjToString(requestDate, 'yyyy-MM-dd');
         saleItem.CustomerMembershipID = freeClassMemberships?.CustomerMembershipID;
         saleItem.ItemDiscountAmount = freeClassMemberships?.DiscountPercentage;
         saleInvoice.SaleDetailList.push(saleItem);
@@ -815,11 +820,12 @@ export class CommonService extends AbstractGenericComponent {
     // }
 
     // Get Service or Class Benefits if the Customer Membership Id > 0
-    getMemberShipBenefits(ItemTypeID: number, ItemID: number, CustomerMembershipID: number) {
+    getMemberShipBenefits(ItemTypeID: number, ItemID: number, CustomerMembershipID: number ,BookingDate?:string) {
         let customerMembershipModel: any = {};
         customerMembershipModel.CustomerMembershipID = CustomerMembershipID;
         customerMembershipModel.ItemID = ItemID;
         customerMembershipModel.ItemTypeID = ItemTypeID == POSItemType.Class ? 7 : ItemTypeID;
+        customerMembershipModel.BookingDate = BookingDate;
 
         return this._http.get(SaleApi.getCustomerMembershipBenefits, customerMembershipModel)
     }

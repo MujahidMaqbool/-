@@ -396,7 +396,7 @@ export class WaitlistItemList {
     ItemID: number;
     ItemPrice: number;
     ModifiedDate: string;
-    RequestDate: string;
+    RequestDate: any;
     StaffID: number;
     StaffName: string;
     StartTime: string;
