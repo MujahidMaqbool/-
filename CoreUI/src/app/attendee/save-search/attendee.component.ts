@@ -827,7 +827,8 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
                                 classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT),
                                 freeClassMemberships: this.freeClassMemberships,
                                 classInfo: this.classDetailObj,
-                                customerMemberShipID: 0
+                                customerMemberShipID: 0,
+                                itemTypeName: 'Class'
 
                             }
                             const dialogRef = this._openDialog.open(RedeemMembershipComponent, {
@@ -1050,6 +1051,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
             freeClassMemberships: this.freeClassMemberships,
             classInfo: this.classDetailObj,
             customerMemberShipID: classAttendeObj.CustomerMembershipID,
+            itemTypeName: 'Class'
         }
         const redeemDialogRef = this._openDialog.open(RedeemMembershipComponent, {
             disableClose: true,
@@ -1080,7 +1082,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
         personInfo.IsBlocked = classAttendeObj.IsBlocked;
 
         if (classAttendeObj.CustomerMembershipID > 0) {
-            this._commonService.getMemberShipBenefits(POSItemType.Class, this.classDetailObj.ParentClassID, classAttendeObj.CustomerMembershipID).subscribe((response: any) => {
+            this._commonService.getMemberShipBenefits(POSItemType.Class, this.classDetailObj.ParentClassID, classAttendeObj.CustomerMembershipID ,this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT),).subscribe((response: any) => {
                 var freeClassMemberships = response.Result;
                 freeClassMemberships.IsBenefitSuspended = freeClassMemberships.IsBenefitsSuspended;
 
@@ -1515,3 +1517,23 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
         }
     }
 }
+
+BranchID: 26
+CustomerMembershipID: 945
+DiscountPercentage: 0
+EndDate: "2023-07-20T00:00:00Z"
+GlobalNoLimits: true
+GlobalRemainingSession: null
+IsBenefitsSuspended: false
+IsFree: true
+IsMembershipBenefit: true
+ItemID: 341
+ItemName: "Soulful ballet dance"
+MembershipID: 226
+MembershipName: "Gold Package Hair Treatment "
+NoLimits: true
+RemainingSession: 0
+StartDate: "2022-07-20T00:00:00Z"
+TotalSessions: 0
+
+

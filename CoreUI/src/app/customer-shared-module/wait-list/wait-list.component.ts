@@ -421,30 +421,24 @@ setPackagePermissions(packageId: number) {
     if (waitList.ItemTypeID == POSItemType.Class) {
 
 
-      this.getClassAttendanceDetail(waitList.ItemID,this._dateTimeService.convertDateObjToString(this.classDate, this.dateFormatForSearch)).subscribe((response: any) => {
+      this.getClassAttendanceDetail(waitList.ItemID,this._dateTimeService.convertDateObjToString(itemType.RequestDate, this.dateFormatForSearch)).subscribe((response: any) => {
         if (response) {
           this.classDetailObj = response.Result;
           this.classDetailObj.StartTime = this._dateTimeService.formatTimeString(this.classDetailObj.StartTime, this.timeFormat);
           this.classDetailObj.EndTime = this._dateTimeService.formatTimeString(this.classDetailObj.EndTime, this.timeFormat);
-          // if (itemType.CustomerMembershipID > 0) {
-            var freeClassServiceMemberships: FreeClassesMemberships ;
+          var freeClassServiceMemberships: FreeClassesMemberships ;
 
 
             this.getMemberShipBenefits(waitList, itemType , itemType.CustomerTypeID , itemType.CustomerID).subscribe((response: any) => {
               freeClassServiceMemberships = response.Result;
               if(response.Result.length > 0){
                 this.redeemMembershipForWaitList(itemType , freeClassServiceMemberships , waitList);
-
               }
             });
-
-          // }
-          // else {
-          //   this.openDialogForPayment(itemType.CustomerID, waitList, itemType, this.personDetail, null ,this.classDetailObj);
-          // }
         }
       });
-    }  else if (waitList.ItemTypeID == POSItemType.Service) {
+    }
+    else if (waitList.ItemTypeID == POSItemType.Service) {
       this.openWaitlistServiceDetail(waitList, itemType);
     }
   }
@@ -461,21 +455,21 @@ setPackagePermissions(packageId: number) {
   //         //   });
   // }
 
-  // call iun case of member to select his/her membership
+  // call in case of member to select his/her membership
   redeemMembershipForWaitList(itemType :WaitlistItemList , freeClassServiceMemberships :any ,waitList: AllWaitlist) {
 
     var hasCustomerMembershipBenefits = {
         parentClassId: this.classDetailObj.ParentClassID,
         customerId: itemType.CustomerID,
-        classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT),
+        classDate: this._dateTimeService.convertDateObjToString(itemType.RequestDate, this.DATE_FORMAT),
         freeClassMemberships: freeClassServiceMemberships,
         classInfo: this.classDetailObj,
         customerMemberShipID: itemType.CustomerMembershipID,
+        itemTypeName: 'Class'
     }
     const redeemDialogRef = this._openDialog.open(RedeemMembershipComponent, {
         disableClose: true,
         data: hasCustomerMembershipBenefits,
-
     })
 
     redeemDialogRef.componentInstance.membershipSelected.subscribe((customerMembershipId: number) => {
@@ -588,16 +582,14 @@ setPackagePermissions(packageId: number) {
   // Get Service or Class Benefits if the Customer Membership Id > 0
   getMemberShipBenefits(waitList: AllWaitlist, itemType: WaitlistItemList , CustomerTypeID: number , CustomerID:number ) {
     let customerMembershipModel: any = {};
-    // customerMembershipModel.CustomerMembershipID = itemType.CustomerMembershipID;
-    // customerMembershipModel.ItemTypeID = waitList.ItemTypeID;
+
 
     if (waitList.ItemTypeID == POSItemType.Class) {
-      // customerMembershipModel.ItemID = waitList.ItemList[0].ParentClassID;
-      // customerMembershipModel.ItemTypeID = 7;
+
       customerMembershipModel = {
         parentClassId: waitList.ItemList[0].ParentClassID,
         customerId: itemType.CustomerID,
-        classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT)
+        classDate: this._dateTimeService.convertDateObjToString(itemType.RequestDate, this.DATE_FORMAT)
     }
     } else {
       customerMembershipModel.ItemID = itemType.ItemID;

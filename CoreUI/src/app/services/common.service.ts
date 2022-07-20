@@ -516,7 +516,6 @@ export class CommonService extends AbstractGenericComponent {
         cartItem.TotalDiscount = 0;
         cartItem.ItemDiscountAmount = 0;
         cartItem.Qty = 1;
-
         cartItem.TotalAmountExcludeTax = this._taxCalculationService.getRoundValue(cartItem.PricePerSession * cartItem.Qty);
 
         // check waitlist class membership benefit
@@ -573,6 +572,11 @@ export class CommonService extends AbstractGenericComponent {
                     cartItem.CustomerMembershipID = freeClassServiceMemberships.CustomerMembershipID;
                     cartItem.Price = cartItem.TotalAmountExcludeTax;
                 }
+
+            }
+            // here we handle the case of future membership and assiging the membership Id null
+            else{
+              freeClassServiceMemberships.CustomerMembershipID = null;
             }
 
         cartItem.ItemTotalTaxAmount = (this._taxCalculationService.getTaxAmount(classDetailObj.TotalTaxPercentage, cartItem.Price) * cartItem.Qty);
@@ -616,8 +620,7 @@ export class CommonService extends AbstractGenericComponent {
         saleItem.Qty = 1;
         saleItem.WaitListDetailID = WaitListDetailID;
 
-        //saleItem.StartDate = this._dateTimeService.convertDateObjToString(new Date(this.classDetailObj.StartDate), "yyyy-MM-dd");
-        // var classDate =  await this._dateTimeService.getCurrentDateTimeAcordingToBranch();
+
 
         saleItem.StartDate = this._dateTimeService.convertDateObjToString(this.classDate, 'yyyy-MM-dd');
         saleItem.CustomerMembershipID = freeClassMemberships?.CustomerMembershipID;
@@ -815,10 +818,12 @@ export class CommonService extends AbstractGenericComponent {
     // }
 
     // Get Service or Class Benefits if the Customer Membership Id > 0
-    getMemberShipBenefits(ItemTypeID: number, ItemID: number, CustomerMembershipID: number) {
+    getMemberShipBenefits(ItemTypeID: number, ItemID: number, CustomerMembershipID: number ,BookingDate?:string) {
         let customerMembershipModel: any = {};
         customerMembershipModel.CustomerMembershipID = CustomerMembershipID;
         customerMembershipModel.ItemID = ItemID;
+        customerMembershipModel.BookingDate = BookingDate;
+
         customerMembershipModel.ItemTypeID = ItemTypeID == POSItemType.Class ? 7 : ItemTypeID;
 
         return this._http.get(SaleApi.getCustomerMembershipBenefits, customerMembershipModel)
