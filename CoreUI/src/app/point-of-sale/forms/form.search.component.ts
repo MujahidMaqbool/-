@@ -2,27 +2,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatPaginator } from '@angular/material/paginator';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 import { ActivatedRoute } from '@angular/router';
-import { CustomerFormApi } from '@app/helper/config/app.webapi';
-import { ApiResponse, AllPerson } from '@app/models/common.model';
-import { CustomerFormModel, CustomerFormSearchModel, CustomFormView, CustomerFormsInfromation } from '@app/models/customer.form.model';
-import { Messages } from '@app/helper/config/app.messages';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { ViewFormComponent } from '@app/shared/components/forms/view/view.form.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { Configurations } from '@app/helper/config/app.config';
+import { CustomerFormApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse, AllPerson } from 'src/app/models/common.model';
+import { CustomerFormModel, CustomerFormSearchModel, CustomFormView, CustomerFormsInfromation } from 'src/app/models/customer.form.model';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { ViewFormComponent } from 'src/app/shared/components/forms/view/view.form.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { CommonService } from '@app/services/common.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName ,ENU_pdfFor } from '@app/helper/config/app.enums';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_PointOfSale, ENU_Permission_Module  } from '@app/helper/config/app.module.page.enums';
+import { CommonService } from 'src/app/services/common.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_DateFormatName ,ENU_pdfFor } from 'src/app/helper/config/app.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_PointOfSale, ENU_Permission_Module  } from 'src/app/helper/config/app.module.page.enums';
 
 /********************** Services & Model *********************/
 

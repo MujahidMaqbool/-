@@ -6,17 +6,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Services & Models *********************/
 /* Models */
-import { PersonInfo } from '@app/models/common.model';
-import { StaffTaskMarkAsDone } from '@app/staff/models/staff.activity.model';
+import { PersonInfo } from 'src/app/models/common.model';
+import { StaffTaskMarkAsDone } from 'src/app/staff/models/staff.activity.model';
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 /********************** Common & Customs *********************/
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { ENU_ModuleList } from '@app/helper/config/app.enums';
-import { StaffActivityApi } from '@app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_ModuleList } from 'src/app/helper/config/app.enums';
+import { StaffActivityApi } from 'src/app/helper/config/app.webapi';
 
 @Component({
     selector: 'mark-as-done',

@@ -6,21 +6,21 @@ import { forkJoin, SubscriptionLike } from 'rxjs';
 
 /** Models */
 import {SchedulerDataSource, CellSelectedData, ActivityViewModel, StaffTaskActivity, SchedulerSearchParam, ActivityLaterViewModel, ClientAppointmentLaterActivity, UpdateLaterActivity
-} from '@scheduler/models/scheduler.model';
-import { Branch } from '@setup/models/branch.model';
-import { ClassAppointmentDetail, ResourcesDataSource, UpdateClass } from '@scheduler/models/class.model';
-import { SchedulerServiceModel, StaffBlockTimeModel, UpdateServiceBooking, StaffBlockTimeUpdateModel } from '@scheduler/models/service.model';
-import { FavouriteViewDetail } from '@scheduler/models/favourite.view.model';
+} from 'src/app/scheduler/models/scheduler.model';
+import { Branch } from 'src/app/setup/models/branch.model';
+import { ClassAppointmentDetail, ResourcesDataSource, UpdateClass } from 'src/app/scheduler/models/class.model';
+import { SchedulerServiceModel, StaffBlockTimeModel, UpdateServiceBooking, StaffBlockTimeUpdateModel } from 'src/app/scheduler/models/service.model';
+import { FavouriteViewDetail } from 'src/app/scheduler/models/favourite.view.model';
 /** Serivces */
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from "@app/helper/app.auth.service";
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from "src/app/helper/app.auth.service";
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /** App Components */
-import { DataSourceModelMapper } from '@shared/helper/datasource-model-mapper';
-import { SchedulerNavigationComponent } from '@scheduler/navigation/scheduler.navigation.component';
+import { DataSourceModelMapper } from 'src/app/shared/helper/datasource-model-mapper';
+import { SchedulerNavigationComponent } from 'src/app/scheduler/navigation/scheduler.navigation.component';
 
 /** DevExtreme Component*/
 import { DxSchedulerComponent } from 'devextreme-angular';
@@ -28,28 +28,27 @@ import Button from 'devextreme/ui/button';
 
 /** Messages & Constants */
 
-import { Configurations, SchedulerOptions } from '@helper/config/app.config';
-import { SchedulerWeekDays, WeekDays, CustomerType, EnumBookingStatusType, enmSchedulerActvityType, ENU_Package, EnumSaleStatusType, ENU_DateFormatName, EnumSchedulerFavouriteViewTypeID, ENU_SchedulerActivityType } from '@helper/config/app.enums';
-import { SchedulerApi, SchedulerServicesApi, MemberActivityApi, LeadActivityApi, StaffActivityApi, ClientActivityApi, SchedulerBlockTimeApi } from '@helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { ENU_Permission_Module, ENU_Permission_Scheduler } from "@app/helper/config/app.module.page.enums";
-import { ApiResponse } from '@app/models/common.model';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { DeleteSeriesComponent } from '@app/application-dialog-module/delete-dialog/delete.series.component';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { EditSeriesComponent } from '@app/shared/components/scheduler/edit-series/edit.series.component';
-import { EditClassAttendeeComponent } from '@app/shared/components/scheduler/edit-class-attendee/edit-class-attendee.component';
-import { AttendeeComponent } from '@app/attendee/save-search/attendee.component';
-import { FavouriteViewComponent} from '@app/shared/components/save-favourite-view/save.favourite.view.component';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { Configurations, SchedulerOptions } from 'src/app/helper/config/app.config';
+import { SchedulerWeekDays, WeekDays, CustomerType, EnumBookingStatusType, enmSchedulerActvityType, ENU_Package, EnumSaleStatusType, ENU_DateFormatName, EnumSchedulerFavouriteViewTypeID, ENU_SchedulerActivityType } from 'src/app/helper/config/app.enums';
+import { SchedulerApi, SchedulerServicesApi, MemberActivityApi, LeadActivityApi, StaffActivityApi, ClientActivityApi, SchedulerBlockTimeApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { ENU_Permission_Module, ENU_Permission_Scheduler } from "src/app/helper/config/app.module.page.enums";
+import { ApiResponse } from 'src/app/models/common.model';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DeleteSeriesComponent } from 'src/app/application-dialog-module/delete-dialog/delete.series.component';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { EditSeriesComponent } from 'src/app/shared/components/scheduler/edit-series/edit.series.component';
+import { EditClassAttendeeComponent } from 'src/app/shared/components/scheduler/edit-class-attendee/edit-class-attendee.component';
+import { AttendeeComponent } from 'src/app/attendee/save-search/attendee.component';
+import { FavouriteViewComponent} from 'src/app/shared/components/save-favourite-view/save.favourite.view.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
 import { MatSelect } from '@angular/material/select';
 import * as events from 'devextreme/events';
 declare var $: any;
 
-import Scrollable from "devextreme/ui/scroll_view/ui.scrollable";
 
 
 // #endregion
@@ -2416,7 +2415,7 @@ export class SchedulerCalendarComponent extends AbstractGenericComponent impleme
 
         this.schedulerDataSourceList.filter(x => x.id === updatedData.id && x.ActivityType === updatedData.ActivityType)[0] = filterActivityFromDS;
 
-        this.scheduler.instance.getDataSource().reload();
+        //this.scheduler.instance.getDataSource().reload();
     }
 
     updateDurationAndStaffNameAfterDragDrop(newUpdatedData) {
@@ -2430,7 +2429,7 @@ export class SchedulerCalendarComponent extends AbstractGenericComponent impleme
 
         this.schedulerDataSourceList.filter(x => x.id === newUpdatedData.id && x.ActivityType === newUpdatedData.ActivityType)[0] = filterDS;
 
-        this.scheduler.instance.getDataSource().reload();
+        //this.scheduler.instance.getDataSource().reload();
     }
 
     //#region Permissions

@@ -3,24 +3,24 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionLike as ISubscription } from "rxjs";
 import { SubscriptionLike } from 'rxjs';
 /*********** Configurations **********/
-import { ConfigurationsApi, CustomerApi } from '@app/helper/config/app.webapi';
-import { Configurations } from '@app/helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { ENU_DateFormatName, ENU_CancelItemType, ENU_CancellationPolicy, ENU_Package } from '@app/helper/config/app.enums';
+import { ConfigurationsApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_DateFormatName, ENU_CancelItemType, ENU_CancellationPolicy, ENU_Package } from 'src/app/helper/config/app.enums';
 import { Location } from '@angular/common';
 /*********** Components **********/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /*********** Models **********/
-import { CancellationPolicy, ClassCancellationPolicy, ServiceCancellationPolicy, ClassServiceResetBy } from '@app/setup/models/CancellationPolicy.model';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { CancellationPolicy, ClassCancellationPolicy, ServiceCancellationPolicy, ClassServiceResetBy } from 'src/app/setup/models/CancellationPolicy.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 
 /*********** Services **********/
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { MessageService } from '@app/services/app.message.service';
-import { HttpService } from '@app/services/app.http.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { ConfirmResetCountComponent } from '@app/customer-shared-module/confirm-reset-count/confirm.reset.count.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { ConfirmResetCountComponent } from 'src/app/customer-shared-module/confirm-reset-count/confirm.reset.count.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 

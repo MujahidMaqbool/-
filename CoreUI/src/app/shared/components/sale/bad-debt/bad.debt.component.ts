@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject, EventEmitter, Output, ViewChild } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MessageService } from '@app/services/app.message.service';
-import { HttpService } from '@app/services/app.http.service';
-import { SaleApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
-import { BadDebtReasonFundamental, SaveBadDebt } from '@app/models/sale.model';
+import { MessageService } from 'src/app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { SaleApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { BadDebtReasonFundamental, SaveBadDebt } from 'src/app/models/sale.model';
 import { NgForm } from '@angular/forms';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 
 @Component({
     selector: 'bad-debt',

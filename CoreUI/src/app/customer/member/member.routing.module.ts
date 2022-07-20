@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PagePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_ClientAndMember, ENU_Permission_Module } from '@app/helper/config/app.module.page.enums';
+import { PagePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_ClientAndMember, ENU_Permission_Module } from 'src/app/helper/config/app.module.page.enums';
 
 import { MemberNavigationComponent } from './navigation/member.navigation.component';
 import { SaveMemberPageComponent } from './save/save-member-page/save.member.page.component';
@@ -13,18 +13,18 @@ import { MemberMembershipPaymentsComponent } from './membership-payments/member.
 import { MemberBooking } from './bookings/member.booking.component';
 import { MemberSaleHistoryComponent } from './sale-history/member.sale.history.component';
 import { MemberDashboardComponent } from './dashboard/member.dashboard.component';
-import { AllMembersAttendanceComponent } from '@app/customer/member/member-attendance/members.attendance.component';
+import { AllMembersAttendanceComponent } from 'src/app/customer/member/member-attendance/members.attendance.component';
 import { MemberMainDashboardComponent } from './member-main-dashboard/member.main.dashboard.component';
 import { MembershipBenefitComponent } from './membership-benefits/membership.benefit.component';
-import { SearchFormsComponent } from '@app/customer-shared-module/customer-forms/search-forms/search.forms.component';
+import { SearchFormsComponent } from 'src/app/customer-shared-module/customer-forms/search-forms/search.forms.component';
 import { MembersPaymentsComponent } from './member-payments/members.payments.component';
-import { NextOfKinComponent } from '@app/customer-shared-module/next-of-kin/next-of-kin.component';
-import { ReferralDetailComponent } from '@app/customer-shared-module/referral/referral-detail.component';
-import { SearchDocumentComponent } from '@app/customer-shared-module/documents/search/search-document.component';
-import { GatewaysComponent } from '@app/customer-shared-module/gateways/gateways.component';
-import { WaitListComponent } from '@app/customer-shared-module/wait-list/wait-list.component';
+import { NextOfKinComponent } from 'src/app/customer-shared-module/next-of-kin/next-of-kin.component';
+import { ReferralDetailComponent } from 'src/app/customer-shared-module/referral/referral-detail.component';
+import { SearchDocumentComponent } from 'src/app/customer-shared-module/documents/search/search-document.component';
+import { GatewaysComponent } from 'src/app/customer-shared-module/gateways/gateways.component';
+import { WaitListComponent } from 'src/app/customer-shared-module/wait-list/wait-list.component';
 import { MembershipBenefitsLog } from './benefits-log/benefits.log.component';
-import { SearchRewardProgramsComponent } from '@app/customer-shared-module/reward-programs/search-reward-programs.component';
+import { SearchRewardProgramsComponent } from 'src/app/customer-shared-module/reward-programs/search-reward-programs.component';
 
 
 const routes: Routes = [

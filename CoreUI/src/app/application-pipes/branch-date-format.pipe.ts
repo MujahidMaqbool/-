@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { SubscriptionLike } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { DD_Branch } from '@app/models/common.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DD_Branch } from 'src/app/models/common.model';
 
 
 @Pipe({

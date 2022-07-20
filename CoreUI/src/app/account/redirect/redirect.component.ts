@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { HttpService } from '@app/services/app.http.service';
-import { StaffApi } from '@helper/config/app.webapi';
-import { Messages } from '@helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { StaffApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 
-import { MessageService } from '@app/services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { StaffAuthentication } from '@app/models/common.model';
-import { variables } from '@app/helper/config/app.variable';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { SessionService } from '@app/helper/app.session.service';
-import { CustomerType, ENU_EnterPriseUrlType, ProductModulePagesEnum } from '@app/helper/config/app.enums';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { StaffAuthentication } from 'src/app//models/common.model';
+import { variables } from 'src/app/helper/config/app.variable';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { SessionService } from 'src/app/helper/app.session.service';
+import { CustomerType, ENU_EnterPriseUrlType, ProductModulePagesEnum } from 'src/app/helper/config/app.enums';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DateTimeService } from '@app/services/date.time.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 @Component({
     selector: 'app-delete-RewardProgram',

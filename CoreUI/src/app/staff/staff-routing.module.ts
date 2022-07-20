@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SearchStaffComponent } from '@app/staff/search/search.staff.component';
+import { SearchStaffComponent } from 'src/app/staff/search/search.staff.component';
 import { StaffDetailNavigationComponent } from './navigation/detail/staff.detail.navigation.component';
 import { StaffMainNavigation } from './navigation/main/staff.main.navigation.component';
 import { SaveStaffDetailsComponent } from './save/save.staff.details.component';
@@ -14,8 +14,8 @@ import { ShiftCalendarComponent } from './attendance/shift/shift.calendar.compon
 import { AttendanceCalendarComponent } from './attendance/calendar/attendance.calendar.component';
 import { StaffTaskComponent } from './task/staff.task.component';
 import { SearchStaffActivityComponent } from './activities/search/search.staff.activity.component';
-import { PagePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
+import { PagePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
 import { StaffFormsComponent } from './staff-forms/staff.form.component';
 
 

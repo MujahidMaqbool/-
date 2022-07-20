@@ -4,29 +4,29 @@ import { NgForm } from '@angular/forms';
 import { SubscriptionLike } from 'rxjs';
 
 /** Model & */
-import { ClassAppointmentDetail, ClassTax, ClassCategories, ParentClasses } from '@scheduler/models/class.model';
-import { CellSelectedData, RRuleData } from '@scheduler/models/scheduler.model';
-import { Tax } from '@app/models/common.model';
+import { ClassAppointmentDetail, ClassTax, ClassCategories, ParentClasses } from 'src/app/scheduler/models/class.model';
+import { CellSelectedData, RRuleData } from 'src/app/scheduler/models/scheduler.model';
+import { Tax } from 'src/app/models/common.model';
 
 /*Serivces*/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { CommonService } from '@app/services/common.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { CommonService } from 'src/app/services/common.service';
 
 /** Messges, Configurations & Constants */
-import { Configurations, SchedulerOptions } from '@helper/config/app.config';
-import { SchedulerApi } from '@helper/config/app.webapi';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { ENU_DurationType, ENU_Package, ENU_DateFormatName } from '@app/helper/config/app.enums';
+import { Configurations, SchedulerOptions } from 'src/app/helper/config/app.config';
+import { SchedulerApi } from 'src/app/helper/config/app.webapi';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { ENU_DurationType, ENU_Package, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { DxFormComponent, DxDateBoxComponent } from 'devextreme-angular';
 import { DatePipe } from '@angular/common';
-import { OneDaySchedulerComponent } from '@app/shared/components/scheduler/one.day.scheduler.component';
+import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
 
 
 @Component({

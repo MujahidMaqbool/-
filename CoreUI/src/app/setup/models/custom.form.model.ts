@@ -1,4 +1,4 @@
-import { ENU_FormType } from "@app/helper/config/app.enums";
+import { ENU_FormType } from "src/app/helper/config/app.enums";
 
 export class SaveCustomFormModel {
     public FormID: number;

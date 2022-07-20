@@ -6,14 +6,13 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 /********************** Common *********************************/
 /* Service */
 
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Model */
 
-import { PersonInfo, InvoiceHistory } from '@app/models/common.model';
+import { PersonInfo, InvoiceHistory } from 'src/app/models/common.model';
 
 /********************** Common *********************************/
-import { CustomerType } from '@helper/config/app.enums';
 
 @Component({
     selector: 'member-sale-history',

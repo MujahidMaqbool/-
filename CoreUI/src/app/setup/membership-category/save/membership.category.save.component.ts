@@ -5,21 +5,21 @@ import { NgForm } from '@angular/forms';
 
 /***************** START: Service & Models *********************/
 /*Services*/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /*Models*/
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { MembershipCategoryApi } from '@app/helper/config/app.webapi';
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
-import { ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { ApiResponse } from '@app/models/common.model';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { CommonService } from '@app/services/common.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { MembershipCategory } from '@app/setup/models/membership.category.model';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { MembershipCategoryApi } from 'src/app/helper/config/app.webapi';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { ApiResponse } from 'src/app/models/common.model';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { CommonService } from 'src/app/services/common.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { MembershipCategory } from 'src/app/setup/models/membership.category.model';
 
 /********************** START: Common *********************/
 

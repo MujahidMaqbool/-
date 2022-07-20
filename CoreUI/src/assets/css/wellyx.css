@@ -6095,12 +6095,12 @@ input:checked+.sch_slider:before {
     margin-right: 10px;
 }
 
-.dx-scheduler-navigator-caption.dx-state-focused,
+/* .dx-scheduler-navigator-caption.dx-state-focused,
 .dx-scheduler-navigator-caption.dx-state-hover,
 .dx-scheduler-navigator-caption.dx-state-active {
     border-right-width: 0px !important;
     border-left-width: 0px !important;
-}
+} */
 
 .refreshButtonIcon {
     position: relative;
@@ -11463,11 +11463,6 @@ a, a:hover, a:focus {
 }
 .email_editor_items .dx-button-has-text .dx-button-content{
     min-width:  100%;
-  }
-  .dx-button-has-text .dx-button-content {
-      padding: 7px 18px 8px;
-      font-size: 13px !important;
-      min-width: 270px;
   }
   .sch_pop_width .dx-button-has-text .dx-button-content{
       min-width: auto !important;

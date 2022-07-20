@@ -3,18 +3,18 @@ import { Component, Inject, Output, EventEmitter, ViewChild, OnInit, OnDestroy }
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CropperComponent } from 'angular-cropperjs';
 /***************** Models & Services ************************/
-import { UploadBanner } from '@setup/models/widget.settings.model';
+import { UploadBanner } from 'src/app/setup/models/widget.settings.model';
 
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 
 /*********** Configurations *************/
-import { ENU_BannerType } from '@helper/config/app.enums';
-import { WidgetSettingApi } from '@helper/config/app.webapi';
-import { environment } from '@env/environment';
-import { Messages } from '@app/helper/config/app.messages';
-import { variables } from '@app/helper/config/app.variable';
+import { ENU_BannerType } from 'src/app/helper/config/app.enums';
+import { WidgetSettingApi } from 'src/app/helper/config/app.webapi';
+import { environment } from 'src/environments/environment';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { variables } from 'src/app/helper/config/app.variable';
 
 @Component({
     selector: 'upload-banner',

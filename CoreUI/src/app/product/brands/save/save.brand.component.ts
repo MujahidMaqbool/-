@@ -1,16 +1,16 @@
 
 import { Component, OnInit, ViewChild, EventEmitter, Output, Inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Messages } from '@app/helper/config/app.messages';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 import { ProductCategoryList, SaveBrand } from '../brand.models';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BrandApi } from '@app/helper/config/app.webapi';
+import { BrandApi } from 'src/app/helper/config/app.webapi';
 import { MatOption } from '@angular/material/core';
-import { ApiResponse } from '@app/models/common.model';
-import { TrimPipe } from '@app/shared/pipes/trim';
-import { EnumSaleSourceType } from '@app/helper/config/app.enums';
+import { ApiResponse } from 'src/app/models/common.model';
+import { TrimPipe } from 'src/app/shared/pipes/trim';
+import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
 
 
 

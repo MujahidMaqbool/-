@@ -3,10 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 
 /********************** START: Service & Models *********************/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffPositionApi } from '@app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffPositionApi } from 'src/app/helper/config/app.webapi';
 
 /********************** START: Common *********************/
 

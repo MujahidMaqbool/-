@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ViewComponent } from '@app/setup/automation-template/view/view.component';
-import { Messages } from '@app/helper/config/app.messages';
+import { ViewComponent } from 'src/app/setup/automation-template/view/view.component';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EnumSaleSourceType } from '@app/helper/config/app.enums';
+import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
 
 
 @Component({

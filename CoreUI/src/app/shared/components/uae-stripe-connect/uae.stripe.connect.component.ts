@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
-import { StripeService } from '@app/services/stripe.service';
-import { ConnectStripeAccount } from '@app/setup/models/gateway.integration.model';
+import { StripeService } from 'src/app/services/stripe.service';
+import { ConnectStripeAccount } from 'src/app/setup/models/gateway.integration.model';
 
 @Component({
   selector: 'app-uae-stripe-connect',

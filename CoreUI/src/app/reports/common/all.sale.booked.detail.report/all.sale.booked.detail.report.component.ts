@@ -6,21 +6,21 @@ import { DatePipe } from '@angular/common';
 
 /********************** Service & Models *********************/
 /* Services */
-import { MessageService } from '@services/app.message.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /* Models */
-import { AllPerson, ReportSearchParameter } from "@models/common.model";
+import { AllPerson, ReportSearchParameter } from "src/app/models/common.model";
 
 /********************** Component *********************************/
 //import { InvoiceDetailComponent } from '../invoice.detail/invoice.detail.component';
 
 /********************** Common *********************************/
-import { CommonService } from '@services/common.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { CommonService } from 'src/app/services/common.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { debounceTime } from 'rxjs/internal/operators';
-import { PersonType, ReportViewType, FileType, ReportName, CustomerType } from '@app/helper/config/app.enums';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { PersonType, ReportViewType, FileType, ReportName, CustomerType } from 'src/app/helper/config/app.enums';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 
 @Component({
     selector: 'all-sale-booked-detail-report',

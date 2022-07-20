@@ -9,7 +9,7 @@ import { DxFunnelModule, DxPieChartModule, DxChartModule } from 'devextreme-angu
 
 import { InternationalPhoneNumberModule } from 'ngx-international-phone-number';
 
-import { SharedModule } from '@app/shared/shared-module';
+import { SharedModule } from 'src/app/shared/shared-module';
 import { LeadRoutingModule } from './lead.routing.module';
 
 import { LeadMainNavigationComponent } from './navigation/lead.main.navigation.component';
@@ -19,7 +19,7 @@ import { SearchLeadComponent } from './search/search.lead.component';
 import { ViewLeadDetailComponent } from './view/view.lead.detail.component';
 import { SaveLeadComponent } from './save/save.lead.component';
 import { LeadNavigationComponent } from './navigation/lead.navigation.component';
-import { SetupModule } from '@app/setup/setup.module';
+import { SetupModule } from 'src/app/setup/setup.module';
 import { LeadActivityComponent } from './activities/lead.activity.component';
 import { LeadInvoiceHistoryComponent } from './invoice-history/lead.invoice.history.component';
 import { LeadBookingsComponent } from './lead-bookings/lead.bookings.component';
@@ -28,18 +28,18 @@ import { LeadDashboardComponent } from './dashboard/lead.dashboard.component';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { LeadBusinessFlowViewComponent } from './business-flow-view/lead.business.flow.component';
 import { LeadLostComponent } from './lost-popup/lead.lost.popup.component';
-import { MemberModule } from '@customer/member/member.module';
+import { MemberModule } from 'src/app/customer/member/member.module';
 import { AddLeadPopupComponent } from './save/save.lead.popup.component';
-import { SharedPaginationModule } from '@app/shared-pagination-module/shared-pagination-module';
+import { SharedPaginationModule } from 'src/app/shared-pagination-module/shared-pagination-module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-import { CustomerSharedModule } from '@app/customer-shared-module/customer-shared-module';
-import { ApplicationDialogSharedModule } from '@app/application-dialog-module/application-dialog-module';
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
+import { CustomerSharedModule } from 'src/app/customer-shared-module/customer-shared-module';
+import { ApplicationDialogSharedModule } from 'src/app/application-dialog-module/application-dialog-module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({

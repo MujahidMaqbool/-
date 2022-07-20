@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { AuthService } from "@app/helper/app.auth.service";
-import { ENU_Permission_Module } from "@app/helper/config/app.module.page.enums";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { ENU_Permission_Module } from "src/app/helper/config/app.module.page.enums";
 
 
 @Component({

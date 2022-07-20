@@ -3,18 +3,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {Location} from '@angular/common';
 /********************** Service & Models *********************/
 /* Services*/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /* Models*/
-import { LeadStatusType, SaveLeadSetting } from '@setup/models/lead.status.model';
+import { LeadStatusType, SaveLeadSetting } from 'src/app/setup/models/lead.status.model';
 
 /********************** Configurations *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { LeadStatusApi, LeadApi } from '@app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { LeadStatusApi, LeadApi } from 'src/app/helper/config/app.webapi';
 import { NgForm } from '@angular/forms';
-import { AssignedToStaffList, LeadMembershipsList } from '@app/models/lead.membership.model';
-import { ApiResponse } from '@app/models/common.model';
+import { AssignedToStaffList, LeadMembershipsList } from 'src/app/models/lead.membership.model';
+import { ApiResponse } from 'src/app/models/common.model';
 //import { promise } from 'protractor';
 
 @Component({

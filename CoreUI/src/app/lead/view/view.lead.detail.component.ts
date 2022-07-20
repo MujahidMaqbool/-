@@ -2,27 +2,25 @@
 
 /*********************** Material Reference *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
 import { SubscriptionLike as ISubscription } from 'rxjs';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 /* Models */
 
-import { LeadDetail } from '@lead/models/lead.model';
+import { LeadDetail } from 'src/app/lead/models/lead.model';
 
 /*************************** Configurations *************************/
-import { environment } from '@env/environment';
-import { Configurations } from '@app/helper/config/app.config';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { CompanyDetailsApi, BranchApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { CompanyDetailsApi, BranchApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 /*************************** Common *************************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { ApiResponse } from '@app/models/common.model';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
   selector: 'view-lead-detail',

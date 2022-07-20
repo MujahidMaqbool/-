@@ -11,18 +11,18 @@ import {
     LeadFlow,
     LeadEnquiryTour,
     LeadStatusTypeList
-} from '@lead/models/lead.dashboard.model';
+} from 'src/app/lead/models/lead.dashboard.model';
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { Configurations } from '@app/helper/config/app.config';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Configurations } from 'src/app/helper/config/app.config';
 /************************* Common ***********************************/
-import { EnquirySourceType, ENU_ActivityType, LeadFlowStatusTypes, LeadStatusType, LeadStatusTypesNew } from '@helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { DateTimeService } from '@app/services/date.time.service';
+import { EnquirySourceType, ENU_ActivityType, LeadFlowStatusTypes, LeadStatusType, LeadStatusTypesNew } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DateTimeService } from 'src/app/services/date.time.service';
 import { forkJoin } from 'rxjs';
-import { LeadApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
+import { LeadApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
 import { MatDatepicker } from '@angular/material/datepicker';
 
 

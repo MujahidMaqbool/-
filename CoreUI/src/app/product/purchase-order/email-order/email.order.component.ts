@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Configurations } from '@app/helper/config/app.config';
-import { EnumPurchaseOrderStatus } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { PurchaseOrderApi } from '@app/helper/config/app.webapi';
-import { EmailModel } from '@app/product/models/purchaseOrder.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { EnumPurchaseOrderStatus } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
+import { EmailModel } from 'src/app/product/models/purchaseOrder.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 
 @Component({

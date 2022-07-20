@@ -2,27 +2,27 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SubscriptionLike as ISubscription } from "rxjs";
 /********************* Material:Refference ********************/
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 /********************** Staff Document:Refference ***********************/
-import { StaffDocument } from "@staff/models/staff.model";
-import { UploadStaffDocument } from '@staff/documents/upload/upload.staff.document.component';
+import { StaffDocument } from "src/app/staff/models/staff.model";
+import { UploadStaffDocument } from 'src/app/staff/documents/upload/upload.staff.document.component';
 
 /********************** Staff Service:Refference ***********************/
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 /********************** START: Common *********************/
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { environment } from "@env/environment";
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffDocumentApi } from '@app/helper/config/app.webapi';
-import { ApiResponse, PersonInfo } from '@app/models/common.model';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
-import { Configurations } from '@app/helper/config/app.config';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { environment } from "src/environments/environment";
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffDocumentApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'staff-document',

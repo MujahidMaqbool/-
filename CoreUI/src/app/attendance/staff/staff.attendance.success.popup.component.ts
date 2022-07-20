@@ -9,10 +9,8 @@ import * as moment from 'moment';
 
 
 /** Models */
-import { StaffAttendanceModel } from '@attendance/models/staff.attendance.model';
-import { environment } from '@env/environment';
-import { variables } from '@app/helper/config/app.variable';
-
+import { StaffAttendanceModel } from 'src/app/attendance/models/staff.attendance.model';
+import { environment } from 'src/environments/environment';
 
 /** Messages & Constants */
 

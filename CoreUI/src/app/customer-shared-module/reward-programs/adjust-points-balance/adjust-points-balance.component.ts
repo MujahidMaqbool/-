@@ -3,13 +3,13 @@ import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 
 /*********************** Material Reference *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpService } from '@app/services/app.http.service';
-import { CustomerRewardProgramApi } from '@app/helper/config/app.webapi';
-import { AdjustRewardPointsBalance } from '@app/models/customer.reward.programs.model';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { CustomerRewardProgramApi } from 'src/app/helper/config/app.webapi';
+import { AdjustRewardPointsBalance } from 'src/app/models/customer.reward.programs.model';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { FormControl } from '@angular/forms';
-import { ApiResponse } from '@app/models/common.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
 
 @Component({

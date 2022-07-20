@@ -1,8 +1,8 @@
 /************************* Angular References ***********************************/
 import { Component, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { HomeApi, StaffDashboardApi, ClientApi, LeadApi, MemberApi, RewardProgramApi } from '@app/helper/config/app.webapi';
-import { StaffAttendance, MemberAttendance, SaleTypeSummary, MainDashboardSearchParams, MembersContract, MembershipStatus, PersonInfo, StaffPendingTask, TotalSaleSummary, MemberContract, RewardProgramSummaryViewModel } from '@app/models/home.dashboard.model';
+import { HomeApi, StaffDashboardApi, ClientApi, LeadApi, MemberApi, RewardProgramApi } from 'src/app/helper/config/app.webapi';
+import { StaffAttendance, MemberAttendance, SaleTypeSummary, MainDashboardSearchParams, MembersContract, MembershipStatus, PersonInfo, StaffPendingTask, TotalSaleSummary, MemberContract, RewardProgramSummaryViewModel } from 'src/app/models/home.dashboard.model';
 //import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
@@ -10,32 +10,32 @@ import * as _moment from 'moment';
 /********************** Service & Models *********************/
 
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 /* Models */
-import { StaffSchedulerHours } from '@app/staff/models/staff.model';
-import { IMonthlyVisits, IServicesandAttendanceBooking, IMonthlySales, IClientVisits } from '@customer/client/models/client.dashboard.model';
-import { LeadFlow, LeadActivity, AtivtiesSummary, LeadStatusTypeList } from '@app/lead/models/lead.dashboard.model';
-import { MemberBooking, MemberServices, MemberProducts, TotalRevenue, TotalSaleCount, LeadStatusTypeListMainDashBorad } from '@customer/member/models/member.dashboard.model';
+import { StaffSchedulerHours } from 'src/app/staff/models/staff.model';
+import { IMonthlyVisits, IServicesandAttendanceBooking, IMonthlySales, IClientVisits } from 'src/app/customer/client/models/client.dashboard.model';
+import { LeadFlow, LeadActivity, AtivtiesSummary, LeadStatusTypeList } from 'src/app/lead/models/lead.dashboard.model';
+import { MemberBooking, MemberServices, MemberProducts, TotalRevenue, TotalSaleCount, LeadStatusTypeListMainDashBorad } from 'src/app/customer/member/models/member.dashboard.model';
 
 /************************* Component & Common ***********************************/
-import { ViewMemberDetail } from '@customer/member/view/view.member.detail.component';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { ViewMemberDetail } from 'src/app/customer/member/view/view.member.detail.component';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 /********************** Configurations *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { Configurations } from '@app/helper/config/app.config';
-import { environment } from '@env/environment';
-import { CustomerType, MembershipStatus_Enum, LeadStatusType, EnumSaleSourceType, ENU_Package, ENU_ActivityType, EnumMemberDashboardSaleType, ENU_DateFormatName, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from '@app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { environment } from 'src/environments/environment';
+import { CustomerType, MembershipStatus_Enum, LeadStatusType, EnumSaleSourceType, ENU_Package, ENU_ActivityType, EnumMemberDashboardSaleType, ENU_DateFormatName, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from 'src/app/helper/config/app.enums';
 import { SubscriptionLike } from 'rxjs';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import * as moment from 'moment';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 var currencyCode: any;
 var currencySymbolForRevenue: any;
 @Component({

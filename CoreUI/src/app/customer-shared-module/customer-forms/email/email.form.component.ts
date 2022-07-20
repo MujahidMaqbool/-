@@ -5,34 +5,34 @@ import { HttpClient } from "@angular/common/http";
 /** Material Reference */
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 /** Services & Models */
-import { MemberContactReasonType } from "@app/customer/member/models/member.activity.model";
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
-import { MessageService } from "@app/services/app.message.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { HttpService } from "@app/services/app.http.service";
+import { MemberContactReasonType } from "src/app/customer/member/models/member.activity.model";
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
+import { MessageService } from "src/app/services/app.message.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { HttpService } from "src/app/services/app.http.service";
 import {
   EmailActivity,
   ActivityPersonInfo,
   Template,
-} from "@app/models/activity.model";
+} from "src/app/models/activity.model";
 /** Configurations */
 import { SubscriptionLike as ISubscription, SubscriptionLike } from "rxjs";
-import { Configurations } from "@app/helper/config/app.config";
-import { Messages } from "@app/helper/config/app.messages";
+import { Configurations } from "src/app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
 import {
   TemplateType,
   EnumSaleSourceType,
   FormQueryType,
   ENU_EmailSmsFor,
-} from "@app/helper/config/app.enums";
-import { StaffActivityApi, StaffApi } from "@app/helper/config/app.webapi";
+} from "src/app/helper/config/app.enums";
+import { StaffActivityApi, StaffApi } from "src/app/helper/config/app.webapi";
 import {
   MemberActivityApi,
   CustomerFormApi,
   LeadActivityApi,
-} from "@app/helper/config/app.webapi";
-import { environment } from "@env/environment";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+} from "src/app/helper/config/app.webapi";
+import { environment } from "src/environments/environment";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
   selector: "email-form",

@@ -6,21 +6,21 @@ import { SaveShiftTemplateComponent } from './save.shift.template.component';
 
 /********************** START: Service & Models *********************/
 /*Services*/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 /*Models*/
-import { ShiftTemplate } from '@staff/models/shift.template.model';
+import { ShiftTemplate } from 'src/app/staff/models/shift.template.model';
 
 /********************** START: Common *********************/
-import { Configurations } from '@helper/config/app.config'
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { ShiftTemplateApi } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { ApiResponse } from '@app/models/common.model';
+import { Configurations } from 'src/app/helper/config/app.config'
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ShiftTemplateApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { ApiResponse } from 'src/app/models/common.model';
 
 
 @Component({

@@ -4,28 +4,28 @@ import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
 import { Router } from '@angular/router';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
-import { MemberAttendanceApi, AttendeeApi } from "@app/helper/config/app.webapi";
-import { Messages } from "@app/helper/config/app.messages";
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MemberAttendanceApi, AttendeeApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
-import { MemberAttendanceDetail, CustomerMembership, MemberClassDetail, MembershipClockin, MembershipMessage, CustomerMembershipPaymentInfoList, BranchTimingListForMemberShip, MembershipGlobalSessionDetail, MembershipAlertMessages, MemberMembershipMessages } from "@attendance/models/member.attendance.model";
-import { ApiResponse, CompanyInfo, DD_Branch } from "@app/models/common.model";
-import { MembershipTypeName, Configurations } from "@app/helper/config/app.config";
+import { MemberAttendanceDetail, CustomerMembership, MemberClassDetail, MembershipClockin, MembershipMessage, CustomerMembershipPaymentInfoList, BranchTimingListForMemberShip, MembershipGlobalSessionDetail, MembershipAlertMessages, MemberMembershipMessages } from "src/app/attendance/models/member.attendance.model";
+import { ApiResponse, CompanyInfo, DD_Branch } from "src/app/models/common.model";
+import { MembershipTypeName, Configurations } from "src/app/helper/config/app.config";
 
 /******* Configurations *********/
-import { environment } from "@env/environment";
-import { MembershipType, MembershipDurationType, EnumBookingStatusType, MembershipStatus_Enum, ENU_ClockinRestrictionType, ENU_DateFormatName, ENU_MemberShipBenefitDurations, MembershipBenefitType, ENU_MembershipAlertMessageRestrictionType } from "@app/helper/config/app.enums";
-import { ImagesPlaceholder } from "@app/helper/config/app.placeholder";
-import { AttendeeClassAttendance } from "@app/models/attendee.model";
-import { variables } from "@app/helper/config/app.variable";
-import { AppUtilities } from "@app/helper/aap.utilities";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { TimeClockComponent } from "@app/attendance/shared/time.clock.component";
-import { CompanyDetails } from "@app/setup/models/company.details.model";
+import { environment } from "src/environments/environment";
+import { MembershipType, MembershipDurationType, EnumBookingStatusType, MembershipStatus_Enum, ENU_ClockinRestrictionType, ENU_DateFormatName, ENU_MemberShipBenefitDurations, MembershipBenefitType, ENU_MembershipAlertMessageRestrictionType } from "src/app/helper/config/app.enums";
+import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
+import { AttendeeClassAttendance } from "src/app/models/attendee.model";
+import { variables } from "src/app/helper/config/app.variable";
+import { AppUtilities } from "src/app/helper/aap.utilities";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { TimeClockComponent } from "src/app/attendance/shared/time.clock.component";
+import { CompanyDetails } from "src/app/setup/models/company.details.model";
 
 @Component({
     selector: 'member-attendance-details',

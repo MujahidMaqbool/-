@@ -7,22 +7,22 @@ import {
 
 /********************** Services & Models *********************/
 /* Models */
-import { MemberMembershipPayments, Membership } from "@customer/member/models/member.membership.payments.model";
-import { MemberMembership } from '@customer/member/models/member.membership.model';
-import { ApiResponse } from '@app/models/common.model';
+import { MemberMembershipPayments, Membership } from "src/app/customer/member/models/member.membership.payments.model";
+import { MemberMembership } from 'src/app/customer/member/models/member.membership.model';
+import { ApiResponse } from 'src/app/models/common.model';
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 /********************** Common & Customs *********************/
-import { MembershipPaymentType } from '@helper/config/app.enums';
+import { MembershipPaymentType } from 'src/app/helper/config/app.enums';
 
 /**********************  Common *********************/
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { MemberPaymentsApi } from '@app/helper/config/app.webapi';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 
 @Component({

@@ -1,10 +1,8 @@
 /********************* Angular References ********************/
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { HttpService } from '@app/services/app.http.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FundamentalsItems, Items } from '@app/setup/models/custom.form.model';
-import { ENU_CustomFormItemType } from '@app/helper/config/app.enums';
+import { FundamentalsItems, Items } from 'src/app/setup/models/custom.form.model';
+import { ENU_CustomFormItemType } from 'src/app/helper/config/app.enums';
 
 /********************** Services & Model *********************/
 

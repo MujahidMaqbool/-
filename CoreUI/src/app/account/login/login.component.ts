@@ -1,21 +1,19 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ENU_LoginState, EnumSaleSourceType } from '@helper/config/app.enums';
-import { HttpService } from '@app/services/app.http.service';
-import { LoginApi } from '@helper/config/app.webapi';
-import { AuthService } from '@helper/app.auth.service';
-import { ImagesPlaceholder } from '@helper/config/app.placeholder';
-import { Messages } from '@helper/config/app.messages';
+import { ENU_LoginState, EnumSaleSourceType } from 'src/app/helper/config/app.enums';
+import { HttpService } from 'src/app/services/app.http.service';
+import { LoginApi } from 'src/app/helper/config/app.webapi';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 
-import { environment } from '@env/environment';
+import { environment } from 'src/environments/environment';
 
 import { Login } from '../model/login.model';
-import { MessageService } from '@app/services/app.message.service';
-import { ApiResponse } from '@app/models/common.model';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { ApiResponse } from 'src/app/models/common.model';
+import { variables } from 'src/app/helper/config/app.variable';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 
 @Component({

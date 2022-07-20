@@ -5,23 +5,22 @@ import { SubscriptionLike } from "rxjs";
 
 /********************** Services & Models *********************/
 /* Models */
-import { GetMemberMembershipPlan, MembershipPaymentSummary } from '@customer/member/models/member.membership.model';
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
+import { GetMemberMembershipPlan, MembershipPaymentSummary } from 'src/app/customer/member/models/member.membership.model';
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
 /* Services */
-import { HttpService } from "@services/app.http.service";
-import { MessageService } from "@services/app.message.service";
-import { TaxCalculation } from "@app/services/tax.calculations.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 /********************** Common & Customs *********************/
 
 /********************** Component *********************/
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 /********************** Configurations *********************/
-import { Configurations } from "@helper/config/app.config";
-import { Messages } from "@app/helper/config/app.messages";
-import { MemberMembershipApi } from "@app/helper/config/app.webapi";
-import { ENU_MembershipPaymetType, ENU_DateFormatName } from "@app/helper/config/app.enums";
+import { Messages } from "src/app/helper/config/app.messages";
+import { MemberMembershipApi } from "src/app/helper/config/app.webapi";
+import { ENU_MembershipPaymetType, ENU_DateFormatName } from "src/app/helper/config/app.enums";
 
 @Component({
     selector: 'save-member-payment',

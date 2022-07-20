@@ -1,9 +1,9 @@
 import { Component, Output, EventEmitter, Inject } from "@angular/core";
-import { Messages } from "@app/helper/config/app.messages";
+import { Messages } from "src/app/helper/config/app.messages";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
 import { ViewStaffAssociationComponent } from '../branch-association/view-staffassociation-popup/view.staff.association.popup';
 import { SaveStaffForOtherBranch } from "../models/staff.model";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 
 @Component({
     selector: 'branch-association',

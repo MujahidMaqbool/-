@@ -6,19 +6,19 @@ import { FormControl } from "@angular/forms";
 
 /*********************** Models & Services  *************************/
 /* Models */
-import { SavedCard } from "@app/point-of-sale/models/point.of.sale.model";
-import { ApiResponse } from "@app/models/common.model";
+import { SavedCard } from "src/app/point-of-sale/models/point.of.sale.model";
+import { ApiResponse } from "src/app/models/common.model";
 
 /* Services */
-import { MessageService } from "@app/services/app.message.service";
-import { HttpService } from "@app/services/app.http.service";
-import { LoaderService } from "@app/services/app.loader.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { LoaderService } from "src/app/services/app.loader.service";
 
 /*********************** Common  *************************/
-import { Messages } from "@app/helper/config/app.messages";
-import { PointOfSaleApi } from "@app/helper/config/app.webapi";
-import { DynamicScriptLoaderService } from "@app/services/dynamic.script.loader.service";
-import { ENU_Page, ENU_PaymentGateway } from "@app/helper/config/app.enums";
+import { Messages } from "src/app/helper/config/app.messages";
+import { PointOfSaleApi } from "src/app/helper/config/app.webapi";
+import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
+import { ENU_Page, ENU_PaymentGateway } from "src/app/helper/config/app.enums";
 
 // #endregion
 

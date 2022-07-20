@@ -1,14 +1,14 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Configurations } from '@app/helper/config/app.config';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { DD_Branch, ApiResponse } from '@app/models/common.model';
-import { HomeApi } from '@app/helper/config/app.webapi';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { SessionService } from '@app/helper/app.session.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName, ENU_MobileOperatingSystem } from '@app/helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DD_Branch, ApiResponse } from 'src/app/models/common.model';
+import { HomeApi } from 'src/app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { SessionService } from 'src/app/helper/app.session.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_DateFormatName, ENU_MobileOperatingSystem } from 'src/app/helper/config/app.enums';
 @Component({
     selector: "time-clock",
     templateUrl: "./time.clock.component.html"

@@ -9,34 +9,34 @@ import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Services & Models *********************/
 /* Models */
-import { ClientActivity, ClientActivityTabOptions, ClientActivityCount, ClientActivityInfo } from '@customer/client/models/client.activity.model';
-import { ActivityPersonInfo } from '@models/activity.model';
-import { PersonInfo, ApiResponse } from '@models/common.model';
+import { ClientActivity, ClientActivityTabOptions, ClientActivityCount, ClientActivityInfo } from 'src/app/customer/client/models/client.activity.model';
+import { ActivityPersonInfo } from 'src/app/models/activity.model';
+import { PersonInfo, ApiResponse } from 'src/app/models/common.model';
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 /********************** Common & Customs *********************/
-import { Configurations } from '@helper/config/app.config';
-import { ClientActivityApi, CustomerApi } from '@helper/config/app.webapi';
-import { Messages } from '@helper/config/app.messages';
-import { environment } from '@env/environment';
-import { ENU_ActivityType, CustomerType, ENU_DateFormatName, ENU_ActivitySubType } from '@helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { ClientActivityApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { ENU_ActivityType, CustomerType, ENU_DateFormatName, ENU_ActivitySubType } from 'src/app/helper/config/app.enums';
 
 /********************** Components *********************/
-import { SaveClientActivityComponent } from '@customer/client/activities/save/save.client.activity.component';
-import { AddLeadMembershipComponent } from '@app/customer-shared-module/add-lead-membership/add.lead.membership.component';
-import { SaveMemberMembershipPopup } from '@app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { CommonService } from '@app/services/common.service';
-import { MissingBillingAddressDialog } from '@app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MessageService } from '@app/services/app.message.service';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
+import { SaveClientActivityComponent } from 'src/app/customer/client/activities/save/save.client.activity.component';
+import { AddLeadMembershipComponent } from 'src/app/customer-shared-module/add-lead-membership/add.lead.membership.component';
+import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { CommonService } from 'src/app/services/common.service';
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { MessageService } from 'src/app/services/app.message.service';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
 
 // import { ViewMemberActivityComponent } from '../view/view.activity.component';
 

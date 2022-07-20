@@ -1,45 +1,45 @@
-﻿import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+﻿import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 /********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { SubscriptionLike as ISubscription } from 'rxjs';
 import { Router } from '@angular/router';
 /********************* Material Reference ********************/
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 /*************************** Services & Models *************************/
 /* Models*/
-import { Staff, StaffInfo, ServiceCategoryWithServiceList, StaffService } from '@staff/models/staff.model';
-import { ModuleList } from '@setup/models/roles.model';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { Staff, StaffInfo, ServiceCategoryWithServiceList, StaffService } from 'src/app/staff/models/staff.model';
+import { ModuleList } from 'src/app/setup/models/roles.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { MessageService } from '@app/services/app.message.service';
-import { SessionService } from '@app/helper/app.session.service';
-import { CommonService } from '@app/services/common.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { SessionService } from 'src/app/helper/app.session.service';
+import { CommonService } from 'src/app/services/common.service';
 
 /********************** Components *********************/
 import { BranchAssociationComponent } from '../branch-association/branch.association.component';
 import { UnArchivedStaffComponent } from '../archived-staff/staff.unarchive.component';
-import { RoleViewComponent } from '@app/setup/role/role-view/role-view.component';
+import { RoleViewComponent } from 'src/app/setup/role/role-view/role-view.component';
 import { CanProvideServicePopup } from '../canprovide-serivce-popup/canprovide.serivce.popup';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
 import { EditEmailComponent } from '../edit-email/edit.email.component';
 
 /*************************** Common & Customs *************************/
-import { Configurations } from '@helper/config/app.config';
-import { environment } from '@env/environment';
-import { Messages } from '@app/helper/config/app.messages';
-import { DoorAccessApi, StaffApi } from "@helper/config/app.webapi";
-import { ENU_Package } from '@app/helper/config/app.enums';
-import { ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
-import { GenericAlertDialogComponent } from '@app/application-dialog-module/generic-alert-dialog/generic.alert.dialog.component';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { TrimPipe } from '@app/shared/pipes/trim';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { environment } from 'src/environments/environment';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DoorAccessApi, StaffApi } from "src/app/helper/config/app.webapi";
+import { ENU_Package } from 'src/app/helper/config/app.enums';
+import { ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
+import { GenericAlertDialogComponent } from 'src/app/application-dialog-module/generic-alert-dialog/generic.alert.dialog.component';
+import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { TrimPipe } from 'src/app/shared/pipes/trim';
 
 
 

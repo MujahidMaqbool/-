@@ -12,11 +12,11 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 /********************** Common ***************************/
 
 /********************** Configurations *********************/
-import { CustomerType } from '@helper/config/app.enums';
+import { CustomerType } from 'src/app/helper/config/app.enums';
 import { SubscriptionLike as ISubscription } from 'rxjs';
-import { CommonService } from '@app/services/common.service';
-import { PersonInfo, InvoiceHistory } from '@app/models/common.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { CommonService } from 'src/app/services/common.service';
+import { PersonInfo, InvoiceHistory } from 'src/app/models/common.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 
 @Component({

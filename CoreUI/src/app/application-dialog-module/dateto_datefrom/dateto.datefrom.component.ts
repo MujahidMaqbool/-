@@ -6,10 +6,10 @@ import { MatDatepicker } from '@angular/material/datepicker';
 /********************** Service & Models *********************/
 
 /* Models */
-import { DateToFrom } from "@models/common.model";
+import { DateToFrom } from "src/app/models/common.model";
 
 /* Services */
-import { DateTimeService } from '@app/services/date.time.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 
 /********************** Component *********************************/

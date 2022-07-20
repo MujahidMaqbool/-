@@ -7,16 +7,16 @@ import { ClientInvoiceHistoryComponent } from './invoice-history/client.invoice.
 import { SaveClientComponent } from './save/save.client.component';
 import { ClientDashboardComponent } from './dashboard/client.dashboard.component';
 import { SearchClientActivityComponent } from './activities/search/search.client.activity.component';
-import { PagePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
+import { PagePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
 import { ClientBookingComponent } from './bookings/client.booking.component';
-import { SearchFormsComponent } from '@app/customer-shared-module/customer-forms/search-forms/search.forms.component';
-import { NextOfKinComponent } from '@app/customer-shared-module/next-of-kin/next-of-kin.component';
-import { SearchDocumentComponent } from '@app/customer-shared-module/documents/search/search-document.component';
-import { ReferralDetailComponent } from '@app/customer-shared-module/referral/referral-detail.component';
-import { GatewaysComponent } from '@app/customer-shared-module/gateways/gateways.component';
-import { WaitListComponent } from '@app/customer-shared-module/wait-list/wait-list.component';
-import { SearchRewardProgramsComponent } from '@app/customer-shared-module/reward-programs/search-reward-programs.component';
+import { SearchFormsComponent } from 'src/app/customer-shared-module/customer-forms/search-forms/search.forms.component';
+import { NextOfKinComponent } from 'src/app/customer-shared-module/next-of-kin/next-of-kin.component';
+import { SearchDocumentComponent } from 'src/app/customer-shared-module/documents/search/search-document.component';
+import { ReferralDetailComponent } from 'src/app/customer-shared-module/referral/referral-detail.component';
+import { GatewaysComponent } from 'src/app/customer-shared-module/gateways/gateways.component';
+import { WaitListComponent } from 'src/app/customer-shared-module/wait-list/wait-list.component';
+import { SearchRewardProgramsComponent } from 'src/app/customer-shared-module/reward-programs/search-reward-programs.component';
 
 
 const routes: Routes = [

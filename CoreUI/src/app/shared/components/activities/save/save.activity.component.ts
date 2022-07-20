@@ -8,18 +8,18 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 /********************** Common *********************/
-import { Configurations } from '@helper/config/app.config';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 /********************** Services & Models *********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { DateTimeService } from '@services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /*Models*/
-import { MemberRedirectInfo } from '@customer/member/models/members.model';
-import { ActivityTabsOptions } from '@models/activity.tab.options';
+import { MemberRedirectInfo } from 'src/app/customer/member/models/members.model';
+import { ActivityTabsOptions } from 'src/app/models/activity.tab.options';
 import {
     PriorityType,
     Template,
@@ -40,20 +40,20 @@ import {
     ActivityPersonInfo,
     ContactReasonType
 
-} from '@models/activity.model';
-import { ApiResponse } from '@app/models/common.model';
+} from 'src/app/models/activity.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
 /********************** Components *********************/
-import { SaveMemberMembershipPopup } from '@app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
+import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { ENU_ActivityType, TemplateType, ENU_ModuleList, ActivityOutcomeType, WhatNextType, CustomerType, ENU_DateFormatName, ENU_ActivitySubType } from '@app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_ActivityType, TemplateType, ENU_ModuleList, ActivityOutcomeType, WhatNextType, CustomerType, ENU_DateFormatName, ENU_ActivitySubType } from 'src/app/helper/config/app.enums';
 import { Router } from '@angular/router';
 import { MatDialogService } from '../../generics/mat.dialog.service';
-import { CustomerApi, ClientActivityApi, LeadActivityApi } from '@app/helper/config/app.webapi';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { MissingBillingAddressDialog } from '@app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
-import { AchievementActivity } from '@app/customer/member/models/member.activity.model';
+import { CustomerApi, ClientActivityApi, LeadActivityApi } from 'src/app/helper/config/app.webapi';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+import { AchievementActivity } from 'src/app/customer/member/models/member.activity.model';
 import { OneDaySchedulerComponent } from '../../scheduler/one.day.scheduler.component';
 
 

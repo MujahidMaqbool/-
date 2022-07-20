@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild, ComponentFactoryResolver, OnDestroy, Type, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { SchedulerDataSource } from '@scheduler/models/scheduler.model';
-import { SchedulerOptions } from '@helper/config/app.config';
+import { SchedulerDataSource } from 'src/app/scheduler/models/scheduler.model';
+import { SchedulerOptions } from 'src/app/helper/config/app.config';
 
 import { ClassTooltipComponent } from './class.tooltip';
 import { ServiceTooltipComponent } from './service.tooltip';
@@ -9,8 +9,8 @@ import { CallTooltipComponent } from './call.tooltip';
 import { AppointmentTooltipComponent } from './appointment.tooltip';
 import { TaskTooltipComponent } from './task.tooltip';
 
-import { SchedulerTooltipDirective } from '@app/shared/directives/scheduler.tooltip.directive';
-import { enmSchedulerActvityType } from '@app/helper/config/app.enums';
+import { SchedulerTooltipDirective } from 'src/app/shared/directives/scheduler.tooltip.directive';
+import { enmSchedulerActvityType } from 'src/app/helper/config/app.enums';
 
 @Component({
     selector: 'app-add-tooltip-component',

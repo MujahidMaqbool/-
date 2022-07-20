@@ -1,4 +1,4 @@
-import { SEPACountryAccountDetail, SEPADashAfterDigit, SEPADashDigit } from "@app/models/cutomer.gateway.models";
+import { SEPACountryAccountDetail, SEPADashAfterDigit, SEPADashDigit } from "src/app/models/cutomer.gateway.models";
 
 class ActivityTypes {
     public All: string = "All";

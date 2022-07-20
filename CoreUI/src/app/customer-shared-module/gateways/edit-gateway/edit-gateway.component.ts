@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output, Inject } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { Messages } from "@app/helper/config/app.messages";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
+import { Messages } from "src/app/helper/config/app.messages";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { GatewayCard, EditCard } from "@app/setup/models/gateway.card.model";
-import { ApiResponse } from "@app/models/common.model";
-import { CustomerPaymentGatewayApi } from "@app/helper/config/app.webapi";
-import { Configurations } from "@app/helper/config/app.config";
+import { GatewayCard, EditCard } from "src/app/setup/models/gateway.card.model";
+import { ApiResponse } from "src/app/models/common.model";
+import { CustomerPaymentGatewayApi } from "src/app/helper/config/app.webapi";
+import { Configurations } from "src/app/helper/config/app.config";
 
 @Component({
     selector: 'edit-gateway',

@@ -7,27 +7,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 /*************************** Components ***********************/
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 
 /*************************** Services & Models ***********************/
 // Models
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { ProductPriceAndInventoryDetailModel } from '@app/product/models/product.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { ProductPriceAndInventoryDetailModel } from 'src/app/product/models/product.model';
 // Services
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /********************** Configurations *********************/
-import { Configurations } from '@app/helper/config/app.config';
-import { EnumSaleSourceType, ProductViewTabs } from '@app/helper/config/app.enums';
-import { ProductApi } from '@app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { EnumSaleSourceType, ProductViewTabs } from 'src/app/helper/config/app.enums';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
 
 /********************** START: Common *********************/
-import { Messages } from '@helper/config/app.messages';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Product } from '@app/helper/config/app.module.page.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Product } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({
     selector: 'view-product-detail',

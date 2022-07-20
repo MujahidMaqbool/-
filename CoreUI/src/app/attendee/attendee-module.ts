@@ -15,8 +15,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { InternationalPhoneNumberModule } from 'ngx-international-phone-number';
 import { AttendeeNotificationComponent } from './attendee-notification-popup/attendee.notificatin.popup.component';
 import { AttendeeComponent } from './save-search/attendee.component';
-import { ApplicationDialogSharedModule } from '@app/application-dialog-module/application-dialog-module';
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
+import { ApplicationDialogSharedModule } from 'src/app/application-dialog-module/application-dialog-module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
 import { WaitlistConfirmationPopupComponent } from './waitlist-confirmation-popup/waitlist.confirmation.popup.component';
 import { DxTooltipModule, DxTemplateModule } from 'devextreme-angular';
 

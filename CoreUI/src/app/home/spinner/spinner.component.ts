@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { LoaderService } from '@app/services/app.loader.service';
+import { LoaderService } from 'src/app/services/app.loader.service';
 
 @Component({
   selector: 'app-spinner',

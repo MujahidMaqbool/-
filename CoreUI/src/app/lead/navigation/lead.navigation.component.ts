@@ -5,14 +5,14 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 
 /********************** Services & Models *********************/
 /* Services */
-import { DataSharingService } from "@services/data.sharing.service";
-import { AuthService } from "@app/helper/app.auth.service";
-import { ENU_Permission_Module, ENU_Permission_Lead } from "@app/helper/config/app.module.page.enums";
-import { MemberNavigationComponent } from "@customer/member/navigation/member.navigation.component";
-import { HttpService } from "@app/services/app.http.service";
-import { ActivityPersonInfo } from "@app/models/activity.model";
-import { CustomerType } from "@app/helper/config/app.enums";
-import { PersonInfo } from "@app/models/common.model";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { ENU_Permission_Module, ENU_Permission_Lead } from "src/app/helper/config/app.module.page.enums";
+import { MemberNavigationComponent } from "src/app/customer/member/navigation/member.navigation.component";
+import { HttpService } from "src/app/services/app.http.service";
+import { ActivityPersonInfo } from "src/app/models/activity.model";
+import { CustomerType } from "src/app/helper/config/app.enums";
+import { PersonInfo } from "src/app/models/common.model";
 
 
 

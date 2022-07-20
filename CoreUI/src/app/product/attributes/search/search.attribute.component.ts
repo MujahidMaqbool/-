@@ -5,23 +5,23 @@ import { MatPaginator } from '@angular/material/paginator';
 /**components**/
 import { ViewAttributeComponent } from '../view/view.attribute.component';
 import { SaveAttributeComponent } from '../save/save.attribute.component';
-import { DeleteConfirmationComponent } from "@app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 /** Services & Models */
-import { MessageService } from '@app/services/app.message.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { HttpService } from '@app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
 import { AttributesSearchParams, AttributeViewModel } from '../../models/attributes.model';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Product } from '@app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Product } from 'src/app/helper/config/app.module.page.enums';
 /** Configurations */
-import { Configurations } from '@app/helper/config/app.config';
-import { ApiResponse } from '@app/models/common.model';
-import { AttributeApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
-import { EnumSaleSourceType } from '@app/helper/config/app.enums';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { ApiResponse } from 'src/app/models/common.model';
+import { AttributeApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { Subscription } from 'rxjs';
 
 

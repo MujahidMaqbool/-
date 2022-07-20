@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'part-payment',

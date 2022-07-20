@@ -9,45 +9,45 @@ import * as moment from "moment";
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 /****************** Configurations *****************/
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember, ENU_Permission_PointOfSale } from "@app/helper/config/app.module.page.enums";
-import { CustomerType, POSItemType, ClassStatus, ENU_DateFormatName, CalculatorValue, EnumSaleType, ENU_Package, ProductClassification } from "@helper/config/app.enums";
-import { PointOfSaleApi, SaleApi, AttendeeApi, DiscountSetupApi, CustomerPaymentGatewayApi } from "@helper/config/app.webapi";
-import { Messages } from "@app/helper/config/app.messages";
-import { environment } from "@env/environment";
-import { Configurations, SaleArea, ClassStatusName, DiscountType } from "@helper/config/app.config";
-import { AppUtilities } from "@app/helper/aap.utilities";
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember, ENU_Permission_PointOfSale } from "src/app/helper/config/app.module.page.enums";
+import { CustomerType, POSItemType, ClassStatus, ENU_DateFormatName, CalculatorValue, EnumSaleType, ENU_Package, ProductClassification } from "src/app/helper/config/app.enums";
+import { PointOfSaleApi, SaleApi, AttendeeApi, DiscountSetupApi, CustomerPaymentGatewayApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
+import { environment } from "src/environments/environment";
+import { Configurations, SaleArea, ClassStatusName, DiscountType } from "src/app/helper/config/app.config";
+import { AppUtilities } from "src/app/helper/aap.utilities";
 
 /****************** Services & Models *****************/
 /* Models */
 import {
     InvoiceInQueue, POSCartItem, POSClass, POSClassInfo, POSClassModel, POSClient, POSItem, POSProduct, POSSaleDetail, POSServiceModel, QueuedInvoiceForGrid, SaleInvoice, SaleQueueDetail,
     SaleService, SaveQueue, FreeClassBooking, MemberhsipBenefits, RemainingSessionDetail, ProductCategory, ClassCategory, ServiceCategory, SavePOSForAddMoreItems, SalePaymentMode, SaleQueuePaymentGateway, ItemList, MembershipBaseProductGlobalRemainingSession
-} from "@pos/models/point.of.sale.model";
-import { ClassAttendanceDetail } from "@app/models/attendee.model";
-import { ApiResponse, CustomerMemberhsip } from "@app/models/common.model";
-import { Client } from "@customer/client/models/client.model";
+} from "src/app/point-of-sale/models/point.of.sale.model";
+import { ClassAttendanceDetail } from "src/app/models/attendee.model";
+import { ApiResponse, CustomerMemberhsip } from "src/app/models/common.model";
+import { Client } from "src/app/customer/client/models/client.model";
 /* Services */
-import { AuthService } from "@app/helper/app.auth.service";
-import { HttpService } from "@services/app.http.service";
-import { MessageService } from "@services/app.message.service";
-import { ClassValidations } from "@app/services/class.validations.service";
-import { CommonService } from "@app/services/common.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { DateTimeService } from "@app/services/date.time.service";
-import { TaxCalculation } from "@app/services/tax.calculations.service";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { ClassValidations } from "src/app/services/class.validations.service";
+import { CommonService } from "src/app/services/common.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 
 /****************** Components *****************/
-import { POSServiceDetailComponent } from "@pos/services/pos.service.detail.component";
-import { AlertConfirmationComponent } from "@app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
-import { POSPaymentComponent } from "@shared/components/sale/payment/pos.payment.component";
-import { POSQueuedInvoicesComponent } from "@pos/queued-invoices/pos.queued.invoices.component";
-import { SaveClientPopupComponent } from '@customer/client/save/save.client.popup.component';
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { RedeemMembershipComponent } from "@app/shared/components/redeem-membership/redeem.membership.component";
+import { POSServiceDetailComponent } from "../services/pos.service.detail.component";
+import { AlertConfirmationComponent } from "src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
+import { POSPaymentComponent } from "src/app/shared/components/sale/payment/pos.payment.component";
+import { POSQueuedInvoicesComponent } from "../queued-invoices/pos.queued.invoices.component";
+import { SaveClientPopupComponent } from 'src/app/customer/client/save/save.client.popup.component';
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { RedeemMembershipComponent } from "src/app/shared/components/redeem-membership/redeem.membership.component";
 import { ClassBookingForFamilyAndFriendsComponent } from "../class-booking-for-family-and-friends/class.booking.for.family.and.friends.component";
 import { PosProductDetailComponent } from "../pos-product-detail/pos-product-detail.component";
-import { AppPaginationComponent } from "@app/shared-pagination-module/app-pagination/app.pagination.component";
+import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pagination/app.pagination.component";
 
 declare var $: any;
 

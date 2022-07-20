@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AdvanceInventory } from '@app/setup/models/advance.inventory.model';
+import { AdvanceInventory } from 'src/app/setup/models/advance.inventory.model';
 import { Location } from '@angular/common';
-import { HttpService } from '@app/services/app.http.service';
-import { ConfigurationsApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { ConfigurationsApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { SubscriptionLike } from 'rxjs';
-import { ENU_Package } from '@app/helper/config/app.enums';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { ENU_Package } from 'src/app/helper/config/app.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 
 @Component({

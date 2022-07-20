@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, AfterViewInit } from "@angular/core";
-import { DateTimeService } from '@services/date.time.service';
-import { SchedulerOptions, Configurations } from '@helper/config/app.config';
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { SchedulerOptions, Configurations } from 'src/app/helper/config/app.config';
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 
 
 @Component({

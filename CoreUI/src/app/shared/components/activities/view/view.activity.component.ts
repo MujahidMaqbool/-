@@ -6,14 +6,13 @@ import { SubscriptionLike } from 'rxjs';
 /********************* Services & Models **************************/
 /* Models */
 import { TaskActivityView } from '../../../../models/activity.model';
-import { PersonInfo } from '@app/models/common.model';
+import { PersonInfo } from 'src/app/models/common.model';
 /* Services */
-import { DateTimeService } from '@app/services/date.time.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 /********************* Common & Customs **************************/
-import { Configurations } from '@helper/config/app.config';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 
 @Component({
     selector: 'view-task',

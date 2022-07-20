@@ -1,7 +1,7 @@
-import { SchedulerOptions } from '@helper/config/app.config';
-import { SchedulerDataSource } from '@scheduler/models/scheduler.model';
-import { ENU_ActivityType, enmSchedulerActvityType } from '@helper/config/app.enums';
-import { DateTimeService } from '@app/services/date.time.service';
+import { SchedulerOptions } from 'src/app/helper/config/app.config';
+import { SchedulerDataSource } from 'src/app/scheduler/models/scheduler.model';
+import { ENU_ActivityType, enmSchedulerActvityType } from 'src/app/helper/config/app.enums';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 export class DataSourceModelMapper {
 

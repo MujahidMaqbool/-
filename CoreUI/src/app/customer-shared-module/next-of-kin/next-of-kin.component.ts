@@ -1,4 +1,4 @@
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 /********************** Angular References *********************/
 import { Component, OnInit, ViewChild, OnDestroy, Input } from "@angular/core";
@@ -6,21 +6,21 @@ import { NgForm } from "@angular/forms";
 import { SubscriptionLike as ISubscription } from "rxjs";
 /********************** Services & Models *********************/
 /* Services */
-import { DataSharingService } from "@services/data.sharing.service";
-import { HttpService } from "@services/app.http.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { HttpService } from "src/app/services/app.http.service";
 
 /* Models */
-import { MemberNextOfKin } from "@models/next.of.kin.model";
+import { MemberNextOfKin } from "src/app/models/next.of.kin.model";
 
 /********************** Common *********************/
-import { Messages } from "@app/helper/config/app.messages";
+import { Messages } from "src/app/helper/config/app.messages";
 import {
   MemberNextOfKinApi,
   CompanyDetailsApi,
-} from "@app/helper/config/app.webapi";
-import { ApiResponse, CompanyInfo } from "@app/models/common.model";
-import { MessageService } from "@app/services/app.message.service";
-import { CompanyDetails } from "@app/setup/models/company.details.model";
+} from "src/app/helper/config/app.webapi";
+import { ApiResponse, CompanyInfo } from "src/app/models/common.model";
+import { MessageService } from "src/app/services/app.message.service";
+import { CompanyDetails } from "src/app/setup/models/company.details.model";
 
 @Component({
   selector: "next-of-kin",

@@ -6,25 +6,25 @@ import { Router } from "@angular/router";
 
 /*************************** Services & Models *************************/
 /*Services*/
-import { MessageService } from '@app/services/app.message.service';
-import { HttpService } from '@app/services/app.http.service';
-import { StaffApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
+import { MessageService } from 'src/app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { StaffApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 /*Models*/
-import { SaveStaffForOtherBranch } from '@staff/models/staff.model';
-import { ModuleList } from '@setup/models/roles.model';
-import { StaffView } from '@staff/models/staff.model';
+import { SaveStaffForOtherBranch } from 'src/app/staff/models/staff.model';
+import { ModuleList } from 'src/app/setup/models/roles.model';
+import { StaffView } from 'src/app/staff/models/staff.model';
 
 /****************** Components ************/
-import { RoleViewComponent } from '@app/setup/role/role-view/role-view.component';
+import { RoleViewComponent } from 'src/app/setup/role/role-view/role-view.component';
 
 /********************** Configurations ***********************/
-import { environment } from "@env/environment";
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { environment } from "src/environments/environment";
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 
 @Component({

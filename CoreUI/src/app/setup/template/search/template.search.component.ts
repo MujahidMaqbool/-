@@ -6,25 +6,25 @@ import { MatPaginator } from '@angular/material/paginator';
 
 /********************* Services & Models ********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /* Models*/
-import { TemplateSearchParameter, TemplateList, TemplateView } from '@setup/models/template.model';
+import { TemplateSearchParameter, TemplateList, TemplateView } from 'src/app/setup/models/template.model';
 
 /********************** Common ***************************/
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 /********************** Components *********************************/
-import { TemplateSaveComponent } from "@setup/template/save/template.save.component";
-import { Messages } from '@app/helper/config/app.messages';
-import { Configurations } from '@app/helper/config/app.config';
-import { TemplateApi } from '@app/helper/config/app.webapi';
-import { TemplateType } from '@app/helper/config/app.enums';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { TemplateSaveComponent } from "src/app/setup/template/save/template.save.component";
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { TemplateApi } from 'src/app/helper/config/app.webapi';
+import { TemplateType } from 'src/app/helper/config/app.enums';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 @Component({
   selector: 'template-search',

@@ -6,30 +6,30 @@ import { SubscriptionLike as ISubscription, Observable } from 'rxjs';
 
 /********************** Services & Models *********************/
 /* Models */
-import { CompanyDetails, CompanyInfo } from '@setup/models/company.details.model';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { CompanyDetails, CompanyInfo } from 'src/app/setup/models/company.details.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { CompanyDetailsApi } from '@helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { CompanyDetailsApi } from 'src/app/helper/config/app.webapi';
 
 /***************** Common *********************/
-import { CommonService } from '@app/services/common.service';
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { CommonService } from 'src/app/services/common.service';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 /**************** Configuration ***********/
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { AppUtilities } from '@app/helper/aap.utilities';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
 
 /**************** Components ***********/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
   selector: 'company-details',

@@ -6,10 +6,10 @@ import { PointOfSaleInvoiceHistoryComponent } from './invoice-history/pos.invoic
 import { PointOfSaleBookingComponent } from './booking/pos.booking.component';
 import { POSClassBookingDetailComponent } from './booking/pos.class.booking.detail.component';
 import { POSClassAttendanceComponent } from './class-attendance/pos.class.attendance.component';
-import { PagePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_Module, ENU_Permission_PointOfSale } from '@app/helper/config/app.module.page.enums';
+import { PagePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_Module, ENU_Permission_PointOfSale } from 'src/app/helper/config/app.module.page.enums';
 import { POSSearchFromComponent } from './forms/form.search.component';
-import { WaitListComponent } from '@app/customer-shared-module/wait-list/wait-list.component';
+import { WaitListComponent } from 'src/app/customer-shared-module/wait-list/wait-list.component';
 
 const routes: Routes = [
   {

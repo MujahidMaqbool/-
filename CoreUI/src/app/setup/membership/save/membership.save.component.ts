@@ -8,12 +8,12 @@ import { MatOption } from '@angular/material/core';
 /********************** START: Service & Models *********************/
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { CommonService } from '@app/services/common.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { CommonService } from 'src/app/services/common.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
 import {
@@ -25,34 +25,30 @@ import {
     MembershipBenefits,
     MembershipItemsBenefits,
     AddMembershipItemsBenefits,
-} from '@setup/models/membership.model';
-import { Tax, ApiResponse, DD_Branch } from '@app/models/common.model';
+} from 'src/app/setup/models/membership.model';
+import { Tax, ApiResponse, DD_Branch } from 'src/app/models/common.model';
 /********************** START: Common *********************/
-import { Configurations, MembershipBenefitTypeName, MembershipBenefitTypesName } from '@helper/config/app.config'
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { MembershipApi } from '@app/helper/config/app.webapi';
-import { WizardforSetupMembership, WeekDays, MembershipType, MembershipDurationType, ENU_MembershipPaymetType, MembershipBenefitType, ENU_MemberShipBenefitDurations, POSItemType, ENU_MemberShipItemTypeName, ENU_Package } from "@helper/config/app.enums";
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-//import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { NumberValidator } from '@app/shared/helper/number.validator';
+import { Configurations, MembershipBenefitTypeName, MembershipBenefitTypesName } from 'src/app/helper/config/app.config'
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { MembershipApi } from 'src/app/helper/config/app.webapi';
+import { WizardforSetupMembership, WeekDays, MembershipType, MembershipDurationType, ENU_MembershipPaymetType, MembershipBenefitType, ENU_MemberShipBenefitDurations, POSItemType, ENU_MemberShipItemTypeName, ENU_Package } from "src/app/helper/config/app.enums";
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+//import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { NumberValidator } from 'src/app/shared/helper/number.validator';
 import { BenefitItemTypesComponent } from './benifit-item-types/benefit.item.types.component';
-import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion
 
 @Component({
     selector: 'membership-save',
-    templateUrl: './membership.save.component.html',
-    providers: [{
-        provide: MAT_STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false }
-    }]
+    templateUrl: './membership.save.component.html'
 })
 export class MembershipSaveComponent extends AbstractGenericComponent implements OnInit, AfterViewInit {
 

@@ -1,7 +1,7 @@
 ﻿/********************* Angular References ********************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { SaveClientComponent } from '@customer/client/save/save.client.component';
+import { SaveClientComponent } from 'src/app/customer/client/save/save.client.component';
 
 /**********************Component*********************/
 

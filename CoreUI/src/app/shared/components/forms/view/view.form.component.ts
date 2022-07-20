@@ -3,19 +3,19 @@ import { Component, OnInit, Inject, ViewChild, EventEmitter, Output, ElementRef 
 /*********************** Material Reference *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 /*********************** Material Reference *************************/
-import { CustomFormView, CustomerFormsInfromation } from '@app/models/customer.form.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { environment } from '@env/environment';
+import { CustomFormView, CustomerFormsInfromation } from 'src/app/models/customer.form.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { environment } from 'src/environments/environment';
 
 import SignaturePad from 'signature_pad';
 
-import { CustomFormStatus, ENU_DateFormatName, ENU_FromTypeName } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { MessageService } from '@app/services/app.message.service';
+import { CustomFormStatus, ENU_DateFormatName, ENU_FromTypeName } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MessageService } from 'src/app/services/app.message.service';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { Configurations } from '@app/helper/config/app.config';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 @Component({
   selector: 'view-form',

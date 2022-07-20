@@ -1,19 +1,19 @@
 import { Component, Input } from "@angular/core";
 /* Services*/
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 /* Models */
-import { PersonDetail } from '@models/common.model';
-import { PersonInfo } from "@app/models/common.model";
-import { ActivityPersonInfo } from "@app/models/activity.model";
+import { PersonDetail } from 'src/app/models/common.model';
+import { PersonInfo } from "src/app/models/common.model";
+import { ActivityPersonInfo } from "src/app/models/activity.model";
 
 /********************** Common *********************/
-import { StaffApi } from '@app/helper/config/app.webapi';
-import { Messages } from "@app/helper/config/app.messages";
-import { environment } from '@env/environment';
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { ImagesPlaceholder } from "@app/helper/config/app.placeholder";
-import { AppUtilities } from "@app/helper/aap.utilities";
+import { StaffApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from "src/app/helper/config/app.messages";
+import { environment } from 'src/environments/environment';
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
+import { AppUtilities } from "src/app/helper/aap.utilities";
 
 @Component({
     selector: 'staff-basic-info',

@@ -11,23 +11,23 @@ import { MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
 
 /************* Services & Models *******************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
-import { Membership, PaymentGateway, MembershipTranscation } from '@app/customer/member/models/member.membership.payments.model';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { Messages } from '@app/helper/config/app.messages';
+import { Membership, PaymentGateway, MembershipTranscation } from 'src/app/customer/member/models/member.membership.payments.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 /************** Configurations ******************/
-import { MemberPaymentsApi } from '@app/helper/config/app.webapi';
-import { Configurations } from '@app/helper/config/app.config';
-import { ENU_PaymentGateway, MembershipPaymentType, MembershipDurationType, ENU_DateFormatName, ENU_PaymentStatus } from '@app/helper/config/app.enums';
-import { DatePickerComponent } from '@app/application-dialog-module/date-picker/date.picker.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { ENU_PaymentGateway, MembershipPaymentType, MembershipDurationType, ENU_DateFormatName, ENU_PaymentStatus } from 'src/app/helper/config/app.enums';
+import { DatePickerComponent } from 'src/app/application-dialog-module/date-picker/date.picker.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion
 

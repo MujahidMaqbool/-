@@ -5,28 +5,28 @@ import { Location } from '@angular/common';
 /********************** Services & Models *********************/
 /* Models */
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { PrintService } from '@services/print.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { PrintService } from 'src/app/services/print.service';
 
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
 import { PrinterSetup } from '../../models/printer.setup.model';
-import { PrinterSetupApi } from '@app/helper/config/app.webapi';
-import { DiscountSetupApi } from '@app/helper/config/app.webapi';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { LoaderService } from '@app/services/app.loader.service';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { CommonService } from '@app/services/common.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { PrinterSetupApi } from 'src/app/helper/config/app.webapi';
+import { DiscountSetupApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { LoaderService } from 'src/app/services/app.loader.service';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { CommonService } from 'src/app/services/common.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
   selector: 'printer-setup-details',

@@ -3,25 +3,25 @@ import { SubscriptionLike } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 
 /********************** START: Application Components *********************/
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { MembershipViewComponent } from '@app/shared/components/membership-view/membership.view.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { MembershipViewComponent } from 'src/app/shared/components/membership-view/membership.view.component';
 /********************** START: Service & Models *********************/
-import { MembershipList, Membership, SearchMembership } from '@setup/models/membership.model';
-import { DD_Branch, ApiResponse } from '@app/models/common.model';
+import { MembershipList, Membership, SearchMembership } from 'src/app/setup/models/membership.model';
+import { DD_Branch, ApiResponse } from 'src/app/models/common.model';
 
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 /********************** START: Common *********************/
-import { Configurations, MembershipTypeName } from '@helper/config/app.config'
-import { Messages } from '@app/helper/config/app.messages';
-import { MembershipApi } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { MembershipType, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { Configurations, MembershipTypeName } from 'src/app/helper/config/app.config'
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MembershipApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { MembershipType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 
 @Component({

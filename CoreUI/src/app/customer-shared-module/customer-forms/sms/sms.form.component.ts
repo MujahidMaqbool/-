@@ -5,29 +5,29 @@ import { NgForm } from "@angular/forms";
 /** Material Reference */
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 /** Services & Models */
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 import {
   ActivityPersonInfo,
   Template,
   SMSActivity,
-} from "@app/models/activity.model";
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
+} from "src/app/models/activity.model";
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
 /**Configurations */
-import { Configurations } from "@app/helper/config/app.config";
-import { Messages } from "@app/helper/config/app.messages";
+import { Configurations } from "src/app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
 import { SubscriptionLike as ISubscription } from "rxjs";
-import { TemplateType, EnumSaleSourceType, FormQueryType, ENU_EmailSmsFor } from "@app/helper/config/app.enums";
-import { environment } from '@env/environment';
+import { TemplateType, EnumSaleSourceType, FormQueryType, ENU_EmailSmsFor } from "src/app/helper/config/app.enums";
+import { environment } from 'src/environments/environment';
 import {
   MemberActivityApi,
   CustomerFormApi,
   LeadActivityApi,
   StaffActivityApi,
   StaffApi,
-} from "@app/helper/config/app.webapi";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+} from "src/app/helper/config/app.webapi";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
   selector: "sms-form",

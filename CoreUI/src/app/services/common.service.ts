@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@app/services/app.http.service';
-import { SaleApi, CustomerApi, StaffApi, DeleteFile, CustomerRewardProgramApi, ProductApi } from '@app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { SaleApi, CustomerApi, StaffApi, DeleteFile, CustomerRewardProgramApi, ProductApi } from 'src/app/helper/config/app.webapi';
 import { MessageService } from './app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { DataSharingService } from './data.sharing.service';
-import { DD_Branch, ApiResponse, AllWaitlist, WaitlistItemList } from '@app/models/common.model';
-import { ActivityPersonInfo } from '@app/models/activity.model';
+import { DD_Branch, ApiResponse, AllWaitlist, WaitlistItemList } from 'src/app/models/common.model';
+import { ActivityPersonInfo } from 'src/app/models/activity.model';
 
 /********************** Services ***********************/
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { AllAttendees, CancelationPolicyDetails, ClassAttendanceDetail, FreeClassesMemberships } from '@app/models/attendee.model';
-import { CustomerType, ENU_BookingStatusOption, ENU_BookingStatusValue, ENU_DurationType, ENU_Package, POSItemType, AddressType, ENU_ChargeFeeType } from '@app/helper/config/app.enums';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { AllAttendees, CancelationPolicyDetails, ClassAttendanceDetail, FreeClassesMemberships } from 'src/app/models/attendee.model';
+import { CustomerType, ENU_BookingStatusOption, ENU_BookingStatusValue, ENU_DurationType, ENU_Package, POSItemType, AddressType, ENU_ChargeFeeType } from 'src/app/helper/config/app.enums';
 import { DateTimeService } from './date.time.service';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { DiscountType, SaleArea } from '@app/helper/config/app.config';
-import { POSCartItem, POSClient, SaleInvoice, POSSaleDetail } from '@app/point-of-sale/models/point.of.sale.model';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { DiscountType, SaleArea } from 'src/app/helper/config/app.config';
+import { POSCartItem, POSClient, SaleInvoice, POSSaleDetail } from 'src/app/point-of-sale/models/point.of.sale.model';
 import { SubscriptionLike } from 'rxjs';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService extends AbstractGenericComponent {

@@ -10,36 +10,31 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 
 /**********************  Configurations *********************/
-import { EnumSaleSourceType, ENU_Package, ProductAreaEnum, WizardforProduct } from '@app/helper/config/app.enums';
-import { ProductApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
+import { EnumSaleSourceType, ENU_Package, ProductAreaEnum, WizardforProduct } from 'src/app/helper/config/app.enums';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 /********************** Services & Models *********************/
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { ProductBranchPermissionViewModel, ProductMediaViewModel, ProductVariantBranchViewModel, SaveProductModel, SaveProductVariantBranchViewModel } from '@app/product/models/product.model';
-import { Configurations } from '@app/helper/config/app.config';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ProductBranchPermissionViewModel, ProductMediaViewModel, ProductVariantBranchViewModel, SaveProductModel, SaveProductVariantBranchViewModel } from 'src/app/product/models/product.model';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { MatOption } from '@angular/material/core';
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
 import { ProductPriceComponent } from '../product-price/product.price.component';
-import { environment } from 'environments/environment';
-import { AppUtilities } from '@app/helper/aap.utilities';
+import { environment } from 'src/environments/environment';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
 import { HttpClient } from '@angular/common/http';
 import { SaveProductPriceComponent } from '../product-price/save/save.product.price.component';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { element } from 'protractor';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 // #region end
 
 @Component({
   selector: "app-save-product",
   templateUrl: "./save.products.component.html",
-  providers: [{
-    provide: MAT_STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false }
-  }]
 })
 export class SaveProductComponent implements OnInit {
 

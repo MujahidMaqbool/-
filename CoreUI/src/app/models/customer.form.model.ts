@@ -1,4 +1,4 @@
-import { Configurations } from 'app/helper/config/app.config';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 
 export class CustomerFormSearchModel {

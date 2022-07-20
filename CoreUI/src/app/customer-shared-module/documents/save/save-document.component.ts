@@ -6,14 +6,14 @@ import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Services & Models ***********************/
-import { MemberDocument } from "@customer/member/models/members.model";
-import { HttpService } from '@services/app.http.service';
+import { MemberDocument } from "src/app/customer/member/models/members.model";
+import { HttpService } from 'src/app/services/app.http.service';
 
 /********************** Common *********************/
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { MemberApi } from '@app/helper/config/app.webapi';
-import { MessageService } from '@app/services/app.message.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MemberApi } from 'src/app/helper/config/app.webapi';
+import { MessageService } from 'src/app/services/app.message.service';
 
 @Component({
     selector: 'save-member-document',

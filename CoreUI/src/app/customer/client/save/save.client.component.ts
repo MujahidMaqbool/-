@@ -12,11 +12,11 @@ import { NgForm, FormControl } from "@angular/forms";
 import { SubscriptionLike as ISubscription } from "rxjs";
 
 /***************** Component ******************/
-import { SaleHistoryComponent } from "@shared/components/sale/sale-history/sale.history.component";
+import { SaleHistoryComponent } from "src/app/shared/components/sale/sale-history/sale.history.component";
 
 /************* Services & Models ***************/
 /* Services */
-import { HttpService } from "@services/app.http.service";
+import { HttpService } from "src/app/services/app.http.service";
 
 /* Models*/
 import {
@@ -24,65 +24,65 @@ import {
   CountryList,
   EnquirySourceTypeList,
   Client,
-} from "@app/customer/client/models/client.model";
+} from "src/app/customer/client/models/client.model";
 import {
   ApiResponse,
   StateCounty,
   DD_Branch,
   CustomerAddress,
   AllPerson,
-} from "@app/models/common.model";
-import { CompanyDetails } from "@setup/models/company.details.model";
+} from "src/app/models/common.model";
+import { CompanyDetails } from "src/app/setup/models/company.details.model";
 
 /********************** Common ***************************/
-import { Messages } from "@app/helper/config/app.messages";
-import { CommonService } from "@app/services/common.service";
-import { DateTimeService } from "@app/services/date.time.service";
-import { ImageEditorPopupComponent } from "@app/application-dialog-module/image-editor/image.editor.popup.component";
-import { environment } from "@env/environment";
+import { Messages } from "src/app/helper/config/app.messages";
+import { CommonService } from "src/app/services/common.service";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { ImageEditorPopupComponent } from "src/app/application-dialog-module/image-editor/image.editor.popup.component";
+import { environment } from "src/environments/environment";
 import {
   CustomerType,
   AddressType,
   ENU_Package,
   ENU_DateFormatName,
   ENU_CancelItemType,
-} from "@app/helper/config/app.enums";
-import { DeleteConfirmationComponent } from "@app/application-dialog-module/delete-dialog/delete.confirmation.component";
+} from "src/app/helper/config/app.enums";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
 
 /********* Configurations *********** */
 import {
   ENU_Permission_ClientAndMember,
   ENU_Permission_Module,
-} from "@app/helper/config/app.module.page.enums";
+} from "src/app/helper/config/app.module.page.enums";
 import {
   ClientApi,
   CustomerApi,
   MemberMembershipApi,
-} from "@app/helper/config/app.webapi";
+} from "src/app/helper/config/app.webapi";
 import {
   Configurations,
   CustomerTypeName,
-} from "@app/helper/config/app.config";
+} from "src/app/helper/config/app.config";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
-import { GenericAlertDialogComponent } from "@app/application-dialog-module/generic-alert-dialog/generic.alert.dialog.component";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { AppUtilities } from "@app/helper/aap.utilities";
-import { TrimPipe } from "@app/shared/pipes/trim";
-import { FillFormComponent } from "@app/shared/components/fill-form/fill.form.component";
-import { EditCustomerEmailComponent } from "@app/customer-shared-module/edit-email/edit.customer.email.component";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { GenericAlertDialogComponent } from "src/app/application-dialog-module/generic-alert-dialog/generic.alert.dialog.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { AppUtilities } from "src/app/helper/aap.utilities";
+import { TrimPipe } from "src/app/shared/pipes/trim";
+import { FillFormComponent } from "src/app/shared/components/fill-form/fill.form.component";
+import { EditCustomerEmailComponent } from "src/app/customer-shared-module/edit-email/edit.customer.email.component";
 import { BranchSubscribeComponent } from "../branch-subscribe/branch.subscribe.component";
-import { variables } from "@app/helper/config/app.variable";
-import { MessageService } from "@app/services/app.message.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { variables } from "src/app/helper/config/app.variable";
+import { MessageService } from "src/app/services/app.message.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 import { debounceTime } from "rxjs/operators";
-import { AddLeadMembershipComponent } from "@app/customer-shared-module/add-lead-membership/add.lead.membership.component";
-import { SaveMemberMembershipPopup } from "@app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup";
-import { AuthService } from "@app/helper/app.auth.service";
-import { AlertConfirmationComponent } from "@app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
+import { AddLeadMembershipComponent } from "src/app/customer-shared-module/add-lead-membership/add.lead.membership.component";
+import { SaveMemberMembershipPopup } from "src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { AlertConfirmationComponent } from "src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
 import { SubscriptionLike } from "rxjs";
 import * as _ from "lodash";
-import { ConfirmResetCountComponent } from "@app/customer-shared-module/confirm-reset-count/confirm.reset.count.component";
+import { ConfirmResetCountComponent } from "src/app/customer-shared-module/confirm-reset-count/confirm.reset.count.component";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 
 @Component({

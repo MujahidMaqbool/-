@@ -6,26 +6,26 @@ import { NgForm } from '@angular/forms';
 /********************** Service & Models *********************/
 /*Services*/
 
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 /*Models*/
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 import {
     SaveAutomation, EventCategoryType, EventType, Audience, AutomationRuleTemplate, AudienceTemplate,
     DurationType, RuleAudience, AutomationRuleAudienceCommunication, AutomationRuleStaffPosition, AutomationRuleAudienceGroup
-} from '@app/models/automation.model';
+} from 'src/app/models/automation.model';
 /********************** Common and Customs *********************/
-import { AutomationRuleApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
-import { TrimPipe } from "@shared/pipes/trim";
+import { AutomationRuleApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { TrimPipe } from "src/app/shared/pipes/trim";
 /********* Configurations ************/
 
-import { Configurations } from '@app/helper/config/app.config';
-import { ENU_EventCategoryType, ENU_AudienceType, ENU_CommunicationType, ENU_AutomationDurationType, ENU_NotificationTrigger } from '@app/helper/config/app.enums';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { ENU_EventCategoryType, ENU_AudienceType, ENU_CommunicationType, ENU_AutomationDurationType, ENU_NotificationTrigger } from 'src/app/helper/config/app.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'save-automation',

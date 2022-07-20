@@ -2,15 +2,15 @@
 import { Component, OnInit, Inject, EventEmitter, Output } from "@angular/core";
 import {FormBuilder,FormGroup,Validators, AbstractControl} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
-import { Messages } from "@app/helper/config/app.messages";
-import { SchedulerApi } from "@app/helper/config/app.webapi";
-import { ApiResponse } from "@app/models/common.model";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { Messages } from "src/app/helper/config/app.messages";
+import { SchedulerApi } from "src/app/helper/config/app.webapi";
+import { ApiResponse } from "src/app/models/common.model";
 
 /**************** Services & Models ***************/
-import { FavouriteViewModel } from '@scheduler/models/favourite.view.model';
+import { FavouriteViewModel } from 'src/app/scheduler/models/favourite.view.model';
 
 /************** Configurations **************/
 

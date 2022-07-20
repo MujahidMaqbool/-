@@ -7,33 +7,33 @@ import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Services & Models *********************/
 /* Models */
-import { MemberActivity, MemberActivityTabOptions, MemberActivityCount, MemberActivityInfo } from '@customer/member/models/member.activity.model';
-import { ActivityPersonInfo } from '@models/activity.model';
+import { MemberActivity, MemberActivityTabOptions, MemberActivityCount, MemberActivityInfo } from 'src/app/customer/member/models/member.activity.model';
+import { ActivityPersonInfo } from 'src/app/models/activity.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /********************** Common & Customs *********************/
-import { Configurations } from '@helper/config/app.config';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 /********************** Components *********************/
-import { SaveMemberActivityComponent } from '@customer/member/activities/save/save.member.activity.component';
+import { SaveMemberActivityComponent } from 'src/app/customer/member/activities/save/save.member.activity.component';
 
 /********************** Configurations *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { MemberActivityApi } from '@app/helper/config/app.webapi';
-import { environment } from '@env/environment';
-import { PersonInfo } from '@app/models/common.model';
-import { ENU_ActivityType, CustomerType, ENU_DateFormatName, ENU_ActivitySubType } from '@app/helper/config/app.enums';
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
-import { AuthService } from '@app/helper/app.auth.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MemberActivityApi } from 'src/app/helper/config/app.webapi';
+import { environment } from 'src/environments/environment';
+import { PersonInfo } from 'src/app/models/common.model';
+import { ENU_ActivityType, CustomerType, ENU_DateFormatName, ENU_ActivitySubType } from 'src/app/helper/config/app.enums';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
 
 
 @Component({

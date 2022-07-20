@@ -6,22 +6,22 @@ import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Services & Models *********************/
 /* Models */
-import { Roles, RoleSearchParameter } from '@app/setup/models/roles.model';
+import { Roles, RoleSearchParameter } from 'src/app/setup/models/roles.model';
 
 
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 /********************** component & Common *********************/
-import { Configurations } from '@app/helper/config/app.config';
-import { RoleApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { RoleApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { RoleViewComponent } from '../role-view/role-view.component';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 
 @Component({

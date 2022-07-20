@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from './app.auth.service';
-import { MessageService } from '@app/services/app.message.service';
+import { MessageService } from 'src/app/services/app.message.service';
 import { Messages } from './config/app.messages';
-import { ApiResponse } from '@app/models/common.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
 @Injectable({ providedIn: 'root' })
 export class ModulePermissionGuard implements CanActivate {

@@ -7,10 +7,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /** Models */
-import { StaffGeoLocation ,LatitudeLongitude} from '@staff/models/attendance.timesheet.model'
+import { StaffGeoLocation ,LatitudeLongitude} from 'src/app/staff/models/attendance.timesheet.model'
 
 /** Configurations **/
-import { ENU_CheckIn_Out_Type } from '@app/helper/config/app.enums';
+import { ENU_CheckIn_Out_Type } from 'src/app/helper/config/app.enums';
 
 @Component({
   selector: 'app-geo-location',

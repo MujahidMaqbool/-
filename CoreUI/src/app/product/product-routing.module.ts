@@ -7,8 +7,8 @@ import { AttributesSearchComponent } from './attributes/search/search.attribute.
 import { SearchSuppliersComponent } from './suppliers/search/search.suppliers.component';
 import { SaveSupplierComponent } from './suppliers/save/save.supplier.component';
 import { SearchBrandsComponent } from './brands/search/search.brands.component';
-import { PagePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_Module, ENU_Permission_Product } from '@app/helper/config/app.module.page.enums';
+import { PagePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_Module, ENU_Permission_Product } from 'src/app/helper/config/app.module.page.enums';
 import { SearchProductsComponent } from './products/search/search.products.component';
 import { SaveProductComponent } from './products/save/save.products.component';
 import { SearchPurchaseOrderComponent } from './purchase-order/search/search.purchase.order.component';

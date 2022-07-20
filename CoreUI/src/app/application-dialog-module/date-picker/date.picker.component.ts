@@ -11,8 +11,8 @@ import {
   AfterViewChecked
 } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { DateTimeService } from '@app/services/date.time.service';
-import { Configurations } from '@app/helper/config/app.config';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 import * as moment from 'moment-timezone';
 import { Moment } from 'moment-timezone';

@@ -3,27 +3,27 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { SubscriptionLike as ISubscription } from "rxjs";
 /********************** Services & Models *********************/
 /* Models */
-import { SavePageMember, MemberInfo } from '@customer/member/models/members.model'
+import { SavePageMember, MemberInfo } from 'src/app/customer/member/models/members.model'
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
+import { HttpService } from 'src/app/services/app.http.service';
 //import { LeadOnBoardComponent } from '../../../lead/Lead-on-board/lead.on.board.component';
 
 /********************** Common & Customs *********************/
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /**********************Component*********************/
-import { SaveMemberDetailsComponent } from "@customer/member/save/save-member-details/save.member.details.component";
+import { SaveMemberDetailsComponent } from "src/app/customer/member/save/save-member-details/save.member.details.component";
 
 /********************** Configurations *********************/
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { MemberApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MemberApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
 import { Router } from '@angular/router';
-import { CommonService } from '@app/services/common.service';
+import { CommonService } from 'src/app/services/common.service';
 
 
 

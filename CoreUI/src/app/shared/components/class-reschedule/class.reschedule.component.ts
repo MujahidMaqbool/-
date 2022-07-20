@@ -9,34 +9,34 @@ import { SubscriptionLike } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Component *********************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { RescheduleBookingComponent } from '../reschedule-booking/reschedule.booking.component';
 import { RedeemMembershipComponent } from '../redeem-membership/redeem.membership.component';
 import { ViewFormComponent } from '../forms/view/view.form.component';
-import { AttendeeComponent } from '@app/attendee/save-search/attendee.component';
+import { AttendeeComponent } from 'src/app/attendee/save-search/attendee.component';
 
 /********************** Services & Models *********************/
-import { AttendeeClass, ClassAttendanceDetail, ClassInfo, FreeClassesMemberships } from '@app/models/attendee.model';
-import { ApiResponse, CustomerMemberhsip, DD_Branch, PersonInfo } from '@app/models/common.model';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { AttendeeClass, ClassAttendanceDetail, ClassInfo, FreeClassesMemberships } from 'src/app/models/attendee.model';
+import { ApiResponse, CustomerMemberhsip, DD_Branch, PersonInfo } from 'src/app/models/common.model';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { MatDialogService } from '../generics/mat.dialog.service';
-import { MessageService } from '@app/services/app.message.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { POSCartItem, POSFormsDetail } from '@app/point-of-sale/models/point.of.sale.model';
-import { CustomerFormsInfromation, CustomFormView } from '@app/models/customer.form.model';
-import { CommonService } from '@app/services/common.service';
-import { HttpService } from '@app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { POSCartItem, POSFormsDetail } from 'src/app/point-of-sale/models/point.of.sale.model';
+import { CustomerFormsInfromation, CustomFormView } from 'src/app/models/customer.form.model';
+import { CommonService } from 'src/app/services/common.service';
+import { HttpService } from 'src/app/services/app.http.service';
 
 /********************** Common *********************/
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
 
 /**********************  Configurations *********************/
-import { ClassStatus, ENU_CancelItemType, ENU_DateFormatName, POSItemType, ENU_Package } from '@app/helper/config/app.enums';
-import { ClassStatusName, Configurations, DiscountType } from '@app/helper/config/app.config';
-import { AttendeeApi, CustomerFormApi, PointOfSaleApi, SaleApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
-import { Memberships } from '@app/setup/models/custom.form.model';
+import { ClassStatus, ENU_CancelItemType, ENU_DateFormatName, POSItemType, ENU_Package } from 'src/app/helper/config/app.enums';
+import { ClassStatusName, Configurations, DiscountType } from 'src/app/helper/config/app.config';
+import { AttendeeApi, CustomerFormApi, PointOfSaleApi, SaleApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Memberships } from 'src/app/setup/models/custom.form.model';
 
 declare var $: any;
 

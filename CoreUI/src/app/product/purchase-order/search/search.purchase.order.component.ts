@@ -2,32 +2,32 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 /***********Components *************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { ReceiveOrderComponent } from '../receive-order/receive.order.component';
 import { EmailOrderComponent } from '../email-order/email.order.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { ViewPurchaseOrderComponent } from '../view/view.purchase.order.component';
 /********************** Services & Models *********************/
 /* Services */
-import { HttpService } from "@services/app.http.service";
-import { MessageService } from "@services/app.message.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 import { MatPaginator } from "@angular/material/paginator";
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 /* Models */
-import { PurchaseOrderSearchParameter, BranchList, SuppliersList } from "@app/product/models/purchaseOrder.model";
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
-import { Messages } from '@app/helper/config/app.messages';
-import { AuthService } from '@app/helper/app.auth.service';
-import { PurchaseOrderApi } from '@app/helper/config/app.webapi';
-import { EnumPurchaseOrderStatus, EnumPurchaseOrderStatusName, ENU_DateFormatName, FileType, EnumSaleSourceType } from '@app/helper/config/app.enums';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { PurchaseOrderSearchParameter, BranchList, SuppliersList } from "src/app/product/models/purchaseOrder.model";
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
+import { EnumPurchaseOrderStatus, EnumPurchaseOrderStatusName, ENU_DateFormatName, FileType, EnumSaleSourceType } from 'src/app/helper/config/app.enums';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
 import { SubscriptionLike } from 'rxjs';
-import { Configurations } from '@app/helper/config/app.config';
-import { CommonService } from '@app/services/common.service';
-import { ENU_Permission_Module, ENU_Permission_Product } from '@app/helper/config/app.module.page.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { CommonService } from 'src/app/services/common.service';
+import { ENU_Permission_Module, ENU_Permission_Product } from 'src/app/helper/config/app.module.page.enums';
 
 
 @Component({

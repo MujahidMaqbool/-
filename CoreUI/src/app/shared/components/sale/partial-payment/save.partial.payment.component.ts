@@ -9,42 +9,42 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 
 /********************** Service & Models *********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { LoaderService } from '@app/services/app.loader.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { StripeService } from '@app/services/stripe.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { LoaderService } from 'src/app/services/app.loader.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { StripeService } from 'src/app/services/stripe.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 import { MatDialogService } from '../../generics/mat.dialog.service';
 
 
 /* Models */
-import { SaleDetail, ReceiptItem, ReceiptModel, ReceiptPaymentMethod, CustomerRewardPointsDetailForPOS } from '@models/sale.model';
-import { SaleInvoice, POSCartItem, SavePartialInvocie, StripePaymentIntent, POSFormsDetail, SaveSaleCardInvoice, PayTabPaymentMode, SalePaymentMode } from '@pos/models/point.of.sale.model';
-import { ApiResponse, CustomerBasicInfo } from '@app/models/common.model';
-import { AuthenticateCard } from '@customer/member/models/member.gateways.model';
+import { SaleDetail, ReceiptItem, ReceiptModel, ReceiptPaymentMethod, CustomerRewardPointsDetailForPOS } from 'src/app/models/sale.model';
+import { SaleInvoice, POSCartItem, SavePartialInvocie, StripePaymentIntent, POSFormsDetail, SaveSaleCardInvoice, PayTabPaymentMode, SalePaymentMode } from 'src/app/point-of-sale/models/point.of.sale.model';
+import { ApiResponse, CustomerBasicInfo } from 'src/app/models/common.model';
+import { AuthenticateCard } from 'src/app/customer/member/models/member.gateways.model';
 
 /********************** Components *********************************/
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
 import { PaymentFailedComponent } from '../payment-failed/payment.failed.component';
 import { PrintReceiptComponent } from '../../print-receipt/print.receipt.component';
 import { PartPaymentComponent } from '../part-payment-alert/part.payment.component';
-import { AddStripeCustomerComponent } from '@app/gateway/stripe/add.stripe.customer.component';
-import { PayTabsCustomerComponent } from '@app/gateway/pay-tabs/paytabs.customer.component';
-import { StripeReaderPopupComponent } from '@app/home/stripe.reader.popup/stripe.reader.popup.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AddStripeCustomerComponent } from 'src/app/gateway/stripe/add.stripe.customer.component';
+import { PayTabsCustomerComponent } from 'src/app/gateway/pay-tabs/paytabs.customer.component';
+import { StripeReaderPopupComponent } from 'src/app/home/stripe.reader.popup/stripe.reader.popup.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /******************  Configurations ****************************/
-import { Configurations, SaleArea, DiscountType } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { POSItemType, EnumSaleType, ENU_PaymentGateway, PersonType, EnumSaleStatusType, ENU_ReaderStatus, ENU_DateFormatName, CalculatorValue, ENU_ChargeFeeType, ENU_Action_ActivityType, ENU_BookingStatusOption, ENU_CancelItemType } from '@helper/config/app.enums';
-import { SaleApi, PointOfSaleApi, CustomerApi, GatewayIntegrationApi, DiscountSetupApi, CustomerRewardProgramApi, CustomerPaymentGatewayApi } from '@app/helper/config/app.webapi';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { ENU_Permission_Module, ENU_Permission_Individual, ENU_Permission_PointOfSale } from '@app/helper/config/app.module.page.enums';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
+import { Configurations, SaleArea, DiscountType } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { POSItemType, EnumSaleType, ENU_PaymentGateway, PersonType, EnumSaleStatusType, ENU_ReaderStatus, ENU_DateFormatName, CalculatorValue, ENU_ChargeFeeType, ENU_Action_ActivityType, ENU_BookingStatusOption, ENU_CancelItemType } from 'src/app/helper/config/app.enums';
+import { SaleApi, PointOfSaleApi, CustomerApi, GatewayIntegrationApi, DiscountSetupApi, CustomerRewardProgramApi, CustomerPaymentGatewayApi } from 'src/app/helper/config/app.webapi';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { ENU_Permission_Module, ENU_Permission_Individual, ENU_Permission_PointOfSale } from 'src/app/helper/config/app.module.page.enums';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
 
 @Component({
     selector: 'save-partial-payment',

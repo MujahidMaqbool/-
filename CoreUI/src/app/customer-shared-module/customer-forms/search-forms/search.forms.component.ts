@@ -3,33 +3,33 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 /***************** Component ******************/
 import { EmailFormComponent } from '../email/email.form.component';// will be implement later
 import { SmsFormComponent } from '../sms/sms.form.component';// will be implement later
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 /************* Services & Models ***************/
 /** Services */
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 /** Models*/
-import { ApiResponse, PersonInfo } from '@app/models/common.model';
-import { CustomerFormSearchModel, CustomerFormModel, CustomFormView, CustomerFormsInfromation } from '@app/models/customer.form.model';
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
+import { CustomerFormSearchModel, CustomerFormModel, CustomFormView, CustomerFormsInfromation } from 'src/app/models/customer.form.model';
 /********************** Common ***************************/
-import { Messages } from '@app/helper/config/app.messages';
+import { Messages } from 'src/app/helper/config/app.messages';
 /********* Material References *********** */
 import { MatPaginator } from '@angular/material/paginator';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 /********* Configurations *********** */
 import { SubscriptionLike as ISubscription } from 'rxjs';
-import { CustomerFormApi } from '@app/helper/config/app.webapi';
-import { Configurations } from '@helper/config/app.config'
+import { CustomerFormApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config'
 import { ActivatedRoute } from '@angular/router';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { CustomFormStatus, CustomerType, ENU_DateFormatName, ENU_pdfFor } from '@app/helper/config/app.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember, ENU_Permission_Lead } from '@app/helper/config/app.module.page.enums';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { CustomFormStatus, CustomerType, ENU_DateFormatName, ENU_pdfFor } from 'src/app/helper/config/app.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
 /********* Import components *********** */
-import { SaveFormsComponent } from '@app/shared/components/forms/save-forms/save.forms.component';
-import { ViewFormComponent } from '@app/shared/components/forms/view/view.form.component';
+import { SaveFormsComponent } from 'src/app/shared/components/forms/save-forms/save.forms.component';
+import { ViewFormComponent } from 'src/app/shared/components/forms/view/view.form.component';
 
 @Component({
     selector: 'search-forms',

@@ -1,13 +1,13 @@
 import { Component, Inject, EventEmitter, Output } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CustomerFormApi, AttendeeApi, SchedulerServicesApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { CustomerFormsInfromation, CustomFormView } from '@app/models/customer.form.model';
+import { CustomerFormApi, AttendeeApi, SchedulerServicesApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { CustomerFormsInfromation, CustomFormView } from 'src/app/models/customer.form.model';
 import { ViewFormComponent } from '../forms/view/view.form.component';
-import { HttpService } from '@app/services/app.http.service';
+import { HttpService } from 'src/app/services/app.http.service';
 import { MatDialogService } from '../generics/mat.dialog.service';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 @Component({
     selector: 'fill-form',

@@ -7,19 +7,19 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubscriptionLike as ISubscription } from "rxjs";
 
 /********************** Common *********************/
-import { Configurations } from '@helper/config/app.config';
-import { StaffActivityApi } from '@helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { StaffActivityApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 /********************** Components *********************/
 
 
 /********************** Services & Models *********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /* Models */
 
@@ -27,10 +27,10 @@ import {
     PriorityType,
     Template,
     ActivityPersonInfo
-} from '@models/activity.model';
-import { ENU_ActivityType, TemplateType, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { StaffActivityTabOptions, TaskActivity, EmailActivity, NoteActivity, SMSActivity } from '@app/staff/models/staff.activity.model';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+} from 'src/app/models/activity.model';
+import { ENU_ActivityType, TemplateType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { StaffActivityTabOptions, TaskActivity, EmailActivity, NoteActivity, SMSActivity } from 'src/app/staff/models/staff.activity.model';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion 
 

@@ -7,38 +7,38 @@ import { DxSchedulerComponent } from 'devextreme-angular';
 import Button from 'devextreme/ui/button';
 
 /** Services */
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /** Models */
-import { CellSelectedData, SchedulerSearchParam, StaffShiftDataSource } from '@scheduler/models/scheduler.model';
-import { StaffShift, UpdateStaffShift } from '@staff/models/staff.model';
-import { Branch } from '@setup/models/branch.model';
-import { ResourcesDataSource } from '@scheduler/models/class.model';
+import { CellSelectedData, SchedulerSearchParam, StaffShiftDataSource } from 'src/app/scheduler/models/scheduler.model';
+import { StaffShift, UpdateStaffShift } from 'src/app/staff/models/staff.model';
+import { Branch } from 'src/app/setup/models/branch.model';
+import { ResourcesDataSource } from 'src/app/scheduler/models/class.model';
 
 /** Messages & Constants, Customs */
-import { MessageService } from '@services/app.message.service';
-import { Configurations, SchedulerOptions } from '@helper/config/app.config';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Configurations, SchedulerOptions } from 'src/app/helper/config/app.config';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /** Component */
-import { SaveSchedulerStaffShiftComponent } from '@staff/attendance/shift/save/save.staff.shift.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffShiftApi } from '@app/helper/config/app.webapi';
-import { WeekDays, SchedulerWeekDays, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { environment } from '@env/environment';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { SaveSchedulerStaffShiftComponent } from 'src/app/staff/attendance/shift/save/save.staff.shift.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffShiftApi } from 'src/app/helper/config/app.webapi';
+import { WeekDays, SchedulerWeekDays, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import * as events from 'devextreme/events';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { DeleteSeriesComponent } from '@app/application-dialog-module/delete-dialog/delete.series.component';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { EditSeriesComponent } from '@app/shared/components/scheduler/edit-series/edit.series.component';
-import { DD_Branch } from '@app/models/common.model';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DeleteSeriesComponent } from 'src/app/application-dialog-module/delete-dialog/delete.series.component';
+import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { EditSeriesComponent } from 'src/app/shared/components/scheduler/edit-series/edit.series.component';
+import { DD_Branch } from 'src/app/models/common.model';
 declare var $: any;
 
 import Scrollable from 'devextreme/ui/scroll_view/ui.scrollable';  
@@ -549,11 +549,11 @@ export class ShiftCalendarComponent extends AbstractGenericComponent implements 
                     this.afterSaveStartDate = e.component.getStartViewDate();
                     this.afterSaveEndDate = e.component.getEndViewDate();
                     this.setStartDateAsEndDateInDayView(e.component.getEndViewDate());
-                    this.loadSearchFundamentals(true, false);
+                    //this.loadSearchFundamentals(true, false);
                 } catch (error) {
                     this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace("{0}", "shifts"));
                     console.log('Error while change dates from view options');
-                    this.loadSearchFundamentals(true);
+                    //this.loadSearchFundamentals(true);
                 }
             }, 1000);
             this.currentView = this.scheduler.currentView;
@@ -867,6 +867,7 @@ export class ShiftCalendarComponent extends AbstractGenericComponent implements 
                         this.mapResponseSchedulerDataToModel(data);
 
                     if(isLoadFilterStaffResourceGroup) this.filterStaffResourceGroup(this.searchStaff);
+                        debugger;
                     this.scheduler.instance.getDataSource().reload();
                     }else{
                         this._messageService.showErrorMessage(data.MessageText);
@@ -1167,6 +1168,7 @@ export class ShiftCalendarComponent extends AbstractGenericComponent implements 
         this.staffShiftDataSource.filter(x => x.id === updatedData.id)[0] = filterStaffShift;
         /** Add recurrence Exception reload Datasource  */
         this.scheduler.dataSource = this.staffShiftDataSource;
+        debugger;
         this.scheduler.instance.getDataSource().reload();
     }
 

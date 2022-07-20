@@ -1,17 +1,17 @@
 /*********************** Angular Reference *************************/
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy, Input } from '@angular/core';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 /*********************** Components *************************/
 import { AddRewardProgramComponent } from './add-reward-program/add-reward-program.component';
 import { AdjustPointsBalanceComponent } from './adjust-points-balance/adjust-points-balance.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { MessageService } from '@app/services/app.message.service';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { HttpService } from '@app/services/app.http.service';
-import { CustomerRewardProgramApi, PersonInfoApi } from '@app/helper/config/app.webapi';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { HttpService } from 'src/app/services/app.http.service';
+import { CustomerRewardProgramApi, PersonInfoApi } from 'src/app/helper/config/app.webapi';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /********* Configurations *********** */
  import { SubscriptionLike as ISubscription } from 'rxjs';
@@ -19,15 +19,15 @@ import { Type } from '@angular/compiler';
 
 /********************** Services & Models *********************/
 /* Models */
-import { RewardPrograms, CustomerBranches, CustomerRewardProgramSearchParams, AllCustomersRewardProgram, CustomersRewardPoints } from '@app/models/customer.reward.programs.model';
-import { ENU_RewardProgramStatusTypeName, ENU_DateFormatName, CustomerType } from '@app/helper/config/app.enums';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { RewardPrograms, CustomerBranches, CustomerRewardProgramSearchParams, AllCustomersRewardProgram, CustomersRewardPoints } from 'src/app/models/customer.reward.programs.model';
+import { ENU_RewardProgramStatusTypeName, ENU_DateFormatName, CustomerType } from 'src/app/helper/config/app.enums';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { MatPaginator } from '@angular/material/paginator';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { ApiResponse, DD_Branch, PersonInfo } from '@app/models/common.model';
-import { Configurations } from '@app/helper/config/app.config';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_Permission_ClientAndMember, ENU_Permission_Module, ENU_Permission_Lead } from '@app/helper/config/app.module.page.enums';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { ApiResponse, DD_Branch, PersonInfo } from 'src/app/models/common.model';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_Permission_ClientAndMember, ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
 import { Router } from '@angular/router';
 
 

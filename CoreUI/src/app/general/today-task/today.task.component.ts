@@ -1,19 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TodayTaskSearch, TodayActivities } from "@app/models/today.task.model";
-import { AllPerson, ApiResponse } from '@app/models/common.model';
-import { HttpService } from '@app/services/app.http.service';
-import { CommonReportApi, StaffApi } from '@app/helper/config/app.webapi';
-import { DateTimeService } from '@app/services/date.time.service';
+import { TodayTaskSearch, TodayActivities } from "src/app/models/today.task.model";
+import { AllPerson, ApiResponse } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { CommonReportApi, StaffApi } from 'src/app/helper/config/app.webapi';
+import { DateTimeService } from 'src/app/services/date.time.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { Configurations } from '@app/helper/config/app.config';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 @Component({
     selector: 'today-task',

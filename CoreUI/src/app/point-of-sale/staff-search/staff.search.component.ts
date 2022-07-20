@@ -8,11 +8,11 @@ import { debounceTime } from "rxjs/internal/operators";
 
 /********************** Services & Models *********************/
 /* Models */
-import { AllStaff, ApiResponse } from "@app/models/common.model";
+import { AllStaff, ApiResponse } from "src/app/models/common.model";
 
 /* Services */
-import { CommonService } from "@app/services/common.service";
-import { MessageService } from "@app/services/app.message.service";
+import { CommonService } from "src/app/services/common.service";
+import { MessageService } from "src/app/services/app.message.service";
 
 /********************** Common & Customs *********************/
 

@@ -1,18 +1,18 @@
 // #region Imports
 import { Component, OnInit, AfterViewInit, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { PrintService } from "@app/services/print.service";
-import { ReceiptModel } from "@app/models/sale.model";
-import { HttpService } from "@app/services/app.http.service";
-import { PrinterSetupApi } from "@app/helper/config/app.webapi";
-import { PrinterSetup } from "@app/setup/models/printer.setup.model";
-import { MessageService } from "@app/services/app.message.service";
-import { LoaderService } from "@app/services/app.loader.service";
-import { Messages } from "@app/helper/config/app.messages";
-import { ApiResponse } from "@app/models/common.model";
-import { DateTimeService } from "@app/services/date.time.service";
-import { TimeFormatPipe } from "@app/application-pipes/time-format.pipe";
-import { TaxCalculation } from "@app/services/tax.calculations.service";
+import { PrintService } from "src/app/services/print.service";
+import { ReceiptModel } from "src/app/models/sale.model";
+import { HttpService } from "src/app/services/app.http.service";
+import { PrinterSetupApi } from "src/app/helper/config/app.webapi";
+import { PrinterSetup } from "src/app/setup/models/printer.setup.model";
+import { MessageService } from "src/app/services/app.message.service";
+import { LoaderService } from "src/app/services/app.loader.service";
+import { Messages } from "src/app/helper/config/app.messages";
+import { ApiResponse } from "src/app/models/common.model";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { TimeFormatPipe } from "src/app/application-pipes/time-format.pipe";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
 
 // #endregion
 

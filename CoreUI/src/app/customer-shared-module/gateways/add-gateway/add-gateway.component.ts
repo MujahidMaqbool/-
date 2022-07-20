@@ -7,28 +7,28 @@ import { MatDialogRef, } from '@angular/material/dialog';
 
 /*********************** Models & Services *************************/
 /* Models */
-import { SaveCustomerGateway, BranchPaymentGateway, Card, DirectDebit, StripeDD, StripeDDAccount, StripeCardAuthentication, AuthenticateCard } from '@app/customer/member/models/member.gateways.model';
-import { ApiResponse, CustomerAddress, CustomerBillingAddress } from '@app/models/common.model';
+import { SaveCustomerGateway, BranchPaymentGateway, Card, DirectDebit, StripeDD, StripeDDAccount, StripeCardAuthentication, AuthenticateCard } from 'src/app/customer/member/models/member.gateways.model';
+import { ApiResponse, CustomerAddress, CustomerBillingAddress } from 'src/app/models/common.model';
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 /*********************** Components *************************/
 
 /*********************** Common *************************/
-import { ENU_PaymentGateway, EnumSaleType, ENU_SEPACountryCode, ENU_Page } from '@app/helper/config/app.enums';
-import { CustomerPaymentGatewayApi, CustomerApi } from '@app/helper/config/app.webapi';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { ENU_PaymentGateway, EnumSaleType, ENU_SEPACountryCode, ENU_Page } from 'src/app/helper/config/app.enums';
+import { CustomerPaymentGatewayApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { SubscriptionLike } from 'rxjs';
-import { StripeService } from '@app/services/stripe.service';
-import { AddGoCardlessCustomerComponent } from '@app/gateway/gocardless/add.gocardless.customer.component';
-import { AddStripeCustomerComponent } from '@app/gateway/stripe/add.stripe.customer.component';
-import { StripeACHComponent } from '@app/gateway/stripe-ach/stripe.ach.component';
-import { PayTabsCustomerComponent } from '@app/gateway/pay-tabs/paytabs.customer.component';
+import { StripeService } from 'src/app/services/stripe.service';
+import { AddGoCardlessCustomerComponent } from 'src/app/gateway/gocardless/add.gocardless.customer.component';
+import { AddStripeCustomerComponent } from 'src/app/gateway/stripe/add.stripe.customer.component';
+import { StripeACHComponent } from 'src/app/gateway/stripe-ach/stripe.ach.component';
+import { PayTabsCustomerComponent } from 'src/app/gateway/pay-tabs/paytabs.customer.component';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { MissingBillingAddressDialog } from '@app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 @Component({
     selector: 'add-gateway',
@@ -243,7 +243,7 @@ export class AddGatewayComponent implements OnInit {
         else if (this.selectedGateway.SaleTypeID === this.saleType.DirectDebit && this.selectedGateway.PaymentGatewayID === this.paymentGateway.GoCardless) {
             this.saveGatewayModel.DirectDebit = new DirectDebit();
             if (this.countryID == 2) {
-                this.checkBillingAddress().then((resolve, rejects) => {
+                this.checkBillingAddress().then((resolve) => {
                     this.saveGoCardlessCustomer();
                 })
             } else {

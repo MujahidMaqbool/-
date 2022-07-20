@@ -6,18 +6,18 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Components *********************************/
-import { StaffNotificationApi } from '@app/helper/config/app.webapi';
-import { HttpService } from '@app/services/app.http.service';
-import { Configurations } from '@app/helper/config/app.config';
+import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { LogSearch, Fundamental } from '../models/log.search.model';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { ApiResponse } from '@app/models/common.model';
-import { MessageService } from '@app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { ApiResponse } from 'src/app/models/common.model';
+import { MessageService } from 'src/app/services/app.message.service';
 
 @Component({
     selector: 'search-log',

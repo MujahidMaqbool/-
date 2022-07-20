@@ -7,22 +7,22 @@ import { MatDialogRef, } from '@angular/material/dialog';
 
 /************* Services & Models *******************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { MessageService } from '@app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /* Models */
-import { MembershipTranscation, Membership, PaymentGateway } from '@customer/member/models/member.membership.payments.model';
-import { MemberPaymentsApi } from '@app/helper/config/app.webapi';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { MembershipTranscation, Membership, PaymentGateway } from 'src/app/customer/member/models/member.membership.payments.model';
+import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 
 /************* Common *******************/
-import { Messages } from '@app/helper/config/app.messages';
-import { Configurations } from '@app/helper/config/app.config';
-import { ENU_PaymentGateway, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { ENU_PaymentGateway, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'add-membership-transaction',

@@ -11,41 +11,41 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /****************** Services & Models *****************/
 /* Models */
-import { SaleInvoice, POSClient, SavedCard, POSCartItem, SaveQueue, SaleQueueDetail, StripePaymentIntent, POSFormsDetail, ItemList, SalePaymentMode, SaveSaleCardInvoice, UpdateCardSaleStatus, PayTabPaymentMode, SavePOSForAddMoreItems, SaleQueuePaymentGateway, UnProcessedPayments } from "@pos/models/point.of.sale.model";
-import { ReceiptModel, ReceiptItem, ReceiptPaymentMethod, CustomerRewardPointsDetailForPOS } from "@app/models/sale.model";
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
+import { SaleInvoice, POSClient, SavedCard, POSCartItem, SaveQueue, SaleQueueDetail, StripePaymentIntent, POSFormsDetail, SalePaymentMode, SaveSaleCardInvoice, UpdateCardSaleStatus, PayTabPaymentMode, SavePOSForAddMoreItems, SaleQueuePaymentGateway, UnProcessedPayments } from "src/app/point-of-sale/models/point.of.sale.model"
+import { ReceiptModel, ReceiptItem, ReceiptPaymentMethod, CustomerRewardPointsDetailForPOS } from "src/app/models/sale.model";
+import { ApiResponse } from "src/app/models/common.model";
 /* Services */
-import { HttpService } from "@services/app.http.service";
-import { MessageService } from "@services/app.message.service";
-import { DateTimeService } from "@app/services/date.time.service";
-import { TaxCalculation } from "@app/services/tax.calculations.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { AuthService } from "@app/helper/app.auth.service";
-import { MatDialogService } from "@shared/components/generics/mat.dialog.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 /****************** Components *****************/
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { PrintReceiptComponent } from "@shared/components/print-receipt/print.receipt.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { PrintReceiptComponent } from "src/app/shared/components/print-receipt/print.receipt.component";
 /****************** Configurations *****************/
-import { CalculatorValue, POSItemType, EnumSaleType, ENU_PaymentGateway, ENU_Package, ENU_ReaderStatus, ENU_DateFormatName, POSProductEnum } from "@helper/config/app.enums";
-import { Configurations, SaleArea, DiscountType } from "@helper/config/app.config";
-import { Messages } from "@app/helper/config/app.messages";
-import { PointOfSaleApi, SaleApi, DiscountSetupApi, CustomerPaymentGatewayApi, GatewayIntegrationApi, CustomerRewardProgramApi } from "@app/helper/config/app.webapi";
-import { ENU_Permission_Module, ENU_Permission_PointOfSale, ENU_Permission_Individual } from "@app/helper/config/app.module.page.enums";
+import { CalculatorValue, POSItemType, EnumSaleType, ENU_PaymentGateway, ENU_Package, ENU_ReaderStatus, ENU_DateFormatName, POSProductEnum } from "src/app/helper/config/app.enums";
+import { Configurations, SaleArea, DiscountType } from "src/app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
+import { PointOfSaleApi, SaleApi, DiscountSetupApi, CustomerPaymentGatewayApi, GatewayIntegrationApi, CustomerRewardProgramApi } from "src/app/helper/config/app.webapi";
+import { ENU_Permission_Module, ENU_Permission_PointOfSale, ENU_Permission_Individual } from "src/app/helper/config/app.module.page.enums";
 import { PartPaymentComponent } from "../part-payment-alert/part.payment.component";
-import { DynamicScriptLoaderService } from "@app/services/dynamic.script.loader.service";
-import { StripeService, StripeDataSharingService } from "@app/services/stripe.service";
-import { variables } from "@app/helper/config/app.variable";
-import { StripeReaderPopupComponent } from "@app/home/stripe.reader.popup/stripe.reader.popup.component";
+import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
+import { StripeService, StripeDataSharingService } from "src/app/services/stripe.service";
+import { variables } from "src/app/helper/config/app.variable";
+import { StripeReaderPopupComponent } from "src/app/home/stripe.reader.popup/stripe.reader.popup.component";
 import { ViewFormComponent } from "../../forms/view/view.form.component";
-import { CustomerFormsInfromation, CustomFormView } from "@app/models/customer.form.model";
-import { AuthenticateCard } from "@customer/member/models/member.gateways.model";
-import { AddStripeCustomerComponent } from "@app/gateway/stripe/add.stripe.customer.component";
-import { PayTabsCustomerComponent } from "@app/gateway/pay-tabs/paytabs.customer.component";
+import { CustomerFormsInfromation, CustomFormView } from "src/app/models/customer.form.model";
+import { AuthenticateCard } from "src/app/customer/member/models/member.gateways.model";
+import { AddStripeCustomerComponent } from "src/app/gateway/stripe/add.stripe.customer.component";
+import { PayTabsCustomerComponent } from "src/app/gateway/pay-tabs/paytabs.customer.component";
 import { MatTabChangeEvent } from "@angular/material/tabs";
-import { TimeFormatPipe } from "@app/application-pipes/time-format.pipe";
-import { AlertConfirmationComponent } from "@app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
+import { TimeFormatPipe } from "src/app/application-pipes/time-format.pipe";
+import { AlertConfirmationComponent } from "src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
 import { PaymentFailedComponent } from "../payment-failed/payment.failed.component";
-import { LoaderService } from "@app/services/app.loader.service";
+import { LoaderService } from "src/app/services/app.loader.service";
 
 
 

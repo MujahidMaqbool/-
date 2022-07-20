@@ -8,36 +8,36 @@ import { Location } from '@angular/common';
 /********************** START: Service, Models & Enums *********************/
 
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /* Models */
-import { ApiResponse } from '@app/models/common.model';
-import { ConfigurationWaitList } from '@app/helper/config/app.webapi';
-import { CommunicationType } from '@app/setup/models/automation.tempalte.model';
-import { TimeDurationType, WaitListConfiguration, WaitListTimeBrackets } from '@app/setup/models/configuration.wait.list.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { ConfigurationWaitList } from 'src/app/helper/config/app.webapi';
+import { CommunicationType } from 'src/app/setup/models/automation.tempalte.model';
+import { TimeDurationType, WaitListConfiguration, WaitListTimeBrackets } from 'src/app/setup/models/configuration.wait.list.model';
 
 /* Enums */
-import { EnumDayOptions, EnumDayType, ENU_Package, ENU_WaitList } from '@app/helper/config/app.enums';
+import { EnumDayOptions, EnumDayType, ENU_Package, ENU_WaitList } from 'src/app/helper/config/app.enums';
 
 /********************** START: Common, helper And Configuration *********************/
 
 /* Services */
-import { DateTimeService } from '@app/services/date.time.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* helper */
-import { Messages } from '@app/helper/config/app.messages';
-import { NumberValidator } from '@app/shared/helper/number.validator';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { NumberValidator } from 'src/app/shared/helper/number.validator';
 
 
 /* Configuration */
-import { Configurations } from '@app/helper/config/app.config';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 /********************** START: Component *********************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { AuthService } from '@app/helper/app.auth.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 
 @Component({

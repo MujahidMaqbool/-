@@ -1,6 +1,6 @@
 ﻿import { SaveMemberMembership } from "./member.membership.model";
-import { CustomerAddress } from "@app/models/common.model";
-import { CustomFormView } from "@app/models/customer.form.model";
+import { CustomerAddress } from "src/app/models/common.model";
+import { CustomFormView } from "src/app/models/customer.form.model";
 
 export class SaveMember {
 

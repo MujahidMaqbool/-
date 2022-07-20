@@ -9,30 +9,30 @@ import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Services & Models *********************/
 /* Models */
-import { ActivityList, TaskActivityView, StatusType } from '@models/activity.model';
-import { ActivityTabsOptions } from '@models/activity.tab.options';
-import { ActivityCount } from '@models/activity.model';
+import { ActivityList, TaskActivityView, StatusType } from 'src/app/models/activity.model';
+import { ActivityTabsOptions } from 'src/app/models/activity.tab.options';
+import { ActivityCount } from 'src/app/models/activity.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /********************** Common & Customs *********************/
-import { Configurations } from '@helper/config/app.config';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 
 /********************** Components *********************/
 import { CompleteTaskComponent } from '../edit/complete.task.component';
 import { ViewActivityComponent } from '../view/view.activity.component';
 import { SaveActivityComponent } from '../save/save.activity.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { ENU_ModuleList, ENU_ActivityType, ENU_DateFormatName, ENU_ActivitySubType } from '@app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_ModuleList, ENU_ActivityType, ENU_DateFormatName, ENU_ActivitySubType } from 'src/app/helper/config/app.enums';
 import { MatDialogService } from '../../generics/mat.dialog.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { LeadActivityApi } from '@app/helper/config/app.webapi';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { LeadActivityApi } from 'src/app/helper/config/app.webapi';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
 
 // #endregion 
 

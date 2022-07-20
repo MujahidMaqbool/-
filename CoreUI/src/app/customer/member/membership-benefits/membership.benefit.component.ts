@@ -1,23 +1,21 @@
 import { Component, OnInit } from "@angular/core";
-import { TrimValue } from "@app/shared/directives/trim.values.directive";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
+import { TrimValue } from "src/app/shared/directives/trim.values.directive";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 import { EditBenefitsComponent } from "../edit-benefits/edit.benefits.component";
-import { MemberMembershipApi, SaleApi } from '@app/helper/config/app.webapi';
+import { MemberMembershipApi, SaleApi } from 'src/app/helper/config/app.webapi';
 
 /** Service & Models **/
-import { HttpService } from '@app/services/app.http.service';
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from "src/app/services/data.sharing.service";
 import { MemberMembershipBenefitsSearch, MemberBenefitsViewModel, searchMembership } from "../models/member.membershipBenefits.model";
-import { ApiResponse, PersonInfo, DD_Branch } from "@app/models/common.model";
-import { Membership } from "../models/member.membership.payments.model";
-import { CustomerType, ENU_MemberShipBenefitsName, MembershipStatus_Enum, ENU_MemberShipBenefitsStatus, ENU_MobileOperatingSystem, ENU_DateFormatName } from "@app/helper/config/app.enums";
-import { SubscriptionLike } from "rxjs";
-import { AuthService } from "@app/helper/app.auth.service";
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from "@app/helper/config/app.module.page.enums";
-import { SuspendBenefitsComponent } from "@app/customer-shared-module/suspend-benefits/suspend.benefits.component";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { MessageService } from "@app/services/app.message.service";
-import { Messages } from "@app/helper/config/app.messages";
+import { ApiResponse, PersonInfo, DD_Branch } from "src/app/models/common.model";
+import { CustomerType, ENU_MemberShipBenefitsName, MembershipStatus_Enum, ENU_MemberShipBenefitsStatus, ENU_MobileOperatingSystem, ENU_DateFormatName } from "src/app/helper/config/app.enums";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from "src/app/helper/config/app.module.page.enums";
+import { SuspendBenefitsComponent } from "src/app/customer-shared-module/suspend-benefits/suspend.benefits.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { MessageService } from "src/app/services/app.message.service";
+import { Messages } from "src/app/helper/config/app.messages";
 
 @Component({
     selector: "membership-benefits",

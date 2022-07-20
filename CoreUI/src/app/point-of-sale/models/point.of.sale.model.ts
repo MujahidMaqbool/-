@@ -1,4 +1,4 @@
-import { CustomFormView } from "@app/models/customer.form.model";
+import { CustomFormView } from "src/app/models/customer.form.model";
 
 export class MembershipBaseProductGlobalRemainingSession{
     public CustomerMembershipID: number;

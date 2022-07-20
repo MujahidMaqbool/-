@@ -5,19 +5,19 @@ import { NgForm } from '@angular/forms';
 
 /********************** START: Service & Models *********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /* Models */
-import { ShiftTemplate } from '@staff/models/shift.template.model';
+import { ShiftTemplate } from 'src/app/staff/models/shift.template.model';
 
 /********************** START: Common *********************/
-import { Configurations } from '@helper/config/app.config'
-import { Messages } from '@app/helper/config/app.messages';
-import { ShiftTemplateApi } from '@app/helper/config/app.webapi';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { Configurations } from 'src/app/helper/config/app.config'
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ShiftTemplateApi } from 'src/app/helper/config/app.webapi';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 
 @Component({

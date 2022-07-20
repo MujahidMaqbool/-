@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-import { WizardforCompanySetup } from '@app/helper/config/app.enums';
+import { WizardforCompanySetup } from 'src/app/helper/config/app.enums';
 
 @Component({
   selector: 'app-signup',

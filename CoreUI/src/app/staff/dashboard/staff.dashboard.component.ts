@@ -3,25 +3,25 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 /************************* Services & Models ***********************************/
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 /* Models */
-import { StaffDashboardParam, StaffPendingTask, StaffAttendance, StaffSchedulerHours } from '@staff/models/staff.model';
+import { StaffDashboardParam, StaffPendingTask, StaffAttendance, StaffSchedulerHours } from 'src/app/staff/models/staff.model';
 
 /************************* Common ***********************************/
-import { Configurations } from '@helper/config/app.config'
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffDashboardApi, StaffTimeSheetApi } from '@helper/config/app.webapi';
-import { environment } from '@env/environment';
+import { Configurations } from 'src/app/helper/config/app.config'
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffDashboardApi, StaffTimeSheetApi } from 'src/app/helper/config/app.webapi';
+import { environment } from 'src/environments/environment';
 import { SubscriptionLike } from 'rxjs';
-import { ENU_Package, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { ApiResponse } from '@app/models/common.model';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { ENU_Package, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { ApiResponse } from 'src/app/models/common.model';
+import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 
 @Component({

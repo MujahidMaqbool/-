@@ -7,26 +7,26 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 /****************** Services & Models *****************/
 /* Models */
-import { SavedCard, SaveSaleCardInvoice } from "@app/point-of-sale/models/point.of.sale.model";
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
-import { TransactionPaymentDetail, PayTransaction, MemberMembershipPayments } from "@customer/member/models/member.membership.payments.model";
+import { SavedCard, SaveSaleCardInvoice } from "src/app/point-of-sale/models/point.of.sale.model";
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
+import { TransactionPaymentDetail, PayTransaction, MemberMembershipPayments } from "src/app/customer/member/models/member.membership.payments.model";
 
 /* Services */
-import { HttpService } from "@services/app.http.service";
-import { MessageService } from "@services/app.message.service";
-import { TaxCalculation } from "@app/services/tax.calculations.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 
 /****************** Components *****************/
 
 /****************** Configurations *****************/
-import { EnumSaleType, ENU_PaymentGateway, ENU_DateFormatName } from "@helper/config/app.enums";
-import { Configurations } from "@helper/config/app.config";
-import { Messages } from "@app/helper/config/app.messages";
-import { MemberPaymentsApi, PointOfSaleApi } from "@app/helper/config/app.webapi";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { StripeService } from "@app/services/stripe.service";
-import { AddStripeCustomerComponent } from "@app/gateway/stripe/add.stripe.customer.component";
+import { EnumSaleType, ENU_PaymentGateway, ENU_DateFormatName } from "src/app/helper/config/app.enums";
+import { Configurations } from "src/app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
+import { MemberPaymentsApi, PointOfSaleApi } from "src/app/helper/config/app.webapi";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { StripeService } from "src/app/services/stripe.service";
+import { AddStripeCustomerComponent } from "src/app/gateway/stripe/add.stripe.customer.component";
 
 @Component({
     selector: 'transaction-payment',

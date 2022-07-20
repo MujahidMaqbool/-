@@ -5,28 +5,28 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 
 /************** Services & Models ****************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from "@app/services/date.time.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from "src/app/services/date.time.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 
 /* Modles */
-import { StaffProfile, StaffInfo } from '@staff/models/staff.model';
+import { StaffProfile, StaffInfo } from 'src/app/staff/models/staff.model';
 
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { ImageEditorPopupComponent } from "@app/application-dialog-module/image-editor/image.editor.popup.component";
-import { Configurations } from "@app/helper/config/app.config";
-import { StaffProfileApi, StaffApi } from '@helper/config/app.webapi';
-import { DeleteConfirmationComponent } from "@app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { CommonService } from "@app/services/common.service";
-import { ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
-import { variables } from "@app/helper/config/app.variable";
-import { AppUtilities } from "@app/helper/aap.utilities";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { ImageEditorPopupComponent } from "src/app/application-dialog-module/image-editor/image.editor.popup.component";
+import { Configurations } from "src/app/helper/config/app.config";
+import { StaffProfileApi, StaffApi } from 'src/app/helper/config/app.webapi';
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { CommonService } from "src/app/services/common.service";
+import { ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
+import { variables } from "src/app/helper/config/app.variable";
+import { AppUtilities } from "src/app/helper/aap.utilities";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
     selector: 'staff-profile',

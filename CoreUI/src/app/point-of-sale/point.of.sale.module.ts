@@ -3,19 +3,19 @@ import { CommonModule } from '@angular/common';
 
 //import { POSPaymentComponent } from './payment/pos.payment.component';
 import { PointOfSaleComponent } from './pos/pos.component';
-import { PointOfSaleRoutingModule } from "@pos/point.of.sale.routing.module";
+import { PointOfSaleRoutingModule } from "./point.of.sale.routing.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '@app/shared/shared-module';
+import { SharedModule } from 'src/app/shared/shared-module';
 import { POSServiceDetailComponent } from './services/pos.service.detail.component';
 import { POSQueuedInvoicesComponent } from './queued-invoices/pos.queued.invoices.component';
-import { ClientModule } from '@customer/client/client.module';
+import { ClientModule } from 'src/app/customer/client/client.module';
 import { PointOfSaleNavigationComponent } from './navigation/pos.navigation.component';
 import { PointOfSaleInvoiceHistoryComponent } from './invoice-history/pos.invoice.history.component';
 import { PointOfSaleBookingComponent } from './booking/pos.booking.component';
 import { POSClassBookingDetailComponent } from './booking/pos.class.booking.detail.component';
 //import { POSClassAttendanceComponent } from './class-attendance/pos.class.attendance.component';
 import { BookingStartTimerComponent } from './booking-start-timer/booking.start.timer.component';
-import { SharedPaginationModule } from '@app/shared-pagination-module/shared-pagination-module';
+import { SharedPaginationModule } from 'src/app/shared-pagination-module/shared-pagination-module';
 import { POSSearchFromComponent } from './forms/form.search.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -28,9 +28,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { ApplicationDialogSharedModule } from '@app/application-dialog-module/application-dialog-module';
+import { ApplicationDialogSharedModule } from 'src/app/application-dialog-module/application-dialog-module';
 import { StaffSearchAutoCompleteComponent } from './staff-search/staff.search.component';
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
 import { AddToWaitlistComponent } from './add-to-waitlist/add.to.waitlist.component';
 
 import { MatSelectModule } from '@angular/material/select';

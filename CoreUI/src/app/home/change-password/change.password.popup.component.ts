@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HttpService } from '@app/services/app.http.service';
-import { LoginApi } from '@helper/config/app.webapi';
-import { AuthService } from '@helper/app.auth.service';
-import { Messages } from '@helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { LoginApi } from 'src/app/helper/config/app.webapi';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 
-import { ChangePassword } from '@account/model/login.model';
+import { ChangePassword } from 'src/app/account/model/login.model';
 import { NgForm } from '@angular/forms';
-import { MessageService } from '@app/services/app.message.service';
+import { MessageService } from 'src/app/services/app.message.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 

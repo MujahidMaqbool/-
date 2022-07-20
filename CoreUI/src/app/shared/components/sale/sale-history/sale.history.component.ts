@@ -10,32 +10,32 @@ import { MatDatepicker } from '@angular/material/datepicker';
 
 /********************** Service & Models *********************/
 /* Services */
-import { DataSharingService } from '@services/data.sharing.service';
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { CommonService } from '@app/services/common.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { CommonService } from 'src/app/services/common.service';
 import { MatDialogService } from '../../generics/mat.dialog.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 /* Models */
-import { SearchSaleHistory, SaleHistory, InvoiceFundamental } from '@models/sale.model';
-import { AllPerson, InvoiceHistory, InvoiceSaleHistory, InvoiceSaleHistoryDetail } from '@app/models/common.model';
+import { SearchSaleHistory, SaleHistory, InvoiceFundamental } from 'src/app/models/sale.model';
+import { AllPerson, InvoiceHistory, InvoiceSaleHistory, InvoiceSaleHistoryDetail } from 'src/app/models/common.model';
 /********************** Component *********************************/
-import { SaleDetailComponent } from '@shared/components/sale/sale.detail/sale.detail.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { SaleDetailComponent } from 'src/app/shared/components/sale/sale.detail/sale.detail.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { ActivityLogComponent } from '../../activity-log/activity.log.popup.component';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { SaleVoidComponent } from '../sale-void/sale-void.popup.component';
 import { SavePartialPaymentComponent } from '../partial-payment/save.partial.payment.component';
 import { RefundPaymentComponent } from '../refund-payment/refund.payment.component';
 import { BadDebtComponent } from '../bad-debt/bad.debt.component';
 
 /********************** Common *********************************/
-import { PersonType, EnumSaleStatusType, EnumSaleCurrentStatusType, ENU_PartialPaymentName, ENU_DateFormatName, FileType, ENU_PaymentGateway, EnumSaleTermsType, EnumSaleTermsOption, EnumActivityLogType, EnumSaleDetailType, EnumSalePaymentStatusType } from "@helper/config/app.enums";
-import { Messages } from '@app/helper/config/app.messages';
-import { SaleApi } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_Individual } from '@app/helper/config/app.module.page.enums';
-import { Configurations } from '@app/helper/config/app.config';
+import { PersonType, EnumSaleStatusType, EnumSaleCurrentStatusType, ENU_PartialPaymentName, ENU_DateFormatName, FileType, ENU_PaymentGateway, EnumSaleTermsType, EnumSaleTermsOption, EnumActivityLogType, EnumSaleDetailType, EnumSalePaymentStatusType } from "src/app/helper/config/app.enums";
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SaleApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Individual } from 'src/app/helper/config/app.module.page.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 @Component({
     selector: 'sale-history',

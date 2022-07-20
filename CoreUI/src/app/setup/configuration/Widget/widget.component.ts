@@ -5,30 +5,29 @@ import { Location } from '@angular/common';
 /********************** Angular Material Refrences *********************/
 
 /********************** Application Components *********************/
-import { WidgetBannerUploadComponent } from '@setup/configuration/widget/upload-widget-banner/upload.banner.component';
-import { ViewWidgetBannerComponent } from '@setup/configuration/widget/view-widget-banner/view.banner.component';
+import { WidgetBannerUploadComponent } from 'src/app/setup/configuration/widget/upload-widget-banner/upload.banner.component';
+import { ViewWidgetBannerComponent } from 'src/app/setup/configuration/widget/view-widget-banner/view.banner.component';
 
 /********************** Service & Models *********************/
 /*Services*/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /*Models*/
-import { WidgetUrl, SocialMedia, Banner, Branch, UploadBanner, Permission } from '@setup/models/widget.settings.model';
+import { WidgetUrl, SocialMedia, Banner, Branch, UploadBanner, Permission } from 'src/app/setup/models/widget.settings.model';
 
 /********************** Common and Customs *********************/
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 /******************  Configurations ****************************/
-import { ENU_BannerType, ENU_Package, ENU_LandingPage } from '@helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { WidgetSettingApi } from '@app/helper/config/app.webapi';
-import { SocialMediaLinks, Configurations } from '@app/helper/config/app.config';
-import { ApiResponse } from '@app/models/common.model';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { environment } from "@env/environment";
-import { ThrowStmt } from '@angular/compiler';
+import { ENU_BannerType, ENU_Package, ENU_LandingPage } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { WidgetSettingApi } from 'src/app/helper/config/app.webapi';
+import { SocialMediaLinks, Configurations } from 'src/app/helper/config/app.config';
+import { ApiResponse } from 'src/app/models/common.model';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: 'app-widget',

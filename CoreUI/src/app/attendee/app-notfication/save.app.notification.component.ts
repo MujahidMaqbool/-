@@ -5,13 +5,13 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 /********************** Angular Material Refrences *********************/
 
 /********************** Common *********************/
-import { Configurations } from '@helper/config/app.config';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { Template, ActivityPersonInfo, AppNotification } from '@app/models/activity.model';
-import { TemplateType } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { Template, ActivityPersonInfo, AppNotification } from 'src/app/models/activity.model';
+import { TemplateType } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { NumberFormatStyle } from '@angular/common';
 
 @Component({

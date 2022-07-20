@@ -5,15 +5,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /*************************** Services & Models *************************/
 /* Models*/
-import { TemplateView } from '@setup/models/template.model';
+import { TemplateView } from 'src/app/setup/models/template.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { Configurations } from '@app/helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { TemplateApi } from '@app/helper/config/app.webapi';
-import { TemplateType } from '@app/helper/config/app.enums';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { TemplateApi } from 'src/app/helper/config/app.webapi';
+import { TemplateType } from 'src/app/helper/config/app.enums';
 
 /*************************** Common & Customs *************************/
 

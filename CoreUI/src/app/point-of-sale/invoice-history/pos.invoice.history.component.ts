@@ -13,9 +13,7 @@ import { DataSharingService } from '../../services/data.sharing.service';
 /********************** Common ***************************/
 
 /********************** Configurations *********************/
-import { CustomerType } from '@helper/config/app.enums';
-import { SubscriptionLike as ISubscription } from 'rxjs';
-import { InvoiceHistory } from '@app/models/common.model';
+import { InvoiceHistory } from 'src/app/models/common.model';
 
 
 @Component({

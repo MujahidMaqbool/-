@@ -1,4 +1,4 @@
-import { CustomerAddress } from "@app/models/common.model";
+import { CustomerAddress } from "src/app/models/common.model";
 
 export class Client {
     public CustomerID: number;

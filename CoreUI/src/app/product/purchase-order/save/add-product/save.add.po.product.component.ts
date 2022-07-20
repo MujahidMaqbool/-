@@ -2,18 +2,18 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 
 /****Services & Models *****/
-import { AuthService } from '@app/helper/app.auth.service';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { ProductVariantsSearchParameter, ProductVariantItems } from "@app/product/models/purchaseOrder.model";
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { ProductVariantsSearchParameter, ProductVariantItems } from "src/app/product/models/purchaseOrder.model";
 
 /***** Configurations ******/
-import { PurchaseOrderApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
+import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { MatPaginator } from '@angular/material/paginator';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 
 

@@ -1,20 +1,20 @@
 /********************* Angular References ********************/
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { ClassViewComponent } from '../view/class.view.component';
 /********************** Services & Model *********************/
-import { ParentClassSearchParameter } from '@setup/models/parent.class.model';
-import { HttpService } from '@services/app.http.service';
+import { ParentClassSearchParameter } from 'src/app/setup/models/parent.class.model';
+import { HttpService } from 'src/app/services/app.http.service';
 
 /********************** Common & Custom *********************/
-import { ClassApi } from '@app/helper/config/app.webapi';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ClassApi } from 'src/app/helper/config/app.webapi';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import { MatPaginator } from '@angular/material/paginator';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({
     selector: 'class-search',

@@ -6,15 +6,15 @@ import { SubscriptionLike } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Services & Models *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { RewardProgramApi } from '@app/helper/config/app.webapi';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { RewardProgramApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /********************** Components *********************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion
 

@@ -1,18 +1,18 @@
 import { Component, OnInit, Inject, ViewChild, Output, EventEmitter } from '@angular/core';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 import { NgForm } from '@angular/forms';
-import { Messages } from '@app/helper/config/app.messages';
-import { SearchCategory, ProductCategory } from '@app/product/models/categories.model';
-import { InventoryProductCategoryApi } from '@app/helper/config/app.webapi';
-import { environment } from '@env/environment';
-import { ENU_Permission_Product } from '@app/helper/config/app.module.page.enums';
-import { EnumSaleSourceType } from '@app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SearchCategory, ProductCategory } from 'src/app/product/models/categories.model';
+import { InventoryProductCategoryApi } from 'src/app/helper/config/app.webapi';
+import { environment } from 'src/environments/environment';
+import { ENU_Permission_Product } from 'src/app/helper/config/app.module.page.enums';
+import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
 
 @Component({
   selector: 'app-save-product-category',

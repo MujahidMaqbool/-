@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { ProductApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { Messages } from '@app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 @Component({
   selector: 'app-restore-variant',

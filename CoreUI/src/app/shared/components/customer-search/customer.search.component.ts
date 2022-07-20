@@ -7,13 +7,13 @@ import { debounceTime } from "rxjs/internal/operators";
 
 /********************** Services & Models *********************/
 /* Models */
-import { AllPerson, ApiResponse } from "@app/models/common.model";
+import { AllPerson, ApiResponse } from "src/app/models/common.model";
 
 /* Services */
 
-import { CommonService } from "@app/services/common.service";
-import { MessageService } from "@app/services/app.message.service";
-import { CustomerType } from "@app/helper/config/app.enums";
+import { CommonService } from "src/app/services/common.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { CustomerType } from "src/app/helper/config/app.enums";
 /********************** Common & Customs *********************/
 
 // #endregion 

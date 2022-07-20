@@ -1,12 +1,12 @@
 import { Component, OnInit, EventEmitter, Output, Inject, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Messages } from '@app/helper/config/app.messages';
-import { SaleApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { SaveVoided, VoidedReasonFundamental } from '@app/models/sale.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SaleApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { SaveVoided, VoidedReasonFundamental } from 'src/app/models/sale.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 @Component({
   selector: 'app-sale-void',

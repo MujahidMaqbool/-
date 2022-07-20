@@ -8,17 +8,17 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Configuration *********************/
-import { RewardProgramActivityType, RewardProgramPurchasesType } from '@app/helper/config/app.enums';
+import { RewardProgramActivityType, RewardProgramPurchasesType } from 'src/app/helper/config/app.enums';
 
 /********************** Services & Models *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { RewardProgramApi } from '@app/helper/config/app.webapi';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { RewardProgramApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { RewardProgramModel } from '../models/reward-program.model';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion
 

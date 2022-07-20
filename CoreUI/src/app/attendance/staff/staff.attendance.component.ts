@@ -4,22 +4,22 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common'
 
 /** Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /** Models */
-import { StaffAttendanceModel, StaffClockIn, StaffClockOut } from '@attendance/models/staff.attendance.model';
+import { StaffAttendanceModel, StaffClockIn, StaffClockOut } from 'src/app/attendance/models/staff.attendance.model';
 
 /** App Component */
 
 /** Messages & Constants */
-import { Configurations } from '@helper/config/app.config';
-import { StaffAttendanceApi } from '@helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { StaffAttendanceApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
 
 
 @Component({

@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { MatOption } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProductAreaEnum, PricingCheckBoxValues } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { NumberValidator } from '@app/shared/helper/number.validator';
-import { ItemTaxViewModel, ProductVariantBranchViewModel } from '@app/product/models/product.model';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { ProductApi } from '@app/helper/config/app.webapi';
-import { ApiResponse,DD_Branch } from '@app/models/common.model';
+import { ProductAreaEnum, PricingCheckBoxValues } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { NumberValidator } from 'src/app/shared/helper/number.validator';
+import { ItemTaxViewModel, ProductVariantBranchViewModel } from 'src/app/product/models/product.model';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse,DD_Branch } from 'src/app/models/common.model';
 import { SubscriptionLike as ISubscription } from "rxjs";
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 
 @Component({

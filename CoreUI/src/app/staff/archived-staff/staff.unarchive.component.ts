@@ -5,12 +5,12 @@ import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 
 /* Services */
-import { StaffApi } from "@app/helper/config/app.webapi";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
+import { StaffApi } from "src/app/helper/config/app.webapi";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 
 /* Configurations */
-import { Messages } from "@app/helper/config/app.messages";
+import { Messages } from "src/app/helper/config/app.messages";
 
 @Component({
     selector: 'archivedstaff-association',

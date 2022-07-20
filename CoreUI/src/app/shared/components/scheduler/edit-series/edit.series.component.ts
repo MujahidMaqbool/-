@@ -3,8 +3,8 @@ import { Component, Output, EventEmitter, Inject, OnInit } from '@angular/core';
 
 /********************* Material:Refference ********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Individual } from '@app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Individual } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({
     selector: 'edit-series',

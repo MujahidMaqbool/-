@@ -11,19 +11,19 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 
 /********************** Services & Models *********************/
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { HttpService } from '@app/services/app.http.service';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
 import { RewardProgramEarningRuleExceptionResultViewModel, RewardProgramExceptionRuleModel } from '../../models/reward-program.model';
 
 /********************** Components *********************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /**********************  Configurations *********************/
-import { EarnedRuleItemType, RewardProgramPurchasesType } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { RewardProgramApi } from '@app/helper/config/app.webapi';
+import { EarnedRuleItemType, RewardProgramPurchasesType } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { RewardProgramApi } from 'src/app/helper/config/app.webapi';
 
 // #endregion
 

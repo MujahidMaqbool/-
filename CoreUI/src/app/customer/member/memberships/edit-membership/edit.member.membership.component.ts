@@ -3,15 +3,15 @@ import { Component, Inject, OnInit, EventEmitter, Output, ViewChild } from '@ang
 
 /*********************** Material References *************************/
 import { MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { HttpService } from '@app/services/app.http.service';
-import { MemberMembershipApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MemberMembershipApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { EditMemberMembership } from '../../models/member.membership.model';
 
 

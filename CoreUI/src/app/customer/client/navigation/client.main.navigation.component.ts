@@ -1,7 +1,7 @@
 ﻿/************************ Angular References **************************/
 import { Component } from '@angular/core';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
 /********************* Material Reference *****************************/
 
 /************************ Services & Models ***************************/

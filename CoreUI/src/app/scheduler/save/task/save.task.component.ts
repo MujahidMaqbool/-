@@ -4,24 +4,23 @@ import { NgForm } from '@angular/forms';
 import { SubscriptionLike as ISubscription } from 'rxjs';
 
 /** Models*/
-import { PriorityType } from '@models/activity.model';
-import { ServiceClient } from '@scheduler/models/service.model';
-import { StaffTaskActivity, CellSelectedData } from '@scheduler/models/scheduler.model';
+import { PriorityType } from 'src/app/models/activity.model';
+import { StaffTaskActivity, CellSelectedData } from 'src/app/scheduler/models/scheduler.model';
 
 /** Services */
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /** Configurations */
-import { Configurations } from '@helper/config/app.config';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { SchedulerApi, StaffActivityApi } from '@app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SchedulerApi, StaffActivityApi } from 'src/app/helper/config/app.webapi';
 import { DatePipe } from '@angular/common';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { OneDaySchedulerComponent } from '@app/shared/components/scheduler/one.day.scheduler.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
 
 
 

@@ -1,5 +1,5 @@
 import { MatDialogService } from './../generics/mat.dialog.service';
-import { FillFormComponent } from '@app/shared/components/fill-form/fill.form.component';
+import { FillFormComponent } from 'src/app/shared/components/fill-form/fill.form.component';
 /********************** Angular References *********************************/
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -11,29 +11,29 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { SubscriptionLike as ISubscription, SubscriptionLike } from "rxjs";
 /********************** Service & Models *********************/
 /* Services */
-import { DataSharingService } from '@services/data.sharing.service';
-import { HttpService } from '@services/app.http.service';
-import { CommonService } from '@app/services/common.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { CommonService } from 'src/app/services/common.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /* Models */
-import { ClassBooking, SearchBooking } from '@models/bookings.model';
-import { AllPerson } from '@app/models/common.model';
+import { ClassBooking, SearchBooking } from 'src/app/models/bookings.model';
+import { AllPerson } from 'src/app/models/common.model';
 
 /********************** Component *********************************/
 //import { InvoiceDetailComponent } from '../invoice.detail/invoice.detail.component';
 
 /********************** Common *********************************/
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { BookingApi } from '@app/helper/config/app.webapi';
-import { ENU_Package, ENU_DateFormatName } from '@app/helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { BookingApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Package, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { ActivatedRoute } from '@angular/router';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { ActivityPersonInfo } from '@app/models/activity.model';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { ActivityPersonInfo } from 'src/app/models/activity.model';
 
 @Component({
     selector: 'booked',

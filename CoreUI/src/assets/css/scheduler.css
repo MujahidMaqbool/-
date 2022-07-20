@@ -1,6 +1,17 @@
-/*Scheduler style Start */
+/*Scheduler new 21.13 style Start */
 
+.dx-buttongroup-item.dx-button.dx-button-mode-contained.dx-button-normal.dx-item-selected, .dx-buttongroup-item.dx-button.dx-button-mode-contained.dx-button-normal.dx-item-selected .dx-icon {
+    color: #fff !important;
+}
+.dx-buttongroup-item.dx-button.dx-button-mode-contained.dx-button-normal.dx-item-selected,
+.dx-buttongroup-item.dx-button.dx-button-mode-contained.dx-button-normal.dx-item-selected.dx-state-hover {
+    background-color: #1b6eb8!important;
+}
+.dx-buttongroup-item.dx-button.dx-button-mode-contained.dx-button-normal.dx-state-hover {
+    background-color: #dbe8f4 !important;
+}
 
+/*Scheduler new style end */
 
 /* .scheduler_menu {
     background: #283138;
@@ -491,7 +502,7 @@
     font-size: 13px;
 }
 table.dx-scheduler-header-panel .dx-scheduler-group-header, table.dx-scheduler-header-panel .dx-scheduler-header-panel-cell{
-    height: 43px !important;
+    height: 42px !important;
 }
 
 table.dx-scheduler-group-table  .dx-scheduler-group-header, table.dx-scheduler-group-table .dx-scheduler-header-panel-cell {
@@ -515,9 +526,7 @@ table.dx-scheduler-group-table  .dx-scheduler-group-header, table.dx-scheduler-g
     width: auto;
 }
 .dx-button-has-text .dx-button-content {
-    overflow: hidden;
-    text-overflow: initial !important;
-    white-space: nowrap;
+    min-width: 98px;
 }
 
 /* .dx-texteditor{

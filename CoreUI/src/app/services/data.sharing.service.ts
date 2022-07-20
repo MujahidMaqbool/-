@@ -2,14 +2,14 @@
 
 import { BehaviorSubject } from 'rxjs';
 
-import { StaffInfo } from '@staff/models/staff.model';
-import { CompanyDetails, CompanyInfo } from '@setup/models/company.details.model';
-import { PersonInfo, InvoiceHistory, DD_Branch, POSBooking, CustomerBillingAddress } from '@app/models/common.model';
-import { ActivityPersonInfo } from '@app/models/activity.model';
-import { Client } from '@customer/client/models/client.model';
-import { ClassAppointmentDetail } from '@app/scheduler/models/class.model';
-import { MemberAttendanceDetail } from '@app/attendance/models/member.attendance.model';
-import { SEPACountry } from '@app/models/cutomer.gateway.models';
+import { StaffInfo } from 'src/app/staff/models/staff.model';
+import { CompanyDetails, CompanyInfo } from 'src/app/setup/models/company.details.model';
+import { PersonInfo, InvoiceHistory, DD_Branch, POSBooking, CustomerBillingAddress } from 'src/app/models/common.model';
+import { ActivityPersonInfo } from 'src/app/models/activity.model';
+import { Client } from 'src/app/customer/client/models/client.model';
+import { ClassAppointmentDetail } from 'src/app/scheduler/models/class.model';
+import { MemberAttendanceDetail } from 'src/app/attendance/models/member.attendance.model';
+import { SEPACountry } from 'src/app/models/cutomer.gateway.models';
 
 @Injectable({ providedIn: 'root' })
 export class DataSharingService {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { RewardProgramDetailViewModel } from '@app/models/customer.reward.programs.model';
+import { RewardProgramDetailViewModel } from 'src/app/models/customer.reward.programs.model';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({

@@ -4,25 +4,25 @@ import { SubscriptionLike } from 'rxjs';
 /*********************** Material Reference *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 /**********************Component*********************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /********************* Services & Models ********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
-import { MessageService } from '@app/services/app.message.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models*/
-import { ViewMembership, ViewMembershipBranchClass, ViewMembershipPayment, MembershipClockInTime, MembershipPayment } from '@setup/models/membership.model';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { ViewMembership, ViewMembershipBranchClass, ViewMembershipPayment, MembershipClockInTime, MembershipPayment } from 'src/app/setup/models/membership.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 
 /********************** Common ***************************/
-import { Messages } from '@app/helper/config/app.messages';
-import { MembershipApi } from '@app/helper/config/app.webapi';
-import { MembershipPaymentType, WeekDays, MembershipType, ENU_Package } from '@app/helper/config/app.enums';
-import { MembershipTypeName } from '@app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MembershipApi } from 'src/app/helper/config/app.webapi';
+import { MembershipPaymentType, WeekDays, MembershipType, ENU_Package } from 'src/app/helper/config/app.enums';
+import { MembershipTypeName } from 'src/app/helper/config/app.config';
 
 
 @Component({

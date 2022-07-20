@@ -13,46 +13,46 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Services & Models *********************/
 /* Models */
-import { AllAttendees, SaveAttendee, AttendeeClass, ClassAttendanceDetail, ClassInfo, AttendeeClassAttendance, AttendeMemberhsip, FreeClassesMemberships } from '@app/models/attendee.model';
-import { AllPerson, ApiResponse, PersonInfo } from '@models/common.model';
-import { ActivityPersonInfo } from '@app/models/activity.model';
-import { POSSaleDetail, SaleInvoice, POSCartItem, POSClient, FreeClassBooking } from '@app/point-of-sale/models/point.of.sale.model';
-import { Client } from '@app/customer/client/models/client.model';
-import { WaitListViewModel, WaitListDetail } from '@app/models/waitlist.model';
+import { AllAttendees, SaveAttendee, AttendeeClass, ClassAttendanceDetail, ClassInfo, AttendeeClassAttendance, AttendeMemberhsip, FreeClassesMemberships } from 'src/app/models/attendee.model';
+import { AllPerson, ApiResponse, PersonInfo } from 'src/app/models/common.model';
+import { ActivityPersonInfo } from 'src/app/models/activity.model';
+import { POSSaleDetail, SaleInvoice, POSCartItem, POSClient, FreeClassBooking } from 'src/app/point-of-sale/models/point.of.sale.model';
+import { Client } from 'src/app/customer/client/models/client.model';
+import { WaitListViewModel, WaitListDetail } from 'src/app/models/waitlist.model';
 
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { DateTimeService } from '@services/date.time.service';
-import { CommonService } from '@app/services/common.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { CommonService } from 'src/app/services/common.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /********************** Component *********************/
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { POSPaymentComponent } from '@shared/components/sale/payment/pos.payment.component';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { CancelBookingComponent } from '@app/shared/components/cancel-booking/cancel.booking.component';
-import { NoShowBookingComponent } from '@app/shared/components/noshow-booking/noshow.booking.component';
-import { SaveClientPopupComponent } from '@app/customer/client/save/save.client.popup.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { POSPaymentComponent } from 'src/app/shared/components/sale/payment/pos.payment.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { CancelBookingComponent } from 'src/app/shared/components/cancel-booking/cancel.booking.component';
+import { NoShowBookingComponent } from 'src/app/shared/components/noshow-booking/noshow.booking.component';
+import { SaveClientPopupComponent } from 'src/app/customer/client/save/save.client.popup.component';
 import { AttendeeNotificationComponent } from '../attendee-notification-popup/attendee.notificatin.popup.component';
-import { FillFormComponent } from '@app/shared/components/fill-form/fill.form.component';
-import { RedeemMembershipComponent } from '@app/shared/components/redeem-membership/redeem.membership.component';
-import { MemberMemberhshipAttendance } from '@app/shared/components/member-memberhsip-attendance/member-membership-attendance';
+import { FillFormComponent } from 'src/app/shared/components/fill-form/fill.form.component';
+import { RedeemMembershipComponent } from 'src/app/shared/components/redeem-membership/redeem.membership.component';
+import { MemberMemberhshipAttendance } from 'src/app/shared/components/member-memberhsip-attendance/member-membership-attendance';
 import { WaitlistConfirmationPopupComponent } from '../waitlist-confirmation-popup/waitlist.confirmation.popup.component';
-import { ClassRescheduleComponent } from '@app/shared/components/class-reschedule/class.reschedule.component';
-import { SavePartialPaymentComponent } from '@app/shared/components/sale/partial-payment/save.partial.payment.component';
+import { ClassRescheduleComponent } from 'src/app/shared/components/class-reschedule/class.reschedule.component';
+import { SavePartialPaymentComponent } from 'src/app/shared/components/sale/partial-payment/save.partial.payment.component';
 
 /**********************  Configurations *********************/
-import { Configurations, SaleArea, ClassStatusName, DiscountType } from '@helper/config/app.config';
-import { ENU_BookingStatusOption, ENU_BookingStatusValue, EnumBookingStatusType, ENU_ActivityType, POSItemType, CustomerType, ClassStatus, ENU_DateFormatName, MembershipStatus_Enum, ENU_CancelItemType, EnumSaleSourceType, ENU_SearchBookingStatusValue, ENU_SearchBookingStatusOption, EnumSaleStatusType, ENU_Package } from '@helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { AttendeeApi, WaitlistAPI } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
+import { Configurations, SaleArea, ClassStatusName, DiscountType } from 'src/app/helper/config/app.config';
+import { ENU_BookingStatusOption, ENU_BookingStatusValue, EnumBookingStatusType, ENU_ActivityType, POSItemType, CustomerType, ClassStatus, ENU_DateFormatName, MembershipStatus_Enum, ENU_CancelItemType, EnumSaleSourceType, ENU_SearchBookingStatusValue, ENU_SearchBookingStatusOption, EnumSaleStatusType, ENU_Package } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AttendeeApi, WaitlistAPI } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
 import { element } from 'protractor';
 
 

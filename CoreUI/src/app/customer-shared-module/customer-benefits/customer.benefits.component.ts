@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SaleApi, MemberMembershipApi } from '@app/helper/config/app.webapi';
-import { HttpService } from '@app/services/app.http.service';
-import { ApiResponse } from '@app/models/common.model';
-import { MembershipStatus_Enum } from '@app/helper/config/app.enums';
-import { MemberMembershipBenefitsSearch, MemberBenefitsViewModel } from '@app/customer/member/models/member.membershipBenefits.model';
-import { MessageService } from '@app/services/app.message.service';
+import { SaleApi, MemberMembershipApi } from 'src/app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { ApiResponse } from 'src/app/models/common.model';
+import { MembershipStatus_Enum } from 'src/app/helper/config/app.enums';
+import { MemberMembershipBenefitsSearch, MemberBenefitsViewModel } from 'src/app/customer/member/models/member.membershipBenefits.model';
+import { MessageService } from 'src/app/services/app.message.service';
 
 @Component({
   selector: 'app-customer-benefits',

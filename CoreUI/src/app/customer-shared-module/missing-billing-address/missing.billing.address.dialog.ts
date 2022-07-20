@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, Inject } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { CustomerShippingAddress } from '../customer-billing-address/customer.billing.address.component';
 
 

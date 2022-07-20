@@ -8,14 +8,14 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 
 
 /* Models */
-import { PersonInfo, POSBooking } from '@app/models/common.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { PersonInfo, POSBooking } from 'src/app/models/common.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /********************** Component *********************************/
 
 
 /********************** Common *********************************/
-import { CustomerType } from '@app/helper/config/app.enums';
+
 
 @Component({
     selector: 'pos-booking',

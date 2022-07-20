@@ -5,17 +5,17 @@ import { Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /****Model/enums *******/
-import { Attribute, AttributeValue, AttributeBranch } from '@app/product/models/attributes.model';
+import { Attribute, AttributeValue, AttributeBranch } from 'src/app/product/models/attributes.model';
 
 
 /**** * Configurations ******/
-import { AttributeApi } from '@app/helper/config/app.webapi';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { EnumSaleSourceType } from '@app/helper/config/app.enums';
+import { AttributeApi } from 'src/app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
 
 
 

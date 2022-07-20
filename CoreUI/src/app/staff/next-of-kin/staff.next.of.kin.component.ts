@@ -1,25 +1,25 @@
-﻿import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+﻿import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 /********************** Angular References *********************/
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SubscriptionLike as ISubscription } from "rxjs";
 /********************** Services & Models *********************/
 /* Services */
-import { DataSharingService } from '@services/data.sharing.service';
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /* Models */
-import { NextOfKin } from '@models/next.of.kin.model';
-import { PersonInfo, DD_Branch, ApiResponse } from '@models/common.model';
+import { NextOfKin } from 'src/app/models/next.of.kin.model';
+import { PersonInfo, DD_Branch, ApiResponse } from 'src/app/models/common.model';
 
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { NextOfKinApi } from '@app/helper/config/app.webapi';
-import { PersonType } from '@app/helper/config/app.enums';
-import { Configurations } from '@app/helper/config/app.config';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { NextOfKinApi } from 'src/app/helper/config/app.webapi';
+import { PersonType } from 'src/app/helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({
     selector: 'staff-next-of-kin',

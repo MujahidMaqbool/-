@@ -1,20 +1,20 @@
 /****************** Angular References **********/
 import { Component, OnInit, Inject, EventEmitter, Output, ɵConsole } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 
 /**************** Services & Models ***************/
 
-import { MemberPaymentsApi, MemberMembershipApi } from "@app/helper/config/app.webapi";
-import { HttpService } from "@app/services/app.http.service";
-import { ApiResponse } from "@app/models/common.model";
-import { MemberBenefitsVM } from "@customer/member/models/member.membershipBenefits.model";
+import { MemberPaymentsApi, MemberMembershipApi } from "src/app/helper/config/app.webapi";
+import { HttpService } from "src/app/services/app.http.service";
+import { ApiResponse } from "src/app/models/common.model";
+import { MemberBenefitsVM } from "src/app/customer/member/models/member.membershipBenefits.model";
 
 /************** Configurations **************/
-import { ENU_BenefitsType, ENU_MemberShipBenefitsName } from "@app/helper/config/app.enums";
-import { Configurations } from "@app/helper/config/app.config";
-import { MessageService } from "@app/services/app.message.service";
-import { Messages } from "@app/helper/config/app.messages";
+import { ENU_BenefitsType, ENU_MemberShipBenefitsName } from "src/app/helper/config/app.enums";
+import { Configurations } from "src/app/helper/config/app.config";
+import { MessageService } from "src/app/services/app.message.service";
+import { Messages } from "src/app/helper/config/app.messages";
 
 @Component({
     selector: 'suspend-benefits',

@@ -6,32 +6,32 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /****************** Services & Models *****************/
 /* Models */
-import { POSServiceModel, ServiceStaff, SaleService, ServiceViewModel, POSServicePackageModel } from "@pos/models/point.of.sale.model";
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
+import { POSServiceModel, ServiceStaff, SaleService, ServiceViewModel, POSServicePackageModel } from "../models/point.of.sale.model";
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
 
 /* Services */
-import { HttpService } from "@services/app.http.service";
+import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "../../services/app.message.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { DateTimeService } from "@app/services/date.time.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { DateTimeService } from "src/app/services/date.time.service";
 
 
 /****************** Components *****************/
 
 
 /****************** Configurations *****************/
-import { Configurations } from "@helper/config/app.config";
-import { PointOfSaleApi } from "@helper/config/app.webapi";
-import { ENU_DateFormatName, POSItemType } from "@helper/config/app.enums";
-import { Messages } from "@app/helper/config/app.messages";
-import { environment } from "@env/environment";
-import { ImagesPlaceholder } from "@app/helper/config/app.placeholder";
-import { variables } from "@app/helper/config/app.variable";
-import { AppUtilities } from "@app/helper/aap.utilities";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { TaxCalculation } from "@app/services/tax.calculations.service";
+import { Configurations } from "src/app/helper/config/app.config";
+import { PointOfSaleApi } from "src/app/helper/config/app.webapi";
+import { ENU_DateFormatName, POSItemType } from "src/app/helper/config/app.enums";
+import { Messages } from "src/app/helper/config/app.messages";
+import { environment } from "src/environments/environment";
+import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
+import { variables } from "src/app/helper/config/app.variable";
+import { AppUtilities } from "src/app/helper/aap.utilities";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
 import { AddToWaitlistComponent } from "../add-to-waitlist/add.to.waitlist.component";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 
 
 @Component({

@@ -1,16 +1,16 @@
 import { Component, OnInit, Inject, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { HttpService } from '@app/services/app.http.service';
-import { PurchaseOrderApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
-import { MessageService } from '@app/services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { SaveGRNViewModel, ReceivePurchaseOrder } from '@app/product/models/save.gr.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { SaveGRNViewModel, ReceivePurchaseOrder } from 'src/app/product/models/save.gr.model';
 import { SubscriptionLike } from 'rxjs';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { EnumPurchaseOrderStatus, ProductClassification } from '@app/helper/config/app.enums';
-import { Configurations } from '@app/helper/config/app.config';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { EnumPurchaseOrderStatus, ProductClassification } from 'src/app/helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 @Component({
   selector: 'app-receive-order',

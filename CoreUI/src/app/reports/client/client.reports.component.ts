@@ -4,22 +4,22 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/internal/operators';
 /********************** Services & Models *********************/
 /* Models */
-import { ClientReportSearchParam } from '@reports/models/client.reports.model';
-import { AllPerson, ApiResponse } from '@models/common.model';
+import { ClientReportSearchParam } from 'src/app/reports/models/client.reports.model';
+import { AllPerson, ApiResponse } from 'src/app/models/common.model';
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 /**********************  Common *********************/
-import { Messages } from '@helper/config/app.messages';
-import { ClientApi, CustomerApi } from '@app/helper/config/app.webapi';
-import { FileType, PersonType, CustomerType, ReportTab, FileFormatType, ReportName } from '@app/helper/config/app.enums';
-import { DateTimeService } from '@app/services/date.time.service';
-import { Configurations } from '@app/helper/config/app.config';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { CommonService } from '@app/services/common.service';
-import { CustomerSearchComponent } from '@app/shared/components/customer-search/customer.search.component';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Report } from '@app/helper/config/app.module.page.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ClientApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { FileType, PersonType, CustomerType, ReportTab, FileFormatType, ReportName } from 'src/app/helper/config/app.enums';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { CommonService } from 'src/app/services/common.service';
+import { CustomerSearchComponent } from 'src/app/shared/components/customer-search/customer.search.component';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Report } from 'src/app/helper/config/app.module.page.enums';
 import { AllSaleHistoryReportComponent } from '../common/all.sale.history.report/all.sale.history.report.component';
 import { AllSaleBookedDetailReportComponent } from '../common/all.sale.booked.detail.report/all.sale.booked.detail.report.component';
 

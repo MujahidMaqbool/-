@@ -22,7 +22,7 @@ import { GenericAlertDialogComponent } from './generic-alert-dialog/generic.aler
 import { EmailEditorComponent } from './email-editor/email.editor.component';
 import { DxHtmlEditorModule, DxDateBoxModule, DxSchedulerModule, DxValidatorModule, DxButtonGroupModule, DxDataGridModule, DxCheckBoxModule } from 'devextreme-angular';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { CustomDateAdapter } from '@app/services/customDateAdapter';
+import { CustomDateAdapter } from 'src/app/services/customDateAdapter';
 
 
 

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Configurations } from "@app/helper/config/app.config"
+import { Configurations } from "src/app/helper/config/app.config"
 
 
 @Injectable({ providedIn: 'root'})

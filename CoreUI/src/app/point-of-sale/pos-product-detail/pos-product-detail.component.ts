@@ -1,20 +1,17 @@
 import { Component, OnInit, Inject, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { ApiResponse } from '@app/models/common.model';
-import { PointOfSaleApi } from '@app/helper/config/app.webapi';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { variables } from '@app/helper/config/app.variable';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { SaleProductVariantAvailability } from '../models/product.detail.model';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { ApiResponse } from 'src/app/models/common.model';
+import { PointOfSaleApi } from 'src/app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { POSProduct } from '../models/point.of.sale.model';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { NgForm } from '@angular/forms';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 
 @Component({
   selector: 'app-pos-product-detail',

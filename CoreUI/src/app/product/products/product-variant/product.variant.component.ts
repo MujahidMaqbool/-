@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild, Inject, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductVariant, SearchProductVariant, ProductAttribute, AttributeValue } from '@app/product/models/variant.model';
-import { HttpService } from '@app/services/app.http.service';
-import { ProductApi } from '@app/helper/config/app.webapi';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { ProductVariant, SearchProductVariant, ProductAttribute, AttributeValue } from 'src/app/product/models/variant.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { RestoreVariantComponent } from './restore-variant/restore.variant.component';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { ApiResponse } from '@app/models/common.model';
-import { ProductClassification } from '@app/helper/config/app.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ApiResponse } from 'src/app/models/common.model';
+import { ProductClassification } from 'src/app/helper/config/app.enums';
 
 @Component({
   selector: 'app-product-variant',

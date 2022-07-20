@@ -3,14 +3,14 @@ import { Component, OnInit, Input, Inject, EventEmitter, Output } from '@angular
 
 /*********************** Material Reference *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpService } from '@app/services/app.http.service';
-import { CustomerRewardProgramApi } from '@app/helper/config/app.webapi';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { AddRewardPrograms } from '@app/models/customer.reward.programs.model';
-import { ENU_RewardProgramStatusTypeName, ENU_IsTransferRewardProgram } from '@app/helper/config/app.enums';
+import { HttpService } from 'src/app/services/app.http.service';
+import { CustomerRewardProgramApi } from 'src/app/helper/config/app.webapi';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AddRewardPrograms } from 'src/app/models/customer.reward.programs.model';
+import { ENU_RewardProgramStatusTypeName, ENU_IsTransferRewardProgram } from 'src/app/helper/config/app.enums';
 import { FormControl } from '@angular/forms';
-import { ApiResponse } from '@app/models/common.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
   selector: 'app-add-reward-program',

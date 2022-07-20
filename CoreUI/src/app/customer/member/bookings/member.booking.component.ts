@@ -7,14 +7,14 @@ import { Component } from '@angular/core';
 
 
 /* Models */
-import { PersonInfo, POSBooking } from '@app/models/common.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { PersonInfo, POSBooking } from 'src/app/models/common.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /********************** Component *********************************/
 
 
 /********************** Common *********************************/
-import { PersonType, CustomerType } from '@app/helper/config/app.enums';
+import { PersonType, CustomerType } from 'src/app/helper/config/app.enums';
 
 @Component({
     selector: 'member-booking',

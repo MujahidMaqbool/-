@@ -1,13 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpService } from '@app/services/app.http.service';
-import { StaffNotificationApi } from '@app/helper/config/app.webapi';
-import { ApiResponse, PersonInfo } from '@app/models/common.model';
-import { MessageService } from '@app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
+import { MessageService } from 'src/app/services/app.message.service';
 import { SubscriptionLike } from 'rxjs';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 
 @Component({
     selector: 'service-notification',

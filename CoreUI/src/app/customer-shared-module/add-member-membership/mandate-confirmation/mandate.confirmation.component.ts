@@ -1,14 +1,14 @@
 ﻿import { Component } from '@angular/core'
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ENU_PaymentGateway } from '@app/helper/config/app.enums';
-import { HttpService } from '@app/services/app.http.service';
-import { CustomerApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { AuthService } from '@app/helper/app.auth.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { FillFormComponent } from '@app/shared/components/fill-form/fill.form.component';
-import { MessageService } from '@app/services/app.message.service';
+import { ENU_PaymentGateway } from 'src/app/helper/config/app.enums';
+import { HttpService } from 'src/app/services/app.http.service';
+import { CustomerApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { FillFormComponent } from 'src/app/shared/components/fill-form/fill.form.component';
+import { MessageService } from 'src/app/services/app.message.service';
 // import { FillFormComponent } from '../../fill-form/fill.form.component';
 // import { MatDialogService } from '../../generics/mat.dialog.service';
 

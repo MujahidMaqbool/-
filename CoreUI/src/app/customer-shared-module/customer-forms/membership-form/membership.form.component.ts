@@ -1,16 +1,16 @@
 import { ElementRef } from '@angular/core';
 import { Component, OnInit, ViewChild, EventEmitter, Output, Input, AfterViewInit } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { Configurations } from '@app/helper/config/app.config';
-import { CustomFormStatus, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { CustomFormView, CustomFormViewBrief } from '@app/models/customer.form.model';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { CustomFormStatus, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { CustomFormView, CustomFormViewBrief } from 'src/app/models/customer.form.model';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
-import { environment } from 'environments/environment';
+import { environment } from 'src/environments/environment';
 import SignaturePad from 'signature_pad';
 
 

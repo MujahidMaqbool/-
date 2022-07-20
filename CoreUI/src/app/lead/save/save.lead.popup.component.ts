@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 
 /**********************Component*********************/
-import { SaveLeadComponent } from '@lead/save/save.lead.component';
+import { SaveLeadComponent } from 'src/app/lead/save/save.lead.component';
 
 /********************* Services & Models ********************/
 /* Services */

@@ -5,21 +5,21 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Application Components *********************/
-import { SaveFacilityComponent } from '@setup/facility/save/save.facility.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { SaveFacilityComponent } from 'src/app/setup/facility/save/save.facility.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 /********************** Service & Models *********************/
-import { Facility } from '@setup/models/facility.model';
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { Facility } from 'src/app/setup/models/facility.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /********************** Common & Customs *********************/
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { FacilityApi } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { FacilityApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 @Component({
     selector: 'search-facility',

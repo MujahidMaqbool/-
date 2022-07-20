@@ -3,9 +3,9 @@ import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@ang
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Common *********************************/
-import { Messages } from '@app/helper/config/app.messages';
+import { Messages } from 'src/app/helper/config/app.messages';
 
-import { NumberValidator } from '@app/shared/helper/number.validator';
+import { NumberValidator } from 'src/app/shared/helper/number.validator';
 
 /********************** Service & Models *********************/
 /* Services */

@@ -1,26 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { ServiceNotificationDetailComponent } from '../service-notification/service.notification.details.component';
-import { StaffNotificationApi } from '@app/helper/config/app.webapi';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { ApiResponse } from '@app/models/common.model';
-import { StaffNotificationSearch } from '@app/models/Notification.model';
-import { DateTimeService } from '@app/services/date.time.service';
-import { Configurations, StaffNotificationsStatus } from '@app/helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { ENU_NotificationTriggerCategory, ENU_EventCategoryType, ENU_DateFormatName, CustomerType, ENU_NotificationTrigger } from '@app/helper/config/app.enums';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { ApiResponse } from 'src/app/models/common.model';
+import { StaffNotificationSearch } from 'src/app/models/Notification.model';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { Configurations, StaffNotificationsStatus } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_NotificationTriggerCategory, ENU_EventCategoryType, ENU_DateFormatName, CustomerType, ENU_NotificationTrigger } from 'src/app/helper/config/app.enums';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { Router } from '@angular/router';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Home, ENU_Permission_Individual, ENU_Permission_Staff, ENU_Permission_ClientAndMember, ENU_Permission_Lead } from '@app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Home, ENU_Permission_Individual, ENU_Permission_Staff, ENU_Permission_ClientAndMember, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
 import { ViewNotificationComponent } from '../view-notification/view.notification.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { AttendeeComponent } from '@app/attendee/save-search/attendee.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { AttendeeComponent } from 'src/app/attendee/save-search/attendee.component';
 
 
 

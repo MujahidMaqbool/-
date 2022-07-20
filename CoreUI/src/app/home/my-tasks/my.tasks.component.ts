@@ -7,25 +7,25 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 
 /********************** Services & Models *********************/
 /* Models */
-import { AllStaffTask, StaffTaskSearchParameter, PriorityType, TaskActivityView } from "@app/models/activity.model";
+import { AllStaffTask, StaffTaskSearchParameter, PriorityType, TaskActivityView } from "src/app/models/activity.model";
 /* Services */
-import { DateTimeService } from "@app/services/date.time.service";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { MatDialogService } from "@shared/components/generics/mat.dialog.service";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 /********************** Common & Customs *********************/
-import { StaffActivityApi } from "@app/helper/config/app.webapi";
-import { Messages } from "@app/helper/config/app.messages";
+import { StaffActivityApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
 import { DatePipe } from "@angular/common";
-import { Configurations } from "@app/helper/config/app.config";
-import { ENU_ActivityType, ENU_DateFormatName } from "@app/helper/config/app.enums";
+import { Configurations } from "src/app/helper/config/app.config";
+import { ENU_ActivityType, ENU_DateFormatName } from "src/app/helper/config/app.enums";
 /********************** Components *********************/
-import { CompleteTaskComponent } from "@app/shared/components/activities/edit/complete.task.component";
-import { ViewActivityComponent } from "@app/shared/components/activities/view/view.activity.component";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { DateToDateFromComponent } from "@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
-import { ApiResponse } from "@app/models/common.model";
+import { CompleteTaskComponent } from "src/app/shared/components/activities/edit/complete.task.component";
+import { ViewActivityComponent } from "src/app/shared/components/activities/view/view.activity.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
+import { ApiResponse } from "src/app/models/common.model";
 
 // #endregion
 

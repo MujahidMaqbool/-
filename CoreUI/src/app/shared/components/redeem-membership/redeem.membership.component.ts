@@ -1,17 +1,17 @@
 /****************** Angular References **********/
 import { Component, OnInit, Inject, Output, EventEmitter } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
-import { HttpService } from "@app/services/app.http.service";
-import { AttendeeApi, SaleApi } from "@app/helper/config/app.webapi";
-import { ApiResponse, CustomerMemberhsip } from "@app/models/common.model";
-import { MessageService } from "@app/services/app.message.service";
-import { Messages } from "@app/helper/config/app.messages";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { FreeClassesMemberships } from "@app/models/attendee.model";
-import { TaxCalculation } from "@app/services/tax.calculations.service";
-import { DateTimeService } from "@app/services/date.time.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { AttendeeApi, SaleApi } from "src/app/helper/config/app.webapi";
+import { ApiResponse, CustomerMemberhsip } from "src/app/models/common.model";
+import { MessageService } from "src/app/services/app.message.service";
+import { Messages } from "src/app/helper/config/app.messages";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { FreeClassesMemberships } from "src/app/models/attendee.model";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { DateTimeService } from "src/app/services/date.time.service";
 
 /**************** Services & Models ***************/
 

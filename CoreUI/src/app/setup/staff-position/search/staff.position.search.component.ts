@@ -3,22 +3,22 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
 /********************** START: Application Components *********************/
-import { StaffPositionSaveComponent } from '@setup/staff-position/save/staff.position.save.component';
+import { StaffPositionSaveComponent } from 'src/app/setup/staff-position/save/staff.position.save.component';
 
 //********************** START: Service & Models *********************/
-import { StaffPosition } from '@setup/models/staff.position.model';
-import { HttpService } from "@services/app.http.service";
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { StaffPosition } from 'src/app/setup/models/staff.position.model';
+import { HttpService } from "src/app/services/app.http.service";
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 
 /********************** START: Common *********************/
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffPositionApi } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffPositionApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 @Component({
   selector: 'staff-position-search',

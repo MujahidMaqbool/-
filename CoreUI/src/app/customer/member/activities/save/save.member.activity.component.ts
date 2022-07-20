@@ -9,18 +9,18 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubscriptionLike as ISubscription } from "rxjs";
 
 /********************** Common *********************/
-import { Configurations } from '@helper/config/app.config';
-import { MemberActivityApi } from '@helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { MemberActivityApi } from 'src/app/helper/config/app.webapi';
 
 /********************** Components *********************/
 
 
 /********************** Services & Models *********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /* Models */
 import {
@@ -40,7 +40,7 @@ import {
     MemberActivityTabOptions,
     CallMarkAsDoneActivity,
     AppointmentMarkAsDoneActivity
-} from '@customer/member/models/member.activity.model';
+} from 'src/app/customer/member/models/member.activity.model';
 
 import {
     ActivityOutcome,
@@ -49,12 +49,12 @@ import {
     Template,
     Staff,
     ActivityPersonInfo
-} from '@models/activity.model';
-import { Messages } from '@app/helper/config/app.messages';
-import { ENU_ActivityType, ENU_ActivitySubType, TemplateType, ENU_ModuleList, WhatNextType, ActivityOutcomeType, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { ApiResponse } from '@app/models/common.model';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { OneDaySchedulerComponent } from '@app/shared/components/scheduler/one.day.scheduler.component';
+} from 'src/app/models/activity.model';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_ActivityType, ENU_ActivitySubType, TemplateType, ENU_ModuleList, WhatNextType, ActivityOutcomeType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { ApiResponse } from 'src/app/models/common.model';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
 
 
 // #endregion 

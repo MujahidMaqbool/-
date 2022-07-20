@@ -5,7 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 
 /************************ Services & Models **************************/
 /* Services */
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
 
@@ -13,9 +13,9 @@ import { DataSharingService } from '@app/services/data.sharing.service';
 
 
 /********************** Common *********************************/
-import { Messages } from '@app/helper/config/app.messages';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({
     selector: 'staff-detail-navigation',

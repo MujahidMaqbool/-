@@ -5,28 +5,28 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatDatepicker } from '@angular/material/datepicker';
 /*********************** Services *************************/
 
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 /************* Configurations ***************/
 
-import { environment } from '@env/environment';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { CustomerFormApi, StaffApi, BranchApi } from '@app/helper/config/app.webapi';
-import { CompanyDetailsApi } from '@helper/config/app.webapi';
-import { Configurations } from '@app/helper/config/app.config';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { FormApi } from '@app/helper/config/app.webapi';
-import { ENU_CountryBaseDateFormatName, ENU_CountryFormat, ENU_DateFormat, ENU_pdfFor } from '@app/helper/config/app.enums';
+import { environment } from 'src/environments/environment';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { CustomerFormApi, StaffApi, BranchApi } from 'src/app/helper/config/app.webapi';
+import { CompanyDetailsApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { FormApi } from 'src/app/helper/config/app.webapi';
+import { ENU_CountryBaseDateFormatName, ENU_CountryFormat, ENU_DateFormat, ENU_pdfFor } from 'src/app/helper/config/app.enums';
 
 
 /************* Model ***************/
-import { CustomFormView } from '@app/models/customer.form.model';
-import { ApiResponse, CompanyInfo } from '@app/models/common.model';
-import { Branch } from "@setup/models/branch.model";
-import { CompanyDetails } from '@setup/models/company.details.model';
+import { CustomFormView } from 'src/app/models/customer.form.model';
+import { ApiResponse, CompanyInfo } from 'src/app/models/common.model';
+import { Branch } from "src/app/setup/models/branch.model";
+import { CompanyDetails } from 'src/app/setup/models/company.details.model';
 
 
 

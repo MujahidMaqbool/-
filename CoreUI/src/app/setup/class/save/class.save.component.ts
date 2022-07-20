@@ -4,25 +4,25 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from "@angular/router";
 
 /********************* Services & Models ********************/
-import { HttpService } from '@services/app.http.service';
+import { HttpService } from 'src/app/services/app.http.service';
 
-import { ParentClass } from '@setup/models/parent.class.model';
-import { ClassApi } from '@app/helper/config/app.webapi';
-import { Configurations } from '@app/helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { MessageService } from '@app/services/app.message.service';
-import { environment } from '@env/environment';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { ApiResponse } from '@app/models/common.model';
-import { ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { CommonService } from '@app/services/common.service';
+import { ParentClass } from 'src/app/setup/models/parent.class.model';
+import { ClassApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MessageService } from 'src/app/services/app.message.service';
+import { environment } from 'src/environments/environment';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ApiResponse } from 'src/app/models/common.model';
+import { ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { CommonService } from 'src/app/services/common.service';
 import { MatOption } from '@angular/material/core';
-import { ENU_Package } from '@app/helper/config/app.enums';
+import { ENU_Package } from 'src/app/helper/config/app.enums';
 import { SubscriptionLike } from 'rxjs';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /********************** Common & Custom *********************/
 

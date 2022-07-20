@@ -6,15 +6,15 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Services & Models ***********************/
-import { StaffDocument } from "@staff/models/staff.model";
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
+import { StaffDocument } from "src/app/staff/models/staff.model";
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffDocumentApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffDocumentApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
     selector: 'upload-staff-document',

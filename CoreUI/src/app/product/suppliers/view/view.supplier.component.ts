@@ -7,8 +7,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**********************  Configurations *********************/
-import { EnumSaleSourceType } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
+import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 // #region Imports End
 

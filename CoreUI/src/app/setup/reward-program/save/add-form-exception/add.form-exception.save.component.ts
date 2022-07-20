@@ -16,11 +16,11 @@ import { MatSelect } from '@angular/material/select';
 import { RewardProgramActivitiesEarningRuleExceptionResultViewModel, RewardProgramActivityExceptionRuleModel } from '../../models/reward-program.model';
 
 /********************** Services & Models *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { RewardProgramApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { RewardProgramApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 // #endregion
 

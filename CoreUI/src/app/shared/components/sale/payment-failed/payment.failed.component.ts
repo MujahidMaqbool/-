@@ -1,12 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ENU_DateFormatName, EnumSaleType, ENU_PaymentGateway } from '@app/helper/config/app.enums';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { Configurations } from '@app/helper/config/app.config';
-import { SubscriptionLike } from 'rxjs';
-import { DD_Branch } from '@app/models/common.model';
+import { ENU_DateFormatName, EnumSaleType, ENU_PaymentGateway } from 'src/app/helper/config/app.enums';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { SavePartialPaymentComponent } from '../partial-payment/save.partial.payment.component';
 import { MatDialogService } from '../../generics/mat.dialog.service';
 

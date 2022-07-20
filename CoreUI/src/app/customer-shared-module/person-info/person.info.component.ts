@@ -1,19 +1,19 @@
 import { Component, Input ,ChangeDetectorRef} from "@angular/core";
 /* Services*/
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 /* Models */
-import { ApiResponse, PersonDetail } from '@models/common.model';
-import { PersonInfo } from "@app/models/common.model";
-import { ActivityPersonInfo } from "@app/models/activity.model";
+import { ApiResponse, PersonDetail } from 'src/app/models/common.model';
+import { PersonInfo } from "src/app/models/common.model";
+import { ActivityPersonInfo } from "src/app/models/activity.model";
 
 /********************** Common *********************/
-import { PersonInfoApi } from '@app/helper/config/app.webapi';
-import { Messages } from "@app/helper/config/app.messages";
-import { environment } from '@env/environment';
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { ImagesPlaceholder } from "@app/helper/config/app.placeholder";
-import { AppUtilities } from "@app/helper/aap.utilities";
+import { PersonInfoApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from "src/app/helper/config/app.messages";
+import { environment } from 'src/environments/environment';
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
+import { AppUtilities } from "src/app/helper/aap.utilities";
 
 import { SubscriptionLike as ISubscription } from 'rxjs';
 

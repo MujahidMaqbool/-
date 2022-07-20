@@ -1,5 +1,5 @@
 import { Component, ViewChild, EventEmitter, Output, AfterViewInit, Input, OnChanges } from "@angular/core";
-import { Configurations } from "@app/helper/config/app.config";
+import { Configurations } from "src/app/helper/config/app.config";
 import { MatPaginator } from "@angular/material/paginator";
 
 

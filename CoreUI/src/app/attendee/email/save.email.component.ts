@@ -4,13 +4,13 @@ import { NgForm } from "@angular/forms";
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubscriptionLike as ISubscription } from "rxjs";
 
-import { HttpService } from "@app/services/app.http.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { MessageService } from "@app/services/app.message.service";
-import { ActivityPersonInfo, Template } from '@app/models/activity.model';
-import { Configurations } from '@app/helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { TemplateType } from '@app/helper/config/app.enums';
+import { HttpService } from "src/app/services/app.http.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { ActivityPersonInfo, Template } from 'src/app/models/activity.model';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { TemplateType } from 'src/app/helper/config/app.enums';
 
 
 @Component({

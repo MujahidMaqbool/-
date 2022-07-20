@@ -6,22 +6,22 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 /************************ Services & Models ***************************/
 /* Services */
-import { DataSharingService } from '@services/data.sharing.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 /* Models */
 
 /********************** Components *************************************/
 
 
 /**************************** Common *********************************/
-import { ENU_ModuleList, CustomerType } from '@helper/config/app.enums';
-import { environment } from '@env/environment';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
-import { HttpService } from '@app/services/app.http.service';
-import { CustomerFormApi } from '@app/helper/config/app.webapi';
-import { MessageService } from '@app/services/app.message.service';
+import { ENU_ModuleList, CustomerType } from 'src/app/helper/config/app.enums';
+import { environment } from 'src/environments/environment';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
+import { HttpService } from 'src/app/services/app.http.service';
+import { CustomerFormApi } from 'src/app/helper/config/app.webapi';
+import { MessageService } from 'src/app/services/app.message.service';
 import { Observable } from 'rxjs';
-import { ApiResponse, PersonInfo } from '@app/models/common.model';
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
 
 @Component({
     selector: 'member-navigation',

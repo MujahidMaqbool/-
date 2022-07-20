@@ -6,24 +6,24 @@ import { NgForm, FormControl } from '@angular/forms';
 import { SubscriptionLike as ISubscription } from 'rxjs';
 
 /** Models*/
-import { ServiceClient } from '@scheduler/models/service.model';
-import { ActivityViewModel, LeadAppointmentLaterActivity, MemberAppointmentLaterActivity, CellSelectedData } from '@scheduler/models/scheduler.model';
+import { ServiceClient } from 'src/app/scheduler/models/service.model';
+import { ActivityViewModel, LeadAppointmentLaterActivity, MemberAppointmentLaterActivity, CellSelectedData } from 'src/app/scheduler/models/scheduler.model';
 
 /** Services */
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /** App Messages & Constants */
-import { Configurations } from '@helper/config/app.config';
-import { CustomerType, ENU_DateFormatName } from '@helper/config/app.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { SchedulerApi, MemberActivityApi, LeadActivityApi, ClientActivityApi } from '@app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { CustomerType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SchedulerApi, MemberActivityApi, LeadActivityApi, ClientActivityApi } from 'src/app/helper/config/app.webapi';
 import { debounceTime } from 'rxjs/internal/operators';
 import { DatePipe } from '@angular/common';
-import { OneDaySchedulerComponent } from '@app/shared/components/scheduler/one.day.scheduler.component';
+import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
 
 // #endregion
 

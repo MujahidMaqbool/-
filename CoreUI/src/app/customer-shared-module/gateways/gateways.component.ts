@@ -8,31 +8,31 @@ import { SubscriptionLike, SubscriptionLike as ISubscription } from "rxjs";
 
 /*********************** Models & Services *************************/
 /* Models */
-import { ApiResponse, PersonInfo } from "@app/models/common.model";
-import { GatewayAccountSearch } from "@app/customer/member/models/member.gateways.model";
-import { CustomerPaymentGateway } from "@app/customer/member/models/member.gateways.model";
+import { ApiResponse, PersonInfo } from "src/app/models/common.model";
+import { GatewayAccountSearch } from "src/app/customer/member/models/member.gateways.model";
+import { CustomerPaymentGateway } from "src/app/customer/member/models/member.gateways.model";
 
 /* Services*/
-import { HttpService } from "@services/app.http.service";
-import { MessageService } from "@services/app.message.service";
-import { DataSharingService } from "@services/data.sharing.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 
 /*********************** Components *************************/
-import { AddGatewayComponent } from "@app/customer-shared-module/gateways/add-gateway/add-gateway.component";
-import { ViewGatewayComponent } from "@app/customer-shared-module/gateways/view-gateway/view-gateway.component";
-import { DeleteConfirmationComponent } from "@app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { AddGatewayComponent } from "src/app/customer-shared-module/gateways/add-gateway/add-gateway.component";
+import { ViewGatewayComponent } from "src/app/customer-shared-module/gateways/view-gateway/view-gateway.component";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
 /*********************** Common *************************/
-import { CustomerPaymentGatewayApi } from "@helper/config/app.webapi";
-import { Messages } from "@helper/config/app.messages";
+import { CustomerPaymentGatewayApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
 import {
   ENU_PaymentGateway,
   ENU_DateFormatName,
-} from "@helper/config/app.enums";
-import { MatDialogService } from "@shared/components/generics/mat.dialog.service";
-import { AbstractGenericComponent } from "@shared/helper/abstract.generic.component";
+} from "src/app/helper/config/app.enums";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 import { EditGatewayComponent } from "./edit-gateway/edit-gateway.component";
-import { EditCard } from "@setup/models/gateway.card.model";
-import { Configurations } from "@app/helper/config/app.config";
+import { EditCard } from "src/app/setup/models/gateway.card.model";
+import { Configurations } from "src/app/helper/config/app.config";
 
 // #endregion Imports
 

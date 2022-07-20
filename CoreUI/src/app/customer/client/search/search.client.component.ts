@@ -7,30 +7,30 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 /********************** Services & Models *********************/
 /* Models */
-import { Client, SearchClient, SaveClient } from "@customer/client/models/client.model";
-import { ApiResponse, PersonInfo } from "@models/common.model";
+import { Client, SearchClient, SaveClient } from "src/app/customer/client/models/client.model";
+import { ApiResponse, PersonInfo } from "src/app/models/common.model";
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /********************** Component *********************/
-import { ViewClientDetailComponent } from '@customer/client/view/view.client.detail.component'
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { ViewClientDetailComponent } from 'src/app/customer/client/view/view.client.detail.component'
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 /* Models */
 /**********************  Common *********************/
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { PersonType, Gender, ENU_DateFormatName, ENU_Package } from "@helper/config/app.enums";
-import { Messages } from '@app/helper/config/app.messages';
-import { ClientApi, CustomerApi } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { EmailValidatePipe } from '@app/shared/pipes/email.validate';
-import { CustomerBenefitsComponent } from '@app/customer-shared-module/customer-benefits/customer.benefits.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { PersonType, Gender, ENU_DateFormatName, ENU_Package } from "src/app/helper/config/app.enums";
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ClientApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { EmailValidatePipe } from 'src/app/shared/pipes/email.validate';
+import { CustomerBenefitsComponent } from 'src/app/customer-shared-module/customer-benefits/customer.benefits.component';
 import { SubscriptionLike } from 'rxjs';
-import { CommonService } from '@app/services/common.service';
-import { MessageService } from '@app/services/app.message.service';
+import { CommonService } from 'src/app/services/common.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 @Component({
     selector: 'search-client',

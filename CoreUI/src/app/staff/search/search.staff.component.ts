@@ -4,28 +4,28 @@ import { SubscriptionLike } from 'rxjs';
 
 /********************* Material Reference ********************/
 import { MatPaginator } from '@angular/material/paginator';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 /********************* Services & Models ********************/
 /* Services */
-import { MessageService } from '@app/services/app.message.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /* Models*/
-import { StaffSearchParameter, StaffView, StaffSearchParameters } from '@app/staff/models/staff.model';
+import { StaffSearchParameter, StaffView, StaffSearchParameters } from 'src/app/staff/models/staff.model';
 
 /********************** Common ***************************/
-import { Configurations } from '@helper/config/app.config'
-import { StaffApi } from '@helper/config/app.webapi'
-import { HttpService } from '@app/services/app.http.service';
-import { Messages } from '@helper/config/app.messages';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { Configurations } from 'src/app/helper/config/app.config'
+import { StaffApi } from 'src/app/helper/config/app.webapi'
+import { HttpService } from 'src/app/services/app.http.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 /********************** Components *********************************/
-import { ViewStaffDetail } from '@staff/view-staff-detail/view.staff.detail.component';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { SessionService } from '@app/helper/app.session.service';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { ViewStaffDetail } from 'src/app/staff/view-staff-detail/view.staff.detail.component';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { SessionService } from 'src/app/helper/app.session.service';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 
 @Component({

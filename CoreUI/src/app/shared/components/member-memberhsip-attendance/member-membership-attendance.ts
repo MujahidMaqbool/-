@@ -7,12 +7,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 /********************** Services & Models *********************/
 /* Models */
 /* Services */
-import { MessageService } from "@app/services/app.message.service";
+import { MessageService } from "src/app/services/app.message.service";
 
 /**********************  Configurations *********************/
-import { AttendeMemberhsip, MemberMemberhsip } from "@app/models/attendee.model";
+import { AttendeMemberhsip, MemberMemberhsip } from "src/app/models/attendee.model";
 
-import { Messages } from "@app/helper/config/app.messages";
+import { Messages } from "src/app/helper/config/app.messages";
 // #endregion
 
 @Component({

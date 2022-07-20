@@ -5,22 +5,22 @@ import { debounceTime } from 'rxjs/internal/operators';
 
 /********************** Services & Models *********************/
 /* Models */
-import { StaffReportSearchParameter, PriorityType } from '@reports/models/staff.reports.model';
-import { AllStaff, ApiResponse } from '@models/common.model';
+import { StaffReportSearchParameter, PriorityType } from 'src/app/reports/models/staff.reports.model';
+import { AllStaff, ApiResponse } from 'src/app/models/common.model';
 
 /* Services */
-import { MessageService } from '@services/app.message.service';
-import { HttpService } from '@services/app.http.service';
-import { CommonService } from '@app/services/common.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { CommonService } from 'src/app/services/common.service';
 /**********************  Common *********************/
-import { Configurations } from '@helper/config/app.config'
-import { Messages } from '@helper/config/app.messages';
-import { StaffApi, StaffActivityApi } from '@app/helper/config/app.webapi';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { ReportName, FileType } from '@app/helper/config/app.enums';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Report } from '@app/helper/config/app.module.page.enums';
+import { Configurations } from 'src/app/helper/config/app.config'
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffApi, StaffActivityApi } from 'src/app/helper/config/app.webapi';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { ReportName, FileType } from 'src/app/helper/config/app.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Report } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({
   selector: 'staff-report',

@@ -4,23 +4,22 @@ import { NgForm } from '@angular/forms';
 
 /********************** START: Service & Models *********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 /* Models */
-import { ServiceCategory } from '@setup/models/service.category.model';
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { ServiceCategoryApi } from '@app/helper/config/app.webapi';
+import { ServiceCategory } from 'src/app/setup/models/service.category.model';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { ServiceCategoryApi } from 'src/app/helper/config/app.webapi';
 
 /********************** START: Common *********************/
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
-import { CommonService } from '@app/services/common.service';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { ApiResponse } from '@app/models/common.model';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { CommonService } from 'src/app/services/common.service';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { ApiResponse } from 'src/app/models/common.model';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
 
 @Component({
   selector: 'service-category-save',

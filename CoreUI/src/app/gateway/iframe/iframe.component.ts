@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LoaderService } from '@app/services/app.loader.service';
+import { LoaderService } from 'src/app/services/app.loader.service';
 @Component({
   selector: 'app-iframe',
   templateUrl: './iframe.component.html',

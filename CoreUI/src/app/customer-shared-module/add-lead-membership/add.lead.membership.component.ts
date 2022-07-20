@@ -1,20 +1,20 @@
 import { Component, Output, EventEmitter, Inject } from "@angular/core";
-import { LeadMembershipApi, LeadStatusApi } from "@app/helper/config/app.webapi";
+import { LeadMembershipApi, LeadStatusApi } from "src/app/helper/config/app.webapi";
 import { SubscriptionLike as ISubscription, SubscriptionLike } from "rxjs";
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 
-import { AddLeadMembership, LeadMembershipsList, AssignedToStaffList } from "@models/lead.membership.model";
-import { ApiResponse, PersonInfo } from "@app/models/common.model";
+import { AddLeadMembership, LeadMembershipsList, AssignedToStaffList } from "src/app/models/lead.membership.model";
+import { ApiResponse, PersonInfo } from "src/app/models/common.model";
 // import { FillFormComponent } from "../fill-form/fill.form.component";
 // import { MatDialogService } from "../generics/mat.dialog.service";
-import { CustomerType, ENU_Package } from "@app/helper/config/app.enums";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
-import { FillFormComponent } from "@app/shared/components/fill-form/fill.form.component";
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { CustomerType, ENU_Package } from "src/app/helper/config/app.enums";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { FillFormComponent } from "src/app/shared/components/fill-form/fill.form.component";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 
 @Component({
     selector: 'add-lead-membership',

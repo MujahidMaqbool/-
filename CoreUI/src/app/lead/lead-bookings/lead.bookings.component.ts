@@ -8,13 +8,12 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 
 
 /* Models */
-import { PersonInfo, POSBooking } from '@app/models/common.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { PersonInfo, POSBooking } from 'src/app/models/common.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /********************** Common *********************************/
-import { CustomerType } from '@app/helper/config/app.enums';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Lead } from '@app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({
     selector: 'lead-bookings',

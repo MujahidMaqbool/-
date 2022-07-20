@@ -5,8 +5,8 @@ import { AutomationMainNavigationComponent } from './navigation/automation.main.
 import { SaveAutomationComponent } from './save/save.automation.component';
 import { AutomationNavigationComponent } from './navigation/automation.navigation.component';
 import { SearchLogComponent } from './log/search.log.component';
-import { PagePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_Module, ENU_Permission_Automation } from '@app/helper/config/app.module.page.enums';
+import { PagePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_Module, ENU_Permission_Automation } from 'src/app/helper/config/app.module.page.enums';
 
 
 const routes: Routes = [

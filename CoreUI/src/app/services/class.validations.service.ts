@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
-import { ClassAttendanceDetail } from "@app/models/attendee.model";
-import { ENU_DurationType } from "@app/helper/config/app.enums";
+import { ClassAttendanceDetail } from "src/app/models/attendee.model";
+import { ENU_DurationType } from "src/app/helper/config/app.enums";
 import { DateTimeService } from "./date.time.service";
 
 @Injectable({ providedIn: 'root' })

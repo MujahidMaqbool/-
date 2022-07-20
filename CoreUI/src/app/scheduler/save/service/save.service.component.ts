@@ -6,43 +6,43 @@ import { NgForm, FormControl } from '@angular/forms';
 import { forkJoin, SubscriptionLike } from 'rxjs';
 
 /** Model */
-import { SchedulerServicesPackage, SchedulerServiceModel, ServiceBookingList, ServiceClient, DeleteServiceModel, ServiceBenefitsPackage, CustomerMembership, UpdateSaleServiceStatusModel, ServiceCancelatinPolicyModel } from '@scheduler/models/service.model';
-import { CellSelectedData } from '@scheduler/models/scheduler.model';
-import { SaleInvoice, POSCartItem, POSSaleDetail, RemainingSessionDetail } from '@app/point-of-sale/models/point.of.sale.model';
-import { ApiResponse } from '@app/models/common.model';
-import { Client } from '@customer/client/models/client.model';
-import { CustomerFormsInfromation, CustomFormView } from '@app/models/customer.form.model';
+import { SchedulerServicesPackage, SchedulerServiceModel, ServiceBookingList, ServiceClient, DeleteServiceModel, ServiceBenefitsPackage, CustomerMembership, UpdateSaleServiceStatusModel, ServiceCancelatinPolicyModel } from 'src/app/scheduler/models/service.model';
+import { CellSelectedData } from 'src/app/scheduler/models/scheduler.model';
+import { SaleInvoice, POSCartItem, POSSaleDetail, RemainingSessionDetail } from 'src/app/point-of-sale/models/point.of.sale.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { Client } from 'src/app/customer/client/models/client.model';
+import { CustomerFormsInfromation, CustomFormView } from 'src/app/models/customer.form.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { DateTimeService } from '@services/date.time.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { CommonService } from '@app/services/common.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { AuthService } from 'src/app//helper/app.auth.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { CommonService } from 'src/app/services/common.service';
 
 /** App Messages & Constants */
-import { Configurations, SchedulerOptions, SaleArea, DiscountType } from '@helper/config/app.config';
-import { PeriodIntervals, POSItemType, EnumSaleStatusType, EnumBookingStatusType, ENU_Package, ENU_DateFormatName, EnumServiceBookingStatusOptions, EnumServiceBookingStatusType, ENU_CancelItemType,  CustomerType } from '@helper/config/app.enums';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { SchedulerServicesApi, SchedulerApi, SaleApi } from '@app/helper/config/app.webapi';
+import { Configurations, SchedulerOptions, SaleArea, DiscountType } from 'src/app/helper/config/app.config';
+import { PeriodIntervals, POSItemType, EnumSaleStatusType, EnumBookingStatusType, ENU_Package, ENU_DateFormatName, EnumServiceBookingStatusOptions, EnumServiceBookingStatusType, ENU_CancelItemType,  CustomerType } from'src/app/helper/config/app.enums';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app//helper/config/app.module.page.enums';
+import { AbstractGenericComponent } from 'src/app//shared/helper/abstract.generic.component';
+import { Messages } from 'src/app//helper/config/app.messages';
+import { SchedulerServicesApi, SchedulerApi, SaleApi } from 'src/app//helper/config/app.webapi';
 import { debounceTime } from 'rxjs/internal/operators';
 
 /** Shared Components */
-import { POSPaymentComponent } from '@shared/components/sale/payment/pos.payment.component';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { SaveClientPopupComponent } from '@customer/client/save/save.client.popup.component';
+import { POSPaymentComponent } from 'src/app/shared/components/sale/payment/pos.payment.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { SaveClientPopupComponent } from 'src/app/customer/client/save/save.client.popup.component';
 import { DatePipe } from '@angular/common';
-import { SavePartialPaymentComponent } from '@app/shared/components/sale/partial-payment/save.partial.payment.component';
-import { FillFormComponent } from '@app/shared/components/fill-form/fill.form.component';
-import { ViewFormComponent } from '@app/shared/components/forms/view/view.form.component';
-import { NoShowBookingComponent } from '@app/shared/components/noshow-booking/noshow.booking.component';
-import { CancelBookingComponent } from '@app/shared/components/cancel-booking/cancel.booking.component';
-import { OneDaySchedulerComponent } from '@app/shared/components/scheduler/one.day.scheduler.component';
+import { SavePartialPaymentComponent } from 'src/app/shared/components/sale/partial-payment/save.partial.payment.component';
+import { FillFormComponent } from 'src/app/shared/components/fill-form/fill.form.component';
+import { ViewFormComponent } from 'src/app/shared/components/forms/view/view.form.component';
+import { NoShowBookingComponent } from 'src/app/shared/components/noshow-booking/noshow.booking.component';
+import { CancelBookingComponent } from 'src/app//shared/components/cancel-booking/cancel.booking.component';
+import { OneDaySchedulerComponent } from 'src/app//shared/components/scheduler/one.day.scheduler.component';
 
 // #endregion
 

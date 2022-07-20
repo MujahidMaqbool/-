@@ -8,43 +8,43 @@ import { Component, ViewChild, OnInit, QueryList, ViewChildren } from '@angular/
 
 /********************** Services & Models *********************/
 /* Models */
-import { SavePageMember } from '@customer/member/models/members.model';
-import { CustomFormView } from '@app/models/customer.form.model';
-import { ApiResponse, CustomerBillingDetail } from '@app/models/common.model';
-import { StripePaymentIntent, PayTabPaymentMode } from '@app/point-of-sale/models/point.of.sale.model';
-import { Card, DirectDebit, StripeTerminal, StripeDD, AuthenticateCard } from '@customer/member/models/member.gateways.model';
-import { GetMemberMembershipPlan, ViewPaymentSummary, ViewPayment, AccountDetails, GatewayCustomerViewModel } from '@customer/member/models/member.membership.model';
+import { SavePageMember } from 'src/app/customer/member/models/members.model';
+import { CustomFormView } from 'src/app/models/customer.form.model';
+import { ApiResponse, CustomerBillingDetail } from 'src/app/models/common.model';
+import { StripePaymentIntent, PayTabPaymentMode } from 'src/app/point-of-sale/models/point.of.sale.model';
+import { Card, DirectDebit, StripeTerminal, StripeDD, AuthenticateCard } from 'src/app/customer/member/models/member.gateways.model';
+import { GetMemberMembershipPlan, ViewPaymentSummary, ViewPayment, AccountDetails, GatewayCustomerViewModel } from 'src/app/customer/member/models/member.membership.model';
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { StripeService } from "@app/services/stripe.service";
-import { DateTimeService } from '@services/date.time.service';
-import { MessageService } from '@services/app.message.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { DynamicScriptLoaderService } from "@app/services/dynamic.script.loader.service";
+import { HttpService } from 'src/app/services/app.http.service';
+import { StripeService } from "src/app/services/stripe.service";
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
 
 
 /**********************Component*********************/
-import { SaveMemberDetailsComponent } from "@customer/member/save/save-member-details/save.member.details.component";
-//import { MembershipFormComponent } from '@app/shared/components/forms/membership-form/membership.form.component';
-// import { SaveMemberPaymentComponent } from '@app/shared/components/add-member-membership/save-member-payment/save.member.payment.component';
-// import { MandateConfirmationDialog } from '@app/shared/components/add-member-membership/mandate-confirmation/mandate.confirmation.component';
+import { SaveMemberDetailsComponent } from "src/app/customer/member/save/save-member-details/save.member.details.component";
+//import { MembershipFormComponent } from 'src/app/shared/components/forms/membership-form/membership.form.component';
+// import { SaveMemberPaymentComponent } from 'src/app/shared/components/add-member-membership/save-member-payment/save.member.payment.component';
+// import { MandateConfirmationDialog } from 'src/app/shared/components/add-member-membership/mandate-confirmation/mandate.confirmation.component';
 // import { SaveMemberMembershipComponent } from '@shared/components/add-member-membership/save-member-membership/save.member.membership.component';
 
 /********************** Configurations *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { Configurations } from '@helper/config/app.config';
-import { MemberApi, CustomerPaymentGatewayApi, CustomerFormApi } from '@app/helper/config/app.webapi';
-import { WizardStep, EnumSaleType, MembershipPaymentType, ENU_PaymentGateway, ENU_SEPACountryCode, CustomFormStatus, AddressType } from "@helper/config/app.enums";
-import { SaveMemberMembershipComponent } from "@app/customer-shared-module/add-member-membership/save-member-membership/save.member.membership.component";
-import { SaveMemberPaymentComponent } from "@app/customer-shared-module/add-member-membership/save-member-payment/save.member.payment.component";
-import { MandateConfirmationDialog } from "@app/customer-shared-module/add-member-membership/mandate-confirmation/mandate.confirmation.component";
-import { MembershipFormComponent } from "@app/customer-shared-module/customer-forms/membership-form/membership.form.component";
-import { POSMembershipPaymentComponent } from "@customershared/payments/pos.membership.payment";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { CommonService } from "@app/services/common.service";
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { MemberApi, CustomerPaymentGatewayApi, CustomerFormApi } from 'src/app/helper/config/app.webapi';
+import { WizardStep, EnumSaleType, MembershipPaymentType, ENU_PaymentGateway, ENU_SEPACountryCode, CustomFormStatus, AddressType } from "src/app/helper/config/app.enums";
+import { SaveMemberMembershipComponent } from "src/app/customer-shared-module/add-member-membership/save-member-membership/save.member.membership.component";
+import { SaveMemberPaymentComponent } from "src/app/customer-shared-module/add-member-membership/save-member-payment/save.member.payment.component";
+import { MandateConfirmationDialog } from "src/app/customer-shared-module/add-member-membership/mandate-confirmation/mandate.confirmation.component";
+import { MembershipFormComponent } from "src/app/customer-shared-module/customer-forms/membership-form/membership.form.component";
+import { POSMembershipPaymentComponent } from "src/app/customer-shared-module/payments/pos.membership.payment";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { CommonService } from "src/app/services/common.service";
 import { SubscriptionLike } from "rxjs";
-import { LoaderService } from "@app/services/app.loader.service";
+import { LoaderService } from "src/app/services/app.loader.service";
 
 // #endregion
 

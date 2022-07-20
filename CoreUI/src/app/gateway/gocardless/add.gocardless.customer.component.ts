@@ -8,21 +8,21 @@ import { NgForm } from "@angular/forms";
 
 /*********************** Models & Services  *************************/
 /* Models */
-import { SavedAccount, SaveGoCardless, SEPACountry, SEPADashAfterDigit } from "@app/models/cutomer.gateway.models";
-import { ApiResponse } from '@app/models/common.model';
+import { SavedAccount, SaveGoCardless, SEPACountry, SEPADashAfterDigit } from "src/app/models/cutomer.gateway.models";
+import { ApiResponse } from 'src/app/models/common.model';
 
 /* Services */
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 
 /*********************** Common  *************************/
-import { CustomerPaymentGatewayApi } from "@app/helper/config/app.webapi";
-import { Messages } from "@app/helper/config/app.messages";
-import { DataSharingService } from '@services/data.sharing.service';
+import { CustomerPaymentGatewayApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { SubscriptionLike } from 'rxjs';
-import { ENU_PaymentAccount, ENU_PaymentSortCode, ENU_SEPACountryCode, ENU_SEPACountryScheme, ENU_Page } from '@helper/config/app.enums';
-import { SEPACountyAccountDetail, SEPACountyAccountDigitBeforeDash } from '@app/helper/config/app.config';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { ENU_PaymentAccount, ENU_PaymentSortCode, ENU_SEPACountryCode, ENU_SEPACountryScheme, ENU_Page } from 'src/app/helper/config/app.enums';
+import { SEPACountyAccountDetail, SEPACountyAccountDigitBeforeDash } from 'src/app/helper/config/app.config';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion
 

@@ -3,32 +3,41 @@ import { Component, ViewChild, Input, Output, EventEmitter, AfterViewInit } from
 import { DxSchedulerComponent } from 'devextreme-angular';
 
 /********************** Services & Models *********************/
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /********************** Configurations *********************/
-import { DataSourceModelMapper } from '@shared/helper/datasource-model-mapper';
-import { SchedulerOptions, Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { SchedulerApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { DataSourceModelMapper } from 'src/app/shared/helper/datasource-model-mapper';
+import { SchedulerOptions, Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SchedulerApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'one-day-scheduler',
     template: `
         <style>  
+        :host ::ng-deep .dx-toolbar-button.dx-toolbar-menu-container {
+            display: none;
+        }
+        :host ::ng-deep .dx-toolbar .dx-toolbar-before {
+            padding-right: 0;
+        }
+        :host ::ng-deep .dx-toolbar .dx-toolbar-after {
+            padding-left: 0;
+        }
             :host ::ng-deep .dx-scheduler-small .dx-scheduler-date-table .dx-scheduler-date-table-row:before{
                 width: 50px;
             }            
             :host ::ng-deep .dx-scheduler-time-panel{
                 width: 32px;
                 font-size: 11px;
-                border-right: 1px solid rgba(221, 221, 221, 0.6);
+                border-right: 1px solid rgba(221, 221, 221, 0.6) !important;
             }
             ::ng-deep .dx-scheduler-small .dx-scheduler-date-table{
-                margin-left: -51px;
+                margin-left: -8px;
             }
             :host ::ng-deep .dx-scrollable-scrollbar{
                 display: none;
@@ -37,7 +46,7 @@ import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.co
                 min-width: 100%;
             }
             :host ::ng-deep .dx-scheduler-navigator-caption{
-                width: 223px;
+                width: 234px;
             }
             :host ::ng-deep .dx-scheduler-header{
                 position: sticky;

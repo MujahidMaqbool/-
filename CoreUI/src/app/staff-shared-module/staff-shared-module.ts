@@ -9,7 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { WebcamModule } from 'ngx-webcam';
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
 
 
 

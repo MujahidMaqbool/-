@@ -6,16 +6,16 @@ import { SubscriptionLike } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /*************************** Services & Models *************************/
-import { StaffView } from '@staff/models/staff.model';
+import { StaffView } from 'src/app/staff/models/staff.model';
 
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 /*************************** Configurations *************************/
-import { environment } from "@env/environment";
-import { ENU_Package, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { Configurations } from '@app/helper/config/app.config';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { environment } from "src/environments/environment";
+import { ENU_Package, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 
 @Component({

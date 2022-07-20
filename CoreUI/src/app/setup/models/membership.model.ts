@@ -1,4 +1,4 @@
-﻿import { ENU_MemberShipBenefitDurations } from "@app/helper/config/app.enums";
+﻿import { ENU_MemberShipBenefitDurations } from "src/app/helper/config/app.enums";
 
 export class Membership {
     public MembershipID: number;

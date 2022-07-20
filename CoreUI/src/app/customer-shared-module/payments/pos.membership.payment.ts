@@ -6,24 +6,24 @@ import { SubscriptionLike } from "rxjs";
 
 /****************** Services & Models *****************/
 /* Models */
-import { ViewPaymentSummary } from "@app/customer/member/models/member.membership.model";
-import { SavedCard } from "@app/point-of-sale/models/point.of.sale.model";
-import { DD_Branch, ApiResponse, CustomerBillingDetail } from "@app/models/common.model";
+import { ViewPaymentSummary } from "src/app/customer/member/models/member.membership.model";
+import { SavedCard } from "src/app/point-of-sale/models/point.of.sale.model";
+import { DD_Branch, ApiResponse, CustomerBillingDetail } from "src/app/models/common.model";
 
 /* Services */
-import { TaxCalculation } from "@app/services/tax.calculations.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
-import { DateTimeService } from "@app/services/date.time.service";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { DateTimeService } from "src/app/services/date.time.service";
 /****************** Components *****************/
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 /****************** Configurations *****************/
-import { EnumSaleType, MembershipDurationType, ENU_DateFormatName, ENU_PaymentGateway } from "@helper/config/app.enums";
-import { Configurations } from "@helper/config/app.config";
-import { Messages } from "@app/helper/config/app.messages";
-import { CustomerApi } from "@app/helper/config/app.webapi";
+import { EnumSaleType, MembershipDurationType, ENU_DateFormatName, ENU_PaymentGateway } from "src/app/helper/config/app.enums";
+import { Configurations } from "src/app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
+import { CustomerApi } from "src/app/helper/config/app.webapi";
 
 
 @Component({

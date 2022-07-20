@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ModulePermissionGuard, PagePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_ClientAndMember, ENU_Permission_Module } from '@app/helper/config/app.module.page.enums';
+import { ModulePermissionGuard, PagePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_ClientAndMember, ENU_Permission_Module } from 'src/app/helper/config/app.module.page.enums';
 import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
 import { MembersPaymentsComponent } from './member-payments/members.payments.component';
 import { NavigationComponent } from './navigation/customer.navigation.component';
@@ -29,25 +29,25 @@ const routes: Routes = [
         data: { module: ENU_Permission_Module.Customer, page: ENU_Permission_ClientAndMember.All_Payments }
       },
       {
-          path: 'main-dashboard',
-          component: CustomerDashboardComponent,
-          canActivate: [PagePermissionGuard],
-          data: { module: ENU_Permission_Module.Customer, page: ENU_Permission_ClientAndMember.Dashboard }
+        path: 'main-dashboard',
+        component: CustomerDashboardComponent,
+        canActivate: [PagePermissionGuard],
+        data: { module: ENU_Permission_Module.Customer, page: ENU_Permission_ClientAndMember.Dashboard }
       },
     ]
   },
-    {
-      path: "member",
-      loadChildren: "@customer/member/member.module#MemberModule",
-      canActivate: [ModulePermissionGuard],
-      data: { module: ENU_Permission_Module.Customer },
-    },
-    {
-      path: "client",
-      loadChildren: "@customer/client/client.module#ClientModule",
-      canActivate: [ModulePermissionGuard],
-      data: { module: ENU_Permission_Module.Customer },
-    }
+  {
+    path: "member",
+    loadChildren: () => import('src/app/customer/member/member.module').then(m => m.MemberModule),
+    canActivate: [ModulePermissionGuard],
+    data: { module: ENU_Permission_Module.Customer },
+  },
+  {
+    path: "client",
+    loadChildren: () => import('src/app/customer/client/client.module').then(m => m.ClientModule),
+    canActivate: [ModulePermissionGuard],
+    data: { module: ENU_Permission_Module.Customer },
+  }
 ];
 
 @NgModule({

@@ -5,24 +5,24 @@ import { NgForm } from '@angular/forms';
 import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
 
 /** Models */
-import { StaffAttendance } from '@staff/models/staff.attendance.model';
-import { CellSelectedData } from '@scheduler/models/scheduler.model';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { StaffAttendance } from 'src/app/staff/models/staff.attendance.model';
+import { CellSelectedData } from 'src/app/scheduler/models/scheduler.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 
 /** Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /** Configuration, Commom, Constants */
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffAttendanceApi } from '@app/helper/config/app.webapi';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffAttendanceApi } from 'src/app/helper/config/app.webapi';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { DatePipe } from '@angular/common';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'save-staff-attendance',

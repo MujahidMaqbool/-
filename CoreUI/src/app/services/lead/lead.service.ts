@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@app/services/app.http.service';
-import {LeadMembershipApi } from '@app/helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import {LeadMembershipApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { MessageService } from '../app.message.service';
 @Injectable({ providedIn: 'root' })
 export class LeadService {

@@ -11,48 +11,48 @@ import { MatDatepicker } from '@angular/material/datepicker';
 
 /********************** Services & Models *********************/
 /* Models */
-import { LeadOnBoard, LeadStatus, SaveLead, LeadLostReasonModel, LeadSearchParameter } from "@lead/models/lead.model";
-import { SearchActivity, AppointmentMarkAsDoneActivity, CallMarkAsDoneActivity } from "@lead/models/lead.activity.model";
-import { SaveMember } from '@customer/member/models/members.model';
-import { MemberRedirectInfo } from '@customer/member/models/members.model';
+import { LeadOnBoard, LeadStatus, SaveLead, LeadLostReasonModel, LeadSearchParameter } from "src/app/lead/models/lead.model";
+import { SearchActivity, AppointmentMarkAsDoneActivity, CallMarkAsDoneActivity } from "src/app/lead/models/lead.activity.model";
+import { SaveMember } from 'src/app/customer/member/models/members.model';
+import { MemberRedirectInfo } from 'src/app/customer/member/models/members.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DataSharingService } from '@services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /**********************Component*********************/
-import { AddLeadPopupComponent } from '@lead/save/save.lead.popup.component';
-import { LeadLostComponent } from '@lead/lost-popup/lead.lost.popup.component';
+import { AddLeadPopupComponent } from 'src/app/lead/save/save.lead.popup.component';
+import { LeadLostComponent } from 'src/app/lead/lost-popup/lead.lost.popup.component';
 
 /********************** START: Common *********************/
 
-import { Configurations } from '@helper/config/app.config';
-import { LeadActivityApi, LeadApi, LeadMembershipApi, CustomerApi } from '@helper/config/app.webapi';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { SaveActivityComponent } from '@shared/components/activities/save/save.activity.component';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { LeadActivityApi, LeadApi, LeadMembershipApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { SaveActivityComponent } from 'src/app/shared/components/activities/save/save.activity.component';
 
-import { ActivityTabsOptions } from '@models/activity.tab.options'
+import { ActivityTabsOptions } from 'src/app/models/activity.tab.options'
 import {
     AppointmentNowActivity,
     AppointmentLaterActivity,
     CallNowActivity,
     CallLaterActivity
-} from '@lead/models/lead.activity.model'
-import { Messages } from '@app/helper/config/app.messages';
-import { ENU_ModuleList, LeadStatusType, ENU_ActivityType, CustomerType, ENU_DateFormatName } from '@app/helper/config/app.enums';
+} from 'src/app/lead/models/lead.activity.model'
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_ModuleList, LeadStatusType, ENU_ActivityType, CustomerType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragStart, CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
-import { ActivityPersonInfo } from '@app/models/activity.model';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Lead } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { ApiResponse, PersonInfo } from '@app/models/common.model';
+import { ActivityPersonInfo } from 'src/app/models/activity.model';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
 
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { SaveMemberMembershipPopup } from '@app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
-import { MissingBillingAddressDialog } from '@app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
 
 // #endregion
 

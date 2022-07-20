@@ -1,20 +1,19 @@
-import { IfStmt } from '@angular/compiler';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 import { Component, Input, OnInit, Inject, ViewChild, EventEmitter, Output } from '@angular/core';
-import { EnumSaleSourceType, ENU_Package, ProductAreaEnum, ProductClassification } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { DD_Branch, ApiResponse } from '@app/models/common.model';
-import { ProductBranchPermissionViewModel, ProductVariantBranchViewModel, ProductVariantPackagingViewModel, ProductVariantPricingModel, ProductVariantViewModel, ProductPriceCheckBoxViewModel } from '@app/product/models/product.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { EnumSaleSourceType, ENU_Package, ProductAreaEnum, ProductClassification } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DD_Branch, ApiResponse } from 'src/app/models/common.model';
+import { ProductBranchPermissionViewModel, ProductVariantBranchViewModel, ProductVariantPackagingViewModel, ProductVariantPricingModel, ProductVariantViewModel, ProductPriceCheckBoxViewModel } from 'src/app/product/models/product.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { SubscriptionLike } from 'rxjs';
 import { BulkUpdatePriceComponent } from './save/bulk.update.price.component';
 import { SavePackagingComponent } from './save/packaging/packaging.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpService } from '@app/services/app.http.service';
-import { ProductApi } from '@app/helper/config/app.webapi';
-import { MessageService } from '@app/services/app.message.service';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { HttpService } from 'src/app/services/app.http.service';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 @Component({
   selector: 'app-product-price',

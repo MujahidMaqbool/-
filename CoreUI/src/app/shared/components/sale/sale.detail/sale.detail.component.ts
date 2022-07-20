@@ -7,31 +7,31 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Service & Models *********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /* Models */
-import { SaleDetail, ReceiptItem, ReceiptModel, ReceiptPaymentMethod } from '@models/sale.model';
-import { SaleInvoice, POSCartItem } from '@pos/models/point.of.sale.model';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { SaleDetail, ReceiptItem, ReceiptModel, ReceiptPaymentMethod } from 'src/app/models/sale.model';
+import { SaleInvoice, POSCartItem } from 'src/app/point-of-sale/models/point.of.sale.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
 /********************** Common *********************************/
-import { Configurations, DiscountType } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { SaleApi, PointOfSaleApi } from '@app/helper/config/app.webapi';
-import { POSItemType, ENU_DateFormatName, EnumSaleStatusType, EnumSaleDetailType, EnumSalePaymentStatusType, ENU_Package } from '@helper/config/app.enums';
+import { Configurations, DiscountType } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { SaleApi, PointOfSaleApi } from 'src/app/helper/config/app.webapi';
+import { POSItemType, ENU_DateFormatName, EnumSaleStatusType, EnumSaleDetailType, EnumSalePaymentStatusType, ENU_Package } from 'src/app/helper/config/app.enums';
 import { PrintReceiptComponent } from '../../print-receipt/print.receipt.component';
 import { CurrencyPipe } from '@angular/common';
 import { MatDialogService } from '../../generics/mat.dialog.service';
-import { AppUtilities } from '@app/helper/aap.utilities';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
 
 /********************** Cpmponent *********************************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
 
 
 

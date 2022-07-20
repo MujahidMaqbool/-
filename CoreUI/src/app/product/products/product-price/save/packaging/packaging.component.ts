@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MeasurementUnitType } from '@app/helper/config/app.enums';
-import { ProductVariantPackagingViewModel } from '@app/product/models/product.model';
+import { MeasurementUnitType } from 'src/app/helper/config/app.enums';
+import { ProductVariantPackagingViewModel } from 'src/app/product/models/product.model';
 
 @Component({
   selector: 'app-packaging',

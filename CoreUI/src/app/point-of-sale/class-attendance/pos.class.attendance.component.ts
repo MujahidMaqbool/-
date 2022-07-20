@@ -3,32 +3,32 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionLike } from 'rxjs';
 
 /** Services & Models */
-import { AllAttendees, SaveAttendee, AttendeeClass, ClassAttendanceDetail, ClassInfo, AttendeeClassAttendance, AttendeMemberhsip, CancelationPolicyDetails } from '@app/models/attendee.model';
-import { AllPerson, ApiResponse, DD_Branch } from '@models/common.model';
-import { CommonService } from '@app/services/common.service';
+import { AllAttendees, SaveAttendee, AttendeeClass, ClassAttendanceDetail, ClassInfo, AttendeeClassAttendance, AttendeMemberhsip, CancelationPolicyDetails } from 'src/app/models/attendee.model';
+import { AllPerson, ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { CommonService } from 'src/app/services/common.service';
 
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /**components**/
-import { CancelBookingComponent } from '@app/shared/components/cancel-booking/cancel.booking.component';
-import { NoShowBookingComponent } from '@app/shared/components/noshow-booking/noshow.booking.component';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { MemberMemberhshipAttendance } from '@app/shared/components/member-memberhsip-attendance/member-membership-attendance';
+import { CancelBookingComponent } from 'src/app/shared/components/cancel-booking/cancel.booking.component';
+import { NoShowBookingComponent } from 'src/app/shared/components/noshow-booking/noshow.booking.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { MemberMemberhshipAttendance } from 'src/app/shared/components/member-memberhsip-attendance/member-membership-attendance';
 
 /** Configurations */
-import { Configurations, ClassStatusName } from '@helper/config/app.config';
-import { EnumBookingStatusType, ClassStatus, EnumSaleStatusType, ENU_DateFormatName, EnumSaleSourceType, ENU_CancelItemType, ENU_BookingStatusValue, ENU_BookingStatusOption, ENU_SearchBookingStatusValue, ENU_SearchBookingStatusOption, ENU_CancellationDurationType, ENU_DurationType } from '@helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { AttendeeApi } from '@app/helper/config/app.webapi';
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
-import { environment } from '@env/environment';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { Configurations, ClassStatusName } from 'src/app/helper/config/app.config';
+import { EnumBookingStatusType, ClassStatus, EnumSaleStatusType, ENU_DateFormatName, EnumSaleSourceType, ENU_CancelItemType, ENU_BookingStatusValue, ENU_BookingStatusOption, ENU_SearchBookingStatusValue, ENU_SearchBookingStatusOption, ENU_CancellationDurationType, ENU_DurationType } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AttendeeApi } from 'src/app/helper/config/app.webapi';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { environment } from 'src/environments/environment';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AppUtilities } from '@app/helper/aap.utilities';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
 
 
 @Component({

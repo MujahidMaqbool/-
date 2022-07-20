@@ -7,39 +7,39 @@ import { NgForm, FormControl } from '@angular/forms';
 import { SubscriptionLike } from 'rxjs';
 
 /** Model */
-import { SchedulerServicesPackage, SchedulerServiceModel, ServiceBookingList, ServiceClient, DeleteServiceModel, ServiceBenefitsPackage, CustomerMembership, UpdateSaleServiceStatusModel } from '@scheduler/models/service.model';
-import { CellSelectedData } from '@scheduler/models/scheduler.model';
-import { POSCartItem, RemainingSessionDetail } from '@app/point-of-sale/models/point.of.sale.model';
-import { ApiResponse } from '@app/models/common.model';
-import { CustomerFormsInfromation, CustomFormView } from '@app/models/customer.form.model';
-import { RescheduleBooking } from '@app/models/bookings.model';
+import { SchedulerServicesPackage, SchedulerServiceModel, ServiceBookingList, ServiceClient, DeleteServiceModel, ServiceBenefitsPackage, CustomerMembership, UpdateSaleServiceStatusModel } from 'src/app/scheduler/models/service.model';
+import { CellSelectedData } from 'src/app/scheduler/models/scheduler.model';
+import { POSCartItem, RemainingSessionDetail } from 'src/app/point-of-sale/models/point.of.sale.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { CustomerFormsInfromation, CustomFormView } from 'src/app/models/customer.form.model';
+import { RescheduleBooking } from 'src/app/models/bookings.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { CommonService } from '@app/services/common.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { CommonService } from 'src/app/services/common.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 /** App Messages & Constants */
 
-import { Configurations, SchedulerOptions, DiscountType } from '@helper/config/app.config';
-import { PeriodIntervals, POSItemType, EnumSaleStatusType, EnumBookingStatusType, ENU_Package, ENU_DateFormatName, EnumServiceBookingStatusOptions, EnumServiceBookingStatusType, ENU_CancelItemType, EnumSaleType, ENU_Action_ActivityType, ENU_PaymentActionType, CustomerType } from '@helper/config/app.enums';
-import { DateTimeService } from '@services/date.time.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { SchedulerServicesApi, SchedulerApi, RescheduleBookingApi, SaleApi } from '@app/helper/config/app.webapi';
+import { Configurations, SchedulerOptions, DiscountType } from 'src/app/helper/config/app.config';
+import { PeriodIntervals, POSItemType, EnumSaleStatusType, EnumBookingStatusType, ENU_Package, ENU_DateFormatName, EnumServiceBookingStatusOptions, EnumServiceBookingStatusType, ENU_CancelItemType, EnumSaleType, ENU_Action_ActivityType, ENU_PaymentActionType, CustomerType } from 'src/app/helper/config/app.enums';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SchedulerServicesApi, SchedulerApi, RescheduleBookingApi, SaleApi } from 'src/app/helper/config/app.webapi';
 import { debounceTime } from 'rxjs/internal/operators';
 
 /** Shared Components */
 import { DatePipe } from '@angular/common';
-import { RedeemMembershipComponent } from '@app/shared/components/redeem-membership/redeem.membership.component';
-import { FillFormComponent } from '@app/shared/components/fill-form/fill.form.component';
-import { ViewFormComponent } from '@app/shared/components/forms/view/view.form.component';
-import { OneDaySchedulerComponent } from '@app/shared/components/scheduler/one.day.scheduler.component';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from '@app/helper/config/app.module.page.enums';
-import { RescheduleBookingComponent } from '@app/shared/components/reschedule-booking/reschedule.booking.component';
+import { RedeemMembershipComponent } from 'src/app/shared/components/redeem-membership/redeem.membership.component';
+import { FillFormComponent } from 'src/app/shared/components/fill-form/fill.form.component';
+import { ViewFormComponent } from 'src/app/shared/components/forms/view/view.form.component';
+import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
+import { RescheduleBookingComponent } from 'src/app/shared/components/reschedule-booking/reschedule.booking.component';
 
 
 // #endregion

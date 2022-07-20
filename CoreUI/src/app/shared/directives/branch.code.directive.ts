@@ -1,5 +1,5 @@
 import { Directive, HostListener, ElementRef, Input } from '@angular/core';
-import { SEPADashAfterDigit } from '@app/models/cutomer.gateway.models';
+import { SEPADashAfterDigit } from 'src/app/models/cutomer.gateway.models';
 
 @Directive({
   selector: '[branchCodeDirective]'

@@ -1,25 +1,24 @@
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 /********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 /********************** Angular Material Refrences *********************/
 /********************** Application Components *********************/
-import { BranchSaveComponent } from '@setup/branch/save/save.branch.component';
 /********************** Service & Models *********************/
-import { Branch, BranchForSave } from '@setup/models/branch.model';
-import { ApiResponse } from '@app/models/common.model';
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { Branch, BranchForSave } from 'src/app/setup/models/branch.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 /********************** Common and Customs *********************/
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { Messages } from '@app/helper/config/app.messages';
-import { BranchApi } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { CommonService } from '@app/services/common.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { BranchApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { CommonService } from 'src/app/services/common.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { BranchViewComponent } from '../view/view.component';
 
 @Component({

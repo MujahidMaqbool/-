@@ -1,9 +1,7 @@
 /********************* Angular References ********************/
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { HttpService } from '@app/services/app.http.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FundamentalsMemberships } from '@app/setup/models/custom.form.model';
+import { FundamentalsMemberships } from 'src/app/setup/models/custom.form.model';
 
 
 /********************** Services & Model *********************/

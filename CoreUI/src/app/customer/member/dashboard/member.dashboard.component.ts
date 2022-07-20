@@ -2,34 +2,34 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { SubscriptionLike as ISubscription, SubscriptionLike } from "rxjs";
 /************************* Services & Models ***********************************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
-import { TaxCalculation } from "@app/services/tax.calculations.service";
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
 
 /* Models */
-import { MemberInfo, MemberDashboardSearchParam, MemberActivities, MemberBooking, MemberServices, MemberProducts, MemberActiveMemberships, MemberAttendanceSummary, MemberTotalRevenue, TotalSaleCount } from "@customer/member/models/member.dashboard.model";
-import { DD_Branch, ApiResponse } from "@app/models/common.model";
+import { MemberInfo, MemberDashboardSearchParam, MemberActivities, MemberBooking, MemberServices, MemberProducts, MemberActiveMemberships, MemberAttendanceSummary, MemberTotalRevenue, TotalSaleCount } from "src/app/customer/member/models/member.dashboard.model";
+import { DD_Branch, ApiResponse } from "src/app/models/common.model";
 /**********************  Common *********************/
-import { environment } from "@env/environment";
-import { ENU_ActivityType, MembershipPaymentType, EnumSaleSourceType, ENU_Package, ENU_MemberAttendanceRedirect, ENU_DateFormatName, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from '@helper/config/app.enums';
-import { DataSharingService } from '@services/data.sharing.service';
-import { ClientApi, MemberApi, MemberPaymentsApi } from '@app/helper/config/app.webapi';
-import { MessageService } from "@app/services/app.message.service";
-import { Messages } from "@app/helper/config/app.messages";
+import { environment } from "src/environments/environment";
+import { ENU_ActivityType, MembershipPaymentType, EnumSaleSourceType, ENU_Package, ENU_MemberAttendanceRedirect, ENU_DateFormatName, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from 'src/app/helper/config/app.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ClientApi, MemberApi, MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
+import { MessageService } from "src/app/services/app.message.service";
+import { Messages } from "src/app/helper/config/app.messages";
 import { MemberMembershipPayments } from "../models/member.membership.payments.model";
-import { Configurations } from "@app/helper/config/app.config";
-import { ImagesPlaceholder } from "@app/helper/config/app.placeholder";
-import { DateToDateFromComponent } from "@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
+import { Configurations } from "src/app/helper/config/app.config";
+import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
+import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
 import { Router } from "@angular/router";
-import { MemberAttendanceComponent } from "@app/attendance/member/member.attendance.component";
-import { AuthService } from "@app/helper/app.auth.service";
-import { ENU_Permission_Module, ENU_Permission_Individual } from "@app/helper/config/app.module.page.enums";
-import { CustomerType } from "@app/helper/config/app.enums";
-import { AppUtilities } from "@app/helper/aap.utilities";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { MemberAttendanceComponent } from "src/app/attendance/member/member.attendance.component";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { ENU_Permission_Module, ENU_Permission_Individual } from "src/app/helper/config/app.module.page.enums";
+import { CustomerType } from "src/app/helper/config/app.enums";
+import { AppUtilities } from "src/app/helper/aap.utilities";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 import { CurrencyPipe } from "@angular/common";
 import { MatDatepicker } from "@angular/material/datepicker";
-import { DateToFrom } from "@models/common.model";
+import { DateToFrom } from "src/app/models/common.model";
 
 /*
     Component Variables are not accessible in Dashboard widget events

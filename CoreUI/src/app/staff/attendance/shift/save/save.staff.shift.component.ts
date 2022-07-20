@@ -8,23 +8,23 @@ import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
 import { DxFormComponent } from 'devextreme-angular';
 
 /** Models*/
-import { RRuleData, CellSelectedData } from '@scheduler/models/scheduler.model';
-import { StaffShift } from '@staff/models/staff.model';
+import { RRuleData, CellSelectedData } from 'src/app/scheduler/models/scheduler.model';
+import { StaffShift } from 'src/app/staff/models/staff.model';
 
 /** Services */
 
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@services/date.time.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /** Configurations */
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffShiftApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { ENU_DateFormatName, ENU_Package } from '@app/helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffShiftApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ENU_DateFormatName, ENU_Package } from 'src/app/helper/config/app.enums';
 
 @Component({
     selector: 'save-staff-shift',

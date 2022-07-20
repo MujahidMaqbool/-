@@ -4,21 +4,21 @@ import { Router } from '@angular/router';
 
 /**********  Services & Models **********/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { MemberAttendanceApi } from "@app/helper/config/app.webapi";
-import { Messages } from "@app/helper/config/app.messages";
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { MemberAttendanceApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
 import { MemerClockInInfo, MemberMessage } from "../models/member.attendance.model";
-import { environment } from "@env/environment";
+import { environment } from "src/environments/environment";
 
 /* Models */
-import { ApiResponse, CompanyInfo } from "@app/models/common.model";
-import { MemberAttendanceDetail } from '@app/attendance/models/member.attendance.model';
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { ENU_MemberAttendanceRedirect } from "@app/helper/config/app.enums";
-import { variables } from "@app/helper/config/app.variable";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { CompanyDetails } from "@app/setup/models/company.details.model";
+import { ApiResponse, CompanyInfo } from "src/app/models/common.model";
+import { MemberAttendanceDetail } from 'src/app/attendance/models/member.attendance.model';
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { ENU_MemberAttendanceRedirect } from "src/app/helper/config/app.enums";
+import { variables } from "src/app/helper/config/app.variable";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { CompanyDetails } from "src/app/setup/models/company.details.model";
 
 @Component({
     selector: 'member-attendance',

@@ -6,24 +6,24 @@ import { NgForm } from '@angular/forms';
 import { SubscriptionLike as ISubscription } from 'rxjs';
 
 /** Serivces*/
-import { HttpService } from "@services/app.http.service";
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
+import { HttpService } from "src/app/services/app.http.service";
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 /** Models */
-import { StaffBlockTimeModel } from '@scheduler/models/service.model';
-import { CellSelectedData, RRuleData } from '@scheduler/models/scheduler.model';
+import { StaffBlockTimeModel } from 'src/app/scheduler/models/service.model';
+import { CellSelectedData, RRuleData } from 'src/app/scheduler/models/scheduler.model';
 
 /** App Messages & Constants */
-import { Configurations } from '@helper/config/app.config';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { DxSwitchComponent, DxFormComponent } from 'devextreme-angular';
-import { Messages } from '@app/helper/config/app.messages';
-import { SchedulerBlockTimeApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SchedulerBlockTimeApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
 import { DatePipe } from '@angular/common';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { OneDaySchedulerComponent } from '@app/shared/components/scheduler/one.day.scheduler.component';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
 
 
 

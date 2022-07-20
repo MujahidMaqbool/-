@@ -4,22 +4,22 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
 /********************** START: Application Components *********************/
-import { ClassCategorySaveComponent } from '@setup/class-category/save/class.category.save.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ClassCategorySaveComponent } from 'src/app/setup/class-category/save/class.category.save.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 /********************** START: Service & Models *********************/
-import { ClassCategory } from '@setup/models/class.category.model';
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { ClassCategory } from 'src/app/setup/models/class.category.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 
 /********************** START: Common *********************/
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { Configurations } from '@app/helper/config/app.config';
-import { ClassCategoryApi } from '@app/helper/config/app.webapi';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { ClassCategoryApi } from 'src/app/helper/config/app.webapi';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 @Component({
   selector: 'class-category-search',

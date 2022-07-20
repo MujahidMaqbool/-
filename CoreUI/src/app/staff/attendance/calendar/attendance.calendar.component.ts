@@ -2,37 +2,37 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 
 /** Services */
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /** Models */
-import { CellSelectedData, SchedulerSearchParam, ShiftAndAttendanceDataSource } from '@scheduler/models/scheduler.model';
-import { ResourcesDataSource } from '@scheduler/models/class.model';
-import { StaffAttendance, CheckShiftsParameter } from '@staff/models/staff.attendance.model';
+import { CellSelectedData, SchedulerSearchParam, ShiftAndAttendanceDataSource } from 'src/app/scheduler/models/scheduler.model';
+import { ResourcesDataSource } from 'src/app/scheduler/models/class.model';
+import { StaffAttendance, CheckShiftsParameter } from 'src/app/staff/models/staff.attendance.model';
 
 /** Messages & Constants */
-import { Configurations, SchedulerOptions } from '@helper/config/app.config';
+import { Configurations, SchedulerOptions } from 'src/app/helper/config/app.config';
 
 /** Component */
-import { SaveStaffAttendanceComponent } from '@staff/attendance/save/save.staff.attendance.component';
-import { environment } from '@env/environment';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { SaveStaffAttendanceComponent } from 'src/app/staff/attendance/save/save.staff.attendance.component';
+import { environment } from 'src/environments/environment';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /** devextreme */
 import { DxSchedulerComponent } from 'devextreme-angular';
 import Button from 'devextreme/ui/button'
-import { Messages } from '@app/helper/config/app.messages';
-import { StaffShiftApi, StaffAttendanceApi } from '@app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { StaffShiftApi, StaffAttendanceApi } from 'src/app/helper/config/app.webapi';
 import { forkJoin, SubscriptionLike } from 'rxjs';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { DD_Branch } from '@app/models/common.model';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { DD_Branch } from 'src/app/models/common.model';
 declare var $: any;
 
 @Component({
@@ -393,7 +393,7 @@ export class AttendanceCalendarComponent extends AbstractGenericComponent implem
                 this.endViewDate = _getendDate;
                 this.afterSaveStartDate = _getstartDate;
                 this.afterSaveEndDate = _getendDate;
-                this.loadSearchFundamentals(false);
+                //this.loadSearchFundamentals(false);
             }, 1000);
         }
     }

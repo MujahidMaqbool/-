@@ -1,33 +1,33 @@
 /********************** Angular References *********************************/
 import { SubscriptionLike } from 'rxjs';
 import { NgForm, FormControl, Validators } from '@angular/forms';
-import { Component, Inject, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, ViewChild } from '@angular/core';
 /********************* Material:Refference ********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 /********************** Service & Models *********************/
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 /* Models */
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { RefundSaleDetail, SaveRefundDetail, RefundedItemsList, SaveOverPaidRefundDetail, SalePaymentModeViewModel } from '@app/models/sale.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { RefundSaleDetail, SaveRefundDetail, RefundedItemsList, SaveOverPaidRefundDetail, SalePaymentModeViewModel } from 'src/app/models/sale.model';
 
 /********************** Component *********************************/
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /********************** Common *********************************/
 import { CurrencyPipe } from '@angular/common';
-import { environment } from '@env/environment';
-import { SaleApi } from '@app/helper/config/app.webapi';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { Messages } from '@app/helper/config/app.messages';
-import { Configurations } from '@app/helper/config/app.config';
-import { POSItemType, ENU_DateFormatName, ENU_RefundType, EnumSaleStatusType, ENU_ChargeFeeType, ENU_Action_ActivityType, ENU_CancelItemType, EnumSaleType, ENU_PaymentGateway } from '@app/helper/config/app.enums';
+import { environment } from 'src/environments/environment';
+import { SaleApi } from 'src/app/helper/config/app.webapi';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { POSItemType, ENU_DateFormatName, ENU_RefundType, EnumSaleStatusType, ENU_ChargeFeeType, ENU_Action_ActivityType, ENU_CancelItemType, EnumSaleType, ENU_PaymentGateway } from 'src/app/helper/config/app.enums';
 
 
 @Component({

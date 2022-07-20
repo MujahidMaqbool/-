@@ -2,21 +2,21 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from "@angula
 import { SubscriptionLike } from "rxjs";
 /************************* Services & Models ***********************************/
 /* Models */
-import { ClientDashboardSearchParam, ITopServices, ITopEmployeeServices, ISalesBreakDownServices, ISalesbyChannel, IMonthlySales, IMonthlyVisits, IServicesandAttendanceBooking, INewvsReturningClient, IClientVisits } from '@customer/client/models/client.dashboard.model';
-import { DD_Branch, ApiResponse } from "@app/models/common.model";
+import { ClientDashboardSearchParam, ITopServices, ITopEmployeeServices, ISalesBreakDownServices, ISalesbyChannel, IMonthlySales, IMonthlyVisits, IServicesandAttendanceBooking, INewvsReturningClient, IClientVisits } from 'src/app/customer/client/models/client.dashboard.model';
+import { DD_Branch, ApiResponse } from "src/app/models/common.model";
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DateTimeService } from '@services/date.time.service';
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { MessageService } from "@app/services/app.message.service";
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { MessageService } from "src/app/services/app.message.service";
 /**********************  Common *********************/
-import { ClientApi } from '@app/helper/config/app.webapi';
-import { Messages } from "@app/helper/config/app.messages";
-import { CustomerType, ENU_DateFormatName } from "@app/helper/config/app.enums";
-import { DateToDateFromComponent } from "@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
+import { ClientApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from "src/app/helper/config/app.messages";
+import { CustomerType, ENU_DateFormatName } from "src/app/helper/config/app.enums";
+import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
 import { MatDatepicker } from "@angular/material/datepicker";
-import { Configurations } from "@app/helper/config/app.config";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { Configurations } from "src/app/helper/config/app.config";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
     selector: 'client-dashboard',

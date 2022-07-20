@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ProductAreaEnum, ProductClassification } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { DD_Branch } from '@app/models/common.model';
-import { ProductBranchPermissionViewModel, SaveProductVariantBranchViewModel, ProductVariantPackagingViewModel, ProductVariantPricingModel, ProductVariantBranchViewModel } from '@app/product/models/product.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { ProductAreaEnum, ProductClassification } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DD_Branch } from 'src/app/models/common.model';
+import { ProductBranchPermissionViewModel, SaveProductVariantBranchViewModel, ProductVariantPackagingViewModel, ProductVariantPricingModel, ProductVariantBranchViewModel } from 'src/app/product/models/product.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { SubscriptionLike } from 'rxjs';
 import { BulkUpdatePriceComponent } from './bulk.update.price.component';
 import { SavePackagingComponent } from './packaging/packaging.component';

@@ -1,10 +1,10 @@
 import { NgForm } from "@angular/forms";
-import { DD_Branch } from "@app/models/common.model";
-import { ENU_CountryFormat, ENU_DateFormat, ENU_CountryBaseDateFormatName, ENU_MobileOperatingSystem } from "@app/helper/config/app.enums";
-import { DataSharingService } from "@app/services/data.sharing.service";
+import { DD_Branch } from "src/app/models/common.model";
+import { ENU_CountryFormat, ENU_DateFormat, ENU_CountryBaseDateFormatName, ENU_MobileOperatingSystem } from "src/app/helper/config/app.enums";
+import { DataSharingService } from "src/app/services/data.sharing.service";
 import { SubscriptionLike as ISubscription } from 'rxjs';
-import { Configurations } from "@app/helper/config/app.config";
-import { CompanyDetails } from "@app/setup/models/company.details.model";
+import { Configurations } from "src/app/helper/config/app.config";
+import { CompanyDetails } from "src/app/setup/models/company.details.model";
 
 export abstract class AbstractGenericComponent {
 

@@ -5,18 +5,18 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 
 /********************** Services & Models *********************/
 /* Models */
-import { MemberReferralDetails } from "@customer/member/models/member.referral.details.model";
-import { PersonInfo, ApiResponse } from '@app/models/common.model';
+import { MemberReferralDetails } from "src/app/customer/member/models/member.referral.details.model";
+import { PersonInfo, ApiResponse } from 'src/app/models/common.model';
 /* Services */
-import { HttpService } from '@services/app.http.service';
+import { HttpService } from 'src/app/services/app.http.service';
 
 /**********************  Common *********************/
-import { Configurations } from '@helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { MemberReferralDetailApi } from '@app/helper/config/app.webapi';
-import { CustomerType } from '@app/helper/config/app.enums';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MemberReferralDetailApi } from 'src/app/helper/config/app.webapi';
+import { CustomerType } from 'src/app/helper/config/app.enums';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 @Component({
     selector: 'referral-detail',

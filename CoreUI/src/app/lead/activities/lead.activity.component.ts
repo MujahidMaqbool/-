@@ -16,37 +16,37 @@ import {
     AppointmentMarkAsDoneActivity,
     CallMarkAsDoneActivity,
     LeadAppNotification
-} from '@lead/models/lead.activity.model'
-import { ActivityTabsOptions } from '@models/activity.tab.options'
-import { LeadAssignedTo, LeadLostReasonModel, LeadStatus } from '@lead/models/lead.model';
-import { MemberRedirectInfo } from '@customer/member/models/members.model';
+} from 'src/app/lead/models/lead.activity.model'
+import { ActivityTabsOptions } from 'src/app/models/activity.tab.options'
+import { LeadAssignedTo, LeadLostReasonModel, LeadStatus } from 'src/app/lead/models/lead.model';
+import { MemberRedirectInfo } from 'src/app/customer/member/models/members.model';
 import { LeadMembershipsList } from '../../models/lead.membership.model';
-import { PersonInfo, PersonDetail, ApiResponse } from '@app/models/common.model';
+import { PersonInfo, PersonDetail, ApiResponse } from 'src/app/models/common.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MessageService } from "@services/app.message.service";
-import { AuthService } from '@app/helper/app.auth.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { MessageService } from "src/app/services/app.message.service";
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 /********************** Application Component(s) *********************/
-import { LeadLostComponent } from '@lead/lost-popup/lead.lost.popup.component';
+import { LeadLostComponent } from 'src/app/lead/lost-popup/lead.lost.popup.component';
 
 /********************** Common & Customs *********************/
-import { Configurations } from '@helper/config/app.config';
-import { SearchActivityComponent } from '@shared/components/activities/search/search.activity.component'
-import { Messages } from '@app/helper/config/app.messages';
-import { LeadActivityApi, LeadMembershipApi, CustomerApi } from '@app/helper/config/app.webapi';
-import { ENU_ActivityType, LeadStatusType, CustomerType } from '@app/helper/config/app.enums';
-import { environment } from '@env/environment';
-//import { SaveMemberMembershipPopup } from '@app/shared/components/add-member-membership/save-membership-popup/save.member.membership.popup';
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
-import { ENU_Permission_Module, ENU_Permission_Lead } from '@app/helper/config/app.module.page.enums';
-import { variables } from '@app/helper/config/app.variable';
-import { SaveMemberMembershipPopup } from '@app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
-import { MissingBillingAddressDialog } from '@app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
-import { PersonInfoComponent } from '@app/customer-shared-module/person-info/person.info.component';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { SearchActivityComponent } from 'src/app/shared/components/activities/search/search.activity.component'
+import { Messages } from 'src/app/helper/config/app.messages';
+import { LeadActivityApi, LeadMembershipApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { ENU_ActivityType, LeadStatusType, CustomerType } from 'src/app/helper/config/app.enums';
+import { environment } from 'src/environments/environment';
+//import { SaveMemberMembershipPopup } from 'src/app/shared/components/add-member-membership/save-membership-popup/save.member.membership.popup';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
+import { variables } from 'src/app/helper/config/app.variable';
+import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+import { PersonInfoComponent } from 'src/app/customer-shared-module/person-info/person.info.component';
 
 @Component({
     selector: 'lead-activity',

@@ -3,16 +3,16 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************* Services & Models **************************/
-import { EmailActivity } from '@models/activity.model';
+import { EmailActivity } from 'src/app/models/activity.model';
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 /********************* Common & Customs **************************/
-import { Configurations } from '@helper/config/app.config';
-import { CustomerType } from '@helper/config/app.enums';
-import { LeadActivityApi, MemberActivityApi } from '@helper/config/app.webapi';
-import { Messages } from '@app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { CustomerType } from 'src/app/helper/config/app.enums';
+import { LeadActivityApi, MemberActivityApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 @Component({
     selector: 'view-email',

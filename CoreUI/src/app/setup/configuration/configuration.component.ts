@@ -1,7 +1,7 @@
 /*********** Angular **********/
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 /*********** Configurations **********/
-import { Configurations } from '@app/helper/config/app.config';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 
 /*********** Components **********/
@@ -12,9 +12,9 @@ import { PaymentsComponent } from './payments/payments.component';
 import { WaitingListComponent } from './waiting-list/waiting-list.component';
 import { BasicComponent } from './basic/basic.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ENU_ConfigurationTab } from '@app/helper/config/app.enums';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { AuthService } from '@app/helper/app.auth.service';
+import { ENU_ConfigurationTab } from 'src/app/helper/config/app.enums';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
 import { AdvancedComponent } from './advanced/advanced.component';
 
 /*********** Models **********/

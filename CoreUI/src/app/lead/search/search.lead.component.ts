@@ -8,31 +8,31 @@ import { MatDatepicker } from '@angular/material/datepicker';
 
 /********************** Services & Models *********************/
 /* Models */
-import { LeadSearchParameter, SaveLead, LeadDetail } from "@lead/models/lead.model";
+import { LeadSearchParameter, SaveLead, LeadDetail } from "src/app/lead/models/lead.model";
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /**********************  Common *********************/
-import { Configurations } from '@helper/config/app.config'
-import { Messages } from '@app/helper/config/app.messages';
-import { LeadApi, CustomerApi } from '@app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config'
+import { Messages } from 'src/app/helper/config/app.messages';
+import { LeadApi, CustomerApi } from 'src/app/helper/config/app.webapi';
 
 /**********************Component*********************/
-import { ViewLeadDetailComponent } from '@lead/view/view.lead.detail.component';
-import { ENU_DateFormatName, ENU_Package, LeadStatusType } from '@app/helper/config/app.enums';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Lead, ENU_Permission_Module } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { CustomerBenefitsComponent } from '@app/customer-shared-module/customer-benefits/customer.benefits.component';
+import { ViewLeadDetailComponent } from 'src/app/lead/view/view.lead.detail.component';
+import { ENU_DateFormatName, ENU_Package, LeadStatusType } from 'src/app/helper/config/app.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Lead, ENU_Permission_Module } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { CustomerBenefitsComponent } from 'src/app/customer-shared-module/customer-benefits/customer.benefits.component';
 import { SubscriptionLike } from 'rxjs';
-import { CustomDatePipe } from '@app/application-pipes/custom.date.pipe';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { ApiResponse } from '@app/models/common.model';
+import { CustomDatePipe } from 'src/app/application-pipes/custom.date.pipe';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
     selector: 'search-lead',

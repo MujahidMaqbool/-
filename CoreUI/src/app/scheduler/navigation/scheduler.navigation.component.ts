@@ -1,12 +1,12 @@
 import { Component, Output, EventEmitter, Inject, OnInit, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
-import { CellSelectedData } from "@scheduler/models/scheduler.model";
-import { SchedulerOptions } from "@helper/config/app.config";
-import { AuthService } from "@app/helper/app.auth.service";
-import { ENU_Permission_Module, ENU_Permission_Scheduler } from "@app/helper/config/app.module.page.enums";
-import { enmSchedulerActvityType } from "@app/helper/config/app.enums";
-import { AttendeeComponent } from "@app/attendee/save-search/attendee.component";
+import { CellSelectedData } from "src/app/scheduler/models/scheduler.model";
+import { SchedulerOptions } from "src/app/helper/config/app.config";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { ENU_Permission_Module, ENU_Permission_Scheduler } from "src/app/helper/config/app.module.page.enums";
+import { enmSchedulerActvityType } from "src/app/helper/config/app.enums";
+import { AttendeeComponent } from "src/app/attendee/save-search/attendee.component";
 
 @Component({
     selector: 'scheduler-navigation',

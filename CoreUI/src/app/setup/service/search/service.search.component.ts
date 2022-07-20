@@ -6,23 +6,23 @@ import { MatPaginator } from "@angular/material/paginator";
 
 /********************** Services & Models *********************/
 /* Models */
-import { Service, SearchParameter } from "@setup/models/service.model";
-import { AuthService } from "@app/helper/app.auth.service";
+import { Service, SearchParameter } from "src/app/setup/models/service.model";
+import { AuthService } from "src/app/helper/app.auth.service";
 /* Services */
-import { HttpService } from "@services/app.http.service";
-import { MessageService } from "@services/app.message.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 
 /********************** component & Common *********************/
-import { DeleteConfirmationComponent } from "@app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { Messages } from "@app/helper/config/app.messages";
-import { Configurations } from "@app/helper/config/app.config";
-import { ServiceApi } from "@app/helper/config/app.webapi";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { Messages } from "src/app/helper/config/app.messages";
+import { Configurations } from "src/app/helper/config/app.config";
+import { ServiceApi } from "src/app/helper/config/app.webapi";
 import {
   ENU_Permission_Module,
   ENU_Permission_Setup,
-} from "@app/helper/config/app.module.page.enums";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
-import { AppPaginationComponent } from "@app/shared-pagination-module/app-pagination/app.pagination.component";
+} from "src/app/helper/config/app.module.page.enums";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pagination/app.pagination.component";
 
 @Component({
   selector: "service-search",

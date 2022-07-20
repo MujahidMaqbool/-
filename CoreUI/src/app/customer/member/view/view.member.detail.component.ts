@@ -6,24 +6,24 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /*************************** Services & Models ***********************/
 /*Services*/
-import { HttpService } from '@services/app.http.service';
+import { HttpService } from 'src/app/services/app.http.service';
 
 /*Models*/
-import { MemberDetail, MemberMembershipList } from '@customer/member/models/members.model';
+import { MemberDetail, MemberMembershipList } from 'src/app/customer/member/models/members.model';
 
 /********************** START: Common *********************/
-import { ClientApi, MemberApi, CompanyDetailsApi, BranchApi } from '@helper/config/app.webapi';
-import { Messages } from '@helper/config/app.messages';
-import { environment } from '@env/environment';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName, ENU_Package } from '@app/helper/config/app.enums';
-import { AllCustomers } from '@app/customer/models/customers.models';
+import { ClientApi, MemberApi, CompanyDetailsApi, BranchApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_DateFormatName, ENU_Package } from 'src/app/helper/config/app.enums';
+import { AllCustomers } from 'src/app/customer/models/customers.models';
 import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
-import { CompanyDetails } from '@app/setup/models/company.details.model';
-import { MessageService } from '@app/services/app.message.service';
-import { ApiResponse } from '@app/models/common.model';
+import { CompanyDetails } from 'src/app/setup/models/company.details.model';
+import { MessageService } from 'src/app/services/app.message.service';
+import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
     selector: 'view-member-detail',

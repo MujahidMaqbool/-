@@ -5,15 +5,15 @@ import { Component, OnInit, Inject, Output, EventEmitter, ViewChild, ChangeDetec
 
 
 /* Models*/
-import { AutomationTemplateFundamental, EventType, TemplateVariable, SaveAutomationTemplate } from '@app/setup/models/automation.tempalte.model';
+import { AutomationTemplateFundamental, EventType, TemplateVariable, SaveAutomationTemplate } from 'src/app/setup/models/automation.tempalte.model';
 
 /* Services */
-import { ApiResponse } from '@app/models/common.model';
-import { Messages } from '@app/helper/config/app.messages';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { AutomationTemplateApi } from '@app/helper/config/app.webapi';
-import { ENU_EventCategoryType, ENU_CommunicationType } from '@app/helper/config/app.enums';
+import { ApiResponse } from 'src/app/models/common.model';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { AutomationTemplateApi } from 'src/app/helper/config/app.webapi';
+import { ENU_EventCategoryType, ENU_CommunicationType } from 'src/app/helper/config/app.enums';
 
 /*************************** Common & Customs *************************/
 

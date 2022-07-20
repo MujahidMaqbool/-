@@ -8,15 +8,15 @@ import { SaveAutomationComponent } from './save/save.automation.component';
 import { AutomationNavigationComponent } from './navigation/automation.navigation.component';
 import { SearchLogComponent } from './log/search.log.component';
 import { DxValidatorModule, DxFormModule, DxDateBoxModule } from 'devextreme-angular';
-import { SharedModule } from '@app/shared/shared-module';
-import { SharedPaginationModule } from '@app/shared-pagination-module/shared-pagination-module';
+import { SharedModule } from 'src/app/shared/shared-module';
+import { SharedPaginationModule } from 'src/app/shared-pagination-module/shared-pagination-module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import { ApplicationDialogSharedModule } from '@app/application-dialog-module/application-dialog-module';
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
+import { ApplicationDialogSharedModule } from 'src/app/application-dialog-module/application-dialog-module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
 
 
 @NgModule({

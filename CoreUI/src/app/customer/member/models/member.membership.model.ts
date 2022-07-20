@@ -1,6 +1,6 @@
 import { Card, DirectDebit, StripeTerminal } from "./member.gateways.model";
-import { CustomerBillingDetail } from "@app/models/common.model";
-import { CustomFormView } from "@app/models/customer.form.model";
+import { CustomerBillingDetail } from "src/app/models/common.model";
+import { CustomFormView } from "src/app/models/customer.form.model";
 
 export class MemberMembership {
     /* Shared */

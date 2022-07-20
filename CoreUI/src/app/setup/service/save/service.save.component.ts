@@ -11,27 +11,27 @@ import {
   Service,
   ServicePackage,
   DurationType,
-} from "@setup/models/service.model";
-import { Tax, ApiResponse, DD_Branch } from "@app/models/common.model";
+} from "src/app/setup/models/service.model";
+import { Tax, ApiResponse, DD_Branch } from "src/app/models/common.model";
 /* Services */
-import { HttpService } from "@services/app.http.service";
+import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "../../../services/app.message.service";
-import { CommonService } from "@app/services/common.service";
-import { TaxCalculation } from "@app/services/tax.calculations.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
+import { CommonService } from "src/app/services/common.service";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 /********************** Common & Components *********************/
-import { environment } from "@env/environment";
-import { Messages } from "@app/helper/config/app.messages";
-import { ServiceApi } from "@app/helper/config/app.webapi";
-import { ImageEditorPopupComponent } from "@app/application-dialog-module/image-editor/image.editor.popup.component";
-import { DeleteConfirmationComponent } from "@app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { ENU_Permission_Setup } from "@app/helper/config/app.module.page.enums";
-import { ENU_Package } from "@app/helper/config/app.enums";
-import { AppUtilities } from "@app/helper/aap.utilities";
+import { environment } from "src/environments/environment";
+import { Messages } from "src/app/helper/config/app.messages";
+import { ServiceApi } from "src/app/helper/config/app.webapi";
+import { ImageEditorPopupComponent } from "src/app/application-dialog-module/image-editor/image.editor.popup.component";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { ENU_Permission_Setup } from "src/app/helper/config/app.module.page.enums";
+import { ENU_Package } from "src/app/helper/config/app.enums";
+import { AppUtilities } from "src/app/helper/aap.utilities";
 import { MatOption } from "@angular/material/core";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { Configurations } from "@app/helper/config/app.config";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { Configurations } from "src/app/helper/config/app.config";
 
 @Component({
   selector: "service-save",

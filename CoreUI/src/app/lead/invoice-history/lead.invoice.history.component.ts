@@ -7,18 +7,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 /********************** Services & Models *********************/
 /* Services */
 
-import { DataSharingService } from '@services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 /* Models */
-import { PersonInfo, InvoiceHistory } from "@models/common.model";
+import { PersonInfo, InvoiceHistory } from "src/app/models/common.model";
 
 /********************** Common ***************************/
 
 
 /********************** Configurations *********************/
-import { CustomerType } from '@helper/config/app.enums';
 import { SubscriptionLike as ISubscription } from 'rxjs';
-import { ENU_Permission_Module, ENU_Permission_Lead } from '@app/helper/config/app.module.page.enums';
-import { AuthService } from '@app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 
 @Component({

@@ -1,24 +1,24 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 /****Material references */
 import { MatDatepicker } from "@angular/material/datepicker";
 
 /*****Configurations *********/
-import { AuthService } from '@app/helper/app.auth.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { PurchaseOrderApi } from '@app/helper/config/app.webapi';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { SavePurchaseItemsComponent } from './add-product/save.add.po.product.component';
-import { BranchList, SuppliersList, PurchaseOrderViewModel, ProductVariantItems } from '@app/product/models/purchaseOrder.model';
+import { BranchList, SuppliersList, PurchaseOrderViewModel, ProductVariantItems } from 'src/app/product/models/purchaseOrder.model';
 import { SubscriptionLike } from 'rxjs';
-import { Configurations } from '@app/helper/config/app.config';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { NgForm } from '@angular/forms';
-import { DateTimeService } from '@app/services/date.time.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 
 

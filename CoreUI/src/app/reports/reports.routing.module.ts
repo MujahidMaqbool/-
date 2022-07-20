@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ReportsNavigationComponent } from '@reports/navigation/reports.navigation.component';
-import { MemberReportComponent } from '@reports/member/member.reports.component';
-import { LeadReportsComponent } from '@reports/lead/lead.reports.component';
-import { StaffReportsComponent } from '@reports/staff/staff.reports.component';
-import { ClientReportComponent } from '@reports/client/client.reports.component';
+import { ReportsNavigationComponent } from 'src/app/reports/navigation/reports.navigation.component';
+import { MemberReportComponent } from 'src/app/reports/member/member.reports.component';
+import { LeadReportsComponent } from 'src/app/reports/lead/lead.reports.component';
+import { StaffReportsComponent } from 'src/app/reports/staff/staff.reports.component';
+import { ClientReportComponent } from 'src/app/reports/client/client.reports.component';
 import { SaleReportsComponent } from './sale/sale.reports.component';
 import { CommonReportsComponent } from './common/common.reports.component';
-import { ModulePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_Module} from '@app/helper/config/app.module.page.enums';
+import { ModulePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_Module} from 'src/app/helper/config/app.module.page.enums';
 
 const routes: Routes = [
     {

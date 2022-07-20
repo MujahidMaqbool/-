@@ -4,29 +4,28 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 
 /********************** Services & Models *********************/
 /* Models */
-import { MemberDocument ,DocumentSearch } from "@customer/member/models/members.model";
-import { PersonInfo } from '@app/models/common.model';
+import { MemberDocument ,DocumentSearch } from "src/app/customer/member/models/members.model";
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /********************** Component *********************/
-import { SaveDocument } from '@app/customer-shared-module/documents/save/save-document.component';
+import { SaveDocument } from 'src/app/customer-shared-module/documents/save/save-document.component';
 
 /********************** START: Common *********************/
 
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MemberApi } from "@helper/config/app.webapi";
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from '@env/environment';
-import { CustomerType, ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember, ENU_Permission_Lead } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { Configurations } from '@app/helper/config/app.config';
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { MemberApi } from "src/app/helper/config/app.webapi";
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { CustomerType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

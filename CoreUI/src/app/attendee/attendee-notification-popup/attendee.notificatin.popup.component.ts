@@ -3,12 +3,12 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
-import { SMSActivity, EmailActivity, AppNotification, GroupActivity } from '@models/activity.model';
-import { ENU_ActivityType, CustomerType } from '@app/helper/config/app.enums';
-import { ClientActivityApi, MemberActivityApi, LeadActivityApi, GroupActivityApi } from '@app/helper/config/app.webapi';
-import { SaveAppNotificationComponent } from '@app/attendee/app-notfication/save.app.notification.component';
-import { SaveSMSComponent } from '@app/attendee/sms/save.sms.component';
-import { SaveEmailComponent } from '@app/attendee/email/save.email.component';
+import { SMSActivity, EmailActivity, AppNotification, GroupActivity } from 'src/app/models/activity.model';
+import { ENU_ActivityType, CustomerType } from 'src/app/helper/config/app.enums';
+import { ClientActivityApi, MemberActivityApi, LeadActivityApi, GroupActivityApi } from 'src/app/helper/config/app.webapi';
+import { SaveAppNotificationComponent } from 'src/app/attendee/app-notfication/save.app.notification.component';
+import { SaveSMSComponent } from 'src/app/attendee/sms/save.sms.component';
+import { SaveEmailComponent } from 'src/app/attendee/email/save.email.component';
 
 @Component({
     selector: 'attendee.notificatin.popup',

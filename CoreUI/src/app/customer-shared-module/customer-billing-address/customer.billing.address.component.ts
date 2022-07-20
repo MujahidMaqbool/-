@@ -6,23 +6,23 @@ import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChil
 /* Models */
 
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 /********************** Configurations *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { ApiResponse, CustomerBillingAddress, DD_Branch } from '@app/models/common.model';
-import { variables } from '@app/helper/config/app.variable';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ApiResponse, CustomerBillingAddress, DD_Branch } from 'src/app/models/common.model';
+import { variables } from 'src/app/helper/config/app.variable';
 import { NgForm, FormControl } from '@angular/forms';
-import { CustomerApi, CompanyDetailsApi, BranchApi } from '@app/helper/config/app.webapi';
+import { CustomerApi, CompanyDetailsApi, BranchApi } from 'src/app/helper/config/app.webapi';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SaveMemberMembershipPopup } from '../add-member-membership/save-membership-popup/save.member.membership.popup';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { CustomerType } from '@app/helper/config/app.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { CustomerType } from 'src/app/helper/config/app.enums';
 import { Router } from '@angular/router';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { SubscriptionLike as ISubscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion
 

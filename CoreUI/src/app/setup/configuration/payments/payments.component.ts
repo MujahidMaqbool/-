@@ -7,37 +7,37 @@ import { NgForm } from "@angular/forms";
 
 /********************** Service & Models *********************/
 /*Services*/
-import { HttpService } from "@services/app.http.service";
-import { MessageService } from "@services/app.message.service";
-import { AuthService } from "@app/helper/app.auth.service";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
-import { SessionService } from "@app/helper/app.session.service";
-import { StripeService } from "@app/services/stripe.service";
-import { DynamicScriptLoaderService } from "@app/services/dynamic.script.loader.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { LoaderService } from "@app/services/app.loader.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { SessionService } from "src/app/helper/app.session.service";
+import { StripeService } from "src/app/services/stripe.service";
+import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { LoaderService } from "src/app/services/app.loader.service";
 
 /*Models*/
-import { SaveIntegration, BranchGatwayIntegration, StripeTerminal, PaymentSettings } from "@setup/models/gateway.integration.model";
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
+import { SaveIntegration, BranchGatwayIntegration, StripeTerminal, PaymentSettings } from "src/app/setup/models/gateway.integration.model";
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
 
 /****************** Angular Material References *****************/
 import { MatOption } from "@angular/material/core";
 
 
 /******************  Configurations ****************************/
-import { Messages } from "@helper/config/app.messages";
-import { GatewayIntegrationApi } from "@helper/config/app.webapi";
-import { environment } from "@env/environment";
-import { ENU_PaymentGateway, ENU_CurrencyFormat, ENU_Package, ENU_CountryCodeStripeTerminal } from "@app/helper/config/app.enums";
-import { ENU_Permission_Setup, ENU_Permission_Individual, ENU_Permission_Module } from "@app/helper/config/app.module.page.enums";
-import { Configurations } from "@app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
+import { GatewayIntegrationApi } from "src/app/helper/config/app.webapi";
+import { environment } from "src/environments/environment";
+import { ENU_PaymentGateway, ENU_CurrencyFormat, ENU_Package, ENU_CountryCodeStripeTerminal } from "src/app/helper/config/app.enums";
+import { ENU_Permission_Setup, ENU_Permission_Individual, ENU_Permission_Module } from "src/app/helper/config/app.module.page.enums";
+import { Configurations } from "src/app/helper/config/app.config";
 
 
 /****************** Components *****************/
-import { UaeStripeConnectComponent } from "@app/shared/components/uae-stripe-connect/uae.stripe.connect.component";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { StripeReaderComponent } from "@app/gateway/stripe-terminal/stripe.reader.component";
+import { UaeStripeConnectComponent } from "src/app/shared/components/uae-stripe-connect/uae.stripe.connect.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { StripeReaderComponent } from "src/app/gateway/stripe-terminal/stripe.reader.component";
 
 var loaderService;
 

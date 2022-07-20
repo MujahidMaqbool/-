@@ -3,7 +3,7 @@ import { Component, Output, EventEmitter, Inject, ViewChild, } from "@angular/co
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 /* Models */
-import { StaffService, ServiceCategoryWithServiceList } from '@staff/models/staff.model';
+import { StaffService, ServiceCategoryWithServiceList } from 'src/app/staff/models/staff.model';
 
 @Component({
     selector: 'provide-service',

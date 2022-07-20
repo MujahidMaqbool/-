@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import { AuthenticationGuard } from "@app/helper/app.route.guard";
-import { ModulePermissionGuard } from "@app/helper/app.permission.guard";
-import { ENU_Permission_Module } from "@app/helper/config/app.module.page.enums";
+import { AuthenticationGuard } from "src/app/helper/app.route.guard";
+import { ModulePermissionGuard } from "src/app/helper/app.permission.guard";
+import { ENU_Permission_Module } from "src/app/helper/config/app.module.page.enums";
 
 import { HomeComponent } from "./home.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
@@ -33,43 +33,43 @@ const routes: Routes = [
 
       {
         path: "client",
-        loadChildren: "@customer/client/client.module#ClientModule",
+        loadChildren: () => import('src/app/customer/client/client.module').then(m => m.ClientModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.Customer },
       },
       // {
       //   path: "customer",
-      //   loadChildren: "@customer/customer.module#CustomerModule",
+      //   loadChildren: "src/app/customer/customer.module#CustomerModule",
       //   canActivate: [ModulePermissionGuard],
       //   data: { module: ENU_Permission_Module.Client },
       // },
       {
         path: "scheduler",
-        loadChildren: "@scheduler/scheduler.module#SchedulerModule",
+        loadChildren: () => import('src/app/scheduler/scheduler.module').then(m => m.SchedulerModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.Scheduler },
       },
       {
         path: "lead",
-        loadChildren: "@lead/lead.module#LeadModule",
+        loadChildren: () => import('src/app/lead/lead.module').then(m => m.LeadModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.Lead },
       },
       {
         path: "customer",
-        loadChildren: "@customer/customer.module#CustomerModule",
+        loadChildren: () => import('src/app/customer/customer.module').then(m => m.CustomerModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.Customer },
       },
       {
         path: "point-of-sale",
-        loadChildren: "@pos/point.of.sale.module#PointOfSaleModule",
+        loadChildren: () => import('src/app/point-of-sale/point.of.sale.module').then(m => m.PointOfSaleModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.PointOfSale },
       },
       {
         path: "reports",
-        loadChildren: "@reports/reports.module#ReportsModule",
+        loadChildren: () => import('src/app/reports/reports.module').then(m => m.ReportsModule),
         /*
           23/05/2019 3:18:PM
           As per discussion with Iftekhar, MainDashboard and Reports will always be visible to user
@@ -81,32 +81,32 @@ const routes: Routes = [
       },
       {
         path: "setup",
-        loadChildren: "@setup/setup.module#SetupModule",
+        loadChildren: () => import('src/app/setup/setup.module').then(m => m.SetupModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.Setup },
       },
       {
         path: "staff",
-        loadChildren: "@staff/staff.module#StaffModule",
+        loadChildren: () => import('src/app/staff/staff.module').then(m => m.StaffModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.Staff },
       },
 
       {
         path: "automation",
-        loadChildren: "@automation/automation.module#AutomationModule",
+        loadChildren: () => import('src/app/automation/automation.module').then(m => m.AutomationModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.Automation },
       },
       {
         path: "product",
-        loadChildren: "@product/product.module#ProductModule",
+        loadChildren: () => import('src/app/product/product.module').then(m => m.ProductModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.Product }
       },
       {
         path: "general",
-        loadChildren: "@general/general.module#GeneralModule",
+        loadChildren: () => import('src/app/general/general.module').then(m => m.GeneralModule),
         canActivate: [ModulePermissionGuard],
         data: { module: ENU_Permission_Module.General },
       },

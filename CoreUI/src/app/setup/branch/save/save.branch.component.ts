@@ -13,33 +13,33 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { NgForm } from "@angular/forms";
 
-import { TimeFormatterPipe } from "@shared/pipes/time.formatter";
-import { TrimPipe } from "@shared/pipes/trim";
+import { TimeFormatterPipe } from "src/app/shared/pipes/time.formatter";
+import { TrimPipe } from "src/app/shared/pipes/trim";
 
 /*********************** Service & Models *********************/
 import {
   Branch,
   BranchForSave,
   BranchWorkTime,
-} from "@setup/models/branch.model";
-import { HttpService } from "@services/app.http.service";
+} from "src/app/setup/models/branch.model";
+import { HttpService } from "src/app/services/app.http.service";
 import { DataSharingService } from "../../../services/data.sharing.service";
-import { MessageService } from "@services/app.message.service";
+import { MessageService } from "src/app/services/app.message.service";
 
 /*********************** Common *********************/
-import { Configurations } from "@helper/config/app.config";
-import { Messages } from "@app/helper/config/app.messages";
-import { BranchApi } from "@app/helper/config/app.webapi";
-import { WeekDays, ENU_Package } from "@app/helper/config/app.enums";
-import { DD_Branch, StateCounty, UtcTimeZone, ApiResponse } from "@app/models/common.model";
-import { AuthService } from "@app/helper/app.auth.service";
+import { Configurations } from "src/app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
+import { BranchApi } from "src/app/helper/config/app.webapi";
+import { WeekDays, ENU_Package } from "src/app/helper/config/app.enums";
+import { DD_Branch, StateCounty, UtcTimeZone, ApiResponse } from "src/app/models/common.model";
+import { AuthService } from "src/app/helper/app.auth.service";
 import {
   ENU_Permission_Module,
   ENU_Permission_Setup,
-} from "@app/helper/config/app.module.page.enums";
+} from "src/app/helper/config/app.module.page.enums";
 import { SubscriptionLike } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
   selector: "save-branch",

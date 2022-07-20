@@ -123,11 +123,10 @@
                 (onAppointmentUpdating)="updateActivityForDragDrop($event)"
                 (onAppointmentRendered)="onAppointmentRendered($event)"  (onCellClick)="onCellClick($event)"
                 (onAppointmentFormOpening)="onAppointmentFormOpening($event)"
-                resourceCellTemplate="resourceCellTemplate"
-                dropDownAppointmentTemplate="dropdown-template" appointmentTooltipTemplate="tooltip-template"
+                resourceCellTemplate="resourceCellTemplate" appointmentTooltipTemplate="tooltip-template"
                 appointmentCollectorTemplate="collectorTemplate" timeCellTemplate="timeCellTemplate"
                 [customizeDateNavigatorText]="customizeDateNavigatorText" recurrenceEditMode="series"
-                [showCurrentTimeIndicator]="false" [shadeUntilCurrentTime]="false" [scrolling]="{ mode: 'virtual' }">
+                [showCurrentTimeIndicator]="false" [shadeUntilCurrentTime]="false">
                 <dxi-resource fieldExpr="StaffID" [dataSource]="resourcesStaffList" editorType="dxSelectBox">
                 </dxi-resource>
                 <dxo-editing [allowDragging]="true" [allowResizing]="allowResizingOnScheduler"></dxo-editing>

@@ -1,15 +1,15 @@
 /********************** Angular references *********************/
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpService } from '@app/services/app.http.service';
+import { HttpService } from 'src/app/services/app.http.service';
 
 /***************** START: Service & Models *********************/
-import { ClassApi } from '@app/helper/config/app.webapi';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { ClassApi } from 'src/app/helper/config/app.webapi';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { SubscriptionLike } from 'rxjs';
-import { ENU_Package } from '@app/helper/config/app.enums';
+import { ENU_Package } from 'src/app/helper/config/app.enums';
 
 /********************** START: Common *********************/
 

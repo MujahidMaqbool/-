@@ -4,9 +4,9 @@ import { tap } from "rxjs/internal/operators";
 import { Router } from "@angular/router";
 import { Observable, throwError } from "rxjs";
 
-import { environment } from "@env/environment";
+import { environment } from "src/environments/environment";
 import { AuthService } from "./app.auth.service";
-import { LoaderService } from "@app/services/app.loader.service";
+import { LoaderService } from "src/app/services/app.loader.service";
 
 
 @Injectable()

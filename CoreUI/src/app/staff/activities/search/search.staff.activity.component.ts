@@ -8,30 +8,30 @@ import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Services & Models *********************/
 /* Models */
-import { ClientActivity, ClientActivityInfo } from '@customer/client/models/client.activity.model';
-import { PersonInfo } from '@models/common.model';
+import { ClientActivity, ClientActivityInfo } from 'src/app/customer/client/models/client.activity.model';
+import { PersonInfo } from 'src/app/models/common.model';
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { DataSharingService } from '@services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { MessageService } from '../../../services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 /********************** Common & Customs *********************/
-import { Configurations } from '@helper/config/app.config';
-import { StaffActivityApi } from '@helper/config/app.webapi';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { Messages } from '@helper/config/app.messages';
-import { ENU_ActivityType, ENU_DateFormatName } from '@helper/config/app.enums';
-import { ENU_Permission_Module, ENU_Permission_Staff } from '@app/helper/config/app.module.page.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { StaffActivityApi } from 'src/app/helper/config/app.webapi';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_ActivityType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { ENU_Permission_Module, ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
 
 /********************** Components *********************/
-import { StaffActivityCount, StaffActivityTabOptions, StaffTaskView } from '@app/staff/models/staff.activity.model';
+import { StaffActivityCount, StaffActivityTabOptions, StaffTaskView } from 'src/app/staff/models/staff.activity.model';
 import { SaveStaffActivityComponent } from '../save/save.staff.activity.component';
 import { ViewStaffTaskComponent } from '../view/view.staff.task.component';
-import { CompleteTaskComponent } from '@app/shared/components/activities/edit/complete.task.component';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
+import { CompleteTaskComponent } from 'src/app/shared/components/activities/edit/complete.task.component';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
 
 // import { ViewMemberActivityComponent } from '../view/view.activity.component';
 

@@ -5,18 +5,18 @@ import { NgForm } from '@angular/forms';
 import {Location} from '@angular/common';
 /********************** Service & Models *********************/
 /* Services*/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models*/
-import { SchedulerActivityColor } from '@setup/models/activity.color.model';
-import { ApiResponse } from '@app/models/common.model';
+import { SchedulerActivityColor } from 'src/app/setup/models/activity.color.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
 /********************** Configurations *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { SchedulerActivityColorApi } from '@app/helper/config/app.webapi';
-import { ENU_SchedulerActivityType, ENU_Package } from '@app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SchedulerActivityColorApi } from 'src/app/helper/config/app.webapi';
+import { ENU_SchedulerActivityType, ENU_Package } from 'src/app/helper/config/app.enums';
 import { map } from 'rxjs/internal/operators';
 
 @Component({

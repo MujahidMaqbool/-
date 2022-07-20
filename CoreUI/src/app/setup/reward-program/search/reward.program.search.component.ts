@@ -6,26 +6,26 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 /**********************  Configurations *********************/
-import { EnumSaleSourceType, ENU_Reward_Action_Progress } from '@app/helper/config/app.enums';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { RewardProgramApi } from '@app/helper/config/app.webapi';
+import { EnumSaleSourceType, ENU_Reward_Action_Progress } from 'src/app/helper/config/app.enums';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { RewardProgramApi } from 'src/app/helper/config/app.webapi';
 
 /********************** Services & Models *********************/
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 import { RewardProgramList, RewardProgramSearchParameter } from '../models/reward-program.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { AuthService } from '@app/helper/app.auth.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 /**********************  Components  *************************/
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { RewardProgramDelete } from '../delete-Reward-Program-Dialog/reward.program.delete.dialog.component';
 import { RewardViewComponent } from '../view/view.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion
 

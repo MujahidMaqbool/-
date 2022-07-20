@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { SubscriptionLike } from 'rxjs';
 import { Router } from '@angular/router';
 

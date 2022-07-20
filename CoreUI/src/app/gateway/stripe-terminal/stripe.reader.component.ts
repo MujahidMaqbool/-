@@ -10,18 +10,18 @@ import {
 } from "@angular/core";
 /********************** Service & Models *********************/
 /*Services*/
-import { DynamicScriptLoaderService } from "@app/services/dynamic.script.loader.service";
+import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
 import {
   StripeService,
   StripeDataSharingService,
-} from "@app/services/stripe.service";
-import { Messages } from "@app/helper/config/app.messages";
-import { StripeReaderPopupComponent } from "@app/home/stripe.reader.popup/stripe.reader.popup.component";
+} from "src/app/services/stripe.service";
+import { Messages } from "src/app/helper/config/app.messages";
+import { StripeReaderPopupComponent } from "src/app/home/stripe.reader.popup/stripe.reader.popup.component";
 import { SubscriptionLike, Observable } from "rxjs";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { LoaderService } from "@app/services/app.loader.service";
-import { MessageService } from "@app/services/app.message.service";
-import { ENU_ReaderStatus } from "@app/helper/config/app.enums";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { LoaderService } from "src/app/services/app.loader.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { ENU_ReaderStatus } from "src/app/helper/config/app.enums";
 /*Models*/
 /********************** Common and Customs *********************/
 var loaderService;

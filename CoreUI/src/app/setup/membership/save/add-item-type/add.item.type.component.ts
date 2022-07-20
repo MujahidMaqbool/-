@@ -7,17 +7,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatOption } from '@angular/material/core';
 /********************** Service & Models *********************/
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 /* Models */
-import { ApiResponse } from '@app/models/common.model';
-import { MembershipItemsBenefits, AddMembershipItemsBenefits, BranchWiseService, ServicePackageList, BranchSpecificItemType, BranchSpecificItemCategoryTypeList, BranchWiseServiceCategory } from '@app/setup/models/membership.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { MembershipItemsBenefits, AddMembershipItemsBenefits, BranchWiseService, ServicePackageList, BranchSpecificItemType, BranchSpecificItemCategoryTypeList, BranchWiseServiceCategory } from 'src/app/setup/models/membership.model';
 
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { MembershipApi } from '@app/helper/config/app.webapi';
-import { NumberValidator } from '@app/shared/helper/number.validator';
-import { ENU_MemberShipBenefitDurations, ENU_MemberShipItemTypeName } from '@app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MembershipApi } from 'src/app/helper/config/app.webapi';
+import { NumberValidator } from 'src/app/shared/helper/number.validator';
+import { ENU_MemberShipBenefitDurations, ENU_MemberShipItemTypeName } from 'src/app/helper/config/app.enums';
 
 // import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 

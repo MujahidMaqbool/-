@@ -12,26 +12,26 @@ import { FormControl } from "@angular/forms";
 import { SubscriptionLike } from "rxjs";
 /********************** Services & Models *********************************/
 /* Models */
-import { StaffInfo } from "@app/staff/models/staff.model";
+import { StaffInfo } from "src/app/staff/models/staff.model";
 import {
   AllPerson,
   DD_Branch,
   Notification,
   ApiResponse,
   StaffAuthentication,
-} from "@app/models/common.model";
-import { CompanyDetails, CompanyInfo } from "@app/setup/models/company.details.model";
+} from "src/app/models/common.model";
+import { CompanyDetails, CompanyInfo } from "src/app/setup/models/company.details.model";
 
 /* Services */
-import { AuthService } from "@app/helper/app.auth.service";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { DateTimeService } from "@app/services/date.time.service";
-import { SessionService } from "@app/helper/app.session.service";
-import { HttpService } from "@app/services/app.http.service";
-import { CommonService } from "@app/services/common.service";
-import { MessageService } from "@app/services/app.message.service";
-import { FCMMessagingService } from "@app/services/fcm.messageing.service";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { SessionService } from "src/app/helper/app.session.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { CommonService } from "src/app/services/common.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { FCMMessagingService } from "src/app/services/fcm.messageing.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 /********************** Common *********************************/
 import {
   ENU_Permission_Module,
@@ -41,7 +41,7 @@ import {
   ENU_Permission_Scheduler,
   ENU_Permission_Individual,
   ENU_Permission_Home,
-} from "@app/helper/config/app.module.page.enums";
+} from "src/app/helper/config/app.module.page.enums";
 import {
   ENU_ActivityType,
   CustomerType,
@@ -50,13 +50,13 @@ import {
   ENU_EventCategoryType,
   ENU_DateFormatName,
   ENU_CountryCodeStripeTerminal,
-} from "@app/helper/config/app.enums";
+} from "src/app/helper/config/app.enums";
 
-import { Messages } from "@app/helper/config/app.messages";
+import { Messages } from "src/app/helper/config/app.messages";
 
-import { Configurations } from "@app/helper/config/app.config";
-import { environment } from "@env/environment";
-import { ENU_NotificationTriggerCategory, ENU_NotificationTrigger } from "@app/helper/config/app.enums";
+import { Configurations } from "src/app/helper/config/app.config";
+import { environment } from "src/environments/environment";
+import { ENU_NotificationTriggerCategory, ENU_NotificationTrigger } from "src/app/helper/config/app.enums";
 
 import {
   HomeApi,
@@ -64,22 +64,22 @@ import {
   StaffNotificationApi,
   StaffApi,
   GatewayIntegrationApi,
-} from "@helper/config/app.webapi";
-import { ImagesPlaceholder } from "@app/helper/config/app.placeholder";
+} from "src/app/helper/config/app.webapi";
+import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
 
 
 import { ChangePasswordPopup } from "./change-password/change.password.popup.component";
-import { POSClassAttendanceComponent } from "@app/point-of-sale/class-attendance/pos.class.attendance.component";
-import { variables } from "@app/helper/config/app.variable";
-import { AppUtilities } from "@app/helper/aap.utilities";
+import { POSClassAttendanceComponent } from "src/app/point-of-sale/class-attendance/pos.class.attendance.component";
+import { variables } from "src/app/helper/config/app.variable";
+import { AppUtilities } from "src/app/helper/aap.utilities";
 import { StripeReaderPopupComponent } from "./stripe.reader.popup/stripe.reader.popup.component";
-import { ServiceNotificationDetailComponent } from "@app/general/notification/service-notification/service.notification.details.component";
-import { AlertConfirmationComponent } from "@app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { ServiceNotificationDetailComponent } from "src/app/general/notification/service-notification/service.notification.details.component";
+import { AlertConfirmationComponent } from "src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 import { MyTasksComponent } from "./my-tasks/my.tasks.component";
 import { StaffProfilePopupComponent } from "./staff-profile/staff.profile.popup.component";
 import { MyAttendanceTimeSheetComponent } from "./my-attendance-timesheet/my.attendance.timesheet.component";
-import { AttendeeComponent } from "@app/attendee/save-search/attendee.component";
+import { AttendeeComponent } from "src/app/attendee/save-search/attendee.component";
 import { HostListener } from '@angular/core';
 
 @Component({

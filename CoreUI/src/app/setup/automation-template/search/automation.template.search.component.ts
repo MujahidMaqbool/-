@@ -6,22 +6,22 @@ import { MatPaginator } from '@angular/material/paginator';
 
 /********************* Services & Models ********************/
 /* Services */
-import { AuthService } from '@app/helper/app.auth.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /* Models*/
-import { AutomationTemplateFundamental, AutomationTemplateSearchParameter } from '@app/setup/models/automation.tempalte.model';
+import { AutomationTemplateFundamental, AutomationTemplateSearchParameter } from 'src/app/setup/models/automation.tempalte.model';
 /********************** Common ***************************/
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 /********************** Components *********************************/
-import { AutomationTemplateSaveComponent } from '@setup/automation-template/save/automation.template.save.component';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { AutomationTemplateApi } from '@app/helper/config/app.webapi';
-import { Configurations } from '@app/helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
+import { AutomationTemplateSaveComponent } from 'src/app/setup/automation-template/save/automation.template.save.component';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { AutomationTemplateApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { ViewComponent } from '../view/view.component';
 
 

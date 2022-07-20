@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Messages } from '@app/helper/config/app.messages';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 @Component({
   selector: 'forgot-password',

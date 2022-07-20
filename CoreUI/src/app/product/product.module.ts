@@ -19,11 +19,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { InternationalPhoneNumberModule } from 'ngx-international-phone-number';
 import { SortablejsModule } from 'ngx-sortablejs';
 /****Services **********/
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 
 /****Components ********/
-import { ProductRoutingModule } from '@app/product/product-routing.module';
-import { SharedPaginationModule } from '@app/shared-pagination-module/shared-pagination-module';
+import { ProductRoutingModule } from 'src/app/product/product-routing.module';
+import { SharedPaginationModule } from 'src/app/shared-pagination-module/shared-pagination-module';
 
 import { SearchCategoriesComponent } from './categories/search/search.categories.component';
 import { SaveCategoryComponent } from './categories/save/save.category.component';
@@ -34,7 +34,7 @@ import { SaveAttributeComponent } from './attributes/save/save.attribute.compone
 import { NavigationProductComponent } from './navigation/product.navigation.component';
 import { SaveSupplierComponent } from './suppliers/save/save.supplier.component';
 import { SearchSuppliersComponent } from './suppliers/search/search.suppliers.component';
-import { SharedModule } from '@app/shared/shared-module';
+import { SharedModule } from 'src/app/shared/shared-module';
 import { SearchBrandsComponent } from './brands/search/search.brands.component';
 import { SaveBrandComponent } from './brands/save/save.brand.component';
 import { ViewBrandComponent } from './brands/view/view.brand.component';
@@ -48,8 +48,8 @@ import { ProductVariantComponent } from './products/product-variant/product.vari
 import { EditInventoryComponent } from './products/edit-inventory/edit.inventory.component';
 import { BulkUpdateComponent } from './products/edit-inventory/bulk-update/bulk.update.component';
 
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
-import { ApplicationDialogSharedModule } from '@app/application-dialog-module/application-dialog-module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
+import { ApplicationDialogSharedModule } from 'src/app/application-dialog-module/application-dialog-module';
 import { SavePackagingComponent } from './products/product-price/save/packaging/packaging.component';
 import { SearchPurchaseOrderComponent } from './purchase-order/search/search.purchase.order.component';
 import { SavePurchaseOrderComponent } from './purchase-order/save/save.prchase.order.component';
@@ -59,6 +59,7 @@ import { ReceiveOrderComponent } from './purchase-order/receive-order/receive.or
 import { EmailOrderComponent } from './purchase-order/email-order/email.order.component';
 import { BulkUpdatePriceComponent } from './products/product-price/save/bulk.update.price.component';
 import { RestoreVariantComponent } from './products/product-variant/restore-variant/restore.variant.component';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 
 @NgModule({
@@ -134,6 +135,10 @@ import { RestoreVariantComponent } from './products/product-variant/restore-vari
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    },
     MatDialogService
   ]
 })

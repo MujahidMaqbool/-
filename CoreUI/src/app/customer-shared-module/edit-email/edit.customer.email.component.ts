@@ -2,14 +2,14 @@ import { Component } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { NgForm } from "@angular/forms";
 import { Inject } from "@angular/core";
-import { CustomerApi } from "@helper/config/app.webapi";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
-import { Messages } from "@app/helper/config/app.messages";
+import { CustomerApi } from "src/app/helper/config/app.webapi";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { Messages } from "src/app/helper/config/app.messages";
 import { Output, Input } from "@angular/core";
 import { EventEmitter } from "@angular/core";
-import { EditCustomerEmail } from "@app/models/common.model";
-import { TrimPipe } from "@app/shared/pipes/trim";
+import { EditCustomerEmail } from "src/app/models/common.model";
+import { TrimPipe } from "src/app/shared/pipes/trim";
 
 @Component({
     selector: 'edit-customer-email',

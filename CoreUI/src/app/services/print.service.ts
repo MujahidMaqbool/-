@@ -1,10 +1,10 @@
 import { MessageService } from './app.message.service';
-import { ReceiptModel, ReceiptItem } from '@app/models/sale.model';
-import { PrinterSetup } from '@app/setup/models/printer.setup.model';
+import { ReceiptModel, ReceiptItem } from 'src/app/models/sale.model';
+import { PrinterSetup } from 'src/app/setup/models/printer.setup.model';
 import { LoaderService } from './app.loader.service';
-import { Messages } from '@app/helper/config/app.messages';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { DateTimeService } from './date.time.service';
-import { TimeFormatPipe } from '@app/application-pipes/time-format.pipe';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
 import { TaxCalculation } from './tax.calculations.service';
 
 declare var epson: any;

@@ -113,17 +113,22 @@
     margin-bottom: 20px;
 }
 
-::ng-deep .dx-scheduler-time-panel{
+::ng-deep .dx-scheduler-time-panel {
     width: 55px;
 }
 
-::ng-deep .dx-scheduler-work-space-grouped:not(.dx-scheduler-timeline):not(.dx-scheduler-agenda):not(.dx-scheduler-work-space-month):not(.dx-scheduler-work-space-all-day):not(.dx-scheduler-work-space-vertical-grouped) .dx-scheduler-header-scrollable{
-    margin-left: 55px;
+::ng-deep .dx-scheduler .dx-scheduler-container {
+    background-color: transparent;
 }
+
+/* ::ng-deep .dx-scheduler-work-space-grouped:not(.dx-scheduler-timeline):not(.dx-scheduler-agenda):not(.dx-scheduler-work-space-month):not(.dx-scheduler-work-space-all-day):not(.dx-scheduler-work-space-vertical-grouped) .dx-scheduler-header-scrollable{
+    margin-left: 55px;
+} 
 
 ::ng-deep .dx-scheduler-work-space-both-scrollbar .dx-scheduler-date-table-scrollable{
     margin-left: 55px;
 }
+*/
 
 ::ng-deep .dx-scheduler-work-space-both-scrollbar.dx-scheduler-work-space.dx-scheduler-work-space-all-day.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count).dx-scheduler-work-space-all-day-collapsed[dx-group-row-count='1'] .dx-scheduler-header-scrollable
 {
@@ -145,11 +150,11 @@
 }
 
 /** week view margin and border*/
-::ng-deep .dx-scheduler-work-space-both-scrollbar .dx-scheduler-header-scrollable.dx-scrollable{
+/* ::ng-deep .dx-scheduler-work-space-both-scrollbar .dx-scheduler-header-scrollable.dx-scrollable{
 
     margin: 0 0 0 54px;
     border-left:  1px solid rgba(221, 221, 221, 0.6);
-}
+} */
 
 /** header highlighted color */
 ::ng-deep .dx-scheduler-header-panel-cell.dx-scheduler-header-panel-current-time-cell:before{

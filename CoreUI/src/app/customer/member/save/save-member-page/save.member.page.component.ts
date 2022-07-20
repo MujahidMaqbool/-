@@ -6,7 +6,7 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 /* Models */
 
 /* Services */
-import { DataSharingService } from '@services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 
 /********************** Common & Customs *********************/

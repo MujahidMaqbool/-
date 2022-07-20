@@ -6,12 +6,12 @@ import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Service & Models *********************/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { FacilityApi } from '@app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { FacilityApi } from 'src/app/helper/config/app.webapi';
 
 @Component({
     selector: 'save-facility',

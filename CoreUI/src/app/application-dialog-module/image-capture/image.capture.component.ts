@@ -1,7 +1,7 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {Subject, Observable} from 'rxjs';
 import { WebcamImage, WebcamInitError } from 'ngx-webcam';
-import { MessageService } from '@app/services/app.message.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 @Component({
   selector: 'image-capture',

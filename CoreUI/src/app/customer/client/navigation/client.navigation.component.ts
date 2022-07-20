@@ -5,15 +5,15 @@ import { ActivatedRoute } from "@angular/router";
 import { SubscriptionLike as ISubscription } from 'rxjs';
 /********************** Services & Models *********************/
 /* Services */
-import { DataSharingService } from "@services/data.sharing.service";
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from "@app/helper/config/app.module.page.enums";
-import { AuthService } from "@app/helper/app.auth.service";
-import { ActivityPersonInfo } from "@app/models/activity.model";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
-import { CustomerType } from '@helper/config/app.enums';
-import { MemberNavigationComponent } from "@app/customer/member/navigation/member.navigation.component";
-import { PersonInfo } from "@app/models/common.model";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from "src/app/helper/config/app.module.page.enums";
+import { AuthService } from "src/app/helper/app.auth.service";
+import { ActivityPersonInfo } from "src/app/models/activity.model";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { CustomerType } from 'src/app/helper/config/app.enums';
+import { MemberNavigationComponent } from "src/app/customer/member/navigation/member.navigation.component";
+import { PersonInfo } from "src/app/models/common.model";
 
 
 

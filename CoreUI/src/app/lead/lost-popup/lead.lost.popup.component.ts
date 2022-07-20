@@ -8,18 +8,18 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Services & Models *********************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /* Models */
-import { LeadLostReasonModel } from '@lead/models/lead.model';
+import { LeadLostReasonModel } from 'src/app/lead/models/lead.model';
 
 /********************** Common ***************************/
-import { DataSharingService } from '@services/data.sharing.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { LeadApi, LeadMembershipApi } from '@app/helper/config/app.webapi';
-import { ENU_ModuleList } from '@app/helper/config/app.enums';
-import { ApiResponse } from '@app/models/common.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { LeadApi, LeadMembershipApi } from 'src/app/helper/config/app.webapi';
+import { ENU_ModuleList } from 'src/app/helper/config/app.enums';
+import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
     selector: 'lead-lost',

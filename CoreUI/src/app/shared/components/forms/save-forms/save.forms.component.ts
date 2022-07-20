@@ -2,12 +2,12 @@ import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 
 /*********************** Material Reference *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CustomerFormApi, StaffApi } from '@app/helper/config/app.webapi';
-import { ApiResponse } from '@app/models/common.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { SaveCustomerForm } from '@app/models/customer.form.model';
+import { CustomerFormApi, StaffApi } from 'src/app/helper/config/app.webapi';
+import { ApiResponse } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SaveCustomerForm } from 'src/app/models/customer.form.model';
 
 @Component({
   selector: 'save-forms',

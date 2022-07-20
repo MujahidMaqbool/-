@@ -11,9 +11,9 @@ import { StaffAttendanceComponent } from './staff/staff.attendance.component';
 import { StaffAttendanceSuccessPopup } from './staff/staff.attendance.success.popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MemberAttendanceComponent } from './member/member.attendance.component';
-import { MemberAttendanceDetailsComponent } from '@app/attendance/member/attendance-details/member.attendance.details.component';
+import { MemberAttendanceDetailsComponent } from 'src/app/attendance/member/attendance-details/member.attendance.details.component';
 import { TimeClockComponent } from './shared/time.clock.component';
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
 
 
 @NgModule({

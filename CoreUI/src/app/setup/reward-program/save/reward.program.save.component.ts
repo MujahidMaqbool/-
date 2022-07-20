@@ -10,24 +10,24 @@ import { NgForm } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 
 /**********************  Configurations *********************/
-import { RewardProgramApi } from '@app/helper/config/app.webapi';
-import { customerEnrollmentTypeID, customerEnrollmentTypeName, CustomerType, ENU_Reward_Program_validation, RewardProgramActivityType, RewardProgramPurchasesType, WizardforRewardProgram } from '@app/helper/config/app.enums';
+import { RewardProgramApi } from 'src/app/helper/config/app.webapi';
+import { customerEnrollmentTypeID, customerEnrollmentTypeName, CustomerType, ENU_Reward_Program_validation, RewardProgramActivityType, RewardProgramPurchasesType, WizardforRewardProgram } from 'src/app/helper/config/app.enums';
 
 /**********************  Components  *************************/
 import { SaveAddExceptionComponent } from './add-exception-dialog/add.exception.component';
 import { SaveAddExceptionFormComponent } from './add-form-exception/add.form-exception.save.component';
 import { RewardTemplateComponent } from './reward-template/reward.template.component';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /********************** Services & Models *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { ApiResponse, DD_Branch } from '@app/models/common.model';
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { RewardProgramBranchViewModel,RewardProgramEarningRuleFrontEnd, RewardProgramEarningRuleViewModel, RewardProgramModel } from '../models/reward-program.model';
 
 // #endregion

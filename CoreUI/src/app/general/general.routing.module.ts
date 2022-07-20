@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PagePermissionGuard, ModulePermissionGuard } from '@app/helper/app.permission.guard';
-import { ENU_Permission_Module, ENU_Permission_Automation, ENU_Permission_Home } from '@app/helper/config/app.module.page.enums';
+import { PagePermissionGuard, ModulePermissionGuard } from 'src/app/helper/app.permission.guard';
+import { ENU_Permission_Module, ENU_Permission_Automation, ENU_Permission_Home } from 'src/app/helper/config/app.module.page.enums';
 import { GeneralNavigationComponent } from './navigation/general.navigation.component';
 import { TodayTaskComponent } from './today-task/today.task.component';
 import { DashboardComponent } from './dashboard/dashboard.component';

@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 /********************** START: Application Components *********************/
-import { ServiceCategorySaveComponent } from '@setup/service-category/save/service.category.save.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ServiceCategorySaveComponent } from 'src/app/setup/service-category/save/service.category.save.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 /********************** START: Service & Models *********************/
-import { ServiceCategory } from '@setup/models/service.category.model';
-import { HttpService } from '@services/app.http.service';
+import { ServiceCategory } from 'src/app/setup/models/service.category.model';
+import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from '../../../services/app.message.service';
-import { AuthService } from '@app/helper/app.auth.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /********************** START: Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { Configurations } from '@app/helper/config/app.config';
-import { ServiceCategoryApi } from '@app/helper/config/app.webapi';
-import { ENU_Permission_Module, ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { ServiceCategoryApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 @Component({
   selector: 'service-category-search',

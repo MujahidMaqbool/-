@@ -6,21 +6,21 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Components *********************************/
-import { AutomationRuleApi } from '@app/helper/config/app.webapi';
-import { AutomationSearch, AutomationSearchParameter, Audience, AutomationSearchParameters } from '@app/automation/models/automation.search.model';
-import { HttpService } from '@app/services/app.http.service';
-import { Configurations } from '@app/helper/config/app.config';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MessageService } from '@app/services/app.message.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { AuthService } from '@app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Automation } from '@app/helper/config/app.module.page.enums';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { ENU_DateFormatName } from '@app/helper/config/app.enums';
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { ApiResponse } from '@app/models/common.model';
+import { AutomationRuleApi } from 'src/app/helper/config/app.webapi';
+import { AutomationSearch, AutomationSearchParameter, Audience, AutomationSearchParameters } from 'src/app/automation/models/automation.search.model';
+import { HttpService } from 'src/app/services/app.http.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { ENU_Permission_Module, ENU_Permission_Automation } from 'src/app/helper/config/app.module.page.enums';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { ApiResponse } from 'src/app/models/common.model';
 
 
 @Component({

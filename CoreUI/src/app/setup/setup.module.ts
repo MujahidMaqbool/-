@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { SharedModule } from '@app/shared/shared-module';
+import { SharedModule } from 'src/app/shared/shared-module';
 import { SetupRoutingModule } from './setup-routing.module';
 import { DxColorBoxModule, DxDateBoxModule, DxFormModule, DxValidatorModule } from 'devextreme-angular';
 import { NgDragDropModule } from 'ng-drag-drop';
@@ -43,7 +43,7 @@ import { ClassCategorySaveComponent } from './class-category/save/class.category
 import { ClassSearchComponent } from './class/search/class.search.component';
 import { ClassSaveComponent } from './class/save/class.save.component';
 import { ClassViewComponent } from './class/view/class.view.component';
-import { SharedPaginationModule } from '@app/shared-pagination-module/shared-pagination-module';
+import { SharedPaginationModule } from 'src/app/shared-pagination-module/shared-pagination-module';
 import { AddItemTypeComponent } from './membership/save/add-item-type/add.item.type.component';
 import { BenefitItemTypesComponent } from './membership/save/benifit-item-types/benefit.item.types.component';
 import { FormSearchComponent } from './forms/search/search.form.component';
@@ -59,9 +59,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { ApplicationDialogSharedModule } from '@app/application-dialog-module/application-dialog-module';
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
-import { GatewayModule } from '@app/gateway/gateway-module';
+import { ApplicationDialogSharedModule } from 'src/app/application-dialog-module/application-dialog-module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
+import { GatewayModule } from 'src/app/gateway/gateway-module';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { WaitingListComponent } from './configuration/waiting-list/waiting-list.component';
 import { BasicComponent } from './configuration/basic/basic.component';
@@ -77,13 +77,14 @@ import { RewardViewComponent } from './reward-program/view/view.component';
 import { RewardTemplateComponent } from './reward-program/save/reward-template/reward.template.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RewardProgramDelete } from './reward-program/delete-Reward-Program-Dialog/reward.program.delete.dialog.component';
-import { SafeHtmlPipe } from '@app/application-pipes/safe.html.pipe';
+import { SafeHtmlPipe } from 'src/app/application-pipes/safe.html.pipe';
 import { MembershipCategorySaveComponent } from './membership-category/save/membership.category.save.component';
 import { MembershipCategorySearchComponent } from './membership-category/search/membership.category.search.component';
 import { AdvancedComponent } from './configuration/advanced/advanced.component';
 import { ViewTaxComponent } from './taxes/view/view.tax.component';
 import { SearchTaxComponent } from './taxes/search/search.tax.component';
 import { AddProductComponent } from './membership/save/add-product/add.product.component';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 
 @NgModule({
@@ -213,6 +214,12 @@ import { AddProductComponent } from './membership/save/add-product/add.product.c
     RewardViewComponent,
     MembershipCategorySaveComponent,
     ViewTaxComponent
+  ],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    }
   ]
 })
 export class SetupModule { }

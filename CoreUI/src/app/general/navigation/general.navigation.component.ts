@@ -1,11 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { ENU_HomeRedirect } from "@app/helper/config/app.enums";
-import { AuthService } from "@app/helper/app.auth.service";
+import { AuthService } from "src/app/helper/app.auth.service";
 import {
   ENU_Permission_Module,
   ENU_Permission_Home,
-} from "@app/helper/config/app.module.page.enums";
+} from "src/app/helper/config/app.module.page.enums";
 
 @Component({
   selector: "general-navigation",

@@ -1,17 +1,17 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import { HttpService } from "./app.http.service";
-import { StripeApi, PointOfSaleApi, CustomerPaymentGatewayApi } from "@app/helper/config/app.webapi";
+import { StripeApi, PointOfSaleApi, CustomerPaymentGatewayApi } from "src/app/helper/config/app.webapi";
 import { DataSharingService } from "./data.sharing.service";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { MessageService } from "./app.message.service";
-import { variables } from "@app/helper/config/app.variable";
+import { variables } from "src/app/helper/config/app.variable";
 import { SubscriptionLike } from "rxjs";
-import { Messages } from "@app/helper/config/app.messages";
+import { Messages } from "src/app/helper/config/app.messages";
 import { LoaderService } from "./app.loader.service";
-import { AuthenticateCard } from "@customer/member/models/member.gateways.model";
-import { ApiResponse } from "@app/models/common.model";
+import { AuthenticateCard } from "src/app/customer/member/models/member.gateways.model";
+import { ApiResponse } from "src/app/models/common.model";
 import { DynamicScriptLoaderService } from "./dynamic.script.loader.service";
-import {GatewayIntegrationApi} from "@app/helper/config/app.webapi"
+import {GatewayIntegrationApi} from "src/app/helper/config/app.webapi"
 
 
 

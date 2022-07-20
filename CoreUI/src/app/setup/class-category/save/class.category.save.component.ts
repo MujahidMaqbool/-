@@ -5,24 +5,24 @@ import { NgForm } from '@angular/forms';
 
 /***************** START: Service & Models *********************/
 /*Services*/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 
 /*Models*/
-import { ClassCategory } from '@setup/models/class.category.model';
-import { ClassCategoryApi } from '@app/helper/config/app.webapi';
-import { ImageEditorPopupComponent } from '@app/application-dialog-module/image-editor/image.editor.popup.component';
-import { ApiResponse } from '@app/models/common.model';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ClassCategory } from 'src/app/setup/models/class.category.model';
+import { ClassCategoryApi } from 'src/app/helper/config/app.webapi';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { ApiResponse } from 'src/app/models/common.model';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 /********************** Configurations *********************/
-import { AppUtilities } from '@app/helper/aap.utilities';
-import { ENU_Permission_Setup } from '@app/helper/config/app.module.page.enums';
-import { environment } from '@env/environment';
-import { Messages } from '@app/helper/config/app.messages';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { ENU_Permission_Setup } from 'src/app/helper/config/app.module.page.enums';
+import { environment } from 'src/environments/environment';
+import { Messages } from 'src/app/helper/config/app.messages';
 
 /********************** START: Common *********************/
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { CommonService } from '@app/services/common.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { CommonService } from 'src/app/services/common.service';
 
 
 @Component({

@@ -6,17 +6,17 @@ import { DatePipe } from '@angular/common';
 
 /********************** Service & Models *********************/
 /* Services */
-import { MessageService } from '@services/app.message.service';
+import { MessageService } from 'src/app/services/app.message.service';
 /* Models */
-import { AllPerson, ReportSearchParameter } from "@models/common.model";
+import { AllPerson, ReportSearchParameter } from "src/app/models/common.model";
 /********************** Component *********************************/
-import { Messages } from '@app/helper/config/app.messages';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { debounceTime } from 'rxjs/internal/operators';
-import { CustomerType, PersonType, FileType, ReportName } from '@app/helper/config/app.enums';
-import { DateTimeService } from '@app/services/date.time.service';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { CommonService } from '@app/services/common.service';
-import { Configurations } from '@app/helper/config/app.config';
+import { CustomerType, PersonType, FileType, ReportName } from 'src/app/helper/config/app.enums';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { CommonService } from 'src/app/services/common.service';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 @Component({
     selector: 'all-sale-history-report',

@@ -8,7 +8,7 @@ import "firebase/messaging";
 
 import { BehaviorSubject } from "rxjs";
 import { HttpService } from "./app.http.service";
-import { HomeApi } from "@app/helper/config/app.webapi";
+import { HomeApi } from "src/app/helper/config/app.webapi";
 
 @Injectable({ providedIn: "root" })
 export class FCMMessagingService {

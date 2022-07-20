@@ -5,18 +5,18 @@ import { MatOption } from '@angular/material/core';
 
 /********************** Service & Models *********************/
 /* Services */
-import { MessageService } from '@app/services/app.message.service';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 /* Models */
-import { MemberShipBenifitSearchFilter } from '@app/models/common.model';
-import { MembershipItemsBenefits, AddMembershipItemsBenefits } from '@app/setup/models/membership.model';
+import { MemberShipBenifitSearchFilter } from 'src/app/models/common.model';
+import { MembershipItemsBenefits, AddMembershipItemsBenefits } from 'src/app/setup/models/membership.model';
 /********************** Component *********************************/
 import { AddItemTypeComponent } from '../add-item-type/add.item.type.component';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { ENU_MemberShipBenefitDurations, ENU_MemberShipItemTypeName } from '@app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_MemberShipBenefitDurations, ENU_MemberShipItemTypeName } from 'src/app/helper/config/app.enums';
 import { AddProductComponent } from '../add-product/add.product.component';
 
 

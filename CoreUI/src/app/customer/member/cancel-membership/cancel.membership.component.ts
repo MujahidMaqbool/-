@@ -5,20 +5,20 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 
 /**************** Services & Models ***************/
 /* Services */
-import { MemberMembershipApi } from '@app/helper/config/app.webapi';
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
+import { MemberMembershipApi } from 'src/app/helper/config/app.webapi';
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 
 /* Models */
-import { CancelMembership, CancelMembershipReasons } from "@customer/member/models/member.membership.model";
-import { ApiResponse } from "@app/models/common.model";
-import { Messages } from "@app/helper/config/app.messages";
+import { CancelMembership, CancelMembershipReasons } from "src/app/customer/member/models/member.membership.model";
+import { ApiResponse } from "src/app/models/common.model";
+import { Messages } from "src/app/helper/config/app.messages";
 
 /************** Configurations **************/
-import { Configurations } from "@app/helper/config/app.config";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { DateTimeService } from "@app/services/date.time.service";
-import { ENU_CancelMembershipReasons } from "@app/helper/config/app.enums";
+import { Configurations } from "src/app/helper/config/app.config";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { ENU_CancelMembershipReasons } from "src/app/helper/config/app.enums";
 
 @Component({
     selector: 'cancel-membership',

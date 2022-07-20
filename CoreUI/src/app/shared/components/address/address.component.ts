@@ -7,17 +7,17 @@ import {
   Output,
   EventEmitter,
 } from "@angular/core";
-import { CustomerAddress, AllStateList } from "@app/models/common.model";
+import { CustomerAddress, AllStateList } from "src/app/models/common.model";
 import { NgForm, ControlContainer, FormControl } from "@angular/forms";
-import { AddressType } from "@app/helper/config/app.enums";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
-import { Messages } from "@app/helper/config/app.messages";
-import { CompanyDetails } from "@app/setup/models/company.details.model";
+import { AddressType } from "src/app/helper/config/app.enums";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { Messages } from "src/app/helper/config/app.messages";
+import { CompanyDetails } from "src/app/setup/models/company.details.model";
 import { debounceTime } from "rxjs/operators";
 import { Observable, SubscriptionLike } from "rxjs";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
   selector: "app-address",

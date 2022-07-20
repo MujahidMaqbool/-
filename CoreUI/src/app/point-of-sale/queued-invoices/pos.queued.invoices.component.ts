@@ -4,28 +4,28 @@ import { Component, Output, EventEmitter, ViewChild, Inject } from "@angular/cor
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /****************** Components *****************/
-import { SaleQueue, SaleQueueSearchParams, SaveQueue } from "@pos/models/point.of.sale.model";
+import { SaleQueue, SaleQueueSearchParams, SaveQueue } from "../models/point.of.sale.model";
 
 /****************** Services & Models *****************/
 /* Services */
-import { DateTimeService } from "@app/services/date.time.service";
-import { MessageService } from "@app/services/app.message.service";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { MessageService } from "src/app/services/app.message.service";
 
 /* Models */
 
 /****************** Configurations *****************/
-import { Configurations } from "@helper/config/app.config";
-import { HttpService } from "@app/services/app.http.service";
-import { PointOfSaleApi } from "@app/helper/config/app.webapi";
-import { Messages } from "@app/helper/config/app.messages";
-import { DeleteConfirmationComponent } from "@app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { CustomerSearchComponent } from "@app/shared/components/customer-search/customer.search.component";
-import { ApiResponse } from "@app/models/common.model";
-import { MatDialogService } from "@app/shared/components/generics/mat.dialog.service";
-import { AlertConfirmationComponent } from "@app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { ENU_DateFormatName } from "@app/helper/config/app.enums";
+import { Configurations } from "src/app/helper/config/app.config";
+import { HttpService } from "src/app/services/app.http.service";
+import { PointOfSaleApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { CustomerSearchComponent } from "src/app/shared/components/customer-search/customer.search.component";
+import { ApiResponse } from "src/app/models/common.model";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { AlertConfirmationComponent } from "src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { ENU_DateFormatName } from "src/app/helper/config/app.enums";
 import { StaffSearchAutoCompleteComponent } from "../staff-search/staff.search.component";
 
 @Component({

@@ -8,20 +8,20 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 /********************** Services & Models *********************/
 /* Models */
-import { TaskActivity, ActivityPersonInfo, Staff, PriorityType } from "@app/models/activity.model";
+import { TaskActivity, ActivityPersonInfo, Staff, PriorityType } from "src/app/models/activity.model";
 
 /* Services */
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
-import { DateTimeService } from "@app/services/date.time.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { DateTimeService } from "src/app/services/date.time.service";
 /********************** Common & Customs *********************/
-import { Configurations, SchedulerOptions } from "@app/helper/config/app.config";
-import { StaffActivityApi, StaffApi } from "@app/helper/config/app.webapi";
-import { Messages } from "@app/helper/config/app.messages";
-import { ApiResponse, PersonDetail } from "@app/models/common.model";
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
-import { ENU_DateFormatName } from "@app/helper/config/app.enums";
+import { Configurations, SchedulerOptions } from "src/app/helper/config/app.config";
+import { StaffActivityApi, StaffApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
+import { ApiResponse, PersonDetail } from "src/app/models/common.model";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { ENU_DateFormatName } from "src/app/helper/config/app.enums";
 
 /********************** Components *********************/
 

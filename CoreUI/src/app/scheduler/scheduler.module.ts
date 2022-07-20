@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DxSchedulerModule, DxDateBoxModule, DxFormModule, DxValidatorModule, DxFileUploaderModule, DxButtonModule, DxSwitchModule} from 'devextreme-angular';
 
 import { SchedulerRoutingModule } from './scheduler.routing.module';
-import { SharedModule } from '@app/shared/shared-module';
-import { ClientModule } from '@customer/client/client.module';
+import { SharedModule } from 'src/app/shared/shared-module';
+import { ClientModule } from 'src/app/customer/client/client.module';
 import { AdTooltipComponent } from "./tooltip/add.tooltip.component"; 
 
 import { SchedulerNavigationComponent } from './navigation/scheduler.navigation.component';
@@ -36,10 +36,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ApplicationDialogSharedModule } from '@app/application-dialog-module/application-dialog-module';
+import { ApplicationDialogSharedModule } from 'src/app/application-dialog-module/application-dialog-module';
 
-import { ApplicationPipesModule } from '@app/application-pipes/application.pipes.module';
-import { AttendeeModule } from '@app/attendee/attendee-module';
+import { ApplicationPipesModule } from 'src/app/application-pipes/application.pipes.module';
+import { AttendeeModule } from 'src/app/attendee/attendee-module';
 
 @NgModule({
   imports: [

@@ -3,40 +3,40 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { Subscription, SubscriptionLike as ISubscription } from "rxjs";
 
 /********************* Material:Refference ********************/
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 
 /********************** Services & Models *********************/
 /* Models */
-import { Configurations, DiscountType, SaleArea } from '@app/helper/config/app.config';
-import { AllWaitlist, ApiResponse, CustomerWaitlistSearchParameter, PersonDetail, WaitlistItemList } from '@app/models/common.model';
-import { CustomerType, ENU_DateFormatName, ENU_Package, ENU_WaitListBookingType, POSItemType, WaitlistStatusType } from '@app/helper/config/app.enums';
-import { PersonInfo } from '@app/models/common.model';
-import { CustomerMembership } from '@app/attendance/models/member.attendance.model';
-import { ServiceBenefitsPackage } from '@app/scheduler/models/service.model';
+import { Configurations, DiscountType, SaleArea } from 'src/app/helper/config/app.config';
+import { AllWaitlist, ApiResponse, CustomerWaitlistSearchParameter, PersonDetail, WaitlistItemList } from 'src/app/models/common.model';
+import { CustomerType, ENU_DateFormatName, ENU_Package, ENU_WaitListBookingType, POSItemType, WaitlistStatusType } from 'src/app/helper/config/app.enums';
+import { PersonInfo } from 'src/app/models/common.model';
+import { CustomerMembership } from 'src/app/attendance/models/member.attendance.model';
+import { ServiceBenefitsPackage } from 'src/app/scheduler/models/service.model';
 
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { CommonService } from '@app/services/common.service';
-import { Messages } from '@app/helper/config/app.messages';
-import { AttendeeApi, PersonInfoApi, SaleApi, WaitlistAPI } from '@app/helper/config/app.webapi';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
-import { DateTimeService } from '@app/services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { CommonService } from 'src/app/services/common.service';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { AttendeeApi, PersonInfoApi, SaleApi, WaitlistAPI } from 'src/app/helper/config/app.webapi';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /********************** Component *********************/
-import { AppPaginationComponent } from '@app/shared-pagination-module/app-pagination/app.pagination.component';
-import { DateToDateFromComponent } from '@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { POSPaymentComponent } from '@app/shared/components/sale/payment/pos.payment.component';
-import { ClassAttendanceDetail, FreeClassesMemberships } from '@app/models/attendee.model';
-import { DeleteConfirmationComponent } from '@app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { POSPaymentComponent } from 'src/app/shared/components/sale/payment/pos.payment.component';
+import { ClassAttendanceDetail, FreeClassesMemberships } from 'src/app/models/attendee.model';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import { Router } from '@angular/router';
 import { WaitlistServiceDetailComponent } from '../waitlist-service-detail/waitlist.service.detail.component';
-import { ENU_Permission_ClientAndMember, ENU_Permission_Lead, ENU_Permission_Module, ENU_Permission_PointOfSale } from '@app/helper/config/app.module.page.enums';
-import { AuthService } from '@app/helper/app.auth.service';
-import { RedeemMembershipComponent } from '@app/shared/components/redeem-membership/redeem.membership.component';
+import { ENU_Permission_ClientAndMember, ENU_Permission_Lead, ENU_Permission_Module, ENU_Permission_PointOfSale } from 'src/app/helper/config/app.module.page.enums';
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { RedeemMembershipComponent } from 'src/app/shared/components/redeem-membership/redeem.membership.component';
 
 @Component({
   selector: 'app-wait-list',

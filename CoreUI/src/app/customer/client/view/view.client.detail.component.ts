@@ -6,27 +6,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /*********************** Services & Models *************************/
 /* Services */
-import { HttpService } from '@services/app.http.service';
+import { HttpService } from 'src/app/services/app.http.service';
 
 /* Models */
-import { ClientApi } from '@app/helper/config/app.webapi';
-import { ClientDetail } from '@customer/client/models/client.model';
+import { ClientApi } from 'src/app/helper/config/app.webapi';
+import { ClientDetail } from 'src/app/customer/client/models/client.model';
 
 /********************** Configurations *************************/
-import { Messages } from '@app/helper/config/app.messages';
-import { environment } from "@env/environment";
-import { ImagesPlaceholder } from '@app/helper/config/app.placeholder';
-import { Configurations } from '@app/helper/config/app.config';
-import { variables } from '@app/helper/config/app.variable';
-import { AppUtilities } from '@app/helper/aap.utilities';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from "src/environments/environment";
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { variables } from 'src/app/helper/config/app.variable';
+import { AppUtilities } from 'src/app/helper/aap.utilities';
 import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /********************** Component *************************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName, ENU_Package } from '@app/helper/config/app.enums';
-import { MessageService } from '@app/services/app.message.service';
-import { ApiResponse } from '@app/models/common.model';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { ENU_DateFormatName, ENU_Package } from 'src/app/helper/config/app.enums';
+import { MessageService } from 'src/app/services/app.message.service';
+import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
     selector: 'view-client-detail',

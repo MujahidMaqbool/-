@@ -2,20 +2,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 /*********** Configurations **********/
-import { ConfigurationsApi } from '@app/helper/config/app.webapi';
-import { HttpService } from '@app/services/app.http.service';
+import { ConfigurationsApi } from 'src/app/helper/config/app.webapi';
+import { HttpService } from 'src/app/services/app.http.service';
 /*********** Components **********/
 /*********** Models **********/
-import { ApiResponse } from '@app/models/common.model';
-import { BrachBasic, BasicAccessControl } from '@app/setup/models/branch.basic.model';
-import { DurationTypeList } from '@app/scheduler/models/class.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { BrachBasic, BasicAccessControl } from 'src/app/setup/models/branch.basic.model';
+import { DurationTypeList } from 'src/app/scheduler/models/class.model';
 /*********** Services **********/
-import { MessageService } from '@app/services/app.message.service';
-import { Configurations } from '@app/helper/config/app.config';
-import { Messages } from '@app/helper/config/app.messages';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { SubscriptionLike } from 'rxjs';
-import { ENU_Package } from '@app/helper/config/app.enums';
+import { ENU_Package } from 'src/app/helper/config/app.enums';
 
 @Component({
   selector: 'app-basic',

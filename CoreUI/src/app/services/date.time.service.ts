@@ -2,12 +2,12 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 /********************** Common *********************/
-import { Configurations } from '@helper/config/app.config';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { DataSharingService } from './data.sharing.service';
-import { DD_Branch } from '@app/models/common.model';
+import { DD_Branch } from 'src/app/models/common.model';
 
 import * as moment from 'moment-timezone';
-import { ENU_DatePickerFormat } from '@app/helper/config/app.enums';
+import { ENU_DatePickerFormat } from 'src/app/helper/config/app.enums';
 
 @Injectable({ providedIn: 'root' })
 export class DateTimeService {

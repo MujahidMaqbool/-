@@ -1,30 +1,30 @@
 /********************* Angular References ********************/
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Messages } from '@app/helper/config/app.messages';
+import { Messages } from 'src/app/helper/config/app.messages';
 import { ElementRef } from '@angular/core';
 
 /********************** Services & Model *********************/
-import { ApiResponse } from '@app/models/common.model';
-import { FundamentalsItems, FundamentalsMemberships, Items, Memberships, SaveCustomFormModel } from '@app/setup/models/custom.form.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { FundamentalsItems, FundamentalsMemberships, Items, Memberships, SaveCustomFormModel } from 'src/app/setup/models/custom.form.model';
 
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { FormApi } from '@app/helper/config/app.webapi';
-import { ENU_CustomFormItemType, ENU_FormType, ENU_MemberShipItemTypeName, ENU_MobileOperatingSystem, ENU_Package } from '@app/helper/config/app.enums';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { FormApi } from 'src/app/helper/config/app.webapi';
+import { ENU_CustomFormItemType, ENU_FormType, ENU_MemberShipItemTypeName, ENU_MobileOperatingSystem, ENU_Package } from 'src/app/helper/config/app.enums';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { FormItemsComponent } from './save-form-items-popup/save.form.items.popup.component';
-import { field, value } from '@app/setup/models/form.model';
+import { field, value } from 'src/app/setup/models/form.model';
 import { DropEffect } from 'ngx-drag-drop/dnd-types';
 import { DndDropEvent } from 'ngx-drag-drop/dnd-dropzone.directive';
-import { ViewFormComponent } from '@app/shared/components/forms/view/view.form.component';
-import { CustomFormView, CustomerFormsInfromation } from '@app/models/customer.form.model';
+import { ViewFormComponent } from 'src/app/shared/components/forms/view/view.form.component';
+import { CustomFormView, CustomerFormsInfromation } from 'src/app/models/customer.form.model';
 import { SaveMembershipFormComponent } from './save-form-membership-popup/save.form.membership.popup.component';
-import { AlertConfirmationComponent } from '@app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
-import { Configurations } from '@app/helper/config/app.config';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { SubscriptionLike } from 'rxjs';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 @Component({
   selector: 'form-save',

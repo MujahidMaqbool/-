@@ -2,20 +2,20 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { SubscriptionLike } from "rxjs";
 /************************* Services & Models ***********************************/
 /* Services  */
-import { DataSharingService } from "@app/services/data.sharing.service";
-import { DateTimeService } from "@app/services/date.time.service";
-import { HttpService } from "@app/services/app.http.service";
-import { MessageService } from "@app/services/app.message.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { DateTimeService } from "src/app/services/date.time.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
 /* Models */
 import { MemberDashboardSearchParam, MemberSnapshot, MemberBooking, MemberServices, MemberProducts, MemberByStatus, MemberServiceAndAttendance, MemberAttendanceSummary, MemberClubVisits, MemberPayment } from "../models/member.dashboard.model";
-import { ApiResponse, DD_Branch } from "@app/models/common.model";
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
 /************************* Common ***********************************/
-import { MemberApi } from "@app/helper/config/app.webapi";
-import { Configurations } from "@app/helper/config/app.config";
-import { Messages } from "@app/helper/config/app.messages";
-import { EnumSaleSourceType, MembershipStatus_Enum, EnumMemberPayment, ENU_Package, CustomerType, ENU_DateFormatName } from "@app/helper/config/app.enums";
-import { DateToDateFromComponent } from "@app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
-import { AbstractGenericComponent } from "@app/shared/helper/abstract.generic.component";
+import { MemberApi } from "src/app/helper/config/app.webapi";
+import { Configurations } from "src/app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
+import { EnumSaleSourceType, MembershipStatus_Enum, EnumMemberPayment, ENU_Package, CustomerType, ENU_DateFormatName } from "src/app/helper/config/app.enums";
+import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 /*
     Component Variables are not accessible in Dashboard widget events

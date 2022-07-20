@@ -6,35 +6,35 @@ import { MatStepper } from '@angular/material/stepper';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubscriptionLike as ISubscription } from 'rxjs';
 /********************** Services & Models ***********************/
-import { HttpService } from '@services/app.http.service';
-import { MessageService } from '@services/app.message.service';
-import { DateTimeService } from '@app/services/date.time.service';
-import { TaxCalculation } from '@app/services/tax.calculations.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 /* Models */
-import { ApiResponse, PersonInfo } from '@app/models/common.model';
-import { GetMemberMembershipPlan, SaveMemberMembership, ViewPaymentSummary, ViewPayment, AccountDetails } from '@customer/member/models/member.membership.model';
-import { Card, DirectDebit, StripeDD, SaveCustomerGateway, AuthenticateCard } from '@customer/member/models/member.gateways.model';
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
+import { GetMemberMembershipPlan, SaveMemberMembership, ViewPaymentSummary, ViewPayment, AccountDetails } from 'src/app/customer/member/models/member.membership.model';
+import { Card, DirectDebit, StripeDD, SaveCustomerGateway, AuthenticateCard } from 'src/app/customer/member/models/member.gateways.model';
 
 /********************** Components *********************/
 import { SaveMemberPaymentComponent } from '../save-member-payment/save.member.payment.component';
 /********************** Common *********************/
-import { Messages } from '@app/helper/config/app.messages';
-import { MemberMembershipApi, CustomerPaymentGatewayApi, CustomerFormApi, CustomerApi } from '@app/helper/config/app.webapi';
-import { EnumSaleType, ENU_PaymentGateway, MembershipPaymentType, ENU_SEPACountryCode, CustomFormStatus, ENU_SEPACountryScheme } from '@app/helper/config/app.enums';
-import { Configurations } from '@app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MemberMembershipApi, CustomerPaymentGatewayApi, CustomerFormApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { EnumSaleType, ENU_PaymentGateway, MembershipPaymentType, ENU_SEPACountryCode, CustomFormStatus, ENU_SEPACountryScheme } from 'src/app/helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { MandateConfirmationDialog } from '../mandate-confirmation/mandate.confirmation.component';
-import { StripeService } from '@app/services/stripe.service';
-import { StripePaymentIntent, PayTabPaymentMode } from '@app/point-of-sale/models/point.of.sale.model';
-import { DataSharingService } from '@app/services/data.sharing.service';
-import { CustomFormView } from '@app/models/customer.form.model';
+import { StripeService } from 'src/app/services/stripe.service';
+import { StripePaymentIntent, PayTabPaymentMode } from 'src/app/point-of-sale/models/point.of.sale.model';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { CustomFormView } from 'src/app/models/customer.form.model';
 import { SaveMemberMembershipComponent } from '../save-member-membership/save.member.membership.component';
-import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
-import { MembershipFormComponent } from '@app/customer-shared-module/customer-forms/membership-form/membership.form.component';
-import { POSMembershipPaymentComponent } from '@customershared/payments/pos.membership.payment';
-import { StripeACHComponent } from '@app/gateway/stripe-ach/stripe.ach.component';
-import { MissingBillingAddressDialog } from '@app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
-import { LoaderService } from '@app/services/app.loader.service';
-import { RewardPointTemplateComponent } from '@app/shared/components/reward-point-template/reward-point-template.component';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { MembershipFormComponent } from 'src/app/customer-shared-module/customer-forms/membership-form/membership.form.component';
+import { POSMembershipPaymentComponent } from "src/app/customer-shared-module/payments/pos.membership.payment";
+import { StripeACHComponent } from 'src/app/gateway/stripe-ach/stripe.ach.component';
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+import { LoaderService } from 'src/app/services/app.loader.service';
+import { RewardPointTemplateComponent } from 'src/app/shared/components/reward-point-template/reward-point-template.component';
 
 @Component({
     selector: 'save-member-membership-popup',

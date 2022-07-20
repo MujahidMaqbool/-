@@ -8,21 +8,21 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 /********************** Services & Models *********************/
 
 /* Services */
-import { HttpService } from '@app/services/app.http.service';
-import { MessageService } from '@app/services/app.message.service';
-import { DataSharingService } from '@app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
 import { SupplierBranch, SupplierViewModel } from '../../models/supplier.models';
-import { ApiResponse } from '@app/models/common.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
 /**********************  Components *********************/
-import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /********************** Services & Models *********************/
-import { EnumSaleSourceType, SupplierValidation } from '@app/helper/config/app.enums';
-import { Messages } from '@app/helper/config/app.messages';
-import { SupplierApi } from '@app/helper/config/app.webapi';
+import { EnumSaleSourceType, SupplierValidation } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { SupplierApi } from 'src/app/helper/config/app.webapi';
 
 // #region Imports End
 
