@@ -1005,7 +1005,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
     }
 
     onProcessPayment(classAttendeObj: AllAttendees) {
-        if(classAttendeObj.BookingStatusTypeID == this.bookingStatusValue.WaitList && classAttendeObj.CustomerMembershipID != null){
+        if(classAttendeObj.BookingStatusTypeID == this.bookingStatusValue.WaitList && classAttendeObj.CustomerMembershipID != null ){
             if (classAttendeObj.CustomerTypeID == CustomerType.Member ) {
                 this.redeemMembershipForWaitList(classAttendeObj);
             } else {
