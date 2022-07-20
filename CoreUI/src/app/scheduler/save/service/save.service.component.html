@@ -118,7 +118,7 @@
                                                 <optgroup *ngFor="let serviceCategory of getServiceFundamentalList"
                                                     [label]="serviceCategory.ServiceCategoryName">
                                                     <ng-container *ngFor="let service of serviceCategory.ServiceList">
-                                                        <option *ngIf="serviceObj.ID > 0 && service.ServiceID == serviceObj.ServiceID" [ngValue]="service.ServiceID">
+                                                        <option *ngIf="serviceObj.ID > 0 && service.ServiceID == serviceObj.ServiceID && !service.IsActive" [ngValue]="service.ServiceID">
                                                             {{service.ServiceName}}
                                                         </option>
                                                         <option *ngIf="service.IsActive" [ngValue]="service.ServiceID">
