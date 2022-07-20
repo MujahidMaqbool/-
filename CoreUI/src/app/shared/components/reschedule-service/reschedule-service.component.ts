@@ -794,7 +794,8 @@ export class RescheduleServiceComponent extends AbstractGenericComponent impleme
             this.selectedClient.Mobile = responseData.Mobile;
             this.selectedClient.IsWalkedIn = responseData.IsWalkedInCustomer;
             this.selectedClient.AllowPartPaymentOnCore = responseData.AllowPartPaymentOnCore;
-            if(this.selectedClient.CustomerTypeID == this.enumCustomerType.Member && this.selectedClient.CustomerTypeName == "Member") {
+            this.selectedClient.HasMembership = responseData.HasMembership;
+            if(this.selectedClient.HasMembership) {
                this.getCustomerMemberhsips(this.selectedClient.CustomerID, 0);
             }
             this.getServiceBenefitsDetail().then(isResolved => {

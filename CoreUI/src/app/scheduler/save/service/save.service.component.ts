@@ -405,7 +405,8 @@ export class SaveSchedulerServiceComponent extends AbstractGenericComponent impl
             this.selectedClient.Mobile = responseData.Mobile;
             this.selectedClient.IsWalkedIn = responseData.IsWalkedInCustomer;
             this.selectedClient.AllowPartPaymentOnCore = responseData.AllowPartPaymentOnCore;
-            if (this.selectedClient.CustomerTypeID == this.enumCustomerType.Member && this.selectedClient.CustomerTypeName == "Member") {
+            this.selectedClient.HasMembership = responseData.HasMembership;
+            if (this.selectedClient.HasMembership) {
                 this.getCustomerMemberhsips(this.selectedClient.CustomerID);
             }
             this.getServiceBenefitsDetail().then(isResolved => {
