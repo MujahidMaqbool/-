@@ -191,6 +191,7 @@ export class ViewMembership {
     public ServicesSession: string;
     public ProductsSession: string;
     public RestrictedCustomerTypeNames: string;
+    public ShowAsPackage: boolean;
 
     public MembershipPaymentList: ViewMembershipPayment[];
     public MembershipBranchList: ViewMembershipBranchClass[];
