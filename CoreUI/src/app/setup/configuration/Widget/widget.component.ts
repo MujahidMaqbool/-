@@ -183,6 +183,12 @@ export class WidgetComponent implements OnInit {
       case this.enu_LandingPage.Products:
         this.permissions.ShowProductOnline = true;
         break;
+      case this.enu_LandingPage.Events:
+        this.permissions.ShowEventOnline = true;
+        break;
+      case this.enu_LandingPage.Packages:
+        this.permissions.ShowPackageOnline = true;
+        break;
 
       default:
         break;

@@ -1,4 +1,3 @@
-import { noUndefined } from '@angular/compiler/src/util';
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,8 +17,6 @@ import { TaxCalculation } from '@app/services/tax.calculations.service';
 import { MatDialogService } from '@app/shared/components/generics/mat.dialog.service';
 import { AbstractGenericComponent } from '@app/shared/helper/abstract.generic.component';
 import { environment } from '@env/environment';
-import { borderTopRightRadius } from 'html2canvas/dist/types/css/property-descriptors/border-radius';
-import { SubscriptionLike } from 'rxjs';
 import { CartWaitListService, POSServiceModel, POSServicePackageModel, SaleService, SaleWaitListService, ServiceStaff, ServiceViewModel, WaitListWorkTimeBrackets } from '../models/point.of.sale.model';
 import { POSServiceDetailComponent } from '../services/pos.service.detail.component';
 
@@ -109,7 +106,7 @@ export class AddToWaitlistComponent extends AbstractGenericComponent implements 
 
     }
 
-   
+
 
     async getCurrentBranchDetail() {
         const branch = await super.getBranchDetail(this._dataSharingService);

@@ -86,8 +86,14 @@ export class RedeemMembershipComponent extends AbstractGenericComponent implemen
     }
 
     getCustomerMemberhsips() {
-        let url = SaleApi.getCustomerMemberhsips.replace("{customerID}", this.data.customerId.toString())
-        this._httpService.get(url)
+        let params = {
+          parentClassId: this.data.parentClassId,
+          customerId: this.data.customerId,
+          classDate: this.data.classDate
+        }
+        let url = SaleApi.getCustomerMemberhsips.replace("{customerID}", this.data.customerId.toString());
+
+        this._httpService.get(this.data?.itemTypeName == "Class" ? AttendeeApi.getMemberClassDetailWithOtherMemberships : url, this.data.itemTypeName == "Class"? params : '')
             .subscribe(
                 (res: ApiResponse) => {
                     if (res && res.MessageCode > 0) {

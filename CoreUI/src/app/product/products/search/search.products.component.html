@@ -234,7 +234,7 @@
           </ng-container>
 
           <div class="col-xl-5 col-lg-6 col-md-8 mt-3 p-0 offset-md-4" [ngClass]="{
-            'offset-xl-7 offset-lg-6': !isMultiBranch && !isAdvanceSearch,
+            'offset-xl-7 offset-lg-6': !(!isMultiBranch && isAdvanceSearch),
             'offset-xl-1 offset-lg-0': !isMultiBranch && isAdvanceSearch}">
 
             <div class="row button-space">

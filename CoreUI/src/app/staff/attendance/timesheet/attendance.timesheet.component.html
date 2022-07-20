@@ -102,6 +102,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="scheduler_btn sch_left_bar_btn">
                 <button (click)="onReset()">
                     Reset</button>
@@ -152,13 +153,16 @@
                         <div class="col">
                             <h5>{{timesheetObj.ClockDate | customdate: dateFormat}}</h5>
                         </div>
+
                         <div class="col lead_member">
                             <h5>{{timesheetObj.FirstName + ' ' + timesheetObj.LastName}} <span
                                     class="active zero_margin">{{timesheetObj.StaffPositionName}}</span></h5>
                         </div>
+
                         <div class="col">
                             <h5>{{timesheetObj.ShiftStartTime | branchTimeFormat}}</h5>
                         </div>
+
                         <div class="col">
                             <h5>
                                 {{timesheetObj.ShiftEndTime | branchTimeFormat}}
@@ -169,21 +173,22 @@
                             <div class="notes">
                                 <h5>{{timesheetObj.ClockIn | branchTimeFormat}}</h5>
                             </div>
-
                         </div>
 
                         <div class="col">
                             <div class="notes">
                                 <h5>{{timesheetObj.ClockOut | branchTimeFormat}}</h5>
                             </div>
-
                         </div>
+
                         <div class="col">
                             <h5>{{timesheetObj.Scheduled}}</h5>
                         </div>
+
                         <div class="col">
                             <h5>{{timesheetObj.Worked}}</h5>
                         </div>
+
                         <div class="col">
                             <h5>{{timesheetObj.Difference}}
                                 <span class="time_difference"
@@ -193,8 +198,7 @@
                                     }">
                                 </span>
                             </h5>
-
-                        </div>
+                       </div>
 
                         <div class="col text-center" >
                             <h5 *ngIf="(timesheetObj.CheckInAttendanceSourceTypeName == 'Terminal' || timesheetObj.CheckOutAttendanceSourceTypeName == 'Terminal') && (timesheetObj.ClockIn )">
