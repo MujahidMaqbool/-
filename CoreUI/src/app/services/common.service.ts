@@ -589,7 +589,7 @@ export class CommonService extends AbstractGenericComponent {
         result.grossAmount = posCartItems[0].TotalAmountExcludeTax;
         result.vatTotal = this._taxCalculationService.getTaxAmount(classDetailObj.TotalTaxPercentage, posCartItems[0].TotalAmountExcludeTax);
         result.posCartItems = posCartItems;
-        result.saleInvoice = this.setSaleClassFinalData(customerID, classDetailObj.ClassID, freeClassServiceMemberships, itemType.WaitListDetailID);
+        result.saleInvoice = this.setSaleClassFinalData(customerID, classDetailObj.ClassID, freeClassServiceMemberships, itemType.WaitListDetailID , itemType.RequestDate);
         result.personInfo = personInfo;
         return result;
         // this.setSaleClassFinalData(waitlistDetailId);
@@ -607,7 +607,7 @@ export class CommonService extends AbstractGenericComponent {
         // }
     }
 
-    setSaleClassFinalData(customerID?: number, classID?: number, freeClassMemberships?: FreeClassesMemberships, WaitListDetailID?: number) {
+    setSaleClassFinalData(customerID?: number, classID?: number, freeClassMemberships?: FreeClassesMemberships, WaitListDetailID?: number , requestDate?:any) {
         var saleInvoice = new SaleInvoice();
         saleInvoice.ApplicationArea = SaleArea.Waitlist;
         saleInvoice.SaleDetailList = [];
@@ -622,7 +622,7 @@ export class CommonService extends AbstractGenericComponent {
 
 
 
-        saleItem.StartDate = this._dateTimeService.convertDateObjToString(this.classDate, 'yyyy-MM-dd');
+        saleItem.StartDate = this._dateTimeService.convertDateObjToString(requestDate, 'yyyy-MM-dd');
         saleItem.CustomerMembershipID = freeClassMemberships?.CustomerMembershipID;
         saleItem.ItemDiscountAmount = freeClassMemberships?.DiscountPercentage;
         saleInvoice.SaleDetailList.push(saleItem);
