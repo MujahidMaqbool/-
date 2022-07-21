@@ -104,7 +104,7 @@
                                         <p> {{classDetailObj.StartDate | customdate: dateFormForView}} </p>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col col-2">
                                     <div class="class_attendence_detail">
                                         <i class="fal fa-clock" aria-hidden="true"></i>
                                         <p> {{classDetailObj.StartTime }} - {{classDetailObj.EndTime }} </p>
@@ -136,7 +136,7 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="view_main_bar_item us-dot"
+                                    <div class="view_main_bar_item us-dot ml-0"
                                     *ngIf="formsList && formsList.CustomFormView?.length > 0"
                                     [ngClass]="{'mandatory-status': formStatus === 'mandatory','non-mandatory-status': formStatus === 'non-mandatory',  'normal': formStatus === 'normal' }">
                                     <button class="pos_form_btn" (click)="onViewForm()"> <i class="fal fa-file-signature"></i>

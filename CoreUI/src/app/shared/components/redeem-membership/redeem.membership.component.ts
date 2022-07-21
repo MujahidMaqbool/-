@@ -32,6 +32,7 @@ export class RedeemMembershipComponent extends AbstractGenericComponent implemen
     membershipId: number = 0;
     branchID: number;
     itemTotalPrice:number ;
+    currencyFormat: string;
 
     /* Model/Component References */
     selectedClassHasBenefits : boolean = true
@@ -71,7 +72,8 @@ export class RedeemMembershipComponent extends AbstractGenericComponent implemen
     async getCurrentBranchDetail() {
         const branch = await super.getBranchDetail(this._dataSharingService);
         if (branch && branch.hasOwnProperty("Currency")) {
-            this.branchID = branch.BranchID;
+          this.branchID = branch.BranchID;
+          this.currencyFormat = branch.CurrencySymbol;
         }
     }
 
