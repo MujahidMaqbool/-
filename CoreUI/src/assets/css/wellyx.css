@@ -10616,10 +10616,6 @@ section.dndDropArea {
     right: 0;
     top: 3px;
 }
-
-.sch_service_action .mat-select-trigger {
-    min-height: 36px;
-}
 .mat-select {
     font-family: "Open Sans",sans-serif !important;
     border-radius: 3px !important;

@@ -25,11 +25,22 @@
     position: relative;
     height: 40px;
 }
+::ng-deep .appointment-badge {
+    margin-left: 5px;
+    margin-top: -2px;
+    width: 20px;
+    height: 20px;
+}
+::ng-deep .dx-list:not(.dx-list-select-decorator-enabled) .dx-scrollview-content .dx-list-item.dx-state-active {
+    background-color: rgba(0,0,0,.04);
+    color: #333;
+}
+
 .staff_shift_height .avatar{
     margin-right: 5px;
 }
 /* Display repeat icon */
-::ng-deep .dx-scheduler-appointment-empty .dx-scheduler-appointment-recurrence-icon{
+::ng-deep .dx-scheduler-appointment-empty .dx-scheduler-appointment-recurrence-icon {
     display: block;
     position: absolute !important;
 }

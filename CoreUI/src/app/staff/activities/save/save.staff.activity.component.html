@@ -79,14 +79,19 @@
 <!-- Task Template -->
 <ng-template #task>
     <form #taskForm="ngForm" novalidate>
-        <div class="popup_content add_activity_height cstm_scroll_bg">
-            <div class="row mob-col-full">
-                <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
-                    <div *ngTemplateOutlet="personinfo"></div>
+        <div class="popup_content add_activity_height cstm_scroll_bg no_padding">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row mob-col-full">
+                        <div *ngIf="personInfo" class="col-md-12 col-sm-12 activity_bar_info">
+                            <div *ngTemplateOutlet="personinfo"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <div class="row sch_mob_reverse">
-                <div class="col-lg-4 col-md-5 padding_left parallel_grid">
+                <div class="col-lg-4 col-md-5 padding_right parallel_grid">
                     <div class="sch_white_bg mob-sm-sche">
                         <div class="smallScheduler">
                             <one-day-scheduler [dayViewFormat]="dayViewFormat" [schedulerTimeFormat]="schedulerTimeFormat" [staffID]="assignedToStaffID" [startDate]="currentCallDate" (onStartDateChange)="onTaskDateChange($event)">
@@ -94,7 +99,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-7 parallel_grid no_padding">
+                <div class="col-lg-8 col-md-7 parallel_grid">
                     <div class="sch_white_bg">
                         <div class="smallScheduler">
                             <div class="row">
