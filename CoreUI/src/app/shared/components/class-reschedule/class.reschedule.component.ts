@@ -229,7 +229,7 @@ setPackagePermissions(packageId: number) {
       this.classDetailObj = new ClassAttendanceDetail();
       this.isClassSearch = false;
       this.hasMemberhsip = false;
-      this.data.attendeeObj.CustomerMembershipID = this.customerMembershipList[0].CustomerMembershipID;
+      // this.data.attendeeObj.CustomerMembershipID = this.customerMembershipList[0].CustomerMembershipID;
       this.getRescheduleClasses();
     });
   }
