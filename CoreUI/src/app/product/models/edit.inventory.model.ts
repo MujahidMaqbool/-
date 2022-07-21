@@ -15,6 +15,7 @@ export class InventoryDetail {
     public RetailValue: number;
     public ProductName: string;
     public TotalCurrentStock : number;
+    public TotalActualStock: number;
     public TotalRetailValue : number;
     public ProductVariants: Array<ProductVariants> = [];
 }
@@ -32,6 +33,7 @@ export class ProductVariantBranches {
     public BranchID: number;
     public BranchName: string;
     public CurrentStock: number;
+    public ActualCurrentStock: number;
     public ProductVariantBranchID: number;
     public ProductVariantID: number;
     public RetailValue: number;
