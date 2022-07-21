@@ -1,409 +1,414 @@
 <form #serviceFormData="ngForm" (ngSubmit)="saveSchedulerService(serviceFormData.valid)" novalidate autocomplete="off">
-    <div class="row popup_content cstm_scroll_bg sch_service_scroll no_padding">
-        <div class="col-md-12">
-            <div class="row sch_white_bg sticky_container" *ngIf="!isClientReadonly">
-                <div class="col-lg-3 col-md-6 col-sm-9">
+    <div class="popup_content cstm_scroll_bg sch_service_scroll no_padding">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row sch_white_bg sticky_container" *ngIf="!isClientReadonly">
+                    <div class="col-lg-3 col-md-6 col-sm-9">
 
-                    <div class="pos-relative"
-                        [ngClass]="{'has-danger': ((searchClientControl.invalid || !searchClientControl.value || searchClientControl.value == '') && (serviceFormData.dirty || serviceFormData.touched || serviceFormData.submitted)) }">
-                        <span class="info_tip search_tooltip"
-                            matTooltip="Search customers or type walk in, if you do not know the customers details"
-                            matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
-                                class="far fa-info-circle"></i></span>
-                        <input class="form-control zero_margin" type="text" placeholder="Search Customer" matInput
-                            [formControl]="searchClientControl" [matAutocomplete]="autoName"
-                            [value]="selectedClient?.FullName" name="FullName" (change)="setFormAsDirty()"
-                            autocomplete="a" maxlength="30" required>
+                        <div class="pos-relative"
+                            [ngClass]="{'has-danger': ((searchClientControl.invalid || !searchClientControl.value || searchClientControl.value == '') && (serviceFormData.dirty || serviceFormData.touched || serviceFormData.submitted)) }">
+                            <span class="info_tip search_tooltip"
+                                matTooltip="Search customers or type walk in, if you do not know the customers details"
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                    class="far fa-info-circle"></i></span>
+                            <input class="form-control zero_margin" type="text" placeholder="Search Customer" matInput
+                                [formControl]="searchClientControl" [matAutocomplete]="autoName"
+                                [value]="selectedClient?.FullName" name="FullName" (change)="setFormAsDirty()"
+                                autocomplete="a" maxlength="30" required>
 
-                        <mat-autocomplete #autoName="matAutocomplete" [displayWith]="displayClientName"
-                            (optionSelected)='getSelectedClient($event.option.value)'>
-                            <mat-option *ngFor="let client of clientList" [value]="client">
-                                <span class="client_name ">{{ client.FullName }}</span>
-                                <small class="client_type float-right">{{client.CustomerTypeName}}</small>
-                                <br>
-                                <span class="client_info">{{ client.Email }}</span>
-                                <br>
-                                <span class="client_info">{{ client.Mobile }}</span>
-                            </mat-option>
-                        </mat-autocomplete>
+                            <mat-autocomplete #autoName="matAutocomplete" [displayWith]="displayClientName"
+                                (optionSelected)='getSelectedClient($event.option.value)'>
+                                <mat-option *ngFor="let client of clientList" [value]="client">
+                                    <span class="client_name ">{{ client.FullName }}</span>
+                                    <small class="client_type float-right">{{client.CustomerTypeName}}</small>
+                                    <br>
+                                    <span class="client_info">{{ client.Email }}</span>
+                                    <br>
+                                    <span class="client_info">{{ client.Mobile }}</span>
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-md-6 col-sm-3">
+                        <button matTooltip="Add Client" matTooltipPosition="above" matTooltipClass="custom-tooltip"
+                            class="sch_addclient_btn float-right" (click)="onAddClient()">
+                            <i class="fal fa-user-plus"></i></button>
                     </div>
                 </div>
 
-                <div class="col-lg-9 col-md-6 col-sm-3">
-                    <button matTooltip="Add Client" matTooltipPosition="above" matTooltipClass="custom-tooltip"
-                        class="sch_addclient_btn float-right" (click)="onAddClient()">
-                        <i class="fal fa-user-plus"></i></button>
-                </div>
-            </div>
-            <div class="row sch_white_bg activity_person_info sticky_container" *ngIf="isClientReadonly">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <label class="field_label zero_margin"><i class="fal fa-user"
-                            aria-hidden="true"></i>&nbsp;&nbsp;{{selectedClient?.FullName}}
-                    </label>
-                    <span class="enq_status">{{selectedClient?.CustomerTypeName}}</span>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <label class="field_label zero_margin"><i class="fal fa-envelope"
-                            aria-hidden="true"></i>&nbsp;&nbsp;{{selectedClient?.Email}}</label>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="selectedClient?.Mobile">
-                    <label class="field_label zero_margin"><i class="fal fa-mobile"
-                            aria-hidden="true"></i>&nbsp;&nbsp;{{selectedClient?.Mobile}}</label>
-                </div>
-                <div [ngClass]="selectedClient?.Mobile ? 'col-lg-2' : 'col-lg-5'" class="col-md-6 col-sm-6 text-right sch_badge tab-text-left">
-                    <p class="no_padding"> <a
-                            class="sch_service_close_btn" *ngIf="_cellDataSelection.id === 0" matTooltip="Change customer"
-                            matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="showSearchClient()"><i
-                                class="fal fa-times-circle"></i></a> </p>
+                <div class="row sch_white_bg activity_person_info sticky_container" *ngIf="isClientReadonly">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <label class="field_label zero_margin"><i class="fal fa-user"
+                                aria-hidden="true"></i>&nbsp;&nbsp;{{selectedClient?.FullName}}
+                        </label>
+                        <span class="enq_status">{{selectedClient?.CustomerTypeName}}</span>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <label class="field_label zero_margin"><i class="fal fa-envelope"
+                                aria-hidden="true"></i>&nbsp;&nbsp;{{selectedClient?.Email}}</label>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="selectedClient?.Mobile">
+                        <label class="field_label zero_margin"><i class="fal fa-mobile"
+                                aria-hidden="true"></i>&nbsp;&nbsp;{{selectedClient?.Mobile}}</label>
+                    </div>
+                    <div [ngClass]="selectedClient?.Mobile ? 'col-lg-2' : 'col-lg-5'" class="col-md-6 col-sm-6 text-right sch_badge tab-text-left">
+                        <p class="no_padding"> <a
+                                class="sch_service_close_btn" *ngIf="_cellDataSelection.id === 0" matTooltip="Change customer"
+                                matTooltipPosition="above" matTooltipClass="custom-tooltip" (click)="showSearchClient()"><i
+                                    class="fal fa-times-circle"></i></a> </p>
 
-                </div>
-            </div>
-            <div class="row sch_mob_reverse">
-                <div class="col-lg-3 col-md-4 padding_left mob-pr-0 parallel_grid">
-                    <div class="sch_white_bg smallScheduler schedulerHeight">
-                        <one-day-scheduler *ngIf="isLoadOneDaySchecduler" [dayViewFormat]="dayViewFormat"
-                            [schedulerTimeFormat]="schedulerTimeFormat"
-                            [staffID]="_cellDataSelection.StaffID" [startDate]="currentDate" #onedaySchedulerComp>
-                        </one-day-scheduler>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-8 no_padding parallel_grid">
-                    <div class="smallScheduler schedulerHeight service_scheduler">
-                        <div class="sch_white_bg pt-2"
-                            *ngFor="let serviceObj of saveServicesModel.ServiceBookingList; let arrayIndex=index">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="alert alert-danger" *ngIf="isShowError && serviceObj?.showErrorText">
-                                        {{serviceObj.DateTimeCompareError}}</div>
-                                </div>
-                                <div class="w-100" *ngIf="hasMemberhsip">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-sm-6">
-                                            <h5 class="field_label sch_lab">Select Membership</h5>
-                                            <div class="select_label">
-                                                <select class="form-control" [(ngModel)]="serviceObj.CustomerMembershipID" id="{{'MembershipID' + arrayIndex}}"
-                                                    name="{{'MembershipID' + arrayIndex}}" (change)="onMembershipChange($event, arrayIndex)"
-                                                    [disabled]="serviceObj.ID > 0 || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled || serviceObj.IsPartialPaid || serviceObj.IsPaidService || serviceObj.SaleID > 0"
-                                                    >
-                                                    <ng-container>
-                                                        <option *ngFor="let membership of customerMembershipList" [ngValue]="membership.CustomerMembershipID">
-                                                            {{membership.MembershipName}}
-                                                        </option>
-                                                    </ng-container>
-                                                    <option [ngValue]="null">
-                                                        Apply No Membership
+            </div>
+        </div>
+
+        <div class="row sch_mob_reverse">
+            <div class="col-lg-3 col-md-4 sm-pr-15 parallel_grid padding_right">
+                <div class="sch_white_bg smallScheduler schedulerHeight">
+                    <one-day-scheduler *ngIf="isLoadOneDaySchecduler" [dayViewFormat]="dayViewFormat"
+                        [schedulerTimeFormat]="schedulerTimeFormat"
+                        [staffID]="_cellDataSelection.StaffID" [startDate]="currentDate" #onedaySchedulerComp>
+                    </one-day-scheduler>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8 parallel_grid">
+                <div class="smallScheduler schedulerHeight service_scheduler">
+                    <div class="sch_white_bg pt-2"
+                        *ngFor="let serviceObj of saveServicesModel.ServiceBookingList; let arrayIndex=index">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="alert alert-danger" *ngIf="isShowError && serviceObj?.showErrorText">
+                                    {{serviceObj.DateTimeCompareError}}</div>
+                            </div>
+                            <div class="w-100" *ngIf="hasMemberhsip">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <h5 class="field_label sch_lab">Select Membership</h5>
+                                        <div class="select_label">
+                                            <select class="form-control" [(ngModel)]="serviceObj.CustomerMembershipID" id="{{'MembershipID' + arrayIndex}}"
+                                                name="{{'MembershipID' + arrayIndex}}" (change)="onMembershipChange($event, arrayIndex)"
+                                                [disabled]="serviceObj.ID > 0 || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled || serviceObj.IsPartialPaid || serviceObj.IsPaidService || serviceObj.SaleID > 0"
+                                                >
+                                                <ng-container>
+                                                    <option *ngFor="let membership of customerMembershipList" [ngValue]="membership.CustomerMembershipID">
+                                                        {{membership.MembershipName}}
                                                     </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Only select for checkout case-->
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <h5 class="field_label">Select Date</h5>
-                                    <date-picker [value]="serviceObj.StartDate" [required]="true" [showClear]="false"
-                                        (onDateChange)="onSelectDate_valueChanged(arrayIndex, $event)"
-                                        [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled">
-                                    </date-picker>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <h5 class="field_label sch_lab">Select Service</h5>
-                                    <div
-                                        [ngClass]="{'has-danger': ((ServiceID.invalid || serviceObj.ServiceID == 0) && (serviceFormData.dirty || serviceFormData.touched || serviceFormData.submitted)) }">
-                                        <div class="select_label">
-                                            <select class="form-control" [(ngModel)]="serviceObj.ServiceID"
-                                                id="{{'ServiceID' + arrayIndex}}" name="{{'ServiceID' + arrayIndex}}"
-                                                #ServiceID="ngModel" (change)="onServiceChange($event, arrayIndex)"
-                                                [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled || serviceObj.IsPartialPaid || serviceObj.IsPaidService || serviceObj.SaleID > 0 || (serviceObj.IsMembershipBenefit && serviceObj.ID > 0)" required>
-                                                <optgroup *ngFor="let serviceCategory of getServiceFundamentalList"
-                                                    [label]="serviceCategory.ServiceCategoryName">
-                                                    <ng-container *ngFor="let service of serviceCategory.ServiceList">
-                                                        <option *ngIf="serviceObj.ID > 0 && service.ServiceID == serviceObj.ServiceID && !service.IsActive" [ngValue]="service.ServiceID">
-                                                            {{service.ServiceName}}
-                                                        </option>
-                                                        <option *ngIf="service.IsActive" [ngValue]="service.ServiceID">
-                                                            {{service.ServiceName}}
-                                                        </option>
-                                                    </ng-container>  
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <h5 class="field_label sch_lab">Duration</h5>
-                                    <div
-                                        [ngClass]="{'has-danger': ((ServicePackageID.invalid || serviceObj.ServicePackageID == 0) && (serviceFormData.dirty || serviceFormData.touched || serviceFormData.submitted)) }">
-                                        <div class="select_label">
-                                            <select class="form-control" [(ngModel)]="serviceObj.ServicePackageID"
-                                                name="{{'ServicePackageID' + arrayIndex}}" #ServicePackageID="ngModel"
-                                                (ngModelChange)="onServicePackageChange(serviceObj, arrayIndex,ServicePackageID)"
-                                                [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed  || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled || serviceObj.IsPartialPaid || serviceObj.IsPaidService || serviceObj.SaleID > 0 || (serviceObj.IsMembershipBenefit && serviceObj.ID > 0)" required>
-                                                <option
-                                                    *ngFor="let servicepackage of ServicePackageList | servicePackageDurationFilter: serviceObj.ServiceID"
-                                                    [ngValue]="servicepackage.ServicePackageID">
-                                                    {{servicepackage.DurationValue}}
-                                                    {{servicepackage.DurationTypeName}}
+                                                </ng-container>
+                                                <option [ngValue]="null">
+                                                    Apply No Membership
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Show checkbox to checkout services if service is paid then hide-->
-                                <!-- <div class="col-md-1 form-group no_padding" *ngIf="serviceObj.ID > 0 && serviceObj.SaleStatusTypeID !== 2 && !serviceFormData.dirty">
-                                    <input type="checkbox" id="{{'SelectService_' + arrayIndex}}" [(ngModel)]="serviceObj.SelectedForCheckout"
-                                        name="{{'SelectService_' + arrayIndex}}" autocomplete="off" (change)="changeServiceSelectionForCheckout(arrayIndex,serviceObj.SelectedForCheckout)">
-                                    <div class="btn-group  float-right">
-                                        <label for="{{'SelectService_' + arrayIndex}}" class="btn cstm_circle  float-right"
-                                            [ngClass]="{'check_bg': serviceObj.SelectedForCheckout, 'uncheck_bg': !serviceObj.SelectedForCheckout}">
-                                            <span class="fa fa-check"></span>
-                                            <span class="fa fa-times"></span>
-                                        </label>
-                                    </div>
-                                </div> -->
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <h5 class="field_label">Start Time</h5>
-                                    <dx-date-box class="full_width" [type]="dateTimeType"
-                                        [displayFormat]="schedulerTimeFormat" [interval]="15"
-                                        [(value)]="serviceObj.StartTime"
-                                        (onValueChanged)="startTime_valueChanged($event, serviceObj.ServicePackageID, arrayIndex)"
-                                        [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled" [showClearButton]="true"
-                                        [useMaskBehavior]="true">
-                                        <dx-validator>
-                                            <dxi-validation-rule type="required"
-                                                message="{{messages.Validation.StartTime_Required}}">
-                                            </dxi-validation-rule>
-                                        </dx-validator>
-                                    </dx-date-box>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <h5 class="field_label">End Time</h5>
-                                    <dx-date-box class="full_width" [type]="dateTimeType"
-                                        [displayFormat]="schedulerTimeFormat" [interval]="15"
-                                        [(value)]="serviceObj.EndTime"
-                                        (onValueChanged)="endTime_valueChanged($event, arrayIndex)"
-                                        [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled" [showClearButton]="true"
-                                        [useMaskBehavior]="true">
-                                        <dx-validator>
-                                            <dxi-validation-rule type="required"
-                                                message="{{messages.Validation.EndTime_Required}}">
-                                            </dxi-validation-rule>
-                                        </dx-validator>
-                                    </dx-date-box>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <h5 class="field_label sch_lab">Staff</h5>
-                                    <div
-                                        [ngClass]="{'has-danger': ((StaffID.invalid || serviceObj.AssignedToStaffID == 0) && (serviceFormData.dirty || serviceFormData.touched || serviceFormData.submitted)) }">
-                                        <div class="select_label">
-                                            <select class="form-control" [(ngModel)]="serviceObj.AssignedToStaffID"
-                                                name="{{'StaffID'+ arrayIndex}}"
-                                                (ngModelChange)="onStaffChange(serviceObj.AssignedToStaffID)"
-                                                [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled" #StaffID="ngModel" required>
-                                                <option *ngFor="let staff of StaffList" [ngValue]="staff.StaffID">
-                                                    {{staff.StaffFullName}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="hasFacilityInPackage">
-                                    <h5 class="field_label sch_lab">Facility <span class="info_tip"
-                                            matTooltip="Selecting a facility helps avoid conflicts between your scheduled activities"
-                                            matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
-                                                class="far fa-info-circle"></i></span></h5>
+                            </div>
+                            <!-- Only select for checkout case-->
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <h5 class="field_label">Select Date</h5>
+                                <date-picker [value]="serviceObj.StartDate" [required]="true" [showClear]="false"
+                                    (onDateChange)="onSelectDate_valueChanged(arrayIndex, $event)"
+                                    [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled">
+                                </date-picker>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <h5 class="field_label sch_lab">Select Service</h5>
+                                <div
+                                    [ngClass]="{'has-danger': ((ServiceID.invalid || serviceObj.ServiceID == 0) && (serviceFormData.dirty || serviceFormData.touched || serviceFormData.submitted)) }">
                                     <div class="select_label">
-                                        <select class="form-control" name="{{'FacilityID'+ arrayIndex}}"
-                                            [(ngModel)]="serviceObj.FacilityID" #FacilityID="ngModel" tabindex="4"
-                                            [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled">
-                                            <option [value]="0">No Facility</option>
-                                            <option *ngFor="let facility of FacilityList"
-                                                [ngValue]="facility.FacilityID">
-                                                {{facility.FacilityName}}
+                                        <select class="form-control" [(ngModel)]="serviceObj.ServiceID"
+                                            id="{{'ServiceID' + arrayIndex}}" name="{{'ServiceID' + arrayIndex}}"
+                                            #ServiceID="ngModel" (change)="onServiceChange($event, arrayIndex)"
+                                            [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled || serviceObj.IsPartialPaid || serviceObj.IsPaidService || serviceObj.SaleID > 0 || (serviceObj.IsMembershipBenefit && serviceObj.ID > 0)" required>
+                                            <optgroup *ngFor="let serviceCategory of getServiceFundamentalList"
+                                                [label]="serviceCategory.ServiceCategoryName">
+                                                <ng-container *ngFor="let service of serviceCategory.ServiceList">
+                                                    <option *ngIf="serviceObj.ID > 0 && service.ServiceID == serviceObj.ServiceID && !service.IsActive" [ngValue]="service.ServiceID">
+                                                        {{service.ServiceName}}
+                                                    </option>
+                                                    <option *ngIf="service.IsActive" [ngValue]="service.ServiceID">
+                                                        {{service.ServiceName}}
+                                                    </option>
+                                                </ng-container>  
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <h5 class="field_label sch_lab">Duration</h5>
+                                <div
+                                    [ngClass]="{'has-danger': ((ServicePackageID.invalid || serviceObj.ServicePackageID == 0) && (serviceFormData.dirty || serviceFormData.touched || serviceFormData.submitted)) }">
+                                    <div class="select_label">
+                                        <select class="form-control" [(ngModel)]="serviceObj.ServicePackageID"
+                                            name="{{'ServicePackageID' + arrayIndex}}" #ServicePackageID="ngModel"
+                                            (ngModelChange)="onServicePackageChange(serviceObj, arrayIndex,ServicePackageID)"
+                                            [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed  || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled || serviceObj.IsPartialPaid || serviceObj.IsPaidService || serviceObj.SaleID > 0 || (serviceObj.IsMembershipBenefit && serviceObj.ID > 0)" required>
+                                            <option
+                                                *ngFor="let servicepackage of ServicePackageList | servicePackageDurationFilter: serviceObj.ServiceID"
+                                                [ngValue]="servicepackage.ServicePackageID">
+                                                {{servicepackage.DurationValue}}
+                                                {{servicepackage.DurationTypeName}}
                                             </option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Show checkbox to checkout services if service is paid then hide-->
+                            <!-- <div class="col-md-1 form-group no_padding" *ngIf="serviceObj.ID > 0 && serviceObj.SaleStatusTypeID !== 2 && !serviceFormData.dirty">
+                                <input type="checkbox" id="{{'SelectService_' + arrayIndex}}" [(ngModel)]="serviceObj.SelectedForCheckout"
+                                    name="{{'SelectService_' + arrayIndex}}" autocomplete="off" (change)="changeServiceSelectionForCheckout(arrayIndex,serviceObj.SelectedForCheckout)">
+                                <div class="btn-group  float-right">
+                                    <label for="{{'SelectService_' + arrayIndex}}" class="btn cstm_circle  float-right"
+                                        [ngClass]="{'check_bg': serviceObj.SelectedForCheckout, 'uncheck_bg': !serviceObj.SelectedForCheckout}">
+                                        <span class="fa fa-check"></span>
+                                        <span class="fa fa-times"></span>
+                                    </label>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <h5 class="field_label">Start Time</h5>
+                                <dx-date-box class="full_width" [type]="dateTimeType"
+                                    [displayFormat]="schedulerTimeFormat" [interval]="15"
+                                    [(value)]="serviceObj.StartTime"
+                                    (onValueChanged)="startTime_valueChanged($event, serviceObj.ServicePackageID, arrayIndex)"
+                                    [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled" [showClearButton]="true"
+                                    [useMaskBehavior]="true">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"
+                                            message="{{messages.Validation.StartTime_Required}}">
+                                        </dxi-validation-rule>
+                                    </dx-validator>
+                                </dx-date-box>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <h5 class="field_label">End Time</h5>
+                                <dx-date-box class="full_width" [type]="dateTimeType"
+                                    [displayFormat]="schedulerTimeFormat" [interval]="15"
+                                    [(value)]="serviceObj.EndTime"
+                                    (onValueChanged)="endTime_valueChanged($event, arrayIndex)"
+                                    [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled" [showClearButton]="true"
+                                    [useMaskBehavior]="true">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"
+                                            message="{{messages.Validation.EndTime_Required}}">
+                                        </dxi-validation-rule>
+                                    </dx-validator>
+                                </dx-date-box>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <h5 class="field_label sch_lab">Staff</h5>
+                                <div
+                                    [ngClass]="{'has-danger': ((StaffID.invalid || serviceObj.AssignedToStaffID == 0) && (serviceFormData.dirty || serviceFormData.touched || serviceFormData.submitted)) }">
+                                    <div class="select_label">
+                                        <select class="form-control" [(ngModel)]="serviceObj.AssignedToStaffID"
+                                            name="{{'StaffID'+ arrayIndex}}"
+                                            (ngModelChange)="onStaffChange(serviceObj.AssignedToStaffID)"
+                                            [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled" #StaffID="ngModel" required>
+                                            <option *ngFor="let staff of StaffList" [ngValue]="staff.StaffID">
+                                                {{staff.StaffFullName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="hasFacilityInPackage">
+                                <h5 class="field_label sch_lab">Facility <span class="info_tip"
+                                        matTooltip="Selecting a facility helps avoid conflicts between your scheduled activities"
+                                        matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                            class="far fa-info-circle"></i></span></h5>
+                                <div class="select_label">
+                                    <select class="form-control" name="{{'FacilityID'+ arrayIndex}}"
+                                        [(ngModel)]="serviceObj.FacilityID" #FacilityID="ngModel" tabindex="4"
+                                        [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled">
+                                        <option [value]="0">No Facility</option>
+                                        <option *ngFor="let facility of FacilityList"
+                                            [ngValue]="facility.FacilityID">
+                                            {{facility.FacilityName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h5 class="field_label sch_lab">Notes <span>(Remaining Characters: {{ 250 -
-                                            serviceObj?.Description?.length }})</span></h5>
-                                    <textarea [(ngModel)]="serviceObj.Description" name="{{'Description' + arrayIndex}}"
-                                        rows="4" class="ng-star-inserted" 
-                                        [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled" maxlength="250"></textarea>
 
-                                    <div class="servece_del pt-2 float-right"
-                                        *ngIf="serviceObj.ShowDeleteButton && serviceObj.ID == 0">
-                                        <a (click)="removeServiceObjectFormList(arrayIndex)">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="field_label sch_lab">Notes <span>(Remaining Characters: {{ 250 -
+                                        serviceObj?.Description?.length }})</span></h5>
+                                <textarea [(ngModel)]="serviceObj.Description" name="{{'Description' + arrayIndex}}"
+                                    rows="4" class="ng-star-inserted" 
+                                    [disabled]="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Cancelled" maxlength="250"></textarea>
+
+                                <div class="servece_del pt-2 float-right"
+                                    *ngIf="serviceObj.ShowDeleteButton && serviceObj.ID == 0">
+                                    <a (click)="removeServiceObjectFormList(arrayIndex)">
+                                        <i aria-hidden="true" class="fal fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="clear-fix"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="benefit_status" *ngIf="serviceObj.BenefitsStatus == 'F'"> This benefit
+                                    is part of a frozen membership <i
+                                        class="fas fa-exclamation-triangle float-right"></i></span>
+                                <span class="benefit_status" *ngIf="serviceObj.BenefitsStatus == 'S'"> This benefit
+                                    is part of a suspended membership <i
+                                        class="fas fa-exclamation-triangle float-right"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                                <div class="col-md-12 col-sm-12" *ngIf="isPurchaseRestrictionAllowed && serviceObj?.RestrictedCustomerTypeNames">
+                                <div class="d-flex align-items-center alert alert-warning p-2 content-sm-reg mb-0">
+                                    <i class="fal fa-registered brown-color pr-2 font-size-medium" aria-hidden="true"></i>
+                                    <span>Purchase is restricted. {{serviceObj?.RestrictedCustomerTypeNames}} cannot purchase this item.</span>
+                                </div>
+                                </div>
+
+                            <div class="col-md-12" *ngIf="serviceObj.itemDurationNote">
+                                <div class="row sch_duration_text align-items-center">
+                                    <div class="col-lg-7 col-md-12 p-0 pr-lg-3">
+                                    <p>{{serviceObj.itemDurationNote}}
+                                        <span *ngIf="serviceObj.IsMultiItem"
+                                            matTooltip="The service has been partially paid with other items in the invoice." class="info_tip"
+                                            matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
+                                                class="far fa-info-circle"></i>
+                                        </span>
+                                    </p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-12 p-0 d-flex md-block justify-content-between text-right">
+                                        <p>
+                                        <span *ngIf="serviceObj.SaleStatusTypeName">
+                                        Payment Status: {{serviceObj.SaleStatusTypeName | uppercase}}</span>
+                                        </p>
+                                        <p>
+                                            <span>
+                                                Total:
+                                                <span class="remove_price"
+                                                    *ngIf="serviceObj.IsMembershipBenefit && serviceObj.RemainingSession != 0">
+                                                    &nbsp;
+                                                    {{serviceObj.PriceBeforeBenefit | currency: currencyFormat}}
+                                                    &nbsp;
+                                                </span>
+
+                                                {{serviceObj.TotalPrice | currency: currencyFormat}}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="serviceObj.ID > 0">
+                            <div class="col-md-12">
+                                <div class="sch_service_action service relative_cls">
+                                    <div class="row">
+                                    <div class="col-sm-3 col-xs-12 pl-0 pr-2">
+                                        <ng-container *ngIf="serviceObj.BookingStatusTypeID !== enumServiceStatusBooked.NoShow">
+
+                                            <mat-select tabindex="9" class="form-control select_label bookingStatusDropdown schedulerServiceBookingDropDown mt-2"
+                                            [ngClass]="{'statusBooked': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Booked,
+                                            'statusNotConfirmed': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NotConfirmed,
+                                            'statusConfirmed': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Confirmed,
+                                            'statusChecked-In': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.CheckedInByStaff,
+                                            'statusReadyToStart': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.ReadyToStart,
+                                            'statusInProgress': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.InProgress,
+                                            'statusNoShow': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow,
+                                            'statusCompleted': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed }"
+                                            [(ngModel)]="serviceObj.BookingStatusTypeID"
+                                            name="{{'bookingStatusId' + arrayIndex}}" #oldBookingStatusID="ngModel"
+                                            (ngModelChange)="onBookingStatusChange(serviceObj, arrayIndex, oldBookingStatusID)"
+                                                    disableOptionCentering panelClass="bookingStatusOptions withBorder" [disabled]="serviceObj.BookingStatusTypeID == enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID == enumServiceStatusBooked.Cancelled">
+
+                                                <mat-option *ngFor="let option of bookingStatusOptions" [value]="option.BookingStatusTypeID" class="{{option.BookingStatusTypeName}}"
+                                                [disabled]="(option.BookingStatusTypeID === enumServiceStatusBooked.NoShow || option.BookingStatusTypeID === enumServiceStatusBooked.Cancelled)
+                                                && (serviceObj.SaleStatusTypeID === enumSaleStatusType.OverPaid || serviceObj.SaleStatusTypeID === enumSaleStatusType.WrittenOff || serviceObj.SaleStatusTypeID === enumSaleStatusType.Cancelled || serviceObj.SaleStatusTypeID === enumSaleStatusType.Refund)">
+                                                    {{option.BookingStatusTypeName}}
+                                                </mat-option>
+
+                                            </mat-select>
+
+                                        </ng-container>
+
+                                        <button type="button" class="btn NoShowLabel w-100 text-left pl-3 mr-10" *ngIf="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow">{{serviceObj.BookingStatusTypeName}}</button>
+
+                                    </div>
+
+                                    <div *ngIf="serviceObj.IsCheckedIn" class="sch_check_in mr-10">
+                                        <div><i class="fas fa-check-circle"></i></div>
+                                        <p>Checked-In by Customer<br><span>{{serviceObj.IsCheckedInDateTime | customdate: checkInDateTimeFormat}}</span></p>
+                                    </div>
+
+                                    <!--If service is Not attended-->
+                                    <!-- <span class="booking_service_status" style="margin-top:10px">{{serviceObj.BookingStatusTypeName}}</span> -->
+                                    <!-- Remove check:  serviceObj.SaleStatusTypeID === enumSaleStatusType.Paid - change request by Sohaib (ALIZIA-12/07/2019) -->
+                                    <!-- <button type="button" (click)="ConfirmNoShowDialog(arrayIndex)"
+                                        *ngIf="serviceObj.BookingStatusTypeID === enumBookingStatusType.Booked">
+                                        <i class="fal fa-user-times"></i>&nbsp;
+                                        No Show
+                                    </button> -->
+                                    <!-- If Service is unpaid/free and created from scheduler only (not from widget/App) -->
+                                    <!-- <button type="button"
+                                        *ngIf="serviceObj.SaleStatusTypeID === enumSaleStatusType.Unpaid && serviceObj.BookingStatusTypeID !== enumBookingStatusType.Attended && serviceObj.SaleStatusTypeName !== 'Partial Paid'"
+                                        (click)="deleteService(arrayIndex)">
+                                        <i class="fal fa-calendar-times"></i>&nbsp;
+                                        Cancel Service
+                                    </button> -->
+                                    <!-- If Service is paid -->
+                                    <!-- remove condition because of partial payment,user can complete on 0 paid payment if allow him partial payment -->
+                                    <!-- *ngIf="serviceObj.SaleStatusTypeID === enumSaleStatusType.Paid && serviceObj.BookingStatusTypeID === enumBookingStatusType.Booked" -->
+                                    <!-- <button
+                                        *ngIf="(serviceObj.SaleStatusTypeID === enumSaleStatusType.Paid || serviceObj.SaleStatusTypeID === enumSaleStatusType.Refund || saveServicesModel.AllowPartPaymentOnCore || serviceObj.SaleStatusTypeID === enumSaleStatusType.WrittenOff) && serviceObj.BookingStatusTypeID !== enumBookingStatusType.Attended"
+                                        type="button" (click)="ConfirmCompleteSaleService(arrayIndex)">
+                                        <i class="fal fa-calendar-check"></i>&nbsp;
+                                        Complete Service
+                                    </button> -->
+                                    <button type="button" *ngIf="selectedClient && !selectedClient.IsWalkedIn && allowedPages.viewForm"
+                                        class="us-sch-dot us-dot" [ngClass]="{   '' : !serviceObj.HasUnSubmittedForm,
+                                                                                'mandatory-status' : serviceObj.HasUnSubmittedForm && serviceObj.HasAtleastOneMandatoryForm,
+                                                                                'non-mandatory-status' : serviceObj.HasUnSubmittedForm && !serviceObj.HasAtleastOneMandatoryForm
+                                                                            }" (click)="openServiceEditSubmitCustomerFormDialog(arrayIndex)">
+                                        <i class="fal fa-file-signature"></i>&nbsp;
+                                        Forms
+                                    </button>
+
+                                    <button
+                                        *ngIf="saveServicesModel.ServiceBookingList.length > 1 && (((serviceObj.SaleStatusTypeID === enumSaleStatusType.PartialPaid || serviceObj.SaleStatusTypeID == enumSaleStatusType.Unpaid) && serviceObj.BookingStatusTypeID != enumBookingStatusType.NoShow) && serviceObj.SaleStatusTypeID != enumSaleStatusType.Refund && serviceObj.SaleStatusTypeID != enumSaleStatusType.WrittenOff)"
+                                        type="button" (click)="savePOS(arrayIndex)">
+                                        <i class="fal fa-cart-plus"></i>&nbsp;
+                                        Checkout
+                                    </button>
+                                    <div class="servece_del deleteButton pt-2 align-self-center" *ngIf="serviceObj.SaleID == 0 && serviceObj.ID > 0 && serviceObj.SaleStatusTypeID == enumSaleStatusType.Unpaid">
+                                        <a (click)="deleteService(arrayIndex)">
                                             <i aria-hidden="true" class="fal fa-trash-alt"></i>
                                         </a>
                                     </div>
-                                    <div class="clear-fix"></div>
+
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <span class="benefit_status" *ngIf="serviceObj.BenefitsStatus == 'F'"> This benefit
-                                        is part of a frozen membership <i
-                                            class="fas fa-exclamation-triangle float-right"></i></span>
-                                    <span class="benefit_status" *ngIf="serviceObj.BenefitsStatus == 'S'"> This benefit
-                                        is part of a suspended membership <i
-                                            class="fas fa-exclamation-triangle float-right"></i></span>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                  <div class="col-md-12 col-sm-12" *ngIf="isPurchaseRestrictionAllowed && serviceObj?.RestrictedCustomerTypeNames">
-                                    <div class="d-flex align-items-center alert alert-warning p-2 content-sm-reg mb-0">
-                                      <i class="fal fa-registered brown-color pr-2 font-size-medium" aria-hidden="true"></i>
-                                      <span>Purchase is restricted. {{serviceObj?.RestrictedCustomerTypeNames}} cannot purchase this item.</span>
-                                    </div>
-                                  </div>
-
-                                <div class="col-md-12" *ngIf="serviceObj.itemDurationNote">
-                                    <div class="row sch_duration_text align-items-center">
-                                      <div class="col-lg-7 col-md-12 p-0 pr-lg-3">
-                                        <p>{{serviceObj.itemDurationNote}}
-                                          <span *ngIf="serviceObj.IsMultiItem"
-                                              matTooltip="The service has been partially paid with other items in the invoice." class="info_tip"
-                                              matTooltipPosition="above" matTooltipClass="custom-tooltip"><i
-                                                  class="far fa-info-circle"></i>
-                                          </span>
-                                        </p>
-                                      </div>
-                                      <div class="col-lg-5 col-md-12 p-0 d-flex md-block justify-content-between text-right">
-                                          <p>
-                                            <span *ngIf="serviceObj.SaleStatusTypeName">
-                                            Payment Status: {{serviceObj.SaleStatusTypeName | uppercase}}</span>
-                                          </p>
-                                          <p>
-                                              <span>
-                                                  Total:
-                                                  <span class="remove_price"
-                                                      *ngIf="serviceObj.IsMembershipBenefit && serviceObj.RemainingSession != 0">
-                                                      &nbsp;
-                                                      {{serviceObj.PriceBeforeBenefit | currency: currencyFormat}}
-                                                      &nbsp;
-                                                  </span>
-
-                                                  {{serviceObj.TotalPrice | currency: currencyFormat}}
-                                              </span>
-                                            </p>
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row" *ngIf="serviceObj.ID > 0">
-                                <div class="col-md-12">
-                                    <div class="sch_service_action service relative_cls">
-                                        <div class="row">
-                                        <div class="col-sm-3 col-xs-12 pl-0 pr-2">
-                                            <ng-container *ngIf="serviceObj.BookingStatusTypeID !== enumServiceStatusBooked.NoShow">
-
-                                                <mat-select tabindex="9" class="form-control select_label bookingStatusDropdown schedulerServiceBookingDropDown mt-2"
-                                                [ngClass]="{'statusBooked': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Booked,
-                                                'statusNotConfirmed': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NotConfirmed,
-                                                'statusConfirmed': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Confirmed,
-                                                'statusChecked-In': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.CheckedInByStaff,
-                                                'statusReadyToStart': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.ReadyToStart,
-                                                'statusInProgress': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.InProgress,
-                                                'statusNoShow': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow,
-                                                'statusCompleted': serviceObj.BookingStatusTypeID === enumServiceStatusBooked.Completed }"
-                                                [(ngModel)]="serviceObj.BookingStatusTypeID"
-                                                name="{{'bookingStatusId' + arrayIndex}}" #oldBookingStatusID="ngModel"
-                                                (ngModelChange)="onBookingStatusChange(serviceObj, arrayIndex, oldBookingStatusID)"
-                                                     disableOptionCentering panelClass="bookingStatusOptions withBorder" [disabled]="serviceObj.BookingStatusTypeID == enumServiceStatusBooked.NoShow || serviceObj.BookingStatusTypeID == enumServiceStatusBooked.Cancelled">
-
-                                                    <mat-option *ngFor="let option of bookingStatusOptions" [value]="option.BookingStatusTypeID" class="{{option.BookingStatusTypeName}}"
-                                                    [disabled]="(option.BookingStatusTypeID === enumServiceStatusBooked.NoShow || option.BookingStatusTypeID === enumServiceStatusBooked.Cancelled)
-                                                    && (serviceObj.SaleStatusTypeID === enumSaleStatusType.OverPaid || serviceObj.SaleStatusTypeID === enumSaleStatusType.WrittenOff || serviceObj.SaleStatusTypeID === enumSaleStatusType.Cancelled || serviceObj.SaleStatusTypeID === enumSaleStatusType.Refund)">
-                                                        {{option.BookingStatusTypeName}}
-                                                    </mat-option>
-
-                                                </mat-select>
-
-                                            </ng-container>
-
-                                            <button type="button" class="btn NoShowLabel w-100 text-left pl-3 mr-10" *ngIf="serviceObj.BookingStatusTypeID === enumServiceStatusBooked.NoShow">{{serviceObj.BookingStatusTypeName}}</button>
-
-                                        </div>
-
-                                        <div *ngIf="serviceObj.IsCheckedIn" class="sch_check_in mr-10">
-                                            <div><i class="fas fa-check-circle"></i></div>
-                                            <p>Checked-In by Customer<br><span>{{serviceObj.IsCheckedInDateTime | customdate: checkInDateTimeFormat}}</span></p>
-                                        </div>
-
-                                        <!--If service is Not attended-->
-                                        <!-- <span class="booking_service_status" style="margin-top:10px">{{serviceObj.BookingStatusTypeName}}</span> -->
-                                        <!-- Remove check:  serviceObj.SaleStatusTypeID === enumSaleStatusType.Paid - change request by Sohaib (ALIZIA-12/07/2019) -->
-                                        <!-- <button type="button" (click)="ConfirmNoShowDialog(arrayIndex)"
-                                            *ngIf="serviceObj.BookingStatusTypeID === enumBookingStatusType.Booked">
-                                            <i class="fal fa-user-times"></i>&nbsp;
-                                            No Show
-                                        </button> -->
-                                        <!-- If Service is unpaid/free and created from scheduler only (not from widget/App) -->
-                                        <!-- <button type="button"
-                                            *ngIf="serviceObj.SaleStatusTypeID === enumSaleStatusType.Unpaid && serviceObj.BookingStatusTypeID !== enumBookingStatusType.Attended && serviceObj.SaleStatusTypeName !== 'Partial Paid'"
-                                            (click)="deleteService(arrayIndex)">
-                                            <i class="fal fa-calendar-times"></i>&nbsp;
-                                            Cancel Service
-                                        </button> -->
-                                        <!-- If Service is paid -->
-                                        <!-- remove condition because of partial payment,user can complete on 0 paid payment if allow him partial payment -->
-                                        <!-- *ngIf="serviceObj.SaleStatusTypeID === enumSaleStatusType.Paid && serviceObj.BookingStatusTypeID === enumBookingStatusType.Booked" -->
-                                        <!-- <button
-                                            *ngIf="(serviceObj.SaleStatusTypeID === enumSaleStatusType.Paid || serviceObj.SaleStatusTypeID === enumSaleStatusType.Refund || saveServicesModel.AllowPartPaymentOnCore || serviceObj.SaleStatusTypeID === enumSaleStatusType.WrittenOff) && serviceObj.BookingStatusTypeID !== enumBookingStatusType.Attended"
-                                            type="button" (click)="ConfirmCompleteSaleService(arrayIndex)">
-                                            <i class="fal fa-calendar-check"></i>&nbsp;
-                                            Complete Service
-                                        </button> -->
-                                        <button type="button" *ngIf="selectedClient && !selectedClient.IsWalkedIn && allowedPages.viewForm"
-                                            class="us-sch-dot us-dot" [ngClass]="{   '' : !serviceObj.HasUnSubmittedForm,
-                                                                                    'mandatory-status' : serviceObj.HasUnSubmittedForm && serviceObj.HasAtleastOneMandatoryForm,
-                                                                                    'non-mandatory-status' : serviceObj.HasUnSubmittedForm && !serviceObj.HasAtleastOneMandatoryForm
-                                                                                }" (click)="openServiceEditSubmitCustomerFormDialog(arrayIndex)">
-                                            <i class="fal fa-file-signature"></i>&nbsp;
-                                            Forms
-                                        </button>
-
-                                        <button
-                                            *ngIf="saveServicesModel.ServiceBookingList.length > 1 && (((serviceObj.SaleStatusTypeID === enumSaleStatusType.PartialPaid || serviceObj.SaleStatusTypeID == enumSaleStatusType.Unpaid) && serviceObj.BookingStatusTypeID != enumBookingStatusType.NoShow) && serviceObj.SaleStatusTypeID != enumSaleStatusType.Refund && serviceObj.SaleStatusTypeID != enumSaleStatusType.WrittenOff)"
-                                            type="button" (click)="savePOS(arrayIndex)">
-                                            <i class="fal fa-cart-plus"></i>&nbsp;
-                                            Checkout
-                                        </button>
-                                        <div class="servece_del deleteButton pt-2 align-self-center" *ngIf="serviceObj.SaleID == 0 && serviceObj.ID > 0 && serviceObj.SaleStatusTypeID == enumSaleStatusType.Unpaid">
-                                            <a (click)="deleteService(arrayIndex)">
-                                                <i aria-hidden="true" class="fal fa-trash-alt"></i>
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div *ngIf="serviceObj.ID == 0" class="col-md-12 sch_service_action">
-                                <button type="button"
-                                    *ngIf="(selectedClient && !selectedClient.IsWalkedIn) && serviceObj.HasForm"
-                                    class="us-sch-dot us-dot" [ngClass]="{   '' : (!serviceObj.HasUnSubmittedForm || !serviceObj.HasForm),
-                                                'mandatory-status' : (!serviceObj.HasUnSubmittedForm || serviceObj.HasForm) && serviceObj.HasAtleastOneMandatoryForm,
-                                                'non-mandatory-status' : (!serviceObj.HasUnSubmittedForm || serviceObj.HasForm) && !serviceObj.HasAtleastOneMandatoryForm
-                                            }" (click)="openSubmitCustomerFormDialog(arrayIndex,serviceObj.ID)">
-                                    <i class="fal fa-file-signature"></i>&nbsp;
-                                    Forms
-                                </button>
-                            </div>
-
                         </div>
+                        </div>
+                        <div *ngIf="serviceObj.ID == 0" class="col-md-12 sch_service_action">
+                            <button type="button"
+                                *ngIf="(selectedClient && !selectedClient.IsWalkedIn) && serviceObj.HasForm"
+                                class="us-sch-dot us-dot" [ngClass]="{   '' : (!serviceObj.HasUnSubmittedForm || !serviceObj.HasForm),
+                                            'mandatory-status' : (!serviceObj.HasUnSubmittedForm || serviceObj.HasForm) && serviceObj.HasAtleastOneMandatoryForm,
+                                            'non-mandatory-status' : (!serviceObj.HasUnSubmittedForm || serviceObj.HasForm) && !serviceObj.HasAtleastOneMandatoryForm
+                                        }" (click)="openSubmitCustomerFormDialog(arrayIndex,serviceObj.ID)">
+                                <i class="fal fa-file-signature"></i>&nbsp;
+                                Forms
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+        
     </div>
     <div class="row popup_footer">
         <div class="col-lg-3 col-md-4 thumbnail_btn blank_btn add-next-btn">

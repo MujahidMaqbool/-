@@ -1,9 +1,9 @@
 <form #schedulerAppointmentFormData="ngForm" (ngSubmit)="saveSchedulerAppointment(schedulerAppointmentFormData.valid)"
   novalidate>
 
-  <div class="popup_content cstm_scroll_bg sch_service_scroll">
+  <div class="popup_content cstm_scroll_bg sch_service_scroll no_padding">
     <div class="row">
-      <div class="col-md-12 no_padding">
+      <div class="col-md-12">
         <div class="row sch_white_bg" *ngIf="!isClientReadonly">
           <div class="col-lg-3 col-md-6">
             <div
@@ -50,15 +50,16 @@
         </div>
       </div>
     </div>
+
     <div class="row sch_mob_reverse">
-      <div class="col-lg-3 col-md-4 mob-pr-0 padding_left parallel_grid">
+      <div class="col-lg-3 col-md-4 sm-pr-15 parallel_grid padding_right">
         <div class="sch_white_bg smallScheduler schedulerHeight" *ngIf="isShowScheduler">
           <one-day-scheduler [dayViewFormat]="dayViewFormat" [staffID]="appointmentActivityViewModel.AssignedToStaffID"
             [startDate]="currentDate" [schedulerTimeFormat]="schedulerTimeFormat" #onedaySchedulerComp>
           </one-day-scheduler>
         </div>
       </div>
-      <div class="col-lg-9 col-md-8 parallel_grid no_padding">
+      <div class="col-lg-9 col-md-8 parallel_grid">
         <div class="sch_white_bg pt-2">
           <div class="row">
             <div class="col-sm-12 col-md-12">
