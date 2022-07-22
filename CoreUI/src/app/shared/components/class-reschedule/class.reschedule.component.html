@@ -60,6 +60,7 @@
                               <div class="field_label top_zero">
                                   <h5>Select Membership</h5>
                               </div>
+                              <div class="select_label">
                               <select class="form-control"
                               [(ngModel)]="data.attendeeObj.CustomerMembershipID" (ngModelChange)="onChangeMembership()">
                               <option [ngValue]="0" [disabled]="true">Select Membership</option>
@@ -69,6 +70,7 @@
                               </option>
                               <option [ngValue] = null>Apply no membership</option>
                           </select>
+                          </div>
                           </div>
                         </div>
                     </div>
