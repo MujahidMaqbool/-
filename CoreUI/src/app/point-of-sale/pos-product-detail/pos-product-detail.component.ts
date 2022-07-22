@@ -50,6 +50,10 @@ export class PosProductDetailComponent extends AbstractGenericComponent implemen
     @Inject(MAT_DIALOG_DATA) public productData: any) { super() }
 
   ngOnInit(): void {
+
+    if(this.productData.isBarCodeSearch){
+      this.getBarcodeSearchProductDetail();
+    }
     this.getBranchDetails();
     this.product = this.productData.product;
     if (this.product.ProductImages?.length > 0 ) {
@@ -58,6 +62,7 @@ export class PosProductDetailComponent extends AbstractGenericComponent implemen
 
     this.product.ProductAttributes = this.product.ProductAttributes.sort((a, b) => a.SortOrder - b.SortOrder);
   }
+
   async getBranchDetails() {
     const branch = await super.getBranchDetail(this._dataSharingService);
     if (branch && branch.hasOwnProperty("Currency")) {
@@ -65,7 +70,9 @@ export class PosProductDetailComponent extends AbstractGenericComponent implemen
       this.currencySymbol = branch.CurrencySymbol;
     }
   }
+
   //#region Events
+
   onClose() {
     this._dialogRef.close();
   }
@@ -140,6 +147,7 @@ export class PosProductDetailComponent extends AbstractGenericComponent implemen
   }
 
   //  select drop down values
+
   onSelectAttributeValue(value , index ) {
     let productAttribute = this.product.ProductAttributes[index];
     let attribute;
@@ -163,6 +171,9 @@ export class PosProductDetailComponent extends AbstractGenericComponent implemen
      this.sortedAttributeValueIDs = this.sortedAttributeValues.map(x => x.AttributeValueID);
 
     }
+
+    // this is use only for FE
+    this.product.ProductAttributes[index].SelectedAttributID = value;
 
     this.saleProductVariantAvailability = new POSProduct();
     this.isCheckAvaliblity = false;
@@ -197,10 +208,34 @@ export class PosProductDetailComponent extends AbstractGenericComponent implemen
     return this._taxCalculationService.getRoundValue(discountedPricePerUnit);
   }
   //#endregion
+
   //#region Methods
 
+  //get bar code search product atributes ids
+  getBarcodeSearchProductDetail(){
+    let param = {
+      productID: this.productData.posProduct.ProductID,
+      barcode: this.productData.posProduct.Code
+    }
 
-
-
+    this._httpService.save(PointOfSaleApi.GetAttributesValuesByProductBarcode, param)
+        .subscribe(
+            (res: ApiResponse) => {
+                if (res && res.MessageCode > 0) {
+                  this.product.ProductAttributes.forEach((value, index) => {
+                    let arrayIndex = this.product.ProductAttributes.findIndex(i => i.ProductAttributeValues.find(x => x.AttributeValueID === res.Result[index]));
+                    this.onSelectAttributeValue(res.Result[index], arrayIndex);
+                  });
+                }
+                else {
+                  this._messageService.showErrorMessage(res.MessageText);
+                }
+            },
+            error => {
+                this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace('{0}', 'Product'))
+            }
+        )
+  }
+  
   //#endregion
 }

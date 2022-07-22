@@ -968,7 +968,9 @@ export const PointOfSaleApi = {
     saveSaleCardInvoice: "Sale/SaveSaleCardInvoice",
     updateCardSaleStatus: "Sale/UpdateCardSaleStatus",
     /* Delete */
-    deleteSaleQueue: "QueueSale/Delete/"
+    deleteSaleQueue: "QueueSale/Delete/",
+    GetAttributesValuesByProductBarcode: "SaleProduct/GetAttributesValuesByProductBarcode"
+    
 }
 //#endregion
 

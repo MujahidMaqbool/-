@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  version: '0.0.323',
+  version: '0.0.324',
   imageUrl: 'https://fileswellyxproductioneu.s3.eu-west-2.amazonaws.com/Images/CP{ImagePath}/',
   qrCodeUrl: 'https://fileswellyxproductioneu.s3.eu-west-2.amazonaws.com/QRCode/',
   apiUrl: 'https://api.wellyx.com/api/Core/',
