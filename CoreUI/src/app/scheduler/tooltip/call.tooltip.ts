@@ -25,10 +25,10 @@ import { ENU_DateFormatName } from "src/app/helper/config/app.enums";
         </div>
         <div class="appointment-content">
                 <div *ngIf="data.CustomerMobile">
-                <h3 class="appointment-tooltip-icons"><i class="fal fa-phone" aria-hidden="true"></i> &nbsp;{{data.CustomerMobile}}</h3>
+                <h3 class="appointment-tooltip-icons mb-0"><i class="fal fa-phone" aria-hidden="true"></i> &nbsp;{{data.CustomerMobile}}</h3>
                 </div>
                 <div>
-                <h3 class="appointment-tooltip-icons"><i class="fal fa-envelope" aria-hidden="true"></i> &nbsp;{{data.CustomerEmail}}</h3>
+                <h3 class="appointment-tooltip-icons mb-0"><i class="fal fa-envelope" aria-hidden="true"></i> &nbsp;{{data.CustomerEmail}}</h3>
                 </div>
         </div>
     </div>

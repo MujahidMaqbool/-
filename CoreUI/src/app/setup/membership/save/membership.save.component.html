@@ -471,8 +471,8 @@
                     <br>
                     <button type="button" class="save">Upload Image</button>
                   </div>
-                  <div *ngIf="isImageExists && (imagePath && imagePath != '')">
-                    <img class="img-responsive center-block" src="{{imagePath}}" alt="no image" />
+                  <div class="relative_cls cat-img-box img-rounded-border" *ngIf="isImageExists && (imagePath && imagePath != '')">
+                    <img class="img-fluid img-full-fit w-100" src="{{imagePath}}" alt="no image" />
                     <br>
                     <div class="changeimg_btn square_img_action">
                       <button type="button" (click)="showImageCropperDialog()"><i class="fal fa-pen"></i></button>

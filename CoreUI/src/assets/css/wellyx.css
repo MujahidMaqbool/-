@@ -2976,8 +2976,8 @@ input[type="number"]:focus {
 }
 
 .square_img_action {
-    bottom: 10% !important;
-    right: 2% !important;
+    bottom: 15px !important;
+    right: 0 !important;
 }
 
 .changeimg_btn button {
@@ -3027,7 +3027,18 @@ input[type="number"]:focus {
     position: relative;
     top: 0px;
 }
-
+.cat-img-box {
+    height: 226px;
+}
+.img-full-fit {
+    object-fit: cover;
+    height: 100%;
+    border-radius: 6px;
+}
+.img-rounded-border {
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
 .square_img {
     width: 100% !important;
     outline: 1px dashed #202d3969;

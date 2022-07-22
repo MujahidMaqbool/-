@@ -254,8 +254,8 @@
             <i class="fal fa-cloud-upload"></i><br>
             <button type="button" class="save">Upload Image</button>
           </div>
-          <div *ngIf="isImageExist && (imagePath && imagePath != '')" class="relative_cls sch_cls_img">
-            <img src="{{imagePath}}" alt="no image" class="img-responsive" />
+          <div *ngIf="isImageExist && (imagePath && imagePath != '')" class="relative_cls sch_cls_img img-rounded-border">
+            <img src="{{imagePath}}" alt="no image" class="img-fluid img-full-fit w-100" />
             <br>
             <div class="changeimg_btn square_img_action">
               <button type="button" (click)="showImageCropperDialog()"><i class="fal fa-pen"></i></button>

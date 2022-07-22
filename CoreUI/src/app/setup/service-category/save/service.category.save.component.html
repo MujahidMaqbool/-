@@ -11,22 +11,33 @@
       </div>
       <form #serviceForm="ngForm" (ngSubmit)="saveServiceCategory(serviceForm.valid)" novalidate>
         <div class="popup_content">
-          <div class="popup_white_bg">
-            <div class="row">
-              <div class="col-md-12 col-sm-12">
-                <div class="alert alert-danger" *ngIf="serviceForm.invalid && serviceForm.submitted">
-                  <div *ngIf="name?.errors?.required">
-                    {{messages.Validation.Info_Required}}
-                  </div>
+          <div class="row">
+            <div class="col-md-12 col-sm-12 px-0">
+              <div class="alert alert-danger" *ngIf="serviceForm.invalid && serviceForm.submitted">
+                <div *ngIf="name?.errors?.required">
+                  {{messages.Validation.Info_Required}}
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="popup_white_bg py-2">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="sch_class_head p-0">
+                  <h5 class="field_label">Active</h5>
+                  <mat-slide-toggle tabindex="1" class="wellyx-checked" [(checked)]="serviceCategory.IsActive"
+                  [(ngModel)]="serviceCategory.IsActive" [disabled]="false" name="status">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="popup_white_bg">
+            
             <div class="row">
               <div class="col-md-7">
-                <mat-slide-toggle tabindex="1" class="example-margin " [(checked)]="serviceCategory.IsActive"
-                  [(ngModel)]="serviceCategory.IsActive" [disabled]="false" name="status">
-                  {{serviceCategory.IsActive ? 'Active': 'Inactive'}}
-                </mat-slide-toggle>
                 <div [ngClass]="{
                         'has-danger': name.invalid && (name.dirty || name.touched || serviceForm.submitted),
                         'has-success': name.valid && (name.dirty || name.touched )
@@ -41,10 +52,10 @@
                   <h5>Description <span> &nbsp;(Remaining Characters: {{ 250 -
                     serviceCategory?.Description?.length }})</span></h5>
                 </div>
-                <textarea [(ngModel)]="serviceCategory.Description" rows="4" maxlength="250" tabindex="3" name="description"></textarea>
-
+                <textarea [(ngModel)]="serviceCategory.Description" rows="5" maxlength="250" tabindex="3" name="description"></textarea>
               </div>
-              <div class="col-md-5">
+
+              <div class="col-md-5 mob-mt-15">
                 <div *ngIf="!isImageExists" class="upload_image_box square_img" (click)="showImageCropperDialog()">
                   <!-- <my-image-cropper [canvasHeight]="200" [canvasWidth]="250" [croppedHeight]="150" [croppedWidth]="150"
                     (imageUrlChange)="onImageUrlChange($event)"></my-image-cropper> -->
@@ -52,14 +63,13 @@
                   <br>
                   <button type="button" class="save">Upload Image</button>
                 </div>
-                <div *ngIf="isImageExists && (imagePath && imagePath != '')" class="col-md-9 col-sm-9">
-                  <img src="{{imagePath}}" alt="no image" />
-                  <!-- <div class="col-md-9 col-sm-9 padding_left"> -->
+                <div *ngIf="isImageExists && (imagePath && imagePath != '')" class="relative_cls cat-img-box img-rounded-border">
+                  <img class="img-fluid img-full-fit" src="{{imagePath}}" alt="Service Category" />
+                   <br />
                   <div class="changeimg_btn square_img_action">
                     <button type="button" (click)="showImageCropperDialog()"><i class="fal fa-pen"></i></button>
                     <button class="delete_img" type="button" (click)="onDeleteImage()" *ngIf="serviceCategory.ServiceCategoryID && serviceCategory.ImagePath"><i class="fal fa-trash-alt"></i></button>
                   </div>
-                  <!-- </div> -->
                 </div>
               </div>
             </div>
