@@ -60,6 +60,7 @@ export class RescheduleBookingComponent extends AbstractGenericComponent impleme
   ) { super(); }
 
   ngOnInit() {
+    this.getCurrentBranchDetail();
     this.rescheduleObj.RefundTypeId = this.enumRefundValue.RefundNow;
     this.rescheduleObj.ChargeTypeId = this.enumChargeValue.ChargeNow;
     this.chargeRefundObj = this._commonService.calculateRefundorCharge(this.data.OldTotalDue, this.data.AmountPaid, this.data.CancellationCharges, this.data.ItemDiscountedPrice, false , ENU_ChargeFeeType.Reschedule , this.data.TotalAdjustment);
