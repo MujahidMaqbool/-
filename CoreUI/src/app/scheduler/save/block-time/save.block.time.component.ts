@@ -104,13 +104,14 @@ export class SaveSchedulerBlockTimeComponent extends AbstractGenericComponent im
 
     async getBranchDatePattern() {
         this.schedulerTimeFormat = await super.getBranchTimeFormat(this._dataSharingService);
+        this.dayViewFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.SchedulerDateFormatDayView);
         this.dateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.DateFormat);
         this.exceptionDateFormate = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.ExceptionDateFormat);
         this.schedulerRRuleUntilDateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.SchedulerRRuleUntilDateFormat);
         this.recurrenceExceptionDateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.RecurrenceExceptionDateFormat);
-        this.dayViewFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.SchedulerDateFormatDayView);
         this.branchCurrentDate = await this._dateTimeService.getCurrentDateTimeAcordingToBranch();
         this.isShowScheduler = true;
+        
     }
 
     getFundamentals() {

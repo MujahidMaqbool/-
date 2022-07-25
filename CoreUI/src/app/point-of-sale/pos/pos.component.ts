@@ -189,6 +189,8 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
 
     selectedCategory: number = null;
     selectedBrand: number = null;
+    copySelectedBrand: number = null;
+    copySelectedCategory: number = null;
     isRewardProgramInPackage: boolean = false;
     isPurchaseRestrictionAllowed: boolean = false;
 
@@ -322,6 +324,8 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
             this.isShowSearchBYCategory = false;
             this.isShowSearchBYBrand = false;
             this.selectedBrand = null;
+            this.copySelectedBrand = null;
+            this.copySelectedCategory = null;
             this.getPOSItems();
         }
     }
@@ -331,6 +335,8 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
         this.searchText = '';
         this.selectedCategory = null;
         this.selectedBrand = null;
+        this.copySelectedBrand = null;
+        this.copySelectedCategory = null;
         this.isBarCodeSearch = false;
 
         if (value == 'Category') {
@@ -356,8 +362,9 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
         } else {
             this.selectedCategory = null;
         }
-        if (this.activeTab === this.POS_ITEM_TYPE.Product) {
+        if (this.activeTab === this.POS_ITEM_TYPE.Product && this.copySelectedCategory == null || (this.copySelectedCategory > 0 && this.copySelectedCategory != this.selectedBrand)) {
             this.getPOSProducts();
+            this.copySelectedCategory = this.selectedBrand;
         }
     }
     //on click category (when search category is selected and you select category type)
@@ -367,8 +374,9 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
         } else {
             this.selectedBrand = null;
         }
-        if (this.activeTab === this.POS_ITEM_TYPE.Product) {
+        if (this.activeTab === this.POS_ITEM_TYPE.Product && this.copySelectedBrand == null || (this.copySelectedBrand > 0 && this.copySelectedBrand != this.selectedBrand) ) {
             this.getPOSProducts();
+            this.copySelectedBrand = this.selectedBrand;
         }
     }
 
@@ -506,9 +514,9 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
 
     }
 
-    onErrorImage(arrayIndex){
-        this.posProducts[arrayIndex].ServerImageAddress = this.serverImageAddress.replace("{ImagePath}", AppUtilities.setOtherImagePath());
-    }
+    // onErrorImage(arrayIndex){
+    //     this.posProducts[arrayIndex].ServerImageAddress = this.serverImageAddress.replace("{ImagePath}", AppUtilities.setOtherImagePath());
+    // }
 
     onProductLoadREcalculateBenefits() {
 

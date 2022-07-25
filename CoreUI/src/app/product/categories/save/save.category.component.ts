@@ -121,9 +121,9 @@ export class SaveCategoryComponent implements OnInit {
     const dialogInst = this._matDialog.open(ImageEditorPopupComponent, {
       disableClose: true,
       data: {
-        height: 460,
-        width: 720,
-        aspectRatio: 720 / 460,
+        height: 200,
+        width: 200,
+        aspectRatio: 200 / 200,
         showWebCam: true
       }
     });

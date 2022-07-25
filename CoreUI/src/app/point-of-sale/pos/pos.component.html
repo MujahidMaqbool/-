@@ -161,7 +161,7 @@
           <div
             *ngIf="product.ProductClassificationID == productClassificationType.Standard && product.IsMembershipBenefit && !product.IsConsumed && (product.IsFree || product.DiscountPercentage == 100) && !product.IsBenefitsSuspended && product.RemainingSession != 0"
             class="off_dis">Free</div>
-          <img src="{{product.ImagePath ? product.ServerImageAddress + product.ImagePath : productPlaceHolderImage}}" (error)="onErrorImage(i)" class="img-responsive" alt="logo">
+          <img src="{{product.ImagePath ? product.ServerImageAddress + product.ImagePath : productPlaceHolderImage}}" class="img-responsive" alt="logo">
 
           <ng-container *ngIf="product.RestrictedCustomerTypeNames && isPurchaseRestrictionAllowed">
             <div class="purchase-restriction">
