@@ -259,7 +259,7 @@
           (onAppointmentFormOpening)="onAppointmentFormOpening($event)"
           (onOptionChanged)="onSchedulerOptionChanged($event)" resourceCellTemplate="resourceCellTemplate"
           appointmentTemplate="activity-template" timeCellTemplate="timeCellTemplate"
-          dropDownAppointmentTemplate="dropdownTooltipTemplate" appointmentTooltipTemplate="tooltip-template"
+          appointmentTooltipTemplate="dropdownTooltipTemplate" appointmentTooltipTemplate="tooltip-template"
           recurrenceEditMode="series" [showCurrentTimeIndicator]="true" [shadeUntilCurrentTime]="false" class="sch_box">
           <dxi-resource fieldExpr="StaffID" [dataSource]="resourcesStaffList" editorType="dxSelectBox"
             *ngIf="!isShowFacilityIcon">
