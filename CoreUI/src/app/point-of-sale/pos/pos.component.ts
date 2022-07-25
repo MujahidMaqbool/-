@@ -557,7 +557,7 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
     }
     // added product in the cart  => check benefits and calculate global remaining sessions
     // added product in the cart  => check benefits and calculate global remaining sessions
-    onProductAddToCart(product: POSProduct) {
+    onProductAddToCart(product: POSProduct, isBarCodeSearch: boolean = false) {
         if (product.ProductClassificationID === ProductClassification.Standard) {
 
             // if (product.IsStockBelowThreshold && !product.InventoryOverselling) {
@@ -582,6 +582,7 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
                                         customerMembershipID: this.customerMembershipId,
                                         customerID: this.selectedClient?.CustomerID,
                                         posProduct: product,
+                                        isBarCodeSearch: isBarCodeSearch
                                     }
                                 });
                             dialog.componentInstance.productVariantAvailable.subscribe(productVarient => {
@@ -1378,7 +1379,7 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
         if (this.isBarCodeSearch) {
             let product = this.posProducts.filter(p => p.Code === searchText.target.value)[0];
             if (product) {
-                this.onProductAddToCart(product);
+                this.onProductAddToCart(product, true);
             }
             setTimeout(() => {
                 this.searchText = "";

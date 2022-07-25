@@ -11,26 +11,33 @@
             </div>
             <form #facilityForm="ngForm" (ngSubmit)="saveFacility(facilityForm.valid)" novalidate>
                 <div class="popup_content">
-                    <div class="popup_white_bg">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="alert alert-danger" *ngIf="facilityForm.invalid && facilityForm.submitted">
-                                    <div *ngIf="name?.errors?.required">{{messages.Validation.Info_Required}}</div>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 px-0">
+                            <div class="alert alert-danger" *ngIf="facilityForm.invalid && facilityForm.submitted">
+                                <div *ngIf="name?.errors?.required">{{messages.Validation.Info_Required}}</div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="popup_white_bg py-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                            <div class="sch_class_head p-0">
+                                <h5 class="field_label">Active</h5>
+                                <mat-slide-toggle tabindex="1" class="wellyx-checked" [(checked)]="facilityModel.IsActive"
+                                        [(ngModel)]="facilityModel.IsActive" [disabled]="false" name="status">
+                                </mat-slide-toggle>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popup_white_bg">
                         <div class="row">
                             <div class="col-md-12 col-sm-12" [ngClass]="{
                                 'has-danger': name.invalid && (name.dirty || name.touched || facilityForm.submitted),
                                 'has-success': name.valid && (name.dirty || name.touched )
                             }">
-
-                                <div class="col-md-12 no_padding">
-                                    <mat-slide-toggle tabindex="1" class="example-margin " [(checked)]="facilityModel.IsActive"
-                                        [(ngModel)]="facilityModel.IsActive" [disabled]="false" name="status">
-                                        {{facilityModel.IsActive ? 'Active': 'Inactive'}}
-                                    </mat-slide-toggle>
-                                </div>
                                 <div class="col-md-12 no_padding">
                                     <div class="field_label">
                                         <h5>Name</h5>
@@ -44,7 +51,7 @@
                                         <h5>Description <span> &nbsp;(Remaining Characters: {{ 250 -
                                             facilityModel?.Description?.length }})</span></h5>
                                     </div>
-                                    <textarea tabindex="3" [(ngModel)]="facilityModel.Description" rows="3" maxlength="250"
+                                    <textarea tabindex="3" [(ngModel)]="facilityModel.Description" rows="5" maxlength="250"
                                         name="description"></textarea>
                                 </div>
                             </div>

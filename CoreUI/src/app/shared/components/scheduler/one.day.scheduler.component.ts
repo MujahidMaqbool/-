@@ -19,7 +19,8 @@ import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic
     selector: 'one-day-scheduler',
     template: `
         <style>  
-        :host ::ng-deep .dx-toolbar-button.dx-toolbar-menu-container {
+        :host ::ng-deep .dx-toolbar-button.dx-toolbar-menu-container,
+        :host ::ng-deep .dx-toolbar-after .dx-buttongroup-wrapper.dx-widget.dx-collection {
             display: none;
         }
         :host ::ng-deep .dx-toolbar .dx-toolbar-before {

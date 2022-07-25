@@ -7,24 +7,35 @@
             <!-- start validation apply our Form-->
             <form #classCategoryForm="ngForm" (ngSubmit)="saveClassCategory(classCategoryForm.valid)" novalidate>
                 <div class="popup_content">
-                    <div class="popup_white_bg">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="alert alert-danger"
-                                    *ngIf="classCategoryForm.invalid && classCategoryForm.submitted">
-                                    <div *ngIf="name?.errors?.required">
-                                        {{messages.Validation.Info_Required}}
-                                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 px-0">
+                            <div class="alert alert-danger"
+                                *ngIf="classCategoryForm.invalid && classCategoryForm.submitted">
+                                <div *ngIf="name?.errors?.required">
+                                    {{messages.Validation.Info_Required}}
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="popup_white_bg py-2">
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="sch_class_head p-0">
+                            <h5 class="field_label">Active</h5>
+                            <mat-slide-toggle tabindex="1" class="wellyx-checked"
+                                [(checked)]="classCategory.IsActive" [(ngModel)]="classCategory.IsActive"
+                                [disabled]="false" name="status">
+                            </mat-slide-toggle>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="popup_white_bg">
+                        
                         <div class="row">
-                            <div class="col-md-7 ">
-                                <mat-slide-toggle tabindex="1" class="example-margin "
-                                    [(checked)]="classCategory.IsActive" [(ngModel)]="classCategory.IsActive"
-                                    [disabled]="false" name="status">
-                                    {{classCategory.IsActive ? 'Active': 'Inactive'}}
-                                </mat-slide-toggle>
+                            <div class="col-md-7">
 
                                 <div [ngClass]="{
                         'has-danger': name.invalid && (name.dirty || name.touched || classCategoryForm.submitted),
@@ -42,13 +53,13 @@
                                     <h5>Description<span> &nbsp;(Remaining Characters: {{ 250 -
                                         classCategory?.Description?.length }})</span></h5>
                                 </div>
-                                <textarea [(ngModel)]="classCategory.Description" rows="4" maxlength="250" tabindex="3"
+                                <textarea [(ngModel)]="classCategory.Description" rows="5" maxlength="250" tabindex="3"
                                     name="description">
                                                       </textarea>
 
                             </div>
 
-                            <div class="col-md-5 ">
+                            <div class="col-md-5 mob-mt-15">
                                 <div *ngIf="!isImageExists" class="upload_image_box square_img"
                                     (click)="showImageCropperDialog()">
                                     <!-- <my-image-cropper [canvasHeight]="200" [canvasWidth]="250" [croppedHeight]="150" [croppedWidth]="150"
@@ -56,8 +67,8 @@
                                     <i class="fal fa-cloud-upload"></i> <br>
                                     <button type="button" class="save">Upload Image</button>
                                 </div>
-                                <div *ngIf="isImageExists && (imagePath && imagePath != '')">
-                                    <img class="img-responsive center-block" src="{{imagePath}}" alt="no image" />
+                                <div class="relative_cls cat-img-box img-rounded-border" *ngIf="isImageExists && (imagePath && imagePath != '')">
+                                    <img class="img-fluid img-full-fit" src="{{imagePath}}" alt="no image" />
                                     <div class="changeimg_btn square_img_action">
                                         <button type="button" (click)="showImageCropperDialog()"><i
                                                 class="fal fa-pen"></i></button>

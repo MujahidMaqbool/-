@@ -276,8 +276,8 @@ mat-icon {
     background-color: rgba(50, 50, 50, 0.85) !important;
     font-size: 12px !important;
     position: relative;
-    left: -30px;
-    top: 8px;
+    left: -34px;
+    top: 12px;
 }
 .custom-tooltip.dashboard-tooltip {
 max-width: 536px;

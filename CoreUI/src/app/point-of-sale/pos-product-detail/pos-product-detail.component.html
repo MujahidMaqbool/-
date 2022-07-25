@@ -33,7 +33,7 @@
                               <ng-container *ngFor="let productAttribute of product.ProductAttributes; let i = index">
                                   <h5 class="field_label">{{productAttribute?.AttributeName}}</h5>
                                   <div class=" select_label" id="id{{i}}">
-                                      <select  id="selectid{{i}}" name="Attributename{{i}}" (change)="onSelectAttributeValue($event.target.value,i)"  >
+                                      <select  id="selectid{{i}}" name="Attributename{{i}}" (change)="onSelectAttributeValue($event.target.value,i)" [(ngModel)]="productAttribute.SelectedAttributID"  >
                                           <option [value] = 0 >Select {{productAttribute?.AttributeName}}</option>
                                           <option *ngFor="let attributeValue of productAttribute.ProductAttributeValues; let j =index" [value]="attributeValue.AttributeValueID">{{attributeValue?.AttributeValue}}</option>
                                       </select>

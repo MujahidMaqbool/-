@@ -1,7 +1,7 @@
 <form #schedulerTaskFormData="ngForm" (ngSubmit)="saveSchedulerTask(schedulerTaskFormData.valid)" novalidate>
-  <div class="popup_content cstm_scroll_bg">
+  <div class="popup_content cstm_scroll_bg no_padding">
     <div class="row sch_mob_reverse">
-      <div class="col-lg-3 col-md-4 mob-pr-0 padding_left parallel_grid">
+      <div class="col-lg-3 col-md-4 sm-pr-15 parallel_grid padding_right">
         <div class="sch_white_bg smallScheduler sch_height_nohead" *ngIf="isShowScheduler">
           <one-day-scheduler  [dayViewFormat]="dayViewFormat"
             [schedulerTimeFormat]="schedulerTimeFormat" [staffID]="taskActivity.AssignedToStaffID"
@@ -9,7 +9,7 @@
           </one-day-scheduler>
         </div>
       </div>
-      <div class="col-lg-9 col-md-8 parallel_grid no_padding">
+      <div class="col-lg-9 col-md-8 parallel_grid">
         <div class="sch_white_bg pt-2">
           <div class="row">
             <div class="col-sm-12 col-md-12">

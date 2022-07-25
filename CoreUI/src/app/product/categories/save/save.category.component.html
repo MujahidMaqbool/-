@@ -48,15 +48,15 @@
                                     maxlength="250" [(ngModel)]="productCategory.Description" name="description"
                                     class="form-control"></textarea>
                             </div>
-                            <div class="col-md-5 pt-1"
+                            <div class="col-md-5 pt-1 mob-mt-15"
                                 [style.pointer-events]="productCategory.ProductCategoryID > 0 && productCategory.AppSourceTypeID === enum_AppSourceType.EnterPrise ?  'none' : ''">
                                 <div class="upload_image_box square_img" *ngIf="!isImageExist"
                                     (click)="showImageCropperDialog()"><i class="fal fa-cloud-upload"
                                         aria-hidden="true"></i><br><button type="button" class="save">Upload
                                         Image</button>
                                 </div>
-                                <div *ngIf="isImageExist && (imagePath && imagePath != '')" class="relative_cls" >
-                                    <img class="img-fluid" src="{{imagePath}}" alt="no image" />
+                                <div *ngIf="isImageExist && (imagePath && imagePath != '')" class="relative_cls cat-img-box img-rounded-border">
+                                    <img class="img-fluid img-full-fit" src="{{imagePath}}" alt="no image" />
                                     <br>
                                     <div class="changeimg_btn square_img_action" [hidden]="productCategory.AppSourceTypeID === enum_AppSourceType.EnterPrise">
                                         <button type="button" (click)="showImageCropperDialog()" ><i

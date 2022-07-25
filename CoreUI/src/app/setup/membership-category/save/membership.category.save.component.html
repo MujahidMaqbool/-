@@ -53,15 +53,16 @@
 
               </div>
 
-              <div class="col-md-5 ">
+              <div class="col-md-5 mob-mt-15">
                 <div *ngIf="!isImageExists" class="upload_image_box square_img" (click)="showImageCropperDialog()">
                   <!-- <my-image-cropper [canvasHeight]="200" [canvasWidth]="250" [croppedHeight]="150" [croppedWidth]="150"
                       (imageUrlChange)="onImageUrlChange($event)"></my-image-cropper> -->
                   <i class="fal fa-cloud-upload"></i> <br>
                   <button type="button" class="save">Upload Image</button>
                 </div>
-                <div *ngIf="isImageExists && (imagePath && imagePath != '')">
-                  <img class="img-responsive center-block" src="{{imagePath}}" alt="no image" />
+                <div class="relative_cls cat-img-box img-rounded-border" *ngIf="isImageExists && (imagePath && imagePath != '')">
+                  <img class="img-fluid img-full-fit" src="{{imagePath}}" alt="no image" />
+                  <br />
                   <div class="changeimg_btn square_img_action">
                     <button type="button" (click)="showImageCropperDialog()"><i class="fal fa-pen"></i></button>
                     <button class="delete_img" type="button" (click)="onDeleteImage()"

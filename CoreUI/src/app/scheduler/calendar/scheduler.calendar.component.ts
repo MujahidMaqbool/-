@@ -2497,6 +2497,10 @@ export class SchedulerCalendarComponent extends AbstractGenericComponent impleme
             ) {
                 this.isScrollToTimeCalled = true;
                 event.component.scrollToTime(this.currentBranchTime.getHours(), this.currentBranchTime.getMinutes(), this.currentBranchTime);
+                // after updated devExtreme we need to use this scrolltime. Remember Month view is not working. here is link for details
+                // https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxScheduler/Methods/#scrollToTimehours_minutes_date
+                // event.component.scrollTo(new Date (this.currentBranchTime.getHours(), this.currentBranchTime.getMinutes()), {groupId: this.currentBranchTime});
+
                 // donot call scrollPositionOffset when this function is called.
             }
             /** week-view check */

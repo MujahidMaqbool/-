@@ -26,10 +26,10 @@ import { SubscriptionLike } from "rxjs";
         </div>
         <div class="appointment-content">
             <div class="" *ngIf="data.CustomerMobile">
-            <h3><i class="fal fa-phone appointment-tooltip-icons" aria-hidden="true"> &nbsp;{{data.CustomerMobile}}</i></h3>
+            <h3 class="appointment-tooltip-icons mb-0"><i class="fal fa-phone" aria-hidden="true"></i> &nbsp;{{data.CustomerMobile}}</h3>
             </div>
             <div class="">
-            <h3><i class="fal fa-envelope appointment-tooltip-icons" aria-hidden="true"> &nbsp;{{data.CustomerEmail}}</i></h3>
+            <h3 class="appointment-tooltip-icons mb-0"><i class="fal fa-envelope" aria-hidden="true"></i> &nbsp;{{data.CustomerEmail}}</h3>
             </div>
         </div>
     </div>

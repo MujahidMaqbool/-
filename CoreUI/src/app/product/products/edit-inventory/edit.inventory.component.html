@@ -88,7 +88,7 @@
                                             <h5></h5>
                                         </div>
                                         <div class="col">
-                                            <h5>{{inventory.TotalCurrentStock}}</h5>
+                                            <h5>{{inventory.TotalActualStock}}</h5>
                                              
                                         </div>
                                         <div class="col text-center">
@@ -119,7 +119,7 @@
                                                 <h5> {{ variant.ProductVariantBranches[0]?.BranchName}}</h5>
                                             </div>
                                             <div class="col">
-                                                <h5>{{ variant.ProductVariantBranches[0]?.CurrentStock}}</h5>
+                                                <h5>{{ variant.ProductVariantBranches[0]?.ActualCurrentStock}}</h5>
                                             </div>
                                             <div class="col text-center">
                                                 <h5>{{ variant.ProductVariantBranches[0]?.RetailValue | currency:

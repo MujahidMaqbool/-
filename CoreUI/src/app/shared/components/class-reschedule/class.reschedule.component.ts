@@ -178,7 +178,6 @@ setPackagePermissions(packageId: number) {
   selectClassToBeSchedule() {
     this.selectedRescheduledClass = JSON.parse(JSON.stringify(this.attendeeClass.filter((s) => s.ClassID == Number(this.classInfo.ClassID))));
     this.copySelectedRescheduledClass = JSON.parse(JSON.stringify(this.selectedRescheduledClass));
-    this.getClassAttendanceDetail();
     this.getFormsData();
     this.getCustomerMemberhsips().then(
       (isPromiseResolved: boolean) =>{
@@ -187,6 +186,7 @@ setPackagePermissions(packageId: number) {
         }
       }
     )
+    this.getClassAttendanceDetail();
 
   }
 
@@ -229,7 +229,7 @@ setPackagePermissions(packageId: number) {
       this.classDetailObj = new ClassAttendanceDetail();
       this.isClassSearch = false;
       this.hasMemberhsip = false;
-      this.data.attendeeObj.CustomerMembershipID = this.customerMembershipList[0].CustomerMembershipID;
+      // this.data.attendeeObj.CustomerMembershipID = this.customerMembershipList[0].CustomerMembershipID;
       this.getRescheduleClasses();
     });
   }
@@ -535,6 +535,8 @@ setPackagePermissions(packageId: number) {
             this.customerMembershipList = res.Result;
             this.data.attendeeObj.CustomerMembershipID = this.customerMembershipList[0].CustomerMembershipID;
             isPromiseResolved(true);
+            }else if(!this.hasMemberhsip){
+              isPromiseResolved(true);
             }
         } else {
           this._messageService.showErrorMessage(res.MessageText);
