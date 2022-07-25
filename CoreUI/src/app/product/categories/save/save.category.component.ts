@@ -145,12 +145,8 @@ export class SaveCategoryComponent implements OnInit {
       this.isImageExist = true;
     }
     else if (this.productCategory.ImagePath != undefined && this.productCategory.ImagePath != "") {
-      if (this.productCategory.AppSourceTypeID === this.enum_AppSourceType.OnSite) {
-        this.imagePath = this.serverImageAddress.replace("{ImagePath}", AppUtilities.setOtherImagePath()) + this.productCategory.ImagePath;
-      } else {
+      /**  On Rizwan Ahmed request branch id Url removed 25-07-2022 */
         this.imagePath = this.serverImageAddress.replace("{ImagePath}", AppUtilities.setOtherImagePathForCompanyOnly()) + this.productCategory.ImagePath;
-      }
-
       this.isImageExist = true;
     }
     else {
