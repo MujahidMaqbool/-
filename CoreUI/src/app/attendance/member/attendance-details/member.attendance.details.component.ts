@@ -18,7 +18,7 @@ import { MembershipTypeName, Configurations } from "src/app/helper/config/app.co
 
 /******* Configurations *********/
 import { environment } from "src/environments/environment";
-import { MembershipType, MembershipDurationType, EnumBookingStatusType, MembershipStatus_Enum, ENU_ClockinRestrictionType, ENU_DateFormatName, ENU_MemberShipBenefitDurations, MembershipBenefitType, ENU_MembershipAlertMessageRestrictionType } from "src/app/helper/config/app.enums";
+import { MembershipType, MembershipDurationType, EnumBookingStatusType, MembershipStatus_Enum, ENU_ClockinRestrictionType, ENU_DateFormatName, ENU_MemberShipBenefitDurations, MembershipBenefitType, ENU_MembershipAlertMessageRestrictionType, ENU_DurationType } from "src/app/helper/config/app.enums";
 import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
 import { AttendeeClassAttendance } from "src/app/models/attendee.model";
 import { variables } from "src/app/helper/config/app.variable";
@@ -83,6 +83,7 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
     isMembershipCancelled: boolean = false;
     hasClasses: boolean = false;
     IsTodayAttendanceMarked: boolean = false;
+    timeInterval:number;
 
     /* Messages */
     messages = Messages;
@@ -232,6 +233,28 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
         }
     }
 
+    //here we calculate the time interval for delay
+    calculateTimeInterval(timeType:number , totalTime:number){
+      switch (timeType) {
+
+        case ENU_DurationType.Minutes:
+        this.timeInterval = totalTime * 60000 ;
+        break;
+
+        case ENU_DurationType.Hours:
+        this.timeInterval = totalTime * 3.6e+6 ;
+        break;
+
+        case ENU_DurationType.Days:
+        this.timeInterval = totalTime * 8.64e+7 ;
+        break;
+
+        case ENU_DurationType.Weeks:
+        this.timeInterval = totalTime * 6.048e+8 ;
+        break;
+     }
+    }
+
     onMouseOver() {
         //fahad
         if (this.intervalId) {
@@ -344,7 +367,7 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
                     this.checkAllowedDoorCheckins();
                     this.memberClassDetailList = response.Result.MemberClassDetailList;
                     this.messagesList = response.Result.MembershipMessageList;
-                    
+
                     this.customerMembershipPaymentInfoList = response.Result.CustomerMembershipPaymentInfoList;
                     this.memberClassDetailList = this.memberClassDetailList ? this.memberClassDetailList : [];
                     this.hasClasses = (this.memberClassDetailList.length > 0);
@@ -459,7 +482,7 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
                 }
             });
         }
-       
+
     }
 
     setMembershipTypeName() {
