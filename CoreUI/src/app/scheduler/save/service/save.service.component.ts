@@ -1491,7 +1491,7 @@ export class SaveSchedulerServiceComponent extends AbstractGenericComponent impl
                 : _singleService.IsMembershipBenefit && _singleService.CustomerMembershipID ? _singleService.CustomerMembershipID :  null;
                 saleService.ItemDiscountAmount = _singleService.ItemDiscountAmount ? _singleService.ItemDiscountAmount : 0;
                 saleService.AssignedToStaffID = _singleService.AssignedToStaffID;
-
+                saleService.Description = _singleService.Description;
                 saleInvoice.SaleDetailList.push(saleService);
 
                 //** cartItem is only for display items on POS Component */
@@ -1504,6 +1504,7 @@ export class SaveSchedulerServiceComponent extends AbstractGenericComponent impl
                 cartItem.ServiceEndTime = this._dateTimeService.convertDateObjToString(new Date(_singleService.EndTime), this.timeFormatDifference);
                 // cartItem.IsFree = false;
                 cartItem.SelectedForPay = true;
+                
                 cartItem.Name = this.serviceList.filter(x => x.ServiceID === _singleService.ServiceID)[0].ServiceName;
                 cartItem.TotalDiscount = _singleService.ItemDiscountAmount ? _singleService.ItemDiscountAmount : 0;
 
