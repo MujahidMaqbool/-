@@ -70,7 +70,7 @@ export class EditBenefitsComponent {
             ItemID: this.memberMembershipBenefits.ItemID,
             MembershipBenefitTypeID: this.memberMembershipBenefits.MembershipBenefitTypeID,
             CustomerMembershipID: this.memberMembershipBenefits.CustomerMembershipID,
-            BranchID: this.memberMembershipBenefits.BranchID,            
+            BranchID: this.memberMembershipBenefits.BranchID,
 
         }
         // if (this.memberMembershipBenefits.SessionConsumed <= this.memberMembershipBenefits.SessionAllowed) {
@@ -106,8 +106,8 @@ export class EditBenefitsComponent {
     }
 
     onChangePBRO(num) {
-        setTimeout(() => {
             this.memberMembershipBenefits.SessionAllowed = this.numberValidator.NotAllowDecimalValue(num);
+            setTimeout(() => {
             this.benefitsAllowed = Number(this.memberMembershipBenefits.MembershipTotalSessions) + Number(this.memberMembershipBenefits.SessionAllowed);
             this.benefitsRemaining = Number(this.benefitsAllowed) - Number(this.memberMembershipBenefits.SessionConsumed);
         }, 10);
@@ -115,8 +115,8 @@ export class EditBenefitsComponent {
     }
 
     onChangeBC(num) {
-        setTimeout(() => {
             this.memberMembershipBenefits.SessionConsumed = this.numberValidator.NotAllowDecimalValue(num);
+            setTimeout(() => {
             this.memberMembershipBenefits.SessionConsumed = this.memberMembershipBenefits.SessionConsumed > this.benefitsAllowed ? this.benefitsAllowed : this.memberMembershipBenefits.SessionConsumed;
             this.benefitsRemaining = Number(this.benefitsAllowed) - Number(this.memberMembershipBenefits.SessionConsumed);
         }, 10);

@@ -233,7 +233,7 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
         }
     }
 
-    //here we calculate the time interval for delay
+    //here we calculate the time interval for delay (in milliseconds)
     calculateTimeInterval(timeType:number , totalTime:number){
       switch (timeType) {
 
