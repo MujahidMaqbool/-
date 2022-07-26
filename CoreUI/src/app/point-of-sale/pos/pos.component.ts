@@ -362,9 +362,9 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
         } else {
             this.selectedCategory = null;
         }
-        if (this.activeTab === this.POS_ITEM_TYPE.Product && this.copySelectedCategory == null || (this.copySelectedCategory > 0 && this.copySelectedCategory != this.selectedBrand)) {
+        if (this.activeTab === this.POS_ITEM_TYPE.Product && this.copySelectedCategory == null || (this.copySelectedCategory > 0 && this.copySelectedCategory != this.selectedCategory)) {
             this.getPOSProducts();
-            this.copySelectedCategory = this.selectedBrand;
+            this.copySelectedCategory = this.selectedCategory;
         }
     }
     //on click category (when search category is selected and you select category type)
