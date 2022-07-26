@@ -151,15 +151,21 @@
                             </div>
                             <ng-container>
                                 <div class="col">
-                                    <h5 *ngFor="let tax of productVariantBranch.CollapseItemTaxVM">{{tax.TaxName}}
+                                    <div class="col">
+                                        <h5 *ngFor="let tax of productVariantBranch.CollapseItemTaxVM">
+                                            {{tax.TaxName}}
+                                            <span role="button" class="plus_mem blue-color"
+                                                (click)="onToggleClick(parentIndex, childIndex, parentIndex + childIndex)"
+                                                *ngIf="productVariantBranch.ItemTaxVM.length > 1 && toggleStatuses[parentIndex + childIndex].collapse == true">
+                                                (+
+                                                {{productVariantBranch.ItemTaxVM.length - 1}}
+                                                {{productVariantBranch.ItemTaxVM.length == 2 ? 'other':'others'}})
+                                            </span>
+                                        </h5>
                                         <span role="button" class="plus_mem blue-color"
-                                            (click)="onToggleClick(parentIndex, childIndex, parentIndex + childIndex)"
-                                            *ngIf="productVariantBranch.ItemTaxVM.length > 1 && toggleStatuses[parentIndex + childIndex].collapse == true">
-                                            (+
-                                            {{productVariantBranch.ItemTaxVM.length - 1}}
-                                            {{productVariantBranch.ItemTaxVM.length == 2 ? 'other':'others'}})
-                                        </span>
-                                    </h5>
+                                            *ngIf="productVariantBranch.ItemTaxVM.length > 1 && toggleStatuses[parentIndex + childIndex].collapse == false"
+                                            (click)="onToggleClick(parentIndex, childIndex, parentIndex + childIndex, true)">{{'Close'}}</span>
+                                    </div>
                                 </div>
                             </ng-container>
 

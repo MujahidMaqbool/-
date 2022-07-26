@@ -232,7 +232,7 @@
                                                     <div>
                                                         <h5>{{tax.TaxName}}
                                                             <span role="button" class="plus_mem blue-color"
-                                                                (click)="onToggleClick(parentIndex, childIndex, 0, parentIndex + childIndex + 0)"
+                                                                (click)="onToggleClick(parentIndex, childIndex, 0, parentIndex + childIndex + 0,toggleStatuses[parentIndex + childIndex]?.collapse)"
                                                                 *ngIf="productVariant.ProductVariantBranchVM[0]?.ItemTaxVM.length > 1 && toggleStatuses[parentIndex + childIndex]?.collapse == true">
                                                                 (+
                                                                 {{productVariant.ProductVariantBranchVM[0]?.ItemTaxVM.length - 1}}
@@ -242,6 +242,9 @@
                                                         </h5>
                                                     </div>
                                                 </div>
+                                                <span role="button" class="plus_mem blue-color"
+                                                *ngIf="productVariant.ProductVariantBranchVM[0]?.ItemTaxVM.length > 1 && !toggleStatuses[parentIndex + childIndex].collapse"
+                                                (click)="onToggleClick(parentIndex, childIndex, 0, parentIndex + childIndex + 0,toggleStatuses[parentIndex + childIndex]?.collapse)">{{'Close'}}</span>
                                             </div>
                                             <div class="col">
                                                 <h5>{{productVariant.ProductVariantBranchVM[0]?.RetailPrice | currency: currencySymbol}}

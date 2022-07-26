@@ -79,6 +79,13 @@ export class SaveProductPriceComponent implements OnInit {
       this.toggleStatuses[i].collapse = !this.toggleStatuses[i].collapse;
       this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].CollapseItemTaxVM = this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].ItemTaxVM;
     } else{
+
+      this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].CollapseItemTaxVM = [];
+
+      if(this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].ItemTaxVM && this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].ItemTaxVM.length > 0){
+        this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].CollapseItemTaxVM.push(this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].ItemTaxVM[0]);
+      }
+      
       this.toggleStatuses[i].collapse = true;
     }
    
