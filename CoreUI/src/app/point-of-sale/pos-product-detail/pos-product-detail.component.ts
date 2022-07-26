@@ -61,6 +61,11 @@ export class PosProductDetailComponent extends AbstractGenericComponent implemen
     }
 
     this.product.ProductAttributes = this.product.ProductAttributes.sort((a, b) => a.SortOrder - b.SortOrder);
+    if(!this.productData.isBarCodeSearch){
+      this.product.ProductAttributes.forEach(element => {
+        element.SelectedAttributID = 0;
+      });
+    }
   }
 
   async getBranchDetails() {
@@ -236,6 +241,6 @@ export class PosProductDetailComponent extends AbstractGenericComponent implemen
             }
         )
   }
-  
+
   //#endregion
 }

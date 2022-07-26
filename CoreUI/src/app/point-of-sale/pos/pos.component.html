@@ -176,10 +176,12 @@
               </dx-tooltip>
             </div>
           </ng-container>
+
           <!-- {{product.IsStockBelowThreshold && product.InventoryOverselling ?  (product?.CurrentStock)*-1 : product.IsStockBelowThreshold && !product.InventoryOverselling ? 0 : product?.CurrentStock}} -->
+          <!-- || product.ReorderThreshold >= product?.CurrentStock -->
           <h4 [ngClass]="{'variant-counter': product.Name}">
             {{product.Name}} <span class="counter-box "
-              [ngClass]="{'box-alert':product.IsStockBelowThreshold || product.ReorderThreshold >= product?.CurrentStock}"
+              [ngClass]="{'box-alert':product.IsStockBelowThreshold }"
               *ngIf="product.HasTrackInventory">{{product?.CurrentStock}}</span>
           </h4>
         </div>
