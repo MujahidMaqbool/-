@@ -109,7 +109,8 @@ export const Messages = {
         RewardProgram_Allowed: "Customer is not allowed to be enrolled in a reward program. Toggle on reward program in customer permissions to add a reward program.",
         RewardProgram_Enrolled:"Reward Program cannot be toggled off as the customer is currently enrolled in a reward program.",
         NO_Active_Memberships:"There are no active memberships in the branch to process.",
-        Item_Out_Of_Stock : "This product is out of stock."
+        Item_Out_Of_Stock : "This product is out of stock.",
+        Reschedule_InActiveService_Error:"The service is currently inactive and therefore cannot be rescheduled for new date/time. Please reschedule this service with another active service or edit this service to change its date/time only."
     },
 
     Success: {

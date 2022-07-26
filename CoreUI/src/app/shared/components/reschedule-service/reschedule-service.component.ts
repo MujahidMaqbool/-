@@ -1650,10 +1650,26 @@ mapRescheduleData(serviceDetail){
     return rescheduleBookingData;
    }
 
+   checkService_Active_Status(serviceDetail: any):boolean {
+    let result = true;
+    this.getServiceFundamentalList.forEach( cat => {
+        cat.ServiceList.forEach(service => {
+            if(service.ServiceID == serviceDetail.ServiceID){
+                result = service.IsActive;
+            }
+        });
+    })
+    return result;
+   }
 
    rescheduleService(serviceDetail: any, isvalid: boolean) {
+
+    if(!this.checkService_Active_Status(serviceDetail)){
+        this._messageService.showErrorMessage(this.messages.Error.Reschedule_InActiveService_Error)
+        return
+    }
     isvalid = this.validateFormOnSubmit();
-    if(!isvalid) { return }
+    if(!isvalid) { return }    
         /////if a service has a sale discount then calculate
         var newCalculatedDiscountAmount = 0;
      //   if(this.copySaveServiceModel.ServiceBookingList[0].CustomerMembershipID !== serviceDetail.CustomerMembershipID || this.copySaveServiceModel.ServiceBookingList[0].ServiceID !== serviceDetail.ServiceID || this.copySaveServiceModel.ServiceBookingList[0].ServicePackageID !== serviceDetail.ServicePackageID || serviceDetail.SaleStatusTypeID == EnumSaleStatusType.PartialPaid) {
