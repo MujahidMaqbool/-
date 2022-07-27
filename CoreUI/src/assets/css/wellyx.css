@@ -3739,6 +3739,12 @@ hr {
     padding: 0px 10px;
 }
 
+.bf_achievement_bg {
+    background: #607EF2;
+    border-radius: 3px;
+    padding: 0px 10px;
+}
+
 .bf_email_bg {
     background: #2DB2D5;
     border-radius: 3px;

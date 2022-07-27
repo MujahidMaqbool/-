@@ -143,6 +143,9 @@ export class LeadBusinessFlowViewComponent extends AbstractGenericComponent impl
         BusinessFlow_Save: false,
     };
 
+    longDateFormat: string = "";
+    longDateTimeFormat: string = "";
+
     // #endregion
 
     constructor(
@@ -429,7 +432,9 @@ export class LeadBusinessFlowViewComponent extends AbstractGenericComponent impl
     // #region methods
 
     async getBranchDatePattern() {
+        this.longDateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.LongDateFormat);
         this.timeFormat = await super.getBranchTimeFormat(this._dataSharingService);
+        this.longDateTimeFormat = this.longDateFormat + ' - ' + this.timeFormat;
         this.dateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.DateFormat);
     }
 

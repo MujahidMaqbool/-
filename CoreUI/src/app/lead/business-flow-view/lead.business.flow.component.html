@@ -180,6 +180,8 @@
                                                         *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
                                                     <span class="bf_sms_bg"
                                                         *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                    <span class="bf_achievement_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Achievement">ACHIEVEMENT</span>
 
                                                 </div>
                                                 <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
@@ -206,6 +208,10 @@
                                                 <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
                                                     class="lead_activty_datetime">
                                                     {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Achievement"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:longDateTimeFormat}}
                                                 </div>
                                                 <div class="lead_assigen_icon float-right">
                                                     <span class="green"
@@ -298,6 +304,8 @@
                                                         *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
                                                     <span class="bf_sms_bg"
                                                         *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                    <span class="bf_achievement_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Achievement">ACHIEVEMENT</span>
                                                 </div>
                                                 <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
                                                 <div class="lead_assigen_to">
@@ -322,6 +330,10 @@
                                                 <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
                                                     class="lead_activty_datetime">
                                                     {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Achievement"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:longDateTimeFormat}}
                                                 </div>
                                                 <div class="lead_assigen_icon float-right">
                                                     <span class="green"
@@ -412,6 +424,8 @@
                                                         *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
                                                     <span class="bf_sms_bg"
                                                         *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                    <span class="bf_achievement_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Achievement">ACHIEVEMENT</span>
                                                 </div>
                                                 <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
                                                 <div class="lead_assigen_to">
@@ -436,6 +450,10 @@
                                                 <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
                                                     class="lead_activty_datetime">
                                                     {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Achievement"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:longDateTimeFormat}}
                                                 </div>
                                                 <div class="lead_assigen_icon float-right">
                                                     <span class="green"
@@ -526,6 +544,8 @@
                                                         *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
                                                     <span class="bf_sms_bg"
                                                         *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                    <span class="bf_achievement_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Achievement">ACHIEVEMENT</span>
                                                 </div>
                                                 <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
                                                 <div class="lead_assigen_to">
@@ -550,6 +570,10 @@
                                                 <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
                                                     class="lead_activty_datetime">
                                                     {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Achievement"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:longDateTimeFormat}}
                                                 </div>
                                                 <div class="lead_assigen_icon float-right">
                                                     <span class="green"
@@ -635,6 +659,8 @@
                                                         *ngIf="activity.ActivityTypeID == activityType.Note">Note</span>
                                                     <span class="bf_sms_bg"
                                                         *ngIf="activity.ActivityTypeID == activityType.SMS">SMS</span>
+                                                    <span class="bf_achievement_bg"
+                                                        *ngIf="activity.ActivityTypeID == activityType.Achievement">ACHIEVEMENT</span>
                                                 </div>
                                                 <p> {{activity.EmailSubject? activity.EmailSubject: activity.Title}}</p>
                                                 <div class="lead_assigen_to">
@@ -659,6 +685,10 @@
                                                 <div *ngIf="activity.ActivityTypeID == activityType.Email || activity.ActivityTypeID == activityType.Note  || activity.ActivityTypeID == activityType.SMS"
                                                     class="lead_activty_datetime">
                                                     {{activity.CreatedOn | customdate:timeFormat}}
+                                                </div>
+                                                <div *ngIf="activity.ActivityTypeID == activityType.Achievement"
+                                                    class="lead_activty_datetime">
+                                                    {{activity.CreatedOn | customdate:longDateTimeFormat}}
                                                 </div>
                                                 <div class="lead_assigen_icon float-right">
                                                     <span class="green"
