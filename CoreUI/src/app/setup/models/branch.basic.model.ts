@@ -9,6 +9,7 @@ export class BrachBasic {
     public RestrictCustomerInvoiceEmail: boolean;
     public SuspendAllBenefits : boolean;
     public MembershipItemsShowPriceOnlineForWidgetAndApp: boolean = false;
+    public MemberAttendanceTimer : number;
     public SuspendDoorCheckInBenefits: boolean;
     public SuspendServiceBenefits: boolean;
     public SuspendClassBenefits: boolean;

@@ -226,6 +226,26 @@
         </div>
       </div>
 
+      <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-12 pr-0 mob-pa">
+          <div class="form_border my-10"></div>
+        </div>
+        <div class="col-lg-10 col-md-9 pt-2">
+          <h3>Member Attendance</h3>
+          <p>Set the default timer on the member attendance portal. Leaving the field blank or setting it to 0 would
+            result in the portal never logging out the customer’s profile.</p>
+        </div>
+        <div class="col-lg-2 col-md-3 padding_right mob-pa pt-2">
+          <div class="d-flex cst-input-group">
+            <input type="text" name="MemberAttendanceTimer" id="memberAttendanceTimer"
+              [(ngModel)]="brachBasic.MemberAttendanceTimer" #memberAttendanceTimer="ngModel" maxlength="3"
+              numberControl class="form-control" onkeydown="if(event.key==='.'){event.preventDefault();}"
+              oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"><span id="dimension-height"
+              class="dollar_prefix right_radius">Seconds</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -269,8 +289,8 @@
             </div>
             <div class="col-md-4 padding_right label_with_input mob-pa">
               <mat-slide-toggle [(ngModel)]="brachBasicControlAccess.MemberBLEAccess"
-                (change)="onChangeMembersAccessControlType()" [(checked)]="brachBasicControlAccess.MemberBLEAccess" [disabled]="!accessControlMembers"
-                name="memberBLEAccess" class="wellyx-checked float-right">
+                (change)="onChangeMembersAccessControlType()" [(checked)]="brachBasicControlAccess.MemberBLEAccess"
+                [disabled]="!accessControlMembers" name="memberBLEAccess" class="wellyx-checked float-right">
               </mat-slide-toggle>
             </div>
             <div class="col-md-12 pr-0 mob-pa">
@@ -286,8 +306,8 @@
             </div>
             <div class="col-md-4 padding_right label_with_input mob-pa">
               <mat-slide-toggle [(ngModel)]="brachBasicControlAccess.MemberNFCAccess"
-                (change)="onChangeMembersAccessControlType()" [(checked)]="brachBasicControlAccess.MemberNFCAccess" [disabled]="!accessControlMembers"
-                name="memberNFCAccess" class="wellyx-checked float-right">
+                (change)="onChangeMembersAccessControlType()" [(checked)]="brachBasicControlAccess.MemberNFCAccess"
+                [disabled]="!accessControlMembers" name="memberNFCAccess" class="wellyx-checked float-right">
               </mat-slide-toggle>
             </div>
           </div>
@@ -322,27 +342,27 @@
                 You can also set a grace period for branch opening hours between 0 minutes to 60 minutes.</p>
             </div>
             <div class="col-md-3 padding_right d-flex justify-content-end mob-pa">
-             
+
               <div class="select_label mr-md-2 flex-grow">
-                <select name="MembserhipName" class="mb-0" [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTiming" [disabled]="!accessControlStaff" tabindex="7" (ngModelChange)="onSelectStaffDoorAccessTiming()">
-                  <option *ngFor="let accessOpening of AccessControlOpeningTime" [ngValue]="accessOpening.value" >
+                <select name="MembserhipName" class="mb-0" [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTiming"
+                  [disabled]="!accessControlStaff" tabindex="7" (ngModelChange)="onSelectStaffDoorAccessTiming()">
+                  <option *ngFor="let accessOpening of AccessControlOpeningTime" [ngValue]="accessOpening.value">
                     {{accessOpening.text}}</option>
                 </select>
               </div>
               <div class="flex-grow" *ngIf="brachBasicControlAccess.StaffDoorAccessTiming == 1">
                 <input type="text" maxlength="4" [disabled]="brachBasicControlAccess.StaffDoorAccessTiming == 1"
-                [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTimeGracePeriodInMinutesText"
-                name="StaffDoorAccessTiming"
-                #StaffDoorAccessTiming="ngModel" min="1"
-                numberControl>
+                  [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTimeGracePeriodInMinutesText"
+                  name="StaffDoorAccessTiming" #StaffDoorAccessTiming="ngModel" min="1" numberControl>
               </div>
               <div class="select_label flex-grow" *ngIf="brachBasicControlAccess.StaffDoorAccessTiming == 2">
-                <select name="StaffDoorAccessTimeGracePeriodInMinutes" class="mb-0" [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTimeGracePeriodInMinutes" tabindex="7">
+                <select name="StaffDoorAccessTimeGracePeriodInMinutes" class="mb-0"
+                  [(ngModel)]="brachBasicControlAccess.StaffDoorAccessTimeGracePeriodInMinutes" tabindex="7">
                   <option *ngFor="let accessControl of AccessControlTimeIntervel" [ngValue]="accessControl.value">
                     {{accessControl.text}}</option>
                 </select>
               </div>
-              
+
             </div>
             <div class="col-md-12 pr-0 mob-pa">
               <div class="form_border my-10"></div>
@@ -355,8 +375,8 @@
             </div>
             <div class="col-md-4 padding_right label_with_input mob-pa">
               <mat-slide-toggle [(ngModel)]="brachBasicControlAccess.StaffBLEAccess"
-                (change)="onChangeStaffAccessControlType()" [(checked)]="brachBasicControlAccess.StaffBLEAccess" [disabled]="!accessControlStaff"
-                name="staffBLEAccess" class="wellyx-checked float-right">
+                (change)="onChangeStaffAccessControlType()" [(checked)]="brachBasicControlAccess.StaffBLEAccess"
+                [disabled]="!accessControlStaff" name="staffBLEAccess" class="wellyx-checked float-right">
               </mat-slide-toggle>
             </div>
             <div class="col-md-12 pr-0 mob-pa">
