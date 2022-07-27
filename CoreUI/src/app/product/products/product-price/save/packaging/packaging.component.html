@@ -83,9 +83,9 @@
                                     TwoDigitDecimaNumber>
                             </div>
                             <div class="col-lg-4 col-md-4">
-                                <div class="select_label">
+                                <div class="select_label" [ngClass]="{'has-danger': SizeVolumeUnitID.invalid}">
                                     <select class="form-control" name="sizeVolumeUnitID" id="sizeVolumeUnitID" [required]="savePackagingDetail.SizeVolume ? true : false"
-                                        [(ngModel)]="savePackagingDetail.SizeVolumeUnitID">
+                                       #SizeVolumeUnitID="ngModel" [(ngModel)]="savePackagingDetail.SizeVolumeUnitID">
                                         <option [ngValue]=null>Select Unit</option>
                                         <option *ngFor="let unit of unitList" [ngValue]="unit.UnitID">
                                             {{unit.UnitName}}
