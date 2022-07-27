@@ -166,15 +166,15 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
+    <div class="row mob-col-full">
+      <div class="col-xl-2 col-lg-4 col-md-6">
         <div class="field_label">
           <h5>Booking Starts before <span class="info_tip"
               matTooltip="The number of minutes, hours or days a client can book the Class in advance. A value of zero or blank field allows Clients to book the Class as soon as it is made available online"
               matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
           </h5>
         </div>
-        <div class="row">
+        <div class="row mob-col-full-p0">
           <div class="col padding_left">
             <input type="number" class="form-control" tabindex="6" min="1"
               [(ngModel)]="parentClassObj.BookingStartsBefore" #bookingStartsBefore="ngModel" name="bookStartsBefore"
@@ -198,21 +198,21 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-xl-3 col-lg-4 col-md-6">
         <div class="field_label">
           <h5>Booking Closes before <span class="info_tip"
               matTooltip="The number of minutes, hours or days prior to the Class start time that Clients can make a reservation. A value of zero or blank field allows Clients to make a reservation up to the last minute"
               matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
           </h5>
         </div>
-        <div class="row">
+        <div class="row mob-col-full-p0">
           <div class="col padding_left">
             <input type="number" class="form-control" tabindex="7" min="1" maxlength="2"
               [(ngModel)]="parentClassObj.BookingClosesBefore" #bookingClosesBefore="ngModel"
               (ngModelChange)="onBookCloseBeforeValueChange(parentClassObj.BookingClosesBefore)"
               name="bookingClosesBefore" (keydown)="preventCharactersForClassBooking($event)">
           </div>
-          <div class="col padding_right">
+          <div class="col">
             <div class="select_label">
               <div
                 [ngClass]="{'has-danger': (bookingClosesBefore && bookingClosesBefore.value && (!bookingClosesBeforeDurationTypeID || bookingClosesBeforeDurationTypeID.value == '0'))}">
@@ -227,16 +227,25 @@
               </div>
             </div>
           </div>
+          <div class="col p-0">
+            <div class="select_label">
+              <select class="form-control" name="isBookingClosesBeforeEndTime" id="isBookingClosesBeforeEndTime" [(ngModel)]="parentClassObj.IsBookingClosesBeforeEndTime">
+                <option [ngValue]="false">Class Start Time</option>
+                <option [ngValue]="true">Class End Time</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col">
+    
+      <div class="col-xl-2 col-lg-4 col-md-6">
         <div class="field_label">
           <h5> Cancellation Ends before <span class="info_tip"
               matTooltip="The number of minutes, hours or days a client can cancel prior to the start time of the Class. A value of zero or blank field allows Clients to cancel booking up to the last minute"
               matTooltipPosition="above" matTooltipClass="custom-tooltip"><i class="far fa-info-circle"></i></span>
           </h5>
         </div>
-        <div class="row">
+        <div class="row mob-col-full-p0">
           <div class="col padding_left">
             <input type="number" class="form-control" tabindex="8" min="1" maxlength="2"
               [(ngModel)]="parentClassObj.CancellationEndsBefore"

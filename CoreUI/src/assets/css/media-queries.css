@@ -2173,6 +2173,11 @@
     .mob-col-full .col {
         flex: 100%;
     }
+    .mob-col-full-p0 .col{
+        flex: 100%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
     .pay_section button {
         height: 38px;
         font-size: 16px;

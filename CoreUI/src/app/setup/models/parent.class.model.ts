@@ -17,6 +17,7 @@ export class ParentClass {
     public ImageFile : string = "";
     public IsActive : boolean = true;
     public RestrictedCustomerTypeID : string = "";
+    public IsBookingClosesBeforeEndTime: boolean = false;
 }
 
 export class ParentClassSearchParameter

@@ -253,7 +253,9 @@ export class ClassSaveComponent implements OnInit {
             imagePath: this.parentClassObj.ImageFile,
             isActive: this.parentClassObj.IsActive,
             restrictedCustomerTypeID: this.parentClassObj.RestrictedCustomerTypeID,
-            showAsEvent: this.parentClassObj.ShowAsEvent
+            showAsEvent: this.parentClassObj.ShowAsEvent,
+            isBookingClosesBeforeEndTime: this.parentClassObj.IsBookingClosesBeforeEndTime
+
         }
         return params;
     }

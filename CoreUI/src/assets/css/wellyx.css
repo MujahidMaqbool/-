@@ -1745,7 +1745,7 @@ select {
 }
 
 select.form-control {
-    padding: 0 27px 0 10px !important;
+    padding: 0 24px 0 10px !important;
 }
 
 .select_label {
@@ -1759,7 +1759,7 @@ select.form-control {
     color: #999;
     right: 5px;
     top: 8px;
-    padding: 0 7px 0 5px;
+    padding: 0 5px 0;
     position: absolute;
     pointer-events: none;
 }
