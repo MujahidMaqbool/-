@@ -275,8 +275,6 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
             this._router.navigate(['/attendance/member/']);
         }, this.branchInfo.MemberAttendanceTimer * 1000)
         }
-
-
     }
 
     // #region Events
