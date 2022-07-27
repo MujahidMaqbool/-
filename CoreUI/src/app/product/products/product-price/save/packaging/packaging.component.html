@@ -13,18 +13,18 @@
                                 <h5 class="field_label">Weight</h5>
                             </div>
                             <div class="col-lg-8 col-md-8 pb-2">
-                                <div class="d-flex cst-input-group">
-                                    <input type="text" name="weight" id="weight"
-                                        [(ngModel)]="savePackagingDetail.Weight" class="form-control" maxlength="15"
+                                <div class="d-flex cst-input-group" [ngClass]="{'has-danger': Weight.invalid}">
+                                    <input type="text" name="weight" id="weight" [required]="savePackagingDetail.WeightUnitID ? true : false"
+                                    #Weight="ngModel"  [(ngModel)]="savePackagingDetail.Weight" class="form-control" maxlength="15"
                                         numberControl TwoDigitDecimaNumber>
                                     <!-- <span class="dollar_prefix right_radius" id="basic-addon2">{{weighrUnitName}}</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4">
-                                <div class="select_label">
-                                    <select class="form-control" name="WeightUnitID" id="WeightUnitID"
-                                        [(ngModel)]="savePackagingDetail.WeightUnitID">
-                                        <option [ngValue]="null">Select Unit</option>
+                                <div class="select_label" [ngClass]="{'has-danger': WeightUnitID.invalid}">
+                                    <select class="form-control" name="WeightUnitID" id="WeightUnitID" [required]="savePackagingDetail.Weight ? true : false"
+                                    #WeightUnitID="ngModel" [(ngModel)]="savePackagingDetail.WeightUnitID">
+                                        <option [ngValue]=null>Select Unit</option>
                                         <option *ngFor="let unit of weightUnitList" [ngValue]="unit.UnitID">
                                             {{unit.UnitName}}
                                         </option>
@@ -35,34 +35,38 @@
                                 <h5 class="field_label">Dimensions <!--<span>({{dimensionUnitName}})</span>--></h5>
                             </div>
                             <div class="col pr-md-0">
-                                <div class="d-flex cst-input-group">
+                                <div class="d-flex cst-input-group" [ngClass]="{'has-danger': Length.invalid}">
                                     <span class="dollar_prefix left_radius" id="dimension-length">Length</span>
-                                    <input type="text" name="length" id="length" class="form-control"
+                                    <input type="text" name="length" id="length" class="form-control" #Length="ngModel"
                                         [(ngModel)]="savePackagingDetail.Length" maxlength="15" numberControl
+                                        [required]="savePackagingDetail.DimensionUnitID && (!savePackagingDetail.Height && !savePackagingDetail.Width) ? true : false"
                                         TwoDigitDecimaNumber>
                                 </div>
                             </div>
                             <div class="col pr-md-0">
-                                <div class="d-flex cst-input-group">
+                                <div class="d-flex cst-input-group" [ngClass]="{'has-danger': DWidth.invalid}">
                                     <span class="dollar_prefix left_radius" id="dimension-width">Width</span>
-                                    <input type="text" name="width" id="width" class="form-control"
+                                    <input type="text" name="width" id="width" class="form-control" #DWidth="ngModel"
                                         [(ngModel)]="savePackagingDetail.Width" maxlength="15" numberControl
+                                        [required]="savePackagingDetail.DimensionUnitID && (!savePackagingDetail.Height && !savePackagingDetail.Length) ? true : false"
                                         TwoDigitDecimaNumber>
                                 </div>
                             </div>
                              <div class="col">
-                                <div class="d-flex cst-input-group">
+                                <div class="d-flex cst-input-group" [ngClass]="{'has-danger': Height.invalid}">
                                     <span class="dollar_prefix left_radius" id="dimension-height">Height</span>
-                                    <input type="text" name="height" id="height" class="form-control"
+                                    <input type="text" name="height" id="height" class="form-control" #Height="ngModel"
                                         [(ngModel)]="savePackagingDetail.Height" maxlength="15" numberControl
-                                        TwoDigitDecimaNumber>
+                                        [required]="savePackagingDetail.DimensionUnitID && (!savePackagingDetail.Width && !savePackagingDetail.Length) ? true : false"
+                                        TwoDigitDecimaNumber />
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4">
-                                <div class="select_label">
-                                    <select class="form-control" name="DimensionUnitID" id="DimensionUnitID"
-                                        [(ngModel)]="savePackagingDetail.DimensionUnitID">
-                                        <option [ngValue]="null">Select Unit</option>
+                                <div class="select_label" [ngClass]="{'has-danger': DimensionUnitID.invalid}">
+                                    <select class="form-control" name="DimensionUnitID" id="DimensionUnitID" #DimensionUnitID="ngModel"
+                                        [(ngModel)]="savePackagingDetail.DimensionUnitID"
+                                        [required]="(savePackagingDetail.Height || savePackagingDetail.Width || savePackagingDetail.Length) ? true : false">
+                                        <option [ngValue]=null>Select Unit</option>
                                         <option *ngFor="let unit of dimensionsUnitList" [ngValue]="unit.UnitID">
                                             {{unit.UnitName}}
                                         </option>
@@ -73,16 +77,16 @@
                             <div class="col-lg-12 col-md-12">
                                 <h5 class="field_label">Size/Volume</h5>
                             </div>
-                            <div class="col-lg-8 col-md-8">
-                                <input type="text" name="sizeVolume" id="sizeVolume" class="form-control"
-                                    [(ngModel)]="savePackagingDetail.SizeVolume" maxlength="15" numberControl
+                            <div class="col-lg-8 col-md-8" [ngClass]="{'has-danger': SizeVolume.invalid}">
+                                <input type="text" name="sizeVolume" id="sizeVolume" class="form-control" [required]="savePackagingDetail.SizeVolumeUnitID ? true : false"
+                                  #SizeVolume="ngModel" [(ngModel)]="savePackagingDetail.SizeVolume" maxlength="15" numberControl
                                     TwoDigitDecimaNumber>
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="select_label">
-                                    <select class="form-control" name="sizeVolumeUnitID" id="sizeVolumeUnitID"
+                                    <select class="form-control" name="sizeVolumeUnitID" id="sizeVolumeUnitID" [required]="savePackagingDetail.SizeVolume ? true : false"
                                         [(ngModel)]="savePackagingDetail.SizeVolumeUnitID">
-                                        <option [ngValue]="null">Select Unit</option>
+                                        <option [ngValue]=null>Select Unit</option>
                                         <option *ngFor="let unit of unitList" [ngValue]="unit.UnitID">
                                             {{unit.UnitName}}
                                         </option>
@@ -99,7 +103,7 @@
                     <div class="cancel_btn float-right">
                         <button type="button" (click)="onClose()">Cancel</button>
                         <button type="button" class="primary_blue_btn" (click)="onSavePackaging()"
-                            [disabled]="productPackagingForm.pristine">Save</button>
+                            [disabled]="productPackagingForm.pristine || productPackagingForm.invalid">Save</button>
                     </div>
                 </div>
             </div>

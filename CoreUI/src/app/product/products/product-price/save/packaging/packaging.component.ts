@@ -12,6 +12,9 @@ export class SavePackagingComponent implements OnInit {
 
   @ViewChild("productPackagingForm") productPackagingForm: NgForm;
 
+  isWeightUnitID: boolean = false;
+  isDimensionUnitID: boolean = false;
+  isSizeVolumeUnitID: boolean = false;
   unitList: any[] = [];  
   weightUnitList: any[] = [];
   dimensionsUnitList: any[] = [];
@@ -57,8 +60,10 @@ export class SavePackagingComponent implements OnInit {
   }
 
   onSavePackaging(){
-    this.savePackagingModel.emit(this.savePackagingDetail);
-    this.onClose(true);
+    if(this.productPackagingForm.valid) {
+      this.savePackagingModel.emit(this.savePackagingDetail);
+      this.onClose(true);
+    }    
   }
 
 }
