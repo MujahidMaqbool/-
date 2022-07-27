@@ -78,12 +78,12 @@ export class SaveSchedulerTaskComponent extends AbstractGenericComponent impleme
     ) {
         super();    //implicit call for constructor
         this.isSaveButtonDisabled = false;
-        this.getBranchDatePattern();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.currentDate = new Date(this._cellDataSelection.startDate);
         if (changes.taskActivityComponentCalled && changes.taskActivityComponentCalled.currentValue) {
+            this.getBranchDatePattern();
             this.getFundamentals();
         }
     }
@@ -202,8 +202,8 @@ export class SaveSchedulerTaskComponent extends AbstractGenericComponent impleme
         } else {
             this.isChangeStartDateEvent = true;
             this.setDefaultValuesToModel();
-            this.onedaySchedulerComp.staffID = this.taskActivity.AssignedToStaffID;
-            this.onedaySchedulerComp.getCustomSchedulerData();
+            // this.onedaySchedulerComp.staffID = this.taskActivity.AssignedToStaffID;
+            // this.onedaySchedulerComp.getCustomSchedulerData();
         }
     }
 

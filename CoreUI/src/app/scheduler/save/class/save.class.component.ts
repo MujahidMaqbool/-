@@ -1,5 +1,5 @@
 /**Angular Modules */
-import { Component, ViewChild, Output, EventEmitter, OnInit, Input } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter, OnChanges, Input, SimpleChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SubscriptionLike } from 'rxjs';
 
@@ -34,7 +34,7 @@ import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/on
     templateUrl: './save.class.component.html'
 })
 
-export class SaveSchedulerClassComponent extends AbstractGenericComponent implements OnInit {
+export class SaveSchedulerClassComponent extends AbstractGenericComponent implements OnChanges {
 
     // #region Local Members
     isShowScheduler: boolean = false;
@@ -53,6 +53,8 @@ export class SaveSchedulerClassComponent extends AbstractGenericComponent implem
     saveClassObj: ClassAppointmentDetail = new ClassAppointmentDetail();
 
     copySaveClassObj: ClassAppointmentDetail = new ClassAppointmentDetail();
+
+    @Input() classComponentCalled: boolean = false;
 
     /** Scope Variables */
     currentDate: Date;
@@ -122,15 +124,17 @@ export class SaveSchedulerClassComponent extends AbstractGenericComponent implem
     ) {
         super();    //implicit call for constructor
         this.isSaveButtonDisabled = false;
-        this.getCurrentBranchDetail();
     }
 
-    ngOnInit() {
-        this.setCurrencyFormat();
+    // ngOnInit() {
+    //     this.setCurrencyFormat();
+    // }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.classComponentCalled && changes.classComponentCalled.currentValue) {
+            this.getCurrentBranchDetail();
+        }
     }
-
- 
 
     // #region Events
 
@@ -151,7 +155,11 @@ export class SaveSchedulerClassComponent extends AbstractGenericComponent implem
         /** Get fundamentals and Get class detail */
         this.getClassFundamentals();
         this.checkPackagePermissions();
-        this.isShowScheduler = true;
+       
+        // setTimeout(() => {
+        //     this.onStaffChange(this._cellDataSelection.StaffID);
+        // }, 100);
+        
     }
 
     startDateChangeEvent($event) {
@@ -372,6 +380,7 @@ export class SaveSchedulerClassComponent extends AbstractGenericComponent implem
                         this.isChangeStartDateEvent = false;
                         this.getClassByID(this._cellDataSelection.id);
                     }
+                    this.isShowScheduler = true;
                 }else{
                     this._messageService.showErrorMessage(data.MessageText);
                 }

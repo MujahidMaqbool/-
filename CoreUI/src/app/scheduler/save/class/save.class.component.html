@@ -2,10 +2,13 @@
   <div class="popup_content no_padding">
     <div class="row sch_mob_reverse">
       <div class="col-lg-3 col-md-4 padding_right sm-pr-15 parallel_grid">
-        <div class="sch_white_bg smallScheduler sch_height_nohead" *ngIf="isShowScheduler">
-          <one-day-scheduler [dayViewFormat]="dayViewFormat" [staffID]="_cellDataSelection.StaffID"
-            [schedulerTimeFormat]="schedulerTimeFormat" [startDate]="currentDate"
-            (onStartDateChange)="smallCalendarDateChange($event)" #onedaySchedulerComp>
+        <div class="sch_white_bg smallScheduler sch_height_nohead">
+          <one-day-scheduler *ngIf="isShowScheduler"
+            [dayViewFormat]="dayViewFormat" 
+            [staffID]="_cellDataSelection.StaffID"
+            [schedulerTimeFormat]="schedulerTimeFormat" 
+            [startDate]="currentDate" 
+            #onedaySchedulerComp>
           </one-day-scheduler>
         </div>
       </div>

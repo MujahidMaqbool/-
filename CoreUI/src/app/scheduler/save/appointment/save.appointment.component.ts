@@ -88,12 +88,12 @@ export class SaveSchedulerAppointmentComponent extends AbstractGenericComponent 
     ) {
         super();    //implicit call for constructor
         this.isSaveButtonDisabled = false;
-        this.getBranchDatePattern();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.currentDate = new Date(this._cellDataSelection.startDate);
         if (changes.appointmentActivityComponentCalled && changes.appointmentActivityComponentCalled.currentValue) {
+            this.getBranchDatePattern();
             this.getSearchClient();
             this._httpService.get(SchedulerApi.getCallAppoinmentFundamental)
                 .subscribe(data => {
@@ -270,8 +270,8 @@ export class SaveSchedulerAppointmentComponent extends AbstractGenericComponent 
         else {
             this.isChangeStartDateEvent = true;
             this.setDefaultValuesToViewModel();
-            this.onedaySchedulerComp.staffID = this.appointmentActivityViewModel.AssignedToStaffID;
-            this.onedaySchedulerComp.getCustomSchedulerData();
+            // this.onedaySchedulerComp.staffID = this.appointmentActivityViewModel.AssignedToStaffID;
+            // this.onedaySchedulerComp.getCustomSchedulerData();
         }
     }
 

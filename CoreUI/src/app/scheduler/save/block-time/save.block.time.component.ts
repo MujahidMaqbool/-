@@ -94,10 +94,11 @@ export class SaveSchedulerBlockTimeComponent extends AbstractGenericComponent im
         this.isSaveButtonDisabled = false;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        this.getBranchDatePattern();
-        this.currentDate = new Date(this._cellDataSelection.startDate);
+    ngOnChanges(changes: SimpleChanges) : void {
+        
         if (changes.blockTimeComponentCalled && changes.blockTimeComponentCalled.currentValue) {
+            this.currentDate = new Date(this._cellDataSelection.startDate);
+            this.getBranchDatePattern();
             this.getFundamentals();
         }
     }
@@ -111,7 +112,6 @@ export class SaveSchedulerBlockTimeComponent extends AbstractGenericComponent im
         this.recurrenceExceptionDateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.RecurrenceExceptionDateFormat);
         this.branchCurrentDate = await this._dateTimeService.getCurrentDateTimeAcordingToBranch();
         this.isShowScheduler = true;
-        
     }
 
     getFundamentals() {
@@ -147,8 +147,8 @@ export class SaveSchedulerBlockTimeComponent extends AbstractGenericComponent im
         } else {
             this.isChangeStartDateEvent = true;
             this.resetStaffBlockForm();
-            this.onedaySchedulerComp.staffID = this.staffBlockModel.StaffID;
-            this.onedaySchedulerComp.getCustomSchedulerData();
+            // this.onedaySchedulerComp.staffID = this.staffBlockModel.StaffID;
+            // this.onedaySchedulerComp.getCustomSchedulerData();
         }
     }
 
