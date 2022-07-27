@@ -130,6 +130,7 @@ export class DD_Branch {
     public BranchTimeFormat12Hours: boolean = false;
     public ISOCode: string;
     public IsCustomerDefaultBranch: boolean;
+    public MemberAttendanceTimer : number;
 
     public constructor(init?: Partial<DD_Branch>) {
         Object.assign(this, init);

@@ -15,17 +15,16 @@ import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { MemberAttendanceDetail, CustomerMembership, MemberClassDetail, MembershipClockin, MembershipMessage, CustomerMembershipPaymentInfoList, BranchTimingListForMemberShip, MembershipGlobalSessionDetail, MembershipAlertMessages, MemberMembershipMessages } from "src/app/attendance/models/member.attendance.model";
 import { ApiResponse, CompanyInfo, DD_Branch } from "src/app/models/common.model";
 import { MembershipTypeName, Configurations } from "src/app/helper/config/app.config";
+import { CompanyDetails } from "src/app/setup/models/company.details.model";
+import { AttendeeClassAttendance } from "src/app/models/attendee.model";
 
 /******* Configurations *********/
 import { environment } from "src/environments/environment";
 import { MembershipType, MembershipDurationType, EnumBookingStatusType, MembershipStatus_Enum, ENU_ClockinRestrictionType, ENU_DateFormatName, ENU_MemberShipBenefitDurations, MembershipBenefitType, ENU_MembershipAlertMessageRestrictionType, ENU_DurationType } from "src/app/helper/config/app.enums";
 import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
-import { AttendeeClassAttendance } from "src/app/models/attendee.model";
-import { variables } from "src/app/helper/config/app.variable";
 import { AppUtilities } from "src/app/helper/aap.utilities";
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 import { TimeClockComponent } from "src/app/attendance/shared/time.clock.component";
-import { CompanyDetails } from "src/app/setup/models/company.details.model";
 
 @Component({
     selector: 'member-attendance-details',
@@ -72,6 +71,8 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
     memberMembershipMessages: MemberMembershipMessages[];
 
     companyInfo: CompanyDetails = new CompanyDetails();
+    branchInfo: DD_Branch = new DD_Branch();
+
     membershipType = MembershipType;
     membershipTypeNames = MembershipTypeName;
     membershipDurationType = MembershipDurationType;
@@ -171,6 +172,7 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
     ) { super(); }
 
     ngOnInit() {
+        this.getBranchDetails();
         this.getCompanyDetails()
         this.getBranchDatePattern();
     }
@@ -190,7 +192,14 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
         }
         }
     }
+    async getBranchDetails() {
 
+      const branch = await super.getBranchDetail(this._dataSharingService);
+      if (branch && branch.hasOwnProperty("Currency")) {
+          this.branchInfo = branch ;
+      }
+
+  }
 
     onMemberMembershipChange() {
         this.IsTodayAttendanceMarked = false;
@@ -260,9 +269,13 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
-        this.intervalId = setInterval(() => {
+
+        if(Number(this.branchInfo.MemberAttendanceTimer) != null && Number(this.branchInfo.MemberAttendanceTimer > 0)){
+          this.intervalId = setInterval(() => {
             this._router.navigate(['/attendance/member/']);
-        }, 20000)
+        }, this.branchInfo.MemberAttendanceTimer * 1000)
+        }
+
 
     }
 

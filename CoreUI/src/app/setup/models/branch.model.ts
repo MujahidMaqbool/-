@@ -103,7 +103,7 @@ export class BranchForSave {
    public SuspendClassBenefits: boolean;
    public SuspendDoorCheckInBenefits: boolean;
    public SuspendProductBenefits: boolean;
-   public SuspendServiceBenefits: boolean;  
+   public SuspendServiceBenefits: boolean;
    public RestrictCustomerInvoiceEmail: boolean;
    public WidgetPartPaymentForMember: number ;
    public WidgetPartPaymentForNonMember: number;
