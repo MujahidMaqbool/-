@@ -279,6 +279,11 @@ mat-icon {
     left: -34px;
     top: 12px;
 }
+.custom-tooltip.overdue-tooltip {
+    top: -12px;
+    margin: 0 !important;
+    left: -5px;
+}
 .custom-tooltip.dashboard-tooltip {
 max-width: 536px;
 left: -70px;
