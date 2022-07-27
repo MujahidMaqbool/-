@@ -86,8 +86,6 @@ export class SaveSchedulerCallComponent extends AbstractGenericComponent impleme
     ) {
         super();    //implicit call for constructor
         this.isSaveButtonDisabled = false;
-        this.getBranchDatePattern();
-
     }
 
     // #region Events
@@ -95,6 +93,7 @@ export class SaveSchedulerCallComponent extends AbstractGenericComponent impleme
     ngOnChanges(changes: SimpleChanges): void {
         this.currentDate = new Date(this._cellDataSelection.startDate);
         if (changes.callActivityComponentCalled && changes.callActivityComponentCalled.currentValue) {
+            this.getBranchDatePattern();
             this.getSearchClient();
             this.getFundamentals();
         }
@@ -272,8 +271,8 @@ export class SaveSchedulerCallComponent extends AbstractGenericComponent impleme
         else {
             this.isChangeStartDateEvent = true;
             this.setDefaultValuesToViewModel();
-            this.onedaySchedulerComp.staffID = this.callActivityViewModel.AssignedToStaffID;
-            this.onedaySchedulerComp.getCustomSchedulerData();
+            // this.onedaySchedulerComp.staffID = this.callActivityViewModel.AssignedToStaffID;
+            // this.onedaySchedulerComp.getCustomSchedulerData();
         }
     }
 
