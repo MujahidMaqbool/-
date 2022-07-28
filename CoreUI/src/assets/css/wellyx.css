@@ -2623,7 +2623,11 @@ input [type="checkbox"] {
 .radioo input[type="radio"]:disabled+label {
     opacity: 2.65;
 }
-
+input[type="radio"]:disabled + label span {
+    cursor: not-allowed;
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
 .custom-form-data .radioo input[type="radio"]:disabled+label {
     opacity: 2.65;
 }

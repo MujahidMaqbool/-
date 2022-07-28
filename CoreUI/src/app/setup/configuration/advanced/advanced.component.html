@@ -1,23 +1,25 @@
 <div class="white_bg waitlist_items">
     <div class="row center_flex_alignment">
-        <div class="col-md-12 col-sm-12 pt-2">
-            <h1>Inventory</h1>
+        <div class="col-md-12 col-sm-12 py-1">
+            <h1 class="mb-0">Inventory</h1>
         </div>
         <div class="col-md-12">
-            <div class="form_border bottom_zero"></div>
+            <div class="form_border my-10"></div>
         </div>
     </div>
+    <div class="row center_flex_alignment">
+        <div class="col-md-12 col-sm-12 py-1">
+            <h1 class="mb-0">Overselling</h1>
+        </div>
+        <div class="col-md-12">
+            <div class="form_border my-10"></div>
+        </div>
+    </div>
+
     <div class="row">
+        <div class="mr-3"></div>
         <div class="media-body">
-            <div class="row waitlist_checkbox waitlist_subtitle center_flex_alignment">
-                <div class="col-md-12 pt-2">
-                    <h3>Overselling</h3>
-                </div>
-            </div>
-            <div class="col-md-12 pr-0 mob-pa">
-                <div class="form_border zero_margin"></div>
-            </div>
-            <div class="row waitlist_checkbox waitlist_subtitle wait_2left_margin center_flex_alignment pb-0">
+            <div class="row waitlist_subtitle align-items-center">
                 <div class="col-md-9">
                     <h3>Overselling - Core & Staff App</h3>
                     <p>Toggle on to allow customers to purchase out of stock products from the point of sale in core & staff app.</p>
@@ -26,13 +28,12 @@
                     <mat-slide-toggle class="wellyx-checked float-right" name="CoreandStaff" [(ngModel)]="advanceInventory.InventoryOversellingForCore">
                     </mat-slide-toggle>
                 </div>
-
                 <div class="col-md-12 pr-0 mob-pa">
-                    <div class="form_border mb-0"></div>
+                    <div class="form_border my-10"></div>
                 </div>
             </div>
 
-            <div class="row waitlist_checkbox waitlist_subtitle wait_2left_margin center_flex_alignment">
+            <div class="row waitlist_subtitle align-items-center">
                 <div class="col-md-9">
                     <h3>Overselling - Widget & Customer App</h3>
                     <p>Toggle on to allow customers to purchase out of stock products from the widget & customer app.</p>
@@ -41,24 +42,21 @@
                     <mat-slide-toggle class="wellyx-checked float-right" name="WidgetandCustomer" [(ngModel)]="advanceInventory.InventoryOversellingForWidgetAndApp">
                     </mat-slide-toggle>
                 </div>
+            </div>
+        </div>
+    </div>
 
-               
-            </div>
-
-            <div class="col-md-12 pr-0 mob-pa">
-                <div class="form_border zero_margin"></div>
-            </div>
-            
-            <div class="row waitlist_checkbox waitlist_subtitle center_flex_alignment">
-                <div class="col-md-9">
-                    <h3>Stock Display - Widget & Customer App</h3>
-                    <p>Toggle on to display current stock on the widget & customer app when inventory is being managed.</p>
-                </div>
-                <div class="col-md-3 padding_right mob-pa">
-                    <mat-slide-toggle class="wellyx-checked float-right" name="StockDisplay" [(ngModel)]="advanceInventory.InventoryDisplayStockForWidgetAndApp">
-                    </mat-slide-toggle>
-                </div>
-            </div>
+    <div class="row waitlist_subtitle align-items-center">
+        <div class="col-md-12 pr-0 mob-pa">
+            <div class="form_border my-10"></div>
+        </div>
+        <div class="col-md-9">
+            <h3>Stock Display - Widget & Customer App</h3>
+            <p>Toggle on to display current stock on the widget & customer app when inventory is being managed.</p>
+        </div>
+        <div class="col-md-3">
+            <mat-slide-toggle class="wellyx-checked float-right" name="StockDisplay" [(ngModel)]="advanceInventory.InventoryDisplayStockForWidgetAndApp">
+            </mat-slide-toggle>
         </div>
     </div>
 </div>

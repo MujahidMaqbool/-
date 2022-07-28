@@ -1525,7 +1525,11 @@ input.mat-input-element {
 }
 
 .mat-disabled .mat-slide-toggle-bar {
-    background-color: rgba(0,0,0,.1111)
+    background-color: rgba(0,0,0,.1111);
+    cursor: not-allowed;
+}
+.mat-slide-toggle.mat-disabled .mat-slide-toggle-thumb-container {
+    cursor: not-allowed !important;
 }
 .landing_disable .mat-disabled .mat-slide-toggle-bar{
     background-color: #1b6eb8;
