@@ -229,7 +229,7 @@
               </div>
               <div class="col-md-6 col-sm-6">
                 <h5 class="field_label">Tax</h5>
-                <mat-select class="form-control multi_select_tax" name="ClassTax" [(ngModel)]="selectedTaxList"
+                <mat-select class="select_label form-control multi_select_tax" name="ClassTax" [(ngModel)]="selectedTaxList"
                   (ngModelChange)="onPriceChange($event, 'tax')" tabindex="15" multiple>
                   <mat-select-trigger *ngIf="selectedTaxList.length > 2">
                     {{selectedTaxList.length > 0 ? selectedTaxList[0].TaxName : ''}}
@@ -267,7 +267,7 @@
                     <div class="panel-body">
                       <dx-form #devexpForm [formData]="recurrenceRuleFormData" [hidden]="!showRepeatControl">
                         <dxi-item cssClass="recurrence-section" dataField="repeat" editorType="dxRecurrenceEditor"
-                          [editorOptions]="{ value: recurrenceRuleFormData.repeat , onValueChanged: onRecurrenceValueChanged  }"
+                          [editorOptions]="{ value: recurrenceRuleFormData.repeat , onValueChanged: onRecurrenceValueChanged }"
                           [label]="{text : 'Recurrence Rule'}">
                         </dxi-item>
                       </dx-form>
