@@ -1288,8 +1288,7 @@ export class SaveSchedulerServiceComponent extends AbstractGenericComponent impl
                     // this.onUpdateSchedulerService.emit(serviceToSave);
                    this.sendSchedulerServiceSaveRequest(serviceToSave);
                     //this.onCloseSchedulerServicePopup();
-                } else {
-                    this.searchClientControl.setValue('');
+                } else {                    
                     this.isSaveButtonDisabled = false;
                 }
             } else {
