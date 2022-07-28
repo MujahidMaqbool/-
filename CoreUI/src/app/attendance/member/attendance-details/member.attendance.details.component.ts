@@ -1,6 +1,6 @@
 /******************* Angular Refereces *****************/
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
+import { SubscriptionLike as ISubscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 /* Services */
@@ -13,8 +13,8 @@ import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
 import { MemberAttendanceDetail, CustomerMembership, MemberClassDetail, MembershipClockin, MembershipMessage, CustomerMembershipPaymentInfoList, BranchTimingListForMemberShip, MembershipGlobalSessionDetail, MembershipAlertMessages, MemberMembershipMessages } from "src/app/attendance/models/member.attendance.model";
-import { ApiResponse, CompanyInfo, DD_Branch } from "src/app/models/common.model";
-import { MembershipTypeName, Configurations } from "src/app/helper/config/app.config";
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
+import { MembershipTypeName } from "src/app/helper/config/app.config";
 import { CompanyDetails } from "src/app/setup/models/company.details.model";
 import { AttendeeClassAttendance } from "src/app/models/attendee.model";
 
@@ -23,6 +23,9 @@ import { environment } from "src/environments/environment";
 import { MembershipType, MembershipDurationType, EnumBookingStatusType, MembershipStatus_Enum, ENU_ClockinRestrictionType, ENU_DateFormatName, ENU_MemberShipBenefitDurations, MembershipBenefitType, ENU_MembershipAlertMessageRestrictionType, ENU_DurationType } from "src/app/helper/config/app.enums";
 import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
 import { AppUtilities } from "src/app/helper/aap.utilities";
+
+
+/******* Components *********/
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 import { TimeClockComponent } from "src/app/attendance/shared/time.clock.component";
 
@@ -92,7 +95,7 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
     //enum
     enuMemberShipBenefitDurations = ENU_MemberShipBenefitDurations;
     enuMembershipBenefitType = MembershipBenefitType;
-    enuMembershipAlertMessageRestrictionType = ENU_MembershipAlertMessageRestrictionType
+    enuMembershipAlertMessageRestrictionType = ENU_MembershipAlertMessageRestrictionType;
 
     // slideConfig = {
     //     "slidesToShow": 6,
@@ -182,244 +185,241 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
             clearInterval(this.intervalId);
         }
     }
-    async getCompanyDetails(){
-        const company = await super.getCompanyDetail(this._dataSharingService);
-        if (company) {
-          this.companyInfo = company;
-           //this condition added by fahad after discussion with tahir bhai when user reload page redirect to login page dated on 04/02/2021
-           if(!this.companyInfo?.CompanyName){
-            this._router.navigate(['/attendance/member/']);
-        }
-        }
-    }
-    async getBranchDetails() {
+        // #region Methods
 
-      const branch = await super.getBranchDetail(this._dataSharingService);
-      if (branch && branch.hasOwnProperty("Currency")) {
-          this.branchInfo = branch ;
+  async getCompanyDetails() {
+    const company = await super.getCompanyDetail(this._dataSharingService);
+    if (company) {
+      this.companyInfo = company;
+      //this condition added by fahad after discussion with tahir bhai when user reload page redirect to login page dated on 04/02/2021
+      if (!this.companyInfo?.CompanyName) {
+        this._router.navigate(['/attendance/member/']);
       }
+    }
+  }
+
+  async getBranchDetails() {
+
+    const branch = await super.getBranchDetail(this._dataSharingService);
+    if (branch && branch.hasOwnProperty("Currency")) {
+      this.branchInfo = branch;
+    }
 
   }
 
-    onMemberMembershipChange() {
-        this.IsTodayAttendanceMarked = false;
-        this.setMembershipTypeName();
-        this.getMembershipDetails();
-    }
+  onMemberMembershipChange() {
+    this.IsTodayAttendanceMarked = false;
+    this.setMembershipTypeName();
+    this.getMembershipDetails();
+  }
 
-    onClassAttendance(classItem: MemberClassDetail) {
-        if(classItem.IsMembershipBenefit){
-            if ((!this.isMembershipCancelled || !classItem.IsFree && !classItem.IsItemBenefitsSuspended)) {
-                //check class time
-                if(!classItem.IsAttended){
-                    var CheckedInTimeStart: Boolean = this.checkClassTimeStartForCheckIn(this.branchCurrentTime.clock ,classItem.StartTime);
-                    if(CheckedInTimeStart){
-                        this.markClassAttendance(classItem);
-                    } else {
-                        this._messageService.showErrorMessage(this.messages.Error.YourClassTimeIsNotStartedYet);
-                    }
-                } else {
-                    this.markClassAttendance(classItem);
-                }
-            }
-        } else{
-            if(!classItem.IsAttended){
-                var CheckedInTimeStart: Boolean = this.checkClassTimeStartForCheckIn(this.branchCurrentTime.clock ,classItem.StartTime);
-                if(CheckedInTimeStart){
-                    this.markClassAttendance(classItem);
-                } else {
-                    this._messageService.showErrorMessage(this.messages.Error.YourClassTimeIsNotStartedYet);
-                }
-            } else {
-                this.markClassAttendance(classItem);
-            }
+  onClassAttendance(classItem: MemberClassDetail) {
+    if (classItem.IsMembershipBenefit) {
+      if ((!this.isMembershipCancelled || !classItem.IsFree && !classItem.IsItemBenefitsSuspended)) {
+        //check class time
+        if (!classItem.IsAttended) {
+          var CheckedInTimeStart: Boolean = this.checkClassTimeStartForCheckIn(this.branchCurrentTime.clock, classItem.StartTime);
+          if (CheckedInTimeStart) {
+            this.markClassAttendance(classItem);
+          } else {
+            this._messageService.showErrorMessage(this.messages.Error.YourClassTimeIsNotStartedYet);
+          }
+        } else {
+          this.markClassAttendance(classItem);
         }
-    }
-
-    onMarkMembershipAttendance() {
-        if (!this.isMembershipCancelled && !this.IsDoorCheckInBenefitsSuspended) {
-            this.markMembershipAttendance();
+      }
+    } else {
+      if (!classItem.IsAttended) {
+        var CheckedInTimeStart: Boolean = this.checkClassTimeStartForCheckIn(this.branchCurrentTime.clock, classItem.StartTime);
+        if (CheckedInTimeStart) {
+          this.markClassAttendance(classItem);
+        } else {
+          this._messageService.showErrorMessage(this.messages.Error.YourClassTimeIsNotStartedYet);
         }
+      } else {
+        this.markClassAttendance(classItem);
+      }
     }
+  }
 
-    //here we calculate the time interval for delay (in milliseconds)
-    calculateTimeInterval(timeType:number , totalTime:number){
-      switch (timeType) {
+  onMarkMembershipAttendance() {
+    if (!this.isMembershipCancelled && !this.IsDoorCheckInBenefitsSuspended) {
+      this.markMembershipAttendance();
+    }
+  }
 
-        case ENU_DurationType.Minutes:
-        this.timeInterval = totalTime * 60000 ;
+  //here we calculate the time interval for delay (in milliseconds)
+  calculateTimeInterval(timeType: number, totalTime: number) {
+    switch (timeType) {
+
+      case ENU_DurationType.Minutes:
+        this.timeInterval = totalTime * 60000;
         break;
 
-        case ENU_DurationType.Hours:
-        this.timeInterval = totalTime * 3.6e+6 ;
+      case ENU_DurationType.Hours:
+        this.timeInterval = totalTime * 3.6e+6;
         break;
 
-        case ENU_DurationType.Days:
-        this.timeInterval = totalTime * 8.64e+7 ;
+      case ENU_DurationType.Days:
+        this.timeInterval = totalTime * 8.64e+7;
         break;
 
-        case ENU_DurationType.Weeks:
-        this.timeInterval = totalTime * 6.048e+8 ;
+      case ENU_DurationType.Weeks:
+        this.timeInterval = totalTime * 6.048e+8;
         break;
-     }
+    }
+  }
+
+  onMouseOver() {
+    //fahad
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
     }
 
-    onMouseOver() {
-        //fahad
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-        }
-
-        if(Number(this.branchInfo.MemberAttendanceTimer) != null && Number(this.branchInfo.MemberAttendanceTimer > 0)){
-          this.intervalId = setInterval(() => {
-            this._router.navigate(['/attendance/member/']);
-        }, this.branchInfo.MemberAttendanceTimer * 1000)
-        }
+    if (Number(this.branchInfo.MemberAttendanceTimer) != null && Number(this.branchInfo.MemberAttendanceTimer > 0)) {
+      this.intervalId = setInterval(() => {
+        this._router.navigate(['/attendance/member/']);
+      }, this.branchInfo.MemberAttendanceTimer * 1000)
     }
+  }
 
-    // #region Events
-
-    // #endregion
-
-    // #region Methods
-
-    setImagePath() {
-        if (this.memberAttendaceModel.ImagePath && this.memberAttendaceModel.ImagePath.length > 0) {
-            this.imagePath = this.serverImageAddress.replace("{ImagePath}", AppUtilities.setCustomerImagePath()) + this.memberAttendaceModel.ImagePath;
-        }
+  setImagePath() {
+    if (this.memberAttendaceModel.ImagePath && this.memberAttendaceModel.ImagePath.length > 0) {
+      this.imagePath = this.serverImageAddress.replace("{ImagePath}", AppUtilities.setCustomerImagePath()) + this.memberAttendaceModel.ImagePath;
     }
+  }
 
-    markClassAttendance(classItem: MemberClassDetail) {
-        let classAttendanceModel = new AttendeeClassAttendance();
-        classAttendanceModel.CustomerID = this.memberAttendaceModel.CustomerID;
-        classAttendanceModel.IsAttended = !classItem.IsAttended;
-        classAttendanceModel.ClassID = classItem.ClassID;
-        classAttendanceModel.SaleDetailID = classItem.SaleDetailID;
-        classAttendanceModel.ClassDate = this._dateTimeService.convertDateObjToString(new Date(), this.dateFormatForSearch);
-        classAttendanceModel.IsFree = classItem.IsFree;
-        classAttendanceModel.CustomerMembershipID = this.selectedMembership.CustomerMembershipID
+  markClassAttendance(classItem: MemberClassDetail) {
+    let classAttendanceModel = new AttendeeClassAttendance();
+    classAttendanceModel.CustomerID = this.memberAttendaceModel.CustomerID;
+    classAttendanceModel.IsAttended = !classItem.IsAttended;
+    classAttendanceModel.ClassID = classItem.ClassID;
+    classAttendanceModel.SaleDetailID = classItem.SaleDetailID;
+    classAttendanceModel.ClassDate = this._dateTimeService.convertDateObjToString(new Date(), this.dateFormatForSearch);
+    classAttendanceModel.IsFree = classItem.IsFree;
+    classAttendanceModel.CustomerMembershipID = this.selectedMembership.CustomerMembershipID
 
-        this._httpService.save(AttendeeApi.saveAttendeeAttendance, classAttendanceModel).subscribe
-            ((response: ApiResponse) => {
-                if (response && response.MessageCode > 0) {
-                    this._messageService.showSuccessMessage(this.messages.Success.Save_Success.replace("{0}", "Attendance"));
-                    this.getMembershipDetails();
-                }
-                else {
-                    this._messageService.showErrorMessage(response.MessageText);
-                }
-            })
-    }
-
-    markMembershipAttendance() {
-        if(!this.IsTodayAttendanceMarked && !this.isAllowedDoorCheckIns){
-            this.membershipClockinModel.CustomerID = this.memberAttendaceModel.CustomerID;
-            this.membershipClockinModel.CustomerMembershipID = this.selectedMembership.CustomerMembershipID;
-            this._httpService.save(MemberAttendanceApi.markMemberAttendance, this.membershipClockinModel).
-                subscribe((response: ApiResponse) => {
-                    if (response && response.MessageCode > 0) {
-                        this.IsTodayAttendanceMarked = true;
-                        this.getMembershipDetails();
-                        this._messageService.showSuccessMessage(this.messages.Success.Save_Success.replace("{0}", "Attendance"));
-                    } else{
-                        this._messageService.showErrorMessage(response.MessageText);
-                    }
-                })
-        }
-    }
-
-    async getBranchDatePattern() {
-        this.dateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.DateFormat);
-
-        var memberDetail: MemberAttendanceDetail = JSON.parse(localStorage.getItem('MemberDetail'));
-        // this.clockedInMemberInfoSubscription = this._dataSharingService.memberAttendanceInfo.
-        //    subscribe((model: MemberAttendanceDetail) => {
-        if (memberDetail && memberDetail.CustomerMembershipList) {
-            this.memberAttendaceModel = memberDetail;
-            this.memberMembershipList = this.memberAttendaceModel.CustomerMembershipList;
-            this.filteredMemberMembershipList = this.memberMembershipList.filter(item => item.MembershipStatusTypeID === this.enu_MembershipStatus.Active || item.MembershipStatusTypeID === this.enu_MembershipStatus.Frozen);
-            this.isMembershipExists = this.filteredMemberMembershipList != null && this.filteredMemberMembershipList.length > 0 ? true : false;
-            this.setImagePath();
-            this.setDefaultMembership();
-            this.setMembershipTypeName();
-            this.getMembershipDetails();
-            // localStorage.removeItem('MemberDetail');
-
+    this._httpService.save(AttendeeApi.saveAttendeeAttendance, classAttendanceModel).subscribe
+      ((response: ApiResponse) => {
+        if (response && response.MessageCode > 0) {
+          this._messageService.showSuccessMessage(this.messages.Success.Save_Success.replace("{0}", "Attendance"));
+          this.getMembershipDetails();
         }
         else {
-            this._router.navigate(['/attendance/member/']);
+          this._messageService.showErrorMessage(response.MessageText);
         }
-        //  })
-        //fahad
-        this.intervalId = setInterval(() => {
-            this._router.navigate(['/attendance/member/']);
-        }, 20000)
+      })
+  }
+
+  markMembershipAttendance() {
+    if (!this.IsTodayAttendanceMarked && !this.isAllowedDoorCheckIns) {
+      this.membershipClockinModel.CustomerID = this.memberAttendaceModel.CustomerID;
+      this.membershipClockinModel.CustomerMembershipID = this.selectedMembership.CustomerMembershipID;
+      this._httpService.save(MemberAttendanceApi.markMemberAttendance, this.membershipClockinModel).
+        subscribe((response: ApiResponse) => {
+          if (response && response.MessageCode > 0) {
+            this.IsTodayAttendanceMarked = true;
+            this.getMembershipDetails();
+            this._messageService.showSuccessMessage(this.messages.Success.Save_Success.replace("{0}", "Attendance"));
+          } else {
+            this._messageService.showErrorMessage(response.MessageText);
+          }
+        })
+    }
+  }
+
+  async getBranchDatePattern() {
+    this.dateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.DateFormat);
+
+    var memberDetail: MemberAttendanceDetail = JSON.parse(localStorage.getItem('MemberDetail'));
+    // this.clockedInMemberInfoSubscription = this._dataSharingService.memberAttendanceInfo.
+    //    subscribe((model: MemberAttendanceDetail) => {
+    if (memberDetail && memberDetail.CustomerMembershipList) {
+      this.memberAttendaceModel = memberDetail;
+      this.memberMembershipList = this.memberAttendaceModel.CustomerMembershipList;
+      this.filteredMemberMembershipList = this.memberMembershipList.filter(item => item.MembershipStatusTypeID === this.enu_MembershipStatus.Active || item.MembershipStatusTypeID === this.enu_MembershipStatus.Frozen);
+      this.isMembershipExists = this.filteredMemberMembershipList != null && this.filteredMemberMembershipList.length > 0 ? true : false;
+      this.setImagePath();
+      this.setDefaultMembership();
+      this.setMembershipTypeName();
+      this.getMembershipDetails();
+      // localStorage.removeItem('MemberDetail');
+
+    }
+    else {
+      this._router.navigate(['/attendance/member/']);
+    }
+    //  })
+    //fahad
+    this.intervalId = setInterval(() => {
+      this._router.navigate(['/attendance/member/']);
+    }, 20000)
+  }
+
+  getMembershipDetails() {
+    let params = {
+      customerID: this.memberAttendaceModel.CustomerID,
+      membershipID: this.selectedMembership.MembershipID,
+      customerMembershipId: this.selectedMembership.CustomerMembershipID
+
     }
 
-    getMembershipDetails() {
-        let params = {
-            customerID: this.memberAttendaceModel.CustomerID,
-            membershipID: this.selectedMembership.MembershipID,
-            customerMembershipId: this.selectedMembership.CustomerMembershipID
+    this._httpService.get(MemberAttendanceApi.getMemberMembershipDetails, params).
+      subscribe((response: ApiResponse) => {
+        if (response && response.MessageCode > 0) {
+          this.IsDoorCheckInBenefitsSuspended = response.Result.IsBenefitsSuspended;
+          this.memberMembershipMessages = response.Result.MembershipMessageList;
+          this.membershipAlertMessages = response.Result.MembershipAlertMessageList;
+          this.branchTimingListForMemberShip = response.Result.MembershipDetailList;
+          this.membershipGlobalSessionList = response.Result.MembershipSessionDetailList;
+          this.isShowDoorCheckInButton = this.membershipGlobalSessionList && this.membershipGlobalSessionList.find(i => i.MembershipBenefitsTypeID == this.enuMembershipBenefitType.DoorCheckedInBenefits) ? true : false;
 
-        }
+          if (this.isShowDoorCheckInButton)
+            this.checkAllowedDoorCheckins();
+          this.memberClassDetailList = response.Result.MemberClassDetailList;
+          this.messagesList = response.Result.MembershipMessageList;
 
-        this._httpService.get(MemberAttendanceApi.getMemberMembershipDetails, params).
-            subscribe((response: ApiResponse) => {
-                if (response && response.MessageCode > 0) {
-                    this.IsDoorCheckInBenefitsSuspended = response.Result.IsBenefitsSuspended;
-                    this.memberMembershipMessages = response.Result.MembershipMessageList;
-                    this.membershipAlertMessages = response.Result.MembershipAlertMessageList;
-                    this.branchTimingListForMemberShip = response.Result.MembershipDetailList;
-                    this.membershipGlobalSessionList = response.Result.MembershipSessionDetailList;
-                    this.isShowDoorCheckInButton = this.membershipGlobalSessionList && this.membershipGlobalSessionList.find(i => i.MembershipBenefitsTypeID == this.enuMembershipBenefitType.DoorCheckedInBenefits) ? true : false;
+          this.customerMembershipPaymentInfoList = response.Result.CustomerMembershipPaymentInfoList;
+          this.memberClassDetailList = this.memberClassDetailList ? this.memberClassDetailList : [];
+          this.hasClasses = (this.memberClassDetailList.length > 0);
 
-                    if(this.isShowDoorCheckInButton)
-                    this.checkAllowedDoorCheckins();
-                    this.memberClassDetailList = response.Result.MemberClassDetailList;
-                    this.messagesList = response.Result.MembershipMessageList;
-
-                    this.customerMembershipPaymentInfoList = response.Result.CustomerMembershipPaymentInfoList;
-                    this.memberClassDetailList = this.memberClassDetailList ? this.memberClassDetailList : [];
-                    this.hasClasses = (this.memberClassDetailList.length > 0);
-
-                    this.setClassImagePath();
-                    this.checkRestrictionType();
-                    this.isPageLoad = true;
-                }else{
-                    this._messageService.showErrorMessage(response.MessageText);
-                }
-            })
-    }
-
-    checkAllowedDoorCheckins(){
-        var noLimit: boolean = this.membershipGlobalSessionList.find(i => i.MembershipBenefitsTypeID == this.enuMembershipBenefitType.DoorCheckedInBenefits).NoLimits;
-        if(noLimit){
-            this.isAllowedDoorCheckIns = false;
+          this.setClassImagePath();
+          this.checkRestrictionType();
+          this.isPageLoad = true;
         } else {
-            var TotalSessions: number = this.membershipGlobalSessionList.find(i => i.MembershipBenefitsTypeID == this.enuMembershipBenefitType.DoorCheckedInBenefits).TotalSessions;
-            var SessionConsumed: number = this.membershipGlobalSessionList.find(i => i.MembershipBenefitsTypeID == this.enuMembershipBenefitType.DoorCheckedInBenefits).SessionConsumed;
-            if(SessionConsumed >= TotalSessions){
-                this.isAllowedDoorCheckIns = true;
-            } else{
-                this.isAllowedDoorCheckIns = false;
-            }
+          this._messageService.showErrorMessage(response.MessageText);
         }
-    }
+      })
+  }
 
-    checkRestrictionType() {
-        if (this.membershipAlertMessages) {
-            this.membershipAlertMessages.forEach(restrictionType => {
-                //restrictionType.RestrictionTypeId == this.enuMembershipAlertMessageRestrictionType.PaymentFailed // check comment dateded on 15-10-2020 by fahad after discussion with zahara (paymnet failed member can class and door checked in if benefits are not suspended)
-                if ( restrictionType.RestrictionTypeId == this.enuMembershipAlertMessageRestrictionType.InactiveMembership || restrictionType.RestrictionTypeId == this.enuMembershipAlertMessageRestrictionType.MembershipNotStartedYet) {
-                    this.isMembershipCancelled = true;
-                }
-                else {
-                    this.isMembershipCancelled = false;
-                }
-            });
-        }
+  checkAllowedDoorCheckins() {
+    var noLimit: boolean = this.membershipGlobalSessionList.find(i => i.MembershipBenefitsTypeID == this.enuMembershipBenefitType.DoorCheckedInBenefits).NoLimits;
+    if (noLimit) {
+      this.isAllowedDoorCheckIns = false;
+    } else {
+      var TotalSessions: number = this.membershipGlobalSessionList.find(i => i.MembershipBenefitsTypeID == this.enuMembershipBenefitType.DoorCheckedInBenefits).TotalSessions;
+      var SessionConsumed: number = this.membershipGlobalSessionList.find(i => i.MembershipBenefitsTypeID == this.enuMembershipBenefitType.DoorCheckedInBenefits).SessionConsumed;
+      if (SessionConsumed >= TotalSessions) {
+        this.isAllowedDoorCheckIns = true;
+      } else {
+        this.isAllowedDoorCheckIns = false;
+      }
     }
+  }
+
+  checkRestrictionType() {
+    if (this.membershipAlertMessages) {
+      this.membershipAlertMessages.forEach(restrictionType => {
+        //restrictionType.RestrictionTypeId == this.enuMembershipAlertMessageRestrictionType.PaymentFailed // check comment dateded on 15-10-2020 by fahad after discussion with zahara (paymnet failed member can class and door checked in if benefits are not suspended)
+        if (restrictionType.RestrictionTypeId == this.enuMembershipAlertMessageRestrictionType.InactiveMembership || restrictionType.RestrictionTypeId == this.enuMembershipAlertMessageRestrictionType.MembershipNotStartedYet) {
+          this.isMembershipCancelled = true;
+        }
+        else {
+          this.isMembershipCancelled = false;
+        }
+      });
+    }
+  }
 
     // formatMembershipTimes() {
     //     //formate branch timings
@@ -443,58 +443,58 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
     //     // }
     // }
 
-    checkClassTimeStartForCheckIn(currentTime, classStartTime){
-        var isValidClassCheckInTime: boolean = true;
-        var _classStartTime: any = this.ConvertTimeStringToDateTime(classStartTime);
-        var _classStartTime: any = this.addMinutes(_classStartTime, 30);
-        var _currentTime: any = this.ConvertTimeStringToDateTime(currentTime);
+  checkClassTimeStartForCheckIn(currentTime, classStartTime) {
+    var isValidClassCheckInTime: boolean = true;
+    var _classStartTime: any = this.ConvertTimeStringToDateTime(classStartTime);
+    var _classStartTime: any = this.addMinutes(_classStartTime, 30);
+    var _currentTime: any = this.ConvertTimeStringToDateTime(currentTime);
 
-        isValidClassCheckInTime = _currentTime >= _classStartTime;
-        return isValidClassCheckInTime;
+    isValidClassCheckInTime = _currentTime >= _classStartTime;
+    return isValidClassCheckInTime;
+  }
+
+  addMinutes(date, minutes) {
+    return new Date(date.getTime() - minutes * 60000);
+  }
+
+  ConvertTimeStringToDateTime(timeValue: string) {
+    return this._dateTimeService.convertTimeStringToDateTime(timeValue);
+  }
+
+  setClassImagePath() {
+    this.memberClassDetailList.forEach(classdetail => {
+      if (classdetail.ImagePath && classdetail.ImagePath != '') {
+        classdetail.ImagePath = this.serverImageAddress.replace("{ImagePath}", AppUtilities.setOtherImagePath()) + classdetail.ImagePath;
+      }
+      else {
+        classdetail.ImagePath = this.classImage;
+      }
+    })
+  }
+
+  async setDefaultMembership() {
+    /* On loading page first membership will be selected */
+    if (this.isMembershipExists) {
+      this.selectedMembership = this.filteredMemberMembershipList[0];
+
     }
-
-    addMinutes(date, minutes) {
-        return new Date(date.getTime() - minutes*60000);
+    else {
+      this.selectedMembership = this.memberMembershipList[0];
     }
-
-    ConvertTimeStringToDateTime(timeValue: string) {
-        return this._dateTimeService.convertTimeStringToDateTime(timeValue);
-    }
-
-    setClassImagePath() {
-        this.memberClassDetailList.forEach(classdetail => {
-            if (classdetail.ImagePath && classdetail.ImagePath != '') {
-                classdetail.ImagePath = this.serverImageAddress.replace("{ImagePath}", AppUtilities.setOtherImagePath()) + classdetail.ImagePath;
-            }
-            else {
-                classdetail.ImagePath = this.classImage;
-            }
-        })
-    }
-
-     async setDefaultMembership() {
-        /* On loading page first membership will be selected */
-        if (this.isMembershipExists) {
-            this.selectedMembership = this.filteredMemberMembershipList[0];
-
+    const branch = await super.getBranchDetail(this._dataSharingService);
+    if (branch && branch.hasOwnProperty("Currency")) {
+      let branchID = branch.BranchID;
+      this.filteredMemberMembershipList.forEach(item => {
+        if (item.BranchID == branchID) {
+          item.MemberhsipConcatName = item.MembershipName;
         }
         else {
-            this.selectedMembership = this.memberMembershipList[0];
+          item.MemberhsipConcatName = item.MembershipName + ' - ' + item.BranchName;
         }
-        const branch = await super.getBranchDetail(this._dataSharingService);
-        if (branch && branch.hasOwnProperty("Currency")) {
-            let branchID = branch.BranchID;
-            this.filteredMemberMembershipList.forEach(item => {
-                if (item.BranchID == branchID) {
-                    item.MemberhsipConcatName = item.MembershipName;
-                }
-                else {
-                    item.MemberhsipConcatName = item.MembershipName + ' - ' + item.BranchName;
-                }
-            });
-        }
-
+      });
     }
+
+  }
 
     setMembershipTypeName() {
         // switch (this.selectedMembership.MembershipTypeID) {
@@ -524,5 +524,6 @@ export class MemberAttendanceDetailsComponent extends AbstractGenericComponent i
     //     }
 
     // }
+
     // #endregion
 }

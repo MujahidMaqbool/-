@@ -12,13 +12,14 @@ import { MemerClockInInfo, MemberMessage } from "../models/member.attendance.mod
 import { environment } from "src/environments/environment";
 
 /* Models */
-import { ApiResponse, CompanyInfo } from "src/app/models/common.model";
+import { ApiResponse} from "src/app/models/common.model";
 import { MemberAttendanceDetail } from 'src/app/attendance/models/member.attendance.model';
 import { DataSharingService } from "src/app/services/data.sharing.service";
 import { ENU_MemberAttendanceRedirect } from "src/app/helper/config/app.enums";
-import { variables } from "src/app/helper/config/app.variable";
-import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 import { CompanyDetails } from "src/app/setup/models/company.details.model";
+
+/**********  components **********/
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
     selector: 'member-attendance',
