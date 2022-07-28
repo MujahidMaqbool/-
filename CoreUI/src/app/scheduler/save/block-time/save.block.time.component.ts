@@ -257,7 +257,7 @@ export class SaveSchedulerBlockTimeComponent extends AbstractGenericComponent im
                        //for multi time zone issue using this method
                         this.staffBlockModel.StartDate = this._dateTimeService.convertStringIntoDateForScheduler(this.staffBlockModel.StartDate);
 
-                        this.currentDate = this.staffBlockModel.StartDate;
+                        //this.currentDate = this.staffBlockModel.StartDate;
                         this.setDateForRecurrenceException();
                     }
                 }
@@ -309,9 +309,10 @@ export class SaveSchedulerBlockTimeComponent extends AbstractGenericComponent im
                 let strRException = this.staffBlockModel.RecurrenceException.split(',');
                 if (strRException) {
                     for (let index = 0; index < strRException.length; index++) {
-                        let exceptDate = this._dateTimeService.convertExceptionStringToDate(strRException[index]);
-                        const element = this._dateTimeService.convertDateObjToString(exceptDate, this.dateFormat);
-                        this.recurrenceExceptionList.push(element);
+                        // let exceptDate = this._dateTimeService.convertExceptionStringToDate(strRException[index]);
+                        // const element = this._dateTimeService.convertDateObjToString(exceptDate, this.dateFormat);
+                        var _date = strRException[index].substring(0, 4) + '-' + strRException[index].substring(4, 6) + '-' + strRException[index].substring(6, 8);
+                        this.recurrenceExceptionList.push(_date);
                     }
                 }
             }

@@ -70,7 +70,7 @@
               <h5 class="field_label">Exceptions</h5>
               <div>
                 <span *ngFor="let exceptDates of recurrenceExceptionList; let arrayIndex=index"
-                  class="excpt_dates">{{exceptDates}}</span>
+                  class="excpt_dates">{{exceptDates | customdate: dateFormat}}</span>
               </div>
             </div>
           </div>
