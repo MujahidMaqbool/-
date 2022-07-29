@@ -10466,7 +10466,7 @@ section.dndDropArea {
 /*******Configuration Style Start********/
 .cst-disable-checkbox .form-control:disabled,
 .cst-disable-checkbox .mat-select-disabled {
-    background: #f9f9f9 !important;
+    background: #d5d5d5 !important;
 }
 .waitlist_items h1{
     font-size: 16px;
