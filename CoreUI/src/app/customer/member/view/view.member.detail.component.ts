@@ -1,5 +1,6 @@
 ﻿/*********************** Angular References *************************/
 import { Component, Inject, OnInit } from '@angular/core';
+import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
 
 /*********************** Material References *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -7,23 +8,24 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 /*************************** Services & Models ***********************/
 /*Services*/
 import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /*Models*/
 import { MemberDetail, MemberMembershipList } from 'src/app/customer/member/models/members.model';
+import { ApiResponse } from 'src/app/models/common.model';
+import { CompanyDetails } from 'src/app/setup/models/company.details.model';
+import { AllCustomers } from 'src/app/customer/models/customers.models';
 
-/********************** START: Common *********************/
-import { ClientApi, MemberApi, CompanyDetailsApi, BranchApi } from 'src/app/helper/config/app.webapi';
+/********************** Configurations *********************/
+import { ClientApi, MemberApi ,BranchApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { environment } from 'src/environments/environment';
 import { AppUtilities } from 'src/app/helper/aap.utilities';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { ENU_DateFormatName, ENU_Package } from 'src/app/helper/config/app.enums';
-import { AllCustomers } from 'src/app/customer/models/customers.models';
-import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
-import { CompanyDetails } from 'src/app/setup/models/company.details.model';
-import { MessageService } from 'src/app/services/app.message.service';
-import { ApiResponse } from 'src/app/models/common.model';
+
+/********************** Components *********************/
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'view-member-detail',
@@ -130,7 +132,7 @@ export class ViewMemberDetail extends AbstractGenericComponent implements OnInit
                         err => {
                             this._messageService.showErrorMessage(this.messages.Error.Save_Error.replace("{0}", "Member information"));
                         }
-                    
+
                 )
         }
     }

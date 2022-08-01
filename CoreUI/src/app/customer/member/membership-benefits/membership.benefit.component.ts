@@ -1,21 +1,29 @@
+/********************** Angular Refrences *********************/
 import { Component, OnInit } from "@angular/core";
-import { TrimValue } from "src/app/shared/directives/trim.values.directive";
 import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 import { EditBenefitsComponent } from "../edit-benefits/edit.benefits.component";
 import { MemberMembershipApi, SaleApi } from 'src/app/helper/config/app.webapi';
 
-/** Service & Models **/
+
+/********************* Service & Models **********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { DataSharingService } from "src/app/services/data.sharing.service";
-import { MemberMembershipBenefitsSearch, MemberBenefitsViewModel, searchMembership } from "../models/member.membershipBenefits.model";
-import { ApiResponse, PersonInfo, DD_Branch } from "src/app/models/common.model";
-import { CustomerType, ENU_MemberShipBenefitsName, MembershipStatus_Enum, ENU_MemberShipBenefitsStatus, ENU_MobileOperatingSystem, ENU_DateFormatName } from "src/app/helper/config/app.enums";
+import { MessageService } from "src/app/services/app.message.service";
 import { AuthService } from "src/app/helper/app.auth.service";
+
+/* Models */
+import { MemberBenefitsViewModel, searchMembership } from "../models/member.membershipBenefits.model";
+import { ApiResponse } from "src/app/models/common.model";
+import { Messages } from "src/app/helper/config/app.messages";
+
+/********************* Configurations **********************/
 import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from "src/app/helper/config/app.module.page.enums";
+import { ENU_MemberShipBenefitsName, MembershipStatus_Enum, ENU_MemberShipBenefitsStatus, ENU_MobileOperatingSystem, ENU_DateFormatName } from "src/app/helper/config/app.enums";
+
+/********************* Components **********************/
 import { SuspendBenefitsComponent } from "src/app/customer-shared-module/suspend-benefits/suspend.benefits.component";
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-import { MessageService } from "src/app/services/app.message.service";
-import { Messages } from "src/app/helper/config/app.messages";
 
 @Component({
     selector: "membership-benefits",
@@ -43,7 +51,7 @@ export class MembershipBenefitComponent extends AbstractGenericComponent impleme
     branchId: number;
     /***********Messages*********/
     messages = Messages;
-    
+
     allowedPages = {
         BenefitsSave: false,
         BenefitsSuspend: false,
@@ -67,12 +75,12 @@ export class MembershipBenefitComponent extends AbstractGenericComponent impleme
         this.getSearchFundamental();
         this.setPermissions();
         this.getCurrentBranchDetail();
-        
+
     }
 
     async getCurrentBranchDetail() {
         this.dateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.DateFormat);
-       
+
         const branch = await super.getBranchDetail(this._dataSharingService);
         if (branch && branch.hasOwnProperty("Currency")) {
             this.branchId = branch.BranchID;

@@ -1,29 +1,22 @@
 /********************** Angular Refrences *********************/
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ChangeDetectorRef,
-  Input,
-} from "@angular/core";
+import { Component,OnInit,Output,EventEmitter,ViewChild,ChangeDetectorRef} from "@angular/core";
+import { SubscriptionLike } from "rxjs";
+
 /********************** Service & Models *********************/
 /*Services*/
 import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
-import {
-  StripeService,
-  StripeDataSharingService,
-} from "src/app/services/stripe.service";
-import { Messages } from "src/app/helper/config/app.messages";
-import { StripeReaderPopupComponent } from "src/app/home/stripe.reader.popup/stripe.reader.popup.component";
-import { SubscriptionLike, Observable } from "rxjs";
+import { StripeService,StripeDataSharingService } from "src/app/services/stripe.service";
 import { DataSharingService } from "src/app/services/data.sharing.service";
 import { LoaderService } from "src/app/services/app.loader.service";
 import { MessageService } from "src/app/services/app.message.service";
+
+/********************** Configurations *********************/
+import { Messages } from "src/app/helper/config/app.messages";
 import { ENU_ReaderStatus } from "src/app/helper/config/app.enums";
-/*Models*/
-/********************** Common and Customs *********************/
+
+/********************** Components *********************/
+import { StripeReaderPopupComponent } from "src/app/home/stripe.reader.popup/stripe.reader.popup.component";
+
 var loaderService;
 
 @Component({

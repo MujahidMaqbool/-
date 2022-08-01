@@ -1,13 +1,25 @@
+/************************* Angular References ***********************************/
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpService } from 'src/app/services/app.http.service';
-import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
-import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
-import { MessageService } from 'src/app/services/app.message.service';
 import { SubscriptionLike } from 'rxjs';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+
+/********************* Material:Refference ********************/
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+/********************** Service & Models *********************/
+/* Services */
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
+
+/* Models */
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
+
+/********************** Configurations *********************/
+import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
 import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+
+/********************** Components *********************/
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'service-notification',

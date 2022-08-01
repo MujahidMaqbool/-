@@ -1,7 +1,7 @@
 ﻿// #region Imports
 
 /********************** Angular Refrences *********************/
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { SubscriptionLike as ISubscription, BehaviorSubject } from "rxjs";
 import { Router } from '@angular/router';
 
@@ -9,38 +9,38 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 
 /********************** Services & Models *********************/
-/* Models */
-import { MemberMembership ,MemberShipSearch ,MembershipStatus} from "src/app/customer/member/models/member.membership.model";
-import { Membership } from "src/app/customer/member/models/member.membership.payments.model";
-
-import { PersonInfo, ApiResponse } from 'src/app/models/common.model';
 
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { AuthService } from 'src/app/helper/app.auth.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+
+/* Models */
+import { MemberMembership ,MemberShipSearch ,MembershipStatus} from "src/app/customer/member/models/member.membership.model";
+import { Membership } from "src/app/customer/member/models/member.membership.payments.model";
+import { ApiResponse } from 'src/app/models/common.model';
+
+/**********************  Configurations *********************/
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { MemberMembershipApi  } from 'src/app/helper/config/app.webapi';
+import { CustomerType, MembershipStatus_Enum, ENU_CancelMembershipReasons, ENU_DateFormatName, EnumActivityLogType } from 'src/app/helper/config/app.enums';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
+
 /********************** Component *********************/
-//import { SaveMemberMembershipPopup } from '@shared/components/add-member-membership/save-membership-popup/save.member.membership.popup';
 import { GenericAlertDialogComponent } from 'src/app/application-dialog-module/generic-alert-dialog/generic.alert.dialog.component';
 import { EditMemberMembershipComponent } from 'src/app/customer/member/memberships/edit-membership/edit.member.membership.component';
 import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
 import { AddLeadMembershipComponent } from 'src/app/customer-shared-module/add-lead-membership/add.lead.membership.component';
-/**********************  Common *********************/
-import { Configurations } from 'src/app/helper/config/app.config';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { MemberMembershipApi,MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
-
-import { CustomerType, MembershipStatus_Enum, ENU_CancelMembershipReasons, ENU_DateFormatName, EnumActivityLogType } from 'src/app/helper/config/app.enums';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { CancelMembershipComponent } from 'src/app/customer/member/cancel-membership/cancel.membership.component';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { MembershipViewComponent } from 'src/app/shared/components/membership-view/membership.view.component';
-import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { ActivityLogComponent } from 'src/app/shared/components/activity-log/activity.log.popup.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { MembershipViewComponent } from 'src/app/shared/components/membership-view/membership.view.component';
+import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
 
 // #endregion
 

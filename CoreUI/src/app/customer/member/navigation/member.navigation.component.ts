@@ -2,26 +2,25 @@
 /************************ Angular References **************************/
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from 'rxjs';
+
 /********************* Material Reference *****************************/
 
 /************************ Services & Models ***************************/
 /* Services */
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { AuthService } from 'src/app/helper/app.auth.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+
 /* Models */
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
 
-/********************** Components *************************************/
-
-
-/**************************** Common *********************************/
+/**************************** Configurations *********************************/
 import { ENU_ModuleList, CustomerType } from 'src/app/helper/config/app.enums';
 import { environment } from 'src/environments/environment';
 import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
-import { HttpService } from 'src/app/services/app.http.service';
 import { CustomerFormApi } from 'src/app/helper/config/app.webapi';
-import { MessageService } from 'src/app/services/app.message.service';
-import { Observable } from 'rxjs';
-import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
 
 @Component({
     selector: 'member-navigation',

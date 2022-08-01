@@ -1,17 +1,16 @@
 /********************** Angular Refrences *********************/
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { SubscriptionLike as ISubscription, async } from "rxjs";
+import { SubscriptionLike as ISubscription } from "rxjs";
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+
 /********************* Material:Refference ********************/
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { debounceTime } from 'rxjs/internal/operators';
+
 /********************** Services & Models *********************/
-/* Models */
-import { MemberMembershipPayments, MemberPaymentSearch, PaymentGateway, PaymentStatus, Membership } from "src/app/customer/member/models/member.membership.payments.model";
-import { PersonInfo, ApiResponse, DD_Branch, AllPerson } from 'src/app/models/common.model';
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
@@ -19,29 +18,31 @@ import { MessageService } from 'src/app/services/app.message.service';
 import { CommonService } from 'src/app/services/common.service';
 import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 import { AuthService } from 'src/app/helper/app.auth.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { StripeService } from 'src/app/services/stripe.service';
+/* Models */
+import { MemberMembershipPayments, MemberPaymentSearch, PaymentGateway, PaymentStatus, Membership } from "src/app/customer/member/models/member.membership.payments.model";
+import { PersonInfo, ApiResponse, AllPerson } from 'src/app/models/common.model';
+import { SaveSaleCardInvoice } from 'src/app/point-of-sale/models/point.of.sale.model';
 
-/********************** Common & Customs *********************/
-import { CustomerType, ENU_PaymentStatus, MembershipPaymentType, EnumSaleType, ENU_PaymentGateway, ENU_DateFormatName, EnumActivityLogType } from 'src/app/helper/config/app.enums';
+/********************** Configurations *********************/
 import { ENU_Permission_ClientAndMember, ENU_Permission_Module } from 'src/app/helper/config/app.module.page.enums';
-
 import { Messages } from 'src/app/helper/config/app.messages';
 import { MemberPaymentsApi, PointOfSaleApi } from 'src/app/helper/config/app.webapi';
+import { CustomerType, ENU_PaymentStatus, MembershipPaymentType, EnumSaleType, ENU_PaymentGateway, ENU_DateFormatName, EnumActivityLogType } from 'src/app/helper/config/app.enums';
 
+/********************** Components *********************/
+import { TransactionPaymentComponent } from '../member/membership-payments/payment/transaction.payment.component';
+import { ActivityLogComponent } from 'src/app/shared/components/activity-log/activity.log.popup.component';
 import { SuspendMembershipComponent } from 'src/app/customer/member/suspend-membership/suspend.membership.component';
-import { AddMembershipTransactionComponent } from 'src/app/customer/member/membership-payments/add-transactions/add.membership.transaction.component';
-import { TransactionDetailComponent } from 'src/app/customer/member/membership-payments/transaction-detail/transaction.detail.component';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
 import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
-import { StripeService } from 'src/app/services/stripe.service';
-import { SaveSaleCardInvoice } from 'src/app/point-of-sale/models/point.of.sale.model';
-import { DateTimeService } from 'src/app/services/date.time.service';
-import { TransactionPaymentComponent } from '../member/membership-payments/payment/transaction.payment.component';
-import { ActivityLogComponent } from 'src/app/shared/components/activity-log/activity.log.popup.component';
-
+import { AddMembershipTransactionComponent } from 'src/app/customer/member/membership-payments/add-transactions/add.membership.transaction.component';
+import { TransactionDetailComponent } from 'src/app/customer/member/membership-payments/transaction-detail/transaction.detail.component';
 @Component({
     selector: "members-payments",
     templateUrl: "./members.payments.component.html"
@@ -193,7 +194,7 @@ export class MembersPaymentsComponent extends AbstractGenericComponent implement
         this.searchMembershipPaymentParams.DateFrom = this.FromDate();
   }
 
-   
+
 
     reciviedDateTo($event) {
         this.membershipSearchModel.DateFrom = $event.DateFrom;

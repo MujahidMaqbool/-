@@ -2,9 +2,7 @@
 
 /*********************** Angular References *************************/
 import { Component, OnInit, Inject, ViewChild, Output, EventEmitter } from '@angular/core';
-import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import { FormControl } from "@angular/forms";
 
 /*********************** Material References *************************/
 import { MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
@@ -19,15 +17,17 @@ import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
 import { Membership, PaymentGateway, MembershipTranscation } from 'src/app/customer/member/models/member.membership.payments.model';
-import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
-import { Messages } from 'src/app/helper/config/app.messages';
+import { ApiResponse } from 'src/app/models/common.model';
 
 /************** Configurations ******************/
 import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
 import { Configurations } from 'src/app/helper/config/app.config';
 import { ENU_PaymentGateway, MembershipPaymentType, MembershipDurationType, ENU_DateFormatName, ENU_PaymentStatus } from 'src/app/helper/config/app.enums';
-import { DatePickerComponent } from 'src/app/application-dialog-module/date-picker/date.picker.component';
+import { Messages } from 'src/app/helper/config/app.messages';
+
+/************** Components ******************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DatePickerComponent } from 'src/app/application-dialog-module/date-picker/date.picker.component';
 
 // #endregion
 
@@ -95,7 +95,7 @@ export class TransactionDetailComponent extends AbstractGenericComponent impleme
 
     }
 
-    
+
 
     onTransactionDateChange(date: any) {
         setTimeout(() => {
@@ -135,7 +135,7 @@ export class TransactionDetailComponent extends AbstractGenericComponent impleme
         if(this.transactionModel.Price && this.transactionModel.Price > 0){
             this.saveTransactionDetails(isValid)
         }
-       
+
     }
 
     onPriceChange() {

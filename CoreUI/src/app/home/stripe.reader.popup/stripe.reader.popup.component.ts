@@ -2,11 +2,6 @@
 /********************** Angular Refrences *********************/
 import { Component} from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-/********************** Service & Models *********************/
-/*Services*/
-
-/*Models*/
-/********************** Common and Customs *********************/
 
 
 @Component({
@@ -34,7 +29,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 
 export class StripeReaderPopupComponent {
-    
+
     constructor(
         public _dialogRef: MatDialogRef<StripeReaderPopupComponent>
     ) {

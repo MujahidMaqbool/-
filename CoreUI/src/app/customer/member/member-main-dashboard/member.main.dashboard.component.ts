@@ -6,17 +6,21 @@ import { DataSharingService } from "src/app/services/data.sharing.service";
 import { DateTimeService } from "src/app/services/date.time.service";
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "src/app/services/app.message.service";
+
 /* Models */
 import { MemberDashboardSearchParam, MemberSnapshot, MemberBooking, MemberServices, MemberProducts, MemberByStatus, MemberServiceAndAttendance, MemberAttendanceSummary, MemberClubVisits, MemberPayment } from "../models/member.dashboard.model";
-import { ApiResponse, DD_Branch } from "src/app/models/common.model";
-/************************* Common ***********************************/
+import { ApiResponse } from "src/app/models/common.model";
+
+/************************* Configurations ***********************************/
 import { MemberApi } from "src/app/helper/config/app.webapi";
 import { Configurations } from "src/app/helper/config/app.config";
 import { Messages } from "src/app/helper/config/app.messages";
 import { EnumSaleSourceType, MembershipStatus_Enum, EnumMemberPayment, ENU_Package, CustomerType, ENU_DateFormatName } from "src/app/helper/config/app.enums";
+
+
+/************************* Components ***********************************/
 import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-
 /*
     Component Variables are not accessible in Dashboard widget events
     Declared an Javascript variable to be used in events while changing label
@@ -67,7 +71,7 @@ export class MemberMainDashboardComponent extends AbstractGenericComponent imple
 
     maxDate: Date = new Date();
     currentDate: Date = new Date();
-    
+
     customerType = CustomerType;
     //dateFormatforAttendanceSummary: string = 'EEE MMM d y';
     //dateFormatforServicesSummary: string = 'MMM y';
@@ -107,7 +111,7 @@ export class MemberMainDashboardComponent extends AbstractGenericComponent imple
     ngOnInit() {
         this.memberDashboardSearchParam.paymentStatusTypeID = this.PaymentStatusType[0].value;
         this.getBranchDatePattern();
-       
+
     }
 
     ngOnDestroy() {
@@ -175,15 +179,15 @@ export class MemberMainDashboardComponent extends AbstractGenericComponent imple
 
          this.memberDashboardSearchParam.DateFrom = this._dateTimeService.convertDateObjToString(branchCurrentDate, this.dateFormat);
          this.memberDashboardSearchParam.DateTo = this._dateTimeService.convertDateObjToString(branchCurrentDate, this.dateFormat);
- 
- 
+
+
          this.packageIdSubscription = this._dataSharingService.packageId.subscribe((packageId: number) => {
              if (packageId && packageId > 0) {
                  this.setPermissions(packageId);
              }
- 
+
          });
- 
+
          this.getMemberSnapshot();
          this.onMemberActivityDateChange();
          this.onMemberStatusDateChange();
@@ -198,7 +202,7 @@ export class MemberMainDashboardComponent extends AbstractGenericComponent imple
             this.currencyFormat = branch.Currency;
             currencyCode = branch.Currency;
          }
-         
+
     }
 
     getMemberSnapshot() {

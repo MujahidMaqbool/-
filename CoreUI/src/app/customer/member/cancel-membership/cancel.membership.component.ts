@@ -8,17 +8,17 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 import { MemberMembershipApi } from 'src/app/helper/config/app.webapi';
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "src/app/services/app.message.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { DateTimeService } from "src/app/services/date.time.service";
 
 /* Models */
 import { CancelMembership, CancelMembershipReasons } from "src/app/customer/member/models/member.membership.model";
 import { ApiResponse } from "src/app/models/common.model";
-import { Messages } from "src/app/helper/config/app.messages";
 
 /************** Configurations **************/
 import { Configurations } from "src/app/helper/config/app.config";
-import { DataSharingService } from "src/app/services/data.sharing.service";
-import { DateTimeService } from "src/app/services/date.time.service";
 import { ENU_CancelMembershipReasons } from "src/app/helper/config/app.enums";
+import { Messages } from "src/app/helper/config/app.messages";
 
 @Component({
     selector: 'cancel-membership',

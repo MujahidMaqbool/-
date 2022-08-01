@@ -1,10 +1,18 @@
+/**************** Angular References ***************/
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
-import { HttpService } from 'src/app/services/app.http.service';
-import { ApiResponse } from 'src/app/models/common.model';
+
+/**********  Services & Models **********/
+/* Services */
 import { MessageService } from 'src/app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+
+/* Models */
+import { ApiResponse } from 'src/app/models/common.model';
 import { Messages } from 'src/app/helper/config/app.messages';
+
+/**********  Configurations **********/
+import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
 
 @Component({
   selector: 'activity-log',

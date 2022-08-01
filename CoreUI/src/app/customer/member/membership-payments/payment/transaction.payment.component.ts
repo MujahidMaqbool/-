@@ -6,27 +6,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 
 /****************** Services & Models *****************/
-/* Models */
-import { SavedCard, SaveSaleCardInvoice } from "src/app/point-of-sale/models/point.of.sale.model";
-import { ApiResponse, DD_Branch } from "src/app/models/common.model";
-import { TransactionPaymentDetail, PayTransaction, MemberMembershipPayments } from "src/app/customer/member/models/member.membership.payments.model";
-
 /* Services */
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "src/app/services/app.message.service";
 import { TaxCalculation } from "src/app/services/tax.calculations.service";
 import { DataSharingService } from "src/app/services/data.sharing.service";
+import { StripeService } from "src/app/services/stripe.service";
 
-/****************** Components *****************/
+/* Models */
+import { SavedCard, SaveSaleCardInvoice } from "src/app/point-of-sale/models/point.of.sale.model";
+import { ApiResponse } from "src/app/models/common.model";
+import { TransactionPaymentDetail, PayTransaction, MemberMembershipPayments } from "src/app/customer/member/models/member.membership.payments.model";
 
 /****************** Configurations *****************/
 import { EnumSaleType, ENU_PaymentGateway, ENU_DateFormatName } from "src/app/helper/config/app.enums";
 import { Configurations } from "src/app/helper/config/app.config";
 import { Messages } from "src/app/helper/config/app.messages";
-import { MemberPaymentsApi, PointOfSaleApi } from "src/app/helper/config/app.webapi";
-import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-import { StripeService } from "src/app/services/stripe.service";
+import { MemberPaymentsApi } from "src/app/helper/config/app.webapi";
+
+/****************** Components *****************/
 import { AddStripeCustomerComponent } from "src/app/gateway/stripe/add.stripe.customer.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
     selector: 'transaction-payment',
@@ -76,9 +76,9 @@ export class TransactionPaymentComponent extends AbstractGenericComponent implem
     ngOnInit() {
         this.getCurrentBranchDetail();
         this.getTransactionDetail();
-     
+
     }
-    
+
     //#region Events
 
     onSaleTypeChange(saleType: number) {
@@ -132,7 +132,7 @@ export class TransactionPaymentComponent extends AbstractGenericComponent implem
     }
 
     setPaymentType() {
-       
+
         this.paymentModel.PaymentGatewayID = this.transactionDetail.PaymentGatewayID;
         switch (this.paymentModel.PaymentGatewayID) {
             case this.gatewayType.Cash:
@@ -149,7 +149,7 @@ export class TransactionPaymentComponent extends AbstractGenericComponent implem
     }
 
     payWithStripe() {
-       
+
         if (this.stripeRef.cardId === 0) {
             this.stripeRef.getStripeToken().then(
                 token => {

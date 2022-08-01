@@ -7,26 +7,24 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 /*********************** Services & Models *************************/
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
 import { ClientApi } from 'src/app/helper/config/app.webapi';
 import { ClientDetail } from 'src/app/customer/client/models/client.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
 /********************** Configurations *************************/
 import { Messages } from 'src/app/helper/config/app.messages';
 import { environment } from "src/environments/environment";
 import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { variables } from 'src/app/helper/config/app.variable';
 import { AppUtilities } from 'src/app/helper/aap.utilities';
 import { SubscriptionLike as ISubscription, SubscriptionLike } from 'rxjs';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { ENU_DateFormatName, ENU_Package } from 'src/app/helper/config/app.enums';
 
 /********************** Component *************************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName, ENU_Package } from 'src/app/helper/config/app.enums';
-import { MessageService } from 'src/app/services/app.message.service';
-import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
     selector: 'view-client-detail',
@@ -74,7 +72,7 @@ export class ViewClientDetailComponent extends AbstractGenericComponent implemen
         // )
         this.isPartPaymentAllowed();
         this.getClientDetail(this.clientID);
-     
+
     }
     async isPartPaymentAllowed(){
         this.isPartialPaymentAllow = await super.isPartPaymentAllow(this._dataSharingService);
@@ -121,28 +119,28 @@ export class ViewClientDetailComponent extends AbstractGenericComponent implemen
 
     setPackagePermission(packageId: number) {
         switch (packageId) {
-      
+
             case this.package.WellnessBasic:
                this.isSmsAllowed = false;
                this.isEmailAllowed = false;
                this.isPushNotificationAllowed= false;
                 break;
-      
+
             case this.package.WellnessMedium:
                 break;
-      
+
             case this.package.WellnessTop:
                 break;
-      
+
             case this.package.FitnessBasic:
                 break;
-      
+
             case this.package.FitnessMedium:
                 break;
-                
+
             case this.package.Full:
                 break;
-      
+
         }
       }
 

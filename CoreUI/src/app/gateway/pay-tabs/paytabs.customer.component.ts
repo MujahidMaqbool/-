@@ -1,16 +1,11 @@
 
-// #region Imports
-/* Angular References */
+/*********************** Angular References *************************/
 import { Component, Input, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 import { FormControl } from "@angular/forms";
-/** Rxjs */
 import { Subscription } from 'rxjs';
 import { interval } from 'rxjs';
-/* Models & Services */
 
-import { SavedCard, PayTabs, PayTabPaymentMode } from "src/app/point-of-sale/models/point.of.sale.model";
-import { ApiResponse, CustomerBillingAddress } from "src/app/models/common.model";
-
+/*********************** Models & Services  *************************/
 /* Services */
 import { MessageService } from "src/app/services/app.message.service";
 import { HttpService } from "src/app/services/app.http.service";
@@ -18,19 +13,24 @@ import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.load
 import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 import { LoaderService } from "src/app/services/app.loader.service";
 import { DataSharingService } from "src/app/services/data.sharing.service";
-/* Common  */
 
+/* Models */
+import { SavedCard, PayTabs, PayTabPaymentMode } from "src/app/point-of-sale/models/point.of.sale.model";
+import { ApiResponse, CustomerBillingAddress } from "src/app/models/common.model";
+import { CustomerPaymentGateway } from 'src/app/customer/member/models/member.gateways.model';
+
+
+/*********************** Configurations  *************************/
 import { Messages } from "src/app/helper/config/app.messages";
 import { PointOfSaleApi, CustomerPaymentGatewayApi, GatewayIntegrationApi, CustomerApi } from "src/app/helper/config/app.webapi";
-
-import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { IframeComponent } from '../iframe/iframe.component';
-
-import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
-import { CustomerPaymentGateway } from 'src/app/customer/member/models/member.gateways.model';
 import * as creditCardType from "credit-card-type";
 import { ENU_Page, ENU_PaymentGateway, EnumSaleType } from "src/app/helper/config/app.enums";
-// #endregion
+
+/*********************** Components  *************************/
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { IframeComponent } from '../iframe/iframe.component';
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+
 /* declare a window global veriable for accesing paytab payment lib methods */
 declare const window: any;
 

@@ -1,18 +1,30 @@
+/************************* Angular References ***********************************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+
+/********************* Material:Refference ********************/
+import { MatPaginator } from '@angular/material/paginator';
+
+/********************** Service & Models *********************/
+/* Services */
+import { HttpService } from 'src/app/services/app.http.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+
+/* Models */
 import { TodayTaskSearch, TodayActivities } from "src/app/models/today.task.model";
 import { AllPerson, ApiResponse } from 'src/app/models/common.model';
-import { HttpService } from 'src/app/services/app.http.service';
+
+/********************** Configurations *********************/
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { CommonReportApi, StaffApi } from 'src/app/helper/config/app.webapi';
-import { DateTimeService } from 'src/app/services/date.time.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { MessageService } from 'src/app/services/app.message.service';
 import { Messages } from 'src/app/helper/config/app.messages';
+
+
+/********************** Components *********************/
 import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 @Component({

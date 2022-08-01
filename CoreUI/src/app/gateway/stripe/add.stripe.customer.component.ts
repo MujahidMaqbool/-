@@ -13,11 +13,11 @@ import { ApiResponse } from "src/app/models/common.model";
 import { MessageService } from "src/app/services/app.message.service";
 import { HttpService } from "src/app/services/app.http.service";
 import { LoaderService } from "src/app/services/app.loader.service";
+import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
 
-/*********************** Common  *************************/
+/*********************** Configuration  *************************/
 import { Messages } from "src/app/helper/config/app.messages";
 import { PointOfSaleApi } from "src/app/helper/config/app.webapi";
-import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
 import { ENU_Page, ENU_PaymentGateway } from "src/app/helper/config/app.enums";
 
 // #endregion

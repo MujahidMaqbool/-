@@ -1,22 +1,18 @@
 ﻿/********************** Angular References *********************/
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-
-/********************* Material:Refference ********************/
-
+import { SubscriptionLike as ISubscription } from 'rxjs';
 
 /********************** Services & Models *********************/
 /* Services */
+import { CommonService } from 'src/app/services/common.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
+import { PersonInfo, InvoiceHistory } from 'src/app/models/common.model';
 
-/********************** Common ***************************/
 
 /********************** Configurations *********************/
 import { CustomerType } from 'src/app/helper/config/app.enums';
-import { SubscriptionLike as ISubscription } from 'rxjs';
-import { CommonService } from 'src/app/services/common.service';
-import { PersonInfo, InvoiceHistory } from 'src/app/models/common.model';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 
 @Component({
@@ -37,7 +33,7 @@ export class ClientInvoiceHistoryComponent implements OnInit, OnDestroy,AfterVie
 
     clientIdSubscription: ISubscription;
 
-    // #endregion 
+    // #endregion
 
     constructor(private _dataSharingService: DataSharingService,private _commonService:CommonService) {
     }
@@ -59,7 +55,7 @@ export class ClientInvoiceHistoryComponent implements OnInit, OnDestroy,AfterVie
     }
 
     ngAfterViewInit(){
-       
+
     }
 
     ngOnDestroy() {

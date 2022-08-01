@@ -1,27 +1,28 @@
 ﻿/********************** Angular Refrences *********************/
 import { Component, OnInit, Inject } from '@angular/core';
+
 /********************* Material:Refference ********************/
-import {
-    MatDialogRef, MAT_DIALOG_DATA
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /********************** Services & Models *********************/
 /* Models */
 import { MemberMembershipPayments, Membership } from "src/app/customer/member/models/member.membership.payments.model";
 import { MemberMembership } from 'src/app/customer/member/models/member.membership.model';
 import { ApiResponse } from 'src/app/models/common.model';
+
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { TaxCalculation } from 'src/app/services/tax.calculations.service';
-/********************** Common & Customs *********************/
-import { MembershipPaymentType } from 'src/app/helper/config/app.enums';
 
-/**********************  Common *********************/
+/********************** Configurations *********************/
+import { MembershipPaymentType } from 'src/app/helper/config/app.enums';
 import { Configurations } from 'src/app/helper/config/app.config';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
+
+/**********************  Components *********************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 

@@ -5,48 +5,37 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 
 /********************** Services & Models *********************/
 /* Models */
-import {
-    AppointmentNowActivity,
-    AppointmentLaterActivity,
-    CallNowActivity,
-    CallLaterActivity,
-    NoteActivity,
-    EmailActivity,
-    SMSActivity,
-    AppointmentMarkAsDoneActivity,
-    CallMarkAsDoneActivity,
-    LeadAppNotification
-} from 'src/app/lead/models/lead.activity.model'
+import { AppointmentNowActivity,AppointmentLaterActivity,CallNowActivity,CallLaterActivity,NoteActivity,EmailActivity,SMSActivity,AppointmentMarkAsDoneActivity,CallMarkAsDoneActivity,LeadAppNotification } from 'src/app/lead/models/lead.activity.model'
 import { ActivityTabsOptions } from 'src/app/models/activity.tab.options'
 import { LeadAssignedTo, LeadLostReasonModel, LeadStatus } from 'src/app/lead/models/lead.model';
 import { MemberRedirectInfo } from 'src/app/customer/member/models/members.model';
 import { LeadMembershipsList } from '../../models/lead.membership.model';
-import { PersonInfo, PersonDetail, ApiResponse } from 'src/app/models/common.model';
+import { PersonDetail, ApiResponse } from 'src/app/models/common.model';
 
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import { MessageService } from "src/app/services/app.message.service";
 import { AuthService } from 'src/app/helper/app.auth.service';
 import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-/********************** Application Component(s) *********************/
-import { LeadLostComponent } from 'src/app/lead/lost-popup/lead.lost.popup.component';
 
-/********************** Common & Customs *********************/
+/********************** Configuration *********************/
 import { Configurations } from 'src/app/helper/config/app.config';
-import { SearchActivityComponent } from 'src/app/shared/components/activities/search/search.activity.component'
 import { Messages } from 'src/app/helper/config/app.messages';
 import { LeadActivityApi, LeadMembershipApi, CustomerApi } from 'src/app/helper/config/app.webapi';
 import { ENU_ActivityType, LeadStatusType, CustomerType } from 'src/app/helper/config/app.enums';
 import { environment } from 'src/environments/environment';
-//import { SaveMemberMembershipPopup } from 'src/app/shared/components/add-member-membership/save-membership-popup/save.member.membership.popup';
 import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
 import { ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
-import { variables } from 'src/app/helper/config/app.variable';
-import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
-import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+
+
+/********************** Component *********************/
+import { LeadLostComponent } from 'src/app/lead/lost-popup/lead.lost.popup.component';
 import { PersonInfoComponent } from 'src/app/customer-shared-module/person-info/person.info.component';
+import { SearchActivityComponent } from 'src/app/shared/components/activities/search/search.activity.component'
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 
 @Component({
     selector: 'lead-activity',
@@ -55,7 +44,7 @@ import { PersonInfoComponent } from 'src/app/customer-shared-module/person-info/
 
 export class LeadActivityComponent implements OnInit, OnDestroy {
 
-    // #region Local Members 
+    // #region Local Members
 
     @ViewChild(SearchActivityComponent) private activityComponent: SearchActivityComponent;
     @ViewChild('personInfoRef') personInfoRef: PersonInfoComponent;
@@ -108,7 +97,7 @@ export class LeadActivityComponent implements OnInit, OnDestroy {
 
     };
 
-    // #endregion 
+    // #endregion
 
     constructor(private _router: Router,
         private _httpService: HttpService,
@@ -158,7 +147,7 @@ export class LeadActivityComponent implements OnInit, OnDestroy {
                     this._messageService.showSuccessMessage(res.MessageText);
                 }
             },
-                err => {  // Error or Failure 
+                err => {  // Error or Failure
                     this._messageService.showErrorMessage(this.messages.Error.Assigned_Error.replace("{0}", "Lead"));
                 })
     }

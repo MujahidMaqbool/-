@@ -1,19 +1,26 @@
 /****************** Angular References **********/
-import { Component, OnInit, Inject, Output, EventEmitter } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
-import { HttpService } from "src/app/services/app.http.service";
-
-/**************** Services & Models ***************/
-import { UpdateMemberBenefits } from "../models/member.membershipBenefits.model";
-import { MemberPaymentsApi, MemberMembershipApi } from "src/app/helper/config/app.webapi";
-import { ApiResponse } from "src/app/models/common.model";
-import { MessageService } from "src/app/services/app.message.service";
-import { Messages } from "src/app/helper/config/app.messages";
-import { NumberValidator } from "src/app/shared/helper/number.validator";
+import { Component, Inject, Output, EventEmitter } from "@angular/core";
 import { FormControl } from "@angular/forms";
 
+/*********************** Material Reference *************************/
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+
+/**************** Services & Models *********************************/
+/* Services */
+import { MessageService } from "src/app/services/app.message.service";
+import { HttpService } from "src/app/services/app.http.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+
+
+/* Models */
+import { UpdateMemberBenefits } from "../models/member.membershipBenefits.model";
+import { ApiResponse } from "src/app/models/common.model";
+
 /************** Configurations **************/
+import { Messages } from "src/app/helper/config/app.messages";
+import { NumberValidator } from "src/app/shared/helper/number.validator";
+import { MemberMembershipApi } from "src/app/helper/config/app.webapi";
+
 
 @Component({
     selector: 'edit-benefits',

@@ -1,16 +1,15 @@
 /********************** Angular Refrences *********************/
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { SubscriptionLike as ISubscription, async } from "rxjs";
+import { SubscriptionLike as ISubscription } from "rxjs";
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+
 /********************* Material:Refference ********************/
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { debounceTime } from 'rxjs/internal/operators';
+
 /********************** Services & Models *********************/
-/* Models */
-import { MemberMembershipPayments, MemberPaymentSearch, PaymentGateway, PaymentStatus, Membership } from "src/app/customer/member/models/member.membership.payments.model";
-import { PersonInfo, ApiResponse, DD_Branch, AllPerson } from 'src/app/models/common.model';
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
@@ -18,27 +17,31 @@ import { MessageService } from 'src/app/services/app.message.service';
 import { CommonService } from 'src/app/services/common.service';
 import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 import { AuthService } from 'src/app/helper/app.auth.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { StripeService } from 'src/app/services/stripe.service';
+
+/* Models */
+import { MemberMembershipPayments, MemberPaymentSearch, PaymentGateway, PaymentStatus, Membership } from "src/app/customer/member/models/member.membership.payments.model";
+import { PersonInfo, ApiResponse, AllPerson } from 'src/app/models/common.model';
+import { SaveSaleCardInvoice } from 'src/app/point-of-sale/models/point.of.sale.model';
 
 /********************** Common & Customs *********************/
 import { CustomerType, ENU_PaymentStatus, MembershipPaymentType, EnumSaleType, ENU_PaymentGateway, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { ENU_Permission_ClientAndMember, ENU_Permission_Module } from 'src/app/helper/config/app.module.page.enums';
-
 import { Messages } from 'src/app/helper/config/app.messages';
 import { MemberPaymentsApi, PointOfSaleApi } from 'src/app/helper/config/app.webapi';
 
+/********************** Components *********************/
 import { SuspendMembershipComponent } from 'src/app/customer/member/suspend-membership/suspend.membership.component';
 import { AddMembershipTransactionComponent } from 'src/app/customer/member/membership-payments/add-transactions/add.membership.transaction.component';
 import { TransactionDetailComponent } from 'src/app/customer/member/membership-payments/transaction-detail/transaction.detail.component';
 import { TransactionPaymentComponent } from '../membership-payments/payment/transaction.payment.component';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
 import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
-import { StripeService } from 'src/app/services/stripe.service';
-import { SaveSaleCardInvoice } from 'src/app/point-of-sale/models/point.of.sale.model';
-import { DateTimeService } from 'src/app/services/date.time.service';
 
 @Component({
     selector: "members-payments",
@@ -58,8 +61,8 @@ export class MembersPaymentsComponent extends AbstractGenericComponent implement
     // totalRecords: number = 0;
     searchByPageIndex: boolean = false;
     dateFormat: string = "";
-    
-    
+
+
     //Configurations.DateFormat;
     paymentTypeId = EnumSaleType.Card;
     /* Angular Events */
@@ -117,9 +120,9 @@ export class MembersPaymentsComponent extends AbstractGenericComponent implement
         private datePipe: DatePipe,
         private _dateTimeService: DateTimeService,
     ) {
-        
+
         super();
-       
+
     }
 
     ngOnInit() {
@@ -149,20 +152,20 @@ export class MembersPaymentsComponent extends AbstractGenericComponent implement
                 }
             });
 
-      
-       
+
+
         this.getMemberID();
         this.setPermissions();
         this.getPaymentSearchFundamentals();
         this.setDates();
         this.FromDateDifference = 30;
     }
-    
+
     ngAfterViewInit() {
         // this.paymentDateSearch.setEmptyDateFilter();
         this.getMemberMembershipPyments();
     }
-   
+
     ngOnDestroy() {
         if (this.memberIdSubscription) {
             this.memberIdSubscription.unsubscribe();
@@ -312,7 +315,7 @@ export class MembersPaymentsComponent extends AbstractGenericComponent implement
     }
 
     openDialogForPayment(payment: MemberMembershipPayments) {
-       
+
         const dialogRef = this._dialog.open(TransactionPaymentComponent, {
             disableClose: true,
             data: payment
@@ -424,9 +427,9 @@ export class MembersPaymentsComponent extends AbstractGenericComponent implement
             }
             else {
                 this._messageService.showErrorMessage(response.MessageText);
-                // Dec 18,2019 at 16:18 hrs 
+                // Dec 18,2019 at 16:18 hrs
                 //As per discussion with Iftikhar there should be a call for view all payments if retry attempt is made.
-                
+
                 setTimeout(() => {
                 this.getMemberMembershipPyments();
                 }, 2000)
@@ -482,7 +485,7 @@ export class MembersPaymentsComponent extends AbstractGenericComponent implement
                 this.searchMembershipPaymentParams.DateTo = this.membershipSearchModel.DateTo;
                 this.searchMembershipPaymentParams.DateFrom = this.membershipSearchModel.DateFrom;
             }
-            
+
             this.searchMembershipPaymentParams.PageNumber = this.appPagination.pageNumber,
             this.searchMembershipPaymentParams.PageSize = this.appPagination.pageSize,
             this._memberMembershipPaymentsService.get(MemberPaymentsApi.getMembershipPyments, this.searchMembershipPaymentParams)

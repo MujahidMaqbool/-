@@ -2,6 +2,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { SubscriptionLike as ISubscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
+
 /*********************** Material References *************************/
 import { MatDialogRef, } from '@angular/material/dialog';
 
@@ -15,13 +16,15 @@ import { MessageService } from 'src/app/services/app.message.service';
 
 /* Models */
 import { MembershipTranscation, Membership, PaymentGateway } from 'src/app/customer/member/models/member.membership.payments.model';
-import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
-import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
-/************* Common *******************/
+/************* Configurations *******************/
 import { Messages } from 'src/app/helper/config/app.messages';
 import { Configurations } from 'src/app/helper/config/app.config';
 import { ENU_PaymentGateway, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
+
+/************* Components *******************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
@@ -137,7 +140,7 @@ export class AddMembershipTransactionComponent extends AbstractGenericComponent 
         this.minDate = this.branchCurrentDate;
         this.minDate.setHours(0, 0, 0, 0);
         this.transactionModel.CollectionDate = this.minDate;
-     
+
         const branch = await super.getBranchDetail(this._dataSharingService);
         if (branch && branch.hasOwnProperty("Currency")) {
             this.currencyFormat = branch.CurrencySymbol;

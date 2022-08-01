@@ -1,31 +1,27 @@
 ﻿/********************** Angular References *********************/
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { SubscriptionLike as ISubscription } from "rxjs";
-/********************** Services & Models *********************/
-/* Models */
-import { SavePageMember, MemberInfo } from 'src/app/customer/member/models/members.model'
+import { Router } from '@angular/router';
 
+/********************** Services & Models *********************/
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
-//import { LeadOnBoardComponent } from '../../../lead/Lead-on-board/lead.on.board.component';
-
-/********************** Common & Customs *********************/
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
+import { CommonService } from 'src/app/services/common.service';
 
-/**********************Component*********************/
-import { SaveMemberDetailsComponent } from "src/app/customer/member/save/save-member-details/save.member.details.component";
+/* Models */
+import { SavePageMember, MemberInfo } from 'src/app/customer/member/models/members.model'
+import { ApiResponse } from 'src/app/models/common.model';
 
 /********************** Configurations *********************/
 import { Configurations } from 'src/app/helper/config/app.config';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { MemberApi } from 'src/app/helper/config/app.webapi';
-import { ApiResponse } from 'src/app/models/common.model';
-import { Router } from '@angular/router';
-import { CommonService } from 'src/app/services/common.service';
 
-
+/**********************Component*********************/
+import { SaveMemberDetailsComponent } from "src/app/customer/member/save/save-member-details/save.member.details.component";
 
 @Component({
     selector: 'edit-member-details',

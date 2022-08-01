@@ -5,6 +5,7 @@ import { NgForm } from "@angular/forms";
 import { Router } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { Component, ViewChild, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { SubscriptionLike } from "rxjs";
 
 /********************** Services & Models *********************/
 /* Models */
@@ -12,7 +13,7 @@ import { SavePageMember } from 'src/app/customer/member/models/members.model';
 import { CustomFormView } from 'src/app/models/customer.form.model';
 import { ApiResponse, CustomerBillingDetail } from 'src/app/models/common.model';
 import { StripePaymentIntent, PayTabPaymentMode } from 'src/app/point-of-sale/models/point.of.sale.model';
-import { Card, DirectDebit, StripeTerminal, StripeDD, AuthenticateCard } from 'src/app/customer/member/models/member.gateways.model';
+import { Card, DirectDebit, StripeDD, AuthenticateCard } from 'src/app/customer/member/models/member.gateways.model';
 import { GetMemberMembershipPlan, ViewPaymentSummary, ViewPayment, AccountDetails, GatewayCustomerViewModel } from 'src/app/customer/member/models/member.membership.model';
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
@@ -22,29 +23,24 @@ import { MessageService } from 'src/app/services/app.message.service';
 import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
-
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { CommonService } from "src/app/services/common.service";
+import { LoaderService } from "src/app/services/app.loader.service";
 
 /**********************Component*********************/
 import { SaveMemberDetailsComponent } from "src/app/customer/member/save/save-member-details/save.member.details.component";
-//import { MembershipFormComponent } from 'src/app/shared/components/forms/membership-form/membership.form.component';
-// import { SaveMemberPaymentComponent } from 'src/app/shared/components/add-member-membership/save-member-payment/save.member.payment.component';
-// import { MandateConfirmationDialog } from 'src/app/shared/components/add-member-membership/mandate-confirmation/mandate.confirmation.component';
-// import { SaveMemberMembershipComponent } from '@shared/components/add-member-membership/save-member-membership/save.member.membership.component';
-
-/********************** Configurations *********************/
-import { Messages } from 'src/app/helper/config/app.messages';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { MemberApi, CustomerPaymentGatewayApi, CustomerFormApi } from 'src/app/helper/config/app.webapi';
-import { WizardStep, EnumSaleType, MembershipPaymentType, ENU_PaymentGateway, ENU_SEPACountryCode, CustomFormStatus, AddressType } from "src/app/helper/config/app.enums";
 import { SaveMemberMembershipComponent } from "src/app/customer-shared-module/add-member-membership/save-member-membership/save.member.membership.component";
 import { SaveMemberPaymentComponent } from "src/app/customer-shared-module/add-member-membership/save-member-payment/save.member.payment.component";
 import { MandateConfirmationDialog } from "src/app/customer-shared-module/add-member-membership/mandate-confirmation/mandate.confirmation.component";
 import { MembershipFormComponent } from "src/app/customer-shared-module/customer-forms/membership-form/membership.form.component";
 import { POSMembershipPaymentComponent } from "src/app/customer-shared-module/payments/pos.membership.payment";
-import { DataSharingService } from "src/app/services/data.sharing.service";
-import { CommonService } from "src/app/services/common.service";
-import { SubscriptionLike } from "rxjs";
-import { LoaderService } from "src/app/services/app.loader.service";
+
+/********************** Configurations *********************/
+import { Messages } from 'src/app/helper/config/app.messages';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { MemberApi,CustomerFormApi } from 'src/app/helper/config/app.webapi';
+import { WizardStep, EnumSaleType, MembershipPaymentType, ENU_PaymentGateway, ENU_SEPACountryCode, CustomFormStatus, AddressType } from "src/app/helper/config/app.enums";
+
 
 // #endregion
 
@@ -231,7 +227,7 @@ export class AddMemberComponent implements OnInit {
       }
         this.setPerviousContinueButtonVisibility(this.activeTabIndex);
       this.setRewardProgramSkipButtonVisibility();
-        
+
         // //store Old form data for skip functionality
         if (this.showSkipAndContinue) {
             var _formData = this.onGetFormComponent();
@@ -438,7 +434,7 @@ export class AddMemberComponent implements OnInit {
                  this.showPay = false;
                 this.showSkipAndContinue = false;
                 this.showNextAndContinue = false;
-                
+
             }
         }
     }

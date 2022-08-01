@@ -1,45 +1,44 @@
 
 /********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { SubscriptionLike } from "rxjs";
+import { Router } from "@angular/router";
 
 /********************* Material:Refference ********************/
 import { MatPaginator } from "@angular/material/paginator";
 import { MatDatepicker } from "@angular/material/datepicker";
 
 /********************** Services & Models *********************/
-/* Models */
-
-import { AllCustomers, customerAllowedPages, CustomerSearchParameter } from "../models/customers.models";
-
 /* Services */
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "src/app/services/app.message.service";
 import { AuthService } from "src/app/helper/app.auth.service";
 import { DataSharingService } from "src/app/services/data.sharing.service";
-/********************** Component *********************/
+import { CommonService } from "src/app/services/common.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+
 /* Models */
-import { ViewMemberDetail } from "src/app/customer/member/view/view.member.detail.component";
-/**********************  Common *********************/
+import { AllCustomers, customerAllowedPages, CustomerSearchParameter } from "../models/customers.models";
+import { ApiResponse } from "src/app/models/common.model";
+
+
+/**********************  Configuration *********************/
 import { Configurations } from "src/app/helper/config/app.config";
 import { Messages } from "src/app/helper/config/app.messages";
 import { CustomerApi, MemberApi } from "src/app/helper/config/app.webapi";
-import {
-  ENU_Permission_Module,
-  ENU_Permission_ClientAndMember,
-} from "src/app/helper/config/app.module.page.enums";
-import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from "src/app/helper/config/app.module.page.enums";
+import { ENU_DateFormatName, ENU_Package, CustomerType } from "src/app/helper/config/app.enums";
+import { EmailValidatePipe } from "src/app/shared/pipes/email.validate";
+import { CustomDatePipe } from '../../../app/application-pipes/custom.date.pipe';
+
+
+/********************** Component *********************/
+import { ViewMemberDetail } from "src/app/customer/member/view/view.member.detail.component";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { CustomerBenefitsComponent } from "src/app/customer-shared-module/customer-benefits/customer.benefits.component";
+import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pagination/app.pagination.component";
 import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-import { ENU_DateFormatName, ENU_Package, CustomerType } from "src/app/helper/config/app.enums";
-import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pagination/app.pagination.component";
-import { EmailValidatePipe } from "src/app/shared/pipes/email.validate";
-import { Router } from "@angular/router";
-import { CommonService } from "src/app/services/common.service";
-import { CustomDatePipe } from '../../../app/application-pipes/custom.date.pipe';
-import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { SubscriptionLike } from "rxjs";
-import { CustomerBenefitsComponent } from "src/app/customer-shared-module/customer-benefits/customer.benefits.component";
-import { ApiResponse } from "src/app/models/common.model";
 
 
 @Component({

@@ -6,37 +6,33 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatDatepicker } from "@angular/material/datepicker";
 
 /********************** Services & Models *********************/
-/* Models */
-import {
-  MemberSearchParameter,
-  AllMembers,
-} from "src/app/customer/member/models/members.model";
 
 /* Services */
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "src/app/services/app.message.service";
 import { AuthService } from "src/app/helper/app.auth.service";
 import { DataSharingService } from "src/app/services/data.sharing.service";
-/********************** Component *********************/
-/* Models */
-import { ViewMemberDetail } from "src/app/customer/member/view/view.member.detail.component";
-/**********************  Common *********************/
-import { Configurations } from "src/app/helper/config/app.config";
-import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { Messages } from "src/app/helper/config/app.messages";
-import { MemberApi } from "src/app/helper/config/app.webapi";
-import {
-  ENU_Permission_Module,
-  ENU_Permission_ClientAndMember,
-} from "src/app/helper/config/app.module.page.enums";
 import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
-import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
-import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-import { ENU_DateFormatName } from "src/app/helper/config/app.enums";
-import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pagination/app.pagination.component";
-import { EmailValidatePipe } from "src/app/shared/pipes/email.validate";
+
+/* Models */
+import { MemberSearchParameter,AllMembers } from "src/app/customer/member/models/members.model";
 import { ApiResponse } from "src/app/models/common.model";
 
+
+/**********************  Common *********************/
+import { Configurations } from "src/app/helper/config/app.config";
+import { Messages } from "src/app/helper/config/app.messages";
+import { MemberApi } from "src/app/helper/config/app.webapi";
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from "src/app/helper/config/app.module.page.enums";
+import { ENU_DateFormatName } from "src/app/helper/config/app.enums";
+import { EmailValidatePipe } from "src/app/shared/pipes/email.validate";
+
+/********************** Component *********************/
+import { ViewMemberDetail } from "src/app/customer/member/view/view.member.detail.component";
+import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pagination/app.pagination.component";
+import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 
 @Component({
   selector: "search-member",
@@ -160,7 +156,7 @@ export class SearchMemberComponent extends AbstractGenericComponent
         this.membershipStatusTypeList = res.Result.MembershipStatusTypeList;
         this.setSearchFilters();
 
-      } 
+      }
       else {
         this._messageService.showErrorMessage(res.MessageText);
       }

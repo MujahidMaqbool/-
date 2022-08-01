@@ -1,5 +1,11 @@
+/********************** Angular Refrences *********************/
 import { Component } from "@angular/core";
+
+/********************** Services & Models *********************/
+/* Services */
 import { AuthService } from "src/app/helper/app.auth.service";
+
+/**********************  Configurations *********************/
 import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from "src/app/helper/config/app.module.page.enums";
 
 @Component({

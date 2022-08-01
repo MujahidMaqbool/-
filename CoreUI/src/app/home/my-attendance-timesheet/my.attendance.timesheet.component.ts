@@ -3,29 +3,29 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDatepicker } from '@angular/material/datepicker';
 
-/** Services */
+/********************** Service & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 /** Models */
 import { TimesheetSearchParam } from 'src/app/staff/models/attendance.timesheet.model'
+import { ApiResponse } from 'src/app/models/common.model';
 
-/** App Component */
-
-
-/** Messages & Constants */
-
+/********************** Configurations *********************/
 import { Configurations } from 'src/app/helper/config/app.config';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { StaffTimeSheetApi } from 'src/app/helper/config/app.webapi';
-import { DateTimeService } from 'src/app/services/date.time.service';
-import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+
+/********************** Configurations *********************/
 import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { ApiResponse } from 'src/app/models/common.model';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+
 @Component({
     selector: 'my-attendance-timesheet',
     templateUrl: './my.attendance.timesheet.component.html'
@@ -82,7 +82,7 @@ export class MyAttendanceTimeSheetComponent extends AbstractGenericComponent imp
     }
 
     ngAfterViewInit() {
-       
+
     }
 
     // #region Events
@@ -96,7 +96,7 @@ export class MyAttendanceTimeSheetComponent extends AbstractGenericComponent imp
 
     onToDateChange(date: any) {
         setTimeout(() => {
-            this.timesheetSearchParam.DateTo = date; //this.getDateString(date, this.dateFormat); // 07/05/2018  MM/dd/yyyy   
+            this.timesheetSearchParam.DateTo = date; //this.getDateString(date, this.dateFormat); // 07/05/2018  MM/dd/yyyy
         });
     }
 

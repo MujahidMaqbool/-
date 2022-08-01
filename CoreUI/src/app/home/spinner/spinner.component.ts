@@ -1,5 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
+/********************** Angular References *********************/
+import { Component, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
+
+/********************** Services*********************/
+
 import { LoaderService } from 'src/app/services/app.loader.service';
 
 @Component({
@@ -78,7 +82,7 @@ export class SpinnerComponent implements OnDestroy {
 
     this.subscription =
       this.spinnerService.getMessage().subscribe(show => {
-       
+
         if (show) {
           if (thresholdTimer) {
             return;

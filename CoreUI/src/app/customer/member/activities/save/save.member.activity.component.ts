@@ -1,18 +1,13 @@
-﻿// #region Imports 
+﻿// #region Imports
 
 /********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild, Output, EventEmitter, Inject, OnDestroy } from '@angular/core';
 import { NgForm, FormControl } from "@angular/forms";
 import { DatePipe } from '@angular/common';
-
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubscriptionLike as ISubscription } from "rxjs";
 
-/********************** Common *********************/
-import { Configurations } from 'src/app/helper/config/app.config';
-import { MemberActivityApi } from 'src/app/helper/config/app.webapi';
-
-/********************** Components *********************/
+/*********************** Material Reference *************************/
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 /********************** Services & Models *********************/
@@ -23,41 +18,23 @@ import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
 
 /* Models */
-import {
-    MemberContactReasonType,
-    AppointmentActivity,
-    AppointmentNowActivity,
-    AppointmentLaterActivity,
-    CallActivity,
-    CallNowActivity,
-    CallLaterActivity,
-    NoteActivity,
-    EmailActivity,
-    SMSActivity,
-    MemberMessage,
-    AchievementActivity,
-    MemberAppNotification,
-    MemberActivityTabOptions,
-    CallMarkAsDoneActivity,
-    AppointmentMarkAsDoneActivity
-} from 'src/app/customer/member/models/member.activity.model';
+import { MemberContactReasonType, AppointmentActivity, AppointmentNowActivity, AppointmentLaterActivity, CallActivity, CallNowActivity, CallLaterActivity, NoteActivity,EmailActivity, SMSActivity,MemberMessage,AchievementActivity,MemberAppNotification,MemberActivityTabOptions,CallMarkAsDoneActivity,AppointmentMarkAsDoneActivity} from 'src/app/customer/member/models/member.activity.model';
 
-import {
-    ActivityOutcome,
-    PriorityType,
-    WhatNext,
-    Template,
-    Staff,
-    ActivityPersonInfo
-} from 'src/app/models/activity.model';
+import { ActivityOutcome, PriorityType, WhatNext, Template, Staff, ActivityPersonInfo } from 'src/app/models/activity.model';
+import { ApiResponse } from 'src/app/models/common.model';
+
+/********************** Configurations *********************/
+import { Configurations } from 'src/app/helper/config/app.config';
+import { MemberActivityApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { ENU_ActivityType, ENU_ActivitySubType, TemplateType, ENU_ModuleList, WhatNextType, ActivityOutcomeType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
-import { ApiResponse } from 'src/app/models/common.model';
+
+/********************** Components *********************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
 
 
-// #endregion 
+// #endregion
 
 @Component({
     selector: 'save-member-activity',
@@ -65,7 +42,7 @@ import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/on
 })
 export class SaveMemberActivityComponent extends AbstractGenericComponent implements OnInit, OnDestroy {
 
-    // #region Local Members 
+    // #region Local Members
     dayViewFormat: string = "";
 
     @Output()
@@ -183,7 +160,7 @@ export class SaveMemberActivityComponent extends AbstractGenericComponent implem
     tepmplateVariableList = Configurations.TemplateVariableList;
     emailMaxLength = Configurations.EmailMaxLength;
 
-    // #endregion 
+    // #endregion
 
     constructor(
         private _dateFilter: DatePipe,
@@ -234,7 +211,7 @@ export class SaveMemberActivityComponent extends AbstractGenericComponent implem
             }
             case this.activityTypes.Appointment:
             case this.activityTypes.FollowupAppointment: {
-                // Save Appointment                
+                // Save Appointment
                 this.saveAppointment();
                 break;
             }
@@ -402,7 +379,7 @@ export class SaveMemberActivityComponent extends AbstractGenericComponent implem
 
     // #endregion
 
-    // #region Methods 
+    // #region Methods
 
     async getBranchDatePattern() {
         this.schedulerTimeFormat = await super.getBranchTimeFormat(this._dataSharingService);

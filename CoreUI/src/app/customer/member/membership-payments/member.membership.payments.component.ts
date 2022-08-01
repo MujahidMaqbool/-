@@ -4,44 +4,50 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { SubscriptionLike as ISubscription } from "rxjs";
 import { Router, ActivatedRoute } from '@angular/router';
+
 /********************* Material:Refference ********************/
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDatepicker } from '@angular/material/datepicker';
 
 /********************** Services & Models *********************/
-/* Models */
-import { MemberMembershipPayments, MemberPaymentSearch, PaymentGateway, PaymentStatus, Membership } from "src/app/customer/member/models/member.membership.payments.model";
-import { MembershipsFundamentals } from "src/app/customer/member/models/member.membership.model"
-import { PersonInfo, ApiResponse, DD_Branch } from 'src/app/models/common.model';
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 import { AuthService } from 'src/app/helper/app.auth.service';
-/********************** Common & Customs *********************/
-import { MembershipPaymentType, CustomerType, ENU_PaymentGateway, ENU_PaymentStatus, EnumSaleType, ENU_DateFormatName, EnumActivityLogType } from 'src/app/helper/config/app.enums';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { DynamicScriptLoaderService } from 'src/app/services/dynamic.script.loader.service';
+import { StripeService } from 'src/app/services/stripe.service';
+import { LoaderService } from 'src/app/services/app.loader.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
+/* Models */
+import { MemberMembershipPayments, MemberPaymentSearch, PaymentGateway, PaymentStatus, Membership } from "src/app/customer/member/models/member.membership.payments.model";
+import { MembershipsFundamentals } from "src/app/customer/member/models/member.membership.model"
+import { ApiResponse } from 'src/app/models/common.model';
+
+
+/********************** Configurations*********************/
+import { MembershipPaymentType, ENU_PaymentGateway, ENU_PaymentStatus, EnumSaleType, ENU_DateFormatName, EnumActivityLogType } from 'src/app/helper/config/app.enums';
 import { Configurations } from 'src/app/helper/config/app.config';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { MemberPaymentsApi, PointOfSaleApi } from 'src/app/helper/config/app.webapi';
 import { ENU_Permission_ClientAndMember, ENU_Permission_Module } from 'src/app/helper/config/app.module.page.enums';
-import { SuspendMembershipComponent } from 'src/app/customer/member/suspend-membership/suspend.membership.component';
-import { AddMembershipTransactionComponent } from 'src/app/customer/member/membership-payments/add-transactions/add.membership.transaction.component';
-import { TransactionDetailComponent } from 'src/app/customer/member/membership-payments/transaction-detail/transaction.detail.component';
-import { TransactionPaymentComponent } from './payment/transaction.payment.component';
-import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { DateTimeService } from 'src/app/services/date.time.service';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
-import { DynamicScriptLoaderService } from 'src/app/services/dynamic.script.loader.service';
-import { StripeService } from 'src/app/services/stripe.service';
-import { LoaderService } from 'src/app/services/app.loader.service';
+
+
+/********************** Components *********************/
 import { AddStripeCustomerComponent } from 'src/app/gateway/stripe/add.stripe.customer.component';
 import { ActivityLogComponent } from 'src/app/shared/components/activity-log/activity.log.popup.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { TransactionDetailComponent } from 'src/app/customer/member/membership-payments/transaction-detail/transaction.detail.component';
+import { AddMembershipTransactionComponent } from 'src/app/customer/member/membership-payments/add-transactions/add.membership.transaction.component';
+import { SuspendMembershipComponent } from 'src/app/customer/member/suspend-membership/suspend.membership.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { TransactionPaymentComponent } from './payment/transaction.payment.component';
 
 // #endregion
 declare var Stripe: any;

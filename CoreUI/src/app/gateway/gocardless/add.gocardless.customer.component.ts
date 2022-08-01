@@ -5,23 +5,25 @@
 /*********************** Angular References *************************/
 import { Component, ViewChild, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from "@angular/forms";
+import { SubscriptionLike } from 'rxjs';
 
 /*********************** Models & Services  *************************/
+/* Services */
+import { HttpService } from "src/app/services/app.http.service";
+import { MessageService } from "src/app/services/app.message.service";
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+
 /* Models */
 import { SavedAccount, SaveGoCardless, SEPACountry, SEPADashAfterDigit } from "src/app/models/cutomer.gateway.models";
 import { ApiResponse } from 'src/app/models/common.model';
 
-/* Services */
-import { HttpService } from "src/app/services/app.http.service";
-import { MessageService } from "src/app/services/app.message.service";
-
-/*********************** Common  *************************/
+/*********************** Configurations  *************************/
 import { CustomerPaymentGatewayApi } from "src/app/helper/config/app.webapi";
 import { Messages } from "src/app/helper/config/app.messages";
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { SubscriptionLike } from 'rxjs';
 import { ENU_PaymentAccount, ENU_PaymentSortCode, ENU_SEPACountryCode, ENU_SEPACountryScheme, ENU_Page } from 'src/app/helper/config/app.enums';
 import { SEPACountyAccountDetail, SEPACountyAccountDigitBeforeDash } from 'src/app/helper/config/app.config';
+
+/*********************** Components  *************************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 // #endregion

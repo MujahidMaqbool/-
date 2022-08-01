@@ -1,18 +1,14 @@
 /********************** Angular References *********************************/
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
 import { SubscriptionLike as ISubscription } from 'rxjs';
 
 /********************** Common *********************************/
 /* Service */
-
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Model */
+import { InvoiceHistory } from 'src/app/models/common.model';
 
-import { PersonInfo, InvoiceHistory } from 'src/app/models/common.model';
-
-/********************** Common *********************************/
 
 @Component({
     selector: 'member-sale-history',

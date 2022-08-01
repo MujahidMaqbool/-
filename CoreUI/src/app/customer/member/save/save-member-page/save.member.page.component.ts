@@ -9,12 +9,6 @@ import { SubscriptionLike as ISubscription } from "rxjs";
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 
-/********************** Common & Customs *********************/
-
-/**********************Component*********************/
-
-/********************** Configurations *********************/
-
 @Component({
     selector: 'save-member',
     template: `
@@ -24,8 +18,8 @@ import { DataSharingService } from 'src/app/services/data.sharing.service';
 })
 
 export class SaveMemberPageComponent implements OnInit, OnDestroy {
-    
-    memberId: number = 0;    
+
+    memberId: number = 0;
     memberIdSubscription: ISubscription;
 
     constructor(private _dataSharingService: DataSharingService) {

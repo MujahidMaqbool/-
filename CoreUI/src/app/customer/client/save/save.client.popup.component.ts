@@ -1,16 +1,10 @@
 ﻿/********************* Angular References ********************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+
+
+/********************** Components ***************************/
 import { SaveClientComponent } from 'src/app/customer/client/save/save.client.component';
-
-/**********************Component*********************/
-
-/********************* Services & Models ********************/
-/* Services */
-
-/* Models*/
-
-/********************** Common ***************************/
 
 @Component({
     selector: 'save-client-popup',
@@ -18,25 +12,14 @@ import { SaveClientComponent } from 'src/app/customer/client/save/save.client.co
 })
 
 export class SaveClientPopupComponent implements OnInit {
-    // #region Local Members
 
     @ViewChild('addClientRef') addClientRef: SaveClientComponent;
 
-    /*********** Messages *********/
 
-    /*********** Model References *********/
-
-    /*********** Collection Types *********/
-    
-    /*********** Configurations *********/
-    
-    // #endregion
-
-    
     constructor(private _dialogRef: MatDialogRef<SaveClientPopupComponent>) {
     }
 
-     
+
     ngOnInit() {
     }
 
@@ -48,10 +31,10 @@ export class SaveClientPopupComponent implements OnInit {
 
     onCloseDialog(shouldClose: boolean) {
         if (shouldClose) {
-            this.closeDialog();    
-        }        
+            this.closeDialog();
+        }
     }
-    
+
     // #endregion
 
     // #region Methods

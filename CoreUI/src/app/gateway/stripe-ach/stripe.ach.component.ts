@@ -2,21 +2,22 @@
 
 /*********************** Angular References *************************/
 import { Component, Input } from "@angular/core";
-/*********************** Models & Services  *************************/
-/* Models */
-import { SavedCard } from "src/app/point-of-sale/models/point.of.sale.model";
-import { ApiResponse } from "src/app/models/common.model";
 
+/*********************** Models & Services  *************************/
 /* Services */
 import { MessageService } from "src/app/services/app.message.service";
 import { HttpService } from "src/app/services/app.http.service";
 import { LoaderService } from "src/app/services/app.loader.service";
+import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
+
+/* Models */
+import { SavedCard } from "src/app/point-of-sale/models/point.of.sale.model";
+import { ApiResponse } from "src/app/models/common.model";
+import { StripeDD } from "src/app/customer/member/models/member.gateways.model";
 
 /*********************** Common  *************************/
 import { Messages } from "src/app/helper/config/app.messages";
 import { PointOfSaleApi, SaleApi } from "src/app/helper/config/app.webapi";
-import { DynamicScriptLoaderService } from "src/app/services/dynamic.script.loader.service";
-import { StripeDD } from "src/app/customer/member/models/member.gateways.model";
 import { environment } from "src/environments/environment";
 
 
@@ -109,7 +110,7 @@ export class StripeACHComponent {
               if (this.showAddAccount) {
                 this.savedAccounts.push({ CustomerPaymentGatewayID: 0, InstrumentName: "", InstrumentLastDigit: "", Title: "Add New Account" });
               }
-              
+
               this.customerPaymentGatewayId = this.savedAccounts[0].CustomerPaymentGatewayID;
             } else{
               this.savedAccounts = [];
@@ -163,14 +164,14 @@ export class StripeACHComponent {
   }
 
   getStripeACHToken(plaidPublickey: string, clientName: string) {
-    
+
     var evnName = environment.ENVName;
     if(evnName == "live"){
       evnName = "production";
     } else{
        evnName = evnName == "qa" || evnName == "demo" || evnName == "staging" ? "sandbox" : evnName;
     }
-    
+
     return new Promise<any>((resolve, reject) => {
       var linkHandler = Plaid.create({
         env: evnName,

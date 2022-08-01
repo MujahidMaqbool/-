@@ -1,6 +1,9 @@
-import { Component, EventEmitter, Inject, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+/*********************** Angular References *************************/
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+
+/*********************** Services *************************/
 import { LoaderService } from 'src/app/services/app.loader.service';
 @Component({
   selector: 'app-iframe',

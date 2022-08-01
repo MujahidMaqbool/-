@@ -1,22 +1,26 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-import { SubscriptionLike } from "rxjs";
+
 /************************* Services & Models ***********************************/
-/* Models */
-import { ClientDashboardSearchParam, ITopServices, ITopEmployeeServices, ISalesBreakDownServices, ISalesbyChannel, IMonthlySales, IMonthlyVisits, IServicesandAttendanceBooking, INewvsReturningClient, IClientVisits } from 'src/app/customer/client/models/client.dashboard.model';
-import { DD_Branch, ApiResponse } from "src/app/models/common.model";
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
 import { DataSharingService } from "src/app/services/data.sharing.service";
 import { MessageService } from "src/app/services/app.message.service";
-/**********************  Common *********************/
+
+/* Models */
+import { ClientDashboardSearchParam, ITopServices, ITopEmployeeServices, ISalesBreakDownServices, ISalesbyChannel, IMonthlySales, IMonthlyVisits, IServicesandAttendanceBooking, INewvsReturningClient, IClientVisits } from 'src/app/customer/client/models/client.dashboard.model';
+import { ApiResponse } from "src/app/models/common.model";
+
+/**********************  Configurations *********************/
 import { ClientApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from "src/app/helper/config/app.messages";
 import { CustomerType, ENU_DateFormatName } from "src/app/helper/config/app.enums";
-import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
 import { MatDatepicker } from "@angular/material/datepicker";
 import { Configurations } from "src/app/helper/config/app.config";
+
+/**********************  Components *********************/
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
 
 @Component({
     selector: 'client-dashboard',
@@ -88,14 +92,14 @@ export class ClientDashboardComponent extends AbstractGenericComponent implement
 
     ngOnInit() {
         this.getCurrentBranchDetail();
-       
+
     }
 
     ngAfterViewInit(){
-   
+
     }
 
-   
+
 
     // #region Events
 

@@ -1,18 +1,20 @@
-﻿// #region Imports 
+﻿// #region Imports
 
 /********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild, Output, EventEmitter, Inject, OnDestroy, AfterViewInit } from '@angular/core';
 import { NgForm, FormControl } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SubscriptionLike as ISubscription, SubscriptionLike } from "rxjs";
+import { SubscriptionLike as ISubscription} from "rxjs";
 
-/********************** Common *********************/
+/********************** Configurations *********************/
 import { Configurations } from 'src/app/helper/config/app.config';
 import { ClientActivityApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
 
 /********************** Components *********************/
 
+import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 /********************** Services & Models *********************/
 /* Services */
@@ -22,38 +24,15 @@ import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
 
 /* Models */
-import {
-    ClientContactReasonType,
-    ClientActivityTabOptions,
-    AppointmentActivity,
-    AppointmentNowActivity,
-    AppointmentLaterActivity,
-    CallActivity,
-    CallNowActivity,
-    CallLaterActivity,
-    NoteActivity,
-    EmailActivity,
-    SMSActivity,
-    ClientAppNotification,
-    CallMarkAsDoneActivity,
-    AppointmentMarkAsDoneActivity
-} from 'src/app/customer/client/models/client.activity.model';
-
-import {
-    ActivityOutcome,
-    PriorityType,
-    WhatNext,
-    Template,
-    Staff,
-    ActivityPersonInfo
-} from 'src/app/models/activity.model';
-import { ENU_ActivityType, TemplateType, ENU_ModuleList, WhatNextType, ActivityOutcomeType, ENU_DateFormatName, ENU_ActivitySubType, ENU_Package } from 'src/app/helper/config/app.enums';
+import { ClientContactReasonType, ClientActivityTabOptions, AppointmentActivity, AppointmentNowActivity, AppointmentLaterActivity, CallActivity, CallNowActivity,CallLaterActivity, NoteActivity,EmailActivity,SMSActivity,ClientAppNotification, CallMarkAsDoneActivity, AppointmentMarkAsDoneActivity} from 'src/app/customer/client/models/client.activity.model';
+import { ActivityOutcome, PriorityType, WhatNext, Template, Staff, ActivityPersonInfo } from 'src/app/models/activity.model';
 import { ApiResponse } from 'src/app/models/common.model';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { AchievementActivity } from 'src/app/customer/member/models/member.activity.model';
-import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/one.day.scheduler.component';
 
-// #endregion 
+/********************** Configuration *********************/
+import { ENU_ActivityType, TemplateType, ENU_ModuleList, WhatNextType, ActivityOutcomeType, ENU_DateFormatName, ENU_ActivitySubType} from 'src/app/helper/config/app.enums';
+
+// #endregion
 
 @Component({
     selector: 'save-client-activity',
@@ -61,7 +40,7 @@ import { OneDaySchedulerComponent } from 'src/app/shared/components/scheduler/on
 })
 export class SaveClientActivityComponent extends AbstractGenericComponent implements OnInit, OnDestroy {
 
-    // #region Local Members 
+    // #region Local Members
 
     dayViewFormat: string = "";
 
@@ -150,7 +129,7 @@ export class SaveClientActivityComponent extends AbstractGenericComponent implem
     clientContactReasonTypeList: ClientContactReasonType[];
     outcomeList: ActivityOutcome[];
     whatNextList: WhatNext[];
-   
+
 
     //activeTabs: string[];
 
@@ -177,7 +156,7 @@ export class SaveClientActivityComponent extends AbstractGenericComponent implem
     currentCallDate: Date;
     currentAppointmentDate: Date;
 
-    // #endregion 
+    // #endregion
 
     constructor(
         private _httpService: HttpService,
@@ -191,9 +170,9 @@ export class SaveClientActivityComponent extends AbstractGenericComponent implem
     }
 
     ngOnInit() {
-    
+
     }
- 
+
     async ngAfterViewInit() {
 
         this.activeTab = this.tabsOptions.activeTabs[0];
@@ -266,7 +245,7 @@ export class SaveClientActivityComponent extends AbstractGenericComponent implem
         switch (this.activeTab) {
             case this.activityTypes.Appointment:
             case this.activityTypes.FollowupAppointment: {
-                // Save Appointment                
+                // Save Appointment
                 this.saveAppointment();
                 break;
             }
@@ -496,7 +475,7 @@ export class SaveClientActivityComponent extends AbstractGenericComponent implem
 
     // #endregion
 
-    // #region Methods 
+    // #region Methods
 
     async getBranchSetting() {
         this.dayViewFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.SchedulerDateFormatDayView);
@@ -1573,8 +1552,8 @@ export class SaveClientActivityComponent extends AbstractGenericComponent implem
         this.schedulerMinDate = this.currentDateTime;
         this.schedulerMaxDate = this.currentDateTime;
     }
-    
 
-    
+
+
     // #endregion
 }

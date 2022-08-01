@@ -1,20 +1,12 @@
 /********************** Angular References *********************************/
 import { Component } from '@angular/core';
-/********************* Material:Refference ********************/
 
 /********************** Service & Models *********************/
 /* Services */
-
-
-/* Models */
-import { PersonInfo, POSBooking } from 'src/app/models/common.model';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 
-/********************** Component *********************************/
-
-
-/********************** Common *********************************/
-import { PersonType, CustomerType } from 'src/app/helper/config/app.enums';
+/* Models */
+import { POSBooking } from 'src/app/models/common.model';
 
 @Component({
     selector: 'member-booking',

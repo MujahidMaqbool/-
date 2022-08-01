@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+/********************** Angular Refrences *********************/
+import { Component} from '@angular/core';
 
-/********************** Service & Models *********************/
 
-/********************** Configurations *********************/
 
 @Component({
   selector: 'app-welcome',

@@ -9,24 +9,25 @@ import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from "src/app/services/date.time.service";
 import { DataSharingService } from "src/app/services/data.sharing.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { CommonService } from "src/app/services/common.service";
 
 /* Modles */
 import { StaffProfile, StaffInfo } from 'src/app/staff/models/staff.model';
+import { ApiResponse, DD_Branch } from "src/app/models/common.model";
 
-/********************** Common *********************/
+/********************** Configuration *********************/
 import { Messages } from 'src/app/helper/config/app.messages';
 import { environment } from 'src/environments/environment';
-import { ImageEditorPopupComponent } from "src/app/application-dialog-module/image-editor/image.editor.popup.component";
 import { Configurations } from "src/app/helper/config/app.config";
 import { StaffProfileApi, StaffApi } from 'src/app/helper/config/app.webapi';
-import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { CommonService } from "src/app/services/common.service";
 import { ENU_Permission_Staff } from 'src/app/helper/config/app.module.page.enums';
-import { ApiResponse, DD_Branch } from "src/app/models/common.model";
-import { variables } from "src/app/helper/config/app.variable";
 import { AppUtilities } from "src/app/helper/aap.utilities";
-import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+
+/********************** Components *********************/
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+import { ImageEditorPopupComponent } from "src/app/application-dialog-module/image-editor/image.editor.popup.component";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
 
 @Component({
     selector: 'staff-profile',

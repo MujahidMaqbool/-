@@ -1,24 +1,37 @@
+/************************* Angular References ***********************************/
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { ServiceNotificationDetailComponent } from '../service-notification/service.notification.details.component';
-import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
-import { HttpService } from 'src/app/services/app.http.service';
-import { MessageService } from 'src/app/services/app.message.service';
-import { ApiResponse } from 'src/app/models/common.model';
-import { StaffNotificationSearch } from 'src/app/models/Notification.model';
-import { DateTimeService } from 'src/app/services/date.time.service';
-import { Configurations, StaffNotificationsStatus } from 'src/app/helper/config/app.config';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { ENU_NotificationTriggerCategory, ENU_EventCategoryType, ENU_DateFormatName, CustomerType, ENU_NotificationTrigger } from 'src/app/helper/config/app.enums';
-import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { Router } from '@angular/router';
+
+/********************* Material:Refference ********************/
+import { MatPaginator } from '@angular/material/paginator';
+
+/********************** Service & Models *********************/
+/* Services */
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { AuthService } from 'src/app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Home, ENU_Permission_Individual, ENU_Permission_Staff, ENU_Permission_ClientAndMember, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
+
+/* Models */
+import { StaffNotificationSearch } from 'src/app/models/Notification.model';
+import { ApiResponse } from 'src/app/models/common.model';
+
+
+/********************** Configurations *********************/
+import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Individual, ENU_Permission_Staff, ENU_Permission_ClientAndMember, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
+import { ENU_NotificationTriggerCategory, ENU_EventCategoryType, ENU_DateFormatName, CustomerType, ENU_NotificationTrigger } from 'src/app/helper/config/app.enums';
+import { StaffNotificationsStatus } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+
+
+/************************* Component ***********************************/
+import { ServiceNotificationDetailComponent } from '../service-notification/service.notification.details.component';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { ViewNotificationComponent } from '../view-notification/view.notification.component';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { AttendeeComponent } from 'src/app/attendee/save-search/attendee.component';
 

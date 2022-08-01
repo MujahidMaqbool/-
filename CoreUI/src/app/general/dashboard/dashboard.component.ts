@@ -3,39 +3,38 @@ import { Component, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { HomeApi, StaffDashboardApi, ClientApi, LeadApi, MemberApi, RewardProgramApi } from 'src/app/helper/config/app.webapi';
 import { StaffAttendance, MemberAttendance, SaleTypeSummary, MainDashboardSearchParams, MembersContract, MembershipStatus, PersonInfo, StaffPendingTask, TotalSaleSummary, MemberContract, RewardProgramSummaryViewModel } from 'src/app/models/home.dashboard.model';
-//import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
+import { SubscriptionLike } from 'rxjs';
 
 /********************** Service & Models *********************/
-
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
-/* Models */
-import { StaffSchedulerHours } from 'src/app/staff/models/staff.model';
-import { IMonthlyVisits, IServicesandAttendanceBooking, IMonthlySales, IClientVisits } from 'src/app/customer/client/models/client.dashboard.model';
-import { LeadFlow, LeadActivity, AtivtiesSummary, LeadStatusTypeList } from 'src/app/lead/models/lead.dashboard.model';
-import { MemberBooking, MemberServices, MemberProducts, TotalRevenue, TotalSaleCount, LeadStatusTypeListMainDashBorad } from 'src/app/customer/member/models/member.dashboard.model';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
-/************************* Component & Common ***********************************/
-import { ViewMemberDetail } from 'src/app/customer/member/view/view.member.detail.component';
-import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+/* Models */
+import { IMonthlyVisits, IServicesandAttendanceBooking, IMonthlySales, IClientVisits } from 'src/app/customer/client/models/client.dashboard.model';
+import { LeadFlow, LeadActivity, AtivtiesSummary } from 'src/app/lead/models/lead.dashboard.model';
+import { MemberBooking, MemberServices, MemberProducts, TotalRevenue, TotalSaleCount, LeadStatusTypeListMainDashBorad } from 'src/app/customer/member/models/member.dashboard.model';
+import { ApiResponse } from 'src/app/models/common.model';
+
+
+
 /********************** Configurations *********************/
 import { Messages } from 'src/app/helper/config/app.messages';
 import { Configurations } from 'src/app/helper/config/app.config';
 import { environment } from 'src/environments/environment';
-import { CustomerType, MembershipStatus_Enum, LeadStatusType, EnumSaleSourceType, ENU_Package, ENU_ActivityType, EnumMemberDashboardSaleType, ENU_DateFormatName, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from 'src/app/helper/config/app.enums';
-import { SubscriptionLike } from 'rxjs';
-import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { MembershipStatus_Enum, LeadStatusType, ENU_Package, ENU_ActivityType, EnumMemberDashboardSaleType, ENU_DateFormatName, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from 'src/app/helper/config/app.enums';
 import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import * as moment from 'moment';
-import { variables } from 'src/app/helper/config/app.variable';
 import { AppUtilities } from 'src/app/helper/aap.utilities';
+
+/************************* Component ***********************************/
+import { ViewMemberDetail } from 'src/app/customer/member/view/view.member.detail.component';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+
 var currencyCode: any;
 var currencySymbolForRevenue: any;
 @Component({
@@ -363,7 +362,7 @@ export class DashboardComponent extends AbstractGenericComponent {
           if (response && response.MessageCode > 0) {
             this.ownLeads = response.Result;
           }
-          
+
         },
         error => { this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace("{0}", "Lead Owns Data")); }
       );
@@ -383,7 +382,7 @@ export class DashboardComponent extends AbstractGenericComponent {
               resolve(true);
             }
           }
-          
+
         },
         error => { this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace("{0}", "Lead Status Data")); }
       );
@@ -844,7 +843,7 @@ export class DashboardComponent extends AbstractGenericComponent {
             this.memberAttendance = res.Result;
             this.setMemerImagePath();
           }
-        } 
+        }
       },
         error => {
           this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace('{0}', "Member Attendance"));
@@ -900,7 +899,7 @@ export class DashboardComponent extends AbstractGenericComponent {
           if (this.ismembersContractsExsist) {
             this.membersContract = res.Result;
           }
-        } 
+        }
       },
         error => {
           this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace('{0}', "Members Contract"));
@@ -921,7 +920,7 @@ export class DashboardComponent extends AbstractGenericComponent {
           if (this.isMembershipStatusExsist) {
             this.membershipStatus = res.Result;
           }
-        } 
+        }
       },
         error => {
           this._messageService.showErrorMessage(this.messages.Error.Get_Error.replace('{0}', "Membership Status"));
@@ -1312,7 +1311,7 @@ export class DashboardComponent extends AbstractGenericComponent {
 
   }
   memberBookingcustomizePoint(arg: any) {
-    
+
     var enumSaleSourceType = EnumNetSaleSourceType;
     switch (arg.data.AppSourceTypeID) {
       case enumSaleSourceType.Core:

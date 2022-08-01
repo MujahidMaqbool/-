@@ -5,6 +5,7 @@ import { SubscriptionLike as ISubscription } from 'rxjs';
 
 /********************** Service & Models *********************/
 /* Services */
+import { CommonService } from 'src/app/services/common.service';
 
 
 /* Models */
@@ -14,9 +15,8 @@ import { DataSharingService } from 'src/app/services/data.sharing.service';
 /********************** Component *********************************/
 
 
-/********************** Common *********************************/
-import { PersonType, CustomerType } from 'src/app/helper/config/app.enums';
-import { CommonService } from 'src/app/services/common.service';
+/********************** Configurations *********************************/
+import { CustomerType } from 'src/app/helper/config/app.enums';
 
 @Component({
     selector: 'client-booking',
@@ -36,7 +36,7 @@ export class ClientBookingComponent {
     constructor(
         private _dataSharingService: DataSharingService,
         private _commonService:CommonService
-    ) { 
+    ) {
         this.posBooking = new POSBooking();
     }
 
@@ -62,7 +62,7 @@ export class ClientBookingComponent {
                 this._commonService.shareLeadInfo(this.personInfo);
             }
         });
-    
+
     }
 
 

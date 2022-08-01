@@ -1,15 +1,25 @@
+/************************* Angular References ***********************************/
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { HttpService } from 'src/app/services/app.http.service';
-import { LoginApi } from 'src/app/helper/config/app.webapi';
-import { AuthService } from 'src/app/helper/app.auth.service';
-import { Messages } from 'src/app/helper/config/app.messages';
-
-import { ChangePassword } from 'src/app/account/model/login.model';
 import { NgForm } from '@angular/forms';
+
+/********************* Material:Refference ********************/
+import { MatDialogRef } from '@angular/material/dialog';
+
+/********************** Service & Models *********************/
+/* Services */
+import { HttpService } from 'src/app/services/app.http.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 import { MessageService } from 'src/app/services/app.message.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
+/* Models */
+import { ChangePassword } from 'src/app/account/model/login.model';
+
+
+/********************** Configurations *********************/
+import { Messages } from 'src/app/helper/config/app.messages';
+import { LoginApi } from 'src/app/helper/config/app.webapi';
+
 
 
 @Component({
@@ -74,7 +84,7 @@ export class ChangePasswordPopup {
             this.closeDialog();
             this._router.navigate(['/account/login']);
           }
-          // else if (response && response.MessageCode == -33) {            
+          // else if (response && response.MessageCode == -33) {
           //   // ERROR
           //   this._messageService.showErrorMessage(this.messages.Validation.OldPassword_Incorrect);
           // }

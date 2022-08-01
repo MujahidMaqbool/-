@@ -12,33 +12,33 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ClientActivity, ClientActivityTabOptions, ClientActivityCount, ClientActivityInfo } from 'src/app/customer/client/models/client.activity.model';
 import { ActivityPersonInfo } from 'src/app/models/activity.model';
 import { PersonInfo, ApiResponse } from 'src/app/models/common.model';
+
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { AuthService } from 'src/app/helper/app.auth.service';
 import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { CommonService } from 'src/app/services/common.service';
 
-/********************** Common & Customs *********************/
+/********************** Configurations *********************/
 import { Configurations } from 'src/app/helper/config/app.config';
 import { ClientActivityApi, CustomerApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { environment } from 'src/environments/environment';
 import { ENU_ActivityType, CustomerType, ENU_DateFormatName, ENU_ActivitySubType } from 'src/app/helper/config/app.enums';
+import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
 
 /********************** Components *********************/
 import { SaveClientActivityComponent } from 'src/app/customer/client/activities/save/save.client.activity.component';
 import { AddLeadMembershipComponent } from 'src/app/customer-shared-module/add-lead-membership/add.lead.membership.component';
 import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
-import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember } from 'src/app/helper/config/app.module.page.enums';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { CommonService } from 'src/app/services/common.service';
 import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
 import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MessageService } from 'src/app/services/app.message.service';
-import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
 
-// import { ViewMemberActivityComponent } from '../view/view.activity.component';
 
 // #endregion
 

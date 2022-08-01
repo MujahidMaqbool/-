@@ -1,28 +1,34 @@
+/*************************** Angular References *********************/
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { SubscriptionLike } from "rxjs";
+import { CurrencyPipe } from "@angular/common";
+
 /************************* Services & Models ***********************************/
 /* Services  */
 import { DataSharingService } from "src/app/services/data.sharing.service";
 import { DateTimeService } from "src/app/services/date.time.service";
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "src/app/services/app.message.service";
+
 /* Models */
-import { ApiResponse, DD_Branch } from "src/app/models/common.model";
-/************************* Common ***********************************/
+import { ApiResponse} from "src/app/models/common.model";
+import { CustomerApplication } from "../models/customers.models";
+import { RewardProgramSummaryViewModel } from "src/app/models/home.dashboard.model";
+import { MemberDashboardSearchParam, MemberSnapshot, MemberBooking, MemberServices, MemberProducts, MemberByStatus, MemberClubVisits, MemberPayment, MemberServiceAndAttendance, MemberTotalRevenue, customerBirthdaySummary, MembershipsExpiry, TotalSaleCount } from "../member/models/member.dashboard.model";
+import { INewvsReturningClient, ISalesBreakDownServices, ISalesbyChannel, iTopEmployeeClasses, ITopEmployeeServices, ITopServices, TopClasses, TopMemberships, TopProducts } from "../client/models/client.dashboard.model";
+
+/************************* Components ***********************************/
+import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
+import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
+
+/************************* Configuration ***********************************/
 import { ClientApi, HomeApi, MemberApi, RewardProgramApi } from "src/app/helper/config/app.webapi";
 import { Configurations } from "src/app/helper/config/app.config";
 import { Messages } from "src/app/helper/config/app.messages";
-import { EnumSaleSourceType, MembershipStatus_Enum, ENU_Package, CustomerType, ENU_DateFormatName, CustomerApplication_Enum, CustomerMobileApplication_Enum, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from "src/app/helper/config/app.enums";
-import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
-import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-import { MemberDashboardSearchParam, MemberSnapshot, MemberBooking, MemberServices, MemberProducts, MemberByStatus, MemberClubVisits, MemberPayment, MemberServiceAndAttendance, MemberTotalRevenue, customerBirthdaySummary, MembershipsExpiry, TotalSaleCount } from "../member/models/member.dashboard.model";
-import { INewvsReturningClient, ISalesBreakDownServices, ISalesbyChannel, iTopEmployeeClasses, ITopEmployeeServices, ITopServices, TopClasses, TopMemberships, TopProducts } from "../client/models/client.dashboard.model";
+import { MembershipStatus_Enum, ENU_Package, CustomerType, ENU_DateFormatName, CustomerMobileApplication_Enum, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from "src/app/helper/config/app.enums";
 import { environment } from "src/environments/environment";
 import { AppUtilities } from "src/app/helper/aap.utilities";
 import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
-import { CustomerApplication } from "../models/customers.models";
-import { CurrencyPipe } from "@angular/common";
-import { RewardProgramSummaryViewModel } from "src/app/models/home.dashboard.model";
 
 /*
     Component Variables are not accessible in Dashboard widget events
@@ -207,7 +213,7 @@ export class CustomerDashboardComponent extends AbstractGenericComponent impleme
     onTopSalesByChanelDateChange() {
         this.getTopSalesChannelByDate();
     }
-    
+
     reciviedDateToForVisitInClub($event) {
         let dateTo = new Date($event.DateTo);
         let dateFrom = new Date($event.DateFrom);
@@ -927,7 +933,7 @@ export class CustomerDashboardComponent extends AbstractGenericComponent impleme
 
 
     memberBookingcustomizePoint(arg: any) {
-    
+
         var enumSaleSourceType = EnumNetSaleSourceType;
         switch (arg.data.AppSourceTypeID) {
           case enumSaleSourceType.Core:

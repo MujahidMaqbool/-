@@ -2,6 +2,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { SubscriptionLike as ISubscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
+
 /*********************** Material References *************************/
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -11,29 +12,20 @@ import { DateTimeService } from 'src/app/services/date.time.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+
 /*********************** Models *************************/
-import {
-    MemberMembership,
-    MembershipFreezeDetail,
-    MemberMembershipPaymentsDetail,
-    SaveMembershipFreezeDetail
-}
-    from '../models/member.membership.suspend.model';
-import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+import { MemberMembership,MembershipFreezeDetail, MemberMembershipPaymentsDetail, SaveMembershipFreezeDetail } from '../models/member.membership.suspend.model';
+import { ApiResponse } from 'src/app/models/common.model'
 import { PaymentGateway } from '../models/member.membership.payments.model';
-/*********************** Common *************************/
+
+/*********************** Configurations *************************/
 import { MemberApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { Configurations } from 'src/app/helper/config/app.config';
-import {
-    MembershipStatus_Enum,
-    ENU_PaymentGateway,
-    ENU_PaymentStatus,
-    EnumSaleType,
-    ENU_DateFormatName
-} from 'src/app/helper/config/app.enums';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { MembershipStatus_Enum, ENU_PaymentGateway, ENU_PaymentStatus, EnumSaleType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 
+/*********************** Components *************************/
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
     selector: 'suspend-membership',
@@ -175,10 +167,10 @@ export class SuspendMembershipComponent extends AbstractGenericComponent impleme
             this.currencyFormat = branch.CurrencySymbol;
         }
           //set branch date time added by fahad for browser different time zone issue resolving
-        
+
          this.currentDate = this.minDate;
     }
-    
+
     addProcessingDays() {
         this.minDate = this._dateTimeService.addWorkDays(new Date(), this.paymentProcessingDays);
         this.minDate.setHours(0, 0, 0, 0);

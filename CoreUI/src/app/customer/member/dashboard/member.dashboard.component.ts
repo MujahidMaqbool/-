@@ -1,35 +1,42 @@
+/********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { SubscriptionLike as ISubscription, SubscriptionLike } from "rxjs";
+import { CurrencyPipe } from "@angular/common";
+import { Router } from "@angular/router";
+
+/*********************** Material Reference *************************/
+import { MatDatepicker } from "@angular/material/datepicker";
+
 /************************* Services & Models ***********************************/
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
 import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MessageService } from "src/app/services/app.message.service";
+import { AuthService } from "src/app/helper/app.auth.service";
 
 /* Models */
 import { MemberInfo, MemberDashboardSearchParam, MemberActivities, MemberBooking, MemberServices, MemberProducts, MemberActiveMemberships, MemberAttendanceSummary, MemberTotalRevenue, TotalSaleCount } from "src/app/customer/member/models/member.dashboard.model";
-import { DD_Branch, ApiResponse } from "src/app/models/common.model";
-/**********************  Common *********************/
+import { ApiResponse } from "src/app/models/common.model";
+import { DateToFrom } from "src/app/models/common.model";
+import { MemberMembershipPayments } from "../models/member.membership.payments.model";
+
+/**********************  Configuration *********************/
 import { environment } from "src/environments/environment";
 import { ENU_ActivityType, MembershipPaymentType, EnumSaleSourceType, ENU_Package, ENU_MemberAttendanceRedirect, ENU_DateFormatName, ENU_MainDashboard_ClubVisitGraphType, EnumNetSaleSourceType } from 'src/app/helper/config/app.enums';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { ClientApi, MemberApi, MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
-import { MessageService } from "src/app/services/app.message.service";
+import { MemberApi, MemberPaymentsApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from "src/app/helper/config/app.messages";
-import { MemberMembershipPayments } from "../models/member.membership.payments.model";
 import { Configurations } from "src/app/helper/config/app.config";
 import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
-import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
-import { Router } from "@angular/router";
-import { MemberAttendanceComponent } from "src/app/attendance/member/member.attendance.component";
-import { AuthService } from "src/app/helper/app.auth.service";
 import { ENU_Permission_Module, ENU_Permission_Individual } from "src/app/helper/config/app.module.page.enums";
 import { CustomerType } from "src/app/helper/config/app.enums";
 import { AppUtilities } from "src/app/helper/aap.utilities";
+
+/**********************  Components *********************/
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-import { CurrencyPipe } from "@angular/common";
-import { MatDatepicker } from "@angular/material/datepicker";
-import { DateToFrom } from "src/app/models/common.model";
+import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
+import { MemberAttendanceComponent } from "src/app/attendance/member/member.attendance.component";
 
 /*
     Component Variables are not accessible in Dashboard widget events
@@ -114,7 +121,7 @@ export class MemberDashboardComponent extends AbstractGenericComponent implement
     memberDashboardSearchParam: MemberDashboardSearchParam = new MemberDashboardSearchParam();
     package = ENU_Package;
     totalSaleCount: TotalSaleCount = new TotalSaleCount();
-    CustomerTypes = Configurations.CustomerTypeList; 
+    CustomerTypes = Configurations.CustomerTypeList;
     memberEmailSubscription: ISubscription;
 
     membershipPaymentType = MembershipPaymentType;
@@ -204,7 +211,7 @@ export class MemberDashboardComponent extends AbstractGenericComponent implement
             currencyCode = branch.Currency;
             this.getMemberSale();
         }
-      
+
         this.packageIdSubscription = this._dataSharingService.packageId.subscribe((packageId: number) => {
             if (packageId && packageId > 0) {
                 this.setPermissions(packageId);
@@ -562,7 +569,7 @@ export class MemberDashboardComponent extends AbstractGenericComponent implement
     }
 
     memberBookingcustomizePoint(arg: any) {
-    
+
         var enumSaleSourceType = EnumNetSaleSourceType;
         switch (arg.data.AppSourceTypeID) {
           case enumSaleSourceType.Core:
@@ -646,7 +653,7 @@ export class MemberDashboardComponent extends AbstractGenericComponent implement
             this.dateTo = this.dateFrom;
         }
     }
-    
+
     // #endregion
 
 }
