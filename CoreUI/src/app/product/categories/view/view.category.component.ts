@@ -1,16 +1,22 @@
+/********************** Angular Refrences *********************/
 import { Component, OnInit, Inject } from '@angular/core';
-import { ViewComponent } from 'src/app/setup/automation-template/view/view.component';
-import { Messages } from 'src/app/helper/config/app.messages';
+
+/********************** Material::Reference *********************/
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
+/********************** Configuration *********************/
+import { Messages } from 'src/app/helper/config/app.messages';
 import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
 
+/********************** Components *********************/
+import { ViewComponent } from 'src/app/setup/automation-template/view/view.component';
 
 @Component({
   selector: 'app-view-product-category',
   templateUrl: './view.category.component.html'
 })
 export class ViewCategoryComponent implements OnInit {
-  
+
   messages = Messages;
   catrgoryObj: any = {};
   enumAppSourceType = EnumSaleSourceType;

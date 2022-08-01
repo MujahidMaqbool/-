@@ -1,34 +1,32 @@
 /*********************** Angular *************************/
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Component, OnInit } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-/*********************** Services *************************/
 
+/********************** Services & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { Messages } from 'src/app/helper/config/app.messages';
 
-/************* Configurations ***************/
-
-import { environment } from 'src/environments/environment';
-import { AppUtilities } from 'src/app/helper/aap.utilities';
-import { CustomerFormApi, StaffApi, BranchApi } from 'src/app/helper/config/app.webapi';
-import { CompanyDetailsApi } from 'src/app/helper/config/app.webapi';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { FormApi } from 'src/app/helper/config/app.webapi';
-import { ENU_CountryBaseDateFormatName, ENU_CountryFormat, ENU_DateFormat, ENU_pdfFor } from 'src/app/helper/config/app.enums';
-
-
-/************* Model ***************/
+/* Model */
 import { CustomFormView } from 'src/app/models/customer.form.model';
-import { ApiResponse, CompanyInfo } from 'src/app/models/common.model';
+import { ApiResponse } from 'src/app/models/common.model';
 import { Branch } from "src/app/setup/models/branch.model";
 import { CompanyDetails } from 'src/app/setup/models/company.details.model';
 
 
+/************* Configurations ***************/
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { CustomerFormApi, StaffApi, BranchApi } from 'src/app/helper/config/app.webapi';
+import { CompanyDetailsApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { FormApi } from 'src/app/helper/config/app.webapi';
+import { ENU_CountryBaseDateFormatName, ENU_CountryFormat, ENU_DateFormat, ENU_pdfFor } from 'src/app/helper/config/app.enums';
+
+/************* Components ***************/
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 
 @Component({

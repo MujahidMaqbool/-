@@ -3,51 +3,52 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild } 
 import { NgForm, FormControl } from "@angular/forms";
 import { SubscriptionLike as ISubscription } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import * as _ from 'lodash';
+import {  debounceTime } from 'rxjs/operators';
 
 /********************* Angular Material References ********************/
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-/**********************Component*********************/
-//import { MembershipViewComponent } from '@setup/membership/view/membership.view.component';
-import { MembershipViewComponent } from 'src/app/shared/components/membership-view/membership.view.component';
-import { SaleHistoryComponent } from 'src/app/shared/components/sale/sale-history/sale.history.component';
-import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
-import { AddLeadMembershipComponent } from 'src/app/customer-shared-module/add-lead-membership/add.lead.membership.component';
 
 /********************* Services & Models ********************/
 /* Services */
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { CommonService } from 'src/app/services/common.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { DateTimeService } from 'src/app/services/date.time.service';
 
 /* Models*/
 import {  SaveLead, UpdateLead } from 'src/app/lead/models/lead.model';
 import { CompanyDetails } from 'src/app/setup/models/company.details.model';
-import { ApiResponse, StateCounty, DD_Branch } from 'src/app/models/common.model';
+import { ApiResponse, StateCounty } from 'src/app/models/common.model';
 import { CustomerAddress, AllPerson } from './../../models/common.model';
 
-/********************** Common ***************************/
+/********************** Configuration ***************************/
 import { LeadStatusType, CustomerType, ENU_CancelItemType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { LeadApi, CustomerApi, LeadStatusApi } from 'src/app/helper/config/app.webapi';
 import { Configurations, CustomerTypeName } from 'src/app/helper/config/app.config';
 import { environment } from 'src/environments/environment';
-import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
-import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { CommonService } from 'src/app/services/common.service';
 import { AddressType } from './../../helper/config/app.enums';
 import { ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { GenericAlertDialogComponent } from 'src/app/application-dialog-module/generic-alert-dialog/generic.alert.dialog.component';
 import { AppUtilities } from 'src/app/helper/aap.utilities';
 import { TrimPipe } from 'src/app/shared/pipes/trim';
-import { FillFormComponent } from 'src/app/shared/components/fill-form/fill.form.component';
-import { EditCustomerEmailComponent } from 'src/app/customer-shared-module/edit-email/edit.customer.email.component';
-import {  debounceTime } from 'rxjs/operators';
-import { DateTimeService } from 'src/app/services/date.time.service';
-import * as _ from 'lodash';
+
+
+/**********************Component*********************/
+import { MembershipViewComponent } from 'src/app/shared/components/membership-view/membership.view.component';
+import { SaleHistoryComponent } from 'src/app/shared/components/sale/sale-history/sale.history.component';
+import { AlertConfirmationComponent } from 'src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component';
+import { AddLeadMembershipComponent } from 'src/app/customer-shared-module/add-lead-membership/add.lead.membership.component';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { ConfirmResetCountComponent } from 'src/app/customer-shared-module/confirm-reset-count/confirm.reset.count.component';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { FillFormComponent } from 'src/app/shared/components/fill-form/fill.form.component';
+import { EditCustomerEmailComponent } from 'src/app/customer-shared-module/edit-email/edit.customer.email.component';
+import { GenericAlertDialogComponent } from 'src/app/application-dialog-module/generic-alert-dialog/generic.alert.dialog.component';
 
 @Component({
   selector: 'save-lead',

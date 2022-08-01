@@ -1,5 +1,3 @@
-// #region Imports
-
 /********************** Angular References *********************/
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { FormControl } from "@angular/forms";
@@ -14,9 +12,8 @@ import { AllStaff, ApiResponse } from "src/app/models/common.model";
 import { CommonService } from "src/app/services/common.service";
 import { MessageService } from "src/app/services/app.message.service";
 
-/********************** Common & Customs *********************/
 
-// #endregion 
+// #endregion
 
 
 @Component({
@@ -34,7 +31,7 @@ export class StaffSearchAutoCompleteComponent implements OnInit {
     allStaff: AllStaff[];
 
 
-    // #endregion 
+    // #endregion
 
     /***********Class Constructor*********/
     constructor(private _commonService: CommonService,
@@ -77,7 +74,7 @@ export class StaffSearchAutoCompleteComponent implements OnInit {
     }
 
 
-    // #region Events 
+    // #region Events
 
     onClearStaff() {
         this.resetStaffName();
@@ -85,7 +82,7 @@ export class StaffSearchAutoCompleteComponent implements OnInit {
 
     // #endregion
 
-    // #region Methods 
+    // #region Methods
     clearStaffID() {
         this.notifyStaffID.emit(0);
     }

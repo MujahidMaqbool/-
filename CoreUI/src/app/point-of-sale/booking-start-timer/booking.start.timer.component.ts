@@ -1,7 +1,13 @@
+/*********************** Angular *************************/
+
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { interval, SubscriptionLike } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+/********************** Service *********************/
+/* Services */
 import { DateTimeService } from 'src/app/services/date.time.service';
+
 @Component({
     selector: 'booking-start-timer',
     templateUrl: './booking.start.timer.component.html'

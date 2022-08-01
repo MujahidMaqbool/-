@@ -1,25 +1,36 @@
+/********************** Angular References *********************************/
 import { Component } from "@angular/core";
 import { SubscriptionLike as ISubscription } from "rxjs";
+import { Router } from "@angular/router";
+
+
+/********************** Service & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
-import { Configurations } from 'src/app/helper/config/app.config';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { PersonInfo } from 'src/app/models/common.model';
-import { CustomerType, ENU_DateFormatName, LeadStatusType } from 'src/app/helper/config/app.enums';
-import { LeadMembershipsView } from "src/app/models/lead.membership.model";
-import { LeadMembershipApi } from "src/app/helper/config/app.webapi";
-import { AddLeadMembershipComponent } from "src/app/customer-shared-module/add-lead-membership/add.lead.membership.component";
 import { AuthService } from "src/app/helper/app.auth.service";
-import { ENU_Permission_Module, ENU_Permission_Lead } from "src/app/helper/config/app.module.page.enums";
-//import { MembershipViewComponent } from "src/app/setup/membership/view/membership.view.component";
 import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { LeadService } from "src/app/services/lead/lead.service";
+
+
+/* Models */
+import { LeadMembershipsView } from "src/app/models/lead.membership.model";
+
+
+/********************** Configuration *********************************/
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { CustomerType, ENU_DateFormatName, LeadStatusType } from 'src/app/helper/config/app.enums';
+import { LeadMembershipApi } from "src/app/helper/config/app.webapi";
+import { ENU_Permission_Module, ENU_Permission_Lead } from "src/app/helper/config/app.module.page.enums";
+
+
+/********************** Components *********************************/
+import { AddLeadMembershipComponent } from "src/app/customer-shared-module/add-lead-membership/add.lead.membership.component";
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
 import { MembershipViewComponent } from "src/app/shared/components/membership-view/membership.view.component";
-import { LeadService } from "src/app/services/lead/lead.service";
 import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { Router } from "@angular/router";
-import { jsonpFactory } from "@angular/http/src/http_module";
 
 @Component({
     selector: 'lead-membership',
@@ -84,7 +95,7 @@ export class LeadMembershipComponent extends AbstractGenericComponent {
                 disableClose: true,
                 data: {
                     CustomerID: this.leadID,
-                    CustomerTypeID: CustomerType.Lead,                  
+                    CustomerTypeID: CustomerType.Lead,
                     IsMemberToLead: false
                 }
             });
@@ -186,7 +197,7 @@ export class LeadMembershipComponent extends AbstractGenericComponent {
                     CustomerID: this.leadID,
                     CustomerTypeID: CustomerType.Lead,
                     MembershipID : leadObj.MembershipID ,
-                    AssignedToStaffID : leadObj.AssignedToStaffID, 
+                    AssignedToStaffID : leadObj.AssignedToStaffID,
                     CustomerMembershipID:leadObj.CustomerMembershipID,
                     IsEnquiryEdit: true ,
                     IsMemberToLead: false

@@ -1,15 +1,26 @@
 
+/********************* Angular References ********************/
 import { Component, OnInit, ViewChild, EventEmitter, Output, Inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Messages } from 'src/app/helper/config/app.messages';
+
+/********************** Material::Reference *********************/
+import { MatOption } from '@angular/material/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+
+/********************** Service & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
-import { ProductCategoryList, SaveBrand } from '../brand.models';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BrandApi } from 'src/app/helper/config/app.webapi';
-import { MatOption } from '@angular/material/core';
+
+/* Models */
 import { ApiResponse } from 'src/app/models/common.model';
+import { ProductCategoryList, SaveBrand } from '../brand.models';
+
+/************************ configurations **********************************/
 import { TrimPipe } from 'src/app/shared/pipes/trim';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { BrandApi } from 'src/app/helper/config/app.webapi';
 import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
 
 

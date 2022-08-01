@@ -1,20 +1,13 @@
 /********************** Angular References *********************************/
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionLike as ISubscription } from 'rxjs';
-/********************* Material:Refference ********************/
 
 /********************** Service & Models *********************/
 /* Services */
-
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
 import { PersonInfo, POSBooking } from 'src/app/models/common.model';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-
-/********************** Component *********************************/
-
-
-/********************** Common *********************************/
 
 
 @Component({

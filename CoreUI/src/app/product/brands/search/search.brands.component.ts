@@ -1,6 +1,7 @@
 
 /********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild } from "@angular/core";
+
 /********************* Material:Refference ********************/
 
 /********************** Services & Models *********************/
@@ -8,28 +9,26 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "src/app/services/app.message.service";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { AuthService } from "src/app/helper/app.auth.service";
 
 /* Models */
 import { ApiResponse } from "src/app/models/common.model";
-
-/********************** Component *********************/
-import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pagination/app.pagination.component";
+import { BrandSearchParameter, BrandViewModel } from "../brand.models";
 
 /**********************  Configurations *********************/
 import { Messages } from 'src/app/helper/config/app.messages';
-import { SupplierApi, BrandApi } from "src/app/helper/config/app.webapi";
+import { BrandApi } from "src/app/helper/config/app.webapi";
 import { Configurations } from "src/app/helper/config/app.config";
-import { AuthService } from "src/app/helper/app.auth.service";
-import { ENU_Permission_Module, ENU_Permission_Product, ENU_Permission_Setup } from "src/app/helper/config/app.module.page.enums";
-import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
-import { ViewBrandComponent } from "../view/view.brand.component";
-import { SaveBrandComponent } from "../save/save.brand.component";
-import { BrandSearchParameter, BrandViewModel } from "../brand.models";
-import { DataSharingService } from "src/app/services/data.sharing.service";
+import { ENU_Permission_Module, ENU_Permission_Product } from "src/app/helper/config/app.module.page.enums";
 import { EnumSaleSourceType } from "src/app/helper/config/app.enums";
 
-
+/**********************  Components *********************/
+import { ViewBrandComponent } from "../view/view.brand.component";
+import { SaveBrandComponent } from "../save/save.brand.component";
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pagination/app.pagination.component";
 @Component({
   selector: "app-brands-search",
   templateUrl: "./search.brands.component.html",

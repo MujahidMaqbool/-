@@ -1,17 +1,16 @@
 /********************** Angular References *********************************/
-import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-/********************** Common *********************************/
-import { Messages } from 'src/app/helper/config/app.messages';
-
-import { NumberValidator } from 'src/app/shared/helper/number.validator';
 
 /********************** Service & Models *********************/
 /* Services */
 
 /* Models */
 import { BookingForFamilyAndFriends } from '../models/point.of.sale.model';
+
+/********************** Configuration *********************************/
+import { Messages } from 'src/app/helper/config/app.messages';
+import { NumberValidator } from 'src/app/shared/helper/number.validator';
 
 @Component({
     selector: 'app-class-booking-for-family-and-friends',
@@ -37,7 +36,7 @@ export class ClassBookingForFamilyAndFriendsComponent implements OnInit {
 
     /***********Messages*********/
     messages = Messages;
-    
+
     // #endregion
 
     constructor(
@@ -50,9 +49,9 @@ export class ClassBookingForFamilyAndFriendsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-  
+
     }
-   
+
     //#region Events
 
     // not allow dot in munber
@@ -70,13 +69,13 @@ export class ClassBookingForFamilyAndFriendsComponent implements OnInit {
             this.bookingForFamilyAndFriends.TotalBenefitsUse = this.numberValidator.NotAllowDecimalValue(num);
         }, 10);
     }
-    
+
     //#endregion Events
 
     //#region Methods
 
     onClassAddToCart(){
-        
+
         if(this.isValid()){
             this.bookingForFamilyAndFriendsModel.emit(this.bookingForFamilyAndFriends);
             this.dialogRef.close();
@@ -129,6 +128,6 @@ export class ClassBookingForFamilyAndFriendsComponent implements OnInit {
             this.bookingForFamilyAndFriends.TotalBenefitsUse = this.bookingForFamilyAndFriends.TotalBenefitsUse == 0 ? 0 : this.bookingForFamilyAndFriends.TotalBenefitsUse - 1;
         }
     }
-    
+
 
 }

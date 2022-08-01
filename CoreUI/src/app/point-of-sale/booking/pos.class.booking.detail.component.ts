@@ -1,30 +1,32 @@
 /** Angular Modules */
-import { Component, OnInit, ViewChild, Output } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatPaginator } from '@angular/material/paginator';
 import { Messages } from 'src/app/helper/config/app.messages';
 
-/** Components */
-/** Models **/
-import { SearchClassBooking, ClassBookingDetail } from '../models/point.of.sale.model';
-
-/** Services */
+/********************** Service & Models *********************/
+/* Services */
 import { DateTimeService } from 'src/app/services/date.time.service';
 import { HttpService } from 'src/app/services/app.http.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { MessageService } from 'src/app/services/app.message.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
-/** Configurations, Messages & Constants */
+/* Models */
+import { SearchClassBooking, ClassBookingDetail } from '../models/point.of.sale.model';
+import { ApiResponse } from 'src/app/models/common.model';
+
+
+/************* Configurations ***************/
 import { Configurations, ClassStatusName } from 'src/app/helper/config/app.config';
 import { BookingApi } from 'src/app/helper/config/app.webapi';
 import { ClassStatus, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+
+/************* Components ***************/
 import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { AttendeeComponent } from 'src/app/attendee/save-search/attendee.component';
-import { ApiResponse } from 'src/app/models/common.model';
-
 
 /** Component */
 @Component({
@@ -96,7 +98,7 @@ export class POSClassBookingDetailComponent extends AbstractGenericComponent imp
         this.classesDateSearch.setEmptyDateFilter();
     }
 
-    
+
 
     //#region Event Start
 

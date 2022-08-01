@@ -2,25 +2,29 @@
 
 /*********************** Material Reference *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
-import { SubscriptionLike as ISubscription } from 'rxjs';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-/* Models */
 
+
+/********************** Services & Models *********************/
+/* Services */
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+
+/* Models */
+import { ApiResponse } from 'src/app/models/common.model';
 import { LeadDetail } from 'src/app/lead/models/lead.model';
 
 /*************************** Configurations *************************/
 import { environment } from 'src/environments/environment';
 import { AppUtilities } from 'src/app/helper/aap.utilities';
-import { CompanyDetailsApi, BranchApi } from 'src/app/helper/config/app.webapi';
+import { BranchApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
-
-/*************************** Common *************************/
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
-import { HttpService } from 'src/app/services/app.http.service';
-import { MessageService } from 'src/app/services/app.message.service';
-import { ApiResponse } from 'src/app/models/common.model';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+
+/*************************** Components *************************/
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+
 
 @Component({
   selector: 'view-lead-detail',
@@ -95,7 +99,7 @@ export class ViewLeadDetailComponent extends AbstractGenericComponent {
         this.defaultCountry = this.countryList.find(
           (country) => country.CountryID == this.companyDetails.CountryID
         ).CountryName;
-        
+
     }
 
     // this._httpService.get(CompanyDetailsApi.get).subscribe(

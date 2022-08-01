@@ -1,16 +1,18 @@
 /** Angular Modules */
 import { Component, OnInit } from '@angular/core';
-import { SubscriptionLike } from 'rxjs';
 
-/** Services & Models */
-import { AllAttendees, SaveAttendee, AttendeeClass, ClassAttendanceDetail, ClassInfo, AttendeeClassAttendance, AttendeMemberhsip, CancelationPolicyDetails } from 'src/app/models/attendee.model';
-import { AllPerson, ApiResponse, DD_Branch } from 'src/app/models/common.model';
+/********************** Service *********************/
+/* Services */
 import { CommonService } from 'src/app/services/common.service';
-
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
+
+/* Models */
+import { AllPerson, ApiResponse } from 'src/app/models/common.model';
+import { AllAttendees, SaveAttendee, AttendeeClass, ClassAttendanceDetail, ClassInfo, AttendeeClassAttendance, AttendeMemberhsip, CancelationPolicyDetails } from 'src/app/models/attendee.model';
 
 /**components**/
 import { CancelBookingComponent } from 'src/app/shared/components/cancel-booking/cancel.booking.component';
@@ -26,7 +28,6 @@ import { Messages } from 'src/app/helper/config/app.messages';
 import { AttendeeApi } from 'src/app/helper/config/app.webapi';
 import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
 import { environment } from 'src/environments/environment';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AppUtilities } from 'src/app/helper/aap.utilities';
 

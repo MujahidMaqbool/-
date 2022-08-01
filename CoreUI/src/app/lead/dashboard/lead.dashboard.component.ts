@@ -1,29 +1,23 @@
 /************************* Angular References ***********************************/
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { MatDatepicker } from '@angular/material/datepicker';
+
 /************************* Services & Models ***********************************/
-/* Models */
-import {
-    LeadDashboradParameter,
-    SaleTourEnquiryStatus,
-    EnquirySource,
-    LeadActivity,
-    AtivtiesSummary,
-    LeadFlow,
-    LeadEnquiryTour,
-    LeadStatusTypeList
-} from 'src/app/lead/models/lead.dashboard.model';
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { Configurations } from 'src/app/helper/config/app.config';
-/************************* Common ***********************************/
+import { DateTimeService } from 'src/app/services/date.time.service';
+
+/* Models */
+import { LeadDashboradParameter, SaleTourEnquiryStatus, EnquirySource, LeadActivity, AtivtiesSummary, LeadFlow, LeadEnquiryTour, LeadStatusTypeList } from 'src/app/lead/models/lead.dashboard.model';
+import { ApiResponse } from 'src/app/models/common.model';
+
+/************************* Configuration ***********************************/
 import { EnquirySourceType, ENU_ActivityType, LeadFlowStatusTypes, LeadStatusType, LeadStatusTypesNew } from 'src/app/helper/config/app.enums';
 import { Messages } from 'src/app/helper/config/app.messages';
-import { DateTimeService } from 'src/app/services/date.time.service';
-import { forkJoin } from 'rxjs';
 import { LeadApi } from 'src/app/helper/config/app.webapi';
-import { ApiResponse } from 'src/app/models/common.model';
-import { MatDatepicker } from '@angular/material/datepicker';
 
 
 @Component({
@@ -251,9 +245,9 @@ export class LeadDashboardComponent implements OnInit {
 
         forkJoin([getDashboardFundamentals, getSourceCountDayWise, getActivitiesCount, getLeadsStatus]).subscribe(
             data => {
-                
+
                 if (data[0].Result) {
-                    this.enquirySourceTypeList = data[0].Result.EnquirySourceTypeList; 
+                    this.enquirySourceTypeList = data[0].Result.EnquirySourceTypeList;
                     let newSourceTypeList = [];
                     /**Remove social media (Twitter, Facebook, Instagram) from list */
 
@@ -264,7 +258,7 @@ export class LeadDashboardComponent implements OnInit {
                         item.EnquirySourceCount = item.EnquirySourceCount ? item.EnquirySourceCount : 0;
                     });
 
-                    this.enquirySourceTypeList = newSourceTypeList;        
+                    this.enquirySourceTypeList = newSourceTypeList;
                     this.isLeadActivitiesDataExists = data[0].Result.LeadActivityTypeList != null && data[0].Result.LeadActivityTypeList.length > 0 ? true : false;
                     this.leadActivityTypeList = data[0].Result.LeadActivityTypeList;
                     this.leadStatusTypeFriendlyViewModel = data[0].Result.LeadStatusTypeFriendlyViewModel;
@@ -398,7 +392,7 @@ export class LeadDashboardComponent implements OnInit {
         this.lostLeadsCount = 0;
         this.allActiveEnquiriesCount = 0;
         if (data) {
-            this.leadActivitySummary = data;            
+            this.leadActivitySummary = data;
             this.leadActivitySummary.forEach(laSum => {
                 laSum.val = laSum.TotalLead;
                 if (laSum.LeadStatusTypeID == this.leadStatusType.Fresh) {
@@ -440,7 +434,7 @@ export class LeadDashboardComponent implements OnInit {
         if (this.leadActivities.length > 0) {
             this.leadActivityTypeList.forEach(leadActivityType => {
                 this.leadActivities.forEach(activity => {
-                    
+
                     switch (leadActivityType.ActivityTypeID) {
                         case this.activityType.Appointment:
                             leadActivityType.ActivityTypeCount += activity.ActivityTypeID == leadActivityType.ActivityTypeID ? activity.TotalLead : 0;
@@ -472,9 +466,9 @@ export class LeadDashboardComponent implements OnInit {
 
     getLeadCountGroupedBySource() {
         this.resetEnquirySourceCount();
-        
+
         this.enquirySourceTypeList.forEach(enquirySource => {
-                       
+
             this.sourceDayWise.forEach(sourceCount => {
                 switch (enquirySource.EnquirySourceTypeID) {
                     case this.enquirySourceType.DigitalAdvertising:
@@ -532,7 +526,7 @@ export class LeadDashboardComponent implements OnInit {
 
             });
             this.equirySourceTotalCount += enquirySource.EnquirySourceCount;
-        
+
         })
     }
 
@@ -574,7 +568,7 @@ export class LeadDashboardComponent implements OnInit {
             text: arg.point.data.StaffName + ' : ' + arg.value + '<br/>' + arg.point.data.Email
         };
     }
-    
+
     SummaryLeadTooltip(arg: any) {
         return {
             text: arg.argument + ' : ' + arg.value
@@ -586,11 +580,11 @@ export class LeadDashboardComponent implements OnInit {
         };
     }
 
-    
-    saleTourEnquiryTooltip(arg: any) { 
+
+    saleTourEnquiryTooltip(arg: any) {
         return {
         text: arg.seriesName + ' : ' + arg.value
-        }      
+        }
     }
 
     leadEnquiryTour: LeadEnquiryTour[] = [
@@ -627,7 +621,7 @@ export class LeadDashboardComponent implements OnInit {
     }
 
     leadFlowCustomizePoint(arg: any) {
-        
+
         var leadStatusType = LeadFlowStatusTypes;
         if (arg.data.LeadStatusTypeID == leadStatusType.Enquiry) {
             return { color: "#BCD556" }; ///Enquiry
@@ -637,18 +631,18 @@ export class LeadDashboardComponent implements OnInit {
         }
         if (arg.data.LeadStatusTypeID == leadStatusType.Lost) {
             return { color: "#E97C82" };
-        } 
+        }
         if (arg.data.LeadStatusTypeID == leadStatusType.Won) {
             return { color: "#BFE1FF" };
-        }       
+        }
         if (arg.data.LeadStatusTypeID == leadStatusType.FinalMeeting) {
             return { color: "#F6A261" };
         }
-        
+
     }
 
     leadFlowCustomizeColors(arg: any) {
-        
+
         var leadStatusType = LeadStatusTypesNew;
 
         if (arg.data.LeadStatusTypeID == leadStatusType.Enquiry) {
@@ -659,10 +653,10 @@ export class LeadDashboardComponent implements OnInit {
         }
         if (arg.data.LeadStatusTypeID == leadStatusType.MeetingArranged) {
             return { color: "#F8CAA6" };
-        } 
+        }
         if (arg.data.LeadStatusTypeID == leadStatusType.PerposalSend ) {
             return { color: "#F96E03" };
-        }       
+        }
         if (arg.data.LeadStatusTypeID == leadStatusType.FinalMeeting) {
             return { color: "#607D8B" };
         }
@@ -672,7 +666,7 @@ export class LeadDashboardComponent implements OnInit {
         if (arg.data.LeadStatusTypeID == leadStatusType.Won) {
             return { color: "#BFE1FF" };
         }
-        
+
     }
 
     leadFlowCustomizePointTooltip(arg: any) {

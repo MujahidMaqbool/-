@@ -1,18 +1,31 @@
+/********************** Angular Refrences *********************/
 import { Component, OnInit, Inject, ViewChild, Output, EventEmitter } from '@angular/core';
-import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { AppUtilities } from 'src/app/helper/aap.utilities';
-import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { NgForm } from '@angular/forms';
+
+/********************* Material:Refference ********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+/********************** Services & Models *********************/
+/* Services */
 import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
-import { NgForm } from '@angular/forms';
+
+/* Models */
 import { Messages } from 'src/app/helper/config/app.messages';
 import { SearchCategory, ProductCategory } from 'src/app/product/models/categories.model';
-import { InventoryProductCategoryApi } from 'src/app/helper/config/app.webapi';
+
+
+/**********************  Configurations *********************/
+import { AppUtilities } from 'src/app/helper/aap.utilities';
 import { environment } from 'src/environments/environment';
+import { InventoryProductCategoryApi } from 'src/app/helper/config/app.webapi';
 import { ENU_Permission_Product } from 'src/app/helper/config/app.module.page.enums';
 import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
+
+/**********************  Components *********************/
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
 
 @Component({
   selector: 'app-save-product-category',

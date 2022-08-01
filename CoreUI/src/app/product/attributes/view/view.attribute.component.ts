@@ -1,5 +1,10 @@
+/********************* Angular References ********************/
 import { Component, Inject, OnInit } from '@angular/core';
+
+/********************** Material::Reference *********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+/************************ Configurations ******************************/
 import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
 
 @Component({

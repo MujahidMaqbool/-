@@ -3,6 +3,7 @@ import { Component, Inject, OnInit, ViewChild, OnDestroy, Output, EventEmitter }
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { SubscriptionLike as ISubscription } from "rxjs";
+
 /********************* Material:Refference ********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -10,16 +11,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 
 /* Models */
 import { LeadLostReasonModel } from 'src/app/lead/models/lead.model';
+import { ApiResponse } from 'src/app/models/common.model';
 
-/********************** Common ***************************/
-import { DataSharingService } from 'src/app/services/data.sharing.service';
+/********************** Configuration ***************************/
 import { Messages } from 'src/app/helper/config/app.messages';
 import { LeadApi, LeadMembershipApi } from 'src/app/helper/config/app.webapi';
 import { ENU_ModuleList } from 'src/app/helper/config/app.enums';
-import { ApiResponse } from 'src/app/models/common.model';
 
 @Component({
     selector: 'lead-lost',

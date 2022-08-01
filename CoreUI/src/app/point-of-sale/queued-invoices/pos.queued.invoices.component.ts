@@ -1,5 +1,6 @@
 /********************** Angular References *********************/
 import { Component, Output, EventEmitter, ViewChild, Inject } from "@angular/core";
+
 /********************** Angular Material References *********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -10,24 +11,26 @@ import { SaleQueue, SaleQueueSearchParams, SaveQueue } from "../models/point.of.
 /* Services */
 import { DateTimeService } from "src/app/services/date.time.service";
 import { MessageService } from "src/app/services/app.message.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { HttpService } from "src/app/services/app.http.service";
 
 /* Models */
+import { ApiResponse } from "src/app/models/common.model";
 
 /****************** Configurations *****************/
 import { Configurations } from "src/app/helper/config/app.config";
-import { HttpService } from "src/app/services/app.http.service";
 import { PointOfSaleApi } from "src/app/helper/config/app.webapi";
 import { Messages } from "src/app/helper/config/app.messages";
-import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
-import { CustomerSearchComponent } from "src/app/shared/components/customer-search/customer.search.component";
-import { ApiResponse } from "src/app/models/common.model";
-import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+import { ENU_DateFormatName } from "src/app/helper/config/app.enums";
+
+
+/****************** Components *****************/
+import { StaffSearchAutoCompleteComponent } from "../staff-search/staff.search.component";
 import { AlertConfirmationComponent } from "src/app/application-dialog-module/confirmation-dialog/alert.confirmation.component";
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-import { DataSharingService } from "src/app/services/data.sharing.service";
-import { ENU_DateFormatName } from "src/app/helper/config/app.enums";
-import { StaffSearchAutoCompleteComponent } from "../staff-search/staff.search.component";
-
+import { DeleteConfirmationComponent } from "src/app/application-dialog-module/delete-dialog/delete.confirmation.component";
+import { CustomerSearchComponent } from "src/app/shared/components/customer-search/customer.search.component";
 @Component({
     selector: 'pos-queued-invoices',
     templateUrl: './pos.queued.invoices.component.html'
@@ -74,7 +77,7 @@ export class POSQueuedInvoicesComponent extends AbstractGenericComponent {
     onCreateDateChange(date: any) {
         setTimeout(() => {
             this.saleQueueSearchParams.CreatedOn = date;
-            this.createdAt = date; //this._dateTimeService.convertDateObjToString(date, this.DATE_FORMAT);   
+            this.createdAt = date; //this._dateTimeService.convertDateObjToString(date, this.DATE_FORMAT);
         });
     }
 

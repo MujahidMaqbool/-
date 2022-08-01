@@ -1,18 +1,17 @@
 /********************** Angular References *********************************/
 import { Component } from '@angular/core';
 import { SubscriptionLike as ISubscription } from 'rxjs';
-/********************* Material:Refference ********************/
 
 /********************** Service & Models *********************/
 /* Services */
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 
 /* Models */
-import { PersonInfo, POSBooking } from 'src/app/models/common.model';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { POSBooking } from 'src/app/models/common.model';
 
-/********************** Common *********************************/
-import { AuthService } from 'src/app/helper/app.auth.service';
+/********************** Configuration *********************************/
 import { ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({
@@ -38,7 +37,7 @@ export class LeadBookingsComponent {
     constructor(
         private _authService: AuthService,
         private _dataSharingService: DataSharingService,
-    ) { 
+    ) {
         this.posBooking = new POSBooking();
     }
 
@@ -54,7 +53,7 @@ export class LeadBookingsComponent {
     getLeadByID() {
         this.leadIDSubscription = this._dataSharingService.leadID.subscribe((leadId: number) => {
             if (leadId && leadId > 0) {
-                this.leadID = leadId;                
+                this.leadID = leadId;
                 // this.personInfo = new PersonInfo();
                 // this.personInfo.PersonID = this.leadID;
                 // this.personInfo.PersonTypeID = CustomerType.Lead;
@@ -65,6 +64,6 @@ export class LeadBookingsComponent {
                 this.posBooking.CustomerID =leadId;
                 this._dataSharingService.sharePOSBookingInfo(this.posBooking);
             }
-        });    
+        });
     }
 }

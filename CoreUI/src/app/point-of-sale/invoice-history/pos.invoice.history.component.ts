@@ -1,18 +1,12 @@
 ﻿/********************** Angular References *********************/
-import { Component, OnInit, OnDestroy } from '@angular/core';
-
-/********************* Material:Refference ********************/
+import { Component, OnInit } from '@angular/core';
 
 
 /********************** Services & Models *********************/
 /* Services */
-
 import { DataSharingService } from '../../services/data.sharing.service';
+
 /* Models */
-
-/********************** Common ***************************/
-
-/********************** Configurations *********************/
 import { InvoiceHistory } from 'src/app/models/common.model';
 
 
@@ -29,7 +23,7 @@ export class PointOfSaleInvoiceHistoryComponent implements OnInit {
     /* Model References */
    invocieHistory:InvoiceHistory;
 
-    // #endregion 
+    // #endregion
 
     constructor(private _dataSharingService: DataSharingService) {
         this.invocieHistory = new InvoiceHistory();

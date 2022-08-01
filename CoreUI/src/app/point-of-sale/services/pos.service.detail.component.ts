@@ -1,23 +1,21 @@
 /********************** Angular References *********************/
 import { Component, OnInit, Inject, Output, EventEmitter } from "@angular/core";
-import { SubscriptionLike } from "rxjs";
+
 /********************** Angular Material References *********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /****************** Services & Models *****************/
-/* Models */
-import { POSServiceModel, ServiceStaff, SaleService, ServiceViewModel, POSServicePackageModel } from "../models/point.of.sale.model";
-import { ApiResponse, DD_Branch } from "src/app/models/common.model";
-
 /* Services */
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "../../services/app.message.service";
 import { DataSharingService } from "src/app/services/data.sharing.service";
 import { DateTimeService } from "src/app/services/date.time.service";
+import { TaxCalculation } from "src/app/services/tax.calculations.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 
-
-/****************** Components *****************/
-
+/* Models */
+import { POSServiceModel, ServiceStaff, SaleService, ServiceViewModel, POSServicePackageModel } from "../models/point.of.sale.model";
+import { ApiResponse } from "src/app/models/common.model";
 
 /****************** Configurations *****************/
 import { Configurations } from "src/app/helper/config/app.config";
@@ -26,12 +24,11 @@ import { ENU_DateFormatName, POSItemType } from "src/app/helper/config/app.enums
 import { Messages } from "src/app/helper/config/app.messages";
 import { environment } from "src/environments/environment";
 import { ImagesPlaceholder } from "src/app/helper/config/app.placeholder";
-import { variables } from "src/app/helper/config/app.variable";
 import { AppUtilities } from "src/app/helper/aap.utilities";
+
+/****************** Components *****************/
 import { AbstractGenericComponent } from "src/app/shared/helper/abstract.generic.component";
-import { TaxCalculation } from "src/app/services/tax.calculations.service";
 import { AddToWaitlistComponent } from "../add-to-waitlist/add.to.waitlist.component";
-import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 
 
 @Component({
@@ -97,11 +94,11 @@ export class POSServiceDetailComponent extends AbstractGenericComponent implemen
         this.getCurrentBranchDetail();
         this.mapServiceBenefits();
         this.saleService = new SaleService();
-       
+
         this.saleService.ServicePackageID = this.service.ServicePackageList && this.service.ServicePackageList.length > 0 ? this.service.ServicePackageList[0].ServicePackageID : 0;
         this.checkIsServicePackageFree(this.service.ServicePackageList[0]);
-       
-        
+
+
     }
 
     async getCurrentBranchDetail() {
@@ -124,7 +121,7 @@ export class POSServiceDetailComponent extends AbstractGenericComponent implemen
 
     onServiceDateChange(serviceBookingDate: any) {
         this.saleService.ServiceDate = serviceBookingDate;
-       
+
         if (this.service.MembershipEndDate) {
             if (this._dateTimeService.compareTwoDates(new Date(serviceBookingDate), new Date(this.service.MembershipEndDate))) {
                 setTimeout(() => {

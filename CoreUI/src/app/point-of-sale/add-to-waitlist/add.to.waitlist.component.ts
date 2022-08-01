@@ -1,23 +1,35 @@
+/*********************** Angular *************************/
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+
+/********************* Material:Refference ********************/
 import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DatePickerComponent } from 'src/app/application-dialog-module/date-picker/date.picker.component';
-import { AppUtilities } from 'src/app/helper/aap.utilities';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { ENU_DateFormatName, POSItemType } from 'src/app/helper/config/app.enums';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
-import { PointOfSaleApi } from 'src/app/helper/config/app.webapi';
-import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+
+/********************** Services & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
 import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { environment } from 'src/environments/environment';
+
+/* Model */
+import { ApiResponse } from 'src/app/models/common.model';
 import { CartWaitListService, POSServiceModel, POSServicePackageModel, SaleService, SaleWaitListService, ServiceStaff, ServiceViewModel, WaitListWorkTimeBrackets } from '../models/point.of.sale.model';
+
+/************* Configurations ***************/
+import { AppUtilities } from 'src/app/helper/aap.utilities';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { environment } from 'src/environments/environment';
+import { ImagesPlaceholder } from 'src/app/helper/config/app.placeholder';
+import { PointOfSaleApi } from 'src/app/helper/config/app.webapi';
+import { ENU_DateFormatName, POSItemType } from 'src/app/helper/config/app.enums';
+
+/************* Components ***************/
+import { DatePickerComponent } from 'src/app/application-dialog-module/date-picker/date.picker.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { POSServiceDetailComponent } from '../services/pos.service.detail.component';
 
 @Component({

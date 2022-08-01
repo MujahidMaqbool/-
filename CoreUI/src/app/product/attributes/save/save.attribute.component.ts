@@ -1,21 +1,26 @@
-// #region Angular References
+/********************* Angular References ********************/
 import { Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 
-/*****Material/ Third party imports  ******/
+/********************** Material::Reference *********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-/****Model/enums *******/
-import { Attribute, AttributeValue, AttributeBranch } from 'src/app/product/models/attributes.model';
+/********************** Service & Models *********************/
+/* Services */
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { HttpService } from 'src/app/services/app.http.service';
 
+
+/* Models */
+import { Attribute, AttributeValue, AttributeBranch } from 'src/app/product/models/attributes.model';
 
 /**** * Configurations ******/
 import { AttributeApi } from 'src/app/helper/config/app.webapi';
-import { HttpService } from 'src/app/services/app.http.service';
-import { MessageService } from 'src/app/services/app.message.service';
 import { Messages } from 'src/app/helper/config/app.messages';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { EnumSaleSourceType } from 'src/app/helper/config/app.enums';
+
+/**** * Components ******/
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 
 

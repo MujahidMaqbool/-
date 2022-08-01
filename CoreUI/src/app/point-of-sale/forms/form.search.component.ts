@@ -2,27 +2,37 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatPaginator } from '@angular/material/paginator';
-import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { HttpService } from 'src/app/services/app.http.service';
-import { MessageService } from 'src/app/services/app.message.service';
 import { ActivatedRoute } from '@angular/router';
-import { CustomerFormApi } from 'src/app/helper/config/app.webapi';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+
+/********************** Service & Models *********************/
+/* Services */
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { CommonService } from 'src/app/services/common.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
+
+/* Models */
 import { ApiResponse, AllPerson } from 'src/app/models/common.model';
 import { CustomerFormModel, CustomerFormSearchModel, CustomFormView, CustomerFormsInfromation } from 'src/app/models/customer.form.model';
+
+/********************** Configuration *********************/
+import { ENU_Permission_PointOfSale, ENU_Permission_Module  } from 'src/app/helper/config/app.module.page.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { Messages } from 'src/app/helper/config/app.messages';
+import { CustomerFormApi } from 'src/app/helper/config/app.webapi';
+import { ENU_DateFormatName ,ENU_pdfFor } from 'src/app/helper/config/app.enums';
+
+/********************** Components *********************/
+
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { ViewFormComponent } from 'src/app/shared/components/forms/view/view.form.component';
 import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { FormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
-import { CommonService } from 'src/app/services/common.service';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { ENU_DateFormatName ,ENU_pdfFor } from 'src/app/helper/config/app.enums';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { AuthService } from 'src/app/helper/app.auth.service';
-import { ENU_Permission_PointOfSale, ENU_Permission_Module  } from 'src/app/helper/config/app.module.page.enums';
 
 /********************** Services & Model *********************/
 
@@ -73,7 +83,7 @@ export class POSSearchFromComponent extends AbstractGenericComponent implements 
     }
 
     ngOnInit() {
-        
+
         this.getBranchDatePattern();
         this.customerFormSearchModel.formStatusID = this.customerFormStatus[0].value;
         this.searchPerson.valueChanges
@@ -213,7 +223,7 @@ export class POSSearchFromComponent extends AbstractGenericComponent implements 
     }
 
     onDeleteForm(customerFormId: number) {
-        
+
         let _url = CustomerFormApi.deleteCustomerForm + customerFormId;
 
         this.deleteDialogRef = this._FormDialogue.open(DeleteConfirmationComponent, { disableClose: true , data: { header: this.messages.Delete_Messages.Del_Msg_Generic.replace("{0}", "") , description: this.messages.Delete_Messages.Del_Msg_Undone}});

@@ -3,7 +3,6 @@
 /********************** Angular References *********************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DropEvent } from 'ng-drag-drop';
-
 import * as moment from 'moment';
 
 /********************* Material:Refference ********************/
@@ -15,44 +14,38 @@ import { LeadOnBoard, LeadStatus, SaveLead, LeadLostReasonModel, LeadSearchParam
 import { SearchActivity, AppointmentMarkAsDoneActivity, CallMarkAsDoneActivity } from "src/app/lead/models/lead.activity.model";
 import { SaveMember } from 'src/app/customer/member/models/members.model';
 import { MemberRedirectInfo } from 'src/app/customer/member/models/members.model';
+import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
+import { ActivityPersonInfo } from 'src/app/models/activity.model';
+import { AppointmentNowActivity,AppointmentLaterActivity,CallNowActivity,CallLaterActivity} from 'src/app/lead/models/lead.activity.model'
 
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /**********************Component*********************/
 import { AddLeadPopupComponent } from 'src/app/lead/save/save.lead.popup.component';
 import { LeadLostComponent } from 'src/app/lead/lost-popup/lead.lost.popup.component';
-
-/********************** START: Common *********************/
-
-import { Configurations } from 'src/app/helper/config/app.config';
-import { LeadActivityApi, LeadApi, LeadMembershipApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import { SaveActivityComponent } from 'src/app/shared/components/activities/save/save.activity.component';
+import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
+import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
 
+/********************** Configuration *********************/
+import { Configurations } from 'src/app/helper/config/app.config';
+import { LeadActivityApi, LeadApi, LeadMembershipApi, CustomerApi } from 'src/app/helper/config/app.webapi';
+import { ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
 import { ActivityTabsOptions } from 'src/app/models/activity.tab.options'
-import {
-    AppointmentNowActivity,
-    AppointmentLaterActivity,
-    CallNowActivity,
-    CallLaterActivity
-} from 'src/app/lead/models/lead.activity.model'
 import { Messages } from 'src/app/helper/config/app.messages';
 import { ENU_ModuleList, LeadStatusType, ENU_ActivityType, CustomerType, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragStart, CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
-import { ActivityPersonInfo } from 'src/app/models/activity.model';
-import { AuthService } from 'src/app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Lead } from 'src/app/helper/config/app.module.page.enums';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { ApiResponse, PersonInfo } from 'src/app/models/common.model';
 
-import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { SaveMemberMembershipPopup } from 'src/app/customer-shared-module/add-member-membership/save-membership-popup/save.member.membership.popup';
-import { MissingBillingAddressDialog } from 'src/app/customer-shared-module/missing-billing-address/missing.billing.address.dialog';
+
 
 // #endregion
 
@@ -379,13 +372,13 @@ export class LeadBusinessFlowViewComponent extends AbstractGenericComponent impl
 
     // onToDateChange(date: any) {
     //     setTimeout(() => {
-    //         this.searchParameterObj.DateTo = date; //this.getFormattedDate(date);  07/05/2018this.searchParameterObj.DateFrom = date; // 07/05/2018 
+    //         this.searchParameterObj.DateTo = date; //this.getFormattedDate(date);  07/05/2018this.searchParameterObj.DateFrom = date; // 07/05/2018
     //     });
     // }
 
     // onFromDateChange(date: any) {
     //     setTimeout(() => {
-    //         this.searchParameterObj.DateFrom = date; // 07/05/2018 
+    //         this.searchParameterObj.DateFrom = date; // 07/05/2018
     //     });
     // }
 
@@ -427,7 +420,7 @@ export class LeadBusinessFlowViewComponent extends AbstractGenericComponent impl
         this.checkBillingAddress(dropEvent);
     }
 
-    // #endregion 
+    // #endregion
 
     // #region methods
 
@@ -845,7 +838,7 @@ export class LeadBusinessFlowViewComponent extends AbstractGenericComponent impl
         this.searchParameterObj.MembershipID = null;
         this.searchParameterObj.AssignedToStaffID = null;
         this.searchParameterObj.Email = "";
-        
+
         this.getLeadsStatus();
     }
 

@@ -1,17 +1,26 @@
-import { Component, OnInit, Inject, Output, EventEmitter, ViewChild } from '@angular/core';
+/********************** Angular References *********************/
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { ApiResponse } from 'src/app/models/common.model';
-import { PointOfSaleApi } from 'src/app/helper/config/app.webapi';
+
+/********************** Services & Models *********************/
+/* Services */
+import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
+import { TaxCalculation } from 'src/app/services/tax.calculations.service';
+
+/* Models */
+import { ApiResponse } from 'src/app/models/common.model';
+import { PointOfSaleApi } from 'src/app/helper/config/app.webapi';
+import { POSProduct } from '../models/point.of.sale.model';
+
+/********************** Configuration *********************/
 import { Messages } from 'src/app/helper/config/app.messages';
 import { environment } from 'src/environments/environment';
 import { AppUtilities } from 'src/app/helper/aap.utilities';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
+
+/********************** Component *********************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { POSProduct } from '../models/point.of.sale.model';
-import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 
 @Component({
   selector: 'app-pos-product-detail',
