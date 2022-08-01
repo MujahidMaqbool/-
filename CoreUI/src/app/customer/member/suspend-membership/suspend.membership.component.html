@@ -19,7 +19,9 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <p class="text_bottom_border">Members will not be allowed to book any benefits during the frozen period however the bookings already made will remain unaffected. Also, ad-hoc/manual transactions will not be affected.</p>
+                                <p class="text_bottom_border">Members will not be allowed to book any benefits during
+                                    the frozen period however the bookings already made will remain unaffected. Also,
+                                    ad-hoc/manual transactions will not be affected.</p>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="field_label top_zero">
@@ -29,7 +31,8 @@
                                     <select name="MembershipID" [(ngModel)]="selectedMembership" #MembershipID="ngModel"
                                         tabindex="2" class="form-control" (ngModelChange)="onMembershipChange()"
                                         required>
-                                        <optgroup label="{{(membership.StartDate | customdate: dateFormat) + ' - ' + (membership.EndDate | customdate: dateFormat)}}"
+                                        <optgroup
+                                            label="{{(membership.StartDate | customdate: dateFormat) + ' - ' + (membership.EndDate | customdate: dateFormat)}}"
                                             *ngFor="let membership of membershipList">
                                             <option class="membership_drpdwn" [ngValue]="membership">
                                                 {{membership.MembershipName}}
@@ -40,11 +43,13 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6 space">
-                                <input id="Freeze" type="radio" name="rdoFreeze" [(ngModel)]="membershipFreezeDetail.Freeze"
-                                    [value]="true" [checked]="membershipFreezeDetail.Freeze" (ngModelChange)="onStatusChange()" />
+                                <input id="Freeze" type="radio" name="rdoFreeze"
+                                    [(ngModel)]="membershipFreezeDetail.Freeze" [value]="true"
+                                    [checked]="membershipFreezeDetail.Freeze" (ngModelChange)="onStatusChange()" />
                                 <label for="Freeze"><span></span>Freeze</label> &nbsp; &nbsp; &nbsp;
 
-                                <input id="UnFreeze" type="radio" name="rdoUnFreeze" [value]="false" [(ngModel)]="membershipFreezeDetail.Freeze"
+                                <input id="UnFreeze" type="radio" name="rdoUnFreeze" [value]="false"
+                                    [(ngModel)]="membershipFreezeDetail.Freeze"
                                     [checked]="!membershipFreezeDetail.Freeze" (ngModelChange)="onStatusChange()" />
                                 <label for="UnFreeze"><span></span>Unfreeze</label>
 
@@ -52,7 +57,8 @@
                             <div class="col-md-12">
                                 <div class="checkbox checkbox-success">
                                     <input type="checkbox" name="OpenEndedSuspension" id="OpenEndedSuspension"
-                                        [(ngModel)]="membershipFreezeDetail.OpenEndedSuspension" #OpenEndedSuspension="ngModel"
+                                        [(ngModel)]="membershipFreezeDetail.OpenEndedSuspension"
+                                        #OpenEndedSuspension="ngModel"
                                         [(checked)]="membershipFreezeDetail.OpenEndedSuspension">
                                     <label for="OpenEndedSuspension">
                                         Open Ended Suspension
@@ -66,10 +72,12 @@
                                     <h5>Suspension Start Date</h5>
                                 </div>
                                 <div class="select_label">
-                                    <select name="StartSuspensionDate" [(ngModel)]="membershipFreezeDetail.StartCollectionDateID"
+                                    <select name="StartSuspensionDate"
+                                        [(ngModel)]="membershipFreezeDetail.StartCollectionDateID"
                                         (ngModelChange)="onSuspensionDateChange()" #StartSuspensionDate="ngModel"
                                         tabindex="2" class="form-control">
-                                        <option *ngFor="let collectionDate of startMembershipFreezeDateList" [ngValue]="collectionDate.CustomerMembershipPaymentID">
+                                        <option *ngFor="let collectionDate of startMembershipFreezeDateList"
+                                            [ngValue]="collectionDate.CustomerMembershipPaymentID">
                                             {{collectionDate.CollectionDate}}
                                         </option>
                                     </select>
@@ -80,8 +88,9 @@
                                     <h5>Intervals <span>(Available payments in series)</span></h5>
                                 </div>
                                 <div class="select_label">
-                                    <select name="Intervals" [(ngModel)]="membershipFreezeDetail.Intervals" [disabled]="membershipFreezeDetail.OpenEndedSuspension"
-                                        #Intervals="ngModel" tabindex="2" class="form-control">
+                                    <select name="Intervals" [(ngModel)]="membershipFreezeDetail.Intervals"
+                                        [disabled]="membershipFreezeDetail.OpenEndedSuspension" #Intervals="ngModel"
+                                        tabindex="2" class="form-control">
                                         <option *ngFor="let interval of intervalList" [ngValue]="interval">
                                             {{interval}}
                                         </option>
@@ -91,8 +100,8 @@
                         </div>
                         <div class="small_space"></div>
                         <div id="search_accordion">
-                            <div class="panel-heading collapsed row" data-toggle="collapse" data-parent="#search_accordion"
-                                data-target="#suspend_membership">
+                            <div class="panel-heading collapsed row" data-toggle="collapse"
+                                data-parent="#search_accordion" data-target="#suspend_membership">
                                 <div class="col-md-12">
                                     <h3 class="panel-title accordion-toggle" style="font-size: 16px;">Optional</h3>
                                 </div>
@@ -107,10 +116,12 @@
                                             <div class="field_label">
                                                 <h5>Suspension Fee <span>(Excluding
                                                         {{selectedMembership?.TotalTaxPercentage > 0 ?
-                                                        selectedMembership?.TotalTaxPercentage + '%' : '' }} Tax)</span></h5>
+                                                        selectedMembership?.TotalTaxPercentage + '%' : '' }}
+                                                        Tax)</span></h5>
                                             </div>
-                                            <input type="text" numberControl name="Price" [(ngModel)]="membershipFreezeDetail.Price"
-                                                #Price="ngModel" tabindex="4" (ngModelChange)="onPriceChange()" class="form-control">
+                                            <input type="text" numberControl name="Price"
+                                                [(ngModel)]="membershipFreezeDetail.Price" #Price="ngModel" tabindex="4"
+                                                (ngModelChange)="onPriceChange()" class="form-control">
 
                                         </div>
                                         <div class="col-md-6 col-sm-6">
@@ -143,16 +154,20 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="field_label">
-                                                <h5>Notes</h5>
+                                                <h5>Notes <span>(Remaining Characters: {{ 250 -
+                                                    membershipFreezeDetail?.Notes?.length }})</span></h5>
                                             </div>
-                                            <textarea type="text" name="Notes" [(ngModel)]="membershipFreezeDetail.Notes"
-                                                #Notes="ngModel" rows="5" tabindex="5" class="form-control" maxlength="100"></textarea>
+                                            <textarea type="text" name="Notes"
+                                                [(ngModel)]="membershipFreezeDetail.Notes" #Notes="ngModel" rows="5"
+                                                tabindex="5" class="form-control" maxlength="250"></textarea>
                                         </div>
                                         <div class="col-md-12" *ngIf="showProcessingDaysMessage">
                                             <span class="membership_processing_days alert-warning mt-2">
                                                 <i class="fal fa-info-circle pr-1"></i>
-                                                <span *ngIf="!isShowPrecessDayStripeACH">Minimum Due date for Go Cardless is {{minDate | customdate: dateFormat}}</span>
-                                                <span *ngIf="isShowPrecessDayStripeACH">Minimum Due date for Stripe ACH is {{minDate | customdate: dateFormat}}</span>
+                                                <span *ngIf="!isShowPrecessDayStripeACH">Minimum Due date for Go
+                                                    Cardless is {{minDate | customdate: dateFormat}}</span>
+                                                <span *ngIf="isShowPrecessDayStripeACH">Minimum Due date for Stripe ACH
+                                                    is {{minDate | customdate: dateFormat}}</span>
                                             </span>
                                         </div>
                                     </div>
