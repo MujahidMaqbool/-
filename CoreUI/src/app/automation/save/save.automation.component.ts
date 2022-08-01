@@ -9,22 +9,23 @@ import { NgForm } from '@angular/forms';
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+
 /*Models*/
-import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
-import {
-    SaveAutomation, EventCategoryType, EventType, Audience, AutomationRuleTemplate, AudienceTemplate,
-    DurationType, RuleAudience, AutomationRuleAudienceCommunication, AutomationRuleStaffPosition, AutomationRuleAudienceGroup
-} from 'src/app/models/automation.model';
-/********************** Common and Customs *********************/
+import { ApiResponse } from 'src/app/models/common.model';
+import { SaveAutomation, EventCategoryType, EventType, Audience, AutomationRuleTemplate, AudienceTemplate, DurationType, RuleAudience, AutomationRuleAudienceCommunication, AutomationRuleAudienceGroup} from 'src/app/models/automation.model';
+
+/********************** Configurations *********************/
 import { AutomationRuleApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { TrimPipe } from "src/app/shared/pipes/trim";
-/********* Configurations ************/
 
+/********* Configurations ************/
 import { Configurations } from 'src/app/helper/config/app.config';
 import { ENU_EventCategoryType, ENU_AudienceType, ENU_CommunicationType, ENU_AutomationDurationType, ENU_NotificationTrigger } from 'src/app/helper/config/app.enums';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { TimeFormatPipe } from 'src/app/application-pipes/time-format.pipe';
+
+/**********  components **********/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
@@ -152,7 +153,7 @@ export class SaveAutomationComponent extends AbstractGenericComponent implements
         });
     }
 
-  
+
     // #region Events
 
 
@@ -795,7 +796,7 @@ export class SaveAutomationComponent extends AbstractGenericComponent implements
             }
 
         }
-     
+
         if (this.automationID > 0) {
             if (this.saveAutomation.DoNotSendBefore) {
                 this.doNotSendBefore = this._dateTimeService.convertTimeStringToDateTime(this.saveAutomation.DoNotSendBefore, this.StartDate);
@@ -1006,7 +1007,7 @@ export class SaveAutomationComponent extends AbstractGenericComponent implements
             this.ruleAudienceStaff = this.audienceStaffDefaultList.filter(staff => staff.AudienceTypeID == this.enu_AudienceType.RelatedStaff);
         }
     }
-    
+
     filterAudienceTypeWithPermission() {
         this.selectedStaffPosition = [];
         this.ruleAudienceStaff = [];

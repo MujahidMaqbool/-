@@ -5,19 +5,26 @@ import { Router } from '@angular/router';
 /********************* Material Reference ********************/
 import { MatPaginator } from '@angular/material/paginator';
 
-/********************** Components *********************************/
-import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
-import { HttpService } from 'src/app/services/app.http.service';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { LogSearch, Fundamental } from '../models/log.search.model';
-import { DateTimeService } from 'src/app/services/date.time.service';
-import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+/**********  Services & Models **********/
+/* Services */
+import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { DateTimeService } from 'src/app/services/date.time.service';
+import { HttpService } from 'src/app/services/app.http.service';
+
+/* Models */
+import { ApiResponse } from 'src/app/models/common.model';
+import { LogSearch, Fundamental } from '../models/log.search.model';
+
+/********************** Components *********************************/
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
-import { ApiResponse } from 'src/app/models/common.model';
-import { MessageService } from 'src/app/services/app.message.service';
+
+/********************** Configurations *****************************/
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
+import { StaffNotificationApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
 
 @Component({
     selector: 'search-log',
@@ -47,7 +54,7 @@ export class SearchLogComponent extends AbstractGenericComponent implements OnIn
     eventTypeList: any;
     communicationTypeList: any;
     logList: any = [];
- 
+
     sortIndex: number = 1;
     sortOrder_ASC = Configurations.SortOrder_ASC;
     sortOrder_DESC = Configurations.SortOrder_DESC;
@@ -71,7 +78,7 @@ export class SearchLogComponent extends AbstractGenericComponent implements OnIn
     }
 
     ngOnInit() {
-        this.getBranchDatePattern();                               
+        this.getBranchDatePattern();
     }
 
     async getBranchDatePattern() {
@@ -161,7 +168,7 @@ export class SearchLogComponent extends AbstractGenericComponent implements OnIn
     }
 
     getLogSearchList() {
-     
+
         this.logSearchParams.EventCategoryTypeID = this.logSearchParams.EventCategoryTypeID > 0 ? this.logSearchParams.EventCategoryTypeID : null;
         this.logSearchParams.EventTypeID = this.logSearchParams.EventTypeID > 0 ? this.logSearchParams.EventTypeID : null;
         this.logSearchParams.CommunicationTypeID = this.logSearchParams.CommunicationTypeID > 0 ? this.logSearchParams.CommunicationTypeID : null;
@@ -189,7 +196,7 @@ export class SearchLogComponent extends AbstractGenericComponent implements OnIn
                     } else {
                         this.appPagination.totalRecords = 0;
                     }
-                    
+
                 } else {
                     this._messageService.showErrorMessage(res.MessageText);
                 }
@@ -228,4 +235,4 @@ export class SearchLogComponent extends AbstractGenericComponent implements OnIn
         this.triggerCategoryList.splice(0, 0, { EventCategoryTypeID: 0, EventCategoryTypeName: "All", IsActive: true });
         this.eventTypeList.splice(0, 0, { EventCategoryTypeID: 0, EventTypeID: 0, EventTypeName: "All", IsActive: true });
     }
-}  
+}

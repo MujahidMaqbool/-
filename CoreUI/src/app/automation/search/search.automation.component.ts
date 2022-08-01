@@ -5,23 +5,31 @@ import { Router } from '@angular/router';
 /********************* Material Reference ********************/
 import { MatPaginator } from '@angular/material/paginator';
 
-/********************** Components *********************************/
-import { AutomationRuleApi } from 'src/app/helper/config/app.webapi';
-import { AutomationSearch, AutomationSearchParameter, Audience, AutomationSearchParameters } from 'src/app/automation/models/automation.search.model';
-import { HttpService } from 'src/app/services/app.http.service';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { MessageService } from 'src/app/services/app.message.service';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { AuthService } from 'src/app/helper/app.auth.service';
-import { ENU_Permission_Module, ENU_Permission_Automation } from 'src/app/helper/config/app.module.page.enums';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
-import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
-import { ApiResponse } from 'src/app/models/common.model';
 
+/**********  Services & Models **********/
+/* Services */
+import { AuthService } from 'src/app/helper/app.auth.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+import { HttpService } from 'src/app/services/app.http.service';
+
+
+/* Models */
+import { ApiResponse } from 'src/app/models/common.model';
+import { AutomationSearch, AutomationSearchParameter, AutomationSearchParameters } from 'src/app/automation/models/automation.search.model';
+
+/********************** Components *********************************/
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+
+/********************** Configurations *****************************/
+import { AutomationRuleApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ENU_Permission_Module, ENU_Permission_Automation } from 'src/app/helper/config/app.module.page.enums';
+import { ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 
 @Component({
     selector: 'search-automation',
@@ -199,7 +207,7 @@ export class SearchAutomationComponent extends AbstractGenericComponent implemen
             }else{
                 this._messageService.showErrorMessage(res.MessageText);
             }
-                
+
             });
 
     }
@@ -257,4 +265,4 @@ export class SearchAutomationComponent extends AbstractGenericComponent implemen
 
     // #endregion
 
-}  
+}
