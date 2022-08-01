@@ -1,17 +1,27 @@
+/********************** Angular Refrences *********************/
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import { SubscriptionLike as ISubscription } from "rxjs";
+
+/********************** Material::Reference *********************/
 import { MatOption } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProductAreaEnum, PricingCheckBoxValues } from 'src/app/helper/config/app.enums';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { NumberValidator } from 'src/app/shared/helper/number.validator';
-import { ItemTaxViewModel, ProductVariantBranchViewModel } from 'src/app/product/models/product.model';
+
+/********************** Services & Models *********************/
+/* Services */
 import { TaxCalculation } from 'src/app/services/tax.calculations.service';
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
-import { ProductApi } from 'src/app/helper/config/app.webapi';
-import { ApiResponse,DD_Branch } from 'src/app/models/common.model';
-import { SubscriptionLike as ISubscription } from "rxjs";
 import { DataSharingService } from 'src/app/services/data.sharing.service';
+
+/* Models */
+import { ItemTaxViewModel, ProductVariantBranchViewModel } from 'src/app/product/models/product.model';
+import { ApiResponse,DD_Branch } from 'src/app/models/common.model';
+
+/********************** Configuration *********************/
+import { ProductAreaEnum, PricingCheckBoxValues } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { NumberValidator } from 'src/app/shared/helper/number.validator';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
 
 
 @Component({
@@ -51,7 +61,7 @@ export class BulkUpdatePriceComponent implements OnInit {
     private _messageService: MessageService,
     private _dataSharingService: DataSharingService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { 
+  ) {
     this.getBranchInfo();
   }
 

@@ -1,18 +1,32 @@
+/********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild, Inject, EventEmitter, Output } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BulkUpdateComponent } from './bulk-update/bulk.update.component';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { element } from 'protractor';
-import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+import { SubscriptionLike } from 'rxjs';
+
+
+/********************** Material::Reference *********************/
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+
+/********************** Services & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
-import { ProductApi } from 'src/app/helper/config/app.webapi';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+
+/* Models */
 import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 import { InventoryAdjustStock, InventoryDetail } from 'src/app/product/models/edit.inventory.model';
+
+/********************** Configuration *********************/
+import { ProductApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
-import { MessageService } from 'src/app/services/app.message.service';
-import { SubscriptionLike } from 'rxjs';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { ProductClassification } from 'src/app/helper/config/app.enums';
+
+/********************** Components *********************/
+import { BulkUpdateComponent } from './bulk-update/bulk.update.component';
+import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
+
 
 @Component({
   selector: 'app-edit-inventory',

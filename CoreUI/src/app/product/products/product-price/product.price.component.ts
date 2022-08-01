@@ -1,18 +1,30 @@
-
+/********************** Angular Refrences *********************/
 import { Component, Input, OnInit, Inject, ViewChild, EventEmitter, Output } from '@angular/core';
-import { EnumSaleSourceType, ENU_Package, ProductAreaEnum, ProductClassification } from 'src/app/helper/config/app.enums';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { DD_Branch, ApiResponse } from 'src/app/models/common.model';
-import { ProductBranchPermissionViewModel, ProductVariantBranchViewModel, ProductVariantPackagingViewModel, ProductVariantPricingModel, ProductVariantViewModel, ProductPriceCheckBoxViewModel } from 'src/app/product/models/product.model';
+import { SubscriptionLike } from 'rxjs';
+
+/********************** Material::Reference *********************/
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+/********************** Services & Models *********************/
+/* Services */
+import { MessageService } from 'src/app/services/app.message.service';
+import { HttpService } from 'src/app/services/app.http.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { SubscriptionLike } from 'rxjs';
+
+/* Models */
+import { ProductBranchPermissionViewModel, ProductVariantBranchViewModel, ProductVariantPackagingViewModel, ProductVariantPricingModel, ProductVariantViewModel, ProductPriceCheckBoxViewModel } from 'src/app/product/models/product.model';
+import { DD_Branch, ApiResponse } from 'src/app/models/common.model';
+
+
+/********************** Configuration *********************/
+import { EnumSaleSourceType, ENU_Package, ProductAreaEnum, ProductClassification } from 'src/app/helper/config/app.enums';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+
+/********************** Components *********************/
 import { BulkUpdatePriceComponent } from './save/bulk.update.price.component';
 import { SavePackagingComponent } from './save/packaging/packaging.component';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpService } from 'src/app/services/app.http.service';
-import { ProductApi } from 'src/app/helper/config/app.webapi';
-import { MessageService } from 'src/app/services/app.message.service';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 
 @Component({
@@ -139,7 +151,7 @@ export class ProductPriceComponent implements OnInit {
       }
       this.toggleStatuses[i].collapse = true;
     }
-    
+
   }
 
   /* Method to receive the pagination from the Paginator */
@@ -277,7 +289,7 @@ export class ProductPriceComponent implements OnInit {
     return productPrice;
   }
 
-  // get signle pricing detail record again ProductVariantID 
+  // get signle pricing detail record again ProductVariantID
   getPricingDetail(productVariant: any) {
     return new Promise<boolean>((resolve, reject) => {
       let param = {

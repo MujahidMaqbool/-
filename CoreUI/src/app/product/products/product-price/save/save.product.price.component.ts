@@ -1,11 +1,21 @@
+/********************** Angular Refrences *********************/
 import { Component, Input, OnInit } from '@angular/core';
-import { ProductAreaEnum, ProductClassification } from 'src/app/helper/config/app.enums';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { DD_Branch } from 'src/app/models/common.model';
-import { ProductBranchPermissionViewModel, SaveProductVariantBranchViewModel, ProductVariantPackagingViewModel, ProductVariantPricingModel, ProductVariantBranchViewModel } from 'src/app/product/models/product.model';
+import { SubscriptionLike } from 'rxjs';
+
+/********************** Services & Models *********************/
+/* Services */
 import { DataSharingService } from 'src/app/services/data.sharing.service';
 import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { SubscriptionLike } from 'rxjs';
+
+/* Models */
+import { DD_Branch } from 'src/app/models/common.model';
+import { ProductBranchPermissionViewModel, SaveProductVariantBranchViewModel, ProductVariantPackagingViewModel, ProductVariantPricingModel, ProductVariantBranchViewModel } from 'src/app/product/models/product.model';
+
+/********************** Configuration *********************/
+import { ProductAreaEnum, ProductClassification } from 'src/app/helper/config/app.enums';
+import { Messages } from 'src/app/helper/config/app.messages';
+
+/********************** Components *********************/
 import { BulkUpdatePriceComponent } from './bulk.update.price.component';
 import { SavePackagingComponent } from './packaging/packaging.component';
 
@@ -33,7 +43,7 @@ export class SaveProductPriceComponent implements OnInit {
   @Input() productClassificationID: number;
   @Input() isExceedPackage: boolean;
 
-  
+
 
   productAreaEnum = ProductAreaEnum;
 
@@ -62,7 +72,7 @@ export class SaveProductPriceComponent implements OnInit {
   async getDefaultBranch() {
     this.currentBranchSubscription =
       this._dataSharingService.currentBranch.subscribe((branch: DD_Branch) => {
-        if (branch.BranchID && branch.hasOwnProperty("Currency")) {          
+        if (branch.BranchID && branch.hasOwnProperty("Currency")) {
           this.currencyFormat = branch.CurrencySymbol;
         }
       });
@@ -74,7 +84,7 @@ export class SaveProductPriceComponent implements OnInit {
 
   /* Method to toggle the tax length and view */
   onToggleClick(parentIndex, childIndex, i: number, isCallTS: boolean = false) {
-    
+
     if(!isCallTS){
       this.toggleStatuses[i].collapse = !this.toggleStatuses[i].collapse;
       this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].CollapseItemTaxVM = this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].ItemTaxVM;
@@ -85,10 +95,10 @@ export class SaveProductPriceComponent implements OnInit {
       if(this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].ItemTaxVM && this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].ItemTaxVM.length > 0){
         this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].CollapseItemTaxVM.push(this.productVariantPricingModel[parentIndex].ProductVariantBranchViewModel[childIndex].ItemTaxVM[0]);
       }
-      
+
       this.toggleStatuses[i].collapse = true;
     }
-   
+
   }
   onBulkUpdate(isBulkUpdate: boolean, parentIndex: number, childIndex: number) {
     this.showProductPricingError = false;
@@ -212,7 +222,7 @@ export class SaveProductPriceComponent implements OnInit {
     this.productVariantPricingModel[0].ProductVariantBranchViewModel.forEach(pricing => {
       if(pricing.Price == null || pricing.Price == undefined || pricing.Price.toString() == "") {
         result = false;
-      }         
+      }
     });
 
     this.showProductPricingError = result ? false : true;

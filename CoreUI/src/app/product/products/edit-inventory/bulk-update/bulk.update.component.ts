@@ -1,13 +1,27 @@
+/********************** Angular Refrences *********************/
 import { Component, OnInit, Inject, EventEmitter, Output } from '@angular/core';
+
+/********************** Material::Reference *********************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { InventoryAdjustStock } from 'src/app/product/models/edit.inventory.model';
+
+/********************** Services & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
-import { ProductApi } from 'src/app/helper/config/app.webapi';
-import { ApiResponse } from 'src/app/models/common.model';
 import { MessageService } from 'src/app/services/app.message.service';
+
+
+/* Models */
+import { ApiResponse } from 'src/app/models/common.model';
+import { InventoryAdjustStock } from 'src/app/product/models/edit.inventory.model';
+
+/********************** Configuration *********************/
 import { Messages } from 'src/app/helper/config/app.messages';
 import { Configurations } from 'src/app/helper/config/app.config';
 import { NumberValidator } from 'src/app/shared/helper/number.validator';
+
+/********************** Components *********************/
+import { ProductApi } from 'src/app/helper/config/app.webapi';
+
 
 @Component({
   selector: 'app-bulk-update',
