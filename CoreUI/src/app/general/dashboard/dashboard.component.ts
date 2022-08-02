@@ -440,7 +440,7 @@ export class DashboardComponent extends AbstractGenericComponent {
   }
 
   ngOnDestroy() {
-    this.packageIdSubscription.unsubscribe();
+    this.packageIdSubscription?.unsubscribe();
   }
 
   // #endregion

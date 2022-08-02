@@ -7,7 +7,7 @@
         </a>
       </li>
       <li *ngIf="allowedClientPages.Save">
-        <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+        <a class="nav-link" [routerLinkActive]="['active']" 
           [routerLink]="['/customer/client/details', clientID]" role="tab">
           {{clientID > 0 ? 'Client Detail' : 'Add Client'}}
         </a>
