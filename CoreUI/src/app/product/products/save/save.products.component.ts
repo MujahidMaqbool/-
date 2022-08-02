@@ -1,36 +1,34 @@
-// #region Imports
-
 /********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionLike } from "rxjs";
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 /********************* Material:Refference ********************/
 import { MatStepper } from '@angular/material/stepper';
+import { MatOption } from '@angular/material/core';
+
+/********************** Services & Models *********************/
+/* Services */
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+
+/* Models */
+import { ApiResponse } from 'src/app/models/common.model';
+import { ProductBranchPermissionViewModel, ProductMediaViewModel, ProductVariantBranchViewModel, SaveProductModel } from 'src/app/product/models/product.model';
+import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
+import { SaveProductPriceComponent } from '../product-price/save/save.product.price.component';
 
 /**********************  Configurations *********************/
 import { EnumSaleSourceType, ENU_Package, ProductAreaEnum, WizardforProduct } from 'src/app/helper/config/app.enums';
 import { ProductApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
-
-/********************** Services & Models *********************/
-import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
-import { HttpService } from 'src/app/services/app.http.service';
-import { MessageService } from 'src/app/services/app.message.service';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { ProductBranchPermissionViewModel, ProductMediaViewModel, ProductVariantBranchViewModel, SaveProductModel, SaveProductVariantBranchViewModel } from 'src/app/product/models/product.model';
 import { Configurations } from 'src/app/helper/config/app.config';
-import { MatOption } from '@angular/material/core';
-import { ImageEditorPopupComponent } from 'src/app/application-dialog-module/image-editor/image.editor.popup.component';
-import { ProductPriceComponent } from '../product-price/product.price.component';
 import { environment } from 'src/environments/environment';
 import { AppUtilities } from 'src/app/helper/aap.utilities';
-import { HttpClient } from '@angular/common/http';
-import { SaveProductPriceComponent } from '../product-price/save/save.product.price.component';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-
-// #region end
 
 @Component({
   selector: "app-save-product",

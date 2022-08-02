@@ -1,19 +1,27 @@
 /***Angular Imports / References */
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 
+/*********************** Material References *************************/
+import { MatPaginator } from '@angular/material/paginator';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 /****Services & Models *****/
+// Services
+
 import { AuthService } from 'src/app/helper/app.auth.service';
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+
+// Models
 import { ProductVariantsSearchParameter, ProductVariantItems } from "src/app/product/models/purchaseOrder.model";
 
 /***** Configurations ******/
 import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
 import { Messages } from 'src/app/helper/config/app.messages';
-import { MatPaginator } from '@angular/material/paginator';
+
+/***** Components ******/
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
 
 
@@ -29,12 +37,12 @@ export class SavePurchaseItemsComponent implements OnInit {
   productvariantsList: Array<ProductVariantItems> = [new ProductVariantItems()];
   selectedProductvariantsList: Array<ProductVariantItems> = [];
   productVariantSearchParameter: ProductVariantsSearchParameter = new ProductVariantsSearchParameter();
-  
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild("appPagination") appPagination: AppPaginationComponent;
   @Output() savedProductVariants = new EventEmitter<ProductVariantItems[]>();
-  
+
 
   constructor(
     private _httpService: HttpService,
@@ -46,7 +54,7 @@ export class SavePurchaseItemsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
   }
 
   ngAfterViewInit() {
@@ -66,7 +74,7 @@ export class SavePurchaseItemsComponent implements OnInit {
             if(this.dialogData.addedVariants && this.dialogData.addedVariants !="") {
               ////****send API to comma separated ID's of already added variants to Exclude those variants from List *****///
               productVariantsSearchParams.ProductVariantIDs = this.dialogData.addedVariants;
-    
+
             }
             if(this.productVariantSearchParameter.ProductName && this.productVariantSearchParameter.ProductName.trim() !='') {
               productVariantsSearchParams.ProductName = this.productVariantSearchParameter.ProductName.trim().toLocaleLowerCase();
@@ -77,7 +85,7 @@ export class SavePurchaseItemsComponent implements OnInit {
               if (this.isDataExists) {
                 this.productvariantsList = data.Result;
                 /****Show already selected product variants as selected ******/
-                if(this.selectedProductvariantsList && this.selectedProductvariantsList.length > 0) { 
+                if(this.selectedProductvariantsList && this.selectedProductvariantsList.length > 0) {
                   this.productvariantsList.forEach(item => {
                     let variantExist = this.selectedProductvariantsList.find(selectedPV => selectedPV.ProductVariantID === item.ProductVariantID);
                     item.IsSelected = variantExist ? variantExist.IsSelected : false;
@@ -99,11 +107,11 @@ export class SavePurchaseItemsComponent implements OnInit {
               }
             );
 //  }
- 
+
   }
 
   addProductsToPO() {
- 
+
     ////validate product variant
     if (this.selectedProductvariantsList.length > 0) {
 
@@ -123,7 +131,7 @@ export class SavePurchaseItemsComponent implements OnInit {
   }
 
   onVariantSelection(event, pvariant) {
-    
+
     if(event){
       this.selectedProductvariantsList.push(pvariant);
     } else {
@@ -137,7 +145,7 @@ export class SavePurchaseItemsComponent implements OnInit {
   }
 
   /****Select or Deselect All*/
-  selectOrDeselectAllItems(isCheck: boolean) { 
+  selectOrDeselectAllItems(isCheck: boolean) {
 
       let already_ItemsSelectedOrDeselected = this.productvariantsList.every(item => item.IsSelected == isCheck);
       if (!already_ItemsSelectedOrDeselected) {
@@ -145,7 +153,7 @@ export class SavePurchaseItemsComponent implements OnInit {
           item.IsSelected = isCheck; /// mark item as selected/checked
           this.onVariantSelection(isCheck, item);
         });
-      }    
+      }
 
   }
 

@@ -1,10 +1,19 @@
+/********************** Angular Refrences *********************/
 import { Component, OnInit, Inject, EventEmitter, Output } from '@angular/core';
+/********************** Material::Reference *********************/
+
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+/********************** Services & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
-import { ProductApi } from 'src/app/helper/config/app.webapi';
+
+/* Models */
 import { ApiResponse } from 'src/app/models/common.model';
+
+/********************** Configuration *********************/
 import { Messages } from 'src/app/helper/config/app.messages';
+import { ProductApi } from 'src/app/helper/config/app.webapi';
 
 @Component({
   selector: 'app-restore-variant',

@@ -17,16 +17,14 @@ import { ProductPriceAndInventoryDetailModel } from 'src/app/product/models/prod
 // Services
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+import { AuthService } from 'src/app/helper/app.auth.service';
 
 /********************** Configurations *********************/
 import { Configurations } from 'src/app/helper/config/app.config';
 import { EnumSaleSourceType, ProductViewTabs } from 'src/app/helper/config/app.enums';
 import { ProductApi } from 'src/app/helper/config/app.webapi';
-
-/********************** START: Common *********************/
 import { Messages } from 'src/app/helper/config/app.messages';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { AuthService } from 'src/app/helper/app.auth.service';
 import { ENU_Permission_Module, ENU_Permission_Product } from 'src/app/helper/config/app.module.page.enums';
 
 @Component({

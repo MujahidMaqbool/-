@@ -1,5 +1,3 @@
-// #region Imports
-
 /********************** Angular Refrences *********************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -19,12 +17,10 @@ import { ApiResponse } from 'src/app/models/common.model';
 /**********************  Components *********************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
-/********************** Services & Models *********************/
+/********************** Configurations *********************/
 import { EnumSaleSourceType, SupplierValidation } from 'src/app/helper/config/app.enums';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { SupplierApi } from 'src/app/helper/config/app.webapi';
-
-// #region Imports End
 
 
 @Component({

@@ -1,25 +1,33 @@
+/***Angular Imports / References */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
-/****Material references */
+import { NgForm } from '@angular/forms';
+import { SubscriptionLike } from 'rxjs';
+
+/*********************** Material References *************************/
 import { MatDatepicker } from "@angular/material/datepicker";
 
-/*****Configurations *********/
+/****Services & Models *****/
+/* Services */
 import { AuthService } from 'src/app/helper/app.auth.service';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
-import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
-import { SavePurchaseItemsComponent } from './add-product/save.add.po.product.component';
-import { BranchList, SuppliersList, PurchaseOrderViewModel, ProductVariantItems } from 'src/app/product/models/purchaseOrder.model';
-import { SubscriptionLike } from 'rxjs';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { NgForm } from '@angular/forms';
 import { DateTimeService } from 'src/app/services/date.time.service';
 import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
 
+/* Models */
+import { BranchList, SuppliersList, PurchaseOrderViewModel, ProductVariantItems } from 'src/app/product/models/purchaseOrder.model';
+import { ApiResponse, DD_Branch } from 'src/app/models/common.model';
+
+/*****Configurations *********/
+import { Messages } from 'src/app/helper/config/app.messages';
+import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
+import { Configurations } from 'src/app/helper/config/app.config';
+
+/*****Components *********/
+import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
+import { SavePurchaseItemsComponent } from './add-product/save.add.po.product.component';
 
 
 
@@ -47,7 +55,7 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
 
   @ViewChild("SavePOData") savePurchaseOrderData: NgForm;
   //@ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
-  
+
   currentBranchSubscription: SubscriptionLike;
   branchList: BranchList[] = [];
   //suppliersDataList: SuppliersList[] = [];
@@ -55,7 +63,7 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
   purchaseOrderViewModel: PurchaseOrderViewModel = new PurchaseOrderViewModel();
 
   AllowedNumberKeysOnly = Configurations.AllowedNumberKeysOnly;
-  
+
 
   constructor(
     private _httpService: HttpService,
@@ -83,8 +91,8 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
       } else {
         this.purchaseOrderViewModel.PurchaseOrderDate = this._dateTimeService.convertDateObjToString(this.poDate, this.dateFormatForSearch);
       }
-    });   
-   
+    });
+
   }
 
   async getCurrentBranchDetail() {
@@ -94,17 +102,17 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
       this.currencySymbol = branch.CurrencySymbol
     }
   }
-  
+
   async getDefaultBranch() {
     this.currentBranchSubscription =
       this._dataSharingService.currentBranch.subscribe((branch: DD_Branch) => {
-        if (branch.BranchID && branch.hasOwnProperty("Currency")) {       
+        if (branch.BranchID && branch.hasOwnProperty("Currency")) {
           this.currencySymbol = branch.CurrencySymbol;
         }
       });
   }
 
-  /***** Get Search Fundamentals******/ 
+  /***** Get Search Fundamentals******/
   getFundamentals() {
     this._httpService.get(PurchaseOrderApi.getFundamentals).subscribe(
       (response: ApiResponse) => {
@@ -128,12 +136,12 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
       .subscribe(
         (response: ApiResponse) => {
           if (response.MessageCode > 0) {
-            this.purchaseOrderViewModel = response.Result;                               
+            this.purchaseOrderViewModel = response.Result;
             if (this.purchaseOrderViewModel?.PurchaseOrderDetails?.length > 0) {
               /****Concat product name and variant for display purpose only*******/
               this.purchaseOrderViewModel?.PurchaseOrderDetails.forEach(p => {
                 p.ProductName = (p.ProductVariantName && p.ProductVariantName != '') ? p.ProductName + ' - ' + p.ProductVariantName : p.ProductName;
-              });            
+              });
               this.calculateTotalPriceAndItems();
               this.getAlreadyAddedVariants();
             }
@@ -170,7 +178,7 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
           if (this.purchaseOrderViewModel.PurchaseOrderDetails && this.purchaseOrderViewModel.PurchaseOrderDetails.length > 0) {
             addedItems.forEach(pVariantItems => {
               this.purchaseOrderViewModel.PurchaseOrderDetails.push(pVariantItems);
-            });          
+            });
 
           } else {
 
@@ -204,11 +212,11 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
     return result;
   }
 
-  deleteProductVariant(i) {  
+  deleteProductVariant(i) {
       this.purchaseOrderViewModel.PurchaseOrderDetails.splice(i, 1);
       this.getAlreadyAddedVariants();
       /******Calculate total price  & Total Items selected for PO *****/
-      this.calculateTotalPriceAndItems();    
+      this.calculateTotalPriceAndItems();
   }
 
   deleteProduct_From_Order_Detail(productDetailID: number, index: number) {
@@ -220,7 +228,7 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
             this._messageService.showSuccessMessage(this.messages.Success.Delete_Success.replace("{0}", "Product"));
             /***********Remove Item from po detail List ****************************** *********/
               this.purchaseOrderViewModel.PurchaseOrderDetails.splice(index, 1);
-              this.getAlreadyAddedVariants();           
+              this.getAlreadyAddedVariants();
               this.calculateTotalPriceAndItems();
             /*************************************************************************************** */
           }
@@ -239,7 +247,7 @@ export class SavePurchaseOrderComponent extends AbstractGenericComponent impleme
   }
 
   onSupplierPrice_Quantity_Update(index: number, value: number) {
-    
+
     this.purchaseOrderViewModel.PurchaseOrderDetails[index].TotalPrice =
       Number(this.purchaseOrderViewModel.PurchaseOrderDetails[index].OrderQuantity) * Number(this.purchaseOrderViewModel.PurchaseOrderDetails[index].SupplierPrice);
 
@@ -347,7 +355,7 @@ savePurchaseOrder() {
     } else if (!this.isValidOrderQuantity()) {
       this._messageService.showErrorMessage(this.messages.Validation.Order_Quantity_validation_Msg);
       return;
-    } 
+    }
     else if (!this.isValidSupplierPrice()) {
       this._messageService.showErrorMessage(this.messages.Validation.Supplier_Price_validation_Msg);
       return;

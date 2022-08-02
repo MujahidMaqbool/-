@@ -1,10 +1,22 @@
+/********************** Angular Refrences ****************************/
 import { Component, Inject, OnInit } from '@angular/core';
+
+/*********************** Material References *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+
+/********************** Services & Models ****************************/
+/* Services */
+import { DataSharingService } from 'src/app/services/data.sharing.service';
+
+/* Models */
+import { PurchaseOrderViewModel } from 'src/app/product/models/purchaseOrder.model';
+
+/********************** Configurations *******************************/
 import { EnumPurchaseOrderStatus, ENU_DateFormatName } from 'src/app/helper/config/app.enums';
 import { Messages } from 'src/app/helper/config/app.messages';
-import { DD_Branch } from 'src/app/models/common.model';
-import { PurchaseOrderViewModel } from 'src/app/product/models/purchaseOrder.model';
-import { DataSharingService } from 'src/app/services/data.sharing.service';
+
+/*********************** Components **********************************/
 import { AbstractGenericComponent } from 'src/app/shared/helper/abstract.generic.component';
 
 @Component({
@@ -21,7 +33,7 @@ export class ViewPurchaseOrderComponent extends AbstractGenericComponent impleme
   grnTotal: number = 0;
   branchID:number = 0;
   grnTotalReceivedQuantity: number = 0;
-  dateFormat: string = "";  
+  dateFormat: string = "";
   enumPOStatus = EnumPurchaseOrderStatus;
 
   purchaseOrderViewModel: PurchaseOrderViewModel = new PurchaseOrderViewModel();
@@ -50,7 +62,7 @@ export class ViewPurchaseOrderComponent extends AbstractGenericComponent impleme
 
 
   async getCurrentBranchDetail() {
-    this.dateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.DateFormat);  
+    this.dateFormat = await super.getBranchDateFormat(this._dataSharingService, ENU_DateFormatName.DateFormat);
 
     const branch = await super.getBranchDetail(this._dataSharingService);
     if (branch && branch.hasOwnProperty("Currency")) {
@@ -58,7 +70,7 @@ export class ViewPurchaseOrderComponent extends AbstractGenericComponent impleme
         this.currencyFormat = branch.CurrencySymbol
     }
 }
-  
+
 onCloseDialog() {
     this._dialog.close();
 }
