@@ -14,10 +14,10 @@ import { MessageService } from "src/app/services/app.message.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { LoaderService } from "src/app/services/app.loader.service";
 import { AuthService } from "src/app/helper/app.auth.service";
-
+import { DataSharingService } from "src/app/services/data.sharing.service";
+import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
 /* Models */
 import { ApiResponse, DD_Branch } from "src/app/models/common.model";
-// import { AllProductSelectToggleModel } from "src/app/models/all-select-toggle-model";
 import { HideAndShowFavouriteViewColumnProduct, HideAndShowFavouriteViewColumnProductForFavView, ProductSearchParameter, SupplierDropDown } from "src/app/product/models/product.model";
 
 /********************** Component *********************/
@@ -26,6 +26,8 @@ import { AppPaginationComponent } from "src/app/shared-pagination-module/app-pag
 import { ProductPriceComponent } from "../product-price/product.price.component";
 import { ViewProductComponent } from "../view/view.products.component";
 import { DateToDateFromComponent } from "src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component";
+import { ProductVariantComponent } from "../product-variant/product.variant.component";
+import { EditInventoryComponent } from "../edit-inventory/edit.inventory.component";
 
 /**********************  Configurations *********************/
 import { Messages } from "src/app/helper/config/app.messages";
@@ -33,13 +35,7 @@ import { ProductApi } from "src/app/helper/config/app.webapi";
 import { Configurations } from "src/app/helper/config/app.config";
 import { ProductFavouriteViewColumnNameString, Product_SearchFundamental_DropDowns, ProductAreaEnum, EnumSaleSourceType, ProductClassification, ENU_Package, } from "src/app/helper/config/app.enums";
 import { ENU_Permission_Module, ENU_Permission_Product, } from "src/app/helper/config/app.module.page.enums";
-// import { ProductVariantComponent } from "src/app/product/product-variant/product.variant.component";
-// import { EditInventoryComponent } from "src/app/product/edit-inventory/edit.inventory.component";
-import { DataSharingService } from "src/app/services/data.sharing.service";
-import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
-import { ProductVariantComponent } from "../product-variant/product.variant.component";
 import { AllProductSelectToggleModel } from "src/app/product/models/all-select-toggle-model";
-import { EditInventoryComponent } from "../edit-inventory/edit.inventory.component";
 
 @Component({
   selector: "app-products-search",

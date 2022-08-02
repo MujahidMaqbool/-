@@ -1,13 +1,23 @@
+/*********************** Angular References *************************/
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
+/*********************** Material References *************************/
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+/*************************** Services & Models ***********************/
+// Services
+import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+
+// Models
+import { EmailModel } from 'src/app/product/models/purchaseOrder.model';
+
+/********************** Configurations *********************/
 import { Configurations } from 'src/app/helper/config/app.config';
 import { EnumPurchaseOrderStatus } from 'src/app/helper/config/app.enums';
 import { Messages } from 'src/app/helper/config/app.messages';
 import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
-import { EmailModel } from 'src/app/product/models/purchaseOrder.model';
-import { HttpService } from 'src/app/services/app.http.service';
-import { MessageService } from 'src/app/services/app.message.service';
 
 
 @Component({
@@ -17,7 +27,7 @@ import { MessageService } from 'src/app/services/app.message.service';
 })
 export class EmailOrderComponent implements OnInit {
 
- 
+
   /*********** region Local Members ****/
   messages = Messages;
   emailBodyMaxLength = Configurations.SupplierEmailMaxLength;
@@ -38,7 +48,7 @@ export class EmailOrderComponent implements OnInit {
     private _httpService: HttpService,
     private _messageService: MessageService,
     @Inject(MAT_DIALOG_DATA) public dialogData: any
-  ) { 
+  ) {
 
 
   }
@@ -59,9 +69,9 @@ export class EmailOrderComponent implements OnInit {
   }
 
   /******Remove html tags from email body and count text****** */
-  getDescriptionWithOutHtml() {    
+  getDescriptionWithOutHtml() {
     this.emailBodyWithoutHTML = this.supplierEmailModel.Text.replace(/<[^>]*>/g, '').replace('&quot;', '"')
-                                .replace('&quot;', '"').replace('&amp;', '&').replace('&apos;', "'").replace('&gt;', '>').replace('&lt;', '<').replace('&#39;', "'");    
+                                .replace('&quot;', '"').replace('&amp;', '&').replace('&apos;', "'").replace('&gt;', '>').replace('&lt;', '<').replace('&#39;', "'");
   }
 
   // description validation for empty new line
@@ -69,8 +79,8 @@ export class EmailOrderComponent implements OnInit {
     this.supplierEmailModel.Text = value === "<br>" ? "" : value;
     this.getDescriptionWithOutHtml();
     if (this.emailBodyWithoutHTML && this.emailBodyWithoutHTML.length > this.emailBodyMaxLength) {
-      this.isInvalidEmailBody = true;      
-    } else {      
+      this.isInvalidEmailBody = true;
+    } else {
       this.isInvalidEmailBody = false;
     }
 
@@ -78,8 +88,8 @@ export class EmailOrderComponent implements OnInit {
 
   sendEmailToSupplier() {
 
-    this.submitted = true;    
-  
+    this.submitted = true;
+
     if (this.emailOrderForm.valid && this.supplierEmailModel.Subject.trim() != '' && this.supplierEmailModel.Subject.trim() != null) {
       this.disableSaveBtn = true;
       this.supplierEmailModel.SupplierEmail = this.supplierEmailAddresses.split(';');
@@ -93,17 +103,17 @@ export class EmailOrderComponent implements OnInit {
           this.disableSaveBtn = false;
           this._messageService.showErrorMessage(respose.MessageText);
         }
-  
+
       },
         error => {
           this.disableSaveBtn = false;
           this._messageService.showErrorMessage(this.messages.Error.Send_Error.replace("{0}", "email to supplier"));
         });
     } else {
-      
+
       this._messageService.showErrorMessage(this.messages.Validation.Info_Required);
     }
-  
+
   }
 
   sendEmail() {

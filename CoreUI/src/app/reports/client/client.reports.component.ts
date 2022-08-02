@@ -9,17 +9,20 @@ import { AllPerson, ApiResponse } from 'src/app/models/common.model';
 /* Services */
 import { HttpService } from 'src/app/services/app.http.service';
 import { MessageService } from 'src/app/services/app.message.service';
-/**********************  Common *********************/
-import { Messages } from 'src/app/helper/config/app.messages';
-import { ClientApi, CustomerApi } from 'src/app/helper/config/app.webapi';
-import { FileType, PersonType, CustomerType, ReportTab, FileFormatType, ReportName } from 'src/app/helper/config/app.enums';
 import { DateTimeService } from 'src/app/services/date.time.service';
-import { Configurations } from 'src/app/helper/config/app.config';
-import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
 import { CommonService } from 'src/app/services/common.service';
-import { CustomerSearchComponent } from 'src/app/shared/components/customer-search/customer.search.component';
 import { AuthService } from 'src/app/helper/app.auth.service';
+
+/**********************  Configurations *********************/
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ClientApi } from 'src/app/helper/config/app.webapi';
+import { FileType, CustomerType, ReportTab, ReportName } from 'src/app/helper/config/app.enums';
+import { Configurations } from 'src/app/helper/config/app.config';
 import { ENU_Permission_Module, ENU_Permission_Report } from 'src/app/helper/config/app.module.page.enums';
+
+/**********************  Components *********************/
+import { DateToDateFromComponent } from 'src/app/application-dialog-module/dateto_datefrom/dateto.datefrom.component';
+import { CustomerSearchComponent } from 'src/app/shared/components/customer-search/customer.search.component';
 import { AllSaleHistoryReportComponent } from '../common/all.sale.history.report/all.sale.history.report.component';
 import { AllSaleBookedDetailReportComponent } from '../common/all.sale.booked.detail.report/all.sale.booked.detail.report.component';
 
@@ -113,7 +116,7 @@ export class ClientReportComponent implements OnInit {
         }
 
       });
-   
+
   }
 
   ngAfterViewInit() {
@@ -148,11 +151,11 @@ export class ClientReportComponent implements OnInit {
 
   async getBranchSetting(){
     this.currentBranchDate = await this._dateTimeService.getCurrentDateTimeAcordingToBranch();
- 
+
     this.clientReportSearchParam.DateFrom = this._dateTimeService.convertDateObjToString(this.currentBranchDate, this.dateFormat),
       this.clientReportSearchParam.DateTo = this._dateTimeService.convertDateObjToString(this.currentBranchDate, this.dateFormat)
   }
-  
+
   exportAllClient(fileType: number) {
 
     let params = {

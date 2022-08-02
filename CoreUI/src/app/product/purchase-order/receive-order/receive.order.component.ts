@@ -1,14 +1,26 @@
+/*********************** Angular References *************************/
 import { Component, OnInit, Inject, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { SubscriptionLike } from 'rxjs';
+
+/*********************** Material References *************************/
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+
+/*************************** Services & Models ***********************/
+// Services
 import { HttpService } from 'src/app/services/app.http.service';
-import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
-import { Messages } from 'src/app/helper/config/app.messages';
 import { MessageService } from 'src/app/services/app.message.service';
 import { DateTimeService } from 'src/app/services/date.time.service';
-import { SaveGRNViewModel, ReceivePurchaseOrder } from 'src/app/product/models/save.gr.model';
-import { SubscriptionLike } from 'rxjs';
 import { DataSharingService } from 'src/app/services/data.sharing.service';
+
+// Models
+import { SaveGRNViewModel, ReceivePurchaseOrder } from 'src/app/product/models/save.gr.model';
+
+/********************** Configurations *********************/
+import { PurchaseOrderApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+
 import { EnumPurchaseOrderStatus, ProductClassification } from 'src/app/helper/config/app.enums';
 import { Configurations } from 'src/app/helper/config/app.config';
 
@@ -41,7 +53,7 @@ export class ReceiveOrderComponent implements OnInit, OnDestroy {
   currentBranchSubscription: SubscriptionLike;
 
   enumProductClassification = ProductClassification;
-  
+
   constructor(
     private _dialog: MatDialogRef<ReceiveOrderComponent>,
     private _httpService: HttpService,
@@ -79,7 +91,7 @@ export class ReceiveOrderComponent implements OnInit, OnDestroy {
     this.receiveDate = date;
   //  this.getReceivedOrder();
   }
-  
+
 
   getReceivedOrder() {
    // let receiveDate = this._dateTimeService.convertDateObjToString(this.receiveDate, "YYYY-MM-dd")
@@ -113,7 +125,7 @@ export class ReceiveOrderComponent implements OnInit, OnDestroy {
      setTimeout(() => { this.receivePurchaseOrders[index].ReceivedToday = 0;
        this.calculateTotals();
       }, 100);
-     
+
    } else {
      this.calculateTotals()
    }
@@ -132,7 +144,7 @@ export class ReceiveOrderComponent implements OnInit, OnDestroy {
       this._messageService.showErrorMessage(this.messages.Validation.Quantity_validation_Msg);
       return;
     }
-    
+
     this.mapSaveGRNViewModel();
     let param = JSON.parse(JSON.stringify(this.saveGRNViewModel))
     this._httpService.save(PurchaseOrderApi.SaveRecivePurchaseOrder, param).subscribe((respose) => {

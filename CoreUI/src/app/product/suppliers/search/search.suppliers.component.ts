@@ -11,6 +11,7 @@ import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.
 /* Services */
 import { HttpService } from "src/app/services/app.http.service";
 import { MessageService } from "src/app/services/app.message.service";
+import { AuthService } from "src/app/helper/app.auth.service";
 
 /* Models */
 import { ApiResponse } from "src/app/models/common.model";
@@ -27,7 +28,6 @@ import { Messages } from 'src/app/helper/config/app.messages';
 import { SupplierApi } from "src/app/helper/config/app.webapi";
 import { Configurations } from "src/app/helper/config/app.config";
 import { EnumSaleSourceType } from "src/app/helper/config/app.enums";
-import { AuthService } from "src/app/helper/app.auth.service";
 import { ENU_Permission_Module, ENU_Permission_Product } from "src/app/helper/config/app.module.page.enums";
 
 // #region Imports End
@@ -185,7 +185,7 @@ export class SearchSuppliersComponent implements OnInit {
         if (data && data.Result != null) {
           this.supplierViewDetail = data.Result;
           this.supplierViewDetail.IsMultiBranch = this.isMultiBranch;
-          
+
           this.supplierViewDetail.AppSourceTypeID = supplier.AppSourceTypeID;
           this.supplierViewDetail.IsActive = supplier.IsActive;
 

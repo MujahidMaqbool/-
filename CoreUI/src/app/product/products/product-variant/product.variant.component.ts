@@ -1,16 +1,29 @@
+/********************** Angular Refrences *********************/
+
 import { Component, OnInit, ViewChild, Inject, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductVariant, SearchProductVariant, ProductAttribute, AttributeValue } from 'src/app/product/models/variant.model';
+/********************** Material::Reference *********************/
+
+/********************** Services & Models *********************/
+/* Services */
 import { HttpService } from 'src/app/services/app.http.service';
+import { MessageService } from 'src/app/services/app.message.service';
+import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
+
+/* Models */
+import { ProductVariant, SearchProductVariant, ProductAttribute, AttributeValue } from 'src/app/product/models/variant.model';
+import { ApiResponse } from 'src/app/models/common.model';
+
+/********************** Configuration *********************/
 import { ProductApi } from 'src/app/helper/config/app.webapi';
+import { Messages } from 'src/app/helper/config/app.messages';
+import { ProductClassification } from 'src/app/helper/config/app.enums';
+
+/********************** Componenets *********************/
+import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
 import { AppPaginationComponent } from 'src/app/shared-pagination-module/app-pagination/app.pagination.component';
 import { RestoreVariantComponent } from './restore-variant/restore.variant.component';
-import { MatDialogService } from 'src/app/shared/components/generics/mat.dialog.service';
-import { MessageService } from 'src/app/services/app.message.service';
-import { Messages } from 'src/app/helper/config/app.messages';
-import { DeleteConfirmationComponent } from 'src/app/application-dialog-module/delete-dialog/delete.confirmation.component';
-import { ApiResponse } from 'src/app/models/common.model';
-import { ProductClassification } from 'src/app/helper/config/app.enums';
+
 
 @Component({
   selector: 'app-product-variant',
@@ -125,7 +138,7 @@ export class ProductVariantComponent implements OnInit {
     });
   }
 
-  // set generated attribute and their values 
+  // set generated attribute and their values
   setAttributeValues(ProductAttributeValues: any) {
     let list: any = [];
     let i = 0
@@ -189,7 +202,7 @@ export class ProductVariantComponent implements OnInit {
     return listOfValues;
   }
 
-  // on select attribute and get its value from BE 
+  // on select attribute and get its value from BE
   onSelectAttribute(index: any, isSelection: boolean = false) {
     this.productVariant[index].attributeValue = [];
     this.productVariant[index].productAttribute == null ? null : this.productVariant[index].productAttribute;
@@ -294,7 +307,7 @@ export class ProductVariantComponent implements OnInit {
       if (this.isCheckMultiSelectAttribute()) {
         this._messageService.showErrorMessage(this.messages.Validation.Attribute_selected_multiple);
       } else {
-        // check max limit exceed 125 
+        // check max limit exceed 125
         var variantValCount = this.productVariant[0].attributeValue.filter(j => Object.keys(j).length > 0 && j.AttributeValueID != 0).length;
         for (let index = 0; index < this.productVariant.length; index++) {
           if (index + 1 == this.productVariant.length) {
@@ -342,7 +355,7 @@ export class ProductVariantComponent implements OnInit {
     }))
   }
 
-  // get generated product variant 
+  // get generated product variant
   productVariantDetail() {
     let param = {
       productID: this.productobj.productID,
