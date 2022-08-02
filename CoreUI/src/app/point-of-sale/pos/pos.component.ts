@@ -8,20 +8,11 @@ import * as moment from "moment";
 /****************** Angular Material References *****************/
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
-/****************** Configurations *****************/
-import { ENU_Permission_Module, ENU_Permission_ClientAndMember, ENU_Permission_PointOfSale } from "src/app/helper/config/app.module.page.enums";
-import { CustomerType, POSItemType, ClassStatus, ENU_DateFormatName, CalculatorValue, EnumSaleType, ENU_Package, ProductClassification } from "src/app/helper/config/app.enums";
-import { PointOfSaleApi, SaleApi, AttendeeApi, DiscountSetupApi, CustomerPaymentGatewayApi } from "src/app/helper/config/app.webapi";
-import { Messages } from "src/app/helper/config/app.messages";
-import { environment } from "src/environments/environment";
-import { Configurations, SaleArea, ClassStatusName, DiscountType } from "src/app/helper/config/app.config";
-import { AppUtilities } from "src/app/helper/aap.utilities";
-
 /****************** Services & Models *****************/
 /* Models */
 import {
-    InvoiceInQueue, POSCartItem, POSClass, POSClassInfo, POSClassModel, POSClient, POSItem, POSProduct, POSSaleDetail, POSServiceModel, QueuedInvoiceForGrid, SaleInvoice, SaleQueueDetail,
-    SaleService, SaveQueue, FreeClassBooking, MemberhsipBenefits, RemainingSessionDetail, ProductCategory, ClassCategory, ServiceCategory, SavePOSForAddMoreItems, SalePaymentMode, SaleQueuePaymentGateway, ItemList, MembershipBaseProductGlobalRemainingSession
+  InvoiceInQueue, POSCartItem, POSClass, POSClassInfo, POSClassModel, POSClient, POSItem, POSProduct, POSSaleDetail, POSServiceModel, QueuedInvoiceForGrid, SaleInvoice, SaleQueueDetail,
+  SaleService, SaveQueue, FreeClassBooking, MemberhsipBenefits, RemainingSessionDetail, ProductCategory, ClassCategory, ServiceCategory, SavePOSForAddMoreItems, SalePaymentMode, SaleQueuePaymentGateway, ItemList, MembershipBaseProductGlobalRemainingSession
 } from "src/app/point-of-sale/models/point.of.sale.model";
 import { ClassAttendanceDetail } from "src/app/models/attendee.model";
 import { ApiResponse, CustomerMemberhsip } from "src/app/models/common.model";
@@ -36,6 +27,17 @@ import { DataSharingService } from "src/app/services/data.sharing.service";
 import { DateTimeService } from "src/app/services/date.time.service";
 import { TaxCalculation } from "src/app/services/tax.calculations.service";
 import { MatDialogService } from "src/app/shared/components/generics/mat.dialog.service";
+
+/****************** Configurations *****************/
+import { ENU_Permission_Module, ENU_Permission_ClientAndMember, ENU_Permission_PointOfSale } from "src/app/helper/config/app.module.page.enums";
+import { CustomerType, POSItemType, ClassStatus, ENU_DateFormatName, CalculatorValue, EnumSaleType, ENU_Package, ProductClassification } from "src/app/helper/config/app.enums";
+import { PointOfSaleApi, SaleApi, AttendeeApi, DiscountSetupApi, CustomerPaymentGatewayApi } from "src/app/helper/config/app.webapi";
+import { Messages } from "src/app/helper/config/app.messages";
+import { environment } from "src/environments/environment";
+import { Configurations, SaleArea, ClassStatusName, DiscountType } from "src/app/helper/config/app.config";
+import { AppUtilities } from "src/app/helper/aap.utilities";
+
+
 
 /****************** Components *****************/
 import { POSServiceDetailComponent } from "../services/pos.service.detail.component";
