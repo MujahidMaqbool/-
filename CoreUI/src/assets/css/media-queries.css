@@ -203,7 +203,7 @@
         padding: 20px 0;
     }
     .staff_das_forecast {
-        min-height: 228px;
+        min-height: 299px;
     }
     .dashboard_bg svg {
         width: 100%;
@@ -620,7 +620,7 @@
         justify-content: center;
     }
     .staff_das_forecast {
-        min-height: 397px;
+        min-height: 430px;
     }
     .staff_das_forecast .col-md-8 {
         margin-top: 15px;
