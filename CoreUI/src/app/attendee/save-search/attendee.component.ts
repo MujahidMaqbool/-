@@ -603,7 +603,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
         this.saveAttendeeObj.CustomerID = customer.CustomerID;
         this.saveAttendeeObj.CustomerTypeID = customer.CustomerTypeID;
         this.saveAttendeeObj.ClassID = this.classDetailObj.ClassID;
-        this.saveAttendeeObj.ClassStartDate = this.classDetailObj.StartDate;
+        this.saveAttendeeObj.ClassStartDate = this.getDateWithoutZone(this.classDetailObj.StartDate);
     }
 
     getAttendeeClasses() {
@@ -813,7 +813,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
         let params = {
             parentClassId: this.classDetailObj.ParentClassID,
             customerId: customer.CustomerID,
-            classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT)
+            classDate: this._dateTimeService.convertDateObjToString(this.getDateWithoutZone(this.classDetailObj.StartDate), this.DATE_FORMAT)
         }
         this._httpService.get(AttendeeApi.getMemberClassDetailWithOtherMemberships, params)
             .subscribe(
@@ -824,7 +824,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
                             var hasCustomerMembershipBenefits = {
                                 parentClassId: this.classDetailObj.ParentClassID,
                                 customerId: customer.CustomerID,
-                                classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT),
+                                classDate: this._dateTimeService.convertDateObjToString(this.getDateWithoutZone(this.classDetailObj.StartDate), this.DATE_FORMAT),
                                 freeClassMemberships: this.freeClassMemberships,
                                 classInfo: this.classDetailObj,
                                 customerMemberShipID: 0,
@@ -882,7 +882,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
         let params = {
             parentClassId: this.classDetailObj.ParentClassID,
             customerId: attende.CustomerID,
-            classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT)
+            classDate: this._dateTimeService.convertDateObjToString(this.getDateWithoutZone(this.classDetailObj.StartDate), this.DATE_FORMAT)
         }
         this._httpService.get(AttendeeApi.getMemberClassDetailWithOtherMemberships, params)
             .toPromise()
@@ -1047,7 +1047,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
         var customerHasMembershipBenefits = {
             parentClassId: this.classDetailObj.ParentClassID,
             customerId: classAttendeObj.CustomerID,
-            classDate: this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT),
+            classDate: this._dateTimeService.convertDateObjToString(this.getDateWithoutZone(this.classDetailObj.StartDate), this.DATE_FORMAT),
             freeClassMemberships: this.freeClassMemberships,
             classInfo: this.classDetailObj,
             customerMemberShipID: classAttendeObj.CustomerMembershipID,
@@ -1082,7 +1082,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
         personInfo.IsBlocked = classAttendeObj.IsBlocked;
 
         if (classAttendeObj.CustomerMembershipID > 0) {
-            this._commonService.getMemberShipBenefits(POSItemType.Class, this.classDetailObj.ParentClassID, classAttendeObj.CustomerMembershipID ,this._dateTimeService.convertDateObjToString(this.classDetailObj.StartDate, this.DATE_FORMAT),).subscribe((response: any) => {
+            this._commonService.getMemberShipBenefits(POSItemType.Class, this.classDetailObj.ParentClassID, classAttendeObj.CustomerMembershipID ,this._dateTimeService.convertDateObjToString(this.getDateWithoutZone(this.classDetailObj.StartDate), this.DATE_FORMAT),).subscribe((response: any) => {
                 var freeClassMemberships = response.Result;
                 freeClassMemberships.IsBenefitSuspended = freeClassMemberships.IsBenefitsSuspended;
 
@@ -1459,7 +1459,8 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
     onDownloadClassAtendeesReport() {
         var invoiceFileName: string = this.attendeeClass.find(ac => ac.ClassID == this.classInfo.ClassID).Name;
 
-        var classStartDate = this._dateTimeService.convertDateObjToString(this.classInfo.ClassDate, this.DATE_FORMAT)
+        var classStartDate = this._dateTimeService.convertDateObjToString(this.getDateWithoutZone(this.classDetailObj.StartDate), this.DATE_FORMAT);
+
         this._httpService.get(AttendeeApi.GetClassAttendeeReport + this.classInfo.ClassID + "/" + classStartDate)
             .toPromise().then(data => {
                 if (data && data.MessageCode > 0) {
@@ -1516,24 +1517,12 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
 
         }
     }
+
+    getDateWithoutZone(date){
+      return  this._dateTimeService.removeZoneFromDateTime(date);
+  }
 }
 
-BranchID: 26
-CustomerMembershipID: 945
-DiscountPercentage: 0
-EndDate: "2023-07-20T00:00:00Z"
-GlobalNoLimits: true
-GlobalRemainingSession: null
-IsBenefitsSuspended: false
-IsFree: true
-IsMembershipBenefit: true
-ItemID: 341
-ItemName: "Soulful ballet dance"
-MembershipID: 226
-MembershipName: "Gold Package Hair Treatment "
-NoLimits: true
-RemainingSession: 0
-StartDate: "2022-07-20T00:00:00Z"
-TotalSessions: 0
+
 
 
