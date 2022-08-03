@@ -413,7 +413,7 @@ export class SaveLeadComponent extends AbstractGenericComponent implements OnIni
                 if (this.popupMode) {
                   this.closeDialog.emit(true);
                 }
-                else {
+                else if(customerInfo?.CustomerID > 0 && customerInfo?.CustomerTypeID > 0){
                   this.resetForm();
                 }
               }
