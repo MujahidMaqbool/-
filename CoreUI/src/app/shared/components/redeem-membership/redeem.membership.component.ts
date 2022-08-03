@@ -163,12 +163,16 @@ export class RedeemMembershipComponent extends AbstractGenericComponent implemen
 
     getMemberMembershipBenefitsDetail() {
         return new Promise<any>((isPromiseResolved, reject) => {
+
           try {
+            var classStartDate = this._dateTimeService.removeZoneFromDateTime(this.data.classInfo.StartDate);
+
             let params = {
               parentClassId: this.data.classInfo.ParentClassID,
               customerId: this.data.customerId,
-              classDate: this._dateTimeService.convertDateObjToString(this.data.classInfo.StartDate, this.DATE_FORMAT)
+              classDate: this._dateTimeService.convertDateObjToString(classStartDate, this.DATE_FORMAT)
             }
+
             this._httpService.get(AttendeeApi.getMemberClassDetailWithOtherMemberships, params)
               .subscribe(async (response: ApiResponse) => {
 
@@ -234,5 +238,6 @@ export class RedeemMembershipComponent extends AbstractGenericComponent implemen
       onChangeMembership(){
           this.isClassHasMembershipBenfits();
       }
+
     // #endregion
 }

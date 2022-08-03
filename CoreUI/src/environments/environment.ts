@@ -8,7 +8,7 @@ export const environment = {
   imageUrl: 'https://sandboxapi.wellyx.com/UploadDownload/Images/CP{ImagePath}/',
   qrCodeUrl: 'https://sandboxapi.wellyx.com/UploadDownload/QRCode/',
   fileUrl: 'https://sandboxapi.wellyx.com/UploadDownload/Documents/CP{ImagePath}/',
-  apiUrl: 'https://sandboxapi.wellyx.com/api/Core/',
+  apiUrl: 'https://api.wellyx.com/api/Core/',
   stripeRedirectUrl: "https://sandboxcore.wellyx.com/setup/configurations/payments",
   stripeConnectUrl: 'https://connect.stripe.com',
   formUrl: 'https://sandboxweb.wellyx.com/{CompanyID}/{BranchID}/{SourceType}/{FormID}/{CustomerFormID}',
