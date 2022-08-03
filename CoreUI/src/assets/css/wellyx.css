@@ -6973,7 +6973,8 @@ input:checked+.sch_slider:before {
 }
 
 .green_border h2,
-.green_border i {
+.green_border i,
+.combine-time h4 {
     color: #BCD556;
 }
 
@@ -7283,11 +7284,22 @@ input:checked+.sch_slider:before {
     background: #FEF7F2 !important;
 }
 
-.orange_border h1 {
+.orange_border h1,
+.orange_border.combine-time h4 {
     color: #FEBF05 !important;
 }
+.combine-time.sch_hours h1:after {
+    margin: 0px 0 5px;
+}
+.combine-time h4 {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 15px;
+}
 
-.sch_hours_blue h1 {
+.sch_hours_blue h1,
+.sch_hours_blue.combine-time h4 {
     color: #60C2FF !important;
 }
 
@@ -7336,7 +7348,7 @@ input:checked+.sch_slider:before {
 }
 
 .staff_das_forecast p {
-    font-size: 14px;
+    font-size: 13px;
     color: #666666;
     padding-bottom: 15px;
 }

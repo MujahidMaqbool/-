@@ -17,8 +17,9 @@
                     <div class="staff_das_forecast mpt-5">
                         <div class="row align-items-center">
                             <div class="col-lg-5 col-md-12">
-                                <div class="sch_hours orange_border">
-                                    <h1>{{staffSchedulerHours?.CurrentWeekWorkedHours}}</h1>
+                                <div class="sch_hours orange_border combine-time">
+                                    <h1>{{staffSchedulerHours?.CurrentWeekWorkedHours}} Hr</h1>
+                                    <h4>{{staffSchedulerHours?.CurrentWeekWorkedMinutes}} Mins</h4>
                                     <p class="font-medium">Actual this Week</p>
                                 </div>
                             </div>
@@ -27,13 +28,13 @@
                                 <p class="pb-1">Actual Hours last Week</p>
                                 <div class="forecast_detail">
                                     <div class="light_green_bg color_size floating"></div>
-                                    <h6>{{staffSchedulerHours?.LastWeeksWorkedHours}}</h6>
+                                    <h6>{{staffSchedulerHours?.LastWeeksWorkedHours}} Hr - {{staffSchedulerHours?.LastWeeksWorkedMinutes}} Mins</h6>
                                 </div>
 
                                 <p class="py-2">Lower than the Actual last Week</p>
                                 <div class="forecast_detail pt-0">
                                     <div class="bg_orange color_size floating"></div>
-                                    <h6>{{staffSchedulerHours?.CurrentWeekActualHours}}</h6>
+                                    <h6>{{staffSchedulerHours?.CurrentWeekActualHours}} Hr - {{staffSchedulerHours?.CurrentWeekActualMinutes}} Mins</h6>
                                 </div>
 
                             </div>
@@ -46,8 +47,9 @@
                     <div class="staff_das_forecast">
                         <div class="row align-items-center">
                             <div class="col-lg-5 col-md-12">
-                                <div class="sch_hours">
-                                    <h1>{{staffSchedulerHours?.CurrentWeekScheduledHours}}</h1>
+                                <div class="sch_hours combine-time">
+                                    <h1>{{staffSchedulerHours?.CurrentWeekScheduledHours}} Hr</h1>
+                                    <h4>{{staffSchedulerHours?.CurrentWeekScheduledMinutes}} Mins</h4>
                                     <p class="font-medium">Scheduled this Week</p>
                                 </div>
                             </div>
@@ -56,7 +58,7 @@
                                 <p class="pb-1">Scheduled Hours last Week</p>
                                 <div class="forecast_detail">
                                     <div class="light_green_bg color_size floating"></div>
-                                    <h6>{{staffSchedulerHours?.LastWeeksScheduledHours}} </h6>
+                                    <h6>{{staffSchedulerHours?.LastWeeksScheduledHours}} Hr - {{staffSchedulerHours?.LastWeeksScheduledMinutes}} Mins</h6>
                                 </div>
 
                                 <ng-container
@@ -64,6 +66,7 @@
                                     <p class="py-2">Increase from Scheduled last Week</p>
                                     <div class="forecast_detail pt-0">
                                         <div class="bg_orange color_size floating"></div>
+                                        <!-- <h6>{{staffSchedulerHours?.ElapsedShiftHoursLastWeek}} Hr - {{staffSchedulerHours?.LastWeeksScheduledMinutes}} Mins</h6> -->
                                         <h6>{{staffSchedulerHours?.ElapsedShiftHoursLastWeek}} </h6>
                                     </div>
                                 </ng-container>
@@ -73,7 +76,7 @@
                                     <p class="py-2">Lower than the Scheduled last Week</p>
                                     <div class="forecast_detail pt-0">
                                         <div class="bg_orange color_size floating"></div>
-                                        <h6>{{staffSchedulerHours?.ScheduledHourDiff}}</h6>
+                                        <h6>{{staffSchedulerHours?.ScheduledHourDiff}} Hr - {{staffSchedulerHours?.ScheduledHourDiffMinutes}} Mins</h6>
                                     </div>
                                 </ng-container>
 
@@ -87,8 +90,9 @@
                     <div class="staff_das_forecast">
                         <div class="row align-items-center">
                             <div class="col-lg-5 col-md-12">
-                                <div class="sch_hours sch_hours_blue">
-                                    <h1>{{staffSchedulerHours?.PreviousWeekDiff}}</h1>
+                                <div class="sch_hours sch_hours_blue combine-time">
+                                    <h1>{{staffSchedulerHours?.PreviousWeekDiff}} Hr</h1>
+                                    <h4>{{staffSchedulerHours?.PreviousWeekDiffMinutes}} Mins</h4>
                                     <p class="font-medium">Difference</p>
                                 </div>
                             </div>
@@ -96,21 +100,20 @@
                                 <h2 class="mb-0">Scheduled Hours Last Week</h2>
                                 <div class="forecast_detail">
                                     <div class="bg_walkIn color_size floating"></div>
-                                    <h6>{{staffSchedulerHours?.LastWeeksScheduledHours}} </h6>
+                                    <h6>{{staffSchedulerHours?.LastWeeksScheduledHours}} Hr - {{staffSchedulerHours?.LastWeeksScheduledMinutes}} Mins</h6>
                                 </div>
 
                                 <h2 class="mb-1">Actual Hours Last Week</h2>
                                 <div class="forecast_detail">
                                     <div class="bg_walkIn color_size floating"></div>
-                                    <h6>{{staffSchedulerHours?.LastWeeksWorkedHours}} </h6>
+                                    <h6>{{staffSchedulerHours?.LastWeeksWorkedHours}} Hr - {{staffSchedulerHours?.LastWeeksWorkedMinutes}} Mins</h6>
                                 </div>
 
                                 <p class="py-2">Actual Hours were more than Scheduled Hours</p>
                                 <div class="forecast_detail pt-0">
                                     <div class="bg_perpal color_size floating"></div>
-                                    <h6>{{staffSchedulerHours?.DiffOfLastWeek}}</h6>
+                                    <h6>{{staffSchedulerHours?.DiffOfLastWeek}} Hr - {{staffSchedulerHours?.DiffOfLastWeekMinutes}} Mins</h6>
                                 </div>
-
                             </div>
                         </div>
                     </div>
