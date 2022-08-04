@@ -1354,15 +1354,16 @@ export enum ENU_ChargeFeeType {
 
 export enum ENU_ConfigurationTab {
     basic = 0,
-    CancellationPolicy = 1,
-    WaitList = 2,
-    Payments = 3,
-    Pos = 4,
-    Lead = 5,
+    Advanced = 1,
+    CancellationPolicy = 2,
+    WaitList = 3,
+    Payments = 4,
+    Pos = 5,
+    Lead = 6,
 
-    Widget = 6,
-    ActivitiesColor = 7,
-    Advanced = 8,
+    Widget = 7,
+    ActivitiesColor = 8
+    
 }
 
 export enum ENU_WaitListBookingType {
