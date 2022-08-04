@@ -262,13 +262,11 @@
                                 <h5>Top Employees For Classes</h5>
                             </div>
                         </div>
-
                         <div class="dash_cstm_height cstm_scroll_bg">
                             <div class="client_service" *ngFor="let topEmployeeClassObj of iTopEmployeeClasses">
                                 <h5>{{topEmployeeClassObj.PersonName}}</h5>
                                 <h6>{{topEmployeeClassObj.TotalCount}}</h6>
                             </div>
-
                             <div *ngIf="!isTopEmployeeClassDataExists">
                                 <div class="row grid_rows">
                                     <div class="col-md-12 col-sm-12 text-center">
