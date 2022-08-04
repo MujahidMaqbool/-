@@ -1512,9 +1512,7 @@ export class AttendeeComponent extends AbstractGenericComponent implements OnIni
             var personInfo = new PersonInfo();
             personInfo.PersonID = customerId;
             personInfo.PersonTypeID = classAttendeObj.CustomerTypeID;
-
             this._dataSharingService.sharePersonInfo(personInfo);
-
         }
     }
 
