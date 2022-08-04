@@ -1859,7 +1859,10 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
 
     changeStatusToAvailable(classItem: POSClass) {
         this.posClasses.forEach(classObj => {
-            classObj.ClassPOSList.find(c => c === classItem).Status = this.classStatus.BuyNow;
+            if(classObj.ClassPOSList.find(c => c === classItem)){
+                classObj.ClassPOSList.find(c => c === classItem).Status = this.classStatus.BuyNow;
+                classObj.ClassPOSList.find(c => c === classItem).IsAvailable = true;
+            }
         })
     }
 
