@@ -56,7 +56,7 @@
                           <p class="pos_mem_label pb-0">
                             Per Unit: {{item.ItemPricePerUnit | currency: currencyFormat}}</p>
                           <p class="pos_mem_label pb-0" *ngIf="item.DiscountType">
-                            <i class="far fa-crown"></i> {{item.DiscountType}}</p>
+                            <i *ngIf="item.DiscountType != discountType.POSDiscount" class="far fa-crown"></i> {{item.DiscountType}}</p>
                           <!-- <p class="pos_mem_label pb-0" *ngIf="item.IsWaitlistItem">Added To Waitlist</p> -->
                         </div>
                         <div class="col text-center p-0">

@@ -148,15 +148,16 @@ export class ClassSaveComponent implements OnInit {
 
       var i;
       this.selectedRestrictedList = [];
-      var array = this.parentClassObj.RestrictedCustomerTypeID.split(',');
-
-      for (i = 0; i < array.length; ++i) {
-          var result = this.restrictedList.find(m => m.value == Number(array[i]));
-          if(result){
-            this.selectedRestrictedList.push(result)
-          }
+      var array = this.parentClassObj.RestrictedCustomerTypeID?.split(',');
+      if(array){
+        for (i = 0; i < array.length; ++i) {
+            var result = this.restrictedList.find(m => m.value == Number(array[i]));
+            if(result){
+              this.selectedRestrictedList.push(result)
+            }
+        }
       }
-
+      
       // check if all selected set All true
       if(this.restrictedList && this.selectedRestrictedList && this.restrictedList.length ==  this.selectedRestrictedList.length){
         setTimeout(() => {
