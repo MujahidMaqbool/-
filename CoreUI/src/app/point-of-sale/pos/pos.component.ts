@@ -3299,8 +3299,23 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
                 // });
 
             } else {
-                this.getPOSItems();
-            }
+                this.isCustomerMembership = false;
+                this.resetFreeClasses();
+                this.resetCartItems();
+                this.getSubTotal();
+
+                if (this.customerMembershipId) {
+                    this.customerMemberhsip = [];
+                    this.customerMembershipId = null;
+                    this.memberhsipBenefits = [];
+                    this.remainingSessionDetail = [];
+                    this.membershipBaseProductGlobalRemainingSession = [];
+                    this.getPOSItems();
+                }
+                else {
+                    this.getPOSItems();
+                }
+             }
         }
         else {
             this.memberhsipBenefits = []
