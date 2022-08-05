@@ -2350,10 +2350,12 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
             classDetails.ClassID = classInfo.ClassID;
             classDetails.StartDate = new Date(classDate);
             classDetails.StartTime = classItem.StartTime;
+            classDetails.EndTime = classItem.EndTime;
             classDetails.BookBefore = classInfo.BookBefore;
             classDetails.BookBeforeDurationTypeID = classInfo.BookBeforeDurationTypeID;
             classDetails.CancelBefore = classInfo.CancelBefore;
             classDetails.CancelBeforeDurationTypeID = classInfo.CancelBeforeDurationTypeID;
+            classDetails.IsBookingClosesBeforeEndTime = classItem.IsBookingClosesBeforeEndTime;
 
             if (this._classValidationService.isClassBookingValid(classDetails)) {
                 //--- Commecnted by fazeel on 24-08-2020--//
@@ -2373,6 +2375,11 @@ export class PointOfSaleComponent extends AbstractGenericComponent implements On
 
                 this.disableClassBookingButton = false;
                 // }
+            }
+            // here we check if the class booking time is passed
+            else{
+              this.disableClassBookingButton = false;
+              this._messageService.showErrorMessage(this.messages.Validation.Class_BookingTime_Expired);
             }
 
         }

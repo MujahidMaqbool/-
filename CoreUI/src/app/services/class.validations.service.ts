@@ -46,8 +46,8 @@ export class ClassValidations {
     }
 
     private _validateBookBeforeWeeks() {
-        let classStartTime = this._dateTimeService.convertToTwentyFourHours(this._classDetailObj.StartTime);
-        var startDate = this._dateTimeService.convertTimeStringToDateTime(classStartTime, new Date(this._classDetailObj.StartDate));
+        let classTime = this._dateTimeService.convertToTwentyFourHours(this._classDetailObj.IsBookingClosesBeforeEndTime ? this._classDetailObj.EndTime :this._classDetailObj.StartTime);
+        var startDate = this._dateTimeService.convertTimeStringToDateTime(classTime, new Date(this._classDetailObj.StartDate));
         var maxBookingBeforeDate = new Date(JSON.parse(JSON.stringify(startDate)));
         maxBookingBeforeDate.setDate(startDate.getDate() - (this._classDetailObj.BookBefore * 7));
 
@@ -55,8 +55,8 @@ export class ClassValidations {
     }
 
     private _validateBookBeforeDays() {
-        let classStartTime = this._dateTimeService.convertToTwentyFourHours(this._classDetailObj.StartTime);
-        var startDate = this._dateTimeService.convertTimeStringToDateTime(classStartTime, new Date(this._classDetailObj.StartDate));
+        let classTime = this._dateTimeService.convertToTwentyFourHours(this._classDetailObj.IsBookingClosesBeforeEndTime ? this._classDetailObj.EndTime :this._classDetailObj.StartTime);
+        var startDate = this._dateTimeService.convertTimeStringToDateTime(classTime, new Date(this._classDetailObj.StartDate));
         var maxBookingBeforeDate = new Date(JSON.parse(JSON.stringify(startDate)));
         maxBookingBeforeDate.setDate(startDate.getDate() - this._classDetailObj.BookBefore);
 
@@ -64,8 +64,8 @@ export class ClassValidations {
     }
 
     private _validateBookBeforeHours() {
-        let classStartTime = this._dateTimeService.convertToTwentyFourHours(this._classDetailObj.StartTime);
-        var startTime = this._dateTimeService.convertTimeStringToDateTime(classStartTime, this._classDetailObj.StartDate);
+        let classTime = this._dateTimeService.convertToTwentyFourHours(this._classDetailObj.IsBookingClosesBeforeEndTime ? this._classDetailObj.EndTime :this._classDetailObj.StartTime);
+        var startTime = this._dateTimeService.convertTimeStringToDateTime(classTime, this._classDetailObj.StartDate);
         var maxBookingBeforeTime = new Date(JSON.parse(JSON.stringify(startTime)));
         maxBookingBeforeTime.setHours(startTime.getHours() - this._classDetailObj.BookBefore);
 
@@ -73,8 +73,8 @@ export class ClassValidations {
     }
 
     private _validateBookBeforeMinutes() {
-        let classStartTime = this._dateTimeService.convertToTwentyFourHours(this._classDetailObj.StartTime);
-        var startTime = this._dateTimeService.convertTimeStringToDateTime(classStartTime, this._classDetailObj.StartDate);
+        let classTime = this._dateTimeService.convertToTwentyFourHours(this._classDetailObj.IsBookingClosesBeforeEndTime ? this._classDetailObj.EndTime :this._classDetailObj.StartTime);
+        var startTime = this._dateTimeService.convertTimeStringToDateTime(classTime, this._classDetailObj.StartDate);
         var maxBookingBeforeTime = new Date(JSON.parse(JSON.stringify(startTime)));
         maxBookingBeforeTime.setMinutes(startTime.getMinutes() - this._classDetailObj.BookBefore);
 

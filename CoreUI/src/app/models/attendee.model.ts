@@ -176,9 +176,7 @@ export class ClassAttendanceDetail {
     public TotalCanceled: number;
     public IsClassWaitList : boolean;
     public RestrictedCustomerTypeNames: string = "";
-
-
-
+    public IsBookingClosesBeforeEndTime:boolean;
 }
 
 export class ClassInfo {

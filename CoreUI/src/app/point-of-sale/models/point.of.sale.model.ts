@@ -60,7 +60,7 @@ export class POSProduct {
     public CustomerMembershipID: number;
     public ReorderThreshold: number;
 
-    //for FE use only 
+    //for FE use only
     public ServerImageAddress: string;
 
 }
@@ -188,6 +188,8 @@ export class POSClass {
     public AmountSpent: number;
     public MemberBaseEarnPoints: number;
     public CustomerEarnedPoints: number;
+    public IsBookingClosesBeforeEndTime :boolean;
+
 }
 
 export class POSClassModel {
