@@ -109,7 +109,7 @@ export class SaveProductPriceComponent implements OnInit {
     }
 
     let data = {
-      taxList: isBulkUpdate ? this.taxList.filter(i => i.BranchID === 0) : this.taxList.filter(i => i.BranchID === pricingDetail.BranchID || i.BranchID === 0),
+      taxList: this.taxList,
       supplierList: this.supplierList,
       areaName: this.areaName,
       pricingDetail: pricingDetail,
